@@ -2,101 +2,112 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F97D763D51
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 26 Jul 2023 19:11:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7BA8676411D
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 26 Jul 2023 23:25:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229824AbjGZRK7 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 26 Jul 2023 13:10:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50754 "EHLO
+        id S231351AbjGZVZg (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 26 Jul 2023 17:25:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230482AbjGZRK7 (ORCPT
+        with ESMTP id S229500AbjGZVZd (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 26 Jul 2023 13:10:59 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A0532126
-        for <linux-bluetooth@vger.kernel.org>; Wed, 26 Jul 2023 10:10:58 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2b702319893so104522601fa.3
-        for <linux-bluetooth@vger.kernel.org>; Wed, 26 Jul 2023 10:10:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1690391456; x=1690996256;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ik8ZwSu5T4EXDiNvC+FWhWa6uj7Vx2ERwidY4Ti3bjI=;
-        b=oDusZn2isjPNC/QvVlPg2GObsXJ3EGpBFLliiMOxw4lbDFQWwcKzj+a8/se11sEewc
-         lxHXX4kQSsD6W2yqWuurOUcpIAO6LZYvhLMfUQKgUpUyVoj0wp8qSdT/JrX5ztcnpSbo
-         hTxjkS9XvWsPWxz7bUll8IPBsUhFuw/sBRITGfISitBzlzHF38LbGtmWdGGJcMzsJW/S
-         tT8IvJ4EZcexhvd0cmJJCBSMuYJQMB9iVeg71Z6nldkVOMGkiB32LtPXapUhxLPzPtwM
-         W4mysdgDfD62ARSfJwU0kbHliHxluNB/QC8pGriTM4aP9AHFGVk0jUplPU2VnQzflpbg
-         3nEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690391456; x=1690996256;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Ik8ZwSu5T4EXDiNvC+FWhWa6uj7Vx2ERwidY4Ti3bjI=;
-        b=ceDlGSjLFXNTzQ7ZY6C6Nz8ebyVi4LDtFoEL8sB/hyJ0UXDrnW9JkfWBk5JMPxVZjc
-         mpdLaEktN3oNGbsvekl4hukRLugsJxgehEHdwfMywdhgMDM9Ue7QgEjfvVsfy3nml6Xc
-         ULXwhfytjJBCFIovVcXGkS8f0PRlUoaN38jdCfaDpGCeEz1M86fuJzqe2/ymZEIDVpjh
-         nK25XL2FPToaLo4fGm4/3/8zdfSdtT5TkdlwWT+IBJI8t8NZ1sTFaA9AvqQIGmD1WtB3
-         tl+WL2oajarSCydQQRbaUCM9bfKVs9SakYYQ/Wu6dtvqChcCyOmuOpfeC2f2ZViQtvls
-         WWvw==
-X-Gm-Message-State: ABy/qLaGvzKh3rDMhoKcC8+PvB+zb6teJGhdp9xz4KuhccPdTEod9t6X
-        4TWoQ2B5hgTSBHUDlcgAzI7caE6cqb7Zf9mnKO1V/u/r
-X-Google-Smtp-Source: APBJJlF7nPCgbneHhCfuH+zcAl/wm3kQ11fEq3iqWoPYaeYqAmBw8Ze8fK6/580BPfCX11DHCmPxGIAxWsZfbuPgb3E=
-X-Received: by 2002:a2e:8743:0:b0:2b6:e283:32cb with SMTP id
- q3-20020a2e8743000000b002b6e28332cbmr1923127ljj.23.1690391455934; Wed, 26 Jul
- 2023 10:10:55 -0700 (PDT)
+        Wed, 26 Jul 2023 17:25:33 -0400
+Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [IPv6:2a0b:5c81:1c1::37])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CE632685
+        for <linux-bluetooth@vger.kernel.org>; Wed, 26 Jul 2023 14:25:27 -0700 (PDT)
+Received: from monolith.lan (91-152-120-101.elisa-laajakaista.fi [91.152.120.101])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: pav)
+        by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4RB6Pb6r9jz49Pyr;
+        Thu, 27 Jul 2023 00:25:23 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
+        t=1690406724;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=wcwZWiK2rfnuL1oJiHrTufItNtj5nRtCSp+kgMClWpM=;
+        b=dyphzWA9YGzS/kWng33LGCof5BjnalPrGCJjf7P7hFQ0tj2OjqFUIWi9KEsw2qcEqgXXju
+        pTbk43nwynISmESNfQvsxsX+PUzTKYZfhtn5S3qvlZR4KYFwUpU6ltoIB6ExLzuwbjgl/Z
+        HISti1FZ94NT/5tU+RmV1Ps8BUlhnwu/K7O78qI/QOtN0ykXPBGdvfPFp4AFyJif1GRgdc
+        +bYJIs6bzyKNM+orneQaMLv+qDJjEocrABk2OFARZWYL1jJ0r7Jby185R5Ng++4WizNNFP
+        MxoW5KlddrtZK4CMK8sD2+ontQ0nXoVPF47NNLPeCnATggYpb1sElNaE7CrejQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
+        s=lahtoruutu; t=1690406724;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=wcwZWiK2rfnuL1oJiHrTufItNtj5nRtCSp+kgMClWpM=;
+        b=R5c2nabtB5H5AazzOnaHqO3LpY4GTvgcn03BpavM02i5ZGwZ9CxsryVcjfAA/m+e9k8z8s
+        pUqozqfCAVBYwf44F4x0uYB60051wbHxPKNs2P8UjpDJmJlX0WuUzirI9fIBFrPGQf1cpR
+        a7gIH0CR28WbursLJGpQHGCbuRGvwYRzni7qWXcf3xEChEDp7k5AY704hd+Sb2/Yu+6piu
+        2tPo0q3xvrsptLi+YciqgiP0sVu7fmMpnraln0qPO5Ky4Krl6dguyKFW4g5xXXFuZgzFZ5
+        eOfWPfnnKAdQ9cb95wY5Bm1QKxI930tp4qd2NUcX7nP3zF+LVwxLR6TizrMA1A==
+ARC-Authentication-Results: i=1;
+        ORIGINATING;
+        auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
+ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1690406724; a=rsa-sha256;
+        cv=none;
+        b=BGfo56jO5U/5GNwGrJ17KaOj0DVpavR5dbWTmXLM+1A4NyTDc/6VfwIoaYt5T8t/Kaqa4G
+        jo1uAOv2O6hy3JYZ3EPMlL5y0H/rplTsUtHZbFAG8aQ9L/ujt2zcDGtwXv/u575VbHrVCp
+        okwr1rDjmrEAiZ5pvg99/ySCmoImwQgy1Qvf0mivYWdrUiMpUzgnYinJvd+CirrL/kJVu8
+        tKlhlLTK1UmxAm4QmWkFpqw9DXnNLsCjiKP9Esr5HGH8L+DK434rOoe+OOXJwB4G3bZ4u1
+        3GsUPZ7v2kTx4IDjMmMqSV0AU2lmRgRYgLCdU4FVj9OlpJslUjbCMeDwjNDRCA==
+From:   Pauli Virtanen <pav@iki.fi>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Pauli Virtanen <pav@iki.fi>
+Subject: [PATCH BlueZ 0/5] Additional tests for ISO and hci_sync
+Date:   Thu, 27 Jul 2023 00:25:14 +0300
+Message-ID: <cover.1690405564.git.pav@iki.fi>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-References: <20230726145303.137597-1-silviu.barbulescu@nxp.com>
-In-Reply-To: <20230726145303.137597-1-silviu.barbulescu@nxp.com>
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date:   Wed, 26 Jul 2023 10:10:42 -0700
-Message-ID: <CABBYNZLJeeE3SG1wfjkoy3aihSAQnS3YDkbhw0GGJFBrcs9oUA@mail.gmail.com>
-Subject: Re: [PATCH BlueZ v2 0/1] Rename BAA_SERVICE to BCAST_AA_SERVICE add BASIC_AA_SERVICE
-To:     Silviu Florian Barbulescu <silviu.barbulescu@nxp.com>
-Cc:     linux-bluetooth@vger.kernel.org, claudia.rosu@nxp.com,
-        mihai-octavian.urzica@nxp.com, vlad.pruteanu@nxp.com,
-        andrei.istodorescu@nxp.com, iulia.tanasescu@nxp.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Silviu,
+This adds a few tests checking ISO socket handling of invalid input
+parameters and cleanup in some race conditions:
 
-On Wed, Jul 26, 2023 at 8:03=E2=80=AFAM Silviu Florian Barbulescu
-<silviu.barbulescu@nxp.com> wrote:
->
-> Rename BAA_SERVICE to BCAST_AA_SERVICE and added BCAST_AA_SERVICE(0x1851)
-> as UUID for the broadcast sink.
->
-> Silviu Florian Barbulescu (1):
->   Rename BAA_SERVICE to BCAST_AA_SERVICE and added
->     BASIC_AA_SERVICE(0x1851) as UUID for the broadcast sink.
+    ISO QoS CIG 0xF0 - Invalid
+    ISO QoS CIS 0xF0 - Invalid
+    ISO Connect2 CIG 0x01 - Success/Invalid
+    ISO AC 6(ii) CIS 0xEF/auto - Success
+    ISO AC 6(ii) CIS 0xEF/0xEF - Invalid
+    ISO Defer Close - Success
+    ISO Connect Close - Success
+    ISO Defer Wait Close - Success
+    ISO Connect Wait Close - Success
 
-How about BCAA and BAA instead?
+There's also one for a hci_sync race condition that triggers GPF:
 
->  client/player.c            | 8 ++++----
->  lib/uuid.h                 | 7 +++++--
->  profiles/audio/bap.c       | 2 +-
->  profiles/audio/media.c     | 2 +-
->  profiles/audio/transport.c | 4 ++--
->  5 files changed, 13 insertions(+), 10 deletions(-)
->
->
-> base-commit: d8ca06631b7434ea8837f9c571bfe31d6602d31f
-> --
-> 2.34.1
->
+    eSCO Simultaneous Disconnect - Failure
 
+I have a patch series fixing these, but we'll revisit the
+HCI_CONN_DELETED flag there, so maybe discussion needed.
 
---=20
-Luiz Augusto von Dentz
+These fail on current bluetooth-next/master, so it could make most sense
+to wait for the fixes first.
+
+Pauli Virtanen (5):
+  btdev: check error conditions for HCI_Create_Connection_Cancel
+  sco-tester: test local and remote disconnecting simultaneously
+  iso-tester: test with large CIS_ID and invalid CIG_ID/CIS_ID
+  iso-tester: add tests checking Remove CIG is emitted
+  btdev: fix Command Status command opcodes for Setup Sync Conn
+
+ emulator/btdev.c   |  80 ++++++++++++++++++---
+ tools/iso-tester.c | 168 +++++++++++++++++++++++++++++++++++++++++++++
+ tools/sco-tester.c |  59 ++++++++++++++++
+ 3 files changed, 297 insertions(+), 10 deletions(-)
+
+-- 
+2.41.0
+
