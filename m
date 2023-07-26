@@ -2,25 +2,25 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EA57F764124
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 26 Jul 2023 23:26:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 313BA764122
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 26 Jul 2023 23:26:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231533AbjGZV0F (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 26 Jul 2023 17:26:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45324 "EHLO
+        id S231536AbjGZV0D (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 26 Jul 2023 17:26:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231500AbjGZV0C (ORCPT
+        with ESMTP id S231485AbjGZV0C (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Wed, 26 Jul 2023 17:26:02 -0400
-Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFCE5269E
+Received: from meesny.iki.fi (meesny.iki.fi [IPv6:2001:67c:2b0:1c1::201])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85A202D64
         for <linux-bluetooth@vger.kernel.org>; Wed, 26 Jul 2023 14:25:47 -0700 (PDT)
 Received: from monolith.lan (91-152-120-101.elisa-laajakaista.fi [91.152.120.101])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
         (Authenticated sender: pav)
-        by meesny.iki.fi (Postfix) with ESMTPSA id 4RB6Q11Gkgzyhc;
+        by meesny.iki.fi (Postfix) with ESMTPSA id 4RB6Q15NvBz107J;
         Thu, 27 Jul 2023 00:25:45 +0300 (EEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
         t=1690406745;
@@ -28,155 +28,159 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=cStnu3uRKmISA/8+0oThhWnWzX9S6j2dgsNQupODTH0=;
-        b=Cxs1Ml+x+UbjKtpPG1TkGExgmubCzwPcQKRcf3WPnunzmY3WpEqfvN3OoRP2w70LoKbXxF
-        UfjX3/WFK4CFk4EgUZcu0eS4p/5jqkArhgAS/hqCHrF4MJPNA6sIqLS4HetccrnatQ/HMC
-        mOgVtv7aUg5fU0gV8BnE3V7ywZZuvWU=
+        bh=C1am/h+ATMBUgghrZPssfKQla6Kn6yuarwxQv/n87UQ=;
+        b=TrLP1CbBqUc1DgZizM18niZgl6Y6J2g7sUKtGqCe/NwiQipY8Y7uUmNZ0O2mELRDBBzyQj
+        mZPB5eZli3qrnCR7NKGA0X47/GCdPNEWMFsIolDp1WewrzgS2lppoGhkXQuQTK8+ivxhHX
+        PAQYEn6fDHElkhUdpo7sFRdW+f7QT+s=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
         s=meesny; t=1690406745;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=cStnu3uRKmISA/8+0oThhWnWzX9S6j2dgsNQupODTH0=;
-        b=q5ctp2/J7By+6X1Jp0uAins5jCxv7WSSHnWdQcHAhZtHElqaHy1nKC2bPnJ20ONY/T1OWn
-        zUGyQqSFhVJWNU2Bq/1zq0afBNMwvhXI2fLiyl9lUKzdCoVT4urFSIwXpC3498x1BHH6oH
-        vfdc/jzM2fADAv8DhXsh4MfS+FJ1WZo=
+        bh=C1am/h+ATMBUgghrZPssfKQla6Kn6yuarwxQv/n87UQ=;
+        b=x4tGfuAjYecbMm0g0GKlWbVvPk937reMea6M4KJx9Kgp3aUkyM9cOIyiFpFmDYZ4xf9Kuw
+        TPUpB1BElXv3bt+UfUtaE3keeOPvFjLcBIl7byeZczqWDDCkFX8vcid5BIPK27zpq7ojeT
+        Y+trnRZvz3bjID4D2TMQAUCgJ+947Fg=
 ARC-Authentication-Results: i=1;
         ORIGINATING;
         auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 ARC-Seal: i=1; s=meesny; d=iki.fi; t=1690406745; a=rsa-sha256; cv=none;
-        b=EosX0/9lrf+3m2IgynUDxBnIMNKHULhWhBGI+3ISeEHLzsQJsGYvtH2/emagO2hYvLvxfX
-        qq8SM1BoOCK0hjWPpPQP5I5jDdP1vfjNiikl/SyuK6EIzjHRpirNHQqkI3mh/wLzgpwuxq
-        YWHyewmJc1AugRBIZ+QdP8HNj+eH2Yg=
+        b=qVEh7rWsNWkm40lTk68xtO0z4IkMHM4fTuCbL+lnLPeDFAhjd0BnzjhvAHR2sSBYI7HbJM
+        ZpGhX107mFjhHuJ6/IYksuYaF3I4QgfXPTo+fgSMLqTHlJeDa9/rUD1BGfuDbAEiLH0WL9
+        3F0WvQ8ULbBCdLY99+2QOB85JUYWaLM=
 From:   Pauli Virtanen <pav@iki.fi>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH RFC 1/6] Bluetooth: hci_conn: hci_conn_cleanup is not needed, combine with del
-Date:   Thu, 27 Jul 2023 00:25:21 +0300
-Message-ID: <30c5e6a7dc62ce209a2b9916fe8b2579d1b27756.1690399379.git.pav@iki.fi>
+Subject: [PATCH RFC 2/6] Bluetooth: hci_conn: add hci_conn_is_alive
+Date:   Thu, 27 Jul 2023 00:25:22 +0300
+Message-ID: <053df33e4e3b35982b257238edcde451780fc832.1690399379.git.pav@iki.fi>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <cover.1690399379.git.pav@iki.fi>
 References: <cover.1690399379.git.pav@iki.fi>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-hci_conn_cleanup is no longer needed, so move the code back to
-hci_conn_del to keep the hci_conn teardown in a single place.
+There's currently no good way to know if a given hci_conn we hold
+hci_conn_get reference for has been deleted in the meanwhile.
 
-This undoes commit b958f9a3e877 ("Bluetooth: Fix reference counting for
-LE-scan based connections"), but keeps the current order of cleanup
-operations.
+To enable checking whether a connection is still alive, add
+HCI_CONN_DELETED flag to indicate whether hci_conn_del has run.
+
+The flag is meaningful also with RCU lock only, but with different
+semantics.  If hci_conn_is_alive(conn) returns true inside
+rcu_read_lock, conn was in conn_hash from the point of view of the
+current task when the flag was read. Then its deletion will not complete
+at least before rcu_read_unlock.
 
 Signed-off-by: Pauli Virtanen <pav@iki.fi>
 ---
- net/bluetooth/hci_conn.c | 78 +++++++++++++++++-----------------------
- 1 file changed, 33 insertions(+), 45 deletions(-)
 
+Notes:
+    This is now suggesting the same thing once again, because the
+    alternatives seem limited, and it's currently hard to write code in
+    hci_sync safe against memory bugs.
+    
+    One alternative here is to remove the connection from conn_hash only
+    when hci_conn_get/put refcount goes to zero. This simplifies resuming
+    interrupted conn_hash iteration, as hci_conn_get then ensures the conn
+    remains a valid iteration cursor. However, some deletion indicator flag
+    is still needed, if we want to do something else with the conn.
+    
+    The suggestion to use conn->refcnt seems a bit hard to make it work,
+    since that is used for different purpose (marking what connections
+    userspace keeps alive), and it seems we'd need to change all callsites
+    for hci_conn_del.
+    
+    E.g. in Disconnect Complete event we must remove the conn from sysfs and
+    invalidate its handle immediately as the handle can be reused.
+    Similarly for failed LE Create CIS while hci_conn_abort is running.
+    
+    It maybe could also be possible to not allow events to run while
+    hci_sync is running, except when it is waiting for an event.  This seems
+    actually to be the concurrency model what is assumed in the hci_sync
+    code (but it is not what is actually happening).  However, it seems the
+    deletion flag would be needed also here, as the conn might be gone while
+    we are waiting for events.
+
+ include/net/bluetooth/hci_core.h | 15 +++++++++++++++
+ net/bluetooth/hci_conn.c         |  4 ++++
+ 2 files changed, 19 insertions(+)
+
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 8200a6689b39..34e4ad7c32e7 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -978,6 +978,7 @@ enum {
+ 	HCI_CONN_CREATE_CIS,
+ 	HCI_CONN_BIG_SYNC,
+ 	HCI_CONN_BIG_SYNC_FAILED,
++	HCI_CONN_DELETED,
+ };
+ 
+ static inline bool hci_conn_ssp_enabled(struct hci_conn *conn)
+@@ -997,6 +998,7 @@ static inline bool hci_conn_sc_enabled(struct hci_conn *conn)
+ static inline void hci_conn_hash_add(struct hci_dev *hdev, struct hci_conn *c)
+ {
+ 	struct hci_conn_hash *h = &hdev->conn_hash;
++	WARN_ON(test_bit(HCI_CONN_DELETED, &c->flags));
+ 	list_add_tail_rcu(&c->list, &h->list);
+ 	switch (c->type) {
+ 	case ACL_LINK:
+@@ -1024,6 +1026,7 @@ static inline void hci_conn_hash_del(struct hci_dev *hdev, struct hci_conn *c)
+ {
+ 	struct hci_conn_hash *h = &hdev->conn_hash;
+ 
++	WARN_ON(!test_bit(HCI_CONN_DELETED, &c->flags));
+ 	list_del_rcu(&c->list);
+ 	synchronize_rcu();
+ 
+@@ -1049,6 +1052,18 @@ static inline void hci_conn_hash_del(struct hci_dev *hdev, struct hci_conn *c)
+ 	}
+ }
+ 
++/* With hdev->lock: whether hci_conn is in conn_hash.
++ * With RCU: if true, the hci_conn is valid conn_hash iteration cursor and
++ * hci_conn_hash_del has not completed. (Note that if hci_conn was obtained in
++ * this critical section it is always valid, but this may return false!)
++ */
++static inline bool hci_conn_is_alive(struct hci_dev *hdev, struct hci_conn *c)
++{
++	RCU_LOCKDEP_WARN(!lockdep_is_held(&hdev->lock) && !rcu_read_lock_held(),
++			 "suspicious locking");
++	return !test_bit(HCI_CONN_DELETED, &c->flags);
++}
++
+ static inline unsigned int hci_conn_num(struct hci_dev *hdev, __u8 type)
+ {
+ 	struct hci_conn_hash *h = &hdev->conn_hash;
 diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index cccc2b8b60a8..a71a54a5c8d8 100644
+index a71a54a5c8d8..ee304618bf0a 100644
 --- a/net/bluetooth/hci_conn.c
 +++ b/net/bluetooth/hci_conn.c
-@@ -139,45 +139,6 @@ static void hci_connect_le_scan_cleanup(struct hci_conn *conn, u8 status)
- 	hci_update_passive_scan(hdev);
- }
- 
--static void hci_conn_cleanup(struct hci_conn *conn)
--{
--	struct hci_dev *hdev = conn->hdev;
--
--	if (test_bit(HCI_CONN_PARAM_REMOVAL_PEND, &conn->flags))
--		hci_conn_params_del(conn->hdev, &conn->dst, conn->dst_type);
--
--	if (test_and_clear_bit(HCI_CONN_FLUSH_KEY, &conn->flags))
--		hci_remove_link_key(hdev, &conn->dst);
--
--	hci_chan_list_flush(conn);
--
--	hci_conn_hash_del(hdev, conn);
--
--	if (conn->cleanup)
--		conn->cleanup(conn);
--
--	if (conn->type == SCO_LINK || conn->type == ESCO_LINK) {
--		switch (conn->setting & SCO_AIRMODE_MASK) {
--		case SCO_AIRMODE_CVSD:
--		case SCO_AIRMODE_TRANSP:
--			if (hdev->notify)
--				hdev->notify(hdev, HCI_NOTIFY_DISABLE_SCO);
--			break;
--		}
--	} else {
--		if (hdev->notify)
--			hdev->notify(hdev, HCI_NOTIFY_CONN_DEL);
--	}
--
--	hci_conn_del_sysfs(conn);
--
--	debugfs_remove_recursive(conn->debugfs);
--
--	hci_dev_put(hdev);
--
--	hci_conn_put(conn);
--}
--
- static void hci_acl_create_connection(struct hci_conn *conn)
+@@ -1052,9 +1052,13 @@ static void hci_conn_unlink(struct hci_conn *conn)
+ void hci_conn_del(struct hci_conn *conn)
  {
  	struct hci_dev *hdev = conn->hdev;
-@@ -1127,12 +1088,39 @@ void hci_conn_del(struct hci_conn *conn)
++	bool deleted;
  
- 	skb_queue_purge(&conn->data_q);
+ 	BT_DBG("%s hcon %p handle %d", hdev->name, conn, conn->handle);
  
--	/* Remove the connection from the list and cleanup its remaining
--	 * state. This is a separate function since for some cases like
--	 * BT_CONNECT_SCAN we *only* want the cleanup part without the
--	 * rest of hci_conn_del.
--	 */
--	hci_conn_cleanup(conn);
-+	if (test_bit(HCI_CONN_PARAM_REMOVAL_PEND, &conn->flags))
-+		hci_conn_params_del(conn->hdev, &conn->dst, conn->dst_type);
++	deleted = test_and_set_bit(HCI_CONN_DELETED, &conn->flags);
++	WARN_ON(deleted);
 +
-+	if (test_and_clear_bit(HCI_CONN_FLUSH_KEY, &conn->flags))
-+		hci_remove_link_key(hdev, &conn->dst);
-+
-+	hci_chan_list_flush(conn);
-+
-+	hci_conn_hash_del(hdev, conn);
-+
-+	if (conn->cleanup)
-+		conn->cleanup(conn);
-+
-+	if (conn->type == SCO_LINK || conn->type == ESCO_LINK) {
-+		switch (conn->setting & SCO_AIRMODE_MASK) {
-+		case SCO_AIRMODE_CVSD:
-+		case SCO_AIRMODE_TRANSP:
-+			if (hdev->notify)
-+				hdev->notify(hdev, HCI_NOTIFY_DISABLE_SCO);
-+			break;
-+		}
-+	} else {
-+		if (hdev->notify)
-+			hdev->notify(hdev, HCI_NOTIFY_CONN_DEL);
-+	}
-+
-+	hci_conn_del_sysfs(conn);
-+
-+	debugfs_remove_recursive(conn->debugfs);
-+
-+	hci_dev_put(hdev);
-+
-+	hci_conn_put(conn);
- }
+ 	hci_conn_unlink(conn);
  
- struct hci_dev *hci_get_route(bdaddr_t *dst, bdaddr_t *src, uint8_t src_type)
+ 	cancel_delayed_work_sync(&conn->disc_work);
 -- 
 2.41.0
 
