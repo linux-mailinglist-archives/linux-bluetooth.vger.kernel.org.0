@@ -2,66 +2,66 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B5A9376411F
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 26 Jul 2023 23:25:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17C81764121
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 26 Jul 2023 23:25:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231362AbjGZVZh (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 26 Jul 2023 17:25:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44896 "EHLO
+        id S231434AbjGZVZj (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 26 Jul 2023 17:25:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230194AbjGZVZe (ORCPT
+        with ESMTP id S231288AbjGZVZe (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Wed, 26 Jul 2023 17:25:34 -0400
-Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [IPv6:2a0b:5c81:1c1::37])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DDEC2691
+Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [185.185.170.37])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E0E3269E
         for <linux-bluetooth@vger.kernel.org>; Wed, 26 Jul 2023 14:25:27 -0700 (PDT)
 Received: from monolith.lan (91-152-120-101.elisa-laajakaista.fi [91.152.120.101])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
         (Authenticated sender: pav)
-        by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4RB6Pc6ZBTz49QB3;
-        Thu, 27 Jul 2023 00:25:24 +0300 (EEST)
+        by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4RB6Pd06gsz49QBX;
+        Thu, 27 Jul 2023 00:25:25 +0300 (EEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
-        t=1690406724;
+        t=1690406725;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=7DNUUcIqQRI29RfL+gzzuUWprMVU8P/baS0HhcuDiT4=;
-        b=p73JBeAE2lbmwSFvCkJSmd7EukEMr1bADTGU4QCxQaI6ljZUcfYXT5ZeD58ujc3qZiSwgE
-        coFZFap2b8HmkkKtbwImjq72Ekp/912BODdc3kAIr6V/QeslgcQT+cw2hClY1cv4R+4kNv
-        HpC27/kSx6eK9P76W9/Q0XvabjXVKa24sEwjDvL7Do1S7f0RD+HyZFY6TKdYIkyBsAFGv0
-        xjtlGIP9Ypc4G00UlzBedq4IhHT8ybrGSjzYCbxf7QVNvR1wrlEkVMvFkDdYzbs9pLgSsL
-        lom55gWV3IFzCKEY/qbae4eW5qxIJk1dSEPvTMNJ2FixLmuiOb+8U21Qk/HoPw==
+        bh=tW2+2BLo8vtYy6DNWxtLOfiMpuLTNkMKEjYi/wSjFvI=;
+        b=mO4cVkwMkGVTjXqtYw1FibEUH8kQfBT1UNJ6oY0EbnfEVA/pUXG/LV9Wq/aHaVLYnmHwB6
+        U6wwaveaQVhLaxT5FBh7hNhfN+xRCio0r17Tu/7t7xfmU4Xif+K9czUXIBN27hHJ2XDfTQ
+        fMTXkHxo13V2MJ68Jlseiid12+HTbKu1HpTe3f2n8DmA1VbcIc0y2Ey8+IPVq+OS2ETER4
+        JhvujoEXEXOgTUO13uhyiri/IomJAOZHygi+ypKfDyFLVKJsDe/zxlAUxNuA9H7C4SDY1e
+        Ta7E2McH8omwMcPPd723wQ2X59IHjCBfY4WywR26wjl01YdTanAPU3hhmvUUQw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-        s=lahtoruutu; t=1690406724;
+        s=lahtoruutu; t=1690406725;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=7DNUUcIqQRI29RfL+gzzuUWprMVU8P/baS0HhcuDiT4=;
-        b=ibMBBYN1QKFSUlbBGFTn499IfS7Z97Yb9INsvATQ9Osgqr+iv8eY6BsRmmJf6nmSYUCDDH
-        cSwtwp6cE3jEaP9Hlc0CKMAnk9BeyKnXdiBNT302+xZZ2aD5+BfoL7nu36NHQE/0jgdvGB
-        nnQn0q/m+h/m71jsB8Rie3gf5G9Meer1T75NEha7Ani5z9fukj5AnGcnKns1rmfBnjICWo
-        tZdFEfj0ETTE87WF6OqeucmETsV3xzjUeK9i73qa2L/iEg3m8gkgaJOeY37W9Ow6pWkkQI
-        dfLabeQoTF8CHYtg3XU05YwNOyDugm3XuMHdxN3cM2URL33sJmFDEpPgbkTypw==
+        bh=tW2+2BLo8vtYy6DNWxtLOfiMpuLTNkMKEjYi/wSjFvI=;
+        b=UvJKrou4fweS5uLOuUAQAjRSoTe0kcT0ZfoozffHvUUqBSUJrMuaF/Mso5pAwt9QH9TtPf
+        nvd/mK7tLh4k9Owg4iDME0upCYVViYWTyHtWLAjv1aLVVojaMdSQbAsZK6zarEPQENcqZx
+        rqCHEIw0Ad0SQ0J0bpsWBfaodZjnlJBMeNRnL68b2YInIKMl0mll7kQmVclw4jD6RzXdX+
+        9pMiSN51m7nxRBgcmfThu2BeOYoZZka3ixxI9guPARe2kIwV4rT2J1YWzjPWEayGdSt1YT
+        bl7D5+zQHv/e6ZPBwPB0A8xhuuE2ZSKyV08hHcbizOtiTs1FWtiosIx+Va73gg==
 ARC-Authentication-Results: i=1;
         ORIGINATING;
         auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
-ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1690406724; a=rsa-sha256;
+ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1690406725; a=rsa-sha256;
         cv=none;
-        b=cIgTC2qsU7jjhDQma3YRsVUDDjMHbNC1UMGsJ317ok4FRAy0s6oP0jaA17IoIQqaTT83ym
-        ZOThRYYG/TJQidr3xr1UB135e0KcuL2GnQlvGtv9Y424H7yFs5LkOoda1LP05I8uGCd3F+
-        sPTLvX3aNUGVtaQTlk2ilngA5AWv9CjUyI8VscPTjCH/kZBZ+EJZsCNltukAP6dstCkxbp
-        HyDLIYJIml7+R6g4a4LB3S5Prt80bN6LPgxn5m0uIZkSrMG4AVRJx/V4A5y2r5v5hvtMRl
-        q/xYOMBFh9mB4Fx6YoWDO5lxWowsnbYf4EadDlzuhMIvs6tqMuGJq2MWBvElUQ==
+        b=d/XQX4Ij2GCTD1hr1588vXpq1uL85700ILEDanMDUjjacKbJEx3ohD0rEGsK9CmzjkAJqY
+        Zme53wPORXLxeO89YE9iv1TBFaflJuQ53pEN08XxuCJyMekEZ/SYx9k4BPa0GOTXY4VTds
+        p8pGCtK5BUWi5r/10/Yg26EJh2jiiwj5sv0YmwwcfVpG1ClynnXH05+GXeWNU1+6FItOPV
+        v6n5+QcEmqmY4GRSkDAJinoK/ksKs+z8Ru6LfGC1Zw0rFtRsXheQgSmp0tNPhBtr/MeooE
+        b6vGzYinVXqMMLthDdL5E32ofEz/8IDHsO3z2/SUrORJx4XaW9vr2tDPPOpe2w==
 From:   Pauli Virtanen <pav@iki.fi>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ 3/5] iso-tester: test with large CIS_ID and invalid CIG_ID/CIS_ID
-Date:   Thu, 27 Jul 2023 00:25:17 +0300
-Message-ID: <a2c050b5412db5692334d1c3e2e2563ee43bf3d1.1690405564.git.pav@iki.fi>
+Subject: [PATCH BlueZ 4/5] iso-tester: add tests checking Remove CIG is emitted
+Date:   Thu, 27 Jul 2023 00:25:18 +0300
+Message-ID: <357f1735cf611bc23d422a8b3cdd777dabababc9.1690405564.git.pav@iki.fi>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <cover.1690405564.git.pav@iki.fi>
 References: <cover.1690405564.git.pav@iki.fi>
@@ -77,163 +77,132 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Add test with a large CIS_ID and multiple CIS so it hits an error
-condition in current kernels (which is why the AC configuration is
-used).
+Kernel should send LE Remove CIG after all CIS are shut down.  Add tests
+checking this, closing either immediately or after waiting connection to
+complete.
 
-Add tests for invalid configurations with bad or duplicate IDs, and for
-trying to connect two CIS in same CIG without BT_DEFER_SETUP.
-
-ISO QoS CIG 0xF0 - Invalid
-ISO QoS CIS 0xF0 - Invalid
-ISO Connect2 CIG 0x01 - Success/Invalid
-ISO AC 6(ii) CIS 0xEF/auto - Success
-ISO AC 6(ii) CIS 0xEF/0xEF - Invalid
+ISO Defer Close - Success
+ISO Connect Close - Success
+ISO Defer Wait Close - Success
+ISO Connect Wait Close - Success
 ---
-
-Notes:
-    Current bluetooth-next/master fails these tests with
-    
-    ISO QoS CIG 0xF0 - Invalid                           Timed out    2.301 seconds
-    ISO QoS CIS 0xF0 - Invalid                           Failed       0.117 seconds
-    ISO Connect2 CIG 0x01 - Success/Invalid              Failed       0.189 seconds
-    ISO AC 6(ii) CIS 0xEF/auto - Success                 Failed       0.196 seconds
-
- tools/iso-tester.c | 72 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 72 insertions(+)
+ tools/iso-tester.c | 96 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 96 insertions(+)
 
 diff --git a/tools/iso-tester.c b/tools/iso-tester.c
-index 8f43d7bec..9f853a0f9 100644
+index 9f853a0f9..bbf959420 100644
 --- a/tools/iso-tester.c
 +++ b/tools/iso-tester.c
-@@ -95,6 +95,10 @@
- 	QOS_FULL(0x01, 0x02, \
- 		{}, QOS_IO(_interval, _latency, _sdu, _phy, _rtn))
- 
-+#define QOS_OUT_1_EF(_interval, _latency, _sdu, _phy, _rtn) \
-+	QOS_FULL(0x01, 0xEF, \
-+		{}, QOS_IO(_interval, _latency, _sdu, _phy, _rtn))
-+
- #define QOS_IN(_interval, _latency, _sdu, _phy, _rtn) \
- 	QOS_FULL(BT_ISO_QOS_CIG_UNSET, BT_ISO_QOS_CIS_UNSET, \
- 		QOS_IO(_interval, _latency, _sdu, _phy, _rtn), {})
-@@ -172,6 +176,7 @@
-  */
- #define AC_6ii_1 QOS_OUT_1(10000, 10, 40, 0x02, 2)
- #define AC_6ii_2 QOS_OUT_1(10000, 10, 40, 0x02, 2)
-+#define AC_6ii_1_EF QOS_OUT_1_EF(10000, 10, 40, 0x02, 2)  /* different CIS ID */
- /* Two unidirectional CISes. Unicast Server is Audio Sink and Audio Source.
-  * #1 - CIG 1 CIS 1 (input)
-  * #2 - CIG 1 CIS 2 (output)
-@@ -801,6 +806,16 @@ static const struct iso_client_data connect_reject = {
- 	.expect_err = -ENOSYS
- };
- 
-+static const struct iso_client_data connect_cig_f0_invalid = {
-+	.qos = QOS_FULL(0xF0, 0x00, {}, QOS_IO(10000, 10, 40, 0x02, 2)),
-+	.expect_err = -EINVAL
-+};
-+
-+static const struct iso_client_data connect_cis_f0_invalid = {
-+	.qos = QOS_FULL(0x00, 0xF0, {}, QOS_IO(10000, 10, 40, 0x02, 2)),
-+	.expect_err = -EINVAL
-+};
-+
- static const uint8_t data_16_2_1[40] = { [0 ... 39] = 0xff };
- static const struct iovec send_16_2_1 = {
- 	.iov_base = (void *)data_16_2_1,
-@@ -960,6 +975,22 @@ static const struct iso_client_data reconnect_ac_6ii = {
- 	.disconnect = true,
- };
- 
-+static const struct iso_client_data connect_ac_6ii_cis_ef_auto = {
-+	.qos = AC_6ii_1_EF,
-+	.qos_2 = AC_6ii_2,
-+	.expect_err = 0,
-+	.mconn = true,
-+	.defer = true,
-+};
-+
-+static const struct iso_client_data connect_ac_6ii_cis_ef_ef = {
-+	.qos = AC_6ii_1_EF,
-+	.qos_2 = AC_6ii_1_EF,
-+	.expect_err = -EINVAL,
-+	.mconn = true,
-+	.defer = true,
-+};
-+
- static const struct iso_client_data connect_ac_7i = {
- 	.qos = AC_7i_1,
- 	.qos_2 = AC_7i_2,
-@@ -2371,6 +2402,29 @@ static void test_connect2_seq(const void *test_data)
- 	setup_connect(data, 0, iso_connect2_seq_cb);
+@@ -2425,6 +2425,90 @@ static void test_connect2_nodefer(const void *test_data)
+ 	close(sk);
  }
  
-+static void test_connect2_nodefer(const void *test_data)
++static gboolean iso_connect_close_cb(GIOChannel *io, GIOCondition cond,
++							gpointer user_data)
++{
++	struct test_data *data = user_data;
++
++	data->io_id[0] = 0;
++
++	tester_print("Disconnected");
++
++	--data->step;
++	if (!data->step)
++		tester_test_passed();
++
++	return FALSE;
++}
++
++static bool hook_remove_cig(const void *msg, uint16_t len, void *user_data)
++{
++	struct test_data *data = user_data;
++
++	tester_print("Remove CIG");
++
++	--data->step;
++	if (!data->step)
++		tester_test_passed();
++
++	return true;
++}
++
++static void test_connect_close(const void *test_data)
 +{
 +	struct test_data *data = tester_get_data();
-+	int sk, err;
++	int sk;
++	GIOChannel *io;
 +
-+	/* Second connect() shall fail, because CIG is then busy,
-+	 * but the first connect() shall succeed.
-+	 */
-+	setup_connect(data, 0, iso_connect_cb);
++	data->step = 2;
 +
-+	sk = create_iso_sock(data);
-+	if (sk < 0) {
-+		tester_test_failed();
++	hciemu_add_hook(data->hciemu, HCIEMU_HOOK_PRE_CMD,
++					BT_HCI_CMD_LE_REMOVE_CIG,
++					hook_remove_cig, data);
++
++	sk = setup_sock(data, 0);
++	if (sk < 0)
 +		return;
-+	}
 +
-+	err = connect_iso_sock(data, 1, sk);
-+	if (err != -EINVAL)
-+		tester_test_failed();
++	io = g_io_channel_unix_new(sk);
++	g_io_channel_set_close_on_unref(io, TRUE);
++	data->io_id[0] = g_io_add_watch(io, G_IO_HUP, iso_connect_close_cb,
++									data);
 +
-+	close(sk);
++	shutdown(sk, SHUT_RDWR);
++}
++
++static gboolean iso_connect_wait_close_cb(GIOChannel *io, GIOCondition cond,
++							gpointer user_data)
++{
++	struct test_data *data = tester_get_data();
++	int sk;
++
++	tester_print("Connected");
++
++	sk = g_io_channel_unix_get_fd(io);
++
++	data->io_id[0] = g_io_add_watch(io, G_IO_HUP, iso_connect_close_cb,
++									data);
++
++	shutdown(sk, SHUT_RDWR);
++
++	return FALSE;
++}
++
++static void test_connect_wait_close(const void *test_data)
++{
++	struct test_data *data = tester_get_data();
++
++	data->step = 1;
++
++	hciemu_add_hook(data->hciemu, HCIEMU_HOOK_PRE_CMD,
++					BT_HCI_CMD_LE_REMOVE_CIG,
++					hook_remove_cig, data);
++
++	setup_connect(data, 0, iso_connect_wait_close_cb);
 +}
 +
  static void test_bcast(const void *test_data)
  {
  	struct test_data *data = tester_get_data();
-@@ -2518,6 +2572,12 @@ int main(int argc, char *argv[])
- 	test_iso("ISO QoS - Invalid", &connect_invalid, setup_powered,
+@@ -2601,6 +2685,18 @@ int main(int argc, char *argv[])
+ 	test_iso("ISO Defer Connect - Success", &defer_16_2_1, setup_powered,
  							test_connect);
  
-+	test_iso("ISO QoS CIG 0xF0 - Invalid", &connect_cig_f0_invalid,
-+			setup_powered, test_connect);
++	test_iso("ISO Defer Close - Success", &defer_16_2_1, setup_powered,
++							test_connect_close);
 +
-+	test_iso("ISO QoS CIS 0xF0 - Invalid", &connect_cis_f0_invalid,
-+			setup_powered, test_connect);
++	test_iso("ISO Connect Close - Success", &connect_16_2_1, setup_powered,
++							test_connect_close);
 +
- 	test_iso_rej("ISO Connect - Reject", &connect_reject, setup_powered,
- 			test_connect, BT_HCI_ERR_CONN_FAILED_TO_ESTABLISH);
- 
-@@ -2545,6 +2605,10 @@ int main(int argc, char *argv[])
++	test_iso("ISO Defer Wait Close - Success", &defer_16_2_1,
++					setup_powered, test_connect_wait_close);
++
++	test_iso("ISO Connect Wait Close - Success", &connect_16_2_1,
++					setup_powered, test_connect_wait_close);
++
+ 	test_iso2("ISO Defer Connect2 CIG 0x01 - Success", &defer_1_16_2_1,
  							setup_powered,
  							test_connect2);
- 
-+	test_iso2("ISO Connect2 CIG 0x01 - Success/Invalid", &connect_1_16_2_1,
-+							setup_powered,
-+							test_connect2_nodefer);
-+
- 	test_iso("ISO Defer Send - Success", &connect_16_2_1_defer_send,
- 							setup_powered,
- 							test_connect);
-@@ -2630,6 +2694,14 @@ int main(int argc, char *argv[])
- 							setup_powered,
- 							test_reconnect);
- 
-+	test_iso2("ISO AC 6(ii) CIS 0xEF/auto - Success",
-+						&connect_ac_6ii_cis_ef_auto,
-+						setup_powered, test_connect);
-+
-+	test_iso2("ISO AC 6(ii) CIS 0xEF/0xEF - Invalid",
-+						&connect_ac_6ii_cis_ef_ef,
-+						setup_powered, test_connect);
-+
- 	test_iso("ISO Broadcaster - Success", &bcast_16_2_1_send, setup_powered,
- 							test_bcast);
- 	test_iso("ISO Broadcaster Encrypted - Success", &bcast_enc_16_2_1_send,
 -- 
 2.41.0
 
