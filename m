@@ -2,25 +2,25 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 313BA764122
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 26 Jul 2023 23:26:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A3931764125
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 26 Jul 2023 23:26:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231536AbjGZV0D (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 26 Jul 2023 17:26:03 -0400
+        id S231485AbjGZV0G (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 26 Jul 2023 17:26:06 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231485AbjGZV0C (ORCPT
+        with ESMTP id S231345AbjGZV0D (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 26 Jul 2023 17:26:02 -0400
-Received: from meesny.iki.fi (meesny.iki.fi [IPv6:2001:67c:2b0:1c1::201])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85A202D64
+        Wed, 26 Jul 2023 17:26:03 -0400
+Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2998326A8
         for <linux-bluetooth@vger.kernel.org>; Wed, 26 Jul 2023 14:25:47 -0700 (PDT)
 Received: from monolith.lan (91-152-120-101.elisa-laajakaista.fi [91.152.120.101])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
         (Authenticated sender: pav)
-        by meesny.iki.fi (Postfix) with ESMTPSA id 4RB6Q15NvBz107J;
+        by meesny.iki.fi (Postfix) with ESMTPSA id 4RB6Q161v0z107j;
         Thu, 27 Jul 2023 00:25:45 +0300 (EEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
         t=1690406745;
@@ -28,159 +28,243 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=C1am/h+ATMBUgghrZPssfKQla6Kn6yuarwxQv/n87UQ=;
-        b=TrLP1CbBqUc1DgZizM18niZgl6Y6J2g7sUKtGqCe/NwiQipY8Y7uUmNZ0O2mELRDBBzyQj
-        mZPB5eZli3qrnCR7NKGA0X47/GCdPNEWMFsIolDp1WewrzgS2lppoGhkXQuQTK8+ivxhHX
-        PAQYEn6fDHElkhUdpo7sFRdW+f7QT+s=
+        bh=2hPuiy3xlYhwpql/vmJpKc986dGEM1JauIIbxMsiXH8=;
+        b=iNQSvc2B4ZbViTPjNdWYH0WPRfzD/dDo24qdIVZNFezRnZa4KxnfO2pXXELhEVvBR+4suN
+        s6dwuxeL63kvs1C/yKeEcSmZm7cnd/jW3PhUzEmTWiPgqgy+wcGlheYxb1LuT60rwz2BmM
+        Pu9nbOZ7drrGVqF7mJa2KLfPW5bzQHY=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
         s=meesny; t=1690406745;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=C1am/h+ATMBUgghrZPssfKQla6Kn6yuarwxQv/n87UQ=;
-        b=x4tGfuAjYecbMm0g0GKlWbVvPk937reMea6M4KJx9Kgp3aUkyM9cOIyiFpFmDYZ4xf9Kuw
-        TPUpB1BElXv3bt+UfUtaE3keeOPvFjLcBIl7byeZczqWDDCkFX8vcid5BIPK27zpq7ojeT
-        Y+trnRZvz3bjID4D2TMQAUCgJ+947Fg=
+        bh=2hPuiy3xlYhwpql/vmJpKc986dGEM1JauIIbxMsiXH8=;
+        b=c5zXbYQ3tSt8uk1c0wJxqh/5OCbhpAa1TDJwFhYGWvc4zGy6N1VlpRr5Xye7viBpMpMffX
+        4Wv6QEjPiC3hu1NPqUK3rV73ZtBUeCOBFRmpuTiGEz7XDYW8iyA6PZ7H3dViM/12jqFzyK
+        ybA73niXV0BpXazi9FZ1qbS9LhheoW0=
 ARC-Authentication-Results: i=1;
         ORIGINATING;
         auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 ARC-Seal: i=1; s=meesny; d=iki.fi; t=1690406745; a=rsa-sha256; cv=none;
-        b=qVEh7rWsNWkm40lTk68xtO0z4IkMHM4fTuCbL+lnLPeDFAhjd0BnzjhvAHR2sSBYI7HbJM
-        ZpGhX107mFjhHuJ6/IYksuYaF3I4QgfXPTo+fgSMLqTHlJeDa9/rUD1BGfuDbAEiLH0WL9
-        3F0WvQ8ULbBCdLY99+2QOB85JUYWaLM=
+        b=Pazk0Y4BXQZLYzzMP0dmYy/EberXneDdcMVWF0t6mD0iGpCwNQNtw1/8zwYQo0F1MXvGfL
+        IAKcsWuUTErJ+ScmcMRcuc36nXKJcBpMvWHj5JXhxOtd9bJ66lIPuQg3w//N2Ec7a6P5R9
+        7gOrP/9gUy0S7kInvSxz1Z+zBw4rFC4=
 From:   Pauli Virtanen <pav@iki.fi>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH RFC 2/6] Bluetooth: hci_conn: add hci_conn_is_alive
-Date:   Thu, 27 Jul 2023 00:25:22 +0300
-Message-ID: <053df33e4e3b35982b257238edcde451780fc832.1690399379.git.pav@iki.fi>
+Subject: [PATCH RFC 3/6] Bluetooth: hci_sync: add hci_conn_sync_queue and hci_cmd_sync_dev_(un)lock
+Date:   Thu, 27 Jul 2023 00:25:23 +0300
+Message-ID: <15e7863c06bd87cd991ab963132fa9d12ef7e11a.1690399379.git.pav@iki.fi>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <cover.1690399379.git.pav@iki.fi>
 References: <cover.1690399379.git.pav@iki.fi>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-There's currently no good way to know if a given hci_conn we hold
-hci_conn_get reference for has been deleted in the meanwhile.
+Operations on a given hci_conn in hci_sync are hard to write safely,
+because the conn might be deleted or modified unexpectedly either
+concurrently or when waiting for the events.  Holding hci_dev_lock in
+the sync callbacks is also inconvenient since it has to be manually
+released before entering the event waits.
 
-To enable checking whether a connection is still alive, add
-HCI_CONN_DELETED flag to indicate whether hci_conn_del has run.
+Add convenience utilities to make things easier:
 
-The flag is meaningful also with RCU lock only, but with different
-semantics.  If hci_conn_is_alive(conn) returns true inside
-rcu_read_lock, conn was in conn_hash from the point of view of the
-current task when the flag was read. Then its deletion will not complete
-at least before rcu_read_unlock.
+Add hci_cmd_sync_dev_lock/unlock, for easier writing of hci_sync
+callbacks where hci_dev_lock should be held. The lock is however still
+released and reacquired around request waits. Callbacks using them can
+then assume that state changes protected by hci_dev_lock can only occur
+when waiting for events. (This is currently assumed in many of the
+callbacks.)
+
+Add hci_conn_sync_queue/submit, whose callback on entry holds
+hci_dev_lock and the hci_conn has not been deleted.  If it was deleted
+while the sync command was queued, the destroy routine has err -ENODEV.
+Similarly, synchronous commands called in the callback fail with ENODEV
+if the conn was deleted during the wait.
 
 Signed-off-by: Pauli Virtanen <pav@iki.fi>
 ---
-
-Notes:
-    This is now suggesting the same thing once again, because the
-    alternatives seem limited, and it's currently hard to write code in
-    hci_sync safe against memory bugs.
-    
-    One alternative here is to remove the connection from conn_hash only
-    when hci_conn_get/put refcount goes to zero. This simplifies resuming
-    interrupted conn_hash iteration, as hci_conn_get then ensures the conn
-    remains a valid iteration cursor. However, some deletion indicator flag
-    is still needed, if we want to do something else with the conn.
-    
-    The suggestion to use conn->refcnt seems a bit hard to make it work,
-    since that is used for different purpose (marking what connections
-    userspace keeps alive), and it seems we'd need to change all callsites
-    for hci_conn_del.
-    
-    E.g. in Disconnect Complete event we must remove the conn from sysfs and
-    invalidate its handle immediately as the handle can be reused.
-    Similarly for failed LE Create CIS while hci_conn_abort is running.
-    
-    It maybe could also be possible to not allow events to run while
-    hci_sync is running, except when it is waiting for an event.  This seems
-    actually to be the concurrency model what is assumed in the hci_sync
-    code (but it is not what is actually happening).  However, it seems the
-    deletion flag would be needed also here, as the conn might be gone while
-    we are waiting for events.
-
- include/net/bluetooth/hci_core.h | 15 +++++++++++++++
- net/bluetooth/hci_conn.c         |  4 ++++
- 2 files changed, 19 insertions(+)
+ include/net/bluetooth/hci_core.h |  7 ++++
+ include/net/bluetooth/hci_sync.h |  3 ++
+ net/bluetooth/hci_conn.c         | 60 ++++++++++++++++++++++++++++++++
+ net/bluetooth/hci_sync.c         | 31 +++++++++++++++++
+ 4 files changed, 101 insertions(+)
 
 diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 8200a6689b39..34e4ad7c32e7 100644
+index 34e4ad7c32e7..8e218300ef4e 100644
 --- a/include/net/bluetooth/hci_core.h
 +++ b/include/net/bluetooth/hci_core.h
-@@ -978,6 +978,7 @@ enum {
- 	HCI_CONN_CREATE_CIS,
- 	HCI_CONN_BIG_SYNC,
- 	HCI_CONN_BIG_SYNC_FAILED,
-+	HCI_CONN_DELETED,
- };
+@@ -519,6 +519,9 @@ struct hci_dev {
+ 	struct work_struct	cmd_sync_cancel_work;
+ 	struct work_struct	reenable_adv_work;
  
- static inline bool hci_conn_ssp_enabled(struct hci_conn *conn)
-@@ -997,6 +998,7 @@ static inline bool hci_conn_sc_enabled(struct hci_conn *conn)
- static inline void hci_conn_hash_add(struct hci_dev *hdev, struct hci_conn *c)
- {
- 	struct hci_conn_hash *h = &hdev->conn_hash;
-+	WARN_ON(test_bit(HCI_CONN_DELETED, &c->flags));
- 	list_add_tail_rcu(&c->list, &h->list);
- 	switch (c->type) {
- 	case ACL_LINK:
-@@ -1024,6 +1026,7 @@ static inline void hci_conn_hash_del(struct hci_dev *hdev, struct hci_conn *c)
- {
- 	struct hci_conn_hash *h = &hdev->conn_hash;
- 
-+	WARN_ON(!test_bit(HCI_CONN_DELETED, &c->flags));
- 	list_del_rcu(&c->list);
- 	synchronize_rcu();
- 
-@@ -1049,6 +1052,18 @@ static inline void hci_conn_hash_del(struct hci_dev *hdev, struct hci_conn *c)
- 	}
- }
- 
-+/* With hdev->lock: whether hci_conn is in conn_hash.
-+ * With RCU: if true, the hci_conn is valid conn_hash iteration cursor and
-+ * hci_conn_hash_del has not completed. (Note that if hci_conn was obtained in
-+ * this critical section it is always valid, but this may return false!)
-+ */
-+static inline bool hci_conn_is_alive(struct hci_dev *hdev, struct hci_conn *c)
-+{
-+	RCU_LOCKDEP_WARN(!lockdep_is_held(&hdev->lock) && !rcu_read_lock_held(),
-+			 "suspicious locking");
-+	return !test_bit(HCI_CONN_DELETED, &c->flags);
-+}
++	bool			cmd_sync_locked;
++	struct hci_conn		*cmd_sync_conn;
 +
- static inline unsigned int hci_conn_num(struct hci_dev *hdev, __u8 type)
- {
- 	struct hci_conn_hash *h = &hdev->conn_hash;
+ 	__u16			discov_timeout;
+ 	struct delayed_work	discov_off;
+ 
+@@ -1400,6 +1403,10 @@ void hci_conn_del(struct hci_conn *conn);
+ void hci_conn_hash_flush(struct hci_dev *hdev);
+ void hci_conn_check_pending(struct hci_dev *hdev);
+ 
++void hci_conn_sync_set_conn(struct hci_dev *hdev, struct hci_conn *conn);
++int hci_conn_sync_queue(struct hci_conn *conn, hci_cmd_sync_work_func_t func,
++			void *data, hci_cmd_sync_work_destroy_t destroy);
++
+ struct hci_chan *hci_chan_create(struct hci_conn *conn);
+ void hci_chan_del(struct hci_chan *chan);
+ void hci_chan_list_flush(struct hci_conn *conn);
+diff --git a/include/net/bluetooth/hci_sync.h b/include/net/bluetooth/hci_sync.h
+index b516a0f4a55b..a9a94950d523 100644
+--- a/include/net/bluetooth/hci_sync.h
++++ b/include/net/bluetooth/hci_sync.h
+@@ -46,6 +46,9 @@ int hci_cmd_sync_submit(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
+ int hci_cmd_sync_queue(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
+ 		       void *data, hci_cmd_sync_work_destroy_t destroy);
+ 
++void hci_cmd_sync_dev_lock(struct hci_dev *hdev);
++void hci_cmd_sync_dev_unlock(struct hci_dev *hdev);
++
+ int hci_update_eir_sync(struct hci_dev *hdev);
+ int hci_update_class_sync(struct hci_dev *hdev);
+ 
 diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index a71a54a5c8d8..ee304618bf0a 100644
+index ee304618bf0a..208eb5eea451 100644
 --- a/net/bluetooth/hci_conn.c
 +++ b/net/bluetooth/hci_conn.c
-@@ -1052,9 +1052,13 @@ static void hci_conn_unlink(struct hci_conn *conn)
- void hci_conn_del(struct hci_conn *conn)
- {
- 	struct hci_dev *hdev = conn->hdev;
-+	bool deleted;
- 
- 	BT_DBG("%s hcon %p handle %d", hdev->name, conn, conn->handle);
- 
-+	deleted = test_and_set_bit(HCI_CONN_DELETED, &conn->flags);
-+	WARN_ON(deleted);
+@@ -2889,3 +2889,63 @@ int hci_abort_conn(struct hci_conn *conn, u8 reason)
+ 	return hci_cmd_sync_queue(hdev, abort_conn_sync, ERR_PTR(conn->handle),
+ 				  NULL);
+ }
 +
- 	hci_conn_unlink(conn);
++struct hci_conn_sync_work_entry {
++	struct hci_conn *conn;
++	hci_cmd_sync_work_func_t func;
++	void *data;
++	hci_cmd_sync_work_destroy_t destroy;
++};
++
++static int hci_conn_sync_work_run(struct hci_dev *hdev, void *data)
++{
++	struct hci_conn_sync_work_entry *entry = data;
++	int err;
++
++	hci_cmd_sync_dev_lock(hdev);
++	hdev->cmd_sync_conn = entry->conn;
++
++	if (hci_conn_is_alive(hdev, entry->conn))
++		err = entry->func(hdev, entry->data);
++	else
++		err = -ENODEV;
++
++	hdev->cmd_sync_conn = NULL;
++	hci_cmd_sync_dev_unlock(hdev);
++
++	return err;
++}
++
++static void hci_conn_sync_work_destroy(struct hci_dev *hdev, void *data,
++				       int err)
++{
++	struct hci_conn_sync_work_entry *entry = data;
++
++	if (entry->destroy)
++		entry->destroy(hdev, entry->data, err);
++	hci_conn_put(entry->conn);
++	kfree(entry);
++}
++
++int hci_conn_sync_queue(struct hci_conn *conn, hci_cmd_sync_work_func_t func,
++			void *data, hci_cmd_sync_work_destroy_t destroy)
++{
++	struct hci_conn_sync_work_entry *entry;
++	int err;
++
++	entry = kmalloc(sizeof(*entry), GFP_KERNEL);
++	if (!entry)
++		return -ENOMEM;
++
++	entry->func = func;
++	entry->data = data;
++	entry->destroy = destroy;
++	entry->conn = hci_conn_get(conn);
++
++	err = hci_cmd_sync_queue(conn->hdev, hci_conn_sync_work_run, entry,
++				 hci_conn_sync_work_destroy);
++	if (err)
++		kfree(entry);
++
++	return err;
++}
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 3348a1b0e3f7..6a295a9e1f5d 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -164,10 +164,16 @@ struct sk_buff *__hci_cmd_sync_sk(struct hci_dev *hdev, u16 opcode, u32 plen,
+ 	if (err < 0)
+ 		return ERR_PTR(err);
  
- 	cancel_delayed_work_sync(&conn->disc_work);
++	if (hdev->cmd_sync_locked)
++		hci_dev_unlock(hdev);
++
+ 	err = wait_event_interruptible_timeout(hdev->req_wait_q,
+ 					       hdev->req_status != HCI_REQ_PEND,
+ 					       timeout);
+ 
++	if (hdev->cmd_sync_locked)
++		hci_dev_lock(hdev);
++
+ 	if (err == -ERESTARTSYS)
+ 		return ERR_PTR(-EINTR);
+ 
+@@ -185,6 +191,11 @@ struct sk_buff *__hci_cmd_sync_sk(struct hci_dev *hdev, u16 opcode, u32 plen,
+ 		break;
+ 	}
+ 
++	if (hdev->cmd_sync_conn) {
++		if (!hci_conn_is_alive(hdev, hdev->cmd_sync_conn))
++			err = -ENODEV;
++	}
++
+ 	hdev->req_status = 0;
+ 	hdev->req_result = 0;
+ 	skb = hdev->req_skb;
+@@ -740,6 +751,26 @@ int hci_cmd_sync_queue(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
+ }
+ EXPORT_SYMBOL(hci_cmd_sync_queue);
+ 
++void hci_cmd_sync_dev_lock(struct hci_dev *hdev)
++{
++	lockdep_assert_held(&hdev->req_lock);
++
++	hci_dev_lock(hdev);
++
++	WARN_ON_ONCE(hdev->cmd_sync_locked);
++	hdev->cmd_sync_locked = true;
++}
++
++void hci_cmd_sync_dev_unlock(struct hci_dev *hdev)
++{
++	lockdep_assert_held(&hdev->req_lock);
++
++	WARN_ON_ONCE(!hdev->cmd_sync_locked);
++	hdev->cmd_sync_locked = false;
++
++	hci_dev_unlock(hdev);
++}
++
+ int hci_update_eir_sync(struct hci_dev *hdev)
+ {
+ 	struct hci_cp_write_eir cp;
 -- 
 2.41.0
 
