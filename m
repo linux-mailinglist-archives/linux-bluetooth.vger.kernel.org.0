@@ -2,53 +2,53 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6459B765FE9
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Jul 2023 00:50:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F3C69765FE8
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Jul 2023 00:50:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232877AbjG0Wu1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 27 Jul 2023 18:50:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56766 "EHLO
+        id S232494AbjG0Wu0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 27 Jul 2023 18:50:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229712AbjG0Wu0 (ORCPT
+        with ESMTP id S229509AbjG0Wu0 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Thu, 27 Jul 2023 18:50:26 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D9331FEC
-        for <linux-bluetooth@vger.kernel.org>; Thu, 27 Jul 2023 15:50:25 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53F801FDD;
+        Thu, 27 Jul 2023 15:50:25 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id EFA8C61F50
-        for <linux-bluetooth@vger.kernel.org>; Thu, 27 Jul 2023 22:50:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 5A286C433CB;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E52BF61F79;
+        Thu, 27 Jul 2023 22:50:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 5666BC433C9;
         Thu, 27 Jul 2023 22:50:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1690498224;
-        bh=dYzZMiaYaDYR9iCHRkgcTWSIVsluHhttzzvdG3vRCpg=;
+        bh=i5DsTslOD8Clg4eU331uW2tQhTGqkzRkE8EjnUBLwCo=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=fjEo/G/uda8qwqmNYZNct/OQ+SNEvbEd2FD0O9McnSvvEAxa6ieeQv5ULRbXnlaQg
-         6H/5vA89bRg9jDRdNXmibhYG119CxamLPLPZtDYmzlYU6MjQIiASkiHJ6rPVdeRV1N
-         ARMgYx2dtGX8UiXVBq1BlKWh3aTD50tPW9LI3HA3DaCzuDlh8EZwHO+QL9qr/3fNI0
-         MlOhJSX5BgqyIHpyEbTAiufLOTcC74Ee/drq6WGGlHVRWTEMSGlBaF5u+bXuH3wXDu
-         uT3iRjYHXyd5eEANyBHSRa49vQ2VtzzRjoBT7jDE3+YaFM6H6wT+JcYTORvxqjzr2m
-         8uG8gAM6/dTHQ==
+        b=I8ZuIIh5IASgG3ywn1uxy0Wq8Fza6V9uPTWH+ccnsZKdaDtd94SXNBGDehwyCWxx6
+         PcbWaC0qmxhs2mselZeL1L2c6Wn20QbBND8noz+frxx7J0CFtMMJ7HKSBUj3U30mA3
+         8xUq1bacnWJVXae0nrTGH59UR7pVLf1ueJzk7grUqPYjdQIF9ZgmjJnSuJCLAtdBBs
+         kkYdQ3KokOMq1oFDq3QyLTzQJO9uDZfw7SvSwsvtnnMv6Y2C5rWyROeR4+ow5IIUpy
+         qRuWTihmWHyALHRThvJgUDjpKVNvuaSwOdP+PrjHXwqcgkTNTOuhm1caYr+QPmLAF4
+         FeUB6nK4kWJlA==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 3233FC40C5E;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 3C26AC64459;
         Thu, 27 Jul 2023 22:50:24 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 1/1] bluetooth: nokia: fix value check in
- nokia_bluetooth_serdev_probe()
+Subject: Re: [PATCH v1] Bluetooth: btnxpuart: Add support for AW693 chipset
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <169049822419.13443.14257648881528856141.git-patchwork-notify@kernel.org>
+Message-Id: <169049822423.13443.14788509499502860271.git-patchwork-notify@kernel.org>
 Date:   Thu, 27 Jul 2023 22:50:24 +0000
-References: <20230726133000.20417-1-ruc_gongyuanjun@163.com>
-In-Reply-To: <20230726133000.20417-1-ruc_gongyuanjun@163.com>
-To:     Yuanjun Gong <ruc_gongyuanjun@163.com>
+References: <20230727133317.297014-1-neeraj.sanjaykale@nxp.com>
+In-Reply-To: <20230727133317.297014-1-neeraj.sanjaykale@nxp.com>
+To:     Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
 Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        linux-bluetooth@vger.kernel.org
+        amitkumar.karwar@nxp.com, rohit.fule@nxp.com, sherry.sun@nxp.com,
+        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -64,19 +64,20 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Wed, 26 Jul 2023 21:30:00 +0800 you wrote:
-> in nokia_bluetooth_serdev_probe(), check the return value of
-> clk_prepare_enable() and return the error code if
-> clk_prepare_enable() returns an unexpected value.
+On Thu, 27 Jul 2023 19:03:17 +0530 you wrote:
+> This adds support for NXP AW693 chipset in btnxpuart driver
+> by adding FW name and bootloader signature. Based on the
+> loader version bits 7:6 of the bootloader signature, the
+> driver can choose between selecting secure and non-secure
+> FW files.
 > 
-> Fixes: 7bb318680e86 ("Bluetooth: add nokia driver")
-> Signed-off-by: Yuanjun Gong <ruc_gongyuanjun@163.com>
+> Signed-off-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
 > 
 > [...]
 
 Here is the summary with links:
-  - [1/1] bluetooth: nokia: fix value check in nokia_bluetooth_serdev_probe()
-    https://git.kernel.org/bluetooth/bluetooth-next/c/d5e8b6a140ec
+  - [v1] Bluetooth: btnxpuart: Add support for AW693 chipset
+    https://git.kernel.org/bluetooth/bluetooth-next/c/dd338bea1ff1
 
 You are awesome, thank you!
 -- 
