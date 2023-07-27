@@ -2,86 +2,129 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F3C69765FE8
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Jul 2023 00:50:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E563766001
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Jul 2023 00:55:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232494AbjG0Wu0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 27 Jul 2023 18:50:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56764 "EHLO
+        id S232638AbjG0WzV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 27 Jul 2023 18:55:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229509AbjG0Wu0 (ORCPT
+        with ESMTP id S230446AbjG0WzT (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 27 Jul 2023 18:50:26 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53F801FDD;
-        Thu, 27 Jul 2023 15:50:25 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E52BF61F79;
-        Thu, 27 Jul 2023 22:50:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 5666BC433C9;
-        Thu, 27 Jul 2023 22:50:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690498224;
-        bh=i5DsTslOD8Clg4eU331uW2tQhTGqkzRkE8EjnUBLwCo=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=I8ZuIIh5IASgG3ywn1uxy0Wq8Fza6V9uPTWH+ccnsZKdaDtd94SXNBGDehwyCWxx6
-         PcbWaC0qmxhs2mselZeL1L2c6Wn20QbBND8noz+frxx7J0CFtMMJ7HKSBUj3U30mA3
-         8xUq1bacnWJVXae0nrTGH59UR7pVLf1ueJzk7grUqPYjdQIF9ZgmjJnSuJCLAtdBBs
-         kkYdQ3KokOMq1oFDq3QyLTzQJO9uDZfw7SvSwsvtnnMv6Y2C5rWyROeR4+ow5IIUpy
-         qRuWTihmWHyALHRThvJgUDjpKVNvuaSwOdP+PrjHXwqcgkTNTOuhm1caYr+QPmLAF4
-         FeUB6nK4kWJlA==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 3C26AC64459;
-        Thu, 27 Jul 2023 22:50:24 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Thu, 27 Jul 2023 18:55:19 -0400
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4D132D7B
+        for <linux-bluetooth@vger.kernel.org>; Thu, 27 Jul 2023 15:55:13 -0700 (PDT)
+Received: by mail-ot1-x32b.google.com with SMTP id 46e09a7af769-6bb2ce4f9f8so1229990a34.3
+        for <linux-bluetooth@vger.kernel.org>; Thu, 27 Jul 2023 15:55:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1690498513; x=1691103313;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=UQ8LLTEhDCvF4e6RDFkmX6mqk+CWu8EG8zvQIw9K/xA=;
+        b=E26i6FoJ0Rr3ztXBTV3c2KWOcF5P8e8ptUcVAJdbfScagxfmq52G/ukcq3N0DuZ9lM
+         I8C2Rcht8ZRxUL0jBzaXz9hWqrjDOnsx5EI2tWpAX2WLkCnu9auQfKZcCzDkWhby4d9g
+         5QqZgfaosdjxZXmVGYa1Mt+p9/yCXniezQXc+gl4Nic1KVr4cHdeWVZnBavpAEHXYQF4
+         gj8tCaXNt9uuks+qVvZj0ICUzUen8OXNFinnyxhm8Dui3ep6PJdNef2/qL1WoDnOZO+6
+         jp7C/hrIKODvq4pakozwXsclTIV7eXXkFdhsk4KGUxFaeg/oJvLCfUQ34MioQYgVBPx8
+         sKnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690498513; x=1691103313;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UQ8LLTEhDCvF4e6RDFkmX6mqk+CWu8EG8zvQIw9K/xA=;
+        b=iyy7VSP08DPRUlcqBvC0doqcnNJLAWr7w2SMk7y+gGduPzO0n3C0nFBs/nBxAzQEEc
+         HD2YeCglW38pCV/dlrHrJFvcpxDsnLzPiajJqtlpb6c8iEW1Z6LdZrib9E9f77LJBGqI
+         klu4uCRQRUc2rLv/jivas/ZmYvanx4EJ6iFaqQl2RL6hLS3sHG7Naw0mBAvEbO84Hg7s
+         btJFRp01sn4zN5biEp37pRM34LSoiMJLkPVPQDModOOOtpit540qVvbKinvvSOjEKkGh
+         eElVD2aXjtTV6xOWS+oFvONRv2psQXivwu0BpYLTBe3Ki4sAMjiLMblCHgnruL5OngRf
+         5SVQ==
+X-Gm-Message-State: ABy/qLbA0VKFGaKjzhVXfSXDXu1QmHxb4v6zTse72aWiA7F7FsXP4wtk
+        ChuOLQLc4p1isSJlKxSWitc4wMpWB5g=
+X-Google-Smtp-Source: APBJJlGckLzks2ynyBYoAa2xcTAmmvxYh/2rOsH94XuB1mVvu7GCTTykIQOAguuJ6uaeurW/ilpngw==
+X-Received: by 2002:a9d:6f08:0:b0:6b9:f3cb:db4a with SMTP id n8-20020a9d6f08000000b006b9f3cbdb4amr567032otq.22.1690498512837;
+        Thu, 27 Jul 2023 15:55:12 -0700 (PDT)
+Received: from [172.17.0.2] ([13.83.3.175])
+        by smtp.gmail.com with ESMTPSA id q1-20020a63d601000000b0055be951145csm2061187pgg.36.2023.07.27.15.55.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Jul 2023 15:55:12 -0700 (PDT)
+Message-ID: <64c2f5d0.630a0220.11eb0.4271@mx.google.com>
+Date:   Thu, 27 Jul 2023 15:55:12 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============2355334137684422192=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v1] Bluetooth: btnxpuart: Add support for AW693 chipset
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <169049822423.13443.14788509499502860271.git-patchwork-notify@kernel.org>
-Date:   Thu, 27 Jul 2023 22:50:24 +0000
-References: <20230727133317.297014-1-neeraj.sanjaykale@nxp.com>
-In-Reply-To: <20230727133317.297014-1-neeraj.sanjaykale@nxp.com>
-To:     Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        amitkumar.karwar@nxp.com, rohit.fule@nxp.com, sherry.sun@nxp.com,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
+Subject: RE: [BlueZ,v3] monitor: Use gnuplot to plot graph of Latency-Packets
+In-Reply-To: <20230727211010.1046099-1-luiz.dentz@gmail.com>
+References: <20230727211010.1046099-1-luiz.dentz@gmail.com>
+Reply-To: linux-bluetooth@vger.kernel.org
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+--===============2355334137684422192==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+This is automated email and please do not reply to this email!
 
-On Thu, 27 Jul 2023 19:03:17 +0530 you wrote:
-> This adds support for NXP AW693 chipset in btnxpuart driver
-> by adding FW name and bootloader signature. Based on the
-> loader version bits 7:6 of the bootloader signature, the
-> driver can choose between selecting secure and non-secure
-> FW files.
-> 
-> Signed-off-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
-> 
-> [...]
+Dear submitter,
 
-Here is the summary with links:
-  - [v1] Bluetooth: btnxpuart: Add support for AW693 chipset
-    https://git.kernel.org/bluetooth/bluetooth-next/c/dd338bea1ff1
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=770289
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+---Test result---
+
+Test Summary:
+CheckPatch                    FAIL      0.70 seconds
+GitLint                       PASS      0.23 seconds
+BuildEll                      PASS      33.67 seconds
+BluezMake                     PASS      1173.46 seconds
+MakeCheck                     PASS      12.92 seconds
+MakeDistcheck                 PASS      195.13 seconds
+CheckValgrind                 PASS      314.79 seconds
+CheckSmatch                   PASS      438.72 seconds
+bluezmakeextell               PASS      130.61 seconds
+IncrementalBuild              PASS      971.95 seconds
+ScanBuild                     PASS      1402.53 seconds
+
+Details
+##############################
+Test: CheckPatch - FAIL
+Desc: Run checkpatch.pl script
+Output:
+[BlueZ,v3] monitor: Use gnuplot to plot graph of Latency-Packets
+WARNING:COMMIT_LOG_LONG_LINE: Possible unwrapped commit description (prefer a maximum 75 chars per line)
+#86: 
+        Address: XX:XX:XX:XX:XX:XX (Sony Home Entertainment&Sound Products Inc)
+
+/github/workspace/src/src/13330735.patch total: 0 errors, 1 warnings, 156 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/github/workspace/src/src/13330735.patch has style problems, please review.
+
+NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
 
 
+
+
+---
+Regards,
+Linux Bluetooth
+
+
+--===============2355334137684422192==--
