@@ -2,111 +2,176 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CCD2C7679FB
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 29 Jul 2023 02:47:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5843767A85
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 29 Jul 2023 03:11:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232870AbjG2Ar3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 28 Jul 2023 20:47:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39738 "EHLO
+        id S237041AbjG2BLG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 28 Jul 2023 21:11:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236233AbjG2Ar1 (ORCPT
+        with ESMTP id S231659AbjG2BLE (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 28 Jul 2023 20:47:27 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B7F14497
-        for <linux-bluetooth@vger.kernel.org>; Fri, 28 Jul 2023 17:46:52 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4fe21e7f3d1so1826415e87.3
-        for <linux-bluetooth@vger.kernel.org>; Fri, 28 Jul 2023 17:46:52 -0700 (PDT)
+        Fri, 28 Jul 2023 21:11:04 -0400
+Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 663F03AA5
+        for <linux-bluetooth@vger.kernel.org>; Fri, 28 Jul 2023 18:11:02 -0700 (PDT)
+Received: by mail-il1-x132.google.com with SMTP id e9e14a558f8ab-348cd210438so10441985ab.1
+        for <linux-bluetooth@vger.kernel.org>; Fri, 28 Jul 2023 18:11:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=codecoup-pl.20221208.gappssmtp.com; s=20221208; t=1690591558; x=1691196358;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wzeMG6V94if0zmo//RHdve3uNRoFr/DpYxF05Wk0DKo=;
-        b=Qtp63OnLN/96IblBcYoFrTxzSwX1fSz/ysskcwzgw9/uor8xzjtfpLLYU/Eu3Apkq9
-         12ECqCq5vd+a8wBbrjxrvVJscLQs4liyTs6DImLMnteOdjfPC7sQdKfDSNf9CzRXr3xY
-         dqpv0D/yVnt2HLdVpvqhD5fPmN4kKEVH3K+nml96uC7FXFVJu9wfcZPt7eaEo/byVKgO
-         NvFDVKS45Uq+Kg5sbY9hTCpywKs1bEFw/qJnsqgusSuv2YMrTreb5dmp1DkoyFDV4bmI
-         wMusjBMJIh7zSG1Tk8/66IVADc+hygEXCpHsTUFERNM/eUlWsOJp49CP1Q5xJig3t+I3
-         9JHA==
+        d=gmail.com; s=20221208; t=1690593061; x=1691197861;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=4goBAOyeXz/EmcBfplSwY7b9w7RJ1ZlCVEyDa20dLH8=;
+        b=U8WPm5pTDEG4EBVrO07AyFGC0dDuVZSaD3J1rPH6MYB1iWtTP5DFfzt5rFe2VBN7Jj
+         6Xi+Eg5PrwadOeSe/V0F73RnXSQY6witLBNt6XyTwU2LS8B+KD6ZDYjUzpY+Q1/W1YGZ
+         9KcapwpBBCBHEppkQRN7ZkKbrFjaXHIZGm8rz9v9yu4eNfyksm2vNX71dqyvivteFPJw
+         lf7Rm1pkg5j0ZChPWO0HE/L4Yol0M3QxLk6qz8b9JvKWHwPVdAwRuuClWkh8Y2APQ0RJ
+         1fwEm8fHvlYxgfqKqT4iHU7E/pU6fD0JxUZrjcgql4w4MyIL9qeqHnFYj+WqoQCoaXby
+         ds1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1690591558; x=1691196358;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wzeMG6V94if0zmo//RHdve3uNRoFr/DpYxF05Wk0DKo=;
-        b=N3QGRLBLbJJhcYluY1SVPjuwFAAWhKYK4SKnQiDOc2uNMLWyvpxltmbQAwfjNt1hzE
-         ShfZBcwxH4yzKD/tJJ56unKEkcnWVUGsdGKGPwWngOtgOUse+pKzZJSC67OtyHU2aOQL
-         S57LncGgBcCSR+W0tMQ93IQ7Cfj7UH0EpECWLoI+6zf7SO7UwG8UYULr2fLEWaq7bZTE
-         cWFZ/UGuNOvxuUf32x184hQQSbpNbhyskyUCQQzQzSq5S16991apZ5subboEE86bBbhw
-         1nDmrMBFOTC6xyOhkhOGWpdhfQnIJLS4YT+SCTkAvtZ2noXEaHl9n83ePHxW5UDxN283
-         POLQ==
-X-Gm-Message-State: ABy/qLYqs8f0ET4wYEfwPG70wSxKAh28b23dvdEMMw8f8ymOFbL59RJr
-        oqXorghO6mFT8w0Qoi7hOfq0QA1uQ+IAYJYqKys=
-X-Google-Smtp-Source: APBJJlFEqX8B41dg1cC11WPTqfKNwYvYqJC9zfICpgrywFtID8PEVHbJmeNRCfFuDJGlo2/Nm/wvWw==
-X-Received: by 2002:a05:6512:3da0:b0:4f8:a858:e60f with SMTP id k32-20020a0565123da000b004f8a858e60fmr3963949lfv.59.1690591558561;
-        Fri, 28 Jul 2023 17:45:58 -0700 (PDT)
-Received: from rymek.localdomain (217.96.255.138.ipv4.supernova.orange.pl. [217.96.255.138])
-        by smtp.gmail.com with ESMTPSA id r25-20020ac24d19000000b004fe1f1c0ee4sm617746lfi.82.2023.07.28.17.45.57
+        d=1e100.net; s=20221208; t=1690593061; x=1691197861;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4goBAOyeXz/EmcBfplSwY7b9w7RJ1ZlCVEyDa20dLH8=;
+        b=eZTYy2Ua4W0c2wvKCCze4QK1iMH4zq4xyHu1c6QTjGthsMhVrAgrNTtHtBhLGsu+w4
+         VN1r5lI07MXhUCEtSoSOJb3l7rOA4l3V8/L1CGXkc1DjxnBfMco+OS5FYnWqcJOekCek
+         +JKLTIgL05Zlk9bbwp7tZvtL+pFOE/bCGDnI1QxRxF5utQ4EEGxJ0YryFWxBMxTazCHA
+         gGo++tGBxyet2hSKK3cTpG3xThJjLCNoZyukJPsvu4NV87VtFuVbHqY3noN1KyubRNl2
+         2miVitRAj2coMscahdhXWx3Tn3KWa+HzhmcVxZqPqUUMPA8yjhnt06O+IzFxGv3rBxX+
+         QkUw==
+X-Gm-Message-State: ABy/qLa249OpuM/IWOSwn+ReTbKSBWjkFiIlCWSMTt2JaE9XeVbi10Vw
+        /+exIbj5A8NO3lNavvA2Kb24uZYteYg=
+X-Google-Smtp-Source: APBJJlH7jY3ZNXSR1M+WnN0c/4YzkYW/iLj0kUmKqDIfY483VEnpmldmtRrZhPd5j9/fHVpPYnmo7Q==
+X-Received: by 2002:a92:d083:0:b0:349:19e:7656 with SMTP id h3-20020a92d083000000b00349019e7656mr1074936ilh.28.1690593061593;
+        Fri, 28 Jul 2023 18:11:01 -0700 (PDT)
+Received: from [172.17.0.2] ([40.83.5.156])
+        by smtp.gmail.com with ESMTPSA id v21-20020a02cbb5000000b004290fd3a68dsm1458318jap.1.2023.07.28.18.11.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Jul 2023 17:45:58 -0700 (PDT)
-From:   =?UTF-8?q?=C5=81ukasz=20Rymanowski?= 
-        <lukasz.rymanowski@codecoup.pl>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     =?UTF-8?q?=C5=81ukasz=20Rymanowski?= 
-        <lukasz.rymanowski@codecoup.pl>
-Subject: [PATCH BlueZ 5/5] monitor: Add parsing Service Data of UUID 128
-Date:   Sat, 29 Jul 2023 02:45:52 +0200
-Message-Id: <20230729004552.1422547-6-lukasz.rymanowski@codecoup.pl>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230729004552.1422547-1-lukasz.rymanowski@codecoup.pl>
-References: <20230729004552.1422547-1-lukasz.rymanowski@codecoup.pl>
+        Fri, 28 Jul 2023 18:11:01 -0700 (PDT)
+Message-ID: <64c46725.020a0220.d7a4f.2da4@mx.google.com>
+Date:   Fri, 28 Jul 2023 18:11:01 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============8239296126960128069=="
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
+Subject: RE: [BlueZ,v5,1/7] monitor: Use gnuplot to plot graph of Latency-Packets
+In-Reply-To: <20230728224247.102057-1-luiz.dentz@gmail.com>
+References: <20230728224247.102057-1-luiz.dentz@gmail.com>
+Reply-To: linux-bluetooth@vger.kernel.org
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-In the advertising report, instead of deciding EIR 0x21 into this:
+--===============8239296126960128069==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-	Unknown EIR field 0x21: 3a048f2ba97ea6ae1b49c619e973a4a701480d130d
+This is automated email and please do not reply to this email!
 
-We can do bit better
+Dear submitter,
 
-        Service Data UUID 128: Vendor specific
-          Data: 01480d130d
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=770739
+
+---Test result---
+
+Test Summary:
+CheckPatch                    FAIL      3.33 seconds
+GitLint                       PASS      2.04 seconds
+BuildEll                      PASS      26.20 seconds
+BluezMake                     PASS      754.54 seconds
+MakeCheck                     PASS      11.28 seconds
+MakeDistcheck                 PASS      152.27 seconds
+CheckValgrind                 PASS      247.21 seconds
+CheckSmatch                   WARNING   333.09 seconds
+bluezmakeextell               PASS      100.58 seconds
+IncrementalBuild              PASS      4437.75 seconds
+ScanBuild                     WARNING   981.58 seconds
+
+Details
+##############################
+Test: CheckPatch - FAIL
+Desc: Run checkpatch.pl script
+Output:
+[BlueZ,v5,1/7] monitor: Use gnuplot to plot graph of Latency-Packets
+WARNING:COMMIT_LOG_LONG_LINE: Possible unwrapped commit description (prefer a maximum 75 chars per line)
+#86: 
+        Address: XX:XX:XX:XX:XX:XX (Sony Home Entertainment&Sound Products Inc)
+
+/github/workspace/src/src/13332712.patch total: 0 errors, 1 warnings, 156 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/github/workspace/src/src/13332712.patch has style problems, please review.
+
+NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+[BlueZ,v5,2/7] monitor: Update documentation
+ERROR:CODE_INDENT: code indent should use tabs where possible
+#115: FILE: monitor/main.c:55:
++                "\t                       system it will also attempt to plot\n"$
+
+WARNING:LEADING_SPACE: please, no spaces at the start of a line
+#115: FILE: monitor/main.c:55:
++                "\t                       system it will also attempt to plot\n"$
+
+/github/workspace/src/src/13332713.patch total: 1 errors, 1 warnings, 19 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+NOTE: Whitespace errors detected.
+      You may wish to use scripts/cleanpatch or scripts/cleanfile
+
+/github/workspace/src/src/13332713.patch has style problems, please review.
+
+NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+##############################
+Test: CheckSmatch - WARNING
+Desc: Run smatch tool with source
+Output:
+monitor/l2cap.c: note: in included file:monitor/display.h:82:26: warning: Variable length array is used.monitor/packet.c: note: in included file:monitor/display.h:82:26: warning: Variable length array is used.monitor/packet.c:1832:26: warning: Variable length array is used.monitor/packet.c: note: in included file:monitor/bt.h:3551:52: warning: array of flexible structuresmonitor/bt.h:3539:40: warning: array of flexible structuresmonitor/packet.c: note: in included file:monitor/display.h:82:26: warning: Variable length array is used.monitor/packet.c:1832:26: warning: Variable length array is used.monitor/packet.c: note: in included file:monitor/bt.h:3551:52: warning: array of flexible structuresmonitor/bt.h:3539:40: warning: array of flexible structuresmonitor/packet.c: note: in included file:monitor/display.h:82:26: warning: Variable length array is used.monitor/packet.c:1832:26: warning: Variable length array is used.monitor/packet.c: note: in included file:monitor/bt.h:3551:52: war
+ ning: array of flexible structuresmonitor/bt.h:3539:40: warning: array of flexible structures
+##############################
+Test: ScanBuild - WARNING
+Desc: Run Scan Build
+Output:
+monitor/l2cap.c:1638:4: warning: Value stored to 'data' is never read
+                        data += len;
+                        ^       ~~~
+monitor/l2cap.c:1639:4: warning: Value stored to 'size' is never read
+                        size -= len;
+                        ^       ~~~
+2 warnings generated.
+monitor/packet.c:12399:2: warning: Null pointer passed to 2nd parameter expecting 'nonnull'
+        memcpy(tx, tv, sizeof(*tv));
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 warning generated.
+
+
+
 ---
- monitor/packet.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+Regards,
+Linux Bluetooth
 
-diff --git a/monitor/packet.c b/monitor/packet.c
-index 3031b028f..21e08ccef 100644
---- a/monitor/packet.c
-+++ b/monitor/packet.c
-@@ -3997,6 +3997,18 @@ static void print_eir(const uint8_t *eir, uint8_t eir_len, bool le)
- 			print_service_data(data, data_len);
- 			break;
- 
-+		case BT_EIR_SERVICE_DATA128:
-+			if (data_len <= 16)
-+				break;
-+
-+			print_field("Service Data UUID 128: %s ",
-+						bt_uuid128_to_str(&data[0]));
-+
-+			if (data_len > 16)
-+				print_hex_field("  Data", &data[16],
-+								data_len - 16);
-+
-+			break;
- 		case BT_EIR_RANDOM_ADDRESS:
- 			if (data_len < 6)
- 				break;
--- 
-2.34.1
 
+--===============8239296126960128069==--
