@@ -2,55 +2,55 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 25BA8769FE6
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 31 Jul 2023 20:00:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 228C2769FE9
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 31 Jul 2023 20:00:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231351AbjGaSAY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 31 Jul 2023 14:00:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38678 "EHLO
+        id S231372AbjGaSA1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 31 Jul 2023 14:00:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231214AbjGaSAX (ORCPT
+        with ESMTP id S231320AbjGaSAY (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 31 Jul 2023 14:00:23 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC187E52
+        Mon, 31 Jul 2023 14:00:24 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E35C910FE
         for <linux-bluetooth@vger.kernel.org>; Mon, 31 Jul 2023 11:00:22 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5ED9761267
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 428AD6125E
         for <linux-bluetooth@vger.kernel.org>; Mon, 31 Jul 2023 18:00:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id BC5FAC433CA;
+Received: by smtp.kernel.org (Postfix) with ESMTPS id A7ECCC433C9;
         Mon, 31 Jul 2023 18:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1690826421;
-        bh=5dPxpTF1rYG0w5UDpUhl89Hvut1ReHQzAA//JLc0AXQ=;
+        bh=+6M+vt6quI0iGo/FzNo8ZqTsHWS7pePki8YHGCWCrZs=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=iVjKPRJ1HPMlDzAQlK1cquUWgFfFok7jI7tnBW86zqGFQ+HLVTTX12qxs9maPXlra
-         Ufwp8XZC5aVLKHuUZcrqY35cgjJWwxlcbkTNE3th7LWZFUA1HAM7vFVG3xnOWYt6vO
-         KBzEbeCpe5vVJA7meI8kiiG7ooRmUwAPHOc7n0AZ3GiSKJSuThQxPCbaK5rAuLKwSB
-         OpDsQ/leZ5PWY4csljchJYAANKbWPMj3Our4lbDDXvWyk2Bo5uJKOKYsp0inW+Tz/7
-         UFdrilv8yRyuvr938UdVl9S4Wxdt46wlH37WvpzDKwumg3jR+H5iITtSrxCBLWnjuk
-         0hsJ8rywGrxsw==
+        b=ZElMan27lTTe5x7Rc+YZtkUnzJ1aG/chm7qncYeknhVTtiPD8W3IaurHkgIpAKrAQ
+         qtqPzceFObh1ggRU/xUuQh68Heq5XmDAUSMLi1u00yDD9V1SjsZMunWlNFoIqqjdcC
+         tmT43QE9j9m3T3ffYJL6b8bUlIFwvf8UcSWcwJYkdGosO6MOA5mOhmEt/dH7OHPU+2
+         dlsdC9n7ahfHsLH5IeCz36kBzxh1RyIRXyB27w590qKLGU0zHA6utc1CQjIHxOlVWs
+         /hncGH16TPplfRBaXndaspyo2l4q+GWhPiepsFRNvOBs+GRBNY67dI35XoAHbC6MC3
+         q6SdAIPoISVDg==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id A1CE3C64458;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 8F4C3E96AD8;
         Mon, 31 Jul 2023 18:00:21 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ] gatt: Fix not establishing a socket for each device
+Subject: Re: [PATCH BlueZ 0/5] Couple of improvements to btmon
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <169082642165.19346.6932521430064344787.git-patchwork-notify@kernel.org>
+Message-Id: <169082642158.19346.15350726406594286173.git-patchwork-notify@kernel.org>
 Date:   Mon, 31 Jul 2023 18:00:21 +0000
-References: <20230724212731.848134-1-luiz.dentz@gmail.com>
-In-Reply-To: <20230724212731.848134-1-luiz.dentz@gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+References: <20230729004552.1422547-1-lukasz.rymanowski@codecoup.pl>
+In-Reply-To: <20230729004552.1422547-1-lukasz.rymanowski@codecoup.pl>
+To:     =?utf-8?q?=C5=81ukasz_Rymanowski_=3Clukasz=2Erymanowski=40codecoup=2Epl=3E?=@ci.codeaurora.org
 Cc:     linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -59,23 +59,32 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This patch was applied to bluetooth/bluez.git (master)
+This series was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Mon, 24 Jul 2023 14:27:31 -0700 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+On Sat, 29 Jul 2023 02:45:47 +0200 you wrote:
+> Szymon Czapracki (1):
+>   monitor/ll: Add support for connection parameter command.
 > 
-> AcquireWrite and AcquireNotify shall establish a socket pair for each
-> device connected otherwise the application cannot distinct the
-> operations of each client.
-> 
-> Fixes: https://github.com/bluez/bluez/issues/460
+> Łukasz Rymanowski (4):
+>   monitor: Fix decoding Command Complete for Remove ISO Data path
+>   monitor: Update le event mask with bits 20-23
+>   monitor: Add support to decode le read ISO link quality
+>   monitor: Add parsing Service Data of UUID 128
 > 
 > [...]
 
 Here is the summary with links:
-  - [BlueZ] gatt: Fix not establishing a socket for each device
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=8eb1dee87e01
+  - [BlueZ,1/5] monitor: Fix decoding Command Complete for Remove ISO Data path
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=86a4015659e3
+  - [BlueZ,2/5] monitor: Update le event mask with bits 20-23
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=7c6e030ac976
+  - [BlueZ,3/5] monitor/ll: Add support for connection parameter command.
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=af3549724b0a
+  - [BlueZ,4/5] monitor: Add support to decode le read ISO link quality
+    (no matching commit)
+  - [BlueZ,5/5] monitor: Add parsing Service Data of UUID 128
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=8d60b555e8e1
 
 You are awesome, thank you!
 -- 
