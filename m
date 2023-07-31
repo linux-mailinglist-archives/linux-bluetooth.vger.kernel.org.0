@@ -2,55 +2,56 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C1B67769FBE
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 31 Jul 2023 19:50:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 36DC3769FC0
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 31 Jul 2023 19:50:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230373AbjGaRu1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 31 Jul 2023 13:50:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32974 "EHLO
+        id S231246AbjGaRu3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 31 Jul 2023 13:50:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230190AbjGaRu0 (ORCPT
+        with ESMTP id S230252AbjGaRu0 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Mon, 31 Jul 2023 13:50:26 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 701AEFF
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C9B3103
         for <linux-bluetooth@vger.kernel.org>; Mon, 31 Jul 2023 10:50:25 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 0925161269
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 0577261265
         for <linux-bluetooth@vger.kernel.org>; Mon, 31 Jul 2023 17:50:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 66464C433CA;
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 5F386C433CB;
         Mon, 31 Jul 2023 17:50:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1690825824;
-        bh=sK5lZ2TkHq8O+uhtxTT4YzM9AIXSP0SMkkRgb2SehC8=;
+        bh=RYmpAyaxUdDufrRp7HEwG9c24SMMx0pMChrJfRsRmes=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=aOl+soiVfsNJDzoejzLIoS1XtNCSSMFt8VHCaBqB8C414DzwNDPz+btWzmlqiGZuT
-         8eGs2fMp0MnssQmcEd5zQkzEafnohP/R+gx0gKPggn48it4iGI1MrivMSlzPqmrBjs
-         pXuBC0ApasOFuvvth8qIKxQAARf0S80jPK0F8M7m+WNNnvV/d57dKuIiYOEDoYeFnn
-         nw8+qIRH8+biFqCqY3PSGMz4g4F8qcJgLR+MUsDJLLXMZiPnvqxBRRjrAWbbT33N2E
-         sg1T3Ctt5nPNOXs3x2zeBYiQOWcogjpm3AY3f/Fhos2Nm0YsAn1oZvCzX+8OtyH6UX
-         7lOK+9Qpzig2Q==
+        b=JiA9llmpIYg2YDQCpGBlZYrdlv8VQp96V2Lmt1KgHr/0TC5TY9Gy3tKIa6ccLU0Fr
+         yLkV6a2FFpSBGcXdoZfPFgS+Y9kEyDPTWEN2p80vxOUSycD+edJPWrYQBbmt+epxqx
+         xVO4v1HKd53J1XPAsB7SK6Zgbdj+8/1A9i6m5Evvlb1hT4VuJ6CN+WOhgnjR2i/Awg
+         Bz4FHrumRue+XrBYQg/9LrU37dn6wWRzron4u4ujdXu0M+9HPv6NdK+GNQFkNgTdDn
+         lWGmo3a2VQbFJh05fAHCKeDLjc+xhhVDJ4h+K0mL/0YnGiJrFVVHt3a7EAz0r9cG32
+         Ff6ujGdiQmD1w==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 4DBC9C691D8;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 46D5EC595C0;
         Mon, 31 Jul 2023 17:50:24 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ 0/8] Various fixes and refactors
+Subject: Re: [PATCH BlueZ 1/2] adapter: Be able to use ConnectDevice for
+ discovered devices
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <169082582431.13999.3264927797730952315.git-patchwork-notify@kernel.org>
+Message-Id: <169082582428.13999.16429356285051317455.git-patchwork-notify@kernel.org>
 Date:   Mon, 31 Jul 2023 17:50:24 +0000
-References: <20230725084431.640332-1-simon.mikuda@streamunlimited.com>
-In-Reply-To: <20230725084431.640332-1-simon.mikuda@streamunlimited.com>
+References: <20230731041229.1429016-1-simon.mikuda@streamunlimited.com>
+In-Reply-To: <20230731041229.1429016-1-simon.mikuda@streamunlimited.com>
 To:     Simon Mikuda <simon.mikuda@streamunlimited.com>
 Cc:     linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -62,41 +63,18 @@ Hello:
 This series was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Tue, 25 Jul 2023 10:44:23 +0200 you wrote:
-> Fixes for pairing and discovery for dual mode devices
-> Fix for EIR_BREDR_UNSUP flag
-> Add handle numbers on dbus for client
-> Minor refactor, fixes
-> 
-> Simon Mikuda (8):
->   advertising: Fix setting "BR/EDR not supported" flag
->   adapter: Be able to use ConnectDevice for discovered devices
->   device: Refactor device_discover_services function
->   device: Rename start_discovery function
->   device: Fix pairing and discovery with dual mode devices
->   device: Handle error from discover services request after pair
->   gatt-client: Add read-only handles to dbus
->   adapter: Ensure that file exists on IRK write
-> 
-> [...]
+On Mon, 31 Jul 2023 06:12:28 +0200 you wrote:
+> This can be useful when you want to specify trasport type for already
+> paired device (e.g. use LE transport for dual mode device).
+> ---
+>  src/adapter.c | 3 ---
+>  1 file changed, 3 deletions(-)
 
 Here is the summary with links:
-  - [BlueZ,1/8] advertising: Fix setting "BR/EDR not supported" flag
-    (no matching commit)
-  - [BlueZ,2/8] adapter: Be able to use ConnectDevice for discovered devices
+  - [BlueZ,1/2] adapter: Be able to use ConnectDevice for discovered devices
     https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=caf7db313e9d
-  - [BlueZ,3/8] device: Refactor device_discover_services function
-    (no matching commit)
-  - [BlueZ,4/8] device: Rename start_discovery function
-    (no matching commit)
-  - [BlueZ,5/8] device: Fix pairing and discovery with dual mode devices
-    (no matching commit)
-  - [BlueZ,6/8] device: Handle error from discover services request after pair
-    (no matching commit)
-  - [BlueZ,7/8] gatt-client: Add read-only handles to dbus
-    (no matching commit)
-  - [BlueZ,8/8] adapter: Ensure that file exists on IRK write
-    (no matching commit)
+  - [BlueZ,2/2] adapter: Update ConnectDevice documentation
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=255ef572ca76
 
 You are awesome, thank you!
 -- 
