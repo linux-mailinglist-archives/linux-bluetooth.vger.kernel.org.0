@@ -2,57 +2,55 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C22B4769FC2
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 31 Jul 2023 19:50:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C1B67769FBE
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 31 Jul 2023 19:50:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230284AbjGaRuc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 31 Jul 2023 13:50:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32982 "EHLO
+        id S230373AbjGaRu1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 31 Jul 2023 13:50:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230264AbjGaRu0 (ORCPT
+        with ESMTP id S230190AbjGaRu0 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Mon, 31 Jul 2023 13:50:26 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B58F6123
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 701AEFF
         for <linux-bluetooth@vger.kernel.org>; Mon, 31 Jul 2023 10:50:25 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 17AB86126B
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 0925161269
         for <linux-bluetooth@vger.kernel.org>; Mon, 31 Jul 2023 17:50:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 7862BC433CD;
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 66464C433CA;
         Mon, 31 Jul 2023 17:50:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1690825824;
-        bh=c1V7lO/IowxdKAYeJjOxZ+wTC54kgNefZwTJzq7olr8=;
+        bh=sK5lZ2TkHq8O+uhtxTT4YzM9AIXSP0SMkkRgb2SehC8=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=A0T+r6cycrV84WyMBqWWdmncuUs6+jzR2poCKD4qIKVJxf4K5CQPrqMBbGLYHUNiM
-         9aO1xPH7AUCmQCtJf2Utmpt3k+fa32Xqi1C+4BWhrVIq0sLiJ5Xx1KD6vrbNEz7Zby
-         FgOQayEyqX8kCpvPGeNN/FxeldBxkwNS7rxAM73j90D696zIojhEFGaHYWQcoQLO+q
-         1ImDBAj8vyKxzutmVi5vXXKWwOqr8ylh9xtfi8F4VlN+Hg5aUmz+94SCayet51a1NM
-         0O4f4PVm9TWxPYQ9aeZd09X/uOxqi+vJFImWnaUcHUd2Tnxcr9a48/5lQZW+A+g9Cp
-         8MnP2MlQ9qxHg==
+        b=aOl+soiVfsNJDzoejzLIoS1XtNCSSMFt8VHCaBqB8C414DzwNDPz+btWzmlqiGZuT
+         8eGs2fMp0MnssQmcEd5zQkzEafnohP/R+gx0gKPggn48it4iGI1MrivMSlzPqmrBjs
+         pXuBC0ApasOFuvvth8qIKxQAARf0S80jPK0F8M7m+WNNnvV/d57dKuIiYOEDoYeFnn
+         nw8+qIRH8+biFqCqY3PSGMz4g4F8qcJgLR+MUsDJLLXMZiPnvqxBRRjrAWbbT33N2E
+         sg1T3Ctt5nPNOXs3x2zeBYiQOWcogjpm3AY3f/Fhos2Nm0YsAn1oZvCzX+8OtyH6UX
+         7lOK+9Qpzig2Q==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 609BDC691EF;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 4DBC9C691D8;
         Mon, 31 Jul 2023 17:50:24 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ v2] main: Fix integer configuration option parse
- failures
+Subject: Re: [PATCH BlueZ 0/8] Various fixes and refactors
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <169082582439.13999.13820304183162328350.git-patchwork-notify@kernel.org>
+Message-Id: <169082582431.13999.3264927797730952315.git-patchwork-notify@kernel.org>
 Date:   Mon, 31 Jul 2023 17:50:24 +0000
-References: <1690795722-29873-1-git-send-email-quic_zijuhu@quicinc.com>
-In-Reply-To: <1690795722-29873-1-git-send-email-quic_zijuhu@quicinc.com>
-To:     Zijun Hu <quic_zijuhu@quicinc.com>
-Cc:     luiz.dentz@gmail.com, pmenzel@molgen.mpg.de,
-        linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20230725084431.640332-1-simon.mikuda@streamunlimited.com>
+In-Reply-To: <20230725084431.640332-1-simon.mikuda@streamunlimited.com>
+To:     Simon Mikuda <simon.mikuda@streamunlimited.com>
+Cc:     linux-bluetooth@vger.kernel.org
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -61,20 +59,44 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This patch was applied to bluetooth/bluez.git (master)
+This series was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Mon, 31 Jul 2023 17:28:42 +0800 you wrote:
-> parse_config_int() has a obvious logical error, so causes many
-> parse failures of integer configuration options, fixed by this
-> change.
-> ---
->  src/main.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+On Tue, 25 Jul 2023 10:44:23 +0200 you wrote:
+> Fixes for pairing and discovery for dual mode devices
+> Fix for EIR_BREDR_UNSUP flag
+> Add handle numbers on dbus for client
+> Minor refactor, fixes
+> 
+> Simon Mikuda (8):
+>   advertising: Fix setting "BR/EDR not supported" flag
+>   adapter: Be able to use ConnectDevice for discovered devices
+>   device: Refactor device_discover_services function
+>   device: Rename start_discovery function
+>   device: Fix pairing and discovery with dual mode devices
+>   device: Handle error from discover services request after pair
+>   gatt-client: Add read-only handles to dbus
+>   adapter: Ensure that file exists on IRK write
+> 
+> [...]
 
 Here is the summary with links:
-  - [BlueZ,v2] main: Fix integer configuration option parse failures
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=446d8ada5790
+  - [BlueZ,1/8] advertising: Fix setting "BR/EDR not supported" flag
+    (no matching commit)
+  - [BlueZ,2/8] adapter: Be able to use ConnectDevice for discovered devices
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=caf7db313e9d
+  - [BlueZ,3/8] device: Refactor device_discover_services function
+    (no matching commit)
+  - [BlueZ,4/8] device: Rename start_discovery function
+    (no matching commit)
+  - [BlueZ,5/8] device: Fix pairing and discovery with dual mode devices
+    (no matching commit)
+  - [BlueZ,6/8] device: Handle error from discover services request after pair
+    (no matching commit)
+  - [BlueZ,7/8] gatt-client: Add read-only handles to dbus
+    (no matching commit)
+  - [BlueZ,8/8] adapter: Ensure that file exists on IRK write
+    (no matching commit)
 
 You are awesome, thank you!
 -- 
