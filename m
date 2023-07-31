@@ -2,51 +2,51 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2BE44769FC1
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 31 Jul 2023 19:50:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 25BA8769FE6
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 31 Jul 2023 20:00:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231278AbjGaRub (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 31 Jul 2023 13:50:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32986 "EHLO
+        id S231351AbjGaSAY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 31 Jul 2023 14:00:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230284AbjGaRu1 (ORCPT
+        with ESMTP id S231214AbjGaSAX (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 31 Jul 2023 13:50:27 -0400
+        Mon, 31 Jul 2023 14:00:23 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 676B095
-        for <linux-bluetooth@vger.kernel.org>; Mon, 31 Jul 2023 10:50:26 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC187E52
+        for <linux-bluetooth@vger.kernel.org>; Mon, 31 Jul 2023 11:00:22 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 814B16126D
-        for <linux-bluetooth@vger.kernel.org>; Mon, 31 Jul 2023 17:50:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 78676C433D9;
-        Mon, 31 Jul 2023 17:50:24 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5ED9761267
+        for <linux-bluetooth@vger.kernel.org>; Mon, 31 Jul 2023 18:00:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id BC5FAC433CA;
+        Mon, 31 Jul 2023 18:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1690825824;
-        bh=xUanpwl2W/ELRk/9rli6bY4ENAS/7JxcJVhx3D75nTc=;
+        s=k20201202; t=1690826421;
+        bh=5dPxpTF1rYG0w5UDpUhl89Hvut1ReHQzAA//JLc0AXQ=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=RjIUqPkbYHxFO1vIn5pM4MarCkuTtdRNzBqN063HIeUArND/gRmVK3cF3V0gaeUE9
-         vahVg3D/Ii6TMNKToeQ5UsMHW5fMHdsg7r94HG+GrSRAYn33SN8x94dM/3YWo57g1A
-         U752j56tGoFEcda4GJKa5co2Tp21g+hZ+cFoN/AttonX0wBmDVZhzQcEpa2xJACFNa
-         Oj4OsXDqp1HawPZhlKacl7//sBbjTjKHZenWk3NVUMsy1s1/ISupzdqL6Cdg5WAWnb
-         Z9wPuSpICRMoes21tZ7Oj8UYGW/k7TNeqn0Gew+P3UUReWiRoc7bi7CumVswv8pZco
-         JJjKmbc9++GpQ==
+        b=iVjKPRJ1HPMlDzAQlK1cquUWgFfFok7jI7tnBW86zqGFQ+HLVTTX12qxs9maPXlra
+         Ufwp8XZC5aVLKHuUZcrqY35cgjJWwxlcbkTNE3th7LWZFUA1HAM7vFVG3xnOWYt6vO
+         KBzEbeCpe5vVJA7meI8kiiG7ooRmUwAPHOc7n0AZ3GiSKJSuThQxPCbaK5rAuLKwSB
+         OpDsQ/leZ5PWY4csljchJYAANKbWPMj3Our4lbDDXvWyk2Bo5uJKOKYsp0inW+Tz/7
+         UFdrilv8yRyuvr938UdVl9S4Wxdt46wlH37WvpzDKwumg3jR+H5iITtSrxCBLWnjuk
+         0hsJ8rywGrxsw==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 58A8CC64458;
-        Mon, 31 Jul 2023 17:50:24 +0000 (UTC)
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id A1CE3C64458;
+        Mon, 31 Jul 2023 18:00:21 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v1] main: Fix a logical error within parse_config_int()
+Subject: Re: [PATCH BlueZ] gatt: Fix not establishing a socket for each device
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <169082582435.13999.16530650273299454723.git-patchwork-notify@kernel.org>
-Date:   Mon, 31 Jul 2023 17:50:24 +0000
-References: <1690789604-3576-1-git-send-email-quic_zijuhu@quicinc.com>
-In-Reply-To: <1690789604-3576-1-git-send-email-quic_zijuhu@quicinc.com>
-To:     Zijun Hu <quic_zijuhu@quicinc.com>
-Cc:     luiz.dentz@gmail.com, linux-bluetooth@vger.kernel.org
+Message-Id: <169082642165.19346.6932521430064344787.git-patchwork-notify@kernel.org>
+Date:   Mon, 31 Jul 2023 18:00:21 +0000
+References: <20230724212731.848134-1-luiz.dentz@gmail.com>
+In-Reply-To: <20230724212731.848134-1-luiz.dentz@gmail.com>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -62,15 +62,20 @@ Hello:
 This patch was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Mon, 31 Jul 2023 15:46:44 +0800 you wrote:
-> Fix a logical error within parse_config_int().
-> ---
->  src/main.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+On Mon, 24 Jul 2023 14:27:31 -0700 you wrote:
+> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> 
+> AcquireWrite and AcquireNotify shall establish a socket pair for each
+> device connected otherwise the application cannot distinct the
+> operations of each client.
+> 
+> Fixes: https://github.com/bluez/bluez/issues/460
+> 
+> [...]
 
 Here is the summary with links:
-  - [v1] main: Fix a logical error within parse_config_int()
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=446d8ada5790
+  - [BlueZ] gatt: Fix not establishing a socket for each device
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=8eb1dee87e01
 
 You are awesome, thank you!
 -- 
