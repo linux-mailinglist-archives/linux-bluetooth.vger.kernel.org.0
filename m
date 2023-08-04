@@ -2,51 +2,50 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D5B8770C21
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  5 Aug 2023 00:50:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7E6C770C20
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  5 Aug 2023 00:50:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229844AbjHDWu3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 4 Aug 2023 18:50:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48706 "EHLO
+        id S229817AbjHDWu1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 4 Aug 2023 18:50:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229555AbjHDWu0 (ORCPT
+        with ESMTP id S229844AbjHDWu0 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Fri, 4 Aug 2023 18:50:26 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1846546B3
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE1F14EED
         for <linux-bluetooth@vger.kernel.org>; Fri,  4 Aug 2023 15:50:24 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 663306216A
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5DD826213C
         for <linux-bluetooth@vger.kernel.org>; Fri,  4 Aug 2023 22:50:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id CC612C433CB;
+Received: by smtp.kernel.org (Postfix) with ESMTPS id C769EC433C9;
         Fri,  4 Aug 2023 22:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1691189423;
-        bh=Rw2JVx8IQ4HbCBxmyIfjk60aS9i7uzZIJa4+3NXV3aM=;
+        bh=ISLA2eKjYP4zE9kwTPCUlGnj6X6pHbBpr0sVxgrfUss=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=Ufe9PWIR8xCUswKsbgYpC30nAg0PH1+dgTK3VnvcHZxjqy68WdrrNkWVnJhnJVZYD
-         bJATtWbtRSWilQOjwSvhx5xBZZxyB7OK16JsEoCy525KtBuYLZEAmN8lGFHHakedlj
-         aObpvSp9MBT62D1BOJKU496HHlmycO6xVO8slcXtuFikQXGyAWfGTrqhlBTMLHrScb
-         oJUKdtOZnZxaqf9t51Qp/CIUTXvUJRw3s4ot96lmE5O+NIQG8Tg04NqjuCDRnOGbIu
-         wxMZM1cZ7DmQn+KE7JCWlSIobR+Pi5E74f8s/Npcmspv4j7wNu+U8nJTCdaCeuhznz
-         rS2AOh11uGH9w==
+        b=OqourbXHjQS+xbN1Hc850HNMq1xsxGwUJyoRmxI7RoG9ctPHgxyYE63/wN5NUpnZA
+         x7vSMOPVbqOGiqbjOeJ9ww7w4/2LDxGx1fJUo5HB0mcv0clahXlBieTvDd1FsrfwTk
+         6pG1ZFaf94+1WRZoar3evwE1rt8dTdZf28DsVsdWh9XpqUVQ69CB/XaH3UE1XYOE0m
+         kTbCuoOog1MtqRFbhGZzfzz1o75JnC0ug86vDph3DeKBXBem1tQZ1cN8plEpEywZw0
+         mxBzu2/FwOmWHU1jVU273SN2SHNXHSMce98IpF7X+hJL8eWs8iGSRmgdT/TBQowO8c
+         e7m6yB8gAJUrA==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id B02D1C6445B;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id A892DC64458;
         Fri,  4 Aug 2023 22:50:23 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 1/5] Bluetooth: hci_sync: Fix handling of
- HCI_OP_CREATE_CONN_CANCEL
+Subject: Re: [PATCH RFC 0/6] Locking in hci_sync
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <169118942371.8518.5868752901322841839.git-patchwork-notify@kernel.org>
+Message-Id: <169118942368.8518.9843355036673015644.git-patchwork-notify@kernel.org>
 Date:   Fri, 04 Aug 2023 22:50:23 +0000
-References: <20230804001115.907885-1-luiz.dentz@gmail.com>
-In-Reply-To: <20230804001115.907885-1-luiz.dentz@gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+References: <cover.1690399379.git.pav@iki.fi>
+In-Reply-To: <cover.1690399379.git.pav@iki.fi>
+To:     Pauli Virtanen <pav@iki.fi>
 Cc:     linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
@@ -62,28 +61,30 @@ Hello:
 This series was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Thu,  3 Aug 2023 17:11:11 -0700 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+On Thu, 27 Jul 2023 00:25:20 +0300 you wrote:
+> The current guarantees that a given hci_conn is not freed concurrently
+> appear to be:
 > 
-> When sending HCI_OP_CREATE_CONN_CANCEL it shall Wait for
-> HCI_EV_CONN_COMPLETE, not HCI_EV_CMD_STATUS, when the reason is
-> anything but HCI_ERROR_REMOTE_POWER_OFF. This reason is used when
-> suspending or powering off, where we don't want to wait for the peer's
-> response.
+> - hci_dev_lock is held, or,
+> - rcu_read_lock is held  (doesn't guarantee valid conn state), or,
+> - hci_conn_get refcount held (doesn't guarantee valid conn state),
+> - current task is running from hdev->workqueue (which is ordered)
 > 
 > [...]
 
 Here is the summary with links:
-  - [v2,1/5] Bluetooth: hci_sync: Fix handling of HCI_OP_CREATE_CONN_CANCEL
-    https://git.kernel.org/bluetooth/bluetooth-next/c/0e4cdf2f6122
-  - [v2,2/5] Bluetooth: hci_sync: Fix UAF on hci_abort_conn_sync
-    https://git.kernel.org/bluetooth/bluetooth-next/c/bdc83c443c30
-  - [v2,3/5] Bluetooth: ISO: Fix not checking for valid CIG/CIS IDs
-    https://git.kernel.org/bluetooth/bluetooth-next/c/e5ab05c24643
-  - [v2,4/5] Bluetooth: hci_conn: Fix modifying handle while aborting
+  - [RFC,1/6] Bluetooth: hci_conn: hci_conn_cleanup is not needed, combine with del
     (no matching commit)
-  - [v2,5/5] Bluetooth: hci_conn: Fix not allowing valid CIS ID
-    https://git.kernel.org/bluetooth/bluetooth-next/c/90b1f9ebdea4
+  - [RFC,2/6] Bluetooth: hci_conn: add hci_conn_is_alive
+    (no matching commit)
+  - [RFC,3/6] Bluetooth: hci_sync: add hci_conn_sync_queue and hci_cmd_sync_dev_(un)lock
+    (no matching commit)
+  - [RFC,4/6] Bluetooth: hci_sync: fix locking in hci_conn_abort and hci_disconnect_all_sync
+    (no matching commit)
+  - [RFC,5/6] Bluetooth: hci_sync: delete CIS in BT_OPEN/CONNECT/BOUND when aborting
+    (no matching commit)
+  - [RFC,6/6] Bluetooth: ISO: handle bound CIS cleanup via hci_conn
+    https://git.kernel.org/bluetooth/bluetooth-next/c/2dfe76d58d3a
 
 You are awesome, thank you!
 -- 
