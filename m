@@ -2,131 +2,92 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A828B770B4A
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  4 Aug 2023 23:57:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D5B8770C21
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  5 Aug 2023 00:50:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229880AbjHDV5i (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 4 Aug 2023 17:57:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57252 "EHLO
+        id S229844AbjHDWu3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 4 Aug 2023 18:50:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229557AbjHDV5h (ORCPT
+        with ESMTP id S229555AbjHDWu0 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 4 Aug 2023 17:57:37 -0400
-Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D929B106
-        for <linux-bluetooth@vger.kernel.org>; Fri,  4 Aug 2023 14:57:36 -0700 (PDT)
-Received: by mail-io1-xd2b.google.com with SMTP id ca18e2360f4ac-790aeee9928so91359039f.2
-        for <linux-bluetooth@vger.kernel.org>; Fri, 04 Aug 2023 14:57:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691186255; x=1691791055;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=wcPD8Y1vhTS4cLo5TwWcMcUQdnD7VR1S6yJwpJxEoxw=;
-        b=mvhBp9BmT+h4WBMP34avgU8buGjoUn7wdJYSYs5KHgKw55sB8K1rc9QGHcQPzu/HX6
-         O7wMfuRdVku5/7IF9jJ5qWv/d6XBl6xPa40GKHMIoHvblfGL1/1ec3uAyWOw58Lrfr+9
-         jDqGEw2Fpv6f8KBFfeW15ZaYDn1hzVO+Tx/wb04oXtsk45M8ay1jH36UQhtPcfl1nVct
-         f0iRvWU3lc+Am3/ruLVcTJcl4IF4h8XGdqUHqlJTs5hlQeDa+Ts0UyMDMZyojKed9XLV
-         k9omXscp2OpALEC+wSs8OGy24IpG+bE1XF6eCq1AeUaeipTlW8LIOY1KwhRtnbpGLpgf
-         DqKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691186255; x=1691791055;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wcPD8Y1vhTS4cLo5TwWcMcUQdnD7VR1S6yJwpJxEoxw=;
-        b=e5AqJ1cojYZFFAyqqbB7munOG4AEvEtSgl437X/s2XZmL6dxHjBT21a3O6WActPjAP
-         l498cBnN3hCz+JjvNZua9SL5WoGM+KfipvxUGIllkPQzp3puhAA8ijS0qK9J7xD+1EVF
-         2VYTOu21aIr38ZZR0iSb1VrK90dnIynS1v7cFksHeW8aSIbm8fX8382xFkliO34iA2JR
-         BKOAlQ2y8uX/hK3IRgzEyd6sHODO3UJS9HYp4OdxeLbO6TRA3pfz7V3gxzYuby2mSzZ9
-         8uWc1lZHxkrcyM2B3fdT0evciBVajJVBtzozfms8hLucCgEhr7cebwXahlJiDhFrt7pv
-         M6/Q==
-X-Gm-Message-State: AOJu0Yxc5IdmG3WRzs5ZFJAoZOAuFEs+Q5dbFxr5P4eooRtXK1+tReM1
-        n0v2Z6d+zXp0p29tDwCReIdcfjXfr8k=
-X-Google-Smtp-Source: AGHT+IGEJXlmfYdnmKRoQpWaQTgFCurbJ09quM+fNTwkuvqTjcqc3FVYBXuwhcjTaI/UyapglV5A6A==
-X-Received: by 2002:a5d:960d:0:b0:783:5209:c01 with SMTP id w13-20020a5d960d000000b0078352090c01mr3769980iol.17.1691186255419;
-        Fri, 04 Aug 2023 14:57:35 -0700 (PDT)
-Received: from lvondent-mobl4.. (c-71-236-201-58.hsd1.or.comcast.net. [71.236.201.58])
-        by smtp.gmail.com with ESMTPSA id ft25-20020a056638661900b0042b1cd4c096sm794256jab.74.2023.08.04.14.57.34
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Aug 2023 14:57:34 -0700 (PDT)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ] iso-tester: Fix test ISO Connect2 CIG 0x01 - Success/Invalid
-Date:   Fri,  4 Aug 2023 14:57:33 -0700
-Message-ID: <20230804215733.1049271-1-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.41.0
+        Fri, 4 Aug 2023 18:50:26 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1846546B3
+        for <linux-bluetooth@vger.kernel.org>; Fri,  4 Aug 2023 15:50:24 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 663306216A
+        for <linux-bluetooth@vger.kernel.org>; Fri,  4 Aug 2023 22:50:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id CC612C433CB;
+        Fri,  4 Aug 2023 22:50:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1691189423;
+        bh=Rw2JVx8IQ4HbCBxmyIfjk60aS9i7uzZIJa4+3NXV3aM=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=Ufe9PWIR8xCUswKsbgYpC30nAg0PH1+dgTK3VnvcHZxjqy68WdrrNkWVnJhnJVZYD
+         bJATtWbtRSWilQOjwSvhx5xBZZxyB7OK16JsEoCy525KtBuYLZEAmN8lGFHHakedlj
+         aObpvSp9MBT62D1BOJKU496HHlmycO6xVO8slcXtuFikQXGyAWfGTrqhlBTMLHrScb
+         oJUKdtOZnZxaqf9t51Qp/CIUTXvUJRw3s4ot96lmE5O+NIQG8Tg04NqjuCDRnOGbIu
+         wxMZM1cZ7DmQn+KE7JCWlSIobR+Pi5E74f8s/Npcmspv4j7wNu+U8nJTCdaCeuhznz
+         rS2AOh11uGH9w==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id B02D1C6445B;
+        Fri,  4 Aug 2023 22:50:23 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Subject: Re: [PATCH v2 1/5] Bluetooth: hci_sync: Fix handling of
+ HCI_OP_CREATE_CONN_CANCEL
+From:   patchwork-bot+bluetooth@kernel.org
+Message-Id: <169118942371.8518.5868752901322841839.git-patchwork-notify@kernel.org>
+Date:   Fri, 04 Aug 2023 22:50:23 +0000
+References: <20230804001115.907885-1-luiz.dentz@gmail.com>
+In-Reply-To: <20230804001115.907885-1-luiz.dentz@gmail.com>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     linux-bluetooth@vger.kernel.org
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Hello:
 
-This test shall succeed rather than fail as this appears to be a bug in
-the kernel code preventing Set CIG Parameters to work properly when
-there are concurrent tasks only one CIS is being programmed.
----
- tools/iso-tester.c | 29 +++--------------------------
- 1 file changed, 3 insertions(+), 26 deletions(-)
+This series was applied to bluetooth/bluetooth-next.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-diff --git a/tools/iso-tester.c b/tools/iso-tester.c
-index bbf959420488..9b9716e06bdb 100644
---- a/tools/iso-tester.c
-+++ b/tools/iso-tester.c
-@@ -2402,29 +2402,6 @@ static void test_connect2_seq(const void *test_data)
- 	setup_connect(data, 0, iso_connect2_seq_cb);
- }
- 
--static void test_connect2_nodefer(const void *test_data)
--{
--	struct test_data *data = tester_get_data();
--	int sk, err;
--
--	/* Second connect() shall fail, because CIG is then busy,
--	 * but the first connect() shall succeed.
--	 */
--	setup_connect(data, 0, iso_connect_cb);
--
--	sk = create_iso_sock(data);
--	if (sk < 0) {
--		tester_test_failed();
--		return;
--	}
--
--	err = connect_iso_sock(data, 1, sk);
--	if (err != -EINVAL)
--		tester_test_failed();
--
--	close(sk);
--}
--
- static gboolean iso_connect_close_cb(GIOChannel *io, GIOCondition cond,
- 							gpointer user_data)
- {
-@@ -2697,13 +2674,13 @@ int main(int argc, char *argv[])
- 	test_iso("ISO Connect Wait Close - Success", &connect_16_2_1,
- 					setup_powered, test_connect_wait_close);
- 
--	test_iso2("ISO Defer Connect2 CIG 0x01 - Success", &defer_1_16_2_1,
-+	test_iso2("ISO Connect2 CIG 0x01 - Success", &connect_1_16_2_1,
- 							setup_powered,
- 							test_connect2);
- 
--	test_iso2("ISO Connect2 CIG 0x01 - Success/Invalid", &connect_1_16_2_1,
-+	test_iso2("ISO Defer Connect2 CIG 0x01 - Success", &defer_1_16_2_1,
- 							setup_powered,
--							test_connect2_nodefer);
-+							test_connect2);
- 
- 	test_iso("ISO Defer Send - Success", &connect_16_2_1_defer_send,
- 							setup_powered,
+On Thu,  3 Aug 2023 17:11:11 -0700 you wrote:
+> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> 
+> When sending HCI_OP_CREATE_CONN_CANCEL it shall Wait for
+> HCI_EV_CONN_COMPLETE, not HCI_EV_CMD_STATUS, when the reason is
+> anything but HCI_ERROR_REMOTE_POWER_OFF. This reason is used when
+> suspending or powering off, where we don't want to wait for the peer's
+> response.
+> 
+> [...]
+
+Here is the summary with links:
+  - [v2,1/5] Bluetooth: hci_sync: Fix handling of HCI_OP_CREATE_CONN_CANCEL
+    https://git.kernel.org/bluetooth/bluetooth-next/c/0e4cdf2f6122
+  - [v2,2/5] Bluetooth: hci_sync: Fix UAF on hci_abort_conn_sync
+    https://git.kernel.org/bluetooth/bluetooth-next/c/bdc83c443c30
+  - [v2,3/5] Bluetooth: ISO: Fix not checking for valid CIG/CIS IDs
+    https://git.kernel.org/bluetooth/bluetooth-next/c/e5ab05c24643
+  - [v2,4/5] Bluetooth: hci_conn: Fix modifying handle while aborting
+    (no matching commit)
+  - [v2,5/5] Bluetooth: hci_conn: Fix not allowing valid CIS ID
+    https://git.kernel.org/bluetooth/bluetooth-next/c/90b1f9ebdea4
+
+You are awesome, thank you!
 -- 
-2.41.0
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
