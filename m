@@ -2,199 +2,135 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9AB3B770FA2
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  5 Aug 2023 14:29:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 69EB2771006
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  5 Aug 2023 16:00:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229832AbjHEM3Q (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 5 Aug 2023 08:29:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33564 "EHLO
+        id S229460AbjHEOAW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 5 Aug 2023 10:00:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229640AbjHEM3P (ORCPT
+        with ESMTP id S229379AbjHEOAV (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 5 Aug 2023 08:29:15 -0400
-Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [IPv6:2a0b:5c81:1c1::37])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1722D44BE
-        for <linux-bluetooth@vger.kernel.org>; Sat,  5 Aug 2023 05:29:13 -0700 (PDT)
-Received: from monolith.lan (unknown [193.138.7.138])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: pav)
-        by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4RJ22H3LS9z49QDY;
-        Sat,  5 Aug 2023 15:29:11 +0300 (EEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
-        t=1691238551;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=6p/eY8ZiJZCTVIgdFf+d3LFmvIBSfdQ2sPHZzcmxOao=;
-        b=kThWTktWiBFDzp5V8VwowVN3lYkeowM8sdrl8HZyb5J5ET9dwag+6lm3lpoQ6t2VObcbtI
-        c+zJYdtSHzD9PddiRhQOULsxKIIoKRCE5M43iXodVxSGgRobdwLrI0DpX9fCGrFE19XGOf
-        Lxr9whm/MgniVbTwLl18mJFITE52X0awR6h3NSqBHTnyBqRMTVf8GEhO6N3Mk7qN6fR/Yz
-        ZCTzMCKNSJMgxRurMXzWUMlksLBu2+33BO37gwOsbSf0OgrdM0I3y7lW7x9KaeYcJPGYK0
-        RUh3c6yX0Yv6XaxPo2TQKAi76BpzX3yKJ9swm6o7k6yCIhjnCunUaXJoG6QHLg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-        s=lahtoruutu; t=1691238551;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=6p/eY8ZiJZCTVIgdFf+d3LFmvIBSfdQ2sPHZzcmxOao=;
-        b=JWRJEH458k2Xa7LhM3eX9Y89FYJVWnbjGvPMtxzbIxVeM7J34n+Li5lTnddDtq1NujU3Qm
-        MnDMw+G9qlxqPUVUdjVV0K/aRY1NrCXEitVSQju+TJtjvoHwvNEq9lK8UF4W4ReFIy44+T
-        iE8OEb0yYokyLerz8KlhoFjlGK5wVw8NkhND2+u9qWd43qqHrU3VkB6Sj0lZG25MZs16Tb
-        wgVJfh5XcOOp3mk7lklxFoBed7D4qRlgM3ovFqSO4NAfKd9yHIrTaIGjEsAj4WY69wOITA
-        8IJ97A0q90oIyUFlbv7CU9IQ6lorTzsTBAz0iV8M0YAP1t+vLH44jBrcLn7ZkQ==
-ARC-Authentication-Results: i=1;
-        ORIGINATING;
-        auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
-ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1691238551; a=rsa-sha256;
-        cv=none;
-        b=tUnDy0cIBP2bMppUyDlgj2o1wiTVGcHk/pJpYQ2ekaugmIl7z0I7RU3y5RQcggZ9aRY5Pg
-        umrNApyCkJbS0yAZThE+UI4sMVr0HqM8cp9R6Nq08Dh0FmFI7VuLvpkX/tg3NKavTR84Ry
-        wv25N9oj3ROUXwe0hQgFAe4v9dNb4WQgk3/HF8K8URRXCg2YlP9PWMyXrcYFR/fFobVG7Q
-        rs9wRY7EXVm1+TrRaMfXmVkxQC45Fkl6u+I0SLWebkmf5hERq1eCwLrMxTleQwbsCJ2HjL
-        F9N1IGWTYbdcV5VV69yPxjM6CCdYZmnRte3OQjU4Yw9uXwOXAwwRTdQh1ROl0w==
-From:   Pauli Virtanen <pav@iki.fi>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ 2/2] iso-tester: test busy CIG error does not drop existing connections
-Date:   Sat,  5 Aug 2023 15:29:07 +0300
-Message-ID: <5f173b905f8e1cc755cd53d89481c011e3c4cf48.1691238245.git.pav@iki.fi>
-X-Mailer: git-send-email 2.41.0
+        Sat, 5 Aug 2023 10:00:21 -0400
+Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E225FD7
+        for <linux-bluetooth@vger.kernel.org>; Sat,  5 Aug 2023 07:00:16 -0700 (PDT)
+Received: by mail-qv1-xf30.google.com with SMTP id 6a1803df08f44-63d23473ed5so17946576d6.1
+        for <linux-bluetooth@vger.kernel.org>; Sat, 05 Aug 2023 07:00:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1691244016; x=1691848816;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=8TY7jpRH5KAxOpgiRWStjPnmPd4lBqipx5T8kiwEkmY=;
+        b=oUqW6zmHs7uJP6P/C8xBVi6KbeEWa7NR4Jpz/JMzX/5UyB+yK7LmyDmUbFK2RnFHlB
+         l1KmpbiftROQZusVuIu2tpgsWhpes6mRziTYh8C2EvK2MC5h0kBB94S4d2NxLqVggM1o
+         WcVQr3ODB38laEiPVkY/9Kvu14Qr7y/jsbmqZDHdl8Ac1J1fpkCkKpRr2viaQmvQr/Gb
+         YizhuBpx/rN/PzDXa/qZrXUjWiPDN99XYZm5EplgsPtqco78Qpof04xMNO2DfsCep929
+         kwr3vDGsrIfDsF6wWrKpO6qEhXlqWaxKnMGOZ8m23UZQUcabFsuTq41tohKKWyEbm2sU
+         z9sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691244016; x=1691848816;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8TY7jpRH5KAxOpgiRWStjPnmPd4lBqipx5T8kiwEkmY=;
+        b=gY8x0Vz0QWMVp5HYmlwIqUJvPRpzoz3fwYTpERqJGOFBPdae0/D4s/FoTuFuq7QPzv
+         pGYLNDVXOwubbk8zncw7ERRrz1F0FXM7lcjzO+iGhxu8bhX9plFKoiyfVzlKXa01JpNS
+         FCaFOPB+5GT+YdDKVSNlz4s36NaqjHcTh+2jGFzSFDKXV1W6k+HA15GbXxzuC0sqlL5j
+         0tny0ijgrmGgF1fmwAIUMrencHvSyz52Vi7urkj4LFVI9zZEvWsnP49w15Q/sYKj/d1d
+         Q4Ej6E2UQrxcE6pFfh0/oUsqEE4lJjt88bTLMok9Cxl54zh26T/xVJS/3GyO7P8G9RBZ
+         wlXQ==
+X-Gm-Message-State: AOJu0YwiXNPU7bDJFRH+9t7PGZtTF+Jyx3tfZJtdt1hk4/9ndBv/TVyo
+        B7R8BhYhTC8uYUfeXlACoa5id///pag=
+X-Google-Smtp-Source: AGHT+IHBr3/OjITePGVSx9KsXo5OkTgZSKCSWuubbx5RnIML4QBOh/JwN6YQpw8wTxXq8Kjlr75XvQ==
+X-Received: by 2002:a05:620a:44c6:b0:765:5b54:93c8 with SMTP id y6-20020a05620a44c600b007655b5493c8mr5652782qkp.76.1691244015240;
+        Sat, 05 Aug 2023 07:00:15 -0700 (PDT)
+Received: from [172.17.0.2] ([172.177.72.63])
+        by smtp.gmail.com with ESMTPSA id y3-20020a37e303000000b0075b2af4a076sm1357005qki.16.2023.08.05.07.00.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 05 Aug 2023 07:00:14 -0700 (PDT)
+Message-ID: <64ce55ee.370a0220.2012f.648e@mx.google.com>
+Date:   Sat, 05 Aug 2023 07:00:14 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============8164197711521352707=="
+MIME-Version: 1.0
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, pav@iki.fi
+Subject: RE: [BlueZ,1/2] btdev: fix CIG ID on Set CIG Parameters error response
 In-Reply-To: <570f7e0427b35925c741118d397eb8bcbcb51efe.1691238245.git.pav@iki.fi>
 References: <570f7e0427b35925c741118d397eb8bcbcb51efe.1691238245.git.pav@iki.fi>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Reply-To: linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-A second connection made with same CIG while the CIG is busy, shall not
-disconnect the first already existing connection.
+--===============8164197711521352707==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-Add test for this:
+This is automated email and please do not reply to this email!
 
-ISO Connect2 Busy CIG 0x01 - Success/Invalid
+Dear submitter,
 
-This was the original intent of "ISO Connect2 CIG 0x01 -
-Success/Invalid", but the busy check should not be made synchronously in
-connect() (to maintain ordering with Remove CIG etc), but must be done
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=773356
+
+---Test result---
+
+Test Summary:
+CheckPatch                    FAIL      1.33 seconds
+GitLint                       PASS      0.69 seconds
+BuildEll                      PASS      27.37 seconds
+BluezMake                     PASS      887.61 seconds
+MakeCheck                     PASS      12.75 seconds
+MakeDistcheck                 PASS      157.93 seconds
+CheckValgrind                 PASS      259.09 seconds
+CheckSmatch                   WARNING   347.36 seconds
+bluezmakeextell               PASS      104.51 seconds
+IncrementalBuild              PASS      1448.91 seconds
+ScanBuild                     PASS      1077.92 seconds
+
+Details
+##############################
+Test: CheckPatch - FAIL
+Desc: Run checkpatch.pl script
+Output:
+[BlueZ,2/2] iso-tester: test busy CIG error does not drop existing connections
+WARNING:TYPO_SPELLING: 'explictly' may be misspelled - perhaps 'explicitly'?
+#97: 
 in hci_sync. So the test needs to check the error async and explictly
-that the first conn is not dropped.
+                                                            ^^^^^^^^^
+
+/github/workspace/src/src/13342572.patch total: 0 errors, 1 warnings, 97 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/github/workspace/src/src/13342572.patch has style problems, please review.
+
+NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+##############################
+Test: CheckSmatch - WARNING
+Desc: Run smatch tool with source
+Output:
+emulator/btdev.c:420:29: warning: Variable length array is used.
+
+
 ---
- tools/iso-tester.c | 85 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 85 insertions(+)
+Regards,
+Linux Bluetooth
 
-diff --git a/tools/iso-tester.c b/tools/iso-tester.c
-index 9b9716e06..5a8b1fe68 100644
---- a/tools/iso-tester.c
-+++ b/tools/iso-tester.c
-@@ -2402,6 +2402,87 @@ static void test_connect2_seq(const void *test_data)
- 	setup_connect(data, 0, iso_connect2_seq_cb);
- }
- 
-+static gboolean test_connect2_busy_done(gpointer user_data)
-+{
-+	struct test_data *data = tester_get_data();
-+
-+	if (data->io_id[0] > 0) {
-+		/* First connection still exists */
-+		g_source_remove(data->io_id[0]);
-+		data->io_id[0] = 0;
-+		tester_test_passed();
-+	} else {
-+		tester_test_failed();
-+	}
-+
-+	return FALSE;
-+}
-+
-+static gboolean iso_connect_cb_busy_disc(GIOChannel *io, GIOCondition cond,
-+							gpointer user_data)
-+{
-+	struct test_data *data = tester_get_data();
-+
-+	data->io_id[0] = 0;
-+
-+	tester_print("Disconnected 1");
-+	tester_test_failed();
-+	return FALSE;
-+}
-+
-+static gboolean iso_connect_cb_busy_2(GIOChannel *io, GIOCondition cond,
-+							gpointer user_data)
-+{
-+	struct test_data *data = tester_get_data();
-+	int err, sk_err, sk;
-+	socklen_t len;
-+
-+	data->io_id[1] = 0;
-+
-+	sk = g_io_channel_unix_get_fd(io);
-+
-+	len = sizeof(sk_err);
-+
-+	if (getsockopt(sk, SOL_SOCKET, SO_ERROR, &sk_err, &len) < 0)
-+		err = -errno;
-+	else
-+		err = -sk_err;
-+
-+	tester_print("Connected 2: %d", err);
-+
-+	if (err == -EBUSY && data->io_id[0] > 0) {
-+		/* Wait in case first connection still gets disconnected */
-+		data->io_id[1] = g_timeout_add(250, test_connect2_busy_done,
-+									data);
-+	} else {
-+		tester_test_failed();
-+	}
-+
-+	return FALSE;
-+}
-+
-+static gboolean iso_connect_cb_busy(GIOChannel *io, GIOCondition cond,
-+							gpointer user_data)
-+{
-+	struct test_data *data = tester_get_data();
-+
-+	/* First connection shall not be disconnected */
-+	data->io_id[0] = g_io_add_watch(io, G_IO_ERR | G_IO_HUP,
-+						iso_connect_cb_busy_disc, data);
-+
-+	/* Second connect shall fail since CIG is now busy */
-+	setup_connect(data, 1, iso_connect_cb_busy_2);
-+
-+	return iso_connect(io, cond, user_data);
-+}
-+
-+static void test_connect2_busy(const void *test_data)
-+{
-+	struct test_data *data = tester_get_data();
-+
-+	setup_connect(data, 0, iso_connect_cb_busy);
-+}
-+
- static gboolean iso_connect_close_cb(GIOChannel *io, GIOCondition cond,
- 							gpointer user_data)
- {
-@@ -2678,6 +2759,10 @@ int main(int argc, char *argv[])
- 							setup_powered,
- 							test_connect2);
- 
-+	test_iso2("ISO Connect2 Busy CIG 0x01 - Success/Invalid",
-+					&connect_1_16_2_1, setup_powered,
-+					test_connect2_busy);
-+
- 	test_iso2("ISO Defer Connect2 CIG 0x01 - Success", &defer_1_16_2_1,
- 							setup_powered,
- 							test_connect2);
--- 
-2.41.0
 
+--===============8164197711521352707==--
