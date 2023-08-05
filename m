@@ -2,42 +2,69 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E4AB8770E72
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  5 Aug 2023 09:31:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 50E47770FA1
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  5 Aug 2023 14:29:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229793AbjHEHbg (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 5 Aug 2023 03:31:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47762 "EHLO
+        id S229803AbjHEM3P (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 5 Aug 2023 08:29:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229379AbjHEHbe (ORCPT
+        with ESMTP id S229469AbjHEM3O (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 5 Aug 2023 03:31:34 -0400
-Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 340E64EC8
-        for <linux-bluetooth@vger.kernel.org>; Sat,  5 Aug 2023 00:31:32 -0700 (PDT)
-Received: from [192.168.0.2] (ip5f5aefd9.dynamic.kabel-deutschland.de [95.90.239.217])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+        Sat, 5 Aug 2023 08:29:14 -0400
+Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [185.185.170.37])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B6C144BD
+        for <linux-bluetooth@vger.kernel.org>; Sat,  5 Aug 2023 05:29:13 -0700 (PDT)
+Received: from monolith.lan (unknown [193.138.7.138])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        (Authenticated sender: pmenzel)
-        by mx.molgen.mpg.de (Postfix) with ESMTPSA id 752DC61E5FE06;
-        Sat,  5 Aug 2023 09:31:10 +0200 (CEST)
-Message-ID: <47e6ab77-e1dd-4ede-b75d-f484b2593395@molgen.mpg.de>
-Date:   Sat, 5 Aug 2023 09:31:08 +0200
+        (Authenticated sender: pav)
+        by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4RJ22H0vgfz49QDB;
+        Sat,  5 Aug 2023 15:29:10 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
+        t=1691238551;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=L2rw73kLroKoM/0YJSlR8IioJr3KPJjTt7OYh30MAjk=;
+        b=VXW3nR4N1YUiUjhfHmhl02GPpAUCAORLTPV2mEoYmImrtbhgjD7aIlhVYPp2L+YMqVNKo8
+        qpOFV8wyiSu8RnU9lK0VMbxlVzzZCet8ZCBW3JZx3407c9MXVy2aAXfnfbq9yOGBMZ9NEj
+        kW/e6gtmFpXCf9LHV3n2ITvRih5r31Aa6q70nmtnQWnTKwQIKAnbl5l2LT6713Xu7oEZsu
+        vj8raaG/Ifhi1gqpkS5WAxB/e1Yo3Tl/Zyio4LWofjLfJz2bOaFbDjk8nNHzv3fSqRysZQ
+        oQHMfwkdKGE3dS6rzX/ertWVBF+dy16rA/+UzNquJTe6n0bAw0Wzgy578IzQww==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
+        s=lahtoruutu; t=1691238551;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=L2rw73kLroKoM/0YJSlR8IioJr3KPJjTt7OYh30MAjk=;
+        b=reitWZ69k2qjlOMW9kS2El0F3yE34d2cEi5o97100fb8g7PFyQhRC7fHFc0rdXlob0M2Fz
+        nps+mxLphrQecNBqnqVKTtSUwXO5XgZTlbn7bGzjLTyNpjLG85x2aAaEzIKJqZdZkCHAud
+        lJ/xqtVs0fCn8lb/j2IP/5q7+d8RFN0S8loLapKCVQC+hYRaSLO/nhxNp4+WdqiKh79zch
+        qSwLBa/wPMZXwOoCpcyGAQ/8GSHOUoLIp6oeolhqi0o3dAx6msePVa6wVmry493yvyxcfW
+        jHNRHY26OxmgS4rqP1m/iJfyB2R+mxS6aqA8pIVXEzIFyQQnkGsjgq7XAZy3yA==
+ARC-Authentication-Results: i=1;
+        ORIGINATING;
+        auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
+ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1691238551; a=rsa-sha256;
+        cv=none;
+        b=iUzZCz2JgVMvEFqqYmMEL9Qpe20uguU3g9xn7hXxZUkcyOG7ajZm60D38cXPww8l/U85Aj
+        vwnhNr9NBt6iMAyWDlGZrd/VOzDt1Q5n0DmIWEzsUqIjNMExgbPn4/8WoYGMXpDK9E+zJr
+        npp4PGRJZEw2BHuJ+SjPfblwg+Rux0HCgN1wuvIgcQi0S5dSo4sPhX7umbi2958T2ShCSz
+        OE0oHZueg1G606A0tKZuFQXAinu5YFB87uIs1oMuuatT2iHn36KA8yW8tqwSthKl3o+NAl
+        oc65tyNoS7FTHDCoSjGXHV2/yOJQaNDbxGkTk0cR6Ot1TBjXvon/g1myR9uFig==
+From:   Pauli Virtanen <pav@iki.fi>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Pauli Virtanen <pav@iki.fi>
+Subject: [PATCH BlueZ 1/2] btdev: fix CIG ID on Set CIG Parameters error response
+Date:   Sat,  5 Aug 2023 15:29:06 +0300
+Message-ID: <570f7e0427b35925c741118d397eb8bcbcb51efe.1691238245.git.pav@iki.fi>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: regression: kernel 6.4.x breaks scanning/pairing (but not use) of
- LE devices
-To:     Bruno Pitrus <brunopitrus@hotmail.com>
-References: <2300626.ElGaqSPkdT@bruno-beit>
-Content-Language: en-US
-Cc:     linux-bluetooth@vger.kernel.org, regressions@lists.linux.dev,
-        Takashi Iwai <tiwai@suse.de>
-From:   Paul Menzel <pmenzel@molgen.mpg.de>
-In-Reply-To: <2300626.ElGaqSPkdT@bruno-beit>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -45,36 +72,33 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-[Cc: +regressions@]
+Set CIG Parameters shall return correct CIG ID in Command_Complete also
+when it errors.
+---
+ emulator/btdev.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-#regzbot introduced v6.3.9..v6.4.2
+diff --git a/emulator/btdev.c b/emulator/btdev.c
+index 38dcb189e..58414bd74 100644
+--- a/emulator/btdev.c
++++ b/emulator/btdev.c
+@@ -5872,6 +5872,8 @@ static int cmd_set_cig_params(struct btdev *dev, const void *data,
+ 
+ 	memset(&rsp, 0, sizeof(rsp));
+ 
++	rsp.params.cig_id = cmd->cig_id;
++
+ 	if (cmd->num_cis > ARRAY_SIZE(dev->le_cig[0].cis)) {
+ 		rsp.params.status = BT_HCI_ERR_MEM_CAPACITY_EXCEEDED;
+ 		goto done;
+@@ -5942,7 +5944,6 @@ static int cmd_set_cig_params(struct btdev *dev, const void *data,
+ 	}
+ 
+ 	rsp.params.status = BT_HCI_ERR_SUCCESS;
+-	rsp.params.cig_id = cmd->cig_id;
+ 
+ 	for (i = 0; i < cmd->num_cis; i++) {
+ 		rsp.params.num_handles++;
+-- 
+2.41.0
 
-Dear Bruno,
-
-
-Thank you for your report.
-
-Am 04.08.23 um 20:55 schrieb Bruno Pitrus:
-> I am using openSUSE Tumbleweed on a Dell Precision 3551 which has a
-> bluetooth adapter of ID 8087:0026 (Intel AX201). I am using a
-> Logitech M575 trackball mouse which only supports Bluetooth LE.
-> 
-> With kernel 6.4.2 or newer, scanning for devices — using either the
-> KDE gui or bluetoothctl — most of the time returns only “classic
-> bluetooth” devices like computers and phones, and not the mouse. If
-> the mouse was paired before, it works correctly however.
-> 
-> With previous kernel versions (6.3.9 and before), pairing the mouse
-> worked correctly.
-
-Are you able to bisect the regression? Please also attach the Linux 
-messages. (You can also create a ticket in the Linux kernel Bugzilla [1] 
-and attach everything there.)
-
-
-Kind regards,
-
-Paul
-
-
-[1]: https://bugzilla.kernel.org/
