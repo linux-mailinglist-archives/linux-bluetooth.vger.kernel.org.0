@@ -2,185 +2,74 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0696E773BE4
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Aug 2023 17:57:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 803B4774355
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Aug 2023 20:01:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231191AbjHHP5m (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 8 Aug 2023 11:57:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37022 "EHLO
+        id S233834AbjHHSBv (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 8 Aug 2023 14:01:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231132AbjHHPz6 (ORCPT
+        with ESMTP id S229570AbjHHSBW (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 8 Aug 2023 11:55:58 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14E5D5B8A
-        for <linux-bluetooth@vger.kernel.org>; Tue,  8 Aug 2023 08:43:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1691509428; x=1723045428;
-  h=date:from:to:cc:subject:message-id;
-  bh=lNmuMfebT5EzHd6ekhBJ+qqub1gPCjCg0ObNj2KYyY0=;
-  b=N1J0Eh8yJoZho9QXFYObbcxDojEbpp6lVpdtx6/lJSuXB2PSuAzJyqz6
-   uDmnrOX3LfB/9wHlPW367pRb5sImwIUSPva/9ouMK6la6T3tnLuzcrC01
-   rD5eFg2wac9LCXDAOTtWPGu5yE1FaK5a0H8OW7K09HeTMKEcfwwvbGsiH
-   ST5ENG7N9UCLrzA3claba6+p10hZdqmkizGiX0ess4P2PrUU81Vp84e9R
-   8pesxRB7IKjguypRssbn+DzLDyv9HdWKTrKNjIXGVSS1ymecypxj2fkgS
-   CZ5JzbAGSfaaIaBBctJGh33ik56nIMXHt2hAJaPpI1TjGyAFSSF4U4EIZ
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10795"; a="457188125"
-X-IronPort-AV: E=Sophos;i="6.01,156,1684825200"; 
-   d="scan'208";a="457188125"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Aug 2023 05:01:58 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10795"; a="845456477"
-X-IronPort-AV: E=Sophos;i="6.01,156,1684825200"; 
-   d="scan'208";a="845456477"
-Received: from lkp-server01.sh.intel.com (HELO d1ccc7e87e8f) ([10.239.97.150])
-  by fmsmga002.fm.intel.com with ESMTP; 08 Aug 2023 05:01:57 -0700
-Received: from kbuild by d1ccc7e87e8f with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1qTLPQ-0005K1-1E;
-        Tue, 08 Aug 2023 12:01:56 +0000
-Date:   Tue, 08 Aug 2023 20:01:52 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Cc:     linux-bluetooth@vger.kernel.org
-Subject: [bluetooth-next:master] BUILD SUCCESS
- 6130cdd83d4078d7cbf7792e201d53bf944ee035
-Message-ID: <202308082050.oOSF0Wwk-lkp@intel.com>
-User-Agent: s-nail v14.9.24
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        Tue, 8 Aug 2023 14:01:22 -0400
+Received: from mail.svario.it (mail.svario.it [IPv6:2a02:2770:13::112:0:1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0F872D1C9
+        for <linux-bluetooth@vger.kernel.org>; Tue,  8 Aug 2023 09:28:11 -0700 (PDT)
+Received: from localhost.localdomain (dynamic-078-048-063-071.78.48.pool.telefonica.de [78.48.63.71])
+        by mail.svario.it (Postfix) with ESMTPSA id 81C2BD86EC;
+        Tue,  8 Aug 2023 08:58:06 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=svario.it; s=201710;
+        t=1691477886; bh=N1gFyDCblnESnweKHz3F7v4xl5qu1zu2eTSZAbC51A0=;
+        h=From:To:Cc:Subject:Date:From;
+        b=uPCb6rRq3asG5k6ov7Ry5hiaoHgtnbkPmaoypjRZirOTNyPHFCqwTHqeaEeOKA5Gm
+         JcCqnpsR5BGbP8Zs2jbwFA6gPAOSFuOPyznhDbvvTusqGPZNXrex3LGFsbYUCNmcV5
+         J4sjIlA5mpr4RPM2CKhm81Hbwyf4CgNagy9288TUFaRHfzX9LeVaYU3VWtN8uAuk7p
+         Kd4pSNKLGvs8L67sUFROV3nKG1I7AiThIgam1mUnS8cQ/6MyxSXf7Oz4ZxXy1yjyy3
+         7LsSkVMyfdRUtGwHJQ7tR/uukg4nUklOt5pdDguia81+7qtZJgkr2TOVJ2EZYUwN+u
+         KWCtiD+Y6dWDg==
+From:   Gioele Barabucci <gioele@svario.it>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Gioele Barabucci <gioele@svario.it>
+Subject: [PREFIX BlueZ 0/1] Makefile.am: Install D-Bus policy in /usr/share, not /etc
+Date:   Tue,  8 Aug 2023 08:57:33 +0200
+Message-Id: <20230808065734.1475152-1-gioele@svario.it>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        RCVD_IN_SBL_CSS,SPF_HELO_PASS,SPF_PASS,URIBL_BLOCKED autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git master
-branch HEAD: 6130cdd83d4078d7cbf7792e201d53bf944ee035  Bluetooth: hci_conn: avoid checking uninitialized CIG/CIS ids
+This patch changes Makefile.am to install the bluez D-Bus policy in
+`/usr/share/dbus-1/system.d` instead of `/etc/dbus-1/system.d`.
 
-elapsed time: 726m
+From https://bugs.debian.org/1006631:
 
-configs tested: 108
-configs skipped: 3
+> dbus supports policy files in both /usr/share/dbus-1/system.d and
+> /etc/dbus-1/systemd. [The] recently released dbus 1.14.0, officially
+> deprecates installing packages' default policies into /etc/dbus-1/systemd,
+> instead reserving it for the sysadmin. This is the same idea as the
+> difference between /usr/lib/udev/rules.d and /etc/udev/rules.d.
 
-The following configs have been built successfully.
-More configs may be tested in the coming days.
+D-Bus supports reading policies from /usr since version 1.10,
+released in 2015:
+https://sources.debian.org/src/dbus/1.10.32-0%2Bdeb9u1/NEWS/#L483-L499
 
-tested configs:
-alpha                            allyesconfig   gcc  
-alpha                               defconfig   gcc  
-alpha                randconfig-r003-20230807   gcc  
-alpha                randconfig-r016-20230807   gcc  
-arc                              allyesconfig   gcc  
-arc                                 defconfig   gcc  
-arc                  randconfig-r043-20230807   gcc  
-arm                              allmodconfig   gcc  
-arm                              allyesconfig   gcc  
-arm                                 defconfig   gcc  
-arm                  randconfig-r046-20230807   gcc  
-arm64                            allyesconfig   gcc  
-arm64                               defconfig   gcc  
-arm64                randconfig-r001-20230807   gcc  
-arm64                randconfig-r004-20230807   gcc  
-arm64                randconfig-r025-20230807   clang
-csky                                defconfig   gcc  
-csky                 randconfig-r013-20230807   gcc  
-csky                 randconfig-r021-20230807   gcc  
-csky                 randconfig-r023-20230807   gcc  
-csky                 randconfig-r034-20230807   gcc  
-hexagon              randconfig-r012-20230807   clang
-hexagon              randconfig-r041-20230807   clang
-hexagon              randconfig-r045-20230807   clang
-i386                             allyesconfig   gcc  
-i386         buildonly-randconfig-r004-20230807   gcc  
-i386         buildonly-randconfig-r005-20230807   gcc  
-i386         buildonly-randconfig-r006-20230807   gcc  
-i386                              debian-10.3   gcc  
-i386                                defconfig   gcc  
-i386                 randconfig-i001-20230807   gcc  
-i386                 randconfig-i002-20230807   gcc  
-i386                 randconfig-i003-20230807   gcc  
-i386                 randconfig-i004-20230807   gcc  
-i386                 randconfig-i005-20230807   gcc  
-i386                 randconfig-i006-20230807   gcc  
-i386                 randconfig-i011-20230807   clang
-i386                 randconfig-i012-20230807   clang
-i386                 randconfig-i013-20230807   clang
-i386                 randconfig-i014-20230807   clang
-i386                 randconfig-i015-20230807   clang
-i386                 randconfig-i016-20230807   clang
-i386                 randconfig-r002-20230807   gcc  
-loongarch                        allmodconfig   gcc  
-loongarch                         allnoconfig   gcc  
-loongarch                           defconfig   gcc  
-loongarch            randconfig-r005-20230807   gcc  
-loongarch            randconfig-r032-20230807   gcc  
-m68k                             allmodconfig   gcc  
-m68k                             allyesconfig   gcc  
-m68k                                defconfig   gcc  
-microblaze           randconfig-r026-20230807   gcc  
-mips                             allmodconfig   gcc  
-mips                             allyesconfig   gcc  
-nios2                               defconfig   gcc  
-nios2                randconfig-r022-20230807   gcc  
-parisc                           allyesconfig   gcc  
-parisc                              defconfig   gcc  
-parisc               randconfig-r031-20230807   gcc  
-parisc               randconfig-r033-20230807   gcc  
-parisc64                            defconfig   gcc  
-powerpc                          allmodconfig   gcc  
-powerpc                           allnoconfig   gcc  
-powerpc              randconfig-r036-20230807   gcc  
-riscv                            allmodconfig   gcc  
-riscv                             allnoconfig   gcc  
-riscv                            allyesconfig   gcc  
-riscv                               defconfig   gcc  
-riscv                randconfig-r006-20230807   gcc  
-riscv                randconfig-r042-20230807   clang
-riscv                          rv32_defconfig   gcc  
-s390                             allmodconfig   gcc  
-s390                             allyesconfig   gcc  
-s390                                defconfig   gcc  
-s390                 randconfig-r011-20230807   clang
-s390                 randconfig-r044-20230807   clang
-sh                               allmodconfig   gcc  
-sparc                            allyesconfig   gcc  
-sparc                               defconfig   gcc  
-sparc64              randconfig-r024-20230807   gcc  
-um                               allmodconfig   clang
-um                                allnoconfig   clang
-um                               allyesconfig   clang
-um                                  defconfig   gcc  
-um                             i386_defconfig   gcc  
-um                   randconfig-r014-20230807   gcc  
-um                   randconfig-r015-20230807   gcc  
-um                           x86_64_defconfig   gcc  
-x86_64                           allyesconfig   gcc  
-x86_64       buildonly-randconfig-r001-20230807   gcc  
-x86_64       buildonly-randconfig-r002-20230807   gcc  
-x86_64       buildonly-randconfig-r003-20230807   gcc  
-x86_64                              defconfig   gcc  
-x86_64                                  kexec   gcc  
-x86_64               randconfig-x001-20230807   clang
-x86_64               randconfig-x002-20230807   clang
-x86_64               randconfig-x003-20230807   clang
-x86_64               randconfig-x004-20230807   clang
-x86_64               randconfig-x005-20230807   clang
-x86_64               randconfig-x006-20230807   clang
-x86_64               randconfig-x011-20230807   gcc  
-x86_64               randconfig-x012-20230807   gcc  
-x86_64               randconfig-x013-20230807   gcc  
-x86_64               randconfig-x014-20230807   gcc  
-x86_64               randconfig-x015-20230807   gcc  
-x86_64               randconfig-x016-20230807   gcc  
-x86_64                          rhel-8.3-rust   clang
-x86_64                               rhel-8.3   gcc  
+Regards,
+
+Gioele Barabucci (1):
+  Makefile.am: Install D-Bus policy in /usr/share, not /etc
+
+ Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.39.2
+
