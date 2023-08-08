@@ -2,217 +2,76 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC8E8774075
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Aug 2023 19:03:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 74D7A7743BD
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Aug 2023 20:09:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230135AbjHHRDg (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 8 Aug 2023 13:03:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51426 "EHLO
+        id S234323AbjHHSJL (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 8 Aug 2023 14:09:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233877AbjHHRCh (ORCPT
+        with ESMTP id S234514AbjHHSIk (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 8 Aug 2023 13:02:37 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21C8D58FBF
-        for <linux-bluetooth@vger.kernel.org>; Tue,  8 Aug 2023 09:01:24 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D72E0624BC
-        for <linux-bluetooth@vger.kernel.org>; Tue,  8 Aug 2023 13:30:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 42F6CC433C8
-        for <linux-bluetooth@vger.kernel.org>; Tue,  8 Aug 2023 13:30:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1691501440;
-        bh=PNfCVWP2Q5xV2FgRMKS2VdwvLzlh4M3mm4QhuY86UmM=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=jHcKbvCQBh8xuujOM9dQE3IxEWNCgbBO/uvqs92tjsmPVzPqYgEhQyrE84GW9LUsy
-         1lC1YDQlGkf+oJg94oaELxMg4aM00zb2LvkpwIXySmIcZ1OTXRwl+LX4lM0yVklh1s
-         LsyScGYdz9l+dnrzme54LcO9UmX82LvFFag5e+hZ1MWNe93c2mHwgMEVDaMmUXrch9
-         0v8sYmdPTffZ6wQWyFg13qIu30erzsgIItcLiDyTlltO9f/PS4MFpydnlKA7ajKpxQ
-         U31icZll0NdvxJQ1kBhjwhHtMFiCzqle3GzNKS9ySIkCV0KRLW+b4281PL0uAZ9Frw
-         lzVEwbGumAlEw==
-Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-        id 2A763C53BC6; Tue,  8 Aug 2023 13:30:40 +0000 (UTC)
-From:   bugzilla-daemon@kernel.org
+        Tue, 8 Aug 2023 14:08:40 -0400
+X-Greylist: delayed 2649 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 08 Aug 2023 10:11:36 PDT
+Received: from mail.svario.it (mail.svario.it [84.22.98.252])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B1A268BCE
+        for <linux-bluetooth@vger.kernel.org>; Tue,  8 Aug 2023 10:11:36 -0700 (PDT)
+Received: from localhost.localdomain (unknown [78.48.63.71])
+        by mail.svario.it (Postfix) with ESMTPSA id 63A5FD7637;
+        Tue,  8 Aug 2023 10:56:09 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=svario.it; s=201710;
+        t=1691484969; bh=Jyi25HsR8F9yJc4ku0ZKBf72iwYg112ebAsFzjSuzPo=;
+        h=From:To:Cc:Subject:Date:From;
+        b=cT8UBs4vHo18NEaN6P0khqT4KulqbLf41L1nvBLhhQF7q+n4nIOd0ca/uf5KyvHDj
+         0O0Bi9X3MYYF7HV0I+rp7gm/Wff0AsBkLmWTYOuspAK9O/RvVEpwihQtMN+6olvXp/
+         0d/koC0zDk+Bpqpvb7URu8bejbUNmeuJMFLxuHIE/TFHwE0skYbUI3R3KTrB4oRa1e
+         13r9iXPKfoi6N0wH7nTP+nreRZRQbAAXY14RSE1gQQHaTA0Pxr1yvzTjf9mWY5Wz7b
+         B+uqgbqsGVkRKi/JzOmorUUgDHnK4Dm0N+URp1iA109N1YhWwAI8K4DkE8FucQxqQ3
+         u+tt4AmY+1csw==
+From:   Gioele Barabucci <gioele@svario.it>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [Bug 217773] Bluetooth LE scan doesn't show device name
-Date:   Tue, 08 Aug 2023 13:30:39 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: bagasdotme@gmail.com
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P3
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: cc
-Message-ID: <bug-217773-62941-KfNi8AA17d@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-217773-62941@https.bugzilla.kernel.org/>
-References: <bug-217773-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+Cc:     Gioele Barabucci <gioele@svario.it>
+Subject: [PATCH BlueZ 0/1] Makefile.am: Install D-Bus policy in /usr/share, not /etc
+Date:   Tue,  8 Aug 2023 10:55:39 +0200
+Message-Id: <20230808085540.1475435-1-gioele@svario.it>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_PASS,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D217773
+(Resent with right subject tag.)
 
-Bagas Sanjaya (bagasdotme@gmail.com) changed:
+This patch changes Makefile.am to install the bluez D-Bus policy in
+`/usr/share/dbus-1/system.d` instead of `/etc/dbus-1/system.d`.
 
-           What    |Removed                     |Added
-----------------------------------------------------------------------------
-                 CC|                            |bagasdotme@gmail.com
+From https://bugs.debian.org/1006631:
 
---- Comment #1 from Bagas Sanjaya (bagasdotme@gmail.com) ---
-(In reply to TatriX from comment #0)
-> Hi!
-> At some point after kernel 5.9 I started having issues with LE device
-> scanning.
-> Here's how it used to work:
->=20
->     $ bluetoothctl
->     # power on
->     # scan on
->      ...
->     [NEW] Device 68:71:DD:73:97:D5 Playfinity-2
->=20
-> It successfully finds my device and it's name.
-> On a newer kernel instead I'm getting no name:
->=20
->     [NEW] Device 4D:18:19:A8:63:B5 4D-18-19-A8-63-B5
->=20
-> Here's corresponding btmon logs. First from kernel 5.9.12 that can see
-> device's name:
->=20
-> ```5.9.12
-> > HCI Event: LE Meta Event (0x3e) plen 33                  #118 [hci0]
-> 5.607028
->       LE Extended Advertising Report (0x0d)
->         Num reports: 1
->         Entry 0
->           Event type: 0x0013
->             Props: 0x0013
->               Connectable
->               Scannable
->               Use legacy advertising PDUs
->             Data status:  [0;32mComplete [0m
->           Legacy PDU Type: ADV_IND (0x0013)
->           Address type: Random (0x01)
->           Address: 68:71:DD:73:97:D5 (Resolvable)
->           Primary PHY: LE 1M
->           Secondary PHY: No packets
->           SID: no ADI field (0xff)
->           TX power: 127 dBm
->           RSSI: -54 dBm (0xca)
->           Periodic advertising interval: 0.00 msec (0x0000)
->           Direct address type: Public (0x00)
->           Direct address: 00:00:00:00:00:00 (OUI 00-00-00)
->           Data length: 0x07
->         02 01 06 03 02 f0 ff                             .......
->         Flags: 0x06
->           LE General Discoverable Mode
->           BR/EDR Not Supported
->         16-bit Service UUIDs (partial): 1 entry
->           Unknown (0xfff0)
-> > HCI Event: LE Meta Event (0x3e) plen 49                  #119 [hci0]
-> 5.608029
->       LE Extended Advertising Report (0x0d)
->         Num reports: 1
->         Entry 0
->           Event type: 0x001b
->             Props: 0x001b
->               Connectable
->               Scannable
->               Scan response
->               Use legacy advertising PDUs
->             Data status:  [0;32mComplete [0m
->           Legacy PDU Type: SCAN_RSP to an ADV_SCAN_IND (0x001b)
->           Address type: Random (0x01)
->           Address: 68:71:DD:73:97:D5 (Resolvable)
->           Primary PHY: LE 1M
->           Secondary PHY: No packets
->           SID: no ADI field (0xff)
->           TX power: 127 dBm
->           RSSI: -54 dBm (0xca)
->           Periodic advertising interval: 0.00 msec (0x0000)
->           Direct address type: Public (0x00)
->           Direct address: 00:00:00:00:00:00 (OUI 00-00-00)
->           Data length: 0x17
->         0d 09 50 6c 61 79 66 69 6e 69 74 79 2d 32 02 0a  ..Playfinity-2..
->         00 05 12 50 00 68 00                             ...P.h.
->         Name (complete): Playfinity-2
->         TX power: 0 dBm
->         Peripheral Conn. Interval: 0x0050 - 0x0068
-> ```
->=20
-> And from 6.4.8:
->=20
-> ```6.4.8
-> > HCI Event: LE Meta Event (0x3e) plen 33                  #130 [hci0]
-> 9.180207
->       LE Extended Advertising Report (0x0d)
->         Num reports: 1
->         Entry 0
->           Event type: 0x0013
->             Props: 0x0013
->               Connectable
->               Scannable
->               Use legacy advertising PDUs
->             Data status: =EF=BF=BD[0;32mComplete=EF=BF=BD[0m
->           Legacy PDU Type: ADV_IND (0x0013)
->           Address type: Random (0x01)
->           Address: 4D:18:19:A8:63:B5 (Resolvable)
->           Primary PHY: LE 1M
->           Secondary PHY: No packets
->           SID: no ADI field (0xff)
->           TX power: 127 dBm
->           RSSI: -53 dBm (0xcb)
->           Periodic advertising interval: 0.00 msec (0x0000)
->           Direct address type: Public (0x00)
->           Direct address: 00:00:00:00:00:00 (OUI 00-00-00)
->           Data length: 0x07
->         02 01 06 03 02 f0 ff                             .......
->         Flags: 0x06
->           LE General Discoverable Mode
->           BR/EDR Not Supported
->         16-bit Service UUIDs (partial): 1 entry
->           Unknown (0xfff0)
-> ```
->=20
-> I've tried compiling 5.9.12 to see if I can bissect, but it fails to comp=
-ile
-> with gcc12..
->=20
-> Is it expected that newer kernels can't get device name? Perhaps some
-> additional action is needed fetch it?
->=20=20
+> dbus supports policy files in both /usr/share/dbus-1/system.d and
+> /etc/dbus-1/systemd. [The] recently released dbus 1.14.0, officially
+> deprecates installing packages' default policies into /etc/dbus-1/systemd,
+> instead reserving it for the sysadmin. This is the same idea as the
+> difference between /usr/lib/udev/rules.d and /etc/udev/rules.d.
 
-Try using gcc 10 when compiling v5.9.12 kernel, then try reproducing this
-regression on v5.10, v5.15, and v6.1. Remember to test the mainline release=
-s,
-not stable tree (like v5.10.y). After that, please consult
-Documentation/admin-guide/bug-bisect.rst for how to perform bisection with =
-git.
+D-Bus supports reading policies from /usr since version 1.10,
+released in 2015:
+https://sources.debian.org/src/dbus/1.10.32-0%2Bdeb9u1/NEWS/#L483-L499
 
---=20
-You may reply to this email to add a comment.
+Regards,
 
-You are receiving this mail because:
-You are the assignee for the bug.=
+Gioele Barabucci (1):
+  Makefile.am: Install D-Bus policy in /usr/share, not /etc
+
+ Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+-- 
+2.39.2
+
