@@ -2,110 +2,338 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A358776699
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  9 Aug 2023 19:41:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E74CC7766DE
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  9 Aug 2023 20:02:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231546AbjHIRlj (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 9 Aug 2023 13:41:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55464 "EHLO
+        id S231789AbjHISCC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 9 Aug 2023 14:02:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229488AbjHIRlh (ORCPT
+        with ESMTP id S232981AbjHISB5 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 9 Aug 2023 13:41:37 -0400
-Received: from mail-oa1-x36.google.com (mail-oa1-x36.google.com [IPv6:2001:4860:4864:20::36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61799E71;
-        Wed,  9 Aug 2023 10:41:37 -0700 (PDT)
-Received: by mail-oa1-x36.google.com with SMTP id 586e51a60fabf-1bbafe6fd8fso25355fac.3;
-        Wed, 09 Aug 2023 10:41:37 -0700 (PDT)
+        Wed, 9 Aug 2023 14:01:57 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6494B1999
+        for <linux-bluetooth@vger.kernel.org>; Wed,  9 Aug 2023 11:01:55 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2ba1e9b1fa9so1332101fa.3
+        for <linux-bluetooth@vger.kernel.org>; Wed, 09 Aug 2023 11:01:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691602896; x=1692207696;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=ycbMab7q1HQ8UI9guXQ6JfRQeBQi+U/6NBqVjfVg4XI=;
-        b=IvMSxJhOCtdwgRwkslaJNYSn+5JmQuxnezIL91pP4DSC4ISclVOZNLZ18+UOP1q17Y
-         5ne3yJM58woh5mw0v7FA6HTV8bQ0sLHU5ALXWZR5efvuNFR2YaqQenmbdN4YXDVcd8//
-         3WyddVTTFcIWIjdydjQktBbFaNWmr0hFx+dmvHCaZJ/P+kmp2aM/55EMJmKsnTtvgIQv
-         FGEWafwD1HJWENmAWmgEytliTFEcU1fcHj7V0RS6fPb4bSXsfZ9k4i4SKGNw/tB6so4d
-         Msegmw0jCNyWPP/8syEeoLVP3Y3/4q16b2mEOG1ybZu2W5P8Rc6ZYEl0zLMSvtxiA3UE
-         qcHA==
+        d=gmail.com; s=20221208; t=1691604113; x=1692208913;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zxyZBuCcK9uKpJnp8jBKeKlBjHeBhIZN/cXWmfyGoss=;
+        b=Puv0iMmF/5eKP7qM3uBfp317QPV4Cvrix1W/nnoc2Cw1dynBoDBWk0Gr4cVS5sCfd6
+         M1vhYCaPFfci7gzqQAOE0CoNrIhcIIKfYqeHlbh1YdoPDL3By2xYWlrMsXHiPBCTWnOs
+         H21wfauvMHiO4655rDZh3MSGpyJaahC/aTwwh9wOgZsPppfRzhaqPi0y6oD0c27LkDAR
+         UKGuNb/QmLAN6cIv1xp2zuCs007svZlNAbDS0nI9VbENhRWq0BBIf3jg2BU7upRyigVL
+         MAek+ARQlVxZxYvVQf6P/39x5fnt/iCNzXHMugD9CXd7fWB8UAoAruZNu+wyvI/XaiAF
+         XcAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691602896; x=1692207696;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ycbMab7q1HQ8UI9guXQ6JfRQeBQi+U/6NBqVjfVg4XI=;
-        b=OtwVyClZx725FuYq4QZctFYO24kUesEEqIMVK8BUyLj8tOKGk4ft1ega3RvwJRpaRQ
-         oUmbcecBXAXCz936giNCKXdh4FqnfDsQqdq+cTE02JPfqHDmsp0MBbsiZ2lqNjaW1BwG
-         Rog1d2BZlfa8CHeq4Amq+qIRdsav911S9YErK5tre6N16k8L2PUk1DZoa9nETyaw7/j/
-         IE3Z8QYXZY0Qy4os2ml30P3FN8QfOxXut5+eq72H6F0jd1cLReHUq/hIlCNhj5f3MU0G
-         IUkqpzJV/6kKAXWvjHltSc21PXSPi+S83lejZD+OxcAff7XaVve7nWxJd7fgB4YLn5Vv
-         Qd5A==
-X-Gm-Message-State: AOJu0Yz2jyjen4SNG+7lXOL+ZFF8S6PEzmJ/uKgvRnaBhoLccq6wXCw5
-        XXUOnz7CdsaElzI9dXKqk0M=
-X-Google-Smtp-Source: AGHT+IFt2+p7mDezSGWcNMh+gx/zSJPM87d2ieMzJMky3a1LD4i6GdN08URcs54eVfbgy8epCJEp2A==
-X-Received: by 2002:a05:6870:d799:b0:187:e563:77b9 with SMTP id bd25-20020a056870d79900b00187e56377b9mr3192034oab.45.1691602896653;
-        Wed, 09 Aug 2023 10:41:36 -0700 (PDT)
-Received: from [192.168.1.119] ([216.130.59.33])
-        by smtp.gmail.com with ESMTPSA id g2-20020a9d6202000000b006b753685cc5sm7068299otj.79.2023.08.09.10.41.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Aug 2023 10:41:36 -0700 (PDT)
-Sender: Larry Finger <larry.finger@gmail.com>
-Message-ID: <33cd4c70-fcf1-d148-8f8b-66b81cd48d72@lwfinger.net>
-Date:   Wed, 9 Aug 2023 12:41:35 -0500
+        d=1e100.net; s=20221208; t=1691604113; x=1692208913;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zxyZBuCcK9uKpJnp8jBKeKlBjHeBhIZN/cXWmfyGoss=;
+        b=D9B2zQXsYgeSalP8rx/eUx4jYYlI0CleKK3qE5K1qOGpAXDgHR12Yq6ujWR5exxoQs
+         whAEGmJkD4ksBWhXbENUDBhsuD7HisCeWNznaKgZAYfXzTe9Je1+wm/nrgtRK0XMD4bs
+         oihCeLkpPXQJ5wz3yQ/e+GDZtxwZKmYBhNN7DBG0arD63y6aHwghpjPoWEZLZXmrZBCY
+         OvDh8fz/YCoLJQYOaKIhyiaPzC7re/vEeaPw6Y/6zMLFHJvoq5Gjy13PKcFb511Bqq2R
+         Ab6hqAOTv9aQhP6jfIMdH/ezJdjHpnbcurxODzpmRuL0Y7c0Fzcj7dqTiYcT2OzdFNQh
+         d4Ng==
+X-Gm-Message-State: AOJu0YxQSLVo/Vmyi3uJc5BRzKimoc+bTQFgBkMAgaC5dTQ5VGZ9moOE
+        0N5Zxu4Z5bhEyJXV3m4rij+wyST2Iq7iPQyS035Drxs2
+X-Google-Smtp-Source: AGHT+IEl+Sc4lJ0f22ApV/qbI5Ed3qtbYEYnO4ITcK4YMFxHdmiye6JhsyTgsGgPysEWpv3SMPdbxSXM1QBilqN2IBY=
+X-Received: by 2002:a2e:8609:0:b0:2b7:3633:2035 with SMTP id
+ a9-20020a2e8609000000b002b736332035mr2473631lji.32.1691604113263; Wed, 09 Aug
+ 2023 11:01:53 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.14.0
-Subject: Re: [PATCH v2] bluetooth: Add device 0bda:4853 to device tables
-Content-Language: en-US
-To:     Paul Menzel <pmenzel@molgen.mpg.de>
-Cc:     Marcel Holtmann <marcel@holtmann.org>,
-        Gustavo Padovan <gustavo@padovan.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        linux-bluetooth@vger.kernel.org, Hilda Wu <hildawu@realtek.com>,
-        stable@vger.kernel.org
-References: <20230809010403.24612-1-Larry.Finger@lwfinger.net>
- <ce62fee5-7f67-4cf9-b265-f6e6fdc2c59b@molgen.mpg.de>
-From:   Larry Finger <Larry.Finger@lwfinger.net>
-In-Reply-To: <ce62fee5-7f67-4cf9-b265-f6e6fdc2c59b@molgen.mpg.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_EF,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,NICE_REPLY_A,RCVD_IN_DNSWL_BLOCKED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+References: <20230808115040.4403-1-claudia.rosu@nxp.com> <20230808115040.4403-7-claudia.rosu@nxp.com>
+In-Reply-To: <20230808115040.4403-7-claudia.rosu@nxp.com>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Wed, 9 Aug 2023 11:01:40 -0700
+Message-ID: <CABBYNZ+CkAgxboz7U+S3A=orYqPuBvKNusNoLKsmBSZi7AigLg@mail.gmail.com>
+Subject: Re: [PATCH BlueZ v5 6/7] media: Add broadcast sink media endpoint
+To:     Claudia Draghicescu <claudia.rosu@nxp.com>
+Cc:     linux-bluetooth@vger.kernel.org, iulia.tanasescu@nxp.com,
+        mihai-octavian.urzica@nxp.com, silviu.barbulescu@nxp.com,
+        vlad.pruteanu@nxp.com, andrei.istodorescu@nxp.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On 8/9/23 00:58, Paul Menzel wrote:
-> Dear Larry,
-> 
-> 
-> Thank you for your patch.
-> 
-> Am 09.08.23 um 03:04 schrieb Larry Finger:
->> This device is part of a Realtek RTW8852BE chip. The device table
->> is as follows:
-> 
-> […]
->> Cc: stable@vger.kernel.org
->> Signed-off-by: Larry Finger <Larry.Finger@lwfinger.net>
->> ---
->> v2 - fix too long line in description
-> 
-> You also need to start with a capital letter: Bluetooth.
-> 
-> Also, I’d be more specific in the commit message summary. Maybe:
-> 
-> Bluetooth: Flag RTL 0bda:4853 to support wide band speech
+Hi Claudia,
 
-No, that one is not better. The intent is to let the device be driven by btrtl, 
-not btusb. I changed it to "Bluetooth: Add device 0bda:4853 to blacklist/quirk 
-table."
+On Tue, Aug 8, 2023 at 9:46=E2=80=AFAM Claudia Draghicescu <claudia.rosu@nx=
+p.com> wrote:
+>
+> This patch adds the possibility to register a broadcast
+> media endpoint if the controller has support for ISO Sync Receiver.
+> ---
+>  profiles/audio/media.c | 82 +++++++++++++++++++++++++++++++++---------
+>  profiles/audio/media.h |  3 +-
+>  2 files changed, 68 insertions(+), 17 deletions(-)
+>
+> diff --git a/profiles/audio/media.c b/profiles/audio/media.c
+> index 15c64c8d6..59143060b 100644
+> --- a/profiles/audio/media.c
+> +++ b/profiles/audio/media.c
+> @@ -105,6 +105,7 @@ struct media_endpoint {
+>         GSList                  *requests;
+>         struct media_adapter    *adapter;
+>         GSList                  *transports;
+> +       bool                    broadcast;
 
-Larry
+Can't we use the uuid to determine if it is a broadcast or not?
 
+>  };
+>
+>  struct media_player {
+> @@ -1058,7 +1059,9 @@ static struct media_transport *pac_bcast_config(str=
+uct bt_bap_stream *stream,
+>                                                 struct media_endpoint *en=
+dpoint)
+>  {
+>         struct bt_bap *bap =3D bt_bap_stream_get_session(stream);
+> -       struct btd_adapter *adapter =3D bt_bap_get_user_data(bap);
+> +       struct btd_adapter *adapter =3D endpoint->adapter->btd_adapter;
+> +       struct btd_device *device =3D
+> +                       btd_service_get_device(bt_bap_get_user_data(bap))=
+;
+>         const char *path;
+>
+>         if (!adapter) {
+> @@ -1066,9 +1069,17 @@ static struct media_transport *pac_bcast_config(st=
+ruct bt_bap_stream *stream,
+>                 return NULL;
+>         }
+>
+> +       if (!device) {
+> +               DBG("no device found");
+> +       } else {
+> +               char name[30];
+> +
+> +               device_get_name(device, name, 30);
+> +               DBG("device found name %s", name);
+> +       }
+
+Seems like a leftover to debug if the code is working properly, on the
+final version this is probably not needed.
+
+>         path =3D bt_bap_stream_get_user_data(stream);
+>
+> -       return media_transport_create(NULL, path, cfg->iov_base, cfg->iov=
+_len,
+> +       return media_transport_create(device, path, cfg->iov_base, cfg->i=
+ov_len,
+>                                         endpoint, stream);
+>  }
+>
+> @@ -1238,6 +1249,12 @@ static bool endpoint_init_broadcast_source(struct =
+media_endpoint *endpoint,
+>         return endpoint_init_pac(endpoint, BT_BAP_BCAST_SOURCE, err);
+>  }
+>
+> +static bool endpoint_init_broadcast_sink(struct media_endpoint *endpoint=
+,
+> +                                               int *err)
+> +{
+> +       return endpoint_init_pac(endpoint, BT_BAP_BCAST_SINK, err);
+> +}
+> +
+>  static bool endpoint_properties_exists(const char *uuid,
+>                                                 struct btd_device *dev,
+>                                                 void *user_data)
+> @@ -1351,6 +1368,17 @@ static bool experimental_broadcaster_ep_supported(=
+struct btd_adapter *adapter)
+>         return g_dbus_get_flags() & G_DBUS_FLAG_ENABLE_EXPERIMENTAL;
+>  }
+>
+> +static bool experimental_bcast_sink_ep_supported(struct btd_adapter *ada=
+pter)
+> +{
+> +       if (!btd_adapter_has_exp_feature(adapter, EXP_FEAT_ISO_SOCKET))
+> +               return false;
+> +
+> +       if (!btd_adapter_has_settings(adapter, MGMT_SETTING_ISO_SYNC_RECE=
+IVER))
+> +               return false;
+> +
+> +       return g_dbus_get_flags() & G_DBUS_FLAG_ENABLE_EXPERIMENTAL;
+> +}
+> +
+>  static struct media_endpoint_init {
+>         const char *uuid;
+>         bool (*func)(struct media_endpoint *endpoint, int *err);
+> @@ -1366,6 +1394,8 @@ static struct media_endpoint_init {
+>                                 experimental_endpoint_supported },
+>         { BCAA_SERVICE_UUID, endpoint_init_broadcast_source,
+>                         experimental_broadcaster_ep_supported },
+> +       { BAA_SERVICE_UUID, endpoint_init_broadcast_sink,
+> +                       experimental_bcast_sink_ep_supported },
+>  };
+>
+>  static struct media_endpoint *
+> @@ -1382,6 +1412,7 @@ media_endpoint_create(struct media_adapter *adapter=
+,
+>                                                 int size,
+>                                                 uint8_t *metadata,
+>                                                 int metadata_size,
+> +                                               bool broadcast,
+>                                                 int *err)
+>  {
+>         struct media_endpoint *endpoint;
+> @@ -1397,6 +1428,7 @@ media_endpoint_create(struct media_adapter *adapter=
+,
+>         endpoint->cid =3D cid;
+>         endpoint->vid =3D vid;
+>         endpoint->delay_reporting =3D delay_reporting;
+> +       endpoint->broadcast =3D broadcast;
+>
+>         if (qos)
+>                 endpoint->qos =3D *qos;
+> @@ -1458,11 +1490,11 @@ struct vendor {
+>  } __packed;
+>
+>  static int parse_properties(DBusMessageIter *props, const char **uuid,
+> -                               gboolean *delay_reporting, uint8_t *codec=
+,
+> -                               uint16_t *cid, uint16_t *vid,
+> -                               struct bt_bap_pac_qos *qos,
+> -                               uint8_t **capabilities, int *size,
+> -                               uint8_t **metadata, int *metadata_size)
+> +                       gboolean *delay_reporting, uint8_t *codec,
+> +                       uint16_t *cid, uint16_t *vid,
+> +                       struct bt_bap_pac_qos *qos,
+> +                       uint8_t **capabilities, int *size,
+> +                       uint8_t **metadata, int *metadata_size, bool *bro=
+adcast)
+>  {
+>         gboolean has_uuid =3D FALSE;
+>         gboolean has_codec =3D FALSE;
+> @@ -1546,6 +1578,10 @@ static int parse_properties(DBusMessageIter *props=
+, const char **uuid,
+>                         if (var !=3D DBUS_TYPE_UINT16)
+>                                 return -EINVAL;
+>                         dbus_message_iter_get_basic(&value, &qos->ppd_max=
+);
+> +               } else if (strcasecmp(key, "Broadcast") =3D=3D 0) {
+> +                       if (var !=3D DBUS_TYPE_BOOLEAN)
+> +                               return -EINVAL;
+> +                       dbus_message_iter_get_basic(&value, broadcast);
+
+I'm not in favor of adding yet another if we can distinct the endpoint
+based on their uuid.
+
+>                 }
+>
+>                 dbus_message_iter_next(props);
+> @@ -1569,6 +1605,7 @@ static DBusMessage *register_endpoint(DBusConnectio=
+n *conn, DBusMessage *msg,
+>         uint8_t *metadata =3D NULL;
+>         int size =3D 0;
+>         int metadata_size =3D 0;
+> +       bool broadcast =3D false;
+>         int err;
+>
+>         sender =3D dbus_message_get_sender(msg);
+> @@ -1587,13 +1624,13 @@ static DBusMessage *register_endpoint(DBusConnect=
+ion *conn, DBusMessage *msg,
+>
+>         if (parse_properties(&props, &uuid, &delay_reporting, &codec, &ci=
+d,
+>                         &vid, &qos, &capabilities, &size, &metadata,
+> -                       &metadata_size) < 0)
+> +                       &metadata_size, &broadcast) < 0)
+>                 return btd_error_invalid_args(msg);
+>
+>         if (media_endpoint_create(adapter, sender, path, uuid, delay_repo=
+rting,
+> -                                       codec, cid, vid, &qos, capabiliti=
+es,
+> -                                       size, metadata, metadata_size,
+> -                                       &err) =3D=3D NULL) {
+> +                               codec, cid, vid, &qos, capabilities,
+> +                               size, metadata, metadata_size, broadcast,
+> +                               &err) =3D=3D NULL) {
+>                 if (err =3D=3D -EPROTONOSUPPORT)
+>                         return btd_error_not_supported(msg);
+>                 else
+> @@ -2627,6 +2664,7 @@ static void app_register_endpoint(void *data, void =
+*user_data)
+>         int metadata_size =3D 0;
+>         DBusMessageIter iter, array;
+>         struct media_endpoint *endpoint;
+> +       bool broadcast =3D false;
+>
+>         if (app->err)
+>                 return;
+> @@ -2736,12 +2774,18 @@ static void app_register_endpoint(void *data, voi=
+d *user_data)
+>                 dbus_message_iter_get_basic(&iter, &qos.ppd_min);
+>         }
+>
+> +       if (g_dbus_proxy_get_property(proxy, "Broadcast", &iter)) {
+> +               if (dbus_message_iter_get_arg_type(&iter) !=3D DBUS_TYPE_=
+BOOLEAN)
+> +                       goto fail;
+> +               dbus_message_iter_get_basic(&iter, &broadcast);
+> +       }
+> +
+>         endpoint =3D media_endpoint_create(app->adapter, app->sender, pat=
+h, uuid,
+> -                                               delay_reporting, codec,
+> -                                               vendor.cid, vendor.vid, &=
+qos,
+> -                                               capabilities, size,
+> -                                               metadata, metadata_size,
+> -                                               &app->err);
+> +                                       delay_reporting, codec,
+> +                                       vendor.cid, vendor.vid, &qos,
+> +                                       capabilities, size,
+> +                                       metadata, metadata_size, broadcas=
+t,
+> +                                       &app->err);
+>         if (!endpoint) {
+>                 error("Unable to register endpoint %s:%s: %s", app->sende=
+r,
+>                                                 path, strerror(-app->err)=
+);
+> @@ -3245,3 +3289,9 @@ struct btd_adapter *media_endpoint_get_btd_adapter(
+>  {
+>         return endpoint->adapter->btd_adapter;
+>  }
+> +
+> +bool media_endpoint_is_broadcast(
+> +       struct media_endpoint *endpoint)
+> +{
+> +       return endpoint->broadcast;
+> +}
+> diff --git a/profiles/audio/media.h b/profiles/audio/media.h
+> index 1de84a8ff..0eeb5746a 100644
+> --- a/profiles/audio/media.h
+> +++ b/profiles/audio/media.h
+> @@ -22,5 +22,6 @@ const char *media_endpoint_get_uuid(struct media_endpoi=
+nt *endpoint);
+>  uint8_t media_endpoint_get_codec(struct media_endpoint *endpoint);
+>  struct btd_adapter *media_endpoint_get_btd_adapter(
+>                                         struct media_endpoint *endpoint);
+> -
+> +bool media_endpoint_is_broadcast(
+> +       struct media_endpoint *endpoint);
+>  int8_t media_player_get_device_volume(struct btd_device *device);
+> --
+> 2.34.1
+>
+
+
+--=20
+Luiz Augusto von Dentz
