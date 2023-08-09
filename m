@@ -2,37 +2,37 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A90077533E
+	by mail.lfdr.de (Postfix) with ESMTP id 9D27177533F
 	for <lists+linux-bluetooth@lfdr.de>; Wed,  9 Aug 2023 08:52:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229793AbjHIGwW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 9 Aug 2023 02:52:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50980 "EHLO
+        id S229853AbjHIGwX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 9 Aug 2023 02:52:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229669AbjHIGwW (ORCPT
+        with ESMTP id S229737AbjHIGwW (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Wed, 9 Aug 2023 02:52:22 -0400
 Received: from mail.svario.it (mail.svario.it [IPv6:2a02:2770:13::112:0:1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83C1C1BF7
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B482D1BFB
         for <linux-bluetooth@vger.kernel.org>; Tue,  8 Aug 2023 23:52:21 -0700 (PDT)
 Received: from localhost.localdomain (dynamic-093-131-108-051.93.131.pool.telefonica.de [93.131.108.51])
-        by mail.svario.it (Postfix) with ESMTPSA id 2611BDA0CC;
+        by mail.svario.it (Postfix) with ESMTPSA id 5647BDA0CE;
         Wed,  9 Aug 2023 08:52:20 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=svario.it; s=201710;
-        t=1691563940; bh=CJj/FZXr7sGlROQGB3/+5wCuhgHk2wvJX4FOfom/Y4E=;
+        t=1691563940; bh=jO11Vmz2bohC4/Z9GnAvRwGYI5QFy8hHRKJHetlBVhg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ugWwVO4NUz8nhGXsl7PGh5LNn5AjTptJFwxGKuYT/EZI4Q3+e6tp8n7sNDj/rItf4
-         0Fwr9z7a+UIXEDAfLv7LjkZn1aOAUm/t2FDQRpUHbu/+fs8yY6LUSl4an+5h7ro1B8
-         r7y+B0MGubh2KW3RUFNb0woNPlZToZmhfODbiUFw3Lut8DIyNv+f64gdhh3TJjdfK/
-         ohCrbufOKjc094X/NPrzqn9Sm2aODF7giP6j3ODb1800gilzn+L2mAQ0KvwXUJg2/Q
-         M/wL6vOVAeWFcsbgjvWoRfSrvGnF1iln4uOJRDyDGSF8APCjvSD3aXS3Xg2PYvkO5q
-         mFpKncrXy8Zkg==
+        b=pddXeeFePTOmhRGUr2gJOBP+uShCFdTGV2MpiqCrPvK2Li5Xss6fGNOyhEzB9OReo
+         E8Gbcn5E0AM1i93fG2G4ce+unXA4jQ1TtkIlrnVJQnls0JB0JGhldP9RfHIfosjSbb
+         17ZxW3xdVLkkco1mUAKTCNt/u0EguIkSAYGxWR9GSwLjJQpvZbFvkL4wyiSy0H6WSH
+         uWI0vno3r/tGjiVPwmxLTdJYBjrTjdbkOUHqom06oTOyfwng9sQninbu0f1aSsHc8C
+         1TpEdDvHVCm92K1rsMzS3n9oKq8+knGIVIbvIivA1bezEnvS4H0yO61Yh6HnM41PvX
+         bHU2FMpE2vE7A==
 From:   Gioele Barabucci <gioele@svario.it>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Gioele Barabucci <gioele@svario.it>
-Subject: [PATCH BlueZ v4 1/2] configure.ac: Bump minimum D-Bus version to 1.10
-Date:   Wed,  9 Aug 2023 08:51:42 +0200
-Message-Id: <20230809065143.2002324-2-gioele@svario.it>
+Subject: [PATCH BlueZ v4 2/2] configure.ac: Install D-Bus policy in /usr/share, not /etc
+Date:   Wed,  9 Aug 2023 08:51:43 +0200
+Message-Id: <20230809065143.2002324-3-gioele@svario.it>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230809065143.2002324-1-gioele@svario.it>
 References: <20230809065143.2002324-1-gioele@svario.it>
@@ -49,29 +49,31 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-D-Bus 1.10, released in 2015, is the first version that supports reading
-policy files from `/usr/share/dbus-1` in addition to `/etc/dbus-1`.
+From https://bugs.debian.org/1006631:
 
-The previous minimum version, 1.6, was released in 2012.
+> dbus supports policy files in both `/usr/share/dbus-1/system.d` and
+> `/etc/dbus-1/systemd`. [The] recently released dbus 1.14.0, officially
+> deprecates installing packages' default policies into
+> `/etc/dbus-1/systemd`, instead reserving it for the sysadmin.
+> This is the same idea as the difference between `/usr/lib/udev/rules.d`
+> and `/etc/udev/rules.d`.
 ---
- configure.ac | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/configure.ac b/configure.ac
-index bc7edfcd3..298b8cd59 100644
+index 298b8cd59..ad864dea7 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -85,8 +85,8 @@ if (test "${enable_threads}" = "yes"); then
- 	GLIB_LIBS="$GLIB_LIBS $GTHREAD_LIBS"
- fi
- 
--PKG_CHECK_MODULES(DBUS, dbus-1 >= 1.6, dummy=yes,
--				AC_MSG_ERROR(D-Bus >= 1.6 is required))
-+PKG_CHECK_MODULES(DBUS, dbus-1 >= 1.10, dummy=yes,
-+				AC_MSG_ERROR(D-Bus >= 1.10 is required))
- AC_SUBST(DBUS_CFLAGS)
- AC_SUBST(DBUS_LIBS)
- 
+@@ -95,7 +95,7 @@ AC_ARG_WITH([dbusconfdir], AS_HELP_STRING([--with-dbusconfdir=DIR],
+ 					[path_dbusconfdir=${withval}])
+ if (test -z "${path_dbusconfdir}"); then
+ 	AC_MSG_CHECKING([D-Bus configuration directory])
+-	path_dbusconfdir="`$PKG_CONFIG --variable=sysconfdir dbus-1`"
++	path_dbusconfdir="`$PKG_CONFIG --variable=datadir dbus-1`"
+ 	if (test -z "${path_dbusconfdir}"); then
+ 		AC_MSG_ERROR([D-Bus configuration directory is required])
+ 	fi
 -- 
 2.39.2
 
