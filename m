@@ -2,54 +2,43 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D009776645
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  9 Aug 2023 19:20:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A7B1F77667F
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  9 Aug 2023 19:34:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232834AbjHIRUX (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 9 Aug 2023 13:20:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39044 "EHLO
+        id S231971AbjHIRes (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 9 Aug 2023 13:34:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232796AbjHIRUW (ORCPT
+        with ESMTP id S230504AbjHIReq (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 9 Aug 2023 13:20:22 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D30351FF5
-        for <linux-bluetooth@vger.kernel.org>; Wed,  9 Aug 2023 10:20:21 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 747DC631D2
-        for <linux-bluetooth@vger.kernel.org>; Wed,  9 Aug 2023 17:20:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id D69A5C433C7;
-        Wed,  9 Aug 2023 17:20:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1691601620;
-        bh=xdkxumFR0VSXJLKxo5/bscOOdok4hcCFjTTp+hxrOow=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=sNyugI5baYnWsUevGD4ivjz/JtVF4u1p5zxL4O0enQLHHo1xm8Gop76ocjDwlZ8uh
-         s8yW5t3otowTRqm9TbN5UKfM8gUYckLxZrmhVDHJvwAj4cOGYIjmLb+6jt2y0HFrHt
-         36QZMAD7MP5qOsAI5nnSk9pNw/mF/SV7Q6UFZrzc46oLIlm6tsUn8kEWyGO/gaXKkE
-         hDCfbubU0GB5X2j80titr6ECZT00csmLVf/YjFucsAvLFCR/E6vFX78ER6/o9IAZPn
-         enBKSUbA1qQxX5gsRN800MzKy4dx1FU6BUxtENa+iFIYKC7+e85AA4X+yD/ySMFYZ5
-         3sAihiLuCrMxQ==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id B4AD5E33090;
-        Wed,  9 Aug 2023 17:20:20 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [BlueZ RFC] profile: Add probe_on_discover flag
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <169160162073.13361.9948723337406695908.git-patchwork-notify@kernel.org>
-Date:   Wed, 09 Aug 2023 17:20:20 +0000
-References: <20230802201538.584029-1-luiz.dentz@gmail.com>
-In-Reply-To: <20230802201538.584029-1-luiz.dentz@gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        Wed, 9 Aug 2023 13:34:46 -0400
+Received: from out-28.smtp.github.com (out-28.smtp.github.com [192.30.252.211])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D52AE71
+        for <linux-bluetooth@vger.kernel.org>; Wed,  9 Aug 2023 10:34:46 -0700 (PDT)
+Received: from github.com (hubbernetes-node-562a3cf.ash1-iad.github.net [10.56.131.35])
+        by smtp.github.com (Postfix) with ESMTPA id 68B3F1000E1
+        for <linux-bluetooth@vger.kernel.org>; Wed,  9 Aug 2023 10:34:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+        s=pf2023; t=1691602485;
+        bh=OS8kGPLxx8Sbw7vggstABMmUpzaXz2kQehPZAVBW3qg=;
+        h=Date:From:To:Subject:From;
+        b=UCBH9Z1tThDuVA0dK4Y0oDLR8QLLkzWpsWUqZdzejyus98FcsMJWwQao2eNMTvdQa
+         +qeu7R56idKirgLg2nhEDmrUEhn64nDy1ekW9V+krsMACANWNVwVKRXqyIzD/CJZY5
+         lWGDGK6jiyugVz7t/QzJ9sYxf5ZIu+GLF8lb4FLM=
+Date:   Wed, 09 Aug 2023 10:34:45 -0700
+From:   Luiz Augusto von Dentz <noreply@github.com>
+To:     linux-bluetooth@vger.kernel.org
+Message-ID: <bluez/bluez/push/refs/heads/master/96de1c-67a26a@github.com>
+Subject: [bluez/bluez] 4352a4: client/player: Add broadcast sink endpoint
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -57,28 +46,104 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+  Branch: refs/heads/master
+  Home:   https://github.com/bluez/bluez
+  Commit: 4352a42ec1e20f509c8584b1a918e620c80fbd98
+      https://github.com/bluez/bluez/commit/4352a42ec1e20f509c8584b1a918e620c80fbd98
+  Author: Claudia Draghicescu <claudia.rosu@nxp.com>
+  Date:   2023-08-08 (Tue, 08 Aug 2023)
 
-This patch was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+  Changed paths:
+    M client/player.c
 
-On Wed,  2 Aug 2023 13:15:38 -0700 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-> 
-> This adds probe_on_discover flag which indicates if profile needs to be
-> probed when the remote_uuid is discovered and changes device logic to
-> attempt to probe driver when a new UUID is discovered and
-> probe_on_discover is set.
-> 
-> [...]
+  Log Message:
+  -----------
+  client/player: Add broadcast sink endpoint
 
-Here is the summary with links:
-  - [BlueZ,RFC] profile: Add probe_on_discover flag
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=67a26abe53bf
+Added support for broadcast sink registration using the 0x1851 UUID.
+Added support for remote endpoint creation when a broadcast source
+is discovered.
+Added support for creating a local endpoint when the broadcast sink
+endpoint was registered from an external application (Pipewire).
+To test this feature use the following commands:
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+[bluetooth]# endpoint.register 00001851-0000-1000-8000-00805f9b34fb 0x06
+[bluetooth]# scan on
+[NEW] Endpoint /org/bluez/hci0/dev_XX_XX_XX_XX_XX_XX/pac_bcast0
+[bluetooth]# endpoint.config
+/org/bluez/hci0/dev_XX_XX_XX_XX_XX_XX/pac_bcast0
+/local/endpoint/ep0 16_2_1
 
 
+  Commit: 7b3aa05323f29de5325a0f2fa52f44d3e85b3637
+      https://github.com/bluez/bluez/commit/7b3aa05323f29de5325a0f2fa52f44d3e85b3637
+  Author: Claudia Draghicescu <claudia.rosu@nxp.com>
+  Date:   2023-08-08 (Tue, 08 Aug 2023)
+
+  Changed paths:
+    M btio/btio.c
+
+  Log Message:
+  -----------
+  btio: Add support for getsockopt(BT_ISO_BASE)
+
+This adds the posibility for a broadcast sink to retrieve the
+BASE information received from a source afeter a PA synchronization,
+using the getsockopt(BT_ISO_BASE) function.
+This needs the patch from bluetooth-next:
+Bluetooth: ISO: Add support for periodic adv reports processing
+
+
+  Commit: 58aa93f3cc4656dfcacd326667015be051c5bd14
+      https://github.com/bluez/bluez/commit/58aa93f3cc4656dfcacd326667015be051c5bd14
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2023-08-09 (Wed, 09 Aug 2023)
+
+  Changed paths:
+    M src/eir.c
+    M src/eir.h
+
+  Log Message:
+  -----------
+  eir: Add eir_get_service_data
+
+This adds eir_get_service_data function which can be used to get a
+specific service data.
+
+
+  Commit: 3370c462552b0dfcae33757bbfe1b843e7cff84f
+      https://github.com/bluez/bluez/commit/3370c462552b0dfcae33757bbfe1b843e7cff84f
+  Author: Claudia Draghicescu <claudia.rosu@nxp.com>
+  Date:   2023-08-09 (Wed, 09 Aug 2023)
+
+  Changed paths:
+    M src/adapter.c
+
+  Log Message:
+  -----------
+  adapter: Do not filter out broadcast advertiser
+
+This allows a broadcast advertiser to be passed up to application,
+if the adapter has the capability of being a Synchronized Receiver.
+
+
+  Commit: 67a26abe53bf33422c17a3f63866e76864b92bc2
+      https://github.com/bluez/bluez/commit/67a26abe53bf33422c17a3f63866e76864b92bc2
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2023-08-09 (Wed, 09 Aug 2023)
+
+  Changed paths:
+    M src/device.c
+    M src/profile.h
+
+  Log Message:
+  -----------
+  profile: Add probe_on_discover flag
+
+This adds probe_on_discover flag which indicates if profile needs to be
+probed when the remote_uuid is discovered and changes device logic to
+attempt to probe driver when a new UUID is discovered and
+probe_on_discover is set.
+
+
+Compare: https://github.com/bluez/bluez/compare/96de1c6eb9ff...67a26abe53bf
