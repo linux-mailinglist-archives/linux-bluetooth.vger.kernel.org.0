@@ -2,53 +2,52 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D67CF77D6EB
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Aug 2023 02:11:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E1EC077D6E8
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Aug 2023 02:11:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240754AbjHPAKo (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 15 Aug 2023 20:10:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41040 "EHLO
+        id S240722AbjHPAKm (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 15 Aug 2023 20:10:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240736AbjHPAK3 (ORCPT
+        with ESMTP id S240743AbjHPAKa (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 15 Aug 2023 20:10:29 -0400
+        Tue, 15 Aug 2023 20:10:30 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BD051FF9;
-        Tue, 15 Aug 2023 17:10:29 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D50C2100
+        for <linux-bluetooth@vger.kernel.org>; Tue, 15 Aug 2023 17:10:29 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A4CC961880;
-        Wed, 16 Aug 2023 00:10:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 04ACDC433C9;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D56AA62A42
+        for <linux-bluetooth@vger.kernel.org>; Wed, 16 Aug 2023 00:10:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 1D08CC433CA;
         Wed, 16 Aug 2023 00:10:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1692144628;
-        bh=PFERWxFe0pV2t+pXvFf/AlJyFRD48CblFwfyjMNOvPE=;
+        bh=LCVFsQO/jpBt8rbDuqXrAfRyw1i3D+P14bNEY5FvpM4=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=Dzrz2OhbVgGkdAx7y/nLBVHTuVULiZQp1nxalxJjnCj+bn0Nr4IikB9cHoXqH7Ofk
-         MsoAksl+1npQ0Ruw3nEUnHQf5g5oBYqkM2X4jJsTPTXS7kgJ1TqqJvatoU4k2EEFX5
-         FwvVVtY+Obk3Q1Nf8uzxqK8bHWh2r1nOhxTdseJrAshZN8BNy2Z8oKcFhubi72BuFC
-         DkeY/IRyuGryRZxa2fd4f1+HbPBQt4k9dGNuIMFnjNPrNU0YbmTp3z3KCMnV7y7Ajl
-         sBrxxdW/bMNRnFww+crFbbCNh3tqVjphy1WXarNz7nAAFBUju/Gfhs7wzWPaVnJ2qk
-         EIadnxkHCfTbA==
+        b=cIpKD2BuiaCwsDNNSPVJS8WiT0PDFnXV3EVj/dZOxfpuQdqhbP9Ttj8iGhErsyQQs
+         oUflIVL/d2aedTB/djln7n5zrpw9eByWdQghqFGYJ4uPFHzdA23AOMFTk0I8kHEKcT
+         RUS/Gsw3vLl0LCepWWlaRGG7QayA6vyK3Y8tm6xvN5ahHZG78CiQhBt/If8spPPm3R
+         SJaDMaCqXJCWtVSCbnTBcqpRncnNKyooJplDextwR+hVwIER4w4vWbEdJQxawX+lqT
+         hVlGZlSKps+U9aWZlxYaoNskZWy/z8Upd2MRdt27Fbs7AexNNVW0+39rmM4WNUfTW7
+         sUFv4jygQ0rLw==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id DBD87C39562;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id E802EC691E1;
         Wed, 16 Aug 2023 00:10:27 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 0/2] Bluetooth: btnxpuart: Add support for IW624 chipset
+Subject: Re: pull request: bluetooth-next 2023-08-11
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <169214462789.26309.9496972962553175060.git-patchwork-notify@kernel.org>
+Message-Id: <169214462793.26309.7033762932004317499.git-patchwork-notify@kernel.org>
 Date:   Wed, 16 Aug 2023 00:10:27 +0000
-References: <20230811101232.844769-1-neeraj.sanjaykale@nxp.com>
-In-Reply-To: <20230811101232.844769-1-neeraj.sanjaykale@nxp.com>
-To:     Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        amitkumar.karwar@nxp.com, rohit.fule@nxp.com, sherry.sun@nxp.com,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230811192256.1988031-1-luiz.dentz@gmail.com>
+In-Reply-To: <20230811192256.1988031-1-luiz.dentz@gmail.com>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     davem@davemloft.net, kuba@kernel.org,
+        linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -60,24 +59,23 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This series was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+This pull request was applied to bluetooth/bluetooth-next.git (master)
+by David S. Miller <davem@davemloft.net>:
 
-On Fri, 11 Aug 2023 15:42:30 +0530 you wrote:
-> This patch series adds support for IW624 in btnxpuart driver.
+On Fri, 11 Aug 2023 12:22:56 -0700 you wrote:
+> The following changes since commit 80f9ad046052509d0eee9b72e11d0e8ae31b665f:
 > 
-> The first patch removes check for CTS low after FW downloaded as
-> it was found to be redundant. It increases the delay from 1000msec
-> to 1200msec after FW download as IW624 requires more time to complete
-> FW initialization.
+>   Merge branch 'rzn1-a5psw-vlan-port_bridge_flags' (2023-08-11 11:58:36 +0100)
+> 
+> are available in the Git repository at:
+> 
+>   git://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git tags/for-net-next-2023-08-11
 > 
 > [...]
 
 Here is the summary with links:
-  - [v2,1/2] Bluetooth: btnxpuart: Remove check for CTS low after FW download
-    https://git.kernel.org/bluetooth/bluetooth-next/c/8f24666933f1
-  - [v2,2/2] Bluetooth: btnxpuart: Add support for IW624 chipset
-    https://git.kernel.org/bluetooth/bluetooth-next/c/f6b00a4fae83
+  - pull request: bluetooth-next 2023-08-11
+    https://git.kernel.org/bluetooth/bluetooth-next/c/3d3829363bf7
 
 You are awesome, thank you!
 -- 
