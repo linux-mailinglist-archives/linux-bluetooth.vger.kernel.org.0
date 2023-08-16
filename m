@@ -2,95 +2,178 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 66FCB77EA40
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Aug 2023 22:01:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0777677ED20
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 17 Aug 2023 00:32:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345943AbjHPUBO (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 16 Aug 2023 16:01:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38886 "EHLO
+        id S1344275AbjHPWbw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 16 Aug 2023 18:31:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345946AbjHPUAm (ORCPT
+        with ESMTP id S1346997AbjHPWbw (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 16 Aug 2023 16:00:42 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 329DB1FE3;
-        Wed, 16 Aug 2023 13:00:23 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B73D06204B;
-        Wed, 16 Aug 2023 20:00:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 143C9C433C8;
-        Wed, 16 Aug 2023 20:00:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1692216022;
-        bh=FqhxkuPdgVbJETSXDsWvg4mXVhYdn8SeQrY8c+xWq78=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=riEM3m7lIRonoMiBMuDX96KWnMnZ3fbs0J1JuZenDRx3CQ73U2CTT2VjIknevpnoR
-         nO7YTuKKyyqBPZrE7brSIShfw0RJdniaL2w08VfTRrR8Eo+YjxvhZVrGU47iT3e9JX
-         aanczv4Su2UTNPFM9HoAFrws9+wWuH9UnFPrno7OC/ZgY1k1IWdp4jeOPAxhPk9cxg
-         6pokkr7KKg7fGFXjSHSrRXqMMHdHIVfZv129b+sz2zCk3OMELAv6h9iD6PWBsgIN+e
-         ckJT6Skr+rRV+Q6CfnVZNYkHoixt0X+3p8BnJGWZ55mGTAL8wABQtKEXCMxflDvtuA
-         Y5SzwKJ8WvgbQ==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id EA150C395C5;
-        Wed, 16 Aug 2023 20:00:21 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Wed, 16 Aug 2023 18:31:52 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E762F1B2
+        for <linux-bluetooth@vger.kernel.org>; Wed, 16 Aug 2023 15:31:50 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id d9443c01a7336-1bdbbede5d4so48126435ad.2
+        for <linux-bluetooth@vger.kernel.org>; Wed, 16 Aug 2023 15:31:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1692225110; x=1692829910;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=cCWyHgLcVPzpFFLmX+q9DIaBIvCOJPEVjefrgbIlmFo=;
+        b=O3DRLbtzIdCs/ZzehdEtl84ag5tl3M577D/GYACO6nEsoZ2sSXo/PYsUDEv7MEL48C
+         1IYs22p0j+rC+tFQuSGGzYGg27Nxcj72lQcrTYJRQt6S3oJxIAtl+CQ64NIzOVrBv9sG
+         KNh+xx9QAwH5S6+28DNo6eopTqLsATvwQheLY1cN5fqN5D9vdzYxMp7GnSwz6oB9i4Y2
+         VFt5EvEoa9s6/fp5FxXxqh2vmyGJhuVKWwXl5owYfSGtbNDLelO2ifmv2fvkzefq+Mue
+         +xjQm74fDCQnZ71SdiDk/C7GWGHilh2cHD8e9W8iHY1hVmKXII1jqKCMrpPhSvvQhFaH
+         wlBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692225110; x=1692829910;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cCWyHgLcVPzpFFLmX+q9DIaBIvCOJPEVjefrgbIlmFo=;
+        b=b6wVXNaxkqHfrZmPLY25N0stB+qOzG1L1Mp5Y+YbtKSocbh4jR6i9+95/pV4BkFZYH
+         FDVZFwnv/QK/F8vciHNyJebG1oKsd6xFzVW45m0DBGeQ1Ocz0jj/bBmb4PTeBHba4qAU
+         QPe1sJwb/fR5zDJ0guNLRwW/8ItGHCi7fqNhlwWcXeydtegJJxGbgjRMCXDLhqgZp9eR
+         ppeqGBdadR2BHhzDDKirMDsxUa7WlR4UXpbXtVzrhd8vDDDzWWxSoGMgUA48THLz3oiD
+         QMH5Leu2KRwycqWBomTaNvKXz/Ia+4a+L7OZJN8j/Fjgvn8tDwwtnrgZCIeXcCMeMJKq
+         RmpA==
+X-Gm-Message-State: AOJu0YxZckaQ7gJ6guefUAw1Org7Yb8uCxaZe0oLT2zhfRqliZs7Hart
+        8TLHU9PGdQ/4InGxLDkK1VO1WYJWywc=
+X-Google-Smtp-Source: AGHT+IFzDRKFc1BIBVUR9S2YO4+YRMiPO2aBVltFTPi1i311jKI2eUauPXWNM4uCSXezij+aRpu0bQ==
+X-Received: by 2002:a17:903:1109:b0:1b5:2fdf:5bd8 with SMTP id n9-20020a170903110900b001b52fdf5bd8mr4673157plh.8.1692225109616;
+        Wed, 16 Aug 2023 15:31:49 -0700 (PDT)
+Received: from lvondent-mobl4.. (c-98-232-221-87.hsd1.or.comcast.net. [98.232.221.87])
+        by smtp.gmail.com with ESMTPSA id 12-20020a170902e9cc00b001993a1fce7bsm13582347plk.196.2023.08.16.15.31.47
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 16 Aug 2023 15:31:48 -0700 (PDT)
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ 1/2] monitor: Fix not printing latency information with -r
+Date:   Wed, 16 Aug 2023 15:31:46 -0700
+Message-ID: <20230816223147.2787284-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v4 0/3] Bluetooth: qca: enable WCN7850 support
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <169221602195.24089.4864640872066685763.git-patchwork-notify@kernel.org>
-Date:   Wed, 16 Aug 2023 20:00:21 +0000
-References: <20230816-topic-sm8550-upstream-bt-v4-0-2ea2212719f6@linaro.org>
-In-Reply-To: <20230816-topic-sm8550-upstream-bt-v4-0-2ea2212719f6@linaro.org>
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     luiz.dentz@gmail.com, davem@davemloft.net, edumazet@google.com,
-        kuba@kernel.org, pabeni@redhat.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        marcel@holtmann.org, johan.hedberg@gmail.com, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        quic_bgodavar@quicinc.com, quic_rjliao@quicinc.com,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, robh@kernel.org
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This series was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+When reading a log from file hci_devba may not work, also store link
+information so assign_handle can use use the parent (ACL) destination.
+---
+ monitor/packet.c | 40 +++++++++++++++++++++++++++++++++++++---
+ monitor/packet.h |  1 +
+ 2 files changed, 38 insertions(+), 3 deletions(-)
 
-On Wed, 16 Aug 2023 10:06:45 +0200 you wrote:
-> This serie enables WCN7850 on the Qualcomm SM8550 QRD
-> reference platform.
-> 
-> The WCN7850 is close to the WCN6855 but uses different
-> firmware names.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> 
-> [...]
-
-Here is the summary with links:
-  - [v4,1/3] dt-bindings: net: bluetooth: qualcomm: document WCN7850 chipset
-    https://git.kernel.org/bluetooth/bluetooth-next/c/f38a5adcbd53
-  - [v4,2/3] Bluetooth: qca: use switch case for soc type behavior
-    https://git.kernel.org/bluetooth/bluetooth-next/c/08292727a9fc
-  - [v4,3/3] Bluetooth: qca: add support for WCN7850
-    https://git.kernel.org/bluetooth/bluetooth-next/c/ef6d9b23aa58
-
-You are awesome, thank you!
+diff --git a/monitor/packet.c b/monitor/packet.c
+index 84af03a0011f..8eae8c9ea8fa 100644
+--- a/monitor/packet.c
++++ b/monitor/packet.c
+@@ -174,6 +174,18 @@ static uint16_t get_format(uint32_t cookie)
+ 
+ static struct packet_conn_data conn_list[MAX_CONN];
+ 
++static struct packet_conn_data *lookup_parent(uint16_t handle)
++{
++	int i;
++
++	for (i = 0; i < MAX_CONN; i++) {
++		if (conn_list[i].link == handle)
++			return &conn_list[i];
++	}
++
++	return NULL;
++}
++
+ static void assign_handle(uint16_t index, uint16_t handle, uint8_t type,
+ 					uint8_t *dst, uint8_t dst_type)
+ {
+@@ -181,15 +193,27 @@ static void assign_handle(uint16_t index, uint16_t handle, uint8_t type,
+ 
+ 	for (i = 0; i < MAX_CONN; i++) {
+ 		if (conn_list[i].handle == 0x0000) {
+-			if (hci_devba(index, (bdaddr_t *)conn_list[i].src) < 0)
+-				return;
++			hci_devba(index, (bdaddr_t *)conn_list[i].src);
+ 
+ 			conn_list[i].index = index;
+ 			conn_list[i].handle = handle;
+ 			conn_list[i].type = type;
+ 
+-			if (!dst)
++			if (!dst) {
++				struct packet_conn_data *p;
++
++				/* If destination is not set attempt to use the
++				 * parent one if that exists.
++				 */
++				p = lookup_parent(handle);
++				if (p) {
++					memcpy(conn_list[i].dst, p->dst,
++						sizeof(conn_list[i].dst));
++					conn_list[i].dst_type = p->dst_type;
++				}
++
+ 				break;
++			}
+ 
+ 			memcpy(conn_list[i].dst, dst, sizeof(conn_list[i].dst));
+ 			conn_list[i].dst_type = dst_type;
+@@ -8725,9 +8749,14 @@ static void le_set_cig_params_rsp(uint16_t index, const void *data,
+ static void print_cis(const void *data, int i)
+ {
+ 	const struct bt_hci_cis *cis = data;
++	struct packet_conn_data *conn;
+ 
+ 	print_field("CIS Handle: %d", cis->cis_handle);
+ 	print_field("ACL Handle: %d", cis->acl_handle);
++
++	conn = packet_get_conn_data(cis->acl_handle);
++	if (conn)
++		conn->link = cis->cis_handle;
+ }
+ 
+ static void le_create_cis_cmd(uint16_t index, const void *data, uint8_t size)
+@@ -11643,11 +11672,16 @@ static void le_req_cis_evt(struct timeval *tv, uint16_t index,
+ 					const void *data, uint8_t size)
+ {
+ 	const struct bt_hci_evt_le_cis_req *evt = data;
++	struct packet_conn_data *conn;
+ 
+ 	print_field("ACL Handle: %d", le16_to_cpu(evt->acl_handle));
+ 	print_field("CIS Handle: %d", le16_to_cpu(evt->cis_handle));
+ 	print_field("CIG ID: 0x%2.2x", evt->cig_id);
+ 	print_field("CIS ID: 0x%2.2x", evt->cis_id);
++
++	conn = packet_get_conn_data(evt->acl_handle);
++	if (conn)
++		conn->link = evt->cis_handle;
+ }
+ 
+ static void print_bis_handle(const void *data, int i)
+diff --git a/monitor/packet.h b/monitor/packet.h
+index 750ce405e4bc..384f460d2f58 100644
+--- a/monitor/packet.h
++++ b/monitor/packet.h
+@@ -42,6 +42,7 @@ struct packet_conn_data {
+ 	uint16_t index;
+ 	uint8_t  src[6];
+ 	uint16_t handle;
++	uint16_t link;
+ 	uint8_t  type;
+ 	uint8_t  dst[6];
+ 	uint8_t  dst_type;
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.41.0
 
