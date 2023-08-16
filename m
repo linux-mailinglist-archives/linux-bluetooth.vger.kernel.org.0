@@ -2,112 +2,41 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E2D3977E6DE
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Aug 2023 18:47:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B536677E7F1
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Aug 2023 19:55:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344846AbjHPQrA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 16 Aug 2023 12:47:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41628 "EHLO
+        id S1345277AbjHPRzI convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 16 Aug 2023 13:55:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236127AbjHPQq3 (ORCPT
+        with ESMTP id S1345268AbjHPRyp (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 16 Aug 2023 12:46:29 -0400
-Received: from EUR02-AM0-obe.outbound.protection.outlook.com (mail-am0eur02on2046.outbound.protection.outlook.com [40.107.247.46])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 054232D40
-        for <linux-bluetooth@vger.kernel.org>; Wed, 16 Aug 2023 09:46:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=RULo2dKDLTxwzmTISJd41uK7L9xniTUNZHPzlAzeo4LMRh3M3VKSVruk8MXD9xbHPi01aZiZ4+djtCojlDkVSPDgN8LgMWwkRHv1taz0XbqkqJj6uGGgdIqUMRKCyjVVtKJhtka4PaI+DsVfvZvGxdSBcj8ZAzURfgsm7R78TfhVNT1pCtYlK02M8L5pM3FvKJjPz522GCXuznOJOoZJqNpxRbel5M6oS2C1Jpi8fVIfvTuSgvK6L6CFVyUdy57MbVO+SmSjTYntDayAxu8OSaOKTAhD7mO7nXNgCa22imSYGX12RFXJ3r/8DXi/l8MpptQRtRmXCUN4gm0LT0FWwg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=IB7Lp7kKiyR6ev9+AbF+zX/i6OoL2QxYMBxWBmUwNpA=;
- b=iC429Gwbat9FuZfWVBmeXgsNYnkt6sL3G6vqtqiEJwMXzeE+pW7DZRvsd/PlAHDtp9EFILlq8rEA3SARTMJ0Q8lwRp7FRTiA1ARdlOKjnU9orlHd4Dc5Ep1nTZQWNVrq/VNd3GuaDcFrTOn8xi4TUnYK+BSNf+gmvcOKUQFQTCApEDHOrmsGAPZFeZ0yq9zutVHdUlbbDcQc4xB1ystHDO3p7OyJrxBGjaKeUg4+z0I4phTo3OsXHbZ/UyU3nq0XJh2Nq+uZSuQBVdGiNBpIoqTou4PTypHXbmB8uFXhBbiRic9Dfqn5Mkfi67WmxUO8cG9tzPNUT6Sp3iO4GKtA9Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=IB7Lp7kKiyR6ev9+AbF+zX/i6OoL2QxYMBxWBmUwNpA=;
- b=NOjwwz1wDSbIsAlQAYVpV3i6IiHrAYwyNA4GX+KS5WkKGRoE2uJhmdE1b0OmJNspqe0EGiWzq3kdYzyZgzTcdFOad6scqWXiFzg3Ywfc4wQCY920Q2hfY7E7ejSCBQYsAzz5XMXzHKX85HhmWPmNDjJIBCeADvM6JTPeP4b14mo=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-Received: from GV1PR04MB9151.eurprd04.prod.outlook.com (2603:10a6:150:26::9)
- by AM0PR04MB7107.eurprd04.prod.outlook.com (2603:10a6:208:1a0::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6678.29; Wed, 16 Aug
- 2023 16:45:28 +0000
-Received: from GV1PR04MB9151.eurprd04.prod.outlook.com
- ([fe80::c2fe:9eef:61ea:36d9]) by GV1PR04MB9151.eurprd04.prod.outlook.com
- ([fe80::c2fe:9eef:61ea:36d9%7]) with mapi id 15.20.6678.029; Wed, 16 Aug 2023
- 16:45:28 +0000
-From:   Claudia Draghicescu <claudia.rosu@nxp.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     iulia.tanasescu@nxp.com, mihai-octavian.urzica@nxp.com,
-        silviu.barbulescu@nxp.com, vlad.pruteanu@nxp.com,
-        andrei.istodorescu@nxp.com,
-        Claudia Draghicescu <claudia.rosu@nxp.com>
-Subject: [PATCH BlueZ v6 7/7] device: Set as non-temporary device that has matching profiles
-Date:   Wed, 16 Aug 2023 19:44:35 +0300
-Message-Id: <20230816164435.5149-8-claudia.rosu@nxp.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230816164435.5149-1-claudia.rosu@nxp.com>
-References: <20230816164435.5149-1-claudia.rosu@nxp.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: VE1PR03CA0047.eurprd03.prod.outlook.com
- (2603:10a6:803:118::36) To GV1PR04MB9151.eurprd04.prod.outlook.com
- (2603:10a6:150:26::9)
+        Wed, 16 Aug 2023 13:54:45 -0400
+Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.141])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40682270D
+        for <linux-bluetooth@vger.kernel.org>; Wed, 16 Aug 2023 10:54:43 -0700 (PDT)
+Received: from submission (posteo.de [185.67.36.169]) 
+        by mout01.posteo.de (Postfix) with ESMTPS id EC6F5240029
+        for <linux-bluetooth@vger.kernel.org>; Wed, 16 Aug 2023 19:54:40 +0200 (CEST)
+Received: from customer (localhost [127.0.0.1])
+        by submission (posteo.de) with ESMTPSA id 4RQwkm26SVz9rxB;
+        Wed, 16 Aug 2023 19:54:40 +0200 (CEST)
+Message-ID: <2a4c09ee380565c4b00f1c7bd0e0425fa6c1e668.camel@iki.fi>
+Subject: Re: [PATCH v4] Bluetooth: hci_sync: Fix UAF in
+ hci_disconnect_all_sync
+From:   Pauli Virtanen <pav@iki.fi>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        linux-bluetooth@vger.kernel.org
+Date:   Wed, 16 Aug 2023 17:54:38 +0000
+In-Reply-To: <CABBYNZKLG1feOObk6gLgCEBTUVbtAwX6NYeZ6KnbjV=q_P5jbw@mail.gmail.com>
+References: <20230814190101.2302448-1-luiz.dentz@gmail.com>
+         <CABBYNZKLG1feOObk6gLgCEBTUVbtAwX6NYeZ6KnbjV=q_P5jbw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: GV1PR04MB9151:EE_|AM0PR04MB7107:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3d2a0a82-71ff-40a7-c851-08db9e783277
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 488B7nAObyzBcLvES016xnNq9FFYcUb0eDfynA3JGdgDPRaxICCh9K2IqMzwqhhMaxzDKYIbSSfJwT3VJ/Qka2Jf3Lw83K3Mbd/X/8/Mv7XaONMo4jtT1D0yZFU0ziGdrlQXPQMxhJazdmUgTQV2/qAC45RFXAzIe/dc3o7uT4H8KQBRkw9uf/7dbdBfklNXlUSNSVoNtK0fHRPcHls9AZBnkFwW6hpnVFp0kaYCh20We0Uau7EAFkrSPcEdIc0Yc14ZU7t8C94+wbvWdXdTvl0Ri3zgNtoxd9WTmVPMnNbMsnxdClUKuiD9MqqEJNTYRSQPPxA3jhJA/+oJ8mF832dIN8Ne1Wsnrd75+gBGUyH0REvJ9d69Zh8r3ajIi7sPRs9XGZvV1z7sxmy8w1bm2MqW7PxkQSZBTR237D9nbFGkc6D5BHwusAkkEmvGw42yTY4niRBTIm9mnmv/twREXaYjweDiCiTpyeaBAuPk6ojxKMWBqHAd9oFrma6dJYjJVCW1/Q872RWwfWUBFMTFbGfQRzuNFZMxU46dPfjQkcWmv/4EL3epRTmNHMreVDhOkSF6T0pRx0aQ5V6thr2X5wbDeV72qiob6Dss1kgHEi4iEcFodHQ0MCRfBhQDOF4w
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:GV1PR04MB9151.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(39860400002)(346002)(366004)(376002)(136003)(1800799009)(451199024)(186009)(316002)(6916009)(66946007)(66476007)(66556008)(41300700001)(5660300002)(38350700002)(38100700002)(8676002)(4326008)(8936002)(2906002)(4744005)(83380400001)(26005)(478600001)(86362001)(6512007)(52116002)(6506007)(36756003)(6666004)(1076003)(2616005)(6486002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?38CBFLwcHHSIs8FjOemgpAn/+0pT6infYPrGpOdOFzLSRU94koPxC+VoTvzt?=
- =?us-ascii?Q?ZHVVj5IFOXlv+/MXkcMpVr/Gu/pnngnS9L1dS3ObQbbNj63damX7DnxFL1qW?=
- =?us-ascii?Q?vlePjc/37xLpiou1z86KCe67CwdQmHRx/kBSAP2wQWqIm0S0xybblea4JZlk?=
- =?us-ascii?Q?igQCVBuWexcQ0htvdyHaoqBgh1Dz6QOaNF2KjG07rpi2PWuVv8kHVjHEOcMS?=
- =?us-ascii?Q?sNhjMStxRwodyJsSxmJo2+5MZOBKHttF1ZNzbKUsyVjvU6TqhyCXm7pRAOgm?=
- =?us-ascii?Q?XLDppGgK+RdTUh7DZAf0mxo1QZpf410Blz9WUU3giz677hQ4eWI5LEAj1pv1?=
- =?us-ascii?Q?03zua29pKhV6yyCwk5Ii7RY8q2SvgGO7HySWxU38VmiPpdvD3qHSQGTm1QvN?=
- =?us-ascii?Q?1hY24ycC5F+Mx2F4uWKbvoHYbTqYRkN4YOrO06YDg07e0ekn8NJb7D6z/2d5?=
- =?us-ascii?Q?qLnLeRQ3NoEmXYEZcxvSQoSkLbkSm67xsKIaGaHwzDsPq3ZtwQMEj25LaKyq?=
- =?us-ascii?Q?8VaI4mnzOuowXTYxAv2+67Zm+rgLlaWzPMrlPCFkzohna0BeQW80ODu5QfjI?=
- =?us-ascii?Q?l5rVbCnH1QA8pbimrbOU7UlNL+0TLw+/8oUZu67BQ9VJDmMZ9Bqn8U7W3Osi?=
- =?us-ascii?Q?7mbvIvgZgnD2tMIBbihrJoTYtuGfCFFZI8CSbHxisOCuosrbZ5lqeViLSJwB?=
- =?us-ascii?Q?eby5/1gfq3OSXnKay7gAf4QxGmxHjySqAOSayLYySbxXyKQ8ATVgcT+63xMA?=
- =?us-ascii?Q?aBeRQnSfz3IrIFdVJf6gnpWQ6Z7g7SOMTGuWAKx+nPyk0wLudUCZOGxpEk5F?=
- =?us-ascii?Q?6Cx/4wYcogTaVSQgb108k9BBZHXDV9y2OihPEVAKj65bPsrpSUn/eHxANBt4?=
- =?us-ascii?Q?PhNry24ZijOK0g/CO/jDJ6zazgxRsHnzjnnxj7J9cyfhMh0Qymublw77CLuZ?=
- =?us-ascii?Q?RT1TC4m9CPYHtrTZnOPzG4qlN1AWoq7sdtFJh3Ms2HICv+3aiBvceXX41CX+?=
- =?us-ascii?Q?1s890aKa/ZHULjm5p375m82ELKnVP2LNoay3qKMUf7v0G8my4Us7b5wpwyVA?=
- =?us-ascii?Q?y6EosC9XDcE6lNE2SDngiB1SBFmsMDKVlLYvC1gVT5nre+IkQPuK9ubp7Qsg?=
- =?us-ascii?Q?Kh4Ip/3UkZ61QUm4YpaY2pa+0BxwEmQYNjdlfA2s73Soo5isHSb9wF0jUTHI?=
- =?us-ascii?Q?gFbXK5E354i0j9fSHFG5KuBVGX8OnSIreVo0viMQVN3kIRZnaIHUXb7qSRUK?=
- =?us-ascii?Q?CUiOHQvlx5oNiuSM4cQu5zLzpW6nadRPCsahUl7H1CHZwWYdfzjqrGVqLyZT?=
- =?us-ascii?Q?e2aWQNWqMkKKbHNRew47cr+Xe1s8BrE2dt0Pbtlbvk9geGQ3u/Dd+IXjeddn?=
- =?us-ascii?Q?YhbqMFyxmM+CBFq8k78YQXBypku+8wkfqAlIQuE8AVHiyJdw5wD9a3IKcX6z?=
- =?us-ascii?Q?NJbH9FcVY8zzAEkbIswAtPjBPgwfBYVyxm6L1abpQJPvMdsQb0/TN2aPAhiW?=
- =?us-ascii?Q?rdZTbzzH/zltAKPig5oLQr+0xFXUv27w7XKULjpFc3SheZ5aNcNd9Uf6JaOQ?=
- =?us-ascii?Q?LYtrXtSKq5cv0gig5iap9fl65UxNDSP8Fouu3yzi?=
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3d2a0a82-71ff-40a7-c851-08db9e783277
-X-MS-Exchange-CrossTenant-AuthSource: GV1PR04MB9151.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Aug 2023 16:45:28.5659
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: R7zMliF+p8eSxPaMmrQ9mOrs3sVpaDUrrJD6SUxQTbyMtDWwUq5x2QD2896Kr8sxPuO+vUhANoXqC7h6QVm16g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR04MB7107
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,URIBL_BLOCKED autolearn=ham
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NEUTRAL autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -115,27 +44,203 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Mark as non-temporary a device that has matching profiles.
-For the BAP broadcast case, this fixes the case where the broadcast
-source was discovered and the remote endpoint was created and the sync
-is performed after the timer for the device expired.
----
- src/device.c | 2 ++
- 1 file changed, 2 insertions(+)
+Hi Luiz,
 
-diff --git a/src/device.c b/src/device.c
-index ecd385cf8..57632b51e 100644
---- a/src/device.c
-+++ b/src/device.c
-@@ -3943,6 +3943,8 @@ static bool device_match_profile(struct btd_device *device,
- 							bt_uuid_strcmp) == NULL)
- 		return false;
- 
-+	btd_device_set_temporary(device, false);
-+
- 	return true;
- }
- 
+ti, 2023-08-15 kello 15:41 -0700, Luiz Augusto von Dentz kirjoitti:
+> Hi Pauli,
+> 
+> On Mon, Aug 14, 2023 at 12:01 PM Luiz Augusto von Dentz
+> <luiz.dentz@gmail.com> wrote:
+> > 
+> > From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> > 
+> > Use-after-free can occur in hci_disconnect_all_sync if a connection is
+> > deleted by concurrent processing of a controller event.
+> > 
+> > To prevent this the code now tries to iterate over the list backwards
+> > to ensure the links are cleanup before its parents, also it no longer
+> > relies on a cursor, instead it always uses the last element since
+> > hci_abort_conn_sync is guaranteed to call hci_conn_del.
+> > 
+> > UAF crash log:
+> > ==================================================================
+> > BUG: KASAN: slab-use-after-free in hci_set_powered_sync
+> > (net/bluetooth/hci_sync.c:5424) [bluetooth]
+> > Read of size 8 at addr ffff888009d9c000 by task kworker/u9:0/124
+> > 
+> > CPU: 0 PID: 124 Comm: kworker/u9:0 Tainted: G        W
+> > 6.5.0-rc1+ #10
+> > Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS
+> > 1.16.2-1.fc38 04/01/2014
+> > Workqueue: hci0 hci_cmd_sync_work [bluetooth]
+> > Call Trace:
+> >  <TASK>
+> >  dump_stack_lvl+0x5b/0x90
+> >  print_report+0xcf/0x670
+> >  ? __virt_addr_valid+0xdd/0x160
+> >  ? hci_set_powered_sync+0x2c9/0x4a0 [bluetooth]
+> >  kasan_report+0xa6/0xe0
+> >  ? hci_set_powered_sync+0x2c9/0x4a0 [bluetooth]
+> >  ? __pfx_set_powered_sync+0x10/0x10 [bluetooth]
+> >  hci_set_powered_sync+0x2c9/0x4a0 [bluetooth]
+> >  ? __pfx_hci_set_powered_sync+0x10/0x10 [bluetooth]
+> >  ? __pfx_lock_release+0x10/0x10
+> >  ? __pfx_set_powered_sync+0x10/0x10 [bluetooth]
+> >  hci_cmd_sync_work+0x137/0x220 [bluetooth]
+> >  process_one_work+0x526/0x9d0
+> >  ? __pfx_process_one_work+0x10/0x10
+> >  ? __pfx_do_raw_spin_lock+0x10/0x10
+> >  ? mark_held_locks+0x1a/0x90
+> >  worker_thread+0x92/0x630
+> >  ? __pfx_worker_thread+0x10/0x10
+> >  kthread+0x196/0x1e0
+> >  ? __pfx_kthread+0x10/0x10
+> >  ret_from_fork+0x2c/0x50
+> >  </TASK>
+> > 
+> > Allocated by task 1782:
+> >  kasan_save_stack+0x33/0x60
+> >  kasan_set_track+0x25/0x30
+> >  __kasan_kmalloc+0x8f/0xa0
+> >  hci_conn_add+0xa5/0xa80 [bluetooth]
+> >  hci_bind_cis+0x881/0x9b0 [bluetooth]
+> >  iso_connect_cis+0x121/0x520 [bluetooth]
+> >  iso_sock_connect+0x3f6/0x790 [bluetooth]
+> >  __sys_connect+0x109/0x130
+> >  __x64_sys_connect+0x40/0x50
+> >  do_syscall_64+0x60/0x90
+> >  entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+> > 
+> > Freed by task 695:
+> >  kasan_save_stack+0x33/0x60
+> >  kasan_set_track+0x25/0x30
+> >  kasan_save_free_info+0x2b/0x50
+> >  __kasan_slab_free+0x10a/0x180
+> >  __kmem_cache_free+0x14d/0x2e0
+> >  device_release+0x5d/0xf0
+> >  kobject_put+0xdf/0x270
+> >  hci_disconn_complete_evt+0x274/0x3a0 [bluetooth]
+> >  hci_event_packet+0x579/0x7e0 [bluetooth]
+> >  hci_rx_work+0x287/0xaa0 [bluetooth]
+> >  process_one_work+0x526/0x9d0
+> >  worker_thread+0x92/0x630
+> >  kthread+0x196/0x1e0
+> >  ret_from_fork+0x2c/0x50
+> > ==================================================================
+> > 
+> > Fixes: 182ee45da083 ("Bluetooth: hci_sync: Rework hci_suspend_notifier")
+> > Signed-off-by: Pauli Virtanen <pav@iki.fi>
+> > Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> > ---
+> >  net/bluetooth/hci_sync.c | 55 +++++++++++++++++++++++++---------------
+> >  1 file changed, 35 insertions(+), 20 deletions(-)
+> > 
+> > diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+> > index 5eb30ba21370..d10a0f36b947 100644
+> > --- a/net/bluetooth/hci_sync.c
+> > +++ b/net/bluetooth/hci_sync.c
+> > @@ -5370,6 +5370,7 @@ int hci_abort_conn_sync(struct hci_dev *hdev, struct hci_conn *conn, u8 reason)
+> >  {
+> >         int err = 0;
+> >         u16 handle = conn->handle;
+> > +       struct hci_conn *c;
+> > 
+> >         switch (conn->state) {
+> >         case BT_CONNECTED:
+> > @@ -5389,43 +5390,57 @@ int hci_abort_conn_sync(struct hci_dev *hdev, struct hci_conn *conn, u8 reason)
+> >                 hci_dev_unlock(hdev);
+> >                 return 0;
+> >         default:
+> > +               hci_dev_lock(hdev);
+> >                 conn->state = BT_CLOSED;
+> > +               hci_disconn_cfm(conn, reason);
+> > +               hci_conn_del(conn);
+> > +               hci_dev_unlock(hdev);
+> >                 return 0;
+> >         }
+> > 
+> > +       hci_dev_lock(hdev);
+> > +
+> > +       /* Check if the connection hasn't been cleanup while waiting
+> > +        * commands to complete.
+> > +        */
+> > +       c = hci_conn_hash_lookup_handle(hdev, handle);
+> > +       if (!c || c != conn) {
+> > +               err = 0;
+> > +               goto unlock;
+> > +       }
+> > +
+> >         /* Cleanup hci_conn object if it cannot be cancelled as it
+> >          * likelly means the controller and host stack are out of sync
+> >          * or in case of LE it was still scanning so it can be cleanup
+> >          * safely.
+> >          */
+> > -       if (err) {
+> > -               struct hci_conn *c;
+> > -
+> > -               /* Check if the connection hasn't been cleanup while waiting
+> > -                * commands to complete.
+> > -                */
+> > -               c = hci_conn_hash_lookup_handle(hdev, handle);
+> > -               if (!c || c != conn)
+> > -                       return 0;
+> > -
+> > -               hci_dev_lock(hdev);
+> > -               hci_conn_failed(conn, err);
+> > -               hci_dev_unlock(hdev);
+> > -       }
+> > +       hci_conn_failed(conn, reason);
+> > 
+> > +unlock:
+> > +       hci_dev_unlock(hdev);
+> >         return err;
+> >  }
+> > 
+> >  static int hci_disconnect_all_sync(struct hci_dev *hdev, u8 reason)
+> >  {
+> > -       struct hci_conn *conn, *tmp;
+> > -       int err;
+> > +       struct list_head *head = &hdev->conn_hash.list;
+> > +       struct hci_conn *conn;
+> > 
+> > -       list_for_each_entry_safe(conn, tmp, &hdev->conn_hash.list, list) {
+> > -               err = hci_abort_conn_sync(hdev, conn, reason);
+> > -               if (err)
+> > -                       return err;
+> > +       rcu_read_lock();
+> > +       while ((conn = list_first_or_null_rcu(head, struct hci_conn, list))) {
+> > +               /* Make sure the connection is not freed while unlocking */
+> > +               conn = hci_conn_get(conn);
+> > +               rcu_read_unlock();
+> > +               /* Disregard possible errors since hci_conn_del shall have been
+> > +                * called even in case of errors had occurred since it would
+> > +                * then cause hci_conn_failed to be called which calls
+> > +                * hci_conn_del internally.
+> > +                */
+> > +               hci_abort_conn_sync(hdev, conn, reason);
+> > +               hci_conn_put(conn);
+> > +               rcu_read_lock();
+> >         }
+> > +       rcu_read_unlock();
+> > 
+> >         return 0;
+> >  }
+> > --
+> > 2.41.0
+> 
+> Any comments on this one, I actually took the time to add some tests
+> to iso-tester to attempt to cover scenarios where
+> hci_disconnect_all_sync is called whiled connecting/connected which
+> seems to be working with these changes.
+> 
+
+I don't have further comments. I tested it on the load that previously
+generated KASAN crashes, and haven't seen any so far.
+
+I guess the only question was if deleting conns in hdev->req_workqueue
+could trigger some crash in hdev->workqueue processing not protected by
+locks/refcount, but don't know a scenario how this would occur right
+now.
+
 -- 
-2.34.1
-
+Pauli Virtanen
