@@ -2,66 +2,64 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D31CC78003A
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 17 Aug 2023 23:57:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 80062780131
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 18 Aug 2023 00:42:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355476AbjHQV44 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 17 Aug 2023 17:56:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59410 "EHLO
+        id S1355802AbjHQWlh (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 17 Aug 2023 18:41:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355558AbjHQV4v (ORCPT
+        with ESMTP id S1355789AbjHQWlI (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 17 Aug 2023 17:56:51 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 891CE35B1
-        for <linux-bluetooth@vger.kernel.org>; Thu, 17 Aug 2023 14:56:41 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id 5614622812f47-3a7ca8720a0so171125b6e.2
-        for <linux-bluetooth@vger.kernel.org>; Thu, 17 Aug 2023 14:56:41 -0700 (PDT)
+        Thu, 17 Aug 2023 18:41:08 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CFA4B9
+        for <linux-bluetooth@vger.kernel.org>; Thu, 17 Aug 2023 15:41:07 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-1bf3a2f44ffso133465ad.1
+        for <linux-bluetooth@vger.kernel.org>; Thu, 17 Aug 2023 15:41:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1692309401; x=1692914201;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=hejffoEm1P9CnlDW1UUh9C0SDtoryX6G38lQLYLH6LU=;
-        b=I1Z8cNy485wUzExqu8vTf90/CUpGNZ+QeRHsHt4MTCOx4ue6shCPUSB+PoVG6Lhcas
-         6ux6hxAsF0FhkbVh8jM9mmzalmAB/Cgj/lEWr5ddKqNWGvQvGStrrduQTnWQO3sV5N+h
-         WjjV+h2q91g7VZFYCozrTj21KfSh5KtufKl7eKYf/0s6XWJAx1YTswKPx92rxGwpvxMZ
-         Qwtrmx7IpHHKaGjFYN3nGTWShJBPrJjmZKveIPCYCSR1bnvRqvkcFyghuVAnFcD1cDN1
-         OhT7FedyfhFLx2GCRl0x9U9qP0ZaRU/6JLhZBIaN3idEhKxqM0ekxRI4/+hWx8p2uePR
-         v1Vg==
+        d=gmail.com; s=20221208; t=1692312066; x=1692916866;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1Q8Fm0hxWBZ6wilqZy1iDERfetf4M3xy+L2/2VQ17Y8=;
+        b=UBbVSOwuSiUFJJg4aZ9yxWgm4d6U/eIUHlf+LyVLcEHT3aIns0prxIU/snawg1MUMp
+         3Xe3iHX70ll+99BfPT3ca/SK5QA2VrT/vviJ5yOehWlUaaV3acZ5Ig9yKbR9T2t5tIF1
+         Mh4JabwpPa4BjICmLuPtefV2VyKEDCXmBUjYSxCxWp7hPzIOp8NF0N7Hu7SE/v9whNHl
+         kyIm6ONMBWegOi/eeYXdLlvsJk3CaPTDOEtBu0AQOPxmTLcBb58+jnfV+FXr1kzVlcV8
+         68X1kTxxKuQD8jtYc1kwDz795r4xyxA8Utpj3yBtZhVcA2AEuR124tGLn4Tg+Dh2NxW/
+         34zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1692309401; x=1692914201;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hejffoEm1P9CnlDW1UUh9C0SDtoryX6G38lQLYLH6LU=;
-        b=gUABLEOJMfOqZJTWuPYmjkZ8/IhvN2e+QHZaiAlPf7aijFX3YXDZQth3lONbvycOgr
-         LWt8xv50NVWow9nDFdHFu2R7QE6xpreBxg3m9RhB36T2GB0K/BTU6DCP8NNHAzVmuxfW
-         iFMgVn6upeDHccPjSaLKrlqqgEXISvnjPL4MUfqqQ0LyDbrlVW5GYGS1Fa3vtYz6ksQv
-         kNqwMZjZikcTGL/YLY7lpWXq/7dgW1bWEbbPQSn0A03qviqlnvWlIzBOzxbhDA3hD1zM
-         PVFnaTvGWqaOIUNOzJ9oYdcAiY58mGyihs4QeK8MqhjLYDZUWaeuRcHGdqXpN5mhY6EL
-         /sjw==
-X-Gm-Message-State: AOJu0YyGV1P4SL271GoHcsjvOfs+yVPJQ7Ai4heRX4reBibsyZu5PLvI
-        iDuKSEw5qvjYvxK/Yyn9MQZ4dW8JB3s=
-X-Google-Smtp-Source: AGHT+IEsvWYmxd1VBWMcYfTA3dZwC65a8cbuc83v6IgIXRMU9PJBhCV9Gc3bCLAtnOB/9hlivKqJnw==
-X-Received: by 2002:a05:6808:288e:b0:3a7:6ddd:5045 with SMTP id eu14-20020a056808288e00b003a76ddd5045mr700580oib.35.1692309400683;
-        Thu, 17 Aug 2023 14:56:40 -0700 (PDT)
-Received: from [172.17.0.2] ([13.66.79.50])
-        by smtp.gmail.com with ESMTPSA id dq25-20020a056808429900b003a77e3c4b75sm279537oib.47.2023.08.17.14.56.40
+        d=1e100.net; s=20221208; t=1692312066; x=1692916866;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1Q8Fm0hxWBZ6wilqZy1iDERfetf4M3xy+L2/2VQ17Y8=;
+        b=gvPwuGxA0U9Tp2cGnqnaHQgeB7z2+mJpYzF13qxAcqRdkk8qy7+4MTIrIGRq9QG5Vg
+         GWWpSBLQj+RV/m3pcMzZpLfPzAzx8+y08tSb8Xbm+xI+HF/GrmEe1/w5uiTpPa39xKtF
+         tR3FfRZKtTkKHsRWIZlvCmoQEldwqk+6+C8xsYLRZYcFsROku+6APx/DbT2Y/IBJ03qO
+         iFJE6S3SK97sBEsvC3848kJjSxuoD0r7dxcwWsm+YqnKyhaN9HkHoyPc2UlnSgIviCe5
+         FYd3WwuGf/r8YnWq2W/wvCkpBPCh2bF7lfrK5BLRaZTBaYwzxMe+zb1Zn70YsZn4v09j
+         KhIA==
+X-Gm-Message-State: AOJu0YwL7eSCyJLAKJ/4EYwxdQQfuucdOXG82KPXZ5P79MTcSFrFGDdA
+        B/if1LD2IhvIYa0ZKG2at2nUDl9qpR4=
+X-Google-Smtp-Source: AGHT+IFcg0mubcXW9TO1zKITwxkL/MapkQ4Qquw27u7FVmy1v673iyzzawNuh9O2O6qaqkp8O8wAqw==
+X-Received: by 2002:a17:903:1245:b0:1b8:66f6:87a3 with SMTP id u5-20020a170903124500b001b866f687a3mr923309plh.52.1692312065821;
+        Thu, 17 Aug 2023 15:41:05 -0700 (PDT)
+Received: from lvondent-mobl4.. (c-98-232-221-87.hsd1.or.comcast.net. [98.232.221.87])
+        by smtp.gmail.com with ESMTPSA id iy20-20020a170903131400b001b89b7e208fsm281877plb.88.2023.08.17.15.41.04
+        for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Aug 2023 14:56:40 -0700 (PDT)
-Message-ID: <64de9798.050a0220.8e635.1f4b@mx.google.com>
-Date:   Thu, 17 Aug 2023 14:56:40 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============9096750345964125912=="
+        Thu, 17 Aug 2023 15:41:04 -0700 (PDT)
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+To:     linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ 1/2] device: Don't attempt to set auto_connect for devices using RPAs
+Date:   Thu, 17 Aug 2023 15:41:02 -0700
+Message-ID: <20230817224103.3042055-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
-Subject: RE: [BlueZ] profile: Remove probe_on_discover
-In-Reply-To: <20230817201401.3001315-1-luiz.dentz@gmail.com>
-References: <20230817201401.3001315-1-luiz.dentz@gmail.com>
-Reply-To: linux-bluetooth@vger.kernel.org
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,39 +67,28 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============9096750345964125912==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This is automated email and please do not reply to this email!
-
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=777134
-
----Test result---
-
-Test Summary:
-CheckPatch                    PASS      0.51 seconds
-GitLint                       PASS      0.33 seconds
-BuildEll                      PASS      33.26 seconds
-BluezMake                     PASS      1193.14 seconds
-MakeCheck                     PASS      13.26 seconds
-MakeDistcheck                 PASS      190.50 seconds
-CheckValgrind                 PASS      318.08 seconds
-CheckSmatch                   PASS      442.40 seconds
-bluezmakeextell               PASS      131.80 seconds
-IncrementalBuild              PASS      1025.37 seconds
-ScanBuild                     PASS      1398.95 seconds
-
-
-
+Device using private address cannot be programmed into the auto_connect
+list without them being paired and its IRK being distributed otherwise
+there is no way to resolve it address and the command will fail.
 ---
-Regards,
-Linux Bluetooth
+ src/device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/src/device.c b/src/device.c
+index e0ff0b1c1543..f6b0167bf55b 100644
+--- a/src/device.c
++++ b/src/device.c
+@@ -2006,7 +2006,7 @@ static void device_set_auto_connect(struct btd_device *device, gboolean enable)
+ {
+ 	char addr[18];
+ 
+-	if (!device || !device->le)
++	if (!device || !device->le || device_address_is_private(device))
+ 		return;
+ 
+ 	ba2str(&device->bdaddr, addr);
+-- 
+2.41.0
 
---===============9096750345964125912==--
