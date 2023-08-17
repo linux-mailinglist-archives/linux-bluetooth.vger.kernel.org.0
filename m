@@ -2,54 +2,52 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 99EEC77FEB6
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 17 Aug 2023 21:51:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F020277FEB4
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 17 Aug 2023 21:51:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354761AbjHQTub (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 17 Aug 2023 15:50:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38262 "EHLO
+        id S1354757AbjHQTua (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 17 Aug 2023 15:50:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38280 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354797AbjHQTuY (ORCPT
+        with ESMTP id S1354799AbjHQTuZ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 17 Aug 2023 15:50:24 -0400
+        Thu, 17 Aug 2023 15:50:25 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26F11359B
-        for <linux-bluetooth@vger.kernel.org>; Thu, 17 Aug 2023 12:50:23 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06479359D
+        for <linux-bluetooth@vger.kernel.org>; Thu, 17 Aug 2023 12:50:24 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id AF1DA66826
-        for <linux-bluetooth@vger.kernel.org>; Thu, 17 Aug 2023 19:50:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 1A699C433C9;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8A84E6477F
+        for <linux-bluetooth@vger.kernel.org>; Thu, 17 Aug 2023 19:50:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id EFE13C433C8;
         Thu, 17 Aug 2023 19:50:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1692301822;
-        bh=Qv3ltt7fAKJJ5JDri+RfZQGzkWvuY6kHbcvtVWKbbyA=;
+        s=k20201202; t=1692301823;
+        bh=FCG79+3TPeyKnDk03gtZYm5w+n98A+FvfPHSft9PXHc=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=mjLL2bzQ7Wzk91Sg8R4S2FhNuNCIqQGzXm2sYyV2ySQoUadSdOY3n63nd1TXcZaQe
-         g24uPmoNvwtQDLmkAKXX9jqlrFVN8jyn5aHbgmX4wksfTv6d40Nm0Io6yMC6EvnO6E
-         ZnGzXTNCstKhjtBOEp+5cqJwn1JaTZbalKCAgWdsHuVrXcoyxKzEOtBQ81PF8B3qJT
-         3RHdUYxPmeTm09IQUMi1qa3siEIr16Y3RD0XGY48m4b7GQft7BdM4HhDS4eq9tCz9e
-         26Nj1x0ZSFzjjDfA4ijfBbAJ5p7T6tm2uQJ0LSddWcAVDmr2l7jcuYbwlcSVESkVwH
-         U4kX+sn03b4+Q==
+        b=BAPZfXXgcNzWMKYr2BYpPXVXShnmilA0bhI46g/VES8vuhaDPGoip+xdh7iPUtr0/
+         3HZs+o4A9hiQs3R4frVAtL2BeX9wQaJjlcnzL11+ZW4cbmBT3fEc0xAHwzY5c/MTZz
+         CWveZJ2y6HdDu7U++1OU//vDg349zLXcLELfW6uvLKYVpqfke+8K+v+kJjq/MWeTot
+         opLeZrQcnQOg3oe0cAeRWIfWoQNac242S0qkFcXMMzXzckhRI6o2UofGv+X2JzSnc9
+         2ZdMzwL+yWog1ZTJDZwAnSWs6F38MumyJZGc4+O0xHWntqyzeN0SIaTJyHpHSLz3s2
+         XWRxnnaJVprUA==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id F31B8C395C5;
-        Thu, 17 Aug 2023 19:50:21 +0000 (UTC)
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id D8666C395C5;
+        Thu, 17 Aug 2023 19:50:22 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3 0/1] Bluetooth: ISO: Use defer setup to separate PA sync
- and BIG sync
+Subject: Re: [PATCH BlueZ 1/2] monitor: Fix not printing latency information with
+ -r
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <169230182199.7718.11583848723742447156.git-patchwork-notify@kernel.org>
-Date:   Thu, 17 Aug 2023 19:50:21 +0000
-References: <20230817064427.3647-1-iulia.tanasescu@nxp.com>
-In-Reply-To: <20230817064427.3647-1-iulia.tanasescu@nxp.com>
-To:     Iulia Tanasescu <iulia.tanasescu@nxp.com>
-Cc:     linux-bluetooth@vger.kernel.org, claudia.rosu@nxp.com,
-        mihai-octavian.urzica@nxp.com, silviu.barbulescu@nxp.com,
-        vlad.pruteanu@nxp.com, andrei.istodorescu@nxp.com
+Message-Id: <169230182287.7718.11850892118907803611.git-patchwork-notify@kernel.org>
+Date:   Thu, 17 Aug 2023 19:50:22 +0000
+References: <20230816223147.2787284-1-luiz.dentz@gmail.com>
+In-Reply-To: <20230816223147.2787284-1-luiz.dentz@gmail.com>
+To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc:     linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -62,26 +60,24 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
+This series was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Thu, 17 Aug 2023 09:44:26 +0300 you wrote:
-> Some scenarios require a Broadcast Sink to complete the PA sync and
-> BIG sync procedures separately.
+On Wed, 16 Aug 2023 15:31:46 -0700 you wrote:
+> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 > 
-> For example, a Broadcast Sink might synchronize to the periodic
-> advertising transmitted by a Broadcast Source and it might detect
-> that the BIG is encrypted, by looking at the BIGInfo advertising
-> reports. If the Broadcast Sink doesn't know which Broadcast Code
-> to pass as parameter to the BIG Create Sync command, it might learn
-> it from a BASS Client through the Set Broadcast Code operation.
-> Only then will it be able to successfully sync to the BIG.
-> 
-> [...]
+> When reading a log from file hci_devba may not work, also store link
+> information so assign_handle can use use the parent (ACL) destination.
+> ---
+>  monitor/packet.c | 40 +++++++++++++++++++++++++++++++++++++---
+>  monitor/packet.h |  1 +
+>  2 files changed, 38 insertions(+), 3 deletions(-)
 
 Here is the summary with links:
-  - [v3,1/1] Bluetooth: ISO: Use defer setup to separate PA sync and BIG sync
-    https://git.kernel.org/bluetooth/bluetooth-next/c/f0835e7404b7
+  - [BlueZ,1/2] monitor: Fix not printing latency information with -r
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=31941ff3977c
+  - [BlueZ,2/2] monitor: Detect LE-ACL connections
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=aed756136b7f
 
 You are awesome, thank you!
 -- 
