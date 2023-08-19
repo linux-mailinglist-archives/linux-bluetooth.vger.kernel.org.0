@@ -2,25 +2,25 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AEE607819BA
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 19 Aug 2023 15:33:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5899A7819B8
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 19 Aug 2023 15:33:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232824AbjHSNdk (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 19 Aug 2023 09:33:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44706 "EHLO
+        id S232812AbjHSNdd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 19 Aug 2023 09:33:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbjHSNdk (ORCPT
+        with ESMTP id S229436AbjHSNdc (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 19 Aug 2023 09:33:40 -0400
-Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDE99255E2
+        Sat, 19 Aug 2023 09:33:32 -0400
+Received: from meesny.iki.fi (meesny.iki.fi [IPv6:2001:67c:2b0:1c1::201])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 974031A2A8
         for <linux-bluetooth@vger.kernel.org>; Sat, 19 Aug 2023 06:31:34 -0700 (PDT)
 Received: from monolith.lan (91-152-120-101.elisa-laajakaista.fi [91.152.120.101])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
         (Authenticated sender: pav)
-        by meesny.iki.fi (Postfix) with ESMTPSA id 4RSflg22pVzydv;
+        by meesny.iki.fi (Postfix) with ESMTPSA id 4RSflg30FMzyfN;
         Sat, 19 Aug 2023 16:31:27 +0300 (EEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
         t=1692451887;
@@ -28,33 +28,33 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=uHkOP8ei0C/7dI72g+L6LTwouMqiFz34F6ZsMFxBN1s=;
-        b=M2bYqHV9Ts/snNT86/tljL8RyEWldOmutr1hRwplsMzZbKk23eUxajhJn7uLgLiOQchpNQ
-        0v3GsEFGQ5r5yQw9UJNdPZWgtFwfEfqj/Bxhsa0LYtbmXUyO7mAKy2U7OscIhS0BRiV8nV
-        I3QUN+NbFm5CAM1VJ2PXNE5bhgUyk1U=
+        bh=2CeyuORkRww/CWbLS26iE+78V82b5y9/EStIhVviNYA=;
+        b=Z5NGIEHowI8I2Bm48J5yOVN4+3uEiGKi28rdzEYxIHB3+OWlHqsX27hDcVY2x6nvRZkyq/
+        rwEH54lPZZbCN3CZuCWQELFA8RPN0SDbH/kC+et8glLdBrCV8QYbd8EqtjuLaFcpK3JMFU
+        dnjTf3GwndNL1sDaI0ddjLlVMFAcMpg=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
         s=meesny; t=1692451887;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=uHkOP8ei0C/7dI72g+L6LTwouMqiFz34F6ZsMFxBN1s=;
-        b=u1EeQDYz22XY8b8BH9rUjfX18MzDrjrYopzbsuQ8l4GZA1Ysv2x5DbTd2XZB2GUn/MJzsf
-        VkuiaJhYUubx+n/9Zq9W6glMFsiBDCKBZeyYSlAKcgx9ZskQ2Fh54q/0x6QT+NWbeStOVM
-        NOw/jomMS8LqvddOP+LsAXHD5DaCSPs=
+        bh=2CeyuORkRww/CWbLS26iE+78V82b5y9/EStIhVviNYA=;
+        b=y2cvH4Uz2DbRMVrgQf95Fq1g3jexyLhcX7FNZqCSMojPmVjoPjEVCH4/PiBvjy3QcyHzcL
+        z8/gPZSs51ZiwndB9iOEssSLRnytoCI5hSocygdo4BOpwOpJWbUrdD+y0CT7+V/xlndmt1
+        yGtcznSb6/ifE0xf7VaWLsIhHBnNgIg=
 ARC-Authentication-Results: i=1;
         ORIGINATING;
         auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 ARC-Seal: i=1; s=meesny; d=iki.fi; t=1692451887; a=rsa-sha256; cv=none;
-        b=ie08uD0FHpUFJ1TwCsmGER78yn5TqwLumYNdiUidTcxGVRfDeOc1pLPxxwFMqRlBZv+tZr
-        BdXnayPq5tfwdLygVmyVB4Mso1SHm3BiPfqXoKcOpnMsEIwLLbotmSKG6DHjWCDLelurlg
-        lVl/ORwTzj7Ak30VeOTN2qJZe8U8b7o=
+        b=sS7pkbBeh/gwfiHjQPUt9/AuSIVGJvE3qlBndACbNXWAikj3z/cjCqDobZxAl3m5SsKYT3
+        B0Vk1FO/mUmPRzs6o1NO2YXkM5ZkVuyzcpEFzUq5SyzRDAFvAEQsu42CVtiPKO3SPEOd1O
+        Lr+qe6bcPNWhtFZQZ5ZDd8kUVCB/06w=
 From:   Pauli Virtanen <pav@iki.fi>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ 3/4] sco-tester: add test for ACL disconnect before SCO established
-Date:   Sat, 19 Aug 2023 16:31:22 +0300
-Message-ID: <d5f409c7af4638a03af56a6083e0416a32f4b590.1692451184.git.pav@iki.fi>
+Subject: [PATCH BlueZ 4/4] iso-tester: add test for ACL disconnect before ISO created
+Date:   Sat, 19 Aug 2023 16:31:23 +0300
+Message-ID: <444c48235fb02ac68871236ce669fd02b4a4736d.1692451184.git.pav@iki.fi>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <feaee15ebafa76155f6c1a91755d6d5ba054d451.1692451184.git.pav@iki.fi>
 References: <feaee15ebafa76155f6c1a91755d6d5ba054d451.1692451184.git.pav@iki.fi>
@@ -69,33 +69,39 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Simulate ACL being disconnected before SCO is established.  Kernel shall
-not crash.
+Simulate ACL being disconnected when connecting ISO, before LE Create
+CIS got sent.  The kernel shall indicate connection failure for the ISO
+socket immediately when the ACL is gone, since connecting the ISO can no
+longer proceed.
 
-eSCO ACL Disconnect - Failure
-
-Link: https://lore.kernel.org/linux-bluetooth/00000000000013b93805fbbadc50@google.com/
+ISO Connect ACL Disconnect - Failure
 ---
 
 Notes:
-    Current bluetooth-next/master crashes, similarly as what syzbot says.
+    Current bluetooth-next/master kernel fails this.
 
- tools/sco-tester.c | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ tools/iso-tester.c | 38 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
-diff --git a/tools/sco-tester.c b/tools/sco-tester.c
-index f3de42c7b..ecc65e092 100644
---- a/tools/sco-tester.c
-+++ b/tools/sco-tester.c
-@@ -800,6 +800,36 @@ static void test_connect_simult_disc(const void *test_data)
- 	test_connect(test_data);
+diff --git a/tools/iso-tester.c b/tools/iso-tester.c
+index b1a2afba0..48c8ab52a 100644
+--- a/tools/iso-tester.c
++++ b/tools/iso-tester.c
+@@ -2628,6 +2628,40 @@ static void test_connect_suspend(const void *test_data)
+ 	trigger_force_suspend((void *)test_data);
  }
  
 +static bool hook_acl_disc(const void *msg, uint16_t len, void *user_data)
 +{
-+	const struct bt_hci_evt_conn_complete *ev = msg;
++	const uint8_t *msg_data = msg;
++	const struct bt_hci_evt_le_enhanced_conn_complete *ev;
 +	struct test_data *data = tester_get_data();
 +	struct bthost *bthost;
++
++	if (msg_data[0] != BT_HCI_EVT_LE_ENHANCED_CONN_COMPLETE)
++		return true;
++
++	ev = (void *) &msg_data[1];
 +
 +	tester_print("Disconnect ACL");
 +
@@ -111,30 +117,28 @@ index f3de42c7b..ecc65e092 100644
 +{
 +	struct test_data *data = tester_get_data();
 +
-+	/* ACL disconnected before SCO is established seen.
-+	 * Kernel shall not crash, but <= 6.5-rc5 crash.
-+	 */
++	/* ACL disconnected before ISO is created */
 +	hciemu_add_hook(data->hciemu, HCIEMU_HOOK_POST_EVT,
-+					BT_HCI_EVT_CONN_COMPLETE,
++					BT_HCI_EVT_LE_META_EVENT,
 +					hook_acl_disc, NULL);
 +
 +	test_connect(test_data);
 +}
 +
- int main(int argc, char *argv[])
+ static void test_bcast(const void *test_data)
  {
- 	tester_init(&argc, &argv);
-@@ -826,6 +856,10 @@ int main(int argc, char *argv[])
- 					&connect_failure_reset, setup_powered,
- 					test_connect_simult_disc);
+ 	struct test_data *data = tester_get_data();
+@@ -2850,6 +2884,10 @@ int main(int argc, char *argv[])
+ 							setup_powered,
+ 							test_connect2);
  
-+	test_sco("eSCO ACL Disconnect - Failure",
-+					&connect_failure_reset, setup_powered,
-+					test_connect_acl_disc);
++	test_iso("ISO Connect ACL Disconnect - Failure", &connect_suspend,
++							setup_powered,
++							test_connect_acl_disc);
 +
- 	test_sco_11("SCO CVSD 1.1 - Success", &connect_success, setup_powered,
+ 	test_iso("ISO Defer Send - Success", &connect_16_2_1_defer_send,
+ 							setup_powered,
  							test_connect);
- 
 -- 
 2.41.0
 
