@@ -2,58 +2,62 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 29F667819B7
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 19 Aug 2023 15:33:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB1D37819B9
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 19 Aug 2023 15:33:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232805AbjHSNdY (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Sat, 19 Aug 2023 09:33:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51838 "EHLO
+        id S232816AbjHSNdj (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Sat, 19 Aug 2023 09:33:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbjHSNdY (ORCPT
+        with ESMTP id S229436AbjHSNdi (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Sat, 19 Aug 2023 09:33:24 -0400
+        Sat, 19 Aug 2023 09:33:38 -0400
 Received: from meesny.iki.fi (meesny.iki.fi [IPv6:2001:67c:2b0:1c1::201])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36113F58C
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8E381A2B6
         for <linux-bluetooth@vger.kernel.org>; Sat, 19 Aug 2023 06:31:34 -0700 (PDT)
 Received: from monolith.lan (91-152-120-101.elisa-laajakaista.fi [91.152.120.101])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
         (Authenticated sender: pav)
-        by meesny.iki.fi (Postfix) with ESMTPSA id 4RSflf4ktXzyPG;
-        Sat, 19 Aug 2023 16:31:26 +0300 (EEST)
+        by meesny.iki.fi (Postfix) with ESMTPSA id 4RSflg1CmHzyd2;
+        Sat, 19 Aug 2023 16:31:27 +0300 (EEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
-        t=1692451886;
+        t=1692451887;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=QFzl1Q1pyyM4DuuxOqyyoJaMaJEA7LV10cSwcwZSSf0=;
-        b=YWVrFMnMmF2OKUkfPRAvFyqI80ucjHn0ZIxbpipk6xGa0NFm2rsmd9irEjV3n6l/yeSjZE
-        ocfGyICULHqXv4JvPVWUtHakGpNMpI4cmXeW+4fP6cP1oGBWsPkNjrYb/vUR3WMH3VIswk
-        EYhG3N32ekOi0WlDtNPP+U0oNCKiWvI=
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=1wBO73R9ff7gSKgLy3qUisXiLGhrcRmdpR547QojgoA=;
+        b=iP8hssisP/DndwDrJRwS3Q2MEyunAp7eIUWkz2xjmGcB0yOi9ewsWZW+OyWbaTQMCAEqM2
+        bTCc8kzeylD4AGuEau1rh8DqI8eUdccw88d8qM/OlB801MlowWaHpKgxyCFEasQobocux8
+        ZUVuFnQIR1HFCfqX7Yvi9cn45+8Ak6g=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-        s=meesny; t=1692451886;
+        s=meesny; t=1692451887;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=QFzl1Q1pyyM4DuuxOqyyoJaMaJEA7LV10cSwcwZSSf0=;
-        b=ydeKb607BviIae4m6cBOvbzuSgY5Rmb/niwHK7F9WiKdjqfY7r7hRRJLPlMFchPMdEvOGS
-        WP2vpuE4QN0C/Sz5pTikGH97sbqaM7JtgauzaGx8CcrJ00D6gUcTsNoxz3CNaqWUSw1Pcz
-        boBv+KVcU1ygxI1Rs7sYit0Tc5XTrlk=
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=1wBO73R9ff7gSKgLy3qUisXiLGhrcRmdpR547QojgoA=;
+        b=IXgKYnUA9aXp0RrVRmKiBD+sfSXbFzvu89rgJaOojKw7B0zHLTxYICsNuNChbOUdffxSIf
+        vP/w91Cgydiypd3y2+BzCQzemgMqWUwDumcSBPSKqi04HYNDelVSvtEBZPUWsrg5LY5ZDN
+        Khp3O+r2cCLJmehFboBdT8fExpmu6RU=
 ARC-Authentication-Results: i=1;
         ORIGINATING;
         auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
-ARC-Seal: i=1; s=meesny; d=iki.fi; t=1692451886; a=rsa-sha256; cv=none;
-        b=PlNDE+EmU5wN+ZmX74QDZrrnFhrdcj962fDwNh5Wrl3bMSdOH+w72AnlzdY96gcL0mz46d
-        60kAwWbpFdpE6vcmcjXOnD8EgiFm4Fx2GhPwZMvzqOMheADj+ga+6JlmrkbWaQDt1NbOzi
-        S57Q2IG2d+ZGLhTqFrz9hzFVZNQjC6k=
+ARC-Seal: i=1; s=meesny; d=iki.fi; t=1692451887; a=rsa-sha256; cv=none;
+        b=SVScu7nbldfmyl7YKkQ7JloFQMmmSkgsDO8HdU1OfpPS91nd0Ealj2WTS2f6+VBx3EySQy
+        YOVU42aOdNz1AAVOlxGAjrpnzkSuh8N3E2rg8ezgDUeltWEsJ7uLfpc3t/2QtXcBSdMGE0
+        eqSsfbpdhc/nzfZ0xNtTYmKL/n+DhPc=
 From:   Pauli Virtanen <pav@iki.fi>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ 1/4] vhci: Add function to pause processing input from vhci
-Date:   Sat, 19 Aug 2023 16:31:20 +0300
-Message-ID: <feaee15ebafa76155f6c1a91755d6d5ba054d451.1692451184.git.pav@iki.fi>
+Subject: [PATCH BlueZ 2/4] hciemu: Add hciemu_flush_client_events for ordering VHCI vs bthost
+Date:   Sat, 19 Aug 2023 16:31:21 +0300
+Message-ID: <70e5ea48b34f3fdb339e92faf4ceb0fefff91f53.1692451184.git.pav@iki.fi>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <feaee15ebafa76155f6c1a91755d6d5ba054d451.1692451184.git.pav@iki.fi>
+References: <feaee15ebafa76155f6c1a91755d6d5ba054d451.1692451184.git.pav@iki.fi>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_INVALID,
@@ -65,42 +69,131 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Add function to pause (temporarily) reading data from vhci.  This can be
-used to synchronously pause handling of btdev commands from the kernel.
----
- emulator/vhci.c | 9 +++++++++
- emulator/vhci.h | 1 +
- 2 files changed, 10 insertions(+)
+bthost commands execute with a delay because events may be sitting in
+the socketpair queues.  This makes it difficult to ensure, when writing
+tests, that certain bthost commands have been handled, before any new
+events from VHCI are processed.
 
-diff --git a/emulator/vhci.c b/emulator/vhci.c
-index ecf1db3c7..c6a5caa5e 100644
---- a/emulator/vhci.c
-+++ b/emulator/vhci.c
-@@ -178,6 +178,15 @@ void vhci_close(struct vhci *vhci)
- 	vhci_destroy(vhci);
- }
+To make event ordering possible, add a function that flushes client
+bthost/btdev socketpair queues, before processing any new VHCI events.
+This is done by pausing VHCI input processing until the kernel
+socketpair queues are empty.
+---
+ emulator/hciemu.c | 54 +++++++++++++++++++++++++++++++++++++++++++++++
+ emulator/hciemu.h |  3 +++
+ 2 files changed, 57 insertions(+)
+
+diff --git a/emulator/hciemu.c b/emulator/hciemu.c
+index dcfed9be7..0b5847c27 100644
+--- a/emulator/hciemu.c
++++ b/emulator/hciemu.c
+@@ -21,6 +21,7 @@
+ #include <stdbool.h>
+ #include <errno.h>
+ #include <sys/socket.h>
++#include <sys/ioctl.h>
  
-+bool vhci_pause_input(struct vhci *vhci, bool paused)
+ #include <glib.h>
+ 
+@@ -41,6 +42,7 @@ struct hciemu_client {
+ 	guint start_source;
+ 	guint host_source;
+ 	guint source;
++	int sock[2];
+ };
+ 
+ struct hciemu {
+@@ -54,6 +56,8 @@ struct hciemu {
+ 	hciemu_debug_func_t debug_callback;
+ 	hciemu_destroy_func_t debug_destroy;
+ 	void *debug_data;
++
++	unsigned int flush_id;
+ };
+ 
+ struct hciemu_command_hook {
+@@ -338,6 +342,9 @@ static struct hciemu_client *hciemu_client_new(struct hciemu *hciemu,
+ 		return NULL;
+ 	}
+ 
++	client->sock[0] = sv[0];
++	client->sock[1] = sv[1];
++
+ 	client->source = create_source_btdev(sv[0], client->dev);
+ 	client->host_source = create_source_bthost(sv[1], client->host);
+ 	client->start_source = g_idle_add(start_host, client);
+@@ -435,6 +442,9 @@ void hciemu_unref(struct hciemu *hciemu)
+ 	queue_destroy(hciemu->post_command_hooks, destroy_command_hook);
+ 	queue_destroy(hciemu->clients, hciemu_client_destroy);
+ 
++	if (hciemu->flush_id)
++		g_source_remove(hciemu->flush_id);
++
+ 	vhci_close(hciemu->vhci);
+ 
+ 	free(hciemu);
+@@ -744,3 +754,47 @@ bool hciemu_del_hook(struct hciemu *hciemu, enum hciemu_hook_type type,
+ 
+ 	return btdev_del_hook(dev, hook_type, opcode);
+ }
++
++static bool client_is_pending(const void *data, const void *match_data)
 +{
-+	if (paused)
-+		return io_set_read_handler(vhci->io, NULL, NULL, NULL);
-+	else
-+		return io_set_read_handler(vhci->io, vhci_read_callback, vhci,
-+									NULL);
++	struct hciemu_client *client = (struct hciemu_client *)data;
++	int used, i;
++
++	if (!client->source || !client->host_source)
++		return false;
++
++	for (i = 0; i < 2; ++i) {
++		if (!ioctl(client->sock[i], TIOCOUTQ, &used) && used > 0)
++			return true;
++		if (!ioctl(client->sock[i], TIOCINQ, &used) && used > 0)
++			return true;
++	}
++
++	return false;
 +}
 +
- struct btdev *vhci_get_btdev(struct vhci *vhci)
- {
- 	if (!vhci)
-diff --git a/emulator/vhci.h b/emulator/vhci.h
-index 68eae4c4a..12c4b55a0 100644
---- a/emulator/vhci.h
-+++ b/emulator/vhci.h
-@@ -31,3 +31,4 @@ int vhci_set_emu_opcode(struct vhci *vhci, uint16_t opcode);
- int vhci_set_force_static_address(struct vhci *vhci, bool enable);
- int vhci_force_devcd(struct vhci *vhci, const void *data, size_t len);
- int vhci_read_devcd(struct vhci *vhci, void *buf, size_t size);
-+bool vhci_pause_input(struct vhci *vhci, bool paused);
++static gboolean flush_client_events(gpointer user_data)
++{
++	struct hciemu *hciemu = user_data;
++
++	if (queue_find(hciemu->clients, client_is_pending, NULL))
++		return TRUE;
++
++	hciemu->flush_id = 0;
++
++	util_debug(hciemu->debug_callback, hciemu->debug_data, "vhci: resume");
++	if (hciemu->vhci)
++		vhci_pause_input(hciemu->vhci, false);
++
++	return FALSE;
++}
++
++void hciemu_flush_client_events(struct hciemu *hciemu)
++{
++	if (hciemu->flush_id || !hciemu->vhci)
++		return;
++
++	util_debug(hciemu->debug_callback, hciemu->debug_data, "vhci: pause");
++	vhci_pause_input(hciemu->vhci, true);
++	hciemu->flush_id = g_idle_add(flush_client_events, hciemu);
++}
+diff --git a/emulator/hciemu.h b/emulator/hciemu.h
+index 3a06ca578..3449eae41 100644
+--- a/emulator/hciemu.h
++++ b/emulator/hciemu.h
+@@ -48,6 +48,9 @@ bool hciemu_set_debug(struct hciemu *hciemu, hciemu_debug_func_t callback,
+ struct vhci *hciemu_get_vhci(struct hciemu *hciemu);
+ struct bthost *hciemu_client_get_host(struct hciemu *hciemu);
+ 
++/* Process pending client events before new VHCI events */
++void hciemu_flush_client_events(struct hciemu *hciemu);
++
+ const char *hciemu_get_address(struct hciemu *hciemu);
+ uint8_t *hciemu_get_features(struct hciemu *hciemu);
+ 
 -- 
 2.41.0
 
