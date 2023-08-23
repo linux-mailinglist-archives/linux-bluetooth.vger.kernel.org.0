@@ -2,88 +2,211 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 43F5D7863CF
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Aug 2023 01:01:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9FFCD7863DD
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Aug 2023 01:11:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238830AbjHWXA2 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 23 Aug 2023 19:00:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59052 "EHLO
+        id S238488AbjHWXKo (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 23 Aug 2023 19:10:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238822AbjHWXA1 (ORCPT
+        with ESMTP id S234974AbjHWXKN (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 23 Aug 2023 19:00:27 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58A5AD3
-        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Aug 2023 16:00:25 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D8F3365C3A
-        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Aug 2023 23:00:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 1B41EC433CA;
-        Wed, 23 Aug 2023 23:00:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1692831624;
-        bh=/lIWKiJ5jRndc96iIFOLzxfq2997q/kpBfvQSviRcec=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=Ma5Twc3wIsihWgTVKTajp/QdvDzhQIKu3eUxqKTeFcGlrMGueT60GzXQuFq9ql43J
-         ZyyE6iSdHo4UDYGB63bnux6ue4o8Ac+VYrLfoAJ4cTIJMVOsK6laBc2Q3b3MpmqVtj
-         N5nSj+99kW0Fu8bOXJ4V9uxe3bixlV0AJzUDgiFpHh8AlidxdSRNRDI4a3xq6g+nl5
-         7LLpCoCfWDeDnGCly2OztwPj+BalSRcSZJOWWgcqhKt7Tj7ULrfpSvBwIBora1AZrm
-         o8rc6akJl7TAhJr8aYNu+J3RF2MPWAhQ7FEe8e8H/B3xCmZToczZMVygK9pYRLIj8G
-         t1pge/CamVJLA==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 02FE1C395C5;
-        Wed, 23 Aug 2023 23:00:24 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ 0/1] isotest: Add defer setup support for Broadcast
- Receiver
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <169283162400.30787.7458691088916734653.git-patchwork-notify@kernel.org>
-Date:   Wed, 23 Aug 2023 23:00:24 +0000
-References: <20230823151125.16100-1-iulia.tanasescu@nxp.com>
-In-Reply-To: <20230823151125.16100-1-iulia.tanasescu@nxp.com>
-To:     Iulia Tanasescu <iulia.tanasescu@nxp.com>
-Cc:     linux-bluetooth@vger.kernel.org, claudia.rosu@nxp.com,
-        mihai-octavian.urzica@nxp.com, silviu.barbulescu@nxp.com,
-        vlad.pruteanu@nxp.com, andrei.istodorescu@nxp.com
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+        Wed, 23 Aug 2023 19:10:13 -0400
+Received: from out-20.smtp.github.com (out-20.smtp.github.com [192.30.252.203])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3717FE7D
+        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Aug 2023 16:10:11 -0700 (PDT)
+Received: from github.com (hubbernetes-node-61de8af.va3-iad.github.net [10.48.144.43])
+        by smtp.github.com (Postfix) with ESMTPA id 7966B8C06AB
+        for <linux-bluetooth@vger.kernel.org>; Wed, 23 Aug 2023 16:10:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+        s=pf2023; t=1692832210;
+        bh=ETv5XKwtMyG1HipSr5e5PUVq/vOSZNKqUfyWtirc+is=;
+        h=Date:From:To:Subject:From;
+        b=TDI3xoVbTGeVz14a7I4mDc84IP2EoOwp94HUt0lG2rGUVi6fF3BOT7E29ZSeL/Cc/
+         xOaqkpu7/LG8TmCZ8Hp83rVcZQIeNW6NX0EMUdX08Cpd0lfQAXhoM2u+oI4yEBgvZh
+         LPFTzbIaOs/5U+cvvQSKzeIfFBYIiD1xsig0jrfs=
+Date:   Wed, 23 Aug 2023 16:10:10 -0700
+From:   iulia-tanasescu <noreply@github.com>
+To:     linux-bluetooth@vger.kernel.org
+Message-ID: <bluez/bluez/push/refs/heads/master/c01cf4-8b2f00@github.com>
+Subject: [bluez/bluez] 35c706: client: Add agent auto argument support
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+  Branch: refs/heads/master
+  Home:   https://github.com/bluez/bluez
+  Commit: 35c706f3986d3813e9ce55bc214858be6ac419e3
+      https://github.com/bluez/bluez/commit/35c706f3986d3813e9ce55bc214858be6ac419e3
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2023-08-23 (Wed, 23 Aug 2023)
 
-This patch was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+  Changed paths:
+    M client/agent.c
+    M client/main.c
 
-On Wed, 23 Aug 2023 18:11:24 +0300 you wrote:
-> This patch adds defer setup support for the Broadcast Receiver scenario.
-> 
-> In order to create a Broadcast Receiver with the defer setup option,
-> the -W command line parameter should be used, as described in
-> isotest.rst.
-> 
-> Iulia Tanasescu (1):
->   isotest: Add defer setup support for Broadcast Receiver
-> 
-> [...]
+  Log Message:
+  -----------
+  client: Add agent auto argument support
 
-Here is the summary with links:
-  - [BlueZ,1/1] isotest: Add defer setup support for Broadcast Receiver
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=8b2f002edeb3
+This adds "auto" capability which behaves like "on" but instead of
+asking user to confirm/autorize it automatically accepts, which is
+not secure to be used thus a warning is printed when user selects it.
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+Usage:
+
+  [bluetoothctl]# agent auto
+  Warning: setting auto response is not secure, it bypass user
+  confirmation/authorization, it shall only be used for test automation.
+
+  or
+
+  client/bluetoothctl -a auto
 
 
+  Commit: d49ea14f70dac31365e2bbf84d065a7ed7222cad
+      https://github.com/bluez/bluez/commit/d49ea14f70dac31365e2bbf84d065a7ed7222cad
+  Author: Claudia Draghicescu <claudia.rosu@nxp.com>
+  Date:   2023-08-23 (Wed, 23 Aug 2023)
+
+  Changed paths:
+    M src/shared/bap.c
+    M src/shared/bap.h
+
+  Log Message:
+  -----------
+  shared/bap: Add support for BAP broadcast sink
+
+This adds support for BAP broadcast sink, creates a remote endpoint when a
+broadcast source is discovered and synchronizes with the source upon
+endpoint configuration.
+This feature was tested using bluetoothctl with the following commands:
+
+[bluetooth]# endpoint.register 00001851-0000-1000-8000-00805f9b34fb 0x06
+[bluetooth]# scan on
+[NEW] Endpoint /org/bluez/hci0/dev_XX_XX_XX_XX_XX_XX/pac_bcast0
+[bluetooth]# endpoint.config
+/org/bluez/hci0/dev_XX_XX_XX_XX_XX_XX/pac_bcast0
+/local/endpoint/ep0 16_2_1
+
+
+  Commit: c7850975b0d01e2ed646bee759bbf0499de6c70c
+      https://github.com/bluez/bluez/commit/c7850975b0d01e2ed646bee759bbf0499de6c70c
+  Author: Claudia Draghicescu <claudia.rosu@nxp.com>
+  Date:   2023-08-23 (Wed, 23 Aug 2023)
+
+  Changed paths:
+    M profiles/audio/bap.c
+
+  Log Message:
+  -----------
+  bap: Add support for BAP broadcast sink
+
+This adds support for BAP broadcast sink, creates a remote endpoint when a
+broadcast source is discovered and synchronizes with the source upon
+endpoint configuration.
+This feature was tested using bluetoothctl with the following commands:
+
+[bluetooth]# endpoint.register 00001851-0000-1000-8000-00805f9b34fb 0x06
+[bluetooth]# scan on
+[NEW] Endpoint /org/bluez/hci0/dev_XX_XX_XX_XX_XX_XX/pac_bcast0
+[bluetooth]# endpoint.config
+/org/bluez/hci0/dev_XX_XX_XX_XX_XX_XX/pac_bcast0
+/local/endpoint/ep0 16_2_1
+
+
+  Commit: 9966e0f8f6d8a04373ed832e8d2b40f491949539
+      https://github.com/bluez/bluez/commit/9966e0f8f6d8a04373ed832e8d2b40f491949539
+  Author: Claudia Draghicescu <claudia.rosu@nxp.com>
+  Date:   2023-08-23 (Wed, 23 Aug 2023)
+
+  Changed paths:
+    M profiles/audio/media.c
+    M profiles/audio/media.h
+
+  Log Message:
+  -----------
+  media: Add broadcast sink media endpoint
+
+This patch adds the possibility to register a broadcast
+media endpoint if the controller has support for ISO Sync Receiver.
+
+
+  Commit: 34d546038ab17a0a7caa6aa9e181c6f8b0ebcc7a
+      https://github.com/bluez/bluez/commit/34d546038ab17a0a7caa6aa9e181c6f8b0ebcc7a
+  Author: Claudia Draghicescu <claudia.rosu@nxp.com>
+  Date:   2023-08-23 (Wed, 23 Aug 2023)
+
+  Changed paths:
+    M profiles/audio/transport.c
+
+  Log Message:
+  -----------
+  transport: Update transport properties for a broadcast stream
+
+This patch gets the QOS broadcast stream parameters and passes them
+to upper layers.
+
+
+  Commit: 0a824ce8f6f695963aaeb525b1b55dca72d9cd82
+      https://github.com/bluez/bluez/commit/0a824ce8f6f695963aaeb525b1b55dca72d9cd82
+  Author: Claudia Draghicescu <claudia.rosu@nxp.com>
+  Date:   2023-08-23 (Wed, 23 Aug 2023)
+
+  Changed paths:
+    M client/player.c
+
+  Log Message:
+  -----------
+  client/player: Remove Broadcast parameter
+
+Remove unused gdbus parameter.
+Fix length for Codec Specific Configuration.
+
+
+  Commit: 8d0d62659c06cb421b39b7928b4d56f052a874e5
+      https://github.com/bluez/bluez/commit/8d0d62659c06cb421b39b7928b4d56f052a874e5
+  Author: Claudia Draghicescu <claudia.rosu@nxp.com>
+  Date:   2023-08-23 (Wed, 23 Aug 2023)
+
+  Changed paths:
+    M src/adapter.c
+
+  Log Message:
+  -----------
+  adapter: Fix UUID name advertised for bcast source
+
+Fix UUID name typo.
+
+
+  Commit: 8b2f002edeb3c06dfc64dc2a913d112bb4124579
+      https://github.com/bluez/bluez/commit/8b2f002edeb3c06dfc64dc2a913d112bb4124579
+  Author: Iulia Tanasescu <iulia.tanasescu@nxp.com>
+  Date:   2023-08-23 (Wed, 23 Aug 2023)
+
+  Changed paths:
+    M tools/isotest.c
+
+  Log Message:
+  -----------
+  isotest: Add defer setup support for Broadcast Receiver
+
+This adds defer setup support for the Broadcast Receiver scenario.
+
+In order to create a Broadcast Receiver with the defer setup option,
+the -W command line parameter should be used, as described in
+isotest.rst.
+
+
+Compare: https://github.com/bluez/bluez/compare/c01cf4552c12...8b2f002edeb3
