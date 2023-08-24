@@ -2,53 +2,53 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0833E786CB6
+	by mail.lfdr.de (Postfix) with ESMTP id 9BBF1786CB8
 	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Aug 2023 12:25:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235817AbjHXKYf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        id S235867AbjHXKYf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
         Thu, 24 Aug 2023 06:24:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34670 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234132AbjHXKYb (ORCPT
+        with ESMTP id S234609AbjHXKYc (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 24 Aug 2023 06:24:31 -0400
+        Thu, 24 Aug 2023 06:24:32 -0400
 Received: from EUR02-AM0-obe.outbound.protection.outlook.com (mail-am0eur02on2052.outbound.protection.outlook.com [40.107.247.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DD501739
-        for <linux-bluetooth@vger.kernel.org>; Thu, 24 Aug 2023 03:24:29 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38A9B1996
+        for <linux-bluetooth@vger.kernel.org>; Thu, 24 Aug 2023 03:24:30 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=VKcjQEiInaW1NWgSo2nu/7LL4TFlZHMwpvov3XU7Hsh5qG0LytdbkfjxUZbJ5o/9FgVjseRTUyWoVCByatZQdJIEwYJPcZghTxJTsfGkMesBBJH6BuP/gBZFwefESUVtNrL5nuo64Mco04cNe/pQk2aegMpRVMIB2zzP/Yz/rtPt9CK6gi+oL8KKj7XJMRRWoT1VvUCaO/FoM/WfNRAMg0L7NWzCAnwzRIErUar4IE7I7LjYmKmWaTzIY21gGUlZB+Hyv2MflqOyRKcl6J8UpnVp2RMpbzcJGNcMxNrM21Kb7Htzxzrlg9EOgCA9ToV2/Pcl4hX2TohETXcCyb9R4w==
+ b=ne+0aS/Qs2eJZ4Da83OJsIfC6yyMWoJ0DuXtsQInN2Mjg/7n9e3dGunGGdpS32P/nhlc25pcVGp0yy7Oez3wzbuH69iUJjhZXPUAdfyx+6CPysMZi9eTsc3USGSMELniveOEFICMgQKEHyw5ii53sx8aXJaOHpIAyOUAU5ZUAlWiuY/vvbbNirS4PA2Bf3vJjRVr9OwEMuSvvBVWI8DDdzYk5gBaiqJveO9kUBo71aaopm7xB3Wf+lsE1RsmQh5mo31jhN0H+6ePPFdEj/YLrk50AQieZoNWzjnFUP6UqJauSk+EGx0Ne2wfzp5W0cWmWPZvBeORbL967NvlLHRLnA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=riJ25iSpKLm/XRPFQ6VFdu2HomWcAcjG5c2kQP/vuoc=;
- b=K9oXd0CdR2lxbtDfnHSDTdrtMhKRKKLMwhUa829PXcvtCxcj8Lk2vIG0P8xUUhB5rOjmD9Rv6eiLeaDopSw7tRqublUXtTPQK+YszgV5qwK35FuDueQ6gyj3Zi9EqCymyPc0aArHUwZlObpSWeAvSgDRuep/EIcLiVWolbWvscg3alXU1HHgKNCPkS/JBY30gYV8y+KmFsuPb63yJjl2Xg3eUsqhwoFfY1szpEtn3jf1WNa77LpiH65Da2azdw9eIq7PYmJXMOvr/ZcJu4qG6LjyDiT5H6onKH6ivXiXXZs64uU5Xy4+vskrsGllnqPt5meYIlwYQaxFPYjGzu5D6A==
+ bh=vwghX3PRVHjCWeOoMTIP7SVIevhN1EwMZcYcAgbARXw=;
+ b=HGD4reBvPt92np+d9PChj15TmQ1m/0+JS/nb1mytYwvJ8Dq0NA1+pvH1ko7ZcYy9P65ZU27CGpdljAJ7yunZDR7KRORRJq8RuD1RxS+Uf6UfmK28NqVe6YhZ7gt2B1xheKcWFUJ10o5rXpyiK0OGNYCpb9WJzruVoCYEzo7wxlhKTkhhEfiJEI2sHgNqtg4rA2gVQjmXR+KY3MlFTkGm4V/4mL536NwC9qDjK8egCH4jKltaSdC1cv5a7kfL+GFlG+1LPf4OYckl00LOdpVGgMzJlpSfgiiNDOQ/P2s2/Z69gZ+KaHh7MrciM9WHMj7MZ1NvMhKQs1KfvqhuAq/ZdQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
  header.d=nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=riJ25iSpKLm/XRPFQ6VFdu2HomWcAcjG5c2kQP/vuoc=;
- b=NLfaWT/zqgGyHycc9dnHl+jUVy1/rJIgutsynGq3uoMg3kpRDiqkd8P4EJvd0HIyCVRpkMNxAf260rp8q0u0aHFU0MSihtV1L52iNoNWyHAiIsznXTnS4aNUmMXPaiuxa8c7BtGA3DakjkrxRv8qUHwdfZXG+ls/8yDUTXPadRg=
+ bh=vwghX3PRVHjCWeOoMTIP7SVIevhN1EwMZcYcAgbARXw=;
+ b=Xnhtl2Il8FK3gPm2Z7LKtHSU16oLJKpYHEs3sO6OWJ2xeyctInYwxwgf5ZpMRQo6RQmCacG1YmOxg6ZPYspctBsNsXh01aQ5B9J5bq9aszw63CZGpC2TBx0vDgsC3GMkSj1FyqmRwxorehtp7vzjgYEeZws2gYSblBw2dJVGe38=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nxp.com;
 Received: from AS8PR04MB8898.eurprd04.prod.outlook.com (2603:10a6:20b:42d::15)
  by AS8PR04MB8625.eurprd04.prod.outlook.com (2603:10a6:20b:428::17) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6699.27; Thu, 24 Aug
- 2023 10:24:27 +0000
+ 2023 10:24:28 +0000
 Received: from AS8PR04MB8898.eurprd04.prod.outlook.com
  ([fe80::6e75:56f3:fc37:277b]) by AS8PR04MB8898.eurprd04.prod.outlook.com
  ([fe80::6e75:56f3:fc37:277b%7]) with mapi id 15.20.6699.027; Thu, 24 Aug 2023
- 10:24:27 +0000
+ 10:24:28 +0000
 From:   Iulia Tanasescu <iulia.tanasescu@nxp.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     claudia.rosu@nxp.com, mihai-octavian.urzica@nxp.com,
         silviu.barbulescu@nxp.com, vlad.pruteanu@nxp.com,
         andrei.istodorescu@nxp.com,
         Iulia Tanasescu <iulia.tanasescu@nxp.com>
-Subject: [PATCH BlueZ 1/4] lib/mgmt: Add mgmt event for BIGInfo report
-Date:   Thu, 24 Aug 2023 13:24:04 +0300
-Message-Id: <20230824102407.25883-2-iulia.tanasescu@nxp.com>
+Subject: [PATCH BlueZ 2/4] monitor: Add decoding support for BIGInfo mgmt event
+Date:   Thu, 24 Aug 2023 13:24:05 +0300
+Message-Id: <20230824102407.25883-3-iulia.tanasescu@nxp.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230824102407.25883-1-iulia.tanasescu@nxp.com>
 References: <20230824102407.25883-1-iulia.tanasescu@nxp.com>
@@ -60,51 +60,51 @@ X-ClientProxiedBy: AS4P192CA0050.EURP192.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: AS8PR04MB8898:EE_|AS8PR04MB8625:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7c18889e-f756-407d-60c4-08dba48c4b43
+X-MS-Office365-Filtering-Correlation-Id: ce4b117f-b430-4b94-84cd-08dba48c4c36
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: heV772/9W9P/jQSo5WxSITs2L0/tQD9S8klQSS+Dp2p9PzdhugGfoCcTIEF/nxNsl/R3WlgeqI792RtjM7ja7a1HCZ3DGHddbiEOjDCnGb0H8lnbYuxRG3Kvf6GsXszbrc8LXkJWXQ8rPvhX2bmW105wLLxuRe6Ae4sdMquV1VsmqpvK+yb5Wg0Dx+A3vlryqW0BkbU+q5y9drTMPL/+s78zlEeiD6ttE86L9JDvQyRjptJW9TEHnJTdf2ZjeGI33EQP4KafPhBDKgv08W+MhEoxNgrGWWhvvELWLp62Munol2NbuFpNEWg8ZmJ7oBBUBFzg0oXGaJ88hsgATb+c2lghvwzGAo9Vr7gotHOZu3ONDNKpSI7mnoUKseW6jdKpm/zhvPlPHxTeibLwqN3aohsk4AKq+PkkMzAZNRoPuzcrREgjZSQI/GPlH6v6QxA3EXBOZCjiHbae6Ij4OeKwnoOUDPhF4B5ZJUxLZF5tZ5Dw+q0yS2jBlFw7cmAA1D7ZQPdSp7fXmlCD6IXp17+ypahmMbwXNjsO4e20YAB6+CzQeHjdQWcgryIMeAFNpSIMB5od69zcfe5+dkUCNEhhXxiSlJZn3vNcshVb7C8HWDwbOke77gHs2hI8eaVkPkSi
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR04MB8898.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(136003)(346002)(376002)(366004)(39860400002)(451199024)(186009)(1800799009)(66476007)(66556008)(66946007)(316002)(6916009)(478600001)(38350700002)(26005)(44832011)(38100700002)(6666004)(41300700001)(52116002)(55236004)(86362001)(6486002)(2906002)(6506007)(6512007)(4326008)(8676002)(8936002)(1076003)(2616005)(5660300002)(4744005)(36756003);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: P0KYTv9ekViyBRJpptmrbApdSBVU7mcg361AHHcvA4AusfzCJKtXFwCgOMvojhBD+Y6i+1tqCMgiefkLE+ptVK+PyjDLyV1BeJ3ib9D+37d6WvKqtdVUzQlLoL2RTX336ByivHQLAmBJfuustQ/XT7RrlYWtikUOdonpT6xCCKaV81GEOi9nQa4sjaZJSdRebO1OIXBBK5G262ojrG4DwCfgVHhdZrqyC+3WS7tXUSEtvN+I/PoI0pTei1Wk5F3gMRuSDLh5qM04PGwTXXhjPrWWAoEA4b7GDoOL4gsn6ZxBAwWvVJamgVB0QlfkdwWFXSIbDrZ6COM/xXe3PmkZ/RHfLzc46xRze27hj5XTHtST7wQez5PHww8IaMQxpxAw4x3gU+VrMk0Y9kiPh+fUEcZ8z+wUPsamb8fjbXhccQ5o78LXBRU2VP8UjhaCXs7Ow/VV1dx0kO10NgYkN7E72yD2VueF2uI4SBhz2EIKmePCSn/zeB6wyIoYULUg4rGhJZ30uOc7OISCq3pJsgNqBDOQRuj0gUZ9Ex62SRa3VfTEt7QhwsGiV3xciZFUxK/32sjmbQtkPpueYukAzr1lJ0kWh4dFEEWBHQsmXy6vLT3ENTGGz86bS0KtIyV4OSI9
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR04MB8898.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(136003)(346002)(376002)(366004)(39860400002)(451199024)(186009)(1800799009)(66476007)(66556008)(66946007)(316002)(6916009)(478600001)(38350700002)(26005)(44832011)(38100700002)(6666004)(41300700001)(52116002)(55236004)(86362001)(6486002)(2906002)(6506007)(6512007)(4326008)(8676002)(8936002)(1076003)(2616005)(5660300002)(83380400001)(36756003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?deVHprFci2mr8R2pTSx8bSgYZ8wcg/gUu5T6jk010xiqS/OdbyLnmNuTFyMq?=
- =?us-ascii?Q?io8T+8TLRoIr/NfUfx1KYREqFxWn9HnLv1Rn/DffEItdC6/Z0gsftNRgh83m?=
- =?us-ascii?Q?S/lNeII3mNOk5dQetqh6AsHcJcHe3zCSUinczDfxG6vWeLrQdhKRLigWANkb?=
- =?us-ascii?Q?TsvTKoCKKx/YhMegR5b2JYxoI++O/oNg0T5Q/hqYDPi8a9jyW2KLsaTo2R9K?=
- =?us-ascii?Q?eiGF0dpm477A3JMcCynpfOzkthpL8qWwyVZf9u4wNWUEIz9of7ACX3UpognY?=
- =?us-ascii?Q?u+sFuu1KcQhKzxtqmiXLTh3ZlB6JAoopcCfiLlvRW/Jq6vJlBuOADmFNbLh1?=
- =?us-ascii?Q?DAQjmn71K74b1PuKDLRRJUFtK9Aph0X9vb0eV4RyEbGsKTFvRbLA4aBzd16r?=
- =?us-ascii?Q?kq+ZyBhVtZHL0gw1s/v8+JDNZFqtpH4UM/tQHtojWssVTvs0JXKQI3/lyl7n?=
- =?us-ascii?Q?iqHsNe+1HcJbD5SiYxF1msceZQ2ZERmPL1kx5ePMrR21ThenBe7VjCH+vYwg?=
- =?us-ascii?Q?6skS1VOG8phZMb2Sfq+287SCR4G6FgSn4xzPR1dhSWUIWE1KinGg0b92op4H?=
- =?us-ascii?Q?dIEXB1jAUFTO5vKUm7ObiGJGs1Tik8yuYE69UGTRnD1WR5Mb1VUpMYSCvEJu?=
- =?us-ascii?Q?hBEgfVx/QxF6TRJedePoWMQ6wC4JrH2oU6KWJrDlYO0Q316X8ESlZU+qmqgR?=
- =?us-ascii?Q?N2APJPJiY54ljmCdJ/nxNo83A24kH1BHJUwqpqS6pyblSHwna223sdKsVHtd?=
- =?us-ascii?Q?WEMCbgx9bAst718VKFwfi6ZRH8NCre5yT8vvjzySntziS2Ny9ek/hwAwMpWw?=
- =?us-ascii?Q?JsdBC7tBNsEVFlPU0hmuc50fesulIV60Z+tWZd7dEzIlWO34lFs5bkvxrI93?=
- =?us-ascii?Q?vvS3dTm+AfNXdi516BYnpmsq1VOWmhE+GumPCTtDpQgUI0IYeKHYwnEkO1Vb?=
- =?us-ascii?Q?eiDA5p69snqBuWM6s1r0R00LBrajQy5LUQ92NPiRHEPE/c24+ppHTS5hcp5p?=
- =?us-ascii?Q?g4KvrAlqqCCEWzQfVFeeCkZHFlRWxpT0Su9bu/3Nu5UiZF2HzVkd8U3fJiue?=
- =?us-ascii?Q?ziCAHgVKBcZ7syhSlb+UTacUYaaMY6ijI4TCFg11HGXIUESSDU6ZaIVUglz7?=
- =?us-ascii?Q?s8TIM0EIAynRdMW/NgN7lDl/is/FxMBwd73rYmzhomRbfkkoxzbd93UTldjQ?=
- =?us-ascii?Q?pyGIhGZfLobduEkUuRJCmlHn+Pcz9Zmu5zm7sZMVYGfPVEPY/6jM2Ku55uBU?=
- =?us-ascii?Q?/ranYGAqJ+da7ge2hZsP133TPcBYNegjGHit6L8Y08keq2vmM7Ga28b1qzBF?=
- =?us-ascii?Q?ZfzpmachRhkDecHnM2wDFy3FqO8wLO+NyO7MeuLeCkWzF5bIP+o6QEN0Q8Pj?=
- =?us-ascii?Q?kmGEOGXMljncvBT6H53pTh8Q7JpuZ/tFsOW71G58b4+76IjS+5Lwb5tW9tNu?=
- =?us-ascii?Q?rNCMx9NWOldea/s6/4qTenpHxHIFheDjg1mXLh/862p5ZtQB+pO0tbqT1R8W?=
- =?us-ascii?Q?+BDJ61Q/wX40ivRM/m0aQbK8ickc1fypCxFoWQGUTqT6A+N1p97l25xZgRtX?=
- =?us-ascii?Q?uvIEYXttmAhKsDaE3HdoCHsVZLcwrKRJFueIf3juXc5qdEXD7734P4NjvM5X?=
- =?us-ascii?Q?Hg=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?nGhs8auViD1GtdSMAdGUxSm/DbHJvHsm5rlGHfWYGtSOZcEjKM3rvF2EobcR?=
+ =?us-ascii?Q?9kLPIh//GMXzwvg0+uHTft/Sbnoit7VItbybWJKkvpJXQbxLRin4Kl3+gT/U?=
+ =?us-ascii?Q?MDHAMYb4QI07aZlx6bdjTCJxk0/HUNE+YFTESg640eKMXCUBPNvnECX/RmxC?=
+ =?us-ascii?Q?SLqRxErR1DbK3eXcgkFClaaKVkyamdDTuzR3CNlmAXuDyB/LrFpXK5ktAGI2?=
+ =?us-ascii?Q?dKlaGkwUpUASZNaEJ+N7gafa2BWDyAK2BHrwX7iFdZ2NhjHrTbBiHebjMR1r?=
+ =?us-ascii?Q?6GkKQuElzaV4fm5T3hd2rn6D4N3/1uVxgvpHuBg6tAgiPYGWcq//N8wg017S?=
+ =?us-ascii?Q?ZSHhEIjSD3D34D5rETJE3t8ApE21fDIM2EsPiwPo7softPfbEmzRW24uZTaR?=
+ =?us-ascii?Q?9jDzlAwBAoTir6KcgzBvvun3PdZE73pb4pAOjz0mF1UBeHE5BTfZGLIKMXBc?=
+ =?us-ascii?Q?hyETmvhZ8iaUjH0zP0Dpo1U2liYmRzhlCqOMysg85MOlGeSMXUeMVh5wNKiO?=
+ =?us-ascii?Q?a6796YvjTIKIE6Pnq57vlJC9jEFjx9RycRCScNrNCLtBZx/5PkOIG8RPKIs3?=
+ =?us-ascii?Q?JeZCWKayfJlypraZzCPnDxfqM7q4Aas6HQMxmCsp0wlT/vJ2/qLaAkxb8CxA?=
+ =?us-ascii?Q?7rUu3s3a5oKrKmHcmbKe647hiHUA/H1WFgxA4zEwRRyRZu+2oB+XVdqOc02D?=
+ =?us-ascii?Q?Rr0HAqsCHYPpDRWdFNTz2rlIiKU+mXArStJEaFrknW0r8ronzCcoexDi0C7D?=
+ =?us-ascii?Q?3B8mzVDqpdqtOs1S3CzJDUaUyEORYs7vEJEy+oXMwBu07X57XLdhH6SVeYQq?=
+ =?us-ascii?Q?WJx6VFJNvrD1+D++xjdcO8bmg+GVN3IR/nCLOkwIM3AIkK/uFy1RNJbYy/IW?=
+ =?us-ascii?Q?k6IE6U9eB+B87K+lBzbMjDrWZpfOPRWUg2kSUgh2ro4dxPD9d80Br953MgGr?=
+ =?us-ascii?Q?jsnI2ex/bSEamxTec8mzb89tf12Wv8qzcD5781ai+n192/Gt+Z8VMf4lMIoZ?=
+ =?us-ascii?Q?Q4fPKdkrVvOtL6jkzfk7iLDx/9smyktqzZ4oPh5WuuWcimlcKMtZ/0IuBarb?=
+ =?us-ascii?Q?T/vZ4nUP8jDHFd/BxzGpXoc/0/1fYKZdosjPCzRcuV2MiOyvU1WipQbEX8iE?=
+ =?us-ascii?Q?YlzcZzqD2p9RblK0XsezpmqvcKH86/LBPDPftEEp2iEAgTKBZagobmDh37UB?=
+ =?us-ascii?Q?LMLVK/6yGl2N0/QG9e5mYjGk2jqA24iHXcrmN5LEymO7lJqX19nFfcuCsfzj?=
+ =?us-ascii?Q?mvYLgyFol02V155ceXLQv4umB7qfaLJrBWbgokNiYCMrbhsLMawkQY0XXJiy?=
+ =?us-ascii?Q?F5tfv9Gu1HGD3Cz8G3rlSCuilRAGpyAz1OU4NVnZfWhv4C9tp0mgccGdfMzY?=
+ =?us-ascii?Q?iajEWutnZ9bjS+aFDcGrhJjQKSGlWkjGbExrrSku/byIpSUVYnpHsdN+suQE?=
+ =?us-ascii?Q?RFLd+yMi28T8itde3+dA8MWyuV9TK6L9oW1t/RfEo7egPgia7nl/xJJ8SZ5P?=
+ =?us-ascii?Q?i5jVUXNaX3j1lfxd9c6xV6ZBKzbHnxdjKuEmQlCSomrr64EYjw4d/PJiYDvS?=
+ =?us-ascii?Q?mUy7QmoJzFW6jNeg8KUNCg91YM304E1guURKB04DBuJ2jwD/GS36IBmitX3Z?=
+ =?us-ascii?Q?KQ=3D=3D?=
 X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7c18889e-f756-407d-60c4-08dba48c4b43
+X-MS-Exchange-CrossTenant-Network-Message-Id: ce4b117f-b430-4b94-84cd-08dba48c4c36
 X-MS-Exchange-CrossTenant-AuthSource: AS8PR04MB8898.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Aug 2023 10:24:27.0103
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Aug 2023 10:24:28.5333
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: wrq9v7KOTY88un46UqBn5KC7+ZJvmTK8YuI+oOiJLFzcFHakF6Fei1gi6VV7Am4aZcZpca+L4J7grlP6HZzyHg==
+X-MS-Exchange-CrossTenant-UserPrincipalName: qlbEE+vZUOFbRUZzc5yUFlQAkXJLuLKn3gNiTVY2OxZmysAyACuss8Y6HfGSvzEQzjfWWY71gZVbiZT0x9x2bg==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB8625
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
@@ -116,48 +116,114 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-This adds the MGMT_EV_LE_BIG_INFO_ADV_REPORT event.
+This adds btmon support for decoding BIGInfo MGMT events.
 
 ---
- lib/mgmt.h | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ monitor/control.c | 25 +++++++++++++++++++++++++
+ monitor/packet.c  | 33 +++++++++++++++++++++++++++++++++
+ 2 files changed, 58 insertions(+)
 
-diff --git a/lib/mgmt.h b/lib/mgmt.h
-index 8f92b7731..f075d435c 100644
---- a/lib/mgmt.h
-+++ b/lib/mgmt.h
-@@ -4,6 +4,7 @@
+diff --git a/monitor/control.c b/monitor/control.c
+index 009cf1520..b843d076f 100644
+--- a/monitor/control.c
++++ b/monitor/control.c
+@@ -5,6 +5,7 @@
   *
-  *  Copyright (C) 2010  Nokia Corporation
-  *  Copyright (C) 2010  Marcel Holtmann <marcel@holtmann.org>
+  *  Copyright (C) 2011-2014  Intel Corporation
+  *  Copyright (C) 2002-2010  Marcel Holtmann <marcel@holtmann.org>
 + *  Copyright 2023 NXP
   *
   *
   */
-@@ -1092,6 +1093,23 @@ struct mgmt_ev_mesh_pkt_cmplt {
- 	uint8_t	handle;
- } __packed;
+@@ -788,6 +789,27 @@ static void mgmt_advertising_removed(uint16_t len, const void *buf)
+ 	packet_hexdump(buf, len);
+ }
  
-+#define MGMT_EV_LE_BIG_INFO_ADV_REPORT	0x0033
-+struct mgmt_ev_le_big_info_adv_report {
++static void mgmt_big_info_adv_report(uint16_t len, const void *buf)
++{
++	const struct mgmt_ev_le_big_info_adv_report *ev = buf;
 +	uint16_t sync_handle;
-+	uint8_t num_bis;
-+	uint8_t nse;
-+	uint16_t iso_interval;
-+	uint8_t bn;
-+	uint8_t pto;
-+	uint8_t irc;
-+	uint16_t max_pdu;
-+	uint8_t sdu_interval[3];
-+	uint16_t max_sdu;
-+	uint8_t phy;
-+	uint8_t framing;
-+	uint8_t encryption;
-+} __packed;
 +
- static const char *mgmt_op[] = {
- 	"<0x0000>",
- 	"Read Version",
++	if (len < sizeof(*ev)) {
++		printf("* Malformed BIGInfo advertising report control\n");
++		return;
++	}
++
++	sync_handle = le16_to_cpu(ev->sync_handle);
++
++	printf("@ BIGInfo Advertising Report: sync_handle 0x%4.4x num_bis %u "
++		"encryption %u\n", sync_handle, ev->num_bis, ev->encryption);
++
++	buf += sizeof(*ev);
++	len -= sizeof(*ev);
++
++	packet_hexdump(buf, len);
++}
++
+ void control_message(uint16_t opcode, const void *data, uint16_t size)
+ {
+ 	if (!decode_control)
+@@ -893,6 +915,9 @@ void control_message(uint16_t opcode, const void *data, uint16_t size)
+ 	case MGMT_EV_ADVERTISING_REMOVED:
+ 		mgmt_advertising_removed(size, data);
+ 		break;
++	case MGMT_EV_LE_BIG_INFO_ADV_REPORT:
++		mgmt_big_info_adv_report(size, data);
++		break;
+ 	default:
+ 		printf("* Unknown control (code %d len %d)\n", opcode, size);
+ 		packet_hexdump(data, size);
+diff --git a/monitor/packet.c b/monitor/packet.c
+index 8eae8c9ea..96fc2662e 100644
+--- a/monitor/packet.c
++++ b/monitor/packet.c
+@@ -15396,6 +15396,37 @@ static void mgmt_mesh_device_found_evt(const void *data, uint16_t size)
+ 	print_hex_field("EIR Data", eir_data, size);
+ }
+ 
++static void mgmt_big_info_adv_report(const void *data, uint16_t size)
++{
++	uint16_t sync_handle = get_le16(data);
++	uint8_t num_bis = get_u8(data + 2);
++	uint8_t nse = get_u8(data + 3);
++	uint16_t iso_interval = get_le16(data + 4);
++	uint8_t bn = get_u8(data + 6);
++	uint8_t pto = get_u8(data + 7);
++	uint8_t irc = get_u8(data + 8);
++	uint16_t max_pdu = get_le16(data + 9);
++	const uint8_t *sdu_interval = data + 11;
++	uint16_t max_sdu = get_le16(data + 14);
++	uint8_t phy = get_u8(data + 16);
++	uint8_t framing = get_u8(data + 17);
++	uint8_t encryption = get_u8(data + 18);
++
++	print_field("Sync Handle: 0x%4.4x", sync_handle);
++	print_field("Number BIS: %u", num_bis);
++	print_field("NSE: %u", nse);
++	print_slot_125("ISO Interval", iso_interval);
++	print_field("BN: %u", bn);
++	print_field("PTO: %u", pto);
++	print_field("IRC: %u", irc);
++	print_field("Maximum PDU: %u", max_pdu);
++	print_usec_interval("SDU Interval", sdu_interval);
++	print_field("Maximum SDU: %u", max_sdu);
++	print_le_phy("PHY", phy);
++	print_framing(framing);
++	print_field("Encryption: 0x%02x", encryption);
++}
++
+ static void mgmt_mesh_packet_cmplt_evt(const void *data, uint16_t size)
+ {
+ 	uint8_t handle = get_u8(data);
+@@ -15500,6 +15531,8 @@ static const struct mgmt_data mgmt_event_table[] = {
+ 			mgmt_mesh_device_found_evt, 22, false },
+ 	{ 0x0032, "Mesh Packet Complete",
+ 			mgmt_mesh_packet_cmplt_evt, 1, true },
++	{ 0x0033, "BIGInfo advertising report",
++			mgmt_big_info_adv_report, 19, false },
+ 	{ }
+ };
+ 
 -- 
 2.34.1
 
