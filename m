@@ -2,56 +2,56 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 64C8578C2DB
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 29 Aug 2023 13:00:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 45EFC78C45F
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 29 Aug 2023 14:41:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231577AbjH2LAV (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 29 Aug 2023 07:00:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56926 "EHLO
+        id S232007AbjH2Mkr (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 29 Aug 2023 08:40:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42062 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233206AbjH2K74 (ORCPT
+        with ESMTP id S235572AbjH2Mkq (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 29 Aug 2023 06:59:56 -0400
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4FB4CDE
-        for <linux-bluetooth@vger.kernel.org>; Tue, 29 Aug 2023 03:59:39 -0700 (PDT)
+        Tue, 29 Aug 2023 08:40:46 -0400
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.120])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E830D2
+        for <linux-bluetooth@vger.kernel.org>; Tue, 29 Aug 2023 05:40:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1693306779; x=1724842779;
+  t=1693312844; x=1724848844;
   h=from:to:cc:subject:date:message-id:mime-version:
    content-transfer-encoding;
-  bh=ZT6hhVojwin3qqpS0/uK9U2Ek7Yifv44ObKmE/gOKbA=;
-  b=QHYTBx+cM0ICDHP3mzOnjCinIgUbVGi5lyn9tpZQvz+sDsf9XU4taIRN
-   i0WuFCwKU5ExwSJUA0N5QNzzTRZt8e8UiWn8apzhJAi9TAECqXsxEXov2
-   VSKoSuU4cm4e5X6lxnDq3R8BEjSMyDkmJ+ORi1iFwCGoQEPJ9BL+UgePa
-   WkNormbdVeHtxFTPQ2j15j2RYClb3U2jqIWGU1r/oDX16QrvFvhfGW600
-   G+ormF71CVNAWrmmAUWSG/wnmT76SjNSbXx+omLytO/OpfW/ICUqAT7Hp
-   k5jmmyKxqTd8KoCNyhIuvFTXL8M1uK4H/5vnzlP+AYqnEx1AQE+rAcQLJ
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10816"; a="439289214"
+  bh=Bt9rG7WtowvwPvmyhCvLF/OvxBMV8PpNFLGvHWISXXo=;
+  b=Do3ooMHr4dz7zICORfxubK1LAHO1WYkCQX0/NeNxcC84K33w9I0HKQGi
+   e4uIis3tr43cGDHCoYYpMZt5WZDzY3p6bL6RCLUE2dFwuOwtrdae+qWit
+   AO8co8xunBYhINAOjccxVqxadwjNqyLX4AFzW40UPFWrd5jGSznRHwf5t
+   l53iI07QFLGc+gL3GSGOydPzOrPdpqzx2FTgBKTQdZZ5/9IqTq6nCk6iN
+   8MNB4OmLVHy5v562emzwFtkAfGBC4XMQmc/Y0nbZm0BC/L4nu776G8bJ4
+   KSRFDzzkzs6qr0JAFEJ4t/vvTzgPP8U4Bwz7fEf2F0/dgK2rDxelWOY6t
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10817"; a="374247754"
 X-IronPort-AV: E=Sophos;i="6.02,210,1688454000"; 
-   d="scan'208";a="439289214"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Aug 2023 03:59:39 -0700
+   d="scan'208";a="374247754"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Aug 2023 05:40:44 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10816"; a="732175352"
+X-IronPort-AV: E=McAfee;i="6600,9927,10817"; a="768059000"
 X-IronPort-AV: E=Sophos;i="6.02,210,1688454000"; 
-   d="scan'208";a="732175352"
+   d="scan'208";a="768059000"
 Received: from bsws3032.iind.intel.com ([10.66.226.27])
-  by orsmga007.jf.intel.com with ESMTP; 29 Aug 2023 03:59:37 -0700
+  by orsmga008.jf.intel.com with ESMTP; 29 Aug 2023 05:40:42 -0700
 From:   Vijay Satija <vijay.satija@intel.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     ravishankar.srivatsa@intel.com, kiran.k@intel.com,
         Vijay Satija <vijay.satija@intel.com>
-Subject: [PATCH] [v1] Bluetooth: btusb: Add support for Intel Misty Peak - 8087:0038
-Date:   Tue, 29 Aug 2023 22:25:01 +0530
-Message-Id: <20230829165501.9277-1-vijay.satija@intel.com>
+Subject: [PATCH v2] Bluetooth: btusb: Add support for Intel Misty Peak - 8087:0038
+Date:   Tue, 29 Aug 2023 18:10:24 +0530
+Message-Id: <20230829124024.40592-1-vijay.satija@intel.com>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=0.9 required=5.0 tests=BAYES_00,DATE_IN_FUTURE_03_06,
-        DKIMWL_WL_HIGH,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=no
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_NONE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -97,13 +97,13 @@ Signed-off-by: Vijay Satija <vijay.satija@intel.com>
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 764d176e9735..18e7e16593dd 100644
+index 499f4809fcdf..53199e7a6394 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -476,6 +476,7 @@ static const struct usb_device_id blacklist_table[] = {
- 	{ USB_DEVICE(0x8087, 0x0032), .driver_info = BTUSB_INTEL_COMBINED },
+@@ -477,6 +477,7 @@ static const struct usb_device_id quirks_table[] = {
  	{ USB_DEVICE(0x8087, 0x0033), .driver_info = BTUSB_INTEL_COMBINED },
  	{ USB_DEVICE(0x8087, 0x0035), .driver_info = BTUSB_INTEL_COMBINED },
+ 	{ USB_DEVICE(0x8087, 0x0036), .driver_info = BTUSB_INTEL_COMBINED },
 +	{ USB_DEVICE(0x8087, 0x0038), .driver_info = BTUSB_INTEL_COMBINED },
  	{ USB_DEVICE(0x8087, 0x07da), .driver_info = BTUSB_CSR },
  	{ USB_DEVICE(0x8087, 0x07dc), .driver_info = BTUSB_INTEL_COMBINED |
