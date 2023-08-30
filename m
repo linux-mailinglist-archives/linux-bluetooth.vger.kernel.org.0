@@ -2,197 +2,149 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B9C978DDDA
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 30 Aug 2023 20:57:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A0E2078DDD1
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 30 Aug 2023 20:57:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245714AbjH3SyQ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Wed, 30 Aug 2023 14:54:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48076 "EHLO
+        id S245675AbjH3SyC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 30 Aug 2023 14:54:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244817AbjH3OJq (ORCPT
+        with ESMTP id S244353AbjH3NCf (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Wed, 30 Aug 2023 10:09:46 -0400
-X-Greylist: delayed 4199 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 30 Aug 2023 07:09:41 PDT
-Received: from mail.kmu-office.ch (mail.kmu-office.ch [IPv6:2a02:418:6a02::a2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7486212F
-        for <linux-bluetooth@vger.kernel.org>; Wed, 30 Aug 2023 07:09:41 -0700 (PDT)
-Received: from webmail.kmu-office.ch (unknown [IPv6:2a02:418:6a02::a3])
-        by mail.kmu-office.ch (Postfix) with ESMTPSA id EA9F25C149E;
-        Tue, 29 Aug 2023 15:27:43 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=agner.ch; s=dkim;
-        t=1693315664;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=SP/J3CyFm5/zbAdAXOXGg0g//A/xs+o9NHwWgQ22MN4=;
-        b=B6FRD1uowp5S9fpCwnQDb/OwxsF4K0tS7gImWU0Inx2DUp984pamPeSVBB63ETAm+nvYpK
-        MSS/7jsMzcNie+hv2TfgWPCoZh+NANpMcwFuN5mf377CeCrcGDEYSUkwpaT52tQpar+bX0
-        DSYz67qbkrhW7MOqVy7MUMiGy7kOJlM=
-MIME-Version: 1.0
-Date:   Tue, 29 Aug 2023 15:27:43 +0200
-From:   Stefan Agner <stefan@agner.ch>
-To:     Linux regressions mailing list <regressions@lists.linux.dev>
-Cc:     Brian Gix <brian.gix@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        linux-bluetooth@vger.kernel.org, marcel@holtmann.org,
-        =?UTF-8?Q?Jan_=C4=8Cerm=C3=A1k?= <sairon@sairon.cz>
-Subject: Re: [PATCH v4 2/4] Bluetooth: Rework le_scan_restart for hci_sync
-In-Reply-To: <24bf25f7-314f-ca73-59e9-df757732f6a9@leemhuis.info>
-References: <20220727135834.294184-1-brian.gix@intel.com>
- <20220727135834.294184-3-brian.gix@intel.com>
- <578e6d7afd676129decafba846a933f5@agner.ch>
- <CABBYNZJGKfwTQM8WAdUGXueTPnFyus1a65UO5mg2g4PXVuCnpA@mail.gmail.com>
- <CABBYNZLgG+zTsk-6ceqzLXXyVRnN6p-m8sFq9Ss7mveD0f9BsQ@mail.gmail.com>
- <CABUQxGxBdAFncJ6YVb7a9gnU-_YZDGFDmpHJTtm5K1tDGEGRDQ@mail.gmail.com>
- <0de3f0d0d5eb6d83cfc8d90cbb2b1ba1@agner.ch>
- <fcdf856db8fd8e77558b4d82b843c51e@agner.ch>
- <24bf25f7-314f-ca73-59e9-df757732f6a9@leemhuis.info>
-Message-ID: <ac58995a00cb6ad6bb4ce4c74b006a2f@agner.ch>
-X-Sender: stefan@agner.ch
-Content-Type: text/plain; charset=UTF-8
+        Wed, 30 Aug 2023 09:02:35 -0400
+Received: from EUR02-VI1-obe.outbound.protection.outlook.com (mail-vi1eur02on2087.outbound.protection.outlook.com [40.107.241.87])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1066132
+        for <linux-bluetooth@vger.kernel.org>; Wed, 30 Aug 2023 06:02:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=UkjxdcNK2JfC5+q8F29NLIHmaKyyewsouQ+G8zgPMbw2dii9pZnlws85TEy7F1eKW8P8tBmRleqlNCWsbq91Y5Y0/YQhf6A5yMOXbe95iaGs61DCPUYIsAk1c93CFUCw50PxD17f7APHEtZJwbSOyJ/845wfSSbqdpPdRYzG8FHbikCpoiLuDcWDb9v9Jz5wydirnNA4ovxJ0U/mky2PeRKrdUTcmCzJxZy5M0RxI5nPvza2M5zyO4/Rl3+4RrBBTPlU+Pam2yxEuiTYAsr6SkDTZhxjTUGEQFHAHTDru8ItYKC3Y5U2pVJzad6OhH6egH34xV6GkT8cs6eC+cs5tg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=YAvRVu50ui9wvSGICbgYS+zI/2EAM13IYuBhtJwbECg=;
+ b=hbyGlTzlW2oiikUfXy7/nCKhmJ/VPTXnFoIxySWpKA6k/ZoP0sgCkhkovZCwvxV6IOGHhJ7cZT0TM71ggnXcvmmfgBb+WB6bFWPV6Vrnzj27zGj6aNI4zmyj9n1dhdXV+Km44hplk7gUL8/2kAQddnswZWyy7Z9X7lwbDHsEzc2zsUnZnsE4gwWrODbK+sL0qTESF1DeKvxjuATSaYKKetoyWuatiTUAmN+IyOu/fTHVsbOLpfbU3ajHJIHlFckO3/NtYeDCFkemvV11BrrVKQ+FFulYe+jqtmlnx4XqPvJcya3vdr74f1NLLP8/DuUOqP76hkz5iHU2Cud4EekRGQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=YAvRVu50ui9wvSGICbgYS+zI/2EAM13IYuBhtJwbECg=;
+ b=FNPytTfvHSNfZhsvvERk7ET1HUvxAfDEfJsPmxOOlVuStxyp09yU834N9ZKjv1LXfyVPv/DR+IZ8FtqhqXNsKpwOQt+oy9WLp1B1zJYvAHyBS4WJ4pFNWUHvjJQ+cQR+OacQb7xjnAEBMm71oDh6EFDanBE9NWAywaHViMLp60M=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from AS8PR04MB8898.eurprd04.prod.outlook.com (2603:10a6:20b:42d::15)
+ by DU0PR04MB9442.eurprd04.prod.outlook.com (2603:10a6:10:35a::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6699.34; Wed, 30 Aug
+ 2023 13:02:29 +0000
+Received: from AS8PR04MB8898.eurprd04.prod.outlook.com
+ ([fe80::6e75:56f3:fc37:277b]) by AS8PR04MB8898.eurprd04.prod.outlook.com
+ ([fe80::6e75:56f3:fc37:277b%7]) with mapi id 15.20.6699.035; Wed, 30 Aug 2023
+ 13:02:28 +0000
+From:   Iulia Tanasescu <iulia.tanasescu@nxp.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     claudia.rosu@nxp.com, mihai-octavian.urzica@nxp.com,
+        silviu.barbulescu@nxp.com, vlad.pruteanu@nxp.com,
+        andrei.istodorescu@nxp.com,
+        Iulia Tanasescu <iulia.tanasescu@nxp.com>
+Subject: [PATCH 0/1] Bluetooth: ISO: Pass BIG encryption info through QoS
+Date:   Wed, 30 Aug 2023 16:01:46 +0300
+Message-Id: <20230830130147.359016-1-iulia.tanasescu@nxp.com>
+X-Mailer: git-send-email 2.34.1
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-0.8 required=5.0 tests=BAYES_00,DATE_IN_PAST_24_48,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,
-        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-ClientProxiedBy: AM0PR08CA0010.eurprd08.prod.outlook.com
+ (2603:10a6:208:d2::23) To AS8PR04MB8898.eurprd04.prod.outlook.com
+ (2603:10a6:20b:42d::15)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AS8PR04MB8898:EE_|DU0PR04MB9442:EE_
+X-MS-Office365-Filtering-Correlation-Id: 36cf3cc6-c31a-4ae3-01bc-08dba9595d52
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 3ILCa5bQPVagXz8c3XCSYc6pqgmv14FRIRQ3F6oHCe3R647Z9gJBSkiaQH8xINUwnMp47dhmJDykxL9QsDqP1OvLfTVj2YIVoH4IBhGgJzCTYPwScxM3n5vDKRHYP+PsD4AeVJ6GI3cy39AnCxxeU1ZCZomerQT1N19Y72catSKYOMqYUNiZdTYEK25+yd4z0+ZzGYoE0JdlBBKRQWlcAVZ0iVTJoAfEmMkSW/tXwGhjxaqLTDTFna5FA/HWEH0VYI2jiJd6PP7Za3CpmVQtfAMMsJJb+6UAkWEz+XqnRs64ghiZJfZNmjmHcsuylYKIz94nD5VPhxi6CcU+GeE82NfzSJEtMony3nrjsKc1235jMe38RBfhpSRx6DW7PNpeu/jTLzUj6hl1sza9ZEx8w4wbodzs7YupJOtT1Sdpw2bf7Lii8IdeLhT6CMak6d5L7mt4Y2iVkajvOpjp4fkOGsQIr1pgAQogNkIZ9gCaR2aB938KgzKiJq9Hf4NoHDzznsLUrDSD/uOMeECKHimB30nyVNV9XtWLV7BClA4ZXp82ODVNmjo0ZdNvAh6c2E4Pbx90sgZmwOamukVk6PeaB3wyPdCX3atiHCG69q8yOn0fvdEZiEPpfQpcYCb21RAb
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR04MB8898.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376002)(39860400002)(346002)(366004)(136003)(396003)(186009)(451199024)(1800799009)(2906002)(66556008)(66476007)(66946007)(316002)(6916009)(36756003)(41300700001)(4326008)(8676002)(8936002)(5660300002)(44832011)(6666004)(6506007)(38350700002)(6486002)(52116002)(2616005)(6512007)(38100700002)(86362001)(1076003)(26005)(478600001)(83380400001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?L02AZ+5GnyEWSNC0J0L1EAsHNcYrAVrm8p73F5lR/BwhtGSq/Fd7xkdQTX1r?=
+ =?us-ascii?Q?8oz8cFlDMkWKcngeg1uEL/YAo2/BV23qMxNHAtjDODApCfpsc+vJmy8cOhZm?=
+ =?us-ascii?Q?SpB1b+QizzuVFQ8fjrMC9H1DugYaNMTYHIpy+eFoc+hWAOOX1Us4A/9zdAZn?=
+ =?us-ascii?Q?XMw2PyXMKA9w8hqKMsqL7VEQ80bbdn57rgh5lxfIeFKeRIBvvhrRAn2KzC61?=
+ =?us-ascii?Q?/0MU2QfI7B7GskMRNlOfKns0+ltPHBxnLPJrvU+Unf2qNQchKqmXh9AQ/0sN?=
+ =?us-ascii?Q?t7PGg4gYKyUbkKfbEcE3okno6A16qX61jJy/rLtjiqgk8CxOu7ur1YAMQzB0?=
+ =?us-ascii?Q?6nngQZg7ULSHHQkcv5llOQkBlqrKMJRJMLkGR+4B/zF0hq5Bcx6vKEskIirg?=
+ =?us-ascii?Q?RaDP/QMXhruTNu2joyF7LBAtbARvFqucgfvbFZNHqsXW07WD3nx1o3FHQooz?=
+ =?us-ascii?Q?DgSBbS6S9ZQt5zMFGmeXSs5OBjA0k8YXP6KY9gKnMo55rReK+Zf0khUCBW0f?=
+ =?us-ascii?Q?I3Eccx0NS9gTio13JJMls/N7MqBuCBtKGRW09HRHKmJlly4q2U8R5vuY2OLp?=
+ =?us-ascii?Q?jx+iAaFgDaMyCJ6qmzjIvy+htwYte6hvX7ouYb9XCAxBXmUp5Hob1bx2KiU6?=
+ =?us-ascii?Q?5osFpvUASMNbw8/3eIiuufZbm5sBz80xQ7FSfNfi0SRscerCMhz78/hgmt46?=
+ =?us-ascii?Q?Xx1DwmvGPh/YQC/Z9PyK1dVoQ0Ag0xq+ggaDUh0i1BQoy2BMIFHunJJmCr4z?=
+ =?us-ascii?Q?FO/KTnahiRDOxru/3MBinm5GUgwgzgy81BECAI/prPCW2IRDxAEgTUfgsj8R?=
+ =?us-ascii?Q?3ytfJE2mRBzL/5OfzFtyuvJegOeomR5tfxglHcODj2iuI3V90zGdqCgLCivR?=
+ =?us-ascii?Q?pMZH3VzZB1UhzH5ulhGT6SHYTAlpxrXrn+pHc993v+mgklBl1CqefzxDhEow?=
+ =?us-ascii?Q?FqhXGOovPtc259Z8Xt1bl5EPUuvcijNsPVNthvXR0679GbSmFDUYD+yfZR+Y?=
+ =?us-ascii?Q?+H25kV/nXUw0dFTl5QpY1uDG4O222j7YeD7qmFh9VjC7oX4nWIYDQjoDwau9?=
+ =?us-ascii?Q?xlHO7JdMQozLwjU1vikX4S0tj1RkMvEAHkWCqsCAeP5UDty6di63VFU8WPKa?=
+ =?us-ascii?Q?n+WgoXXbcK342btPkbIvMR2YrwD9jgK2nYPD4jJFz4QCAduy9kqTzpzvnIln?=
+ =?us-ascii?Q?tZX+GFMZW2/TdmZpzhWm9H9cWIoaOyGKjS9aS6P5otsMfkSSwOZtwmsA3wdV?=
+ =?us-ascii?Q?vFAQ0rXlptjV/xGZZVsf19CcPxcAg7lk+g8G3iho8npKSMRb+Cvbecs+76k1?=
+ =?us-ascii?Q?NvBQu1K1KVl9uUdGdkEc/Ns9A31x3t5MTjfwqbMmR/88bD0A2n0S6tAPhMOk?=
+ =?us-ascii?Q?hv7u0q8mPsfma3UK4Yye4fNPwN4hRUENkCR+nt/eSdVQfYGxXQYYCW9otijU?=
+ =?us-ascii?Q?vko4RHSD8wKYEuKh+Qqmb4qyORg7oL4DWyW6D4I8tLFXNY6fkESR9b5q2MqD?=
+ =?us-ascii?Q?V+yZ6zEZkbzkha2wJUxJeF9XE7Dn39DezGO/rClEDGfkxiwNeP+xdJQZ4FGe?=
+ =?us-ascii?Q?kmVZaGAEHew8Ey/ARy8ULxDsbItTj2M2MIMaFT3jIBtrWgPSL+3AvNSAxZ5L?=
+ =?us-ascii?Q?Pg=3D=3D?=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 36cf3cc6-c31a-4ae3-01bc-08dba9595d52
+X-MS-Exchange-CrossTenant-AuthSource: AS8PR04MB8898.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Aug 2023 13:02:28.7438
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: fzputod10REkoCLzNFMtITMPUEWRGzuQLADv7tapId67eTmkrzMHKWH2LGxoah7KoxnN6VG0X2MxauHV7WsaDw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU0PR04MB9442
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hi Thorsten,
+This patch enables the ISO layer to set the encryption field of
+the broadcast QoS struct, according to a BIGInfo advertising report
+received after PA sync establishment.
 
-No, this hasn't been addressed so far. I am also not sure how we can
-help solving that particular issue.
+This is useful for the broadcast sink scenario: the userspace
+opens a socket and starts listening for a PA sync connection.
+If the PA is associated with an encrypted BIG, the userspace
+needs to be informed.
 
-Besides this, we have other Bluetooth issues which seem to be Kernel
-regressions (where downgrading to Linux 5.15 also helps), folks see
-"hci0: unexpected event for opcode" on Intel but also other systems. We
-haven't bisected that issue yet. But it seems that the Bluetooth stack
-is really somewhat unstable in recent releases.
+After PA sync has been successfully established and the first
+BIGInfo advertising report is received, a new hcon is added and
+notified to the ISO layer. The ISO layer sets the encryption
+field of the socket and hcon QoS according to the encryption
+parameter of the BIGInfo advertising report event.
 
---
-Stefan
+After that, the userspace is woken up, and the QoS of the new
+PA sync socket can be read, to inspect the encryption field
+and follow up accordingly.
+
+Iulia Tanasescu (1):
+  Bluetooth: ISO: Pass BIG encryption info through QoS
+
+ include/net/bluetooth/hci.h      |  3 ++
+ include/net/bluetooth/hci_core.h | 25 ++++++++++++++-
+ net/bluetooth/hci_conn.c         |  1 +
+ net/bluetooth/hci_event.c        | 54 +++++++++++++++++++++++---------
+ net/bluetooth/iso.c              | 19 ++++++++---
+ 5 files changed, 82 insertions(+), 20 deletions(-)
 
 
-On 2023-08-29 13:22, Linux regression tracking (Thorsten Leemhuis)
-wrote:
-> Hi, Thorsten here, the Linux kernel's regression tracker. Top-posting
-> for once, to make this easily accessible to everyone.
-> 
-> Stefan, was this regression ever addressed? Doesn't look like it from
-> here, but maybe I'm missing something.
-> 
-> Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
-> --
-> Everything you wanna know about Linux kernel regression tracking:
-> https://linux-regtracking.leemhuis.info/about/#tldr
-> If I did something stupid, please tell me, as explained on that page.
-> 
-> #regzbot poke
-> 
-> On 30.06.23 12:59, Stefan Agner wrote:
->> Hi Brian,
->>
->> Gentle ping on the issue below.
->>
->> On 2023-06-20 16:41, Stefan Agner wrote:
->>> On 2023-06-16 03:22, Brian Gix wrote:
->>>
->>>> On Thu, Jun 15, 2023 at 11:28 AM Luiz Augusto von Dentz <luiz.dentz@gmail.com> wrote:
->>>>
->>>>> +Brian Gix
->>>>>
->>>>> On Thu, Jun 15, 2023 at 10:27 AM Luiz Augusto von Dentz
->>>>> <luiz.dentz@gmail.com> wrote:
->>>>>>
->>>>>> Hi Stefan,
->>>>>>
->>>>>> On Thu, Jun 15, 2023 at 5:06 AM Stefan Agner <stefan@agner.ch> wrote:
->>>>>>>
->>>>>>> Hi Brian, hi all,
->>>>>>>
->>>>>>> We experienced quite some Bluetooth issues after moving from Linux 5.15
->>>>>>> to 6.1 on Home Assistant OS, especially on Intel NUC type systems (which
->>>>>>> is a popular choice in our community, so it might just be that). When
->>>>>>> continuously scanning/listening for BLE packets, the packet flow
->>>>>>> suddenly ends. Depending on which and how many devices (possibly also
->>>>>>> other factors) within minutes or hours.
->>>>>>>
->>>>>>> Jan (in cc) was able to bisect the issue, and was able to pinpoint the
->>>>>>> problem to this change.
->>>>>>>
->>>>>>> Meanwhile I was able to confirm, that reverting this single commit on
->>>>>>> the latest 6.1.34 seems to resolve the issue.
->>>>>>>
->>>>>>> I've reviewed the change and surrounding code, and one thing I've
->>>>>>> noticed is that the if statement to set cp.filter_dup in
->>>>>>> hci_le_set_ext_scan_enable_sync and hci_le_set_scan_enable_sync are
->>>>>>> different. Not sure if that needs to be the way it is, but my outside
->>>>>>> gut feeling says hci_le_set_ext_scan_enable_sync should use "if (val &&
->>>>>>> hci_dev_test_flag(hdev, HCI_MESH))" as well.
->>>>>>>
->>>>>>> However, that did not fix the problem (but maybe it is wrong
->>>>>>> nonetheless?).
->>>>>>>
->>>>>>> Anyone has an idea what could be the problem here?
->>>>>>
->>>>>> Are there any logs of the problem? Does any HCI command fails or
->>>>>> anything so that we can track down what could be wrong?
->>>
->>> No HCI command fails, there is also no issue reported in the kernel log.
->>> BlueZ just stops receiving BLE packets, at least from certain devices.
->>>
->>>>>
->>>>> @Brian Gix perhaps you have a better idea what is going wrong here?
->>>>
->>>> It seems unlikely that this is Mesh related. Mesh does need for filtering to
->>>> be FALSE, and Mesh does not use extended scanning in any case.
->>>>
->>>> But this was part of the final rewrite to retire the hci_req mechanism in
->>>> favor of the hci_sync mechanism. So my best guess off the top of my head is
->>>> that there was an unintended race condition that worked better than the
->>>> synchronous single-threading mechanism?  Filtering (or not) should not
->>>
->>> After review the code I concluded the same. What is a bit surprising to
->>> me is that it is so well reproducible. I guess it is nicer to have a
->>> reproducible one than a hard to reproduce one :)
->>>
->>>> prevent advertising packets from permanently wedging.  Does anyone have an
->>>> HCI flow log with and without the offending patch?  Ideally they should be
->>>> identical...  If they are not then I obviously did something wrong. As this
->>>> was not specifically Mesh related, I may have missed some non-mesh corner
->>>> cases.
->>>
->>>
->>> I've taken two btmon captures, I created them using:
->>> btmon -i hci0 -w /config/hcidump-hci-req-working.log
->>>
->>> You can find them at:
->>> https://os-builds.home-assistant.io/hcidump-hci-req-working.log
->>> https://os-builds.home-assistant.io/hcidump-hci-sync-non-working.log
->>
->> Could you gain any insights from these logs?
->>
->> --
->> Stefan
->>
->>
->>>
->>> This is while running our user space software (Home Assistant with
->>> Bluetooth integration). Besides some BLE devices (e.g. Xioami Mi
->>> Temperature & Humidity sensor) I have a ESP32 running which sends SPAM
->>> advertisements every 100ms (this accelerates the issue). In the
->>> non-working case you'll see that the system doesn't receive any SPAM
->>> advertisements after around 27 seconds. The working log shows that it
->>> continuously receives the same packets (capture 120s).
->>>
->>> Hope this helps.
->>>
->>> --
->>> Stefan
->>>
->>>
->>
->>
+base-commit: 75d095daab9fa1d299fa79ebc7ab5dfbead877ca
+-- 
+2.34.1
+
