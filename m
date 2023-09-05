@@ -2,115 +2,92 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A9935792729
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  5 Sep 2023 18:35:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C84787926E3
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  5 Sep 2023 18:33:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349653AbjIEQWG (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 5 Sep 2023 12:22:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57076 "EHLO
+        id S237981AbjIEQWM (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 5 Sep 2023 12:22:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353809AbjIEITM (ORCPT
+        with ESMTP id S1354177AbjIEKGU (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 5 Sep 2023 04:19:12 -0400
-Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37672CEF
-        for <linux-bluetooth@vger.kernel.org>; Tue,  5 Sep 2023 01:19:05 -0700 (PDT)
-Received: by mail-qt1-x835.google.com with SMTP id d75a77b69052e-4141d8a4959so13975671cf.0
-        for <linux-bluetooth@vger.kernel.org>; Tue, 05 Sep 2023 01:19:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693901944; x=1694506744; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=CvUmRYKO5rN5JiKdYLn9/Xxm/soJiVGtQm650JnL3Yc=;
-        b=IDuf0baB1t1F8QSCLjWC8pmRvzAKQ/R4M4t5u3FLsOX2SqRgQXz/Z3MpAk8Vd5Kb6m
-         OBaz+r/ujIbUuNkrji3TkmDn2dTAwQpGpPSmDRQp7o69pvQ/Nlbne7CwWkb0CdLrrzzk
-         IN5sVqz4WX/cEw2uA94JE67yTGlOm8wzR3yOF0SXEPyJnQGBjepPHYJlqPiS3zq3DGfU
-         I2yXoCdrDFdm20VoyBK97sKFjeM/5AIhQp1In2otrpCJ9z7tTsw9ci7s0XR+LUbYUzXt
-         uod929b61k889o1RxRCphXZmWycOoUHC60HIKvs/decRlJjUBc58LQQ4Se5bQ0loDS6t
-         OnEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693901944; x=1694506744;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CvUmRYKO5rN5JiKdYLn9/Xxm/soJiVGtQm650JnL3Yc=;
-        b=W7RnCn5iONSoZ+9z+2Tn/35DMsgB9/C497ogbQM7jCkPrlOMaAzZs0OIsOfYPBWY35
-         OPzvLoj4NwbzC5fQdPjKGtc19Ueeo6NyE95YktI8WX/fKqR1pVjMTN/sUo0J4NJFZGvF
-         8yc25atQ+Ixw1i1dSsdg7sa2pNT8tsFzap9ZB26xdOu8Fsmg/8Q1+QFn5/ZHsmlv0F9d
-         b4n36BXdAanYbDxx/tvdnjz9zQhR/2cwAyvA8n4Y5BnLnYfbQRl3pmI4YQgeEFXYeRAZ
-         +83tTwjmR8ra7Q0cCJU68QaKl9q3PLWEHH8zoXH+wdH6VICXmjAaRJYwyTQT2oALX16Z
-         bWYg==
-X-Gm-Message-State: AOJu0YyDruuKdDgWeZJlpe4JkVTBz12d3bA20Kju86JYeuHXw1+gO3NO
-        o5iaeB0RO8+U6i5/6cRcJXBC81TWUYyhXFAFGEo=
-X-Google-Smtp-Source: AGHT+IERAX8PQb3+O/VRt2IpdT+B8+AIRhc7TR9qfBXEywqtD/tUeMqNmseulSPs3fS452xIhVN8tbhQYqX1LXl34po=
-X-Received: by 2002:a0c:aa1b:0:b0:653:5736:c0b4 with SMTP id
- d27-20020a0caa1b000000b006535736c0b4mr10412089qvb.54.1693901943569; Tue, 05
- Sep 2023 01:19:03 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a0c:de0e:0:b0:634:8588:8dcb with HTTP; Tue, 5 Sep 2023
- 01:19:02 -0700 (PDT)
-Reply-To: wuwumoneytransfer5000@hotmail.com
-From:   "(IMF) SCAM VICTIMS" <smmab4668@gmail.com>
-Date:   Tue, 5 Sep 2023 01:19:02 -0700
-Message-ID: <CAPvhgiGb_xchv+cBfjtNXZbs3T38s2BJRqmONSNBDUeOvUkr=Q@mail.gmail.com>
-Subject: Betrugsopfer
-To:     undisclosed-recipients:;
+        Tue, 5 Sep 2023 06:06:20 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DE6590
+        for <linux-bluetooth@vger.kernel.org>; Tue,  5 Sep 2023 03:06:14 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 59503B81104
+        for <linux-bluetooth@vger.kernel.org>; Tue,  5 Sep 2023 10:06:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 1CB81C433CD
+        for <linux-bluetooth@vger.kernel.org>; Tue,  5 Sep 2023 10:06:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1693908372;
+        bh=p4jx4BkUQoa8hrskH7mJUWfnxoGS/G4J2CXfM217NXE=;
+        h=From:To:Subject:Date:In-Reply-To:References:From;
+        b=M3Fsx1dtTHu+MWIJlvL+8sPvbsdTeOj5HOpk/3/UQdNKkKrHhHCsWeyJ6q4LfAeDj
+         +rogbZ2iWAxPhor2dy+x7SGjusE7txxRQjCRii5pPtMHpkUI/mFGSec8+rmF+zJnEp
+         S/4Rkydzpu8QRkL3W4WHk7sdUzc/VHnNHbfbocCh7u/FjZV5joYJPSyfz9PnkYqHwf
+         ndIFQtcsPVIsumflCn0ixAlBE/5VD+zciFb9HHW+2WZpGE+NAkIaLapvReFsw5d+BH
+         ul8U3DGniTlhStwSUt6RNKTN8TbL1gavh5b/gmcY3CwXbIIz5f0vgAgEO7GUNKMVmH
+         ZxhxNaLYAXsKA==
+Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
+        id 0682FC53BD0; Tue,  5 Sep 2023 10:06:12 +0000 (UTC)
+From:   bugzilla-daemon@kernel.org
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 85161] Bluetooth: hci0 SCO packet for unknown connection handle
+ 41
+Date:   Tue, 05 Sep 2023 10:06:11 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: aros@gmx.com
+X-Bugzilla-Status: RESOLVED
+X-Bugzilla-Resolution: DUPLICATE
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: bug_status resolution
+Message-ID: <bug-85161-62941-F7oSY8ApSj@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-85161-62941@https.bugzilla.kernel.org/>
+References: <bug-85161-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=4.7 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS,UNDISC_FREEM autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Level: ****
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
+MIME-Version: 1.0
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Sehr geehrter E-Mail-Besitzer,
+https://bugzilla.kernel.org/show_bug.cgi?id=3D85161
+
+Artem S. Tashkinov (aros@gmx.com) changed:
+
+           What    |Removed                     |Added
+----------------------------------------------------------------------------
+             Status|NEW                         |RESOLVED
+         Resolution|---                         |DUPLICATE
+
+--- Comment #6 from Artem S. Tashkinov (aros@gmx.com) ---
 
 
+*** This bug has been marked as a duplicate of bug 80791 ***
 
-Der Internationale W=C3=A4hrungsfonds (IWF) entsch=C3=A4digt alle Betrugsop=
-fer
-und Ihre E-Mail-Adresse wurde auf der Liste der Betrugsopfer gefunden.
+--=20
+You may reply to this email to add a comment.
 
-Dieses Western Union-B=C3=BCro wurde vom IWF beauftragt Ihnen Ihre
-Verg=C3=BCtung per Western Union Money Transfer zu =C3=BCberweisen.
-
-Wir haben uns jedoch entschieden Ihre eigene Zahlung =C3=BCber Geldtransfer
-der Westunion in H=C3=B6he von =E2=82=AC5,000, pro Tag vorzunehmen bis die
-Gesamtsumme von =E2=82=AC1,500.000.00, vollst=C3=A4ndig an Sie =C3=BCberwie=
-sen wurde.
-
-Wir k=C3=B6nnen die Zahlung m=C3=B6glicherweise nicht nur mit Ihrer
-E-Mail-Adresse senden daher ben=C3=B6tigen wir Ihre Informationen dar=C3=BC=
-ber
-wohin wir das Geld an Sie senden wie z. B.:
-
-
-Name des Adressaten ________________
-
-Adresse________________
-
-Land__________________
-
-Telefonnummer________________
-
-Angeh=C3=A4ngte Kopie Ihres Ausweises______________
-
-Das Alter ________________________
-
-
-Wir beginnen mit der =C3=9Cbertragung sobald wir Ihre Informationen
-erhalten haben: Kontakt E-Mail: ( wuwumoneytransfer5000@hotmail.com)
-
-
-Getreu,
-
-
-Herr Anthony Duru,
-
-Direktor von Geldtransfer der Westunion
+You are receiving this mail because:
+You are the assignee for the bug.=
