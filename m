@@ -2,71 +2,119 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0ADEE792874
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  5 Sep 2023 18:43:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF6AE7927A1
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  5 Sep 2023 18:37:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239423AbjIEQWm (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 5 Sep 2023 12:22:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57500 "EHLO
+        id S1349899AbjIEQWZ (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 5 Sep 2023 12:22:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353833AbjIEIUl (ORCPT
+        with ESMTP id S1343978AbjIEDIm (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 5 Sep 2023 04:20:41 -0400
-X-Greylist: delayed 86464 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 05 Sep 2023 01:20:38 PDT
-Received: from mail.equinoxrise.pl (mail.equinoxrise.pl [217.61.112.157])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E23B81AE
-        for <linux-bluetooth@vger.kernel.org>; Tue,  5 Sep 2023 01:20:38 -0700 (PDT)
-Received: by mail.equinoxrise.pl (Postfix, from userid 1002)
-        id 5DE24835FD; Mon,  4 Sep 2023 09:41:37 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=equinoxrise.pl;
-        s=mail; t=1693813323;
-        bh=v6OgBfK5dN7P5dQ0wCu59rOfZaiqziJeLNblJ8dOcGI=;
-        h=Date:From:To:Subject:From;
-        b=IvK8EA5uQpMEvpEyJ9sKDVcGy2ODmaYRBZGXtRJi9K5JZD/jvZ+o/KmbeRdIas4+/
-         Nkya//Jc+EDf6EE2UYpcxI1YbgTcOBETjcTI+dxkjxmj7bL5E5UTfzy7V26XbPsGYa
-         yGHBK4hb5HsTYcntndzgKj7Lh2AJfSb1j/9OevpGgpM5kQpwK/4C8PccpkETMJ1Lca
-         ZUKKa1walY3ckRGoaP1B7z65x7pECDgt/oNF9KayUQ5do9x6L2tNOt9AIQGudJyxfw
-         3Esdf8LzTMxdBHRNh4H+Ewq7zCgDZOc4EA2RkjweCZQqytbzGl4ceSzXpCFz4hQ1PF
-         zQQj/+YGMvVEg==
-Received: by mail.equinoxrise.pl for <linux-bluetooth@vger.kernel.org>; Mon,  4 Sep 2023 07:40:34 GMT
-Message-ID: <20230904084500-0.1.7.roa.0.sx5ibda0h5@equinoxrise.pl>
-Date:   Mon,  4 Sep 2023 07:40:34 GMT
-From:   "Mateusz Talaga" <mateusz.talaga@equinoxrise.pl>
-To:     <linux-bluetooth@vger.kernel.org>
-Subject: Prezentacja
-X-Mailer: mail.equinoxrise.pl
-MIME-Version: 1.0
+        Mon, 4 Sep 2023 23:08:42 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD95ECC6
+        for <linux-bluetooth@vger.kernel.org>; Mon,  4 Sep 2023 20:08:38 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6BA9A60AC6
+        for <linux-bluetooth@vger.kernel.org>; Tue,  5 Sep 2023 03:08:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id C71BFC433C7
+        for <linux-bluetooth@vger.kernel.org>; Tue,  5 Sep 2023 03:08:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1693883317;
+        bh=7d8uKoM+C8LIYfLRxC4d887k4i3+tzLgJWpKc4XEXR4=;
+        h=From:To:Subject:Date:From;
+        b=Be9Fx8CpT++/qBict7hTSojqdC6a/ajhi04HbUhWECJs1uhW87DFEWzwU2U3IcjFz
+         rp1029lEVpVNYULG+slqlcFSgtXIcPKTrzoZEVJEbRlpId7Id12XLwXrpGH5qchjAe
+         yWbLQLaBkZdpKx/UA9mE3mUieYUVm6IOmYGDQQV+ecZYVij2vxrs0nAjQ7Zxbum2L+
+         dJ8LItkKmAzlqEYpiN3U4AznSmlxdIABVQ97kG9rytD0brqlsUaRZxufJGGwmrRjgk
+         mtLAAt2Vl5TlNBgDazEaQ+09A6Qjfe+grlCgR3TxJvJz5IpBcjdJSMBmJeaUkuIpcO
+         T3XQ+VkSgtCag==
+Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
+        id ABE59C4332E; Tue,  5 Sep 2023 03:08:37 +0000 (UTC)
+From:   bugzilla-daemon@kernel.org
+To:     linux-bluetooth@vger.kernel.org
+Subject: [Bug 217870] New: ATS2851 chipset for Baseus BA07 Bluetooth does not
+ connect, no bluetooth device connects, adapter does not turn on
+Date:   Tue, 05 Sep 2023 03:08:37 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: new
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: high
+X-Bugzilla-Who: mg-tatangelo@hotmail.com.br
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P3
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: bug_id short_desc product version rep_platform
+ op_sys bug_status bug_severity priority component assigned_to reporter
+ cf_regression
+Message-ID: <bug-217870-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=3.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,URIBL_CSS_A,URIBL_DBL_SPAM
-        autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: ***
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
+MIME-Version: 1.0
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Dzie=C5=84 dobry!
+https://bugzilla.kernel.org/show_bug.cgi?id=3D217870
 
-Czy m=C3=B3g=C5=82bym przedstawi=C4=87 rozwi=C4=85zanie, kt=C3=B3re umo=C5=
-=BCliwia monitoring ka=C5=BCdego auta w czasie rzeczywistym w tym jego po=
-zycj=C4=99, zu=C5=BCycie paliwa i przebieg?
+            Bug ID: 217870
+           Summary: ATS2851 chipset for Baseus BA07 Bluetooth does not
+                    connect, no bluetooth device connects, adapter does
+                    not turn on
+           Product: Drivers
+           Version: 2.5
+          Hardware: Other
+                OS: Linux
+            Status: NEW
+          Severity: high
+          Priority: P3
+         Component: Bluetooth
+          Assignee: linux-bluetooth@vger.kernel.org
+          Reporter: mg-tatangelo@hotmail.com.br
+        Regression: No
 
-Dodatkowo nasze narz=C4=99dzie minimalizuje koszty utrzymania samochod=C3=
-=B3w, skraca czas przejazd=C3=B3w, a tak=C5=BCe tworzenie planu tras czy =
-dostaw.
+doesn't connect/bugs on linux, mainly on KDE, on KDE it doesn't even show t=
+hat
+it's connected, on gnome it shows that the adapter is connected, but it loo=
+ks
+like it's plugged in and not plugged in at the same time, like, it really, =
+IT
+IS CONNECTED, but it appears that it is off, no device appears to pair and =
+when
+it appears (rare occasions), it keeps loading infinitely when I click to ma=
+ke
+the connection, an interesting fact that happened and I will leave it here =
+as a
+help: when I I use a virtual machine with Linux, THE SOUND CATCHES, the ada=
+pter
+picks up, I can hear what comes out of the virtual machine, with the same
+headphones that I try to connect to the bluetooth adapter and it does not go
+when Linux is my main OS, the only The thing that doesn't work is the phone,
+through the virtual machine, but the sound comes out! so probably the chips=
+et
+works, but it must be misconfigured or have little/no support for the chips=
+et
+and that's it, I hope you can help me, hugs!
 
-Z naszej wiedzy i do=C5=9Bwiadczenia korzysta ju=C5=BC ponad 49 tys. Klie=
-nt=C3=B3w. Monitorujemy 809 000 pojazd=C3=B3w na ca=C5=82ym =C5=9Bwiecie,=
- co jest nasz=C4=85 najlepsz=C4=85 wizyt=C3=B3wk=C4=85.
+--=20
+You may reply to this email to add a comment.
 
-Bardzo prosz=C4=99 o e-maila zwrotnego, je=C5=9Bli mogliby=C5=9Bmy wsp=C3=
-=B3lnie om=C3=B3wi=C4=87 potencja=C5=82 wykorzystania takiego rozwi=C4=85=
-zania w Pa=C5=84stwa firmie.
-
-
-Pozdrawiam
-Mateusz Talaga
+You are receiving this mail because:
+You are the assignee for the bug.=
