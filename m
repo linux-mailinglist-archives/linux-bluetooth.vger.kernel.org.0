@@ -2,51 +2,51 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 69991792885
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  5 Sep 2023 18:45:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA7577927B3
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  5 Sep 2023 18:37:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234313AbjIEQWy (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 5 Sep 2023 12:22:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43272 "EHLO
+        id S1349713AbjIEQWK (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 5 Sep 2023 12:22:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353670AbjIEHJ5 (ORCPT
+        with ESMTP id S1353671AbjIEHKC (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 5 Sep 2023 03:09:57 -0400
-Received: from EUR04-HE1-obe.outbound.protection.outlook.com (mail-he1eur04on2074.outbound.protection.outlook.com [40.107.7.74])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE5C31B4
-        for <linux-bluetooth@vger.kernel.org>; Tue,  5 Sep 2023 00:09:53 -0700 (PDT)
+        Tue, 5 Sep 2023 03:10:02 -0400
+Received: from EUR01-VE1-obe.outbound.protection.outlook.com (mail-ve1eur01on2084.outbound.protection.outlook.com [40.107.14.84])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 058371B4
+        for <linux-bluetooth@vger.kernel.org>; Tue,  5 Sep 2023 00:09:58 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ZOAA8gaDOEU49PeA2KxImyGe/XPxVSL4FkJdGexKIrxncvP9T7ZTOz5vq2aWUUL9eJi2To0tL+5q8TGONoXitGsYiXl9Q372SBmtZ7RPKeNTIvgACFTbNBeDyyzu7EQkpocLjs9uhzU7ws1KwVBRu393gHlGppNqoUIR3zqnJPw7cdZws7vIL31++Td/6jZuLbuYhXlKRgX0jsPml/N3yG75EVgzauvdJY/uxp/CcZiuU2vffM+HaqF/ZoV35/HTGhWzR78R5of88AkDIHuCo5+EHTijzhUKEs8KUcqQnjzjZpYALWJZp0ctIG9vdC2zMMF19jRmUNCCM/i9Hn6xyA==
+ b=ePgf0gH2Rxt93QWuLpLD35byTbktUlY2yfeAsi3qGxcMPtqAuxdA1J8mt8k3Cz/e1bphfpk/z+Ha1d3jTuGQfvGca7agJ5lNSthHCkrFNBYVSCgcBcixi4ySivwLSrt0J5b8g4wE4f1LsFa0EwdTzWzcjorDjFdKiiniu2LXj+2xlJHDe32iQlEjoMH5qC7kFisqggLTXNyTw4Gpy9Hb/XyhluOqv4gIV8t1R33Si2cEj8ijyj2wCW0AihgK9ZFcVEnA0/qrQFXRIpuLAKJs/RYJSRUdj35t3YaA9Rcw0DrB3gBBSBvi8hg0uexruwD9eb/ETuF07VnRuYRsEJ1Jfg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5QixYa73qMrOEn2y44yuyOC4vF8yJozPeyquUdBrhJw=;
- b=ZiusdtuJUTQwhF+kAng7PGMM6/PrWlhouDJ+sOWB0FrXJXkZag2taB7R4i8hkbbvpZu9LWZbHC7g1bQnkl/k1RogKpM1tFmc3Jtj7UeIj/bAlvvtUd80N+ju2uTG5+XeZeXGl3Bl2Hh1gCv0apl4SXgeuwPPGL82xmo824zbm8AzGvDMGE3ILOuM79HmAwPBB7UwZC1E0rtTo3EUnMomoWsVZXxlv7YDNmLYpoN35KbdfqFN0ArA0QHfxdrOCABzVgkrWUPo+p1pcauIAnuoIKraki9vJFAW2Wc4TwblB4RRy5k3tCLUPN2lMZUbO3ua3Q0EfuKBhaHs30hxmm23yw==
+ bh=H3zOJG/Tl6o4BkWw52KbeJfBXtdds9wHUT2KOWv2gYg=;
+ b=k7rys7zBym8ob4u+anyKWfkE4Ojk4oT/1RPPkpljDvUT8VukvY5NbwWL7pqsXfQ49IpsU/DWHAMvetub+ZzyngfDWIuCj/7Zy/MWquE6PXCH+V/ywe/1X9gNrdzWsyzDF/YutT+fzjGosJoMMivihUQsmVRRAB79yU1qFrD+wjBI4RTwEnG/iWr/Xwp/DTbD2t8Gi3nFd42KzojsYbI2bhDSlzdXgMz0nLU4ayXPZddVgh429G1GENBpjhI66P9uh1Eg853LfW8bMplyoMKS8iyYDqVpvtOLKD6fqSFcLLBUI6bppQGPcFGVy7RE/svrD/LRFsHFPtUBNPUBQbPVeA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
  header.d=nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5QixYa73qMrOEn2y44yuyOC4vF8yJozPeyquUdBrhJw=;
- b=lRLmmTFQzI9IdhelBheos0zsjm8sePUfzy1hq+XVSrGjjNIJ6urdZjjI6jsvY1+k3wuLdBso7h7wzKp9TSlzqY4PtUSFExTN36xSYlktiiNlDsa46B/1PtY2wqUtHah+OawpiYin83FFnqbe07aCUUuvsuCTEKkhqdKSsXLRIaM=
+ bh=H3zOJG/Tl6o4BkWw52KbeJfBXtdds9wHUT2KOWv2gYg=;
+ b=SYQgZ+4DWGwvXVjRZUgk75/ifinMz/W3P2dx4R0W/JEsTDRUJCPLsVtRK/18m9xBg5tL2OiXXL2wxg30yLzhSooluK5U4cRakUzXwF63Qi/8ba4dvdgWzulrSnvZHS/sVmTEP5Ar+E1JX1U/lqYwgG90YwoLUjhr/zrAZ/aWmVE=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nxp.com;
 Received: from AS8PR04MB9126.eurprd04.prod.outlook.com (2603:10a6:20b:449::16)
  by DBBPR04MB8058.eurprd04.prod.outlook.com (2603:10a6:10:1e7::20) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6745.33; Tue, 5 Sep
- 2023 07:09:51 +0000
+ 2023 07:09:55 +0000
 Received: from AS8PR04MB9126.eurprd04.prod.outlook.com
  ([fe80::2320:fa57:8f7c:bb64]) by AS8PR04MB9126.eurprd04.prod.outlook.com
  ([fe80::2320:fa57:8f7c:bb64%6]) with mapi id 15.20.6745.030; Tue, 5 Sep 2023
- 07:09:51 +0000
+ 07:09:55 +0000
 From:   Nitin Jadhav <nitin.jadhav@nxp.com>
 To:     linux-bluetooth@vger.kernel.org
 Cc:     devyani.godbole@nxp.com, mahesh.talewad@nxp.com,
         luiz.dentz@gmail.com, nitin.jadhav@nxp.com
-Subject: [PATCH BlueZ v2 3/4] profiles/audio/micp.c: To implement MICP plugin
-Date:   Tue,  5 Sep 2023 10:09:11 +0300
-Message-Id: <20230905070912.82340-4-nitin.jadhav@nxp.com>
+Subject: [PATCH BlueZ v2 4/4] unit/test-micp-test-mics: To implement unit tester code
+Date:   Tue,  5 Sep 2023 10:09:12 +0300
+Message-Id: <20230905070912.82340-5-nitin.jadhav@nxp.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230905070912.82340-1-nitin.jadhav@nxp.com>
 References: <20230905070912.82340-1-nitin.jadhav@nxp.com>
@@ -58,50 +58,50 @@ X-ClientProxiedBy: SI2PR02CA0031.apcprd02.prod.outlook.com
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: AS8PR04MB9126:EE_|DBBPR04MB8058:EE_
-X-MS-Office365-Filtering-Correlation-Id: 95963ddf-4da9-4b23-7220-08dbaddf191b
+X-MS-Office365-Filtering-Correlation-Id: 32be7bba-ad2c-4f7f-52d4-08dbaddf1b3d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: r62JeXrfxDNzxU2Cpiytsou4kTCZlg7+NTC/T6n0ah7P2RqYDUnNpmkGH91pF9eKTCYVHUiopAHvc5bd8cf2WKhOf0cOkcPzkoTEMCzZImfyptEEK5KwuIBhm3e+je72atC0/6+0LzBPSfC3w7UrbNVGcJ0xMZktFLxU3u8tBvPl+SrAp6ND2ANyEQGL9xyQTiARnz7FFmkdoTstk0ktXN+5W3ntndHGuJIc8appsVX/iRgc70gK6KxZ7YsAqwTh3Igv2LhTOFmzY2N244m+SUNTQnjyvI3mrR1/ST5UgE9M2c+5S42aHv2f8yBcVAZWI1JrlUIWvcAc1nguz06lyFB77rMjZE901TPHVR6Fv8Y9ty1d+pITJi1zCNDr6922jTY89ibh9ngAHEi7e1DtgdtKn9mpC+LFbtXzeeIHfO6GONWQmprre7wUfGVLZ2Ypwnt0D/nG8I5XY89cdY8fZ7M028r9XJstBtkH+YZbgw+qp0C2W0nQFBKt+KQranliuDVJHxz6OajGYFrjSnZzl3E6iSHBmhgPWYmH+AGsofIkPjHzHosyEAsVP1E5M36FOO6LAxHJOiA2xFCfZ6dA6Ns9I4RSm2FmGGMSRELxWQvIzyu9i4wF0+G6gYd/fK+Q
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR04MB9126.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(346002)(376002)(136003)(39860400002)(366004)(451199024)(1800799009)(186009)(66946007)(66556008)(66476007)(6916009)(478600001)(38100700002)(38350700002)(316002)(2906002)(41300700001)(86362001)(8936002)(8676002)(4326008)(5660300002)(44832011)(6506007)(6512007)(6666004)(6486002)(52116002)(55236004)(2616005)(26005)(1076003)(36756003);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: g8apolO8iemCWWrwgyZzEAVHI7ud+40KQ7VvaDudn7qhBIt1WszEgui01g6FQRTiSwVjxrzW+fpc3B2hmM8xAGcxIqAwp0iLnY2EbKeJxnJr6iTwYEAPlzrcFR5zi0l+IPXeDa5RWmxMTVTiTVr6QDThL48sHtwA3i51+q2QJPflVWboyPy1qJnsxumhuwp1lAiLtzXX+sty4aWq/IZZ3MauU4HT6D8CTjhL8RS9iLCAR9aB6bCxFs0hPIb3vRczlklikNLYW1ir/DRl22C+5YxZG9FaJgz8SM8hK/fmjIZyex4c+fHnb3HjP6tV8wQhNu1CB4dv1YZIoq+CxWTcAqYg+ygl6MDYc2LJ37avV0WkMn22NhhjKSsOs+ErlCReYunNYTRD4b+ThzxOs917OLWONqebhDliliriSoJ9op4D2NPhutIz4JAD3rn89i9ERU3GUY5LaxTIeCxJYTJH+uk9It2f8vQ3npV5L/GGJEl/GDVnt1GY4Qka8YEmzJWTeHrh4yWmQHDBs8hfgXXWp0eyqCGLeTnDBmFIDeOqrqkowfTBzOWctXTA//Bm+3StcHSOm7V/OtqEphf7M0GEIetadudU1+8d8ajek5FawG5wyrU4Un+fQwwfFN/H9VNH
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR04MB9126.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(396003)(346002)(376002)(136003)(39860400002)(366004)(451199024)(1800799009)(186009)(66946007)(66556008)(66476007)(6916009)(478600001)(38100700002)(38350700002)(316002)(30864003)(2906002)(41300700001)(86362001)(8936002)(8676002)(4326008)(5660300002)(44832011)(6506007)(83380400001)(6512007)(6666004)(6486002)(52116002)(55236004)(2616005)(26005)(1076003)(36756003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?p1bzOA8DeSQ1R+rcaVUeih1Om9ztiwQp3KA7ZWAweDRme9YYLX+KZqihpNyS?=
- =?us-ascii?Q?g2oOjKBlHZ1758u17h/wolEEBjnEdmjHZlWpsm2P42blB6vR32CfCSzMLkJ3?=
- =?us-ascii?Q?tMzVssNYyS4t6nghbsyguKdThBFK+ibn0GewIfGJtIc2WV5FHOFouYOG1PSA?=
- =?us-ascii?Q?kxtnX+aE5LwBZqniw/VjwSHcL7/kp8F++YVxRhj2fj9IGmTYNG+x/m5zHWAy?=
- =?us-ascii?Q?pNJLKgW1/qUEQFBXZ4mkhjYa/74I5uRto3OqdpIevzBKNy/M05QwN7Lq4D5e?=
- =?us-ascii?Q?aieiUFy01Ho/kzdTYYbcfjVs4hUYFhUZCNMfdksND2k/Rudq93s6vdzpPf66?=
- =?us-ascii?Q?cEfsuaUSsObfIyb2Ay76dXw60N6zzmZwafcD6tegVIt2vI5hrwbFUNjSMjs6?=
- =?us-ascii?Q?pmGP8QsO54Wf8nAJOlO4TRdM+qQHi5EwLn0pLS06y3HvmUG4iDgu4yHE19Dr?=
- =?us-ascii?Q?U3+C/a4tC4OFywPT1E1j2I5Wqeo3Iao1xqOLLO2DdGRCAXbv2fC7QArAnKRi?=
- =?us-ascii?Q?izIiyOudvrSglOADHxqyZN5ojD1slnaZLQRRg94l6ZV72vNwTNiaSvolutxA?=
- =?us-ascii?Q?N4qfh0Q5OX6h4oLe2WTvb2QHuSGGuNiO3kvPYwRmDMrUUBfRbhgLtY/TWFYl?=
- =?us-ascii?Q?usqPUrguNBYQ5GSoOxO5T6oGjIzoBRtgaoYVc9OLNetj89Wd7f5fNNOqwySa?=
- =?us-ascii?Q?CX60Q6AD1MiMhp+ONMMtuHHJaJqYIGflsqUS3x1Woh4fIy7ML4ViBqKhZ/e4?=
- =?us-ascii?Q?5yJQPSM3HCA0UzKGYNnwHZeqUbcoJlIb+qthS/TATKCFkf08y/G1wco85hL0?=
- =?us-ascii?Q?XCTWJHeX35PHq+zqrWy1bOoTAdFxR2Cl4NR5Il/qyqt0kQ2brKJ3XW7biADC?=
- =?us-ascii?Q?B2nEhmpHu/mF+bsKFNcDItvRXKA7BrcP/noBRc6XtMd6izp1jEvFzmM53ZDc?=
- =?us-ascii?Q?pq49d95gXTZ3hToNIJTP/FFWIecEdG/qDHPIKoMAYunJLgQzb+s2fyAYm0yC?=
- =?us-ascii?Q?oSnH6rM0dcDnBICHjiQTYBWehjMJ9PFPQppHUtMgK8c3KHmnUNXW3G5Nkn6y?=
- =?us-ascii?Q?nXgcMItxI6Z/bl9Ul/IGmk24m4NNdOTBDFinR5tX8Ga9IJ5rAnAJPY0wLhNb?=
- =?us-ascii?Q?jsjPXtp2lZ/DHMnPxnUFo061JcuLhsZBtsVWIDyXQ+zYVUARR1uDRhQ0YxNK?=
- =?us-ascii?Q?YbNqq9fM9JYbVQWlVei0X2TTpIIJbdSsmjy7/YTVogNmLeJEIKtAsW8R6jI/?=
- =?us-ascii?Q?Bt2mawGT29YurGlUOf3viPt+uMLuFCxnX2PMW0kyoukG8nJToChQOEntwFkq?=
- =?us-ascii?Q?QyhS2LWaCZHhBPNe/qeqYKJKOtek+/diLX5NNBLIWukXxz1eWp0a+Xw3k14J?=
- =?us-ascii?Q?Yb4fCjId/8BRUdpRZ3gBmjJTkVft2eqn/+4fXLKycLZ1bQJLtNyH7uq7gFIz?=
- =?us-ascii?Q?T0aGv85clwDzWd1JO+6oZ053l2E8rwUJ6ctwlLANS9XrTo/qP0aUecCaTlRK?=
- =?us-ascii?Q?p2e9Pyb5GfyO0t6aARvUYuAb9iT74dg2VJQlClAlMm7z7Yl3TwNTcPnRqZuG?=
- =?us-ascii?Q?pL5WXULb5ftznxFYJX2nZY2W7G27IoWiN5LQA3Tj?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?DMoEYFL4EemJIFZWaOehFBe8vke0+YkAtup+9qb4KoveITaqVyVRhS73RePN?=
+ =?us-ascii?Q?o7dskpkmWr6vXtRUyowaEBhnAFGPBPAFrhSZ4GIMOXX1Vv1ny4Vfci2N0dL8?=
+ =?us-ascii?Q?Fdh3Wq3FL9dK83RevO7QuQYbJzSXEUWHBZ/BDcmd8fPOutiW+pgMbI5aw95k?=
+ =?us-ascii?Q?CBxNA60d4ltyIHeUHr0mxV8GtjzQDLzrdhipdbsFZef3uA1bz6ZHGrYYWv+3?=
+ =?us-ascii?Q?F3A3+vwRwO73AhZglTYFaPN6U+yEH6vNk+Ta0mDqgtJFBR6hbHklk4CHZPMm?=
+ =?us-ascii?Q?cgsgAPFpdgMYCtHhVnJmN/IZ+6m1ouV0bS7103+6EI/u56lOUaJmGQU6ULnn?=
+ =?us-ascii?Q?LDfOfQKiCqMUv6kK9eMBsC6FKqZPu8o1Omt4LPdbUKmpYGCCOhXT49R9LuKy?=
+ =?us-ascii?Q?CAM78gYFNPa+YiLnO/6MD/Reio84EHh2/l7t6IakuxJqRspNx1i4fLbN8T4i?=
+ =?us-ascii?Q?FosX+cJNKwslb0FhuGi69O/aPogT9c+f5bkuOFkAKuJtSyCyXfI2wkFKA3Tm?=
+ =?us-ascii?Q?GfJW5wEo0aOXiix6IOiybGrhbblckIJmYacHP6WyYfu4Os4AhznesS0cwFDB?=
+ =?us-ascii?Q?h0k6GYEyBeukYGsm9HUDAQZw6b3OzF9ZPO/8jVeh6tx9UJK7q3uRdd9Bofhd?=
+ =?us-ascii?Q?gQm/83t3IrZgciAzfi2ud9QjLe5qIhiahcvn00wHePznCtoZzT1bEjQCNHN6?=
+ =?us-ascii?Q?ewTgpvALxgcsOXrtk0n8ITNX8R9QkUAlpPKe4AkJt7LM2y44/MgStaG8wCrB?=
+ =?us-ascii?Q?ntKluT25N/lpllUIifMoh6e2PTL56psBgqtHJmkUDKPcHbh6ldohauynIRJW?=
+ =?us-ascii?Q?2gzoe0DOJt5pL2BJEVcdjmwNPPnpg1GpYBZWTPQg8+H55pLT/up6SST+WKmQ?=
+ =?us-ascii?Q?0gKSJDf9PhpLDJgKMh77Ts4smCNBmZ3lXJtJnUFt3UoVO0RdCHCNBx+OXQ5v?=
+ =?us-ascii?Q?x505J/PVLBRZ/krtGPPBzM6zb5IRsHTOB8JcxIN4jpHMNTn1t9drmKUvxn2A?=
+ =?us-ascii?Q?+kq369xwG8j/f8CIZHBCPGKOPK5kZ+MOZRExwHdCwwiKXSKG+qy8+1PLA44g?=
+ =?us-ascii?Q?HND41QSWSJ4u17BoncE2TazZj8uGMlVvJz8U0XnsRMOjulAQA82zkHl9+rZI?=
+ =?us-ascii?Q?fgsRyY6EDTTdVMvO+w1e+ks7rjXt3f+UZudOJ9lD3uhfv8s+pFz387AnN7Su?=
+ =?us-ascii?Q?tgQPG4Qjru8EW/VjdkdkA3D1Z0Kcme8IN4qK0fNqoU/DShZl04iVKbjbWvB+?=
+ =?us-ascii?Q?d6HhLnWP4VMaQbSwVE/o4+xbSF80EGOfFSYHuMhWcIyEc8wIFRMrBiaw//Ak?=
+ =?us-ascii?Q?nnwWSUOjFOqrCQcM7RgtGhY/P2VYYal1obm0SGGLua5LloC02Nvhp8yT0Jf9?=
+ =?us-ascii?Q?8AmcJg4jXPAkV98MD+lYm+97zeTYifEyqbfIH5xBbXkgjoDipQBelWnQbddB?=
+ =?us-ascii?Q?RjEPPZMkM+Jo1+9GwxEDaCfwhpU7irny4o9+UUGyF8syKEHuBHD0hvrWzgn3?=
+ =?us-ascii?Q?5h5JtNOKbTKXiNymklzujICt7dZsJuv4VP6qRVaCOCaEUunMn0kFmkVP2bzy?=
+ =?us-ascii?Q?um5lD40hzbZmCTWRq9G93h/C0WS/+Y+XkoMtyk1B?=
 X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 95963ddf-4da9-4b23-7220-08dbaddf191b
+X-MS-Exchange-CrossTenant-Network-Message-Id: 32be7bba-ad2c-4f7f-52d4-08dbaddf1b3d
 X-MS-Exchange-CrossTenant-AuthSource: AS8PR04MB9126.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Sep 2023 07:09:51.6450
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Sep 2023 07:09:55.0836
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: eNnL8mvXwowX4s4hrq0alHu3OJCuUkj+dKTqPSConFwccM7C8P/9vRjPBn1cEK0ti9jQ9TWdyH8lGkqpNJZzrg==
+X-MS-Exchange-CrossTenant-UserPrincipalName: JjZ5r2nGYFv6moq9HRR7qmw5obmO9sriBJ4NyEugmzWTH77INRln7s1DkGh4qHIlf8k01wWEITuVnewOXXrnVA==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBBPR04MB8058
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
@@ -113,396 +113,729 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-MICP profile level interface function have been implemented
-This adds initial code for MICP plugin.
+Implemented Unit Testcases for MICS[test-micp.c] and MICP[test-mics.c].
 
 Co-developed-by: Mahesh Talewad <mahesh.talewad@nxp.com>
 Signed-off-by: Mahesh Talewad <mahesh.talewad@nxp.com>
 Signed-off-by: Nitin Jadhav <nitin.jadhav@nxp.com>
 ---
- Makefile.plugins      |   5 +
- configure.ac          |   4 +
- profiles/audio/micp.c | 340 ++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 349 insertions(+)
- create mode 100644 profiles/audio/micp.c
+ Makefile.am      |  13 ++
+ unit/test-micp.c | 357 +++++++++++++++++++++++++++++++++++++++++++++++
+ unit/test-mics.c | 317 +++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 687 insertions(+)
+ create mode 100644 unit/test-micp.c
+ create mode 100644 unit/test-mics.c
 
-diff --git a/Makefile.plugins b/Makefile.plugins
-index fc19522e4..5880ed0df 100644
---- a/Makefile.plugins
-+++ b/Makefile.plugins
-@@ -137,6 +137,11 @@ builtin_modules += vcp
- builtin_sources += profiles/audio/vcp.c
- endif
+diff --git a/Makefile.am b/Makefile.am
+index 6f40f2a74..cde55bebf 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -573,6 +573,19 @@ unit_test_gattrib_LDADD = src/libshared-glib.la \
+ 				lib/libbluetooth-internal.la \
+ 				$(GLIB_LIBS) $(DBUS_LIBS) -ldl -lrt
  
-+if MICP
-+builtin_modules += micp
-+builtin_sources += profiles/audio/micp.c
-+endif
++unit_tests += unit/test-micp
 +
- if CSIP
- builtin_modules += csip
- builtin_sources += profiles/audio/csip.c
-diff --git a/configure.ac b/configure.ac
-index bc7edfcd3..9a8856380 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -211,6 +211,10 @@ AC_ARG_ENABLE(vcp, AS_HELP_STRING([--disable-vcp],
- 		[disable VCP profile]), [enable_vcp=${enableval}])
- AM_CONDITIONAL(VCP, test "${enable_vcp}" != "no")
++unit_test_micp_SOURCES = unit/test-micp.c
++
++unit_test_micp_LDADD = src/libshared-glib.la \
++			lib/libbluetooth-internal.la $(GLIB_LIBS)
++
++unit_tests += unit/test-mics
++
++unit_test_mics_SOURCES = unit/test-mics.c
++unit_test_mics_LDADD = src/libshared-glib.la \
++				lib/libbluetooth-internal.la $(GLIB_LIBS)
++
+ unit_tests += unit/test-bap
  
-+AC_ARG_ENABLE(micp, AS_HELP_STRING([--disable-micp],
-+		[disable MICP profile]), [enable_micp=${enableval}])
-+AM_CONDITIONAL(MICP, test "${enable_micp}" != "no")
-+
- AC_ARG_ENABLE(csip, AS_HELP_STRING([--disable-csip],
- 		[disable CSIP profile]), [enable_csip=${enableval}])
- AM_CONDITIONAL(CSIP, test "${enable_csip}" != "no")
-diff --git a/profiles/audio/micp.c b/profiles/audio/micp.c
+ unit_test_bap_SOURCES = unit/test-bap.c
+diff --git a/unit/test-micp.c b/unit/test-micp.c
 new file mode 100644
-index 000000000..452027c75
+index 000000000..3db32a4f7
 --- /dev/null
-+++ b/profiles/audio/micp.c
-@@ -0,0 +1,340 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
++++ b/unit/test-micp.c
+@@ -0,0 +1,357 @@
++// SPDX-License-Identifier: LGPL-2.1-or-later
 +/*
-+ *
 + *
 + *  BlueZ - Bluetooth protocol stack for Linux
 + *
 + *  Copyright (C) 2023  NXP Semiconductors. All rights reserved.
 + *
-+ *
 + */
++
 +#ifdef HAVE_CONFIG_H
 +#include <config.h>
 +#endif
 +
-+#define	_GNU_SOURCE
-+
-+#include <ctype.h>
-+#include <stdbool.h>
-+#include <stdlib.h>
-+#include <stdio.h>
-+#include <sys/types.h>
-+#include <sys/stat.h>
++#define _GNU_SOURCE
++#include <unistd.h>
++#include <string.h>
++#include <sys/socket.h>
 +#include <fcntl.h>
-+#include <errno.h>
++
 +
 +#include <glib.h>
 +
-+#include "gdbus/gdbus.h"
-+
 +#include "lib/bluetooth.h"
-+#include "lib/hci.h"
-+#include "lib/sdp.h"
 +#include "lib/uuid.h"
-+
-+#include "src/dbus-common.h"
 +#include "src/shared/util.h"
-+#include "src/shared/att.h"
++#include "src/shared/tester.h"
 +#include "src/shared/queue.h"
++#include "src/shared/att.h"
 +#include "src/shared/gatt-db.h"
 +#include "src/shared/gatt-server.h"
 +#include "src/shared/micp.h"
 +
-+#include "btio/btio.h"
-+#include "src/plugin.h"
-+#include "src/adapter.h"
-+#include "src/gatt-database.h"
-+#include "src/device.h"
-+#include "src/profile.h"
-+#include "src/service.h"
-+#include "src/log.h"
-+#include "src/error.h"
-+
-+#define MICS_UUID_STR	"0000184D-0000-1000-8000-00805f9b34fb"
-+
-+struct micp_data {
-+	struct btd_device *device;
-+	struct btd_service *service;
++struct test_data {
++	struct gatt_db *db;
 +	struct bt_micp *micp;
-+	unsigned int ready_id;
++	struct bt_gatt_server *server;
++	struct bt_gatt_client *client;
++	struct queue *ccc_states;
++	size_t iovcnt;
++	struct iovec *iov;
++	struct test_config *cfg;
 +};
 +
-+static struct queue *sessions;
++struct ccc_state {
++	uint16_t handle;
++	uint16_t value;
++};
 +
-+static void micp_debug(const char *str, void *user_data)
++struct notify {
++	uint16_t handle, ccc_handle;
++	uint8_t *value;
++	uint16_t len;
++	bt_gatt_server_conf_func_t conf;
++	void *user_data;
++};
++
++#define iov_data(args...) ((const struct iovec[]) { args })
++
++#define define_test(name, function, _cfg, args...)		\
++	do {							\
++		const struct iovec iov[] = { args };		\
++		static struct test_data data;			\
++		data.cfg = _cfg;				\
++		data.iovcnt = ARRAY_SIZE(iov_data(args));	\
++		data.iov = util_iov_dup(iov, ARRAY_SIZE(iov_data(args))); \
++		tester_add(name, &data, NULL, function,	\
++				test_teardown);			\
++	} while (0)
++
++static void print_debug(const char *str, void *user_data)
 +{
-+	DBG_IDX(0xffff, "%s", str);
++	const char *prefix = user_data;
++
++	if (tester_use_debug())
++		tester_debug("%s%s", prefix, str);
 +}
 +
-+static int micp_disconnect(struct btd_service *service)
++static void test_teardown(const void *user_data)
 +{
-+	return 0;
-+}
++	struct test_data *data = (void *)user_data;
 +
-+static struct micp_data *micp_data_new(struct btd_device *device)
-+{
-+	struct micp_data *data;
-+
-+	data = new0(struct micp_data, 1);
-+	g_assert(data);
-+	data->device = device;
-+
-+	return data;
-+}
-+
-+static void micp_data_add(struct micp_data *data)
-+{
-+	DBG("data %p", data);
-+
-+	if (queue_find(sessions, NULL, data)) {
-+		error("data %p allready added", data);
-+		return;
-+	}
-+
-+	bt_micp_set_debug(data->micp, micp_debug, NULL, NULL);
-+
-+	if (!sessions)
-+		sessions = queue_new();
-+
-+	queue_push_tail(sessions, data);
-+
-+	if (data->service)
-+		btd_service_set_user_data(data->service, data);
-+}
-+
-+static bool match_data(const void *data, const void *match_data)
-+{
-+	const struct micp_data *mdata = data;
-+	const struct bt_micp *micp = match_data;
-+
-+	return mdata->micp == micp;
-+}
-+
-+static void micp_data_free(struct micp_data *data)
-+{
-+	if (data->service) {
-+		btd_service_set_user_data(data->service, NULL);
-+		bt_micp_set_user_data(data->micp, NULL);
-+	}
-+
-+	bt_micp_ready_unregister(data->micp, data->ready_id);
 +	bt_micp_unref(data->micp);
-+	free(data);
++	bt_gatt_server_unref(data->server);
++	util_iov_free(data->iov, data->iovcnt);
++	gatt_db_unref(data->db);
++
++	queue_destroy(data->ccc_states, free);
++
++	tester_teardown_complete();
 +}
 +
-+static void micp_data_remove(struct micp_data *data)
++static void test_complete_cb(const void *user_data)
 +{
-+	DBG("data %p", data);
-+
-+	if (!queue_remove(sessions, data))
-+		return;
-+
-+	micp_data_free(data);
-+
-+	if (queue_isempty(sessions)) {
-+		queue_destroy(sessions, NULL);
-+		sessions = NULL;
-+	}
++	tester_test_passed();
 +}
 +
-+static void micp_detached(struct bt_micp *micp, void *user_data)
++static bool ccc_state_match(const void *a, const void *b)
 +{
-+	struct micp_data *data;
++	const struct ccc_state *ccc = a;
++	uint16_t handle = PTR_TO_UINT(b);
 +
-+	DBG("%p", micp);
++	return ccc->handle == handle;
++}
 +
-+	data = queue_find(sessions, match_data, micp);
-+	if (!data) {
-+		error("unable to find sessio");
-+		return;
++static struct ccc_state *find_ccc_state(struct test_data *data,
++				uint16_t handle)
++{
++	return queue_find(data->ccc_states, ccc_state_match,
++				UINT_TO_PTR(handle));
++}
++
++static struct ccc_state *get_ccc_state(struct test_data *data, uint16_t handle)
++{
++	struct ccc_state *ccc;
++
++	ccc = find_ccc_state(data, handle);
++	if (ccc)
++		return ccc;
++
++	ccc = new0(struct ccc_state, 1);
++	ccc->handle = handle;
++	queue_push_tail(data->ccc_states, ccc);
++
++	return ccc;
++}
++
++static void gatt_notify_cb(struct gatt_db_attribute *attrib,
++					struct gatt_db_attribute *ccc,
++					const uint8_t *value, size_t len,
++					struct bt_att *att, void *user_data)
++{
++	struct test_data *data = user_data;
++	struct notify notify;
++
++	memset(&notify, 0, sizeof(notify));
++
++	notify.handle = gatt_db_attribute_get_handle(attrib);
++	notify.ccc_handle = gatt_db_attribute_get_handle(ccc);
++	notify.value = (void *) value;
++	notify.len = len;
++
++	printf("%s: notify.value:%d notify->len:%d\n", __func__,
++		(int)*(notify.value), notify.len);
++	if (!bt_gatt_server_send_notification(data->server,
++			notify.handle, notify.value,
++			notify.len, false))
++		printf("%s: Failed to send notification\n", __func__);
++}
++
++static void gatt_ccc_read_cb(struct gatt_db_attribute *attrib,
++					unsigned int id, uint16_t offset,
++					uint8_t opcode, struct bt_att *att,
++					void *user_data)
++{
++	struct test_data *data = user_data;
++	struct ccc_state *ccc;
++	uint16_t handle;
++	uint8_t ecode = 0;
++	const uint8_t *value = NULL;
++	size_t len = 0;
++
++	handle = gatt_db_attribute_get_handle(attrib);
++
++	ccc = get_ccc_state(data, handle);
++	if (!ccc) {
++		ecode = BT_ATT_ERROR_UNLIKELY;
++		goto done;
 +	}
 +
-+	micp_data_remove(data);
++	len = sizeof(ccc->value);
++	value = (void *) &ccc->value;
++
++done:
++	gatt_db_attribute_read_result(attrib, id, ecode, value, len);
++}
++
++static void test_server(const void *user_data)
++{
++	struct test_data *data = (void *)user_data;
++	struct bt_att *att;
++	struct io *io;
++
++	io = tester_setup_io(data->iov, data->iovcnt);
++	g_assert(io);
++
++	tester_io_set_complete_func(test_complete_cb);
++
++	att = bt_att_new(io_get_fd(io), false);
++	g_assert(att);
++
++	bt_att_set_debug(att, BT_ATT_DEBUG, print_debug, "bt_att:", NULL);
++
++	data->db = gatt_db_new();
++	g_assert(data->db);
++
++	gatt_db_ccc_register(data->db, gatt_ccc_read_cb, NULL,
++					gatt_notify_cb, data);
++
++	data->micp = bt_micp_new(data->db, NULL);
++	g_assert(data->micp);
++
++	data->server = bt_gatt_server_new(data->db, att, 64, 0);
++	g_assert(data->server);
++
++	bt_gatt_server_set_debug(data->server, print_debug, "bt_gatt_server:",
++					NULL);
++
++	data->ccc_states = queue_new();
++
++	tester_io_send();
++
++	bt_att_unref(att);
++}
++
++#define EXCHANGE_MTU	IOV_DATA(0x02, 0x40, 0x00), \
++						IOV_DATA(0x03, 0x40, 0x00)
++
++#define	MICS_MUTE_WRITE_VAL_00 \
++			IOV_DATA(0x12, 0x03, 0x00, 0x00), \
++			IOV_DATA(0x13)
++
++#define	MICS_MUTE_WRITE_VAL_01 \
++			IOV_DATA(0x12, 0x03, 0x00, 0x01), \
++			IOV_DATA(0x13)
++
++#define	MICS_MUTE_READ \
++			IOV_DATA(0x0a, 0x03, 0x00), \
++			IOV_DATA(0x0b, 0x01)
++
++#define DISCOVER_PRIM_SERV_NOTIF \
++		IOV_DATA(0x10, 0x01, 0x00, 0xff, 0xff, 0x00, 0x28), \
++		IOV_DATA(0x11, 0x06, 0x01, 0x00, 0x04, 0x00, 0x4d, 0x18), \
++		IOV_DATA(0x10, 0x05, 0x00, 0xff, 0xff, 0x00, 0x28), \
++		IOV_DATA(0x01, 0x10, 0x05, 0x00, 0x0a)
++
++/* ATT: Read By Type Request (0x08) len 6
++ *   Handle range: 0x0001-0x0009
++ *   Attribute type: Characteristic (0x2803)
++ * ATT: Read By Type Response (0x09) len 22
++ * Attribute data length: 7
++ *   Handle: 0x0002
++ *   Value: 1a0300c82b
++ *   Properties: 0x1a
++ *   Value Handle: 0x0003
++ *   Value UUID: Mute (0x2bc3)
++ */
++#define DISC_MICS_CHAR_1 \
++	IOV_DATA(0x08, 0x01, 0x00, 0x05, 0x00, 0x03, 0x28), \
++	IOV_DATA(0x09, 0x07, \
++		0x02, 0x00, 0x1a, 0x03, 0x00, 0xc3, 0x2b), \
++	IOV_DATA(0x08, 0x05, 0x00, 0x05, 0x00, 0x03, 0x28), \
++	IOV_DATA(0x01, 0x08, 0x05, 0x00, 0x0a)
++
++
++#define MICS_FIND_BY_TYPE_VALUE \
++	IOV_DATA(0x06, 0x01, 0x00, 0xff, 0xff, 0x00, 0x28, 0x4d, 0x18), \
++	IOV_DATA(0x07, 0x01, 0x00, 0x04, 0x00), \
++	IOV_DATA(0x06, 0x05, 0x00, 0xff, 0xff, 0x00, 0x28, 0x4d, 0x18), \
++	IOV_DATA(0x01, 0x06, 0x05, 0x00, 0x0a)
++
++#define DISC_MICS_CHAR_AFTER_TYPE \
++	IOV_DATA(0x08, 0x01, 0x00, 0x05, 0x00, 0x03, 0x28), \
++	IOV_DATA(0x09, 0x07, \
++		0x02, 0x00, 0x1a, 0x03, 0x00, 0xc3, 0x2b), \
++	IOV_DATA(0x08, 0x03, 0x00, 0x05, 0x00, 0x03, 0x28), \
++	IOV_DATA(0x01, 0x08, 0x03, 0x00, 0x0a)
++
++#define MICS_WRITE_CCD \
++	IOV_DATA(0x12, 0x04, 0x00, 0x00, 0x00), \
++	IOV_DATA(0x13), \
++	IOV_DATA(0x12, 0x04, 0x00, 0x01, 0x00), \
++	IOV_DATA(0x13)
++
++#define MICS_FIND_INFO \
++	IOV_DATA(0x04, 0x04, 0x00, 0x05, 0x00), \
++	IOV_DATA(0x05, 0x01, 0x04, 0x00, 0x02, 0x29), \
++	IOV_DATA(0x04, 0x05, 0x00, 0x05, 0x00), \
++	IOV_DATA(0x01, 0x04, 0x05, 0x00, 0x0a)
++
++#define MICS_SR_SPN_BV_01_C \
++			EXCHANGE_MTU, \
++			DISCOVER_PRIM_SERV_NOTIF, \
++			DISC_MICS_CHAR_1, \
++			MICS_FIND_BY_TYPE_VALUE, \
++			DISC_MICS_CHAR_AFTER_TYPE, \
++			MICS_FIND_INFO, \
++			MICS_WRITE_CCD, \
++			IOV_DATA(0x0a, 0x03, 0x00), \
++			IOV_DATA(0x0b, 0x01), \
++			MICS_MUTE_WRITE_VAL_00, \
++			IOV_DATA(0x1b, 0x03, 0x00, 0x00), \
++			MICS_MUTE_WRITE_VAL_01, \
++			IOV_DATA(0x1b, 0x03, 0x00, 0x01), \
++			IOV_DATA(0x0a, 0x03, 0x00), \
++			IOV_DATA(0x0b, 0x01)
++
++#define MICS_SR_SGGIT_SER_BV_01_C \
++						EXCHANGE_MTU, \
++						DISCOVER_PRIM_SERV_NOTIF, \
++						MICS_FIND_BY_TYPE_VALUE
++
++#define MICS_SR_SGGIT_CHA_BV_01_C \
++						EXCHANGE_MTU, \
++						DISCOVER_PRIM_SERV_NOTIF, \
++						MICS_FIND_BY_TYPE_VALUE, \
++						DISC_MICS_CHAR_AFTER_TYPE
++
++#define MICS_WRITE_MUTE_CHAR_INVALID \
++			IOV_DATA(0x12, 0x03, 0x00, 0x02), \
++			IOV_DATA(0x01, 0x12, 0x03, 0x00, 0x13), \
++			IOV_DATA(0x12, 0x03, 0x00, 0x05), \
++			IOV_DATA(0x01, 0x12, 0x03, 0x00, 0x13)
++
++#define MICS_SR_SPE_BI_1_C	\
++						EXCHANGE_MTU, \
++						DISCOVER_PRIM_SERV_NOTIF, \
++						MICS_FIND_BY_TYPE_VALUE, \
++						MICS_WRITE_MUTE_CHAR_INVALID
++
++#define	MICS_MUTE_READ_INVALID \
++			IOV_DATA(0x0a, 0x03, 0x00), \
++			IOV_DATA(0x0b, 0x02)
++
++#define	MICS_MUTE_WRITE_1 \
++			IOV_DATA(0x12, 0x03, 0x00, 0x01), \
++			IOV_DATA(0x01, 0x12, 0x03, 0x00, 0x80)
++
++#define	MICS_MUTE_WRITE_0 \
++			IOV_DATA(0x12, 0x03, 0x00, 0x00), \
++			IOV_DATA(0x01, 0x12, 0x03, 0x00, 0x80)
++
++#define MICS_SR_SPE_BI_02_C	\
++						EXCHANGE_MTU, \
++						DISCOVER_PRIM_SERV_NOTIF, \
++						MICS_FIND_BY_TYPE_VALUE, \
++						MICS_MUTE_READ_INVALID, \
++						MICS_MUTE_WRITE_0, \
++						MICS_MUTE_WRITE_1
++
++int main(int argc, char *argv[])
++{
++
++	tester_init(&argc, &argv);
++
++	define_test("MICS/SR/SGGIT/SER/BV-01-C", test_server, NULL,
++					MICS_SR_SGGIT_SER_BV_01_C);
++	define_test("MICS/SR/SGGIT/CHA/BV-01-C", test_server, NULL,
++					MICS_SR_SGGIT_CHA_BV_01_C);
++	define_test("MICS/SR/SPE/BI-01-C", test_server, NULL,
++					MICS_SR_SPE_BI_1_C);
++	define_test("MICS/SR/SPE/BI-02-C", test_server, NULL,
++					MICS_SR_SPE_BI_02_C);
++	define_test("MICS/SR/SPN/BV-01-C", test_server, NULL,
++					MICS_SR_SPN_BV_01_C);
++
++	return tester_run();
++}
+diff --git a/unit/test-mics.c b/unit/test-mics.c
+new file mode 100644
+index 000000000..7a7d70bf3
+--- /dev/null
++++ b/unit/test-mics.c
+@@ -0,0 +1,317 @@
++// SPDX-License-Identifier: LGPL-2.1-or-later
++/*
++ *
++ *  BlueZ - Bluetooth protocol stack for Linux
++ *
++ *  Copyright (C) 2023  NXP Semiconductors. All rights reserved.
++ *
++ */
++
++#ifdef HAVE_CONFIG_H
++#include <config.h>
++#endif
++
++#define _GNU_SOURCE
++#include <unistd.h>
++#include <string.h>
++#include <sys/socket.h>
++#include <fcntl.h>
++
++
++#include <glib.h>
++
++#include "lib/bluetooth.h"
++#include "lib/uuid.h"
++#include "btio/btio.h"
++#include "src/shared/util.h"
++#include "src/shared/tester.h"
++#include "src/shared/queue.h"
++#include "src/shared/att.h"
++#include "src/shared/gatt-db.h"
++#include "src/shared/gatt-helpers.h"
++#include "src/shared/micp.h"
++
++struct test_data {
++	struct gatt_db *db;
++	struct bt_mics *mics;
++	struct bt_micp *micp;
++	struct bt_gatt_client *client;
++	size_t iovcnt;
++	struct iovec *iov;
++	struct test_config *cfg;
++};
++
++struct db_attribute_micp_test_data {
++	struct gatt_db_attribute *match;
++	bool found;
++};
++
++#define MICP_GATT_CLIENT_MTU	64
++#define iov_data(args...) ((const struct iovec[]) { args })
++
++#define define_test(name, function, _cfg, args...)		\
++	do {							\
++		const struct iovec iov[] = { args };		\
++		static struct test_data data;			\
++		data.cfg = _cfg;				\
++		data.iovcnt = ARRAY_SIZE(iov_data(args));	\
++		data.iov = util_iov_dup(iov, ARRAY_SIZE(iov_data(args))); \
++		tester_add(name, &data, test_setup, function,	\
++				test_teardown);			\
++	} while (0)
++
++static void print_debug(const char *str, void *user_data)
++{
++	const char *prefix = user_data;
++
++	if (tester_use_debug())
++		tester_debug("%s %s", prefix, str);
++}
++
++static void test_teardown(const void *user_data)
++{
++	struct test_data *data = (void *)user_data;
++
++	bt_gatt_client_unref(data->client);
++	util_iov_free(data->iov, data->iovcnt);
++	gatt_db_unref(data->db);
++
++	tester_teardown_complete();
++}
++
++static void test_complete_cb(const void *user_data)
++{
++	tester_test_passed();
++}
++
++static void client_ready_cb(bool success, uint8_t att_ecode, void *user_data)
++{
++
++	if (!success)
++		tester_setup_failed();
++	else
++		tester_setup_complete();
++}
++
++static void micp_write_cb(bool success, uint8_t att_ecode, void *user_data)
++{
++	if (success)
++		printf("MICP Write successful\n");
++	else
++		printf("\nWrite failed: 0x%02x\n", att_ecode);
++}
++
++static void micp_write_value(struct bt_micp *micp, void *user_data)
++{
++	struct bt_mics *mics = micp_get_mics(micp);
++	uint16_t	value_handle;
++	int ret;
++	const uint16_t value = 0x0001;
++
++	gatt_db_attribute_get_char_data(mics->ms, NULL, &value_handle,
++							NULL, NULL, NULL);
++
++	printf("%s handle: %x\n", __func__, value_handle);
++	ret = bt_gatt_client_write_value(micp->client, value_handle,
++		(void *)&value, sizeof(value), micp_write_cb, NULL, NULL);
++
++	if (!ret)
++		printf("bt_gatt_client_write_value() : Write FAILED");
 +}
 +
 +static void micp_ready(struct bt_micp *micp, void *user_data)
 +{
-+	DBG("micp %p\n", micp);
++	micp_write_value(micp, user_data);
 +}
 +
-+static void micp_attached(struct bt_micp *micp, void *user_data)
++static void test_client(const void *user_data)
 +{
-+	struct micp_data *data;
-+	struct bt_att *att;
-+	struct btd_device *device;
++	struct test_data *data = (void *)user_data;
++	struct io *io;
 +
-+	DBG("%p", micp);
++	io = tester_setup_io(data->iov, data->iovcnt);
++	g_assert(io);
 +
-+	data = queue_find(sessions, match_data, micp);
-+	if (data)
-+		return;
++	tester_io_set_complete_func(test_complete_cb);
 +
-+	att = bt_micp_get_att(micp);
-+	if (!att)
-+		return;
++	data->db = gatt_db_new();
++	g_assert(data->db);
 +
-+	device = btd_adapter_find_device_by_fd(bt_att_get_fd(att));
-+	if (!device) {
-+		error("unable to find device");
-+		return;
-+	}
++	data->micp = bt_micp_new(data->db, bt_gatt_client_get_db(data->client));
++	g_assert(data->micp);
 +
-+	data = micp_data_new(device);
-+	g_assert(data);
-+	data->micp = micp;
++	bt_micp_set_debug(data->micp, print_debug, "bt_mip: ", NULL);
 +
-+	micp_data_add(data);
++	bt_micp_ready_register(data->micp, micp_ready, data, NULL);
++
++	bt_micp_attach(data->micp, data->client);
 +}
 +
-+static int micp_probe(struct btd_service *service)
-+{
-+	struct btd_device *device = btd_service_get_device(service);
-+	struct btd_adapter *adapter = device_get_adapter(device);
-+	struct btd_gatt_database *database = btd_adapter_get_database(adapter);
-+	struct micp_data *data = btd_service_get_user_data(service);
-+	char addr[18];
++	/* ATT: Exchange MTU Response (0x03) len 2
++	 *   Server RX MTU: 64
++	 */
++	/* ATT: Exchange MTU Request (0x02) len 2
++	 *    Client RX MTU: 64
++	 */
++#define ATT_EXCHANGE_MTU	IOV_DATA(0x02, 0x40, 0x00), \
++			IOV_DATA(0x03, 0x40, 0x00)
 +
-+	ba2str(device_get_address(device), addr);
-+	DBG("%s", addr);
++/*
++ *      ATT: Read By Type Request (0x08) len 6
++ *        Handle range: 0x0001-0xffff
++ *        Attribute type: Server Supported Features (0x2b3a)
++ */
++#define MICP_READ_SR_FEATURE	IOV_DATA(0x08, 0x01, 0x00, 0Xff, 0xff, \
++			0x3a, 0x2b), \
++			IOV_DATA(0x01, 0x08, 0x01, 0x00, 0x0a)
 +
-+	/*Ignore, if we probed for this device allready */
-+	if (data) {
-+		error("Profile probed twice for this device");
-+		return -EINVAL;
-+	}
++	/*
++	 * ATT: Read By Group Type Request (0x10) len 6
++	 *   Handle range: 0x0001-0xffff
++	 *   Attribute group type: Primary Service (0x2800)
++	 */
 +
-+	data = micp_data_new(device);
-+	data->service = service;
++/*
++ *     ATT: Read By Group Type Response (0x11) len 7
++ *        Attribute data length: 6
++ *        Attribute group list: 1 entry
++ *        Handle range: 0x00a0-0x00a4
++ *        UUID: Microphone Control (0x184d)
++ */
++#define MICP_READ_GROUP_TYPE	\
++			IOV_DATA(0x10, 0x01, 0x00, 0xff, 0xff, 0x00, 0x28), \
++			IOV_DATA(0x11, 0x06, \
++				0x01, 0x00, 0x04, 0x00, 0x4d, 0x18), \
++			IOV_DATA(0x10, 0x05, 0x00, 0xff, 0xff, 0x00, 0x28), \
++			IOV_DATA(0x01, 0x10, 0x06, 0x00, 0x0a)
 +
-+	data->micp = bt_micp_new(btd_gatt_database_get_db(database),
-+					btd_device_get_gatt_db(device));
++	/* ATT: Read By Group Type Request (0x10) len 6
++	 *   Handle range: 0x0001-0xffff
++	 *   Attribute group type: Secondary Service (0x2801)
++	 */
++	/* ATT: Error Response (0x01) len 4
++	 *   Read By Group Type Request (0x10)
++	 *   Handle: 0x0001
++	 *   Error: Attribute Not Found (0x0a)08 01 00 05 00 02 28
++	 */
++#define MICP_READ_REQ_SECOND_SERVICE	\
++			IOV_DATA(0x10, 0x01, 0x00, 0xff, 0xff, 0x01, 0x28), \
++			IOV_DATA(0x01, 0x10, 0x01, 0x00, 0x0a)
 +
-+	if (!data->micp) {
-+		error("unable to create MICP instance");
-+		free(data);
-+		return -EINVAL;
-+	}
++#define MICP_READ_REQ_INCLUDE_SERVICE	\
++			IOV_DATA(0x08, 0x01, 0x00, 0x04, 0x00, 0x02, 0x28), \
++			IOV_DATA(0x01, 0x08, 0x01, 0x00, 0x0a)
 +
-+	micp_data_add(data);
++	/* ATT: Read By Type Request (0x08) len 6
++	 *   Handle range: 0x0001-0x0004
++	 *   Attribute type: Characteristic (0x2803)
++	 */
 +
-+	data->ready_id = bt_micp_ready_register(data->micp, micp_ready, service,
-+								NULL);
++/*      ATT: Find Information Request (0x04) len 4
++ *        Handle range: 0x0004-0x0004
++ */
++#define	MICP_FIND_INFO_REQ	\
++			IOV_DATA(0x04, 0x04, 0x00, 0x04, 0x00), \
++			IOV_DATA(0x05, 0x01, 0x04, 0x00, 0x02, 0x29)
 +
-+	bt_micp_set_user_data(data->micp, service);
++/*
++ *      ATT: Read By Type Request (0x08) len 6
++ *        Handle range: 0x0001-0x0004
++ *        Attribute type: Characteristic (0x2803)
++ */
++#define	MICP_READ_REQ_CHAR	\
++			IOV_DATA(0x08, 0x01, 0x00, 0x04, 0x00, 0x03, 0x28),\
++			IOV_DATA(0x09, 0x07, \
++			0x02, 0x00, 0x1a, 0x03, 0x00, 0xc3, 0x2b), \
++			IOV_DATA(0x08, 0x03, 0x00, 0x04, 0x00, 0x03, 0x28), \
++			IOV_DATA(0x01, 0x08, 0x04, 0x00, 0x0a)
 +
-+	return 0;
-+}
++#define	MICS_MUTE_READ \
++			IOV_DATA(0x0a, 0x03, 0x00), \
++			IOV_DATA(0x0b, 0x01)
 +
-+static void micp_remove(struct btd_service *service)
-+{
-+	struct btd_device *device = btd_service_get_device(service);
-+	struct micp_data *data;
-+	char addr[18];
++#define	MICS_EN_MUTE_DISCPTR	\
++			IOV_DATA(0x12, 0x04, 0x00, 0x01, 0x00), \
++			IOV_DATA(0x13)
 +
-+	ba2str(device_get_address(device), addr);
-+	DBG("%s", addr);
++#define	MICS_MUTE_WRITE	\
++			IOV_DATA(0x12, 0x03, 0x00, 0x01),\
++			IOV_DATA(0x13)
 +
-+	data = btd_service_get_user_data(service);
-+	if (!data) {
-+		error("MICP Service not handled by profile");
-+		return;
-+	}
++#define MICP_CL_CGGIT_SER_BV_01_C \
++			MICS_MUTE_READ, \
++			MICS_EN_MUTE_DISCPTR, \
++			IOV_DATA(0x12, 0x03, 0x00, 0x01, 0x00), \
++			IOV_DATA(0x01, 0x12, 0x03, 0x00, 0x013)
 +
-+	micp_data_remove(data);
-+}
++#define	MICP_CL_CGGIT_CHA_BV_01_C	\
++			MICS_MUTE_READ, \
++			MICS_EN_MUTE_DISCPTR, \
++			IOV_DATA(0x12, 0x03, 0x00, 0x06, 0x00), \
++			IOV_DATA(0x01, 0x12, 0x03, 0x00, 0x013), \
++			MICS_MUTE_READ
 +
-+static int micp_accept(struct btd_service *service)
-+{
-+	struct btd_device *device = btd_service_get_device(service);
-+	struct bt_gatt_client *client = btd_device_get_gatt_client(device);
-+	struct micp_data *data = btd_service_get_user_data(service);
-+	char addr[18];
++#define MICP_CL_SPE_BI_01_C	\
++			MICS_MUTE_READ, \
++			MICS_EN_MUTE_DISCPTR, \
++			IOV_DATA(0x12, 0x03, 0x00, 0x01, 0x00), \
++			IOV_DATA(0x01, 0x12, 0x03, 0x00, 0x80)
 +
-+	ba2str(device_get_address(device), addr);
-+	DBG("%s", addr);
-+
-+	if (!data) {
-+		error("MICP Service not handled by profile");
-+		return -EINVAL;
-+	}
-+
-+	if (!bt_micp_attach(data->micp, client)) {
-+		error("MICP unable to attach");
-+		return -EINVAL;
-+	}
-+
-+	btd_service_connecting_complete(service, 0);
-+
-+	return 0;
-+}
-+
-+static int micp_connect(struct btd_service *service)
-+{
-+	struct btd_device *device = btd_service_get_device(service);
-+	char addr[18];
-+
-+	ba2str(device_get_address(device), addr);
-+	DBG("%s", addr);
-+
-+	return 0;
-+}
-+
-+static int micp_server_probe(struct btd_profile *p,
-+				struct btd_adapter *adapter)
-+{
-+	struct btd_gatt_database *database = btd_adapter_get_database(adapter);
-+
-+	DBG("MICP path %s", adapter_get_path(adapter));
-+
-+	bt_micp_add_db(btd_gatt_database_get_db(database));
-+
-+	return 0;
-+}
-+
-+static void micp_server_remove(struct btd_profile *p,
-+					struct btd_adapter *adapter)
-+{
-+	DBG("MICP remove adapter");
-+}
-+
-+static struct btd_profile micp_profile = {
-+	.name		= "micp",
-+	.priority	= BTD_PROFILE_PRIORITY_MEDIUM,
-+	.remote_uuid	= MICS_UUID_STR,
-+
-+	.device_probe	= micp_probe,
-+	.device_remove	= micp_remove,
-+
-+	.accept	= micp_accept,
-+	.connect	= micp_connect,
-+	.disconnect	= micp_disconnect,
-+
-+	.adapter_probe	= micp_server_probe,
-+	.adapter_remove = micp_server_remove,
++/* GATT Discover All procedure */
++static const struct iovec setup_data[] = {
++				ATT_EXCHANGE_MTU,
++				MICP_READ_SR_FEATURE,
++				MICP_READ_GROUP_TYPE,
++				MICP_READ_REQ_SECOND_SERVICE,
++				MICP_READ_REQ_INCLUDE_SERVICE,
++				MICP_READ_REQ_CHAR,
++				MICP_FIND_INFO_REQ
 +};
 +
-+static unsigned int micp_id;
-+
-+static int micp_init(void)
++static void test_setup(const void *user_data)
 +{
-+	if (!(g_dbus_get_flags() & G_DBUS_FLAG_ENABLE_EXPERIMENTAL)) {
-+		warn("D-Bus experimental not enabled");
-+		return -ENOTSUP;
-+	}
++	struct test_data *data = (void *)user_data;
++	struct bt_att *att;
++	struct gatt_db *db;
++	struct io *io;
 +
-+	btd_profile_register(&micp_profile);
-+	micp_id = bt_micp_register(micp_attached, micp_detached, NULL);
++	io = tester_setup_io(setup_data, ARRAY_SIZE(setup_data));
++	g_assert(io);
 +
-+	return 0;
++	att = bt_att_new(io_get_fd(io), false);
++	g_assert(att);
++
++	bt_att_set_debug(att, BT_ATT_DEBUG, print_debug, "bt_att:", NULL);
++
++	db = gatt_db_new();
++	g_assert(db);
++
++
++	data->client = bt_gatt_client_new(db, att, MICP_GATT_CLIENT_MTU, 0);
++	g_assert(data->client);
++
++	bt_gatt_client_set_debug(data->client, print_debug, "bt_gatt_client:",
++						NULL);
++
++	bt_gatt_client_ready_register(data->client, client_ready_cb, data,
++						NULL);
++
++	bt_att_unref(att);
++	gatt_db_unref(db);
 +}
 +
-+static void micp_exit(void)
-+{
-+	if (g_dbus_get_flags() & G_DBUS_FLAG_ENABLE_EXPERIMENTAL) {
-+		btd_profile_unregister(&micp_profile);
-+		bt_micp_unregister(micp_id);
-+	}
-+}
 +
-+BLUETOOTH_PLUGIN_DEFINE(micp, VERSION, BLUETOOTH_PLUGIN_PRIORITY_DEFAULT,
-+							micp_init, micp_exit)
++int main(int argc, char *argv[])
++{
++
++	tester_init(&argc, &argv);
++
++	define_test("MICP/CL/CGGIT/SER/BV-01-C", test_client, NULL,
++					MICS_MUTE_READ);
++	define_test("MICP/CL/CGGIT/CHA/BV-01-C", test_client, NULL,
++					MICP_CL_CGGIT_SER_BV_01_C);
++	define_test("MICP/CL/SPE/BI-01-C", test_client, NULL,
++					MICP_CL_SPE_BI_01_C);
++
++	return tester_run();
++}
 -- 
 2.34.1
 
