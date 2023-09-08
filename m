@@ -2,50 +2,48 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 394CE798DEC
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Sep 2023 20:25:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 75BFE799144
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Sep 2023 22:50:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344510AbjIHSZd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 8 Sep 2023 14:25:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36862 "EHLO
+        id S242212AbjIHUuc (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 8 Sep 2023 16:50:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343783AbjIHSZN (ORCPT
+        with ESMTP id S235767AbjIHUub (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 8 Sep 2023 14:25:13 -0400
+        Fri, 8 Sep 2023 16:50:31 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9FA44EC0;
-        Fri,  8 Sep 2023 11:22:14 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3C22C116C9;
-        Fri,  8 Sep 2023 18:21:47 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ECCDB2;
+        Fri,  8 Sep 2023 13:50:25 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 06D34C433C9;
+        Fri,  8 Sep 2023 20:50:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1694197309;
-        bh=HfKLUL4bRp3fqvz2hE+klKZJi377c5jOcKoup7hpwZ8=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=izcXLyg++WZs8/zYEzXzGfJJaRomGk8SuxAqnfn1USE/1rTUgwV/L5LDH/EMtrArs
-         sLpZRm/diWKJuDOsA29csFSPvhJ5APVsQGdcluqfUpbNx3JU5V1gdkoi5SFdJwhyGX
-         pqYtICoRBDnRAGbAIcwC85rX0ZjSAktmwf9AS9mXeyNhSmPkQHKZaAbK5mHmzcp4do
-         GqkaOdRv37FVcYRVcTBlu/fzvlghTYeuOM4F41zz+koue5MRic5w8rhxJZBtMWV7v8
-         GQX7NzrMFhZZXLRK3BX19bhMxdiYeNCjVWsH5XRLSb6IW0/X4+VZutlahjSwXXoPYH
-         U+ToAlvW0HuGA==
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Bastien Nocera <hadess@hadess.net>,
-        Paul Menzel <pmenzel@molgen.mpg.de>,
-        Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-        Sasha Levin <sashal@kernel.org>, marcel@holtmann.org,
-        johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.14 8/8] Bluetooth: btusb: Fix quirks table naming
-Date:   Fri,  8 Sep 2023 14:21:27 -0400
-Message-Id: <20230908182127.3461199-8-sashal@kernel.org>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230908182127.3461199-1-sashal@kernel.org>
-References: <20230908182127.3461199-1-sashal@kernel.org>
+        s=k20201202; t=1694206225;
+        bh=1oC3unuPY4W2Ce2yVgXMfOxQiB4DCDJ2bQBhfLNXz4M=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=hHxceuVbk/xIXsBVcXUE1q6lEUGsnk7d9ubmsHG2nBGhWNogevJVeiOC2lFSitXzj
+         iswWz/a4xVWsYwCYVC0fk8oCwIUMq8u3G9TyW5fiHLaMDG6HkOZwrdT/goow7FwKch
+         f9orgtYOEAIWkkeKxUIxg1U/756BY6gEroh4pdKHcGSYFCnP5AOvDiJubRx33xq0TZ
+         W1/FShTOEQiT7Ffw0XdDbnIB6adLOVwAtxCMCXSFHzYtgdKxPbuNyKJ28J6gdwxh9W
+         IjkPri5MWdcO1OeJwR8/NcDWa6lMmqkEQt80GvExNYZWrX4xj1FYSc/EXSvbCsVdZT
+         fpFDdrxrRmA9Q==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id E5EFDF1D6AA;
+        Fri,  8 Sep 2023 20:50:24 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 4.14.325
 Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v2] Bluetooth: Avoid redundant authentication
+From:   patchwork-bot+bluetooth@kernel.org
+Message-Id: <169420622493.6163.1195791709998663185.git-patchwork-notify@kernel.org>
+Date:   Fri, 08 Sep 2023 20:50:24 +0000
+References: <20230907043933.v2.1.I0cd65c6ecb991a13b224614c32c1946f9eecea3d@changeid>
+In-Reply-To: <20230907043933.v2.1.I0cd65c6ecb991a13b224614c32c1946f9eecea3d@changeid>
+To:     Ying Hsu <yinghsu@chromium.org>
+Cc:     linux-bluetooth@vger.kernel.org, marcel@holtmann.org,
+        chromeos-bluetooth-upstreaming@chromium.org,
+        johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+        linux-kernel@vger.kernel.org
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -55,46 +53,34 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Bastien Nocera <hadess@hadess.net>
+Hello:
 
-[ Upstream commit d831e3612111d385e8629104af5429808ef26e25 ]
+This patch was applied to bluetooth/bluetooth-next.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-The quirks table was named "blacklist_table" which isn't a good
-description for that table as devices detected using it weren't ignored
-by the driver.
+On Thu,  7 Sep 2023 04:39:34 +0000 you wrote:
+> While executing the Android 13 CTS Verifier Secure Server test on a
+> ChromeOS device, it was observed that the Bluetooth host initiates
+> authentication for an RFCOMM connection after SSP completes.
+> When this happens, some Intel Bluetooth controllers, like AC9560, would
+> disconnect with "Connection Rejected due to Security Reasons (0x0e)".
+> 
+> Historically, BlueZ did not mandate this authentication while an
+> authenticated combination key was already in use for the connection.
+> This behavior was changed since commit 7b5a9241b780
+> ("Bluetooth: Introduce requirements for security level 4").
+> So, this patch addresses the aforementioned disconnection issue by
+> restoring the previous behavior.
+> 
+> [...]
 
-Rename the table to match what it actually does.
+Here is the summary with links:
+  - [v2] Bluetooth: Avoid redundant authentication
+    https://git.kernel.org/bluetooth/bluetooth-next/c/4c8a783f3882
 
-Signed-off-by: Bastien Nocera <hadess@hadess.net>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/bluetooth/btusb.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 27d26ef70dcc1..4904c00fbebe2 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -186,7 +186,7 @@ static const struct usb_device_id btusb_table[] = {
- 
- MODULE_DEVICE_TABLE(usb, btusb_table);
- 
--static const struct usb_device_id blacklist_table[] = {
-+static const struct usb_device_id quirks_table[] = {
- 	/* CSR BlueCore devices */
- 	{ USB_DEVICE(0x0a12, 0x0001), .driver_info = BTUSB_CSR },
- 
-@@ -2963,7 +2963,7 @@ static int btusb_probe(struct usb_interface *intf,
- 	if (!id->driver_info) {
- 		const struct usb_device_id *match;
- 
--		match = usb_match_id(intf, blacklist_table);
-+		match = usb_match_id(intf, quirks_table);
- 		if (match)
- 			id = match;
- 	}
+You are awesome, thank you!
 -- 
-2.40.1
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
