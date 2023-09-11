@@ -2,66 +2,111 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A30D79A4A9
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Sep 2023 09:40:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8032179A4F2
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Sep 2023 09:48:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231837AbjIKHk4 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 11 Sep 2023 03:40:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33024 "EHLO
+        id S232965AbjIKHss (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 11 Sep 2023 03:48:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229678AbjIKHkz (ORCPT
+        with ESMTP id S233487AbjIKHsr (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 11 Sep 2023 03:40:55 -0400
-Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68877118
-        for <linux-bluetooth@vger.kernel.org>; Mon, 11 Sep 2023 00:40:51 -0700 (PDT)
-Received: by mail-qv1-xf2f.google.com with SMTP id 6a1803df08f44-6516a8e2167so26528576d6.2
-        for <linux-bluetooth@vger.kernel.org>; Mon, 11 Sep 2023 00:40:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1694418050; x=1695022850; darn=vger.kernel.org;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=q+Ye259iqLmMdMJw5P+IigcuTzJqJbzTEENJq5v3Ub8=;
-        b=DJgA8zIJ0f2gdjdj3fE8psqoh7OLgf7Y4dk7UTylLxsQsEfzwXHxRw7NUZP2GOz8IZ
-         +/dhyyAIsCfo7Rwv9eH4wKId4ROPRW3iUYpiW2v2x7bI1joXVTjY1gmDacbCS34JzHYq
-         5RPJveDeT69JooMMTi6kFNB4ZV/UHL6UV5B8YJ/nR3+bx/MvgRQfiNvzyTFJ+ObavM3n
-         Pc1v1gXBuFV2ZBD55g7arzioyOmxdA+8a8WtkkRSaMAW4T+c9l7Yxg5j59M2UGgTAXHc
-         zvfJkxYFHfMbmwhAgnCD505fi0upeNnbpVSKYsRWxQIhXlva+zZH2jIsqXM8fS5A6pHF
-         kwvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694418050; x=1695022850;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=q+Ye259iqLmMdMJw5P+IigcuTzJqJbzTEENJq5v3Ub8=;
-        b=QDr4AqSGGH71qq/exlPwCIAvkC+rSF18u68TJsMlv7bJ5JIOHyUCvF/wgM3RkXV3bV
-         fQmamrrh73zUSWMc7hc3oMwAu3bhOkiE8D1oJqcBomL+eJISENeYznbGpaHcNehtKu5D
-         n6bDWnvFD7H/gbO85CIrJ53gS660GXYl1oYuD+xnEIcqsrnXpehpVoPyqVgzcI7mv5mM
-         eBiXFyzXfr7yF0/Lq7iEEAUnhbwlWRuceowVr31gtE2gjRwr6e3jidS61yMwuRwDfmpZ
-         dalS6Qwyx1x+LnJGSGiHznBm4zurWpYZqdw3BEUmspHlkJaI7S45oHHYmtY8reHMalTw
-         kaRg==
-X-Gm-Message-State: AOJu0YziQrkfKCkU8vfEmZ3pz3k1wi/sRYzYaTQ8nGDSUEIW0ZN1iW1F
-        p0oSQ46Y8685PlsE9F7XXEj/CviLbqA=
-X-Google-Smtp-Source: AGHT+IGe5y+fc7DFXhzMs5loFyEjaxGkgXwmnXmdKIvwGU0J9jeKik+auttpwiKF8f0OxFkX3vRNzg==
-X-Received: by 2002:a0c:e381:0:b0:64f:5ad7:f57b with SMTP id a1-20020a0ce381000000b0064f5ad7f57bmr7299704qvl.6.1694418050124;
-        Mon, 11 Sep 2023 00:40:50 -0700 (PDT)
-Received: from [172.17.0.2] ([20.185.158.56])
-        by smtp.gmail.com with ESMTPSA id c18-20020a0cca12000000b0064723b94a23sm2722348qvk.27.2023.09.11.00.40.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Sep 2023 00:40:49 -0700 (PDT)
-Message-ID: <64fec481.0c0a0220.fc9e2.9de5@mx.google.com>
-Date:   Mon, 11 Sep 2023 00:40:49 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============2076085610835003962=="
+        Mon, 11 Sep 2023 03:48:47 -0400
+Received: from EUR03-AM7-obe.outbound.protection.outlook.com (mail-am7eur03on2078.outbound.protection.outlook.com [40.107.105.78])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ABD5FCDE
+        for <linux-bluetooth@vger.kernel.org>; Mon, 11 Sep 2023 00:48:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=TEXSUwFTSaAucTjbSC21mn7/UQx/+lNlCYhd2LInr2kISqVGtkvBzpgxq0J2N98j/3kj/YJAkX80nnL5ne46utjUb317gQcFydJjX35VQ9k2bajpmuviSSbthcHurnchgs4T5D9bo+8qWqL3t+uX0rGWAHToxLAXsFdSxUoJrMN61S53MMwWxDdgCxpQMjaoRVGbphB7yvjgYzhH3j0iBYFnpdms+IEth7rf4LuD/6sMU9ok7qlgoHR4pBOLj/R95hkTTq4B/5UF8flXdMAJBFt21M+Hk0vlRvLn1Vt7+D+PwOH4ujxXGJ8f55v8e092SQLyCX9xAmTS0cCzDZ7q+g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=SSkn2rrYwnkh0/3Y67mLSm/7ZOqQ9+m6g1iP3KwbJjc=;
+ b=IlyNPo1keZt1rWFk5c8nllQw4mmgNc3vHdfP8NxBCUF61MhJGA5jRwqxTB8DwVooTnEmh9561Sv1qvFof9hSxe7fAimoHJL18vj0C7n0ckyhuWKQ4FqlcWyMhiNsVTLbnCuRGSLvo9C6C/uqeYkUcoFCmCbxXeifXSRdWRoMYMXPEdUcpDHzqu3tbIP7KdjnjE9q2rtAOf4WFrGBQdjCt41+rijrJmgUSMGJVF7UHK6zPWXVPsOLuZKWSDfqeAT0hkFVM2dtU/Z4TpGLSqHcjLyhS6WTV16Ptb1HDLJW21dej8/uiipFqyvgGu8eDYIDmv/Z7xmRKTzq1Jmv566fjA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SSkn2rrYwnkh0/3Y67mLSm/7ZOqQ9+m6g1iP3KwbJjc=;
+ b=pyeqbpV09xUp4Vkh0Q3r2iKoERWjELrW/1A6s+i5ee+D9muv12kOeXl9I90B24rwNYM4OoqbhkCdjc6+CJYmhda8od0kRhE1KHZw0OeWot78foq7sORAWvHvAjjiQFPkegqLImpRADiyQ+SvU+4fgXYVB77Cl5j/gbxWE91O1vU=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from VI1PR04MB5344.eurprd04.prod.outlook.com (2603:10a6:803:4b::31)
+ by PA4PR04MB7839.eurprd04.prod.outlook.com (2603:10a6:102:c9::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6768.34; Mon, 11 Sep
+ 2023 07:47:28 +0000
+Received: from VI1PR04MB5344.eurprd04.prod.outlook.com
+ ([fe80::7318:7662:8c18:ead5]) by VI1PR04MB5344.eurprd04.prod.outlook.com
+ ([fe80::7318:7662:8c18:ead5%7]) with mapi id 15.20.6768.029; Mon, 11 Sep 2023
+ 07:47:28 +0000
+From:   Silviu Florian Barbulescu <silviu.barbulescu@nxp.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     claudia.rosu@nxp.com, mihai-octavian.urzica@nxp.com,
+        silviu.barbulescu@nxp.com, vlad.pruteanu@nxp.com,
+        andrei.istodorescu@nxp.com, iulia.tanasescu@nxp.com,
+        luiz.dentz@gmail.com
+Subject: [PATCH 0/2] Update transport acquire/release flow for BAP bcast source
+Date:   Mon, 11 Sep 2023 10:47:09 +0300
+Message-Id: <20230911074711.62493-1-silviu.barbulescu@nxp.com>
+X-Mailer: git-send-email 2.34.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: AM9P193CA0018.EURP193.PROD.OUTLOOK.COM
+ (2603:10a6:20b:21e::23) To VI1PR04MB5344.eurprd04.prod.outlook.com
+ (2603:10a6:803:4b::31)
 MIME-Version: 1.0
-From:   bluez.test.bot@gmail.com
-To:     linux-bluetooth@vger.kernel.org, vlad.pruteanu@nxp.com
-Subject: RE: bap: Use defer setup when syncing to a BIS source
-In-Reply-To: <20230911061624.30600-2-vlad.pruteanu@nxp.com>
-References: <20230911061624.30600-2-vlad.pruteanu@nxp.com>
-Reply-To: linux-bluetooth@vger.kernel.org
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI1PR04MB5344:EE_|PA4PR04MB7839:EE_
+X-MS-Office365-Filtering-Correlation-Id: bf978d1b-b2c3-443b-1130-08dbb29b5883
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: x9st/bix/pcnOcgaiDEXD/x8HKGoMpujuxAhevBtNojldINVuNUPJZfq8pqSTzRV7ybwmgC1DXMqoXrSw5aXIzb48ZtajK0OvFkax5UxqEdfUm2hT1G4SykmsDrSeRbjLU1UC4L9bS3IsgWm63OKATFuCNAkdeMODETUxH/i+7Xp5H2iVGTmmqU4AjXqb6qt9qlDMdSIWU4In9Df+zHAKF8Bc51avte64H3TnmVrTbsX7QXE9P0Hk1rqkYRAhRQ2WeckhbtBUBoqgxJXDOTO09JGs0lPua+Q+kNpDn2MdcArsmDz78OVtB9WmKK8y+B3OhO+1A/UWneAQ3VWm1VkI92fQK43rIzrmhAsoGhSBsz7YpI0flbcXRbs5zBj7ul3LR0B6CY99HONHW0zgWCPo6XbJ8pT9xtA2fYZNiEUVtrWUWTXNV/Ov23m1Z7N5D23xp0OJ/1kQIA7j5rPCtuKZ9F5/iylDZWmEJc1E5I0ILayKKp3jZ+G1jvFap2VJb2yNApfKGNjaL/MZCCZWZUTztks41rFPhUPmaBQr5Bx1E8dYeeHNemnroTXBIwC1O8Psbk2J+A04rf6NtFABSSk6bCWg4PBsBptGRrXDd7BWjccuUxvNm1nQGhere6jSUrk
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI1PR04MB5344.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366004)(136003)(396003)(346002)(376002)(39860400002)(451199024)(1800799009)(186009)(52116002)(6486002)(6666004)(6506007)(86362001)(36756003)(38350700002)(38100700002)(1076003)(2616005)(26005)(4744005)(15650500001)(6512007)(83380400001)(478600001)(41300700001)(4326008)(316002)(2906002)(8936002)(8676002)(5660300002)(66476007)(6916009)(66946007)(66556008);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?LhzTXqJBHzKLmjbMXc2DuzKo8vpCQjkX/GT0xKicVsUr+3TnZu9KZYROMcWR?=
+ =?us-ascii?Q?P6OqGJ4bwSvGwauxqv2iz8WzNBZ/kYxHMnrcHpXUCYNUF1p2jn+H7eMGS1RO?=
+ =?us-ascii?Q?MqCd3Tll+b+n1aniymwdvh0G9wk3odYuNuw87JBKn1sPdm0INyTMcvrdsJ3+?=
+ =?us-ascii?Q?6nf/VJosggl9zkZNN2quxrXhq/JKBV36rlMSXdMNIRYph2XczFWzLYpXqLsv?=
+ =?us-ascii?Q?eZfhgmJy2yoPrbQSvSyH38jaaYPl58A/GHbqjSrvNnnPSXK/B59EGUW6i8cL?=
+ =?us-ascii?Q?EYRwQZQXqLhgLf10ctkdLbKtW1aVCByl0YQrB3CuxUQ1zzsrviZizbL8Dy9v?=
+ =?us-ascii?Q?+TnBXSd2/rb1KHDkaJhVdg3WzGUKJLKwXIs7QEH4RsaA3RyNlVKQtwEk6gSi?=
+ =?us-ascii?Q?TmBGd67BBAi9xWKS+r5ICY5Eos97IrLMXe3NW/F3tOoP08sLZeG7zgL1i0yB?=
+ =?us-ascii?Q?gybLm5Lkfy2xywK0xPI/AyS3ieuG4TZkX2czfrFn71XpvPVZIOwSztxMr3rS?=
+ =?us-ascii?Q?fz6FPRj+ZnYOpUDWs7EKuQyTWecpeS29uq5EQr7dSu+cKLSuGgk+Yn2f22YY?=
+ =?us-ascii?Q?cg7ImuINLKqaodli7r3rfM2SjTsq1S83/YVpo02RtlguoRFTaxaHtLJCHVnd?=
+ =?us-ascii?Q?3IpBvjM27N6XBzDwdpoW/wdrDkpNZgAnXoo3zQqDafWpNzO4lQIzmMnDoX0w?=
+ =?us-ascii?Q?HEOrf2TyZcl80w5h27tjCySMV7n82TemHWsuE0UwSUFw/9imzVAFdF8iubZ7?=
+ =?us-ascii?Q?fDx/S7sXVRtJjtY33sABMh5SgpITDl8ZT3APGWhKdiCBMtlK1FLbflA7tYAh?=
+ =?us-ascii?Q?k4JlbDawMnMFL+vU6cW/r2FUujQvDoGjcOy4qQ8S/QY+M4C7Z7Jttd28byoJ?=
+ =?us-ascii?Q?h4ABpPJOAAH3FJO+ONfsXOm1J1ka4cSMUStTySfKYXk+u51uBcXzdgqDgvzX?=
+ =?us-ascii?Q?JPT+ItptaeCFlhLJxrCmnKgWqxGy48g2h5qT2K+n3pUJY6UCy1/7+u12KWLX?=
+ =?us-ascii?Q?40Uq7g8WkyxZB0O8RihPqovcncigB+Hu4N/48ojGA3RedJ0GDtVnimRGJR1l?=
+ =?us-ascii?Q?b7dRpOYSBN6WfTcM0ru5QLAN5yJIX6OxOjR3YDIedJv6suZbr1hJDsiMVDNG?=
+ =?us-ascii?Q?yLiTKPI/ysJLq+sMgTjO7cvprzqgwQwWDNhwMQSWaILHZASh10mLsSLgPxtI?=
+ =?us-ascii?Q?jID190QsNxcX3CeylUkawdXYfXmCoZsiUGEtJwBpUwyInP+3U+K/MD1NYubY?=
+ =?us-ascii?Q?Rhu6TkU/U7L66UxPwHV6JYWLWgDtGaTVkA8RSUNlk8j43v7GF4k6RjNTUc75?=
+ =?us-ascii?Q?I9Wa9ypRfzvcHxBbykLo2cSHnTI96YIDZOWEwwVxKQkfE/C6Lao0EhHZOyX6?=
+ =?us-ascii?Q?XydyIaAOrK+iffv6NcaQmrRlgX6KkSB+McGxXIVt0DbLHUJ6QOC/JSPRu5a3?=
+ =?us-ascii?Q?CL7psd9JujWIRQClmwKDzUZXyR/YODmTzMcsIID9Ch/m53XUmUlyL02N0kwC?=
+ =?us-ascii?Q?QC7bHa1pYWl9XyH6m6d5RjwP+l4R0FrU78CvPv/zjMLehXR0z70PHV8UVM6a?=
+ =?us-ascii?Q?eu6inBLoGs+v82GNoPRs8jHTznIdG9KPs0feXHfKY3Sx1EOtYyAjbsxmpObl?=
+ =?us-ascii?Q?7g=3D=3D?=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bf978d1b-b2c3-443b-1130-08dbb29b5883
+X-MS-Exchange-CrossTenant-AuthSource: VI1PR04MB5344.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Sep 2023 07:47:28.0091
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 77r7Cbp9OqJ1OnWBmefZ/ONX3kyYAz9c7MgqV2FKHXdg5iNUW0H29jedjZHKHHSFG6QH8HJjexyF5QGjl6WbrIp0SE8uL7PJjUdTwRuaAwc=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB7839
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,39 +114,21 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
---===============2076085610835003962==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Update transport acquire/release flow for BAP broadcast source to 
+fix failure on transport release, and second acquire
 
-This is automated email and please do not reply to this email!
+Silviu Florian Barbulescu (2):
+  Update stream enable/disable flow for BAP broadcast source
+  Update transport acquire/release flow for BAP broadcast source
 
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=782813
-
----Test result---
-
-Test Summary:
-CheckPatch                    PASS      0.57 seconds
-GitLint                       PASS      0.36 seconds
-BuildEll                      PASS      28.20 seconds
-BluezMake                     PASS      934.65 seconds
-MakeCheck                     PASS      12.39 seconds
-MakeDistcheck                 PASS      162.65 seconds
-CheckValgrind                 PASS      264.44 seconds
-CheckSmatch                   PASS      356.71 seconds
-bluezmakeextell               PASS      108.14 seconds
-IncrementalBuild              PASS      765.23 seconds
-ScanBuild                     PASS      1121.72 seconds
+ profiles/audio/bap.c       | 27 ++++++++++++-----
+ profiles/audio/transport.c | 62 ++++++++++++++++++++++----------------
+ src/shared/bap.c           | 51 ++++++++++++++++++++++---------
+ src/shared/bap.h           |  2 ++
+ 4 files changed, 95 insertions(+), 47 deletions(-)
 
 
+base-commit: df658c6c4ab5bd5ec4a8a3f8faa36e0d0a5f906a
+-- 
+2.34.1
 
----
-Regards,
-Linux Bluetooth
-
-
---===============2076085610835003962==--
