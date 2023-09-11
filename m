@@ -2,67 +2,61 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E177479C11F
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 12 Sep 2023 02:30:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 19F5E79C109
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 12 Sep 2023 02:21:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230431AbjILAaM (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 11 Sep 2023 20:30:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55780 "EHLO
+        id S229863AbjIKX4v (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 11 Sep 2023 19:56:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231431AbjILAaD (ORCPT
+        with ESMTP id S238529AbjIKXyZ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 11 Sep 2023 20:30:03 -0400
-Received: from mail-vs1-xe35.google.com (mail-vs1-xe35.google.com [IPv6:2607:f8b0:4864:20::e35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 325D011C8E2
-        for <linux-bluetooth@vger.kernel.org>; Mon, 11 Sep 2023 17:05:50 -0700 (PDT)
-Received: by mail-vs1-xe35.google.com with SMTP id ada2fe7eead31-44e3a4d0a6fso2007182137.0
-        for <linux-bluetooth@vger.kernel.org>; Mon, 11 Sep 2023 17:05:50 -0700 (PDT)
+        Mon, 11 Sep 2023 19:54:25 -0400
+Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC28CAED2
+        for <linux-bluetooth@vger.kernel.org>; Mon, 11 Sep 2023 15:47:59 -0700 (PDT)
+Received: by mail-qv1-xf2f.google.com with SMTP id 6a1803df08f44-655d25f3678so19874736d6.3
+        for <linux-bluetooth@vger.kernel.org>; Mon, 11 Sep 2023 15:47:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1694477072; x=1695081872; darn=vger.kernel.org;
+        d=gmail.com; s=20221208; t=1694472390; x=1695077190; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:to
          :from:from:to:cc:subject:date:message-id:reply-to;
         bh=SPxTVKDfPnYcmDz+/Xp310u86Enj0uzeRFdQ4Ju+daI=;
-        b=dJb+IG/lvIUcmSTn3yzkleOCFgoZgJTho/Q+buO1qJX7rtPuwhFYcyQpHUY+3em+/2
-         7kc3eHzzefgW564GD+Bwm6QF6tmjDXzucQuXPrupbut3ZoQzzvD0Ok64oWz/H1kpTt69
-         qmIe7upR/ojb7sAAuGsXaKDBamV4gs5yDWZ7TQlU+vzXtd/Ig28sFqUQQFldB18NclIR
-         4T2T1XQfdRexz3N531cMoJepssnwk33xYE6aFRbsHtyZgc5NM5atILTib6pEbpSAjXbF
-         XyjHAijui6WX/7z04W+/YtyMALjX85ZucMKIF2HDaiANLoyeVkNEwNk5j6TVsOfqPblJ
-         KcNg==
+        b=ciQ4TnRy7RkGhRmZZU9acUuzCjx2xdZPbmukymXzLlLbhLj6N8XMzKIq3vlhkjmSLY
+         xFkMzxyaapWIAhrVqoXTJfP2LFJvGGU4wX9OoKzDmNmYO7RWqrVwWnSoCO8aSxp9fp9M
+         bJwXY8cYNOjo1zI2QsQYnPyjavzJOko1LfzkHT26eTVv07BXDwCj+dUrfxgnVJgtUx6C
+         iZCY8CcFn35yRIwjhe9xQrj5EnHWtqWE4JrTC+29nGtyki8FhobsbGzKQIm0+K19huPC
+         LDDPeJO2MkieP3VsDxuETxG2H8u+qb1SUGAL/Ilp5LvT25gL+cwBFtUiF/KM7jyrP6Xl
+         BO6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694477072; x=1695081872;
+        d=1e100.net; s=20230601; t=1694472390; x=1695077190;
         h=content-transfer-encoding:mime-version:message-id:date:subject:to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
         bh=SPxTVKDfPnYcmDz+/Xp310u86Enj0uzeRFdQ4Ju+daI=;
-        b=L8ZvrdSVcO0WfFx5mV3dMxomUuZ1T5M8K9Fg0Hgvp8PYJttYgqTw0LY9VK/ZPSVfkc
-         y32dQ8tVpnyufVjkmAV49LSM3XLXTSSgkPxafcGc5/nF6idy57qUswv1BmVeDCLZ7YO7
-         40AWh9naUoJOAFkLz5A2SB5o+ZvkTgZKyL0y8e5yJr8+BBWAoOeqeA+lgpkPaAEICZeb
-         koAwVVH5st7Ebsyti+1tr6oOPao0oALCrGqpRYrOy99gY2fgm/JV0kgv/FrZEDO00yS0
-         DxMPMedNnmh4bY+BhA4fpX7XaucBtC3GXVfckXsnlUu7y2J4rSPKMYHahuYNd3sGHQxo
-         Z3CA==
-X-Gm-Message-State: AOJu0YyfZmMY+SdpDZY0i4mIG5+gzwq0kkymy71ahUFQ5pQyoUYKcevY
-        2+GzbYcoozLhprkDLg+f5s3B6nI8uJc=
-X-Google-Smtp-Source: AGHT+IFgYOtMG094/l9VZWAHidoq46axAkCYbGpmTf8zEuGplOWf2+7Fv5ebWipEdA6LuXx7OFdEow==
-X-Received: by 2002:a05:6a20:842a:b0:134:9f4e:623f with SMTP id c42-20020a056a20842a00b001349f4e623fmr10639128pzd.14.1694471623775;
-        Mon, 11 Sep 2023 15:33:43 -0700 (PDT)
+        b=nMETKjI8bvg6u6s44JX3TqErFDDSHYbvRQHFEYA14vUahf9te4+RNJgYlxiFnOtONl
+         SRawRl/L5Y0O6D578GnqCYGViH7vfTnIpuj3W6zucXThm1+d13Af5QleTt6UpwpYjN7F
+         kRBm1DqYYkogC3FZatgW74/fOFd2nq+MRav/hVt2gZQ1RdYLHo2c00j2nif51S7C6yBM
+         cLCPJ7tzajEhqxmdWG5aaI+MLtlDJk5QnUpwnkc/xX2nB8DjWK3lkr4vHg1nKIf/1Kuq
+         mN4RlqTdwiNVruKaKUk10ZX9iDPaY2fNNNRAtVqjIXrL6cqQY+Ju9Ttztb/K16MsvISV
+         KhNw==
+X-Gm-Message-State: AOJu0YwJEx4aKgGCfcm7tUsPdIj75VkLZpGhQdLoZS34/P2ipkF9RFuQ
+        9HT0Nt7Yv9nv8mWRJ6WfsM33NZUGLiU=
+X-Google-Smtp-Source: AGHT+IGKKiDPc936i0ZoBXURiu5Ui0sNuGvq0kN2SA83XSWu/gFqeir35SNBpPTgc1v2LLOS4RjiFg==
+X-Received: by 2002:a05:6a20:d425:b0:14a:7701:56df with SMTP id il37-20020a056a20d42500b0014a770156dfmr8868883pzb.21.1694471636733;
+        Mon, 11 Sep 2023 15:33:56 -0700 (PDT)
 Received: from lvondent-mobl4.. (c-98-232-221-87.hsd1.or.comcast.net. [98.232.221.87])
-        by smtp.gmail.com with ESMTPSA id i11-20020a633c4b000000b005634343cd9esm4099884pgn.44.2023.09.11.15.33.42
+        by smtp.gmail.com with ESMTPSA id o12-20020a170902778c00b001bc6536051bsm6965131pll.184.2023.09.11.15.33.55
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Sep 2023 15:33:42 -0700 (PDT)
+        Mon, 11 Sep 2023 15:33:55 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
 Subject: [PATCH BlueZ] device: Fix not handling initiator properly
-Date:   Mon, 11 Sep 2023 15:33:40 -0700
-Message-ID: <20230911223341.2701182-1-luiz.dentz@gmail.com>
+Date:   Mon, 11 Sep 2023 15:33:55 -0700
+Message-ID: <20230911223355.2701293-1-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=unavailable
-        autolearn_force=no version=3.4.6
-X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
-        lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
