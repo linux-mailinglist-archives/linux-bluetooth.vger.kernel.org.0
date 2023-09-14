@@ -2,63 +2,59 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECA1C7A0F8F
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 14 Sep 2023 23:10:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A8017A0F96
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 14 Sep 2023 23:11:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229547AbjINVKN (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 14 Sep 2023 17:10:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34532 "EHLO
+        id S229512AbjINVLl (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 14 Sep 2023 17:11:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229519AbjINVKM (ORCPT
+        with ESMTP id S229493AbjINVLk (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 14 Sep 2023 17:10:12 -0400
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 454CE269D
-        for <linux-bluetooth@vger.kernel.org>; Thu, 14 Sep 2023 14:10:08 -0700 (PDT)
-Received: by mail-pf1-x431.google.com with SMTP id d2e1a72fcca58-68fb46f38f9so1358895b3a.1
-        for <linux-bluetooth@vger.kernel.org>; Thu, 14 Sep 2023 14:10:08 -0700 (PDT)
+        Thu, 14 Sep 2023 17:11:40 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3746826B2
+        for <linux-bluetooth@vger.kernel.org>; Thu, 14 Sep 2023 14:11:36 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-68fdd6011f2so1135567b3a.3
+        for <linux-bluetooth@vger.kernel.org>; Thu, 14 Sep 2023 14:11:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1694725807; x=1695330607; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JK+ZdGAxo+bR/VYK8dO5ZTBFJr0ZOvgzoKLYaaA3K2g=;
-        b=sBD0Qyhma9RLiiPkbw87MlVXl0i+mGydWrcJ2u/J6yg+MQLD8oUWoeSHOqvgK2fMkN
-         ar2TbOy4bz7It5p0AHGQIRJh6lUX/XkK2OZLpbBvlrR0nPiokdTqAElQ9WnWkq34nGrv
-         nYRoENa9ylhqRMxxQIsdnVJJffsqL1F+ocqRKJIy/OT8lBDl2DyJTQdciB1PIlOHQ8Eq
-         /SSuB+dTdXDJoyNrADxwHQFdg0ZEsLUNps1O4hjSeE1e/x1mGrkZrXPsP4DeRVjEyjlg
-         lEiw0qiXlUgB079BiS96jkwjN4VM/E5Ba3tzWC5c9EnMsU+h3Vp2sPsKm8jytNKx6k7S
-         9AxQ==
+        d=gmail.com; s=20221208; t=1694725895; x=1695330695; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=i/308pntA+ZYZm9I5MvpRH8IQRP7l/fbGGryUi/IgXU=;
+        b=gWH94xxAMEeKxsL/WDlSdPAp5ruUqk+Z0bf39yVkRZGpXBMP9LsC/FMBdyHW8jnCIT
+         c0Br8VBjCxU6RZa+DmF9jiGk/Ev2wgxF4k9XGLsyvhbvbzmj6xhWTrDyCFewvCRMa818
+         lMezIw3sdsykDcLgIwwioXdX3lhiEqoFxDv7Sna110EM9uPQCOacl0HMMS7CMnnFRdKS
+         3uKlf8NVH0CPKdhS3vCT2PTo89PvzyXOVBeyf+gCD9RnoSwCPW6e7jm3uYrhg/2pLsHw
+         Zah1LlxJv10dLF4z634VNNrEJbpIRs/Bi3TtSjonJr9qFmOjWJCZdR6CM0360gAqjfwz
+         OApw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694725807; x=1695330607;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JK+ZdGAxo+bR/VYK8dO5ZTBFJr0ZOvgzoKLYaaA3K2g=;
-        b=LwVFdhTwaij0RBosj4pcNlV4aP2kChFddBFtgjPJtvQmC0rcYgzQv76u5/5Gz9OuG/
-         euxumSSYXK29/xMKrcs/q0fEEZJN0UjTfwJuTF5j70Dff6O4isG8SepONpSEjRu+lZId
-         xzcLsNCXgNXjw0hMPKRayh0hDY5vLzGpXzzn2fn9S26OrKYr0OaBqxRdR9aOcXqScvII
-         kSCJlqHuEe8XcZ4QmcFKDsDV7Gb4VJlfShH+ylTTKbgPnFZ8LarFjjSIPOYXs/bN3vlR
-         G/LpXhPOuSsthIpGX9+uPV0JxDqN43CSmYmJf6ZHW3ogthfl7Jag9PIODFnb9FyuE37u
-         Nq+A==
-X-Gm-Message-State: AOJu0YzWR6RKoH1mk/t85GqeFDCl903qvBgE3zJQeySlwfA1e8ifhPV5
-        fVlA/emyeMPrU8GFQQa2lphQyiWJaCGG6Q==
-X-Google-Smtp-Source: AGHT+IGdCFXosgpHeZ5EyPJCu5r36Il0HUC84YY6ckaW4kWO9pujqU0Ib4ATil+usiRt3OKsY3eRuA==
-X-Received: by 2002:a05:6a00:1487:b0:68f:ca4a:efd with SMTP id v7-20020a056a00148700b0068fca4a0efdmr6736949pfu.9.1694725806845;
-        Thu, 14 Sep 2023 14:10:06 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1694725895; x=1695330695;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=i/308pntA+ZYZm9I5MvpRH8IQRP7l/fbGGryUi/IgXU=;
+        b=hWxkaNZB8C1Iqg5U3qhSM1TEDyFdE+b6Im2zCSL1dipQHwK/WxHuWgFR4gIEHK7BWV
+         JTobb70FnzzwyxkyKFMrSrfqvMYjSSkiYYZu5iwiLsOVqPMIHrt8ElXRoUjuznS9y9Y7
+         F6hsL0YnRCRTTZZUDnTVxx5biyxI4GX6dRyXAlcx8euhknhrngtzmVbZrmbfw/Se+WUV
+         1MVY6CtsAb26uYupnYuvkhdX4uXf7xO+4D/6876y1GdMB30erC+Z/aWYKuXCto8QSmTb
+         Mltzgr/63q2AdzjNAyx2Lj017ze9vFvPWmW2FGbpxNyhxZUJ1OJULYQScCOA54cWe7xs
+         ulkA==
+X-Gm-Message-State: AOJu0YyPnq+KnnmoMi8LXqtdvT4DWsF/EQkt4jOxHekpHNI5I7iyzQjZ
+        g/eZUv2YrI5n87VlgMsRJG164bKd2JGOrw==
+X-Google-Smtp-Source: AGHT+IGmwkeNMz6Z31IGcj9uVXkOGi+GFbuM2+vyon6H5s7rN1IwCfL99sG5o3lPfoOxBfw9p25Z3w==
+X-Received: by 2002:aa7:8881:0:b0:68f:d4fe:6344 with SMTP id z1-20020aa78881000000b0068fd4fe6344mr8100374pfe.0.1694725894769;
+        Thu, 14 Sep 2023 14:11:34 -0700 (PDT)
 Received: from lvondent-mobl4.. (c-98-232-221-87.hsd1.or.comcast.net. [98.232.221.87])
-        by smtp.gmail.com with ESMTPSA id a18-20020aa78652000000b006862b2a6b0dsm1803805pfo.15.2023.09.14.14.10.05
+        by smtp.gmail.com with ESMTPSA id x53-20020a056a000bf500b0069029a2206bsm1731424pfu.47.2023.09.14.14.11.33
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Sep 2023 14:10:06 -0700 (PDT)
+        Thu, 14 Sep 2023 14:11:34 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v2 2/2] l2cap-tester: Add tests for connection timeout
-Date:   Thu, 14 Sep 2023 14:10:03 -0700
-Message-ID: <20230914211003.3339238-2-luiz.dentz@gmail.com>
+Subject: [PATCH v3] Bluetooth: L2CAP: Fix leaking l2cap_conn objects
+Date:   Thu, 14 Sep 2023 14:11:33 -0700
+Message-ID: <20230914211133.3339473-1-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20230914211003.3339238-1-luiz.dentz@gmail.com>
-References: <20230914211003.3339238-1-luiz.dentz@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -67,173 +63,127 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This adds the following tests which attempts to use SO_SNDTIMEO so the
-socket times out before the connection completes:
+l2cap_conn objects must be cleanup whenever its hci_chan is deleted by
+hci_chan_list_flush since it means the connection attempt is being
+aborted prematurely thus no calls to connect_cfm/disconnect_cfm would
+be generated causing the l2cap_conn object to leak.
 
-L2CAP BR/EDR Client - Timeout
-L2CAP LE Client - Timeout
-L2CAP Ext-Flowctl Client - Timeout
+Fixes: 73d80deb7bdf ("Bluetooth: prioritizing data over HCI")
+Reported-by: Olivier L'Heureux <olivier.lheureux@fortrobotics.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 ---
- tools/l2cap-tester.c | 82 ++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 80 insertions(+), 2 deletions(-)
+ include/net/bluetooth/hci_core.h |  2 ++
+ net/bluetooth/hci_conn.c         | 10 ++++++++--
+ net/bluetooth/l2cap_core.c       | 29 ++++++++++++++++++++++++++---
+ 3 files changed, 36 insertions(+), 5 deletions(-)
 
-diff --git a/tools/l2cap-tester.c b/tools/l2cap-tester.c
-index f4810e3eacea..461f2c27c456 100644
---- a/tools/l2cap-tester.c
-+++ b/tools/l2cap-tester.c
-@@ -52,6 +52,7 @@ struct l2cap_data {
- 	uint16_t cid;
- 	uint8_t mode;
- 	int expect_err;
-+	int timeout;
- 
- 	uint8_t send_cmd_code;
- 	const void *send_cmd;
-@@ -275,6 +276,11 @@ static const struct l2cap_data client_connect_close_test = {
- 	.client_psm = 0x1001,
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index bbad301f5781..21459c38a074 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -795,6 +795,8 @@ struct hci_chan {
+ 	unsigned int	sent;
+ 	__u8		state;
+ 	bool		amp;
++
++	void (*cleanup)(struct hci_chan *chan);
  };
  
-+static const struct l2cap_data client_connect_timeout_test = {
-+	.client_psm = 0x1001,
-+	.timeout = 1
-+};
-+
- static const struct l2cap_data client_connect_ssp_success_test_1 = {
- 	.client_psm = 0x1001,
- 	.server_psm = 0x1001,
-@@ -446,6 +452,11 @@ static const struct l2cap_data le_client_connect_close_test_1 = {
- 	.client_psm = 0x0080,
- };
+ struct hci_conn_params {
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index e62a5f368a51..c4e16e92446c 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -2735,9 +2735,11 @@ struct hci_chan *hci_chan_create(struct hci_conn *conn)
+ void hci_chan_del(struct hci_chan *chan)
+ {
+ 	struct hci_conn *conn = chan->conn;
+-	struct hci_dev *hdev = conn->hdev;
  
-+static const struct l2cap_data le_client_connect_timeout_test_1 = {
-+	.client_psm = 0x0080,
-+	.timeout = 1,
-+};
-+
- static const struct l2cap_data le_client_connect_adv_success_test_1 = {
- 	.client_psm = 0x0080,
- 	.server_psm = 0x0080,
-@@ -691,6 +702,12 @@ static const struct l2cap_data ext_flowctl_client_connect_close_test_1 = {
- 	.mode = BT_MODE_EXT_FLOWCTL,
- };
- 
-+static const struct l2cap_data ext_flowctl_client_connect_timeout_test_1 = {
-+	.client_psm = 0x0080,
-+	.mode = BT_MODE_EXT_FLOWCTL,
-+	.timeout = 1,
-+};
-+
- static const struct l2cap_data ext_flowctl_client_connect_adv_success_test_1 = {
- 	.client_psm = 0x0080,
- 	.server_psm = 0x0080,
-@@ -793,6 +810,11 @@ static void setup_powered_client_callback(uint8_t status, uint16_t length,
- 
- 	tester_print("Controller powered on");
- 
-+	if (l2data && l2data->timeout) {
-+		tester_setup_complete();
+-	BT_DBG("%s hcon %p chan %p", hdev->name, conn, chan);
++	if (!conn)
 +		return;
-+	}
 +
- 	bthost = hciemu_client_get_host(data->hciemu);
- 	bthost_set_cmd_complete_cb(bthost, client_cmd_complete, user_data);
++	bt_dev_dbg(conn->hdev, "hcon %p chan %p", conn, chan);
  
-@@ -1133,9 +1155,11 @@ static gboolean socket_closed_cb(GIOChannel *io, GIOCondition cond,
- 	else
- 		err = -sk_err;
+ 	list_del_rcu(&chan->list);
  
--	if (-err != l2data->expect_err)
-+	if (!l2data->timeout && -err != l2data->expect_err) {
-+		tester_print("err %d != %d expected_err", -err,
-+						l2data->expect_err);
- 		tester_test_failed();
--	else
-+	} else
- 		tester_test_passed();
+@@ -2746,6 +2748,10 @@ void hci_chan_del(struct hci_chan *chan)
+ 	/* Prevent new hci_chan's to be created for this hci_conn */
+ 	set_bit(HCI_CONN_DROP, &conn->flags);
  
- 	return FALSE;
-@@ -1517,6 +1541,50 @@ static void test_connect_close(const void *test_data)
- 	shutdown(sk, SHUT_RDWR);
++	if (chan->cleanup)
++		chan->cleanup(chan);
++
++	chan->conn = NULL;
+ 	hci_conn_put(conn);
+ 
+ 	skb_queue_purge(&chan->data_q);
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 17ca13e8c044..a791f28ccd6a 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -1896,6 +1896,8 @@ static void l2cap_conn_del(struct hci_conn *hcon, int err)
+ 
+ 	BT_DBG("hcon %p conn %p, err %d", hcon, conn, err);
+ 
++	hcon->l2cap_data = NULL;
++
+ 	kfree_skb(conn->rx_skb);
+ 
+ 	skb_queue_purge(&conn->pending_rx);
+@@ -1931,13 +1933,15 @@ static void l2cap_conn_del(struct hci_conn *hcon, int err)
+ 
+ 	mutex_unlock(&conn->chan_lock);
+ 
+-	hci_chan_del(conn->hchan);
++	if (conn->hchan) {
++		conn->hchan->cleanup = NULL;
++		hci_chan_del(conn->hchan);
++		conn->hchan = NULL;
++	}
+ 
+ 	if (conn->info_state & L2CAP_INFO_FEAT_MASK_REQ_SENT)
+ 		cancel_delayed_work_sync(&conn->info_timer);
+ 
+-	hcon->l2cap_data = NULL;
+-	conn->hchan = NULL;
+ 	l2cap_conn_put(conn);
  }
  
-+static void test_connect_timeout(const void *test_data)
+@@ -7830,6 +7834,24 @@ static void process_pending_rx(struct work_struct *work)
+ 		l2cap_recv_frame(conn, skb);
+ }
+ 
++static void l2cap_conn_hchan_cleanup(struct hci_chan *hchan)
 +{
-+	struct test_data *data = tester_get_data();
-+	const struct l2cap_data *l2data = data->test_data;
-+	GIOChannel *io;
-+	int sk;
-+	struct timeval sndto;
-+	socklen_t len;
++	struct hci_conn *hcon = hchan->conn;
++	struct l2cap_conn *conn;
 +
-+	sk = create_l2cap_sock(data, 0, l2data->cid, l2data->sec_level,
-+							l2data->mode);
-+	if (sk < 0) {
-+		if (sk == -ENOPROTOOPT)
-+			tester_test_abort();
-+		else
-+			tester_test_failed();
++	if (!hcon)
 +		return;
-+	}
 +
-+	memset(&sndto, 0, sizeof(sndto));
-+
-+	sndto.tv_sec = l2data->timeout;
-+	len = sizeof(sndto);
-+	if (setsockopt(sk, SOL_SOCKET, SO_SNDTIMEO, &sndto, len) < 0) {
-+		tester_print("Can't set SO_SNDTIMEO: %s (%d)", strerror(errno),
-+								errno);
-+		close(sk);
-+		tester_test_failed();
++	conn = hcon->l2cap_data;
++	if (!conn)
 +		return;
-+	}
 +
-+	if (connect_l2cap_sock(data, sk, l2data->client_psm,
-+							l2data->cid) < 0) {
-+		close(sk);
-+		tester_test_failed();
-+		return;
-+	}
++	/* hci_chan_del has been called so we shouldn't call it gain. */
++	conn->hchan = NULL;
 +
-+	io = g_io_channel_unix_new(sk);
-+	g_io_channel_set_close_on_unref(io, TRUE);
-+	data->io_id = g_io_add_watch(io, G_IO_HUP, socket_closed_cb, NULL);
-+	g_io_channel_unref(io);
++	l2cap_conn_del(hcon, bt_to_errno(HCI_ERROR_LOCAL_HOST_TERM));
 +}
 +
- static void test_connect_reject(const void *test_data)
+ static struct l2cap_conn *l2cap_conn_add(struct hci_conn *hcon)
  {
- 	struct test_data *data = tester_get_data();
-@@ -2189,6 +2257,10 @@ int main(int argc, char *argv[])
- 					&client_connect_close_test,
- 					setup_powered_client,
- 					test_connect_close);
-+	test_l2cap_bredr("L2CAP BR/EDR Client - Timeout",
-+					&client_connect_timeout_test,
-+					setup_powered_client,
-+					test_connect_timeout);
+ 	struct l2cap_conn *conn = hcon->l2cap_data;
+@@ -7852,6 +7874,7 @@ static struct l2cap_conn *l2cap_conn_add(struct hci_conn *hcon)
+ 	hcon->l2cap_data = conn;
+ 	conn->hcon = hci_conn_get(hcon);
+ 	conn->hchan = hchan;
++	hchan->cleanup = l2cap_conn_hchan_cleanup;
  
- 	test_l2cap_bredr("L2CAP BR/EDR Client SSP - Success 1",
- 					&client_connect_ssp_success_test_1,
-@@ -2259,6 +2331,9 @@ int main(int argc, char *argv[])
- 	test_l2cap_le("L2CAP LE Client - Close",
- 				&le_client_connect_close_test_1,
- 				setup_powered_client, test_connect_close);
-+	test_l2cap_le("L2CAP LE Client - Timeout",
-+				&le_client_connect_timeout_test_1,
-+				setup_powered_client, test_connect_timeout);
- 	test_l2cap_le("L2CAP LE Client, Direct Advertising - Success",
- 				&le_client_connect_adv_success_test_1,
- 				setup_powered_client, test_connect);
-@@ -2307,6 +2382,9 @@ int main(int argc, char *argv[])
- 	test_l2cap_le("L2CAP Ext-Flowctl Client - Close",
- 				&ext_flowctl_client_connect_close_test_1,
- 				setup_powered_client, test_connect_close);
-+	test_l2cap_le("L2CAP Ext-Flowctl Client - Timeout",
-+				&ext_flowctl_client_connect_timeout_test_1,
-+				setup_powered_client, test_connect_timeout);
- 	test_l2cap_le("L2CAP Ext-Flowctl Client, Direct Advertising - Success",
- 				&ext_flowctl_client_connect_adv_success_test_1,
- 				setup_powered_client, test_connect);
+ 	BT_DBG("hcon %p conn %p hchan %p", hcon, conn, hchan);
+ 
 -- 
 2.41.0
 
