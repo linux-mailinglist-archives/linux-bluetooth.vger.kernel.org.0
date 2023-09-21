@@ -2,59 +2,63 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 912077AA5C9
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Sep 2023 01:47:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 729EF7AA5CA
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Sep 2023 01:47:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229667AbjIUXrt (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 21 Sep 2023 19:47:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38254 "EHLO
+        id S230022AbjIUXrw (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 21 Sep 2023 19:47:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229509AbjIUXrs (ORCPT
+        with ESMTP id S229509AbjIUXrw (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 21 Sep 2023 19:47:48 -0400
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99D068F
-        for <linux-bluetooth@vger.kernel.org>; Thu, 21 Sep 2023 16:47:42 -0700 (PDT)
-Received: by mail-ot1-x335.google.com with SMTP id 46e09a7af769-6bee392fe9dso917224a34.1
-        for <linux-bluetooth@vger.kernel.org>; Thu, 21 Sep 2023 16:47:42 -0700 (PDT)
+        Thu, 21 Sep 2023 19:47:52 -0400
+Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B328C8F
+        for <linux-bluetooth@vger.kernel.org>; Thu, 21 Sep 2023 16:47:44 -0700 (PDT)
+Received: by mail-oo1-xc32.google.com with SMTP id 006d021491bc7-57b3d8de4a2so841332eaf.0
+        for <linux-bluetooth@vger.kernel.org>; Thu, 21 Sep 2023 16:47:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695340061; x=1695944861; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=O8UvCzpydCqEJ8G9A6NMOVjDAbhJMdAdjKtdbYeGZO0=;
-        b=L6/+DU7cgKNTaC4Not7l/nXFhi7chEUpVDjKEPkDlLD+HyvdhF/6wzu9cL8W5VbkVv
-         hRf7dOBHq82yxdm6hT0FdttVC1PDbWr/u8eRV5C59OJB0De6cHsgLOC9dra2K5ayU7XB
-         DD3rtLlR0Tt4YY5pJbFvvBMGfPcTvNr8Rdslch/VP/AmMAP5ktYw+62da2XRbCJHsK30
-         J/Cw05cgOdjl3rqd+bEdsl7aDka6hVY2hv5UJpGY/+C0R3qj+m25HqHF+s1qn/Hnx2xo
-         tMSFh0dKHDJ12csRThKsc+QDzm3x4rkLJLrtN4ZBHJ+b+LBCYtX1TRODbW0DSKphuqwh
-         /NbQ==
+        d=gmail.com; s=20230601; t=1695340063; x=1695944863; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VtGiSV1E5U4cehaNWHPMnXXwXJDO7i/5cOKi8COIW5k=;
+        b=ALVGNI2OYWhsMXBnvw7JfkJxZ4Ev5TAHUbfmoDgLz+33zDMsVHR1AnGkTuz0xEA+rk
+         JFASnDoCaArMs4J4Scv9F2eAKCVdmIy7jQpfHr5ghYUm73jc0zH/4xESArrqBoy+18Ci
+         FTY6Amihu3VMnzcAhxwkEFuysFD/AA4Imao2MvBQ0oGZjCeWkTDyOCkLyaU3EmLy+tij
+         5JpFWv2fIj7cmlbZzoVJBi+Tlbi4CZgGFhGkCaHfAP7ip6I59VxJgUYkYu8XGTApBbH+
+         FaCUgYaGbDnxPPKnqS7teUGVmachDThDHepg0zcYo/B2xHgWfi09gEaDTHE8N6KUTgz6
+         alLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695340061; x=1695944861;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=O8UvCzpydCqEJ8G9A6NMOVjDAbhJMdAdjKtdbYeGZO0=;
-        b=FJLr08HeruH09qHpYASmV/QUgJpdK8hFZe2loXn3Q7Z/mNqcm3vo8+ZypVi/FFgITi
-         6XYgPD/Ju/Wjp5NIgpMU8Ee1O/EQxwxtkiGzjg32mcnLigngpjqO8MQVYqcbFaAd8UTR
-         Oyn0HUXjIMQxDUTmpZlupwMNOwxLaFlN6h8YLYCb58mDVE3hhENoAcLvm5R/GGXPulhW
-         zPZD/F0t21ZtSxo338KUguP6RNG2TMFP047oxi0tymQUCICS5AQZwUdQ/aF4vLrHjX1s
-         fwnnQHYyl7g6vasaNxwmHpN7LMsKxj6q6ZpMon0UobWEGj7MCywN86HsmIsQd9MfDw0+
-         A0NA==
-X-Gm-Message-State: AOJu0YzjG7j4hphgaTsS2l7ox/7OHGCohECbASxFzqBQDB+wWbxin5d4
-        hH+yHtTCMn6cB6RR6ACSwzLj6aA+vZo=
-X-Google-Smtp-Source: AGHT+IFqV3m4TopTIRdxPLxXwLa8IosMrwzApZh0C+EJGLvlM7NTDazErJqo6gCtiAnrok0o1rswSQ==
-X-Received: by 2002:a05:6358:998a:b0:142:d678:f708 with SMTP id j10-20020a056358998a00b00142d678f708mr9640904rwb.19.1695340060952;
-        Thu, 21 Sep 2023 16:47:40 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1695340063; x=1695944863;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VtGiSV1E5U4cehaNWHPMnXXwXJDO7i/5cOKi8COIW5k=;
+        b=LVTDL8Ek3pv+Si9bdPlRHGeoUKr1RcBF2ITMksKOEVdfxUwMLI1kvfyUHWp8Wnkag5
+         HAHIIdcGNhkCsm1koIc/xa2SkMcJLHdkPZshY5lfcPSVbbfvzNuDT83s0LF8+ExaQVCW
+         Nbmr3XK6PZLOqP8b78Vbd6xVpR/7OjwIbL47+Phj03GdRx+61vGoDfUNmwMMKY2l5uGs
+         JWzX5TJdRh4E66R2iJ9y9/SKt/WCgrJAsMRBzq1kOj1Ao+aIrLwJT9IlaOIqT/sKzekB
+         FNYOIbyPJkDwn3J6QwYrMabWCEiO7+zYJR4k4dzHkBD/Ui5+udmLBKIGWmTZJkMPzge5
+         QxWQ==
+X-Gm-Message-State: AOJu0YxtyGR2pyUrLE0PJVB5BArMMPqs7u5gQb41gUG5mnwXFE/KvpOY
+        6zFVybSpNGLXJyTSnLXVUXLO7A86bBM=
+X-Google-Smtp-Source: AGHT+IFZKV5qp+Bl6HdigMrw3ihfBmHfX+yrtK49HjOi7627Do2erGZI0btBuMS7vlQNvncSTsRFWQ==
+X-Received: by 2002:a05:6358:2607:b0:141:bfc:b11d with SMTP id l7-20020a056358260700b001410bfcb11dmr7926755rwc.16.1695340062871;
+        Thu, 21 Sep 2023 16:47:42 -0700 (PDT)
 Received: from lvondent-mobl4.. (c-98-232-221-87.hsd1.or.comcast.net. [98.232.221.87])
-        by smtp.gmail.com with ESMTPSA id d18-20020aa78692000000b00690fb385ea9sm1959824pfo.47.2023.09.21.16.47.39
+        by smtp.gmail.com with ESMTPSA id d18-20020aa78692000000b00690fb385ea9sm1959824pfo.47.2023.09.21.16.47.41
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Sep 2023 16:47:39 -0700 (PDT)
+        Thu, 21 Sep 2023 16:47:41 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 1/5] media-api: Update to reflect the last code changes
-Date:   Thu, 21 Sep 2023 16:47:34 -0700
-Message-ID: <20230921234738.929423-1-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ 2/5] transport: Implement QoS property
+Date:   Thu, 21 Sep 2023 16:47:35 -0700
+Message-ID: <20230921234738.929423-2-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20230921234738.929423-1-luiz.dentz@gmail.com>
+References: <20230921234738.929423-1-luiz.dentz@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -69,244 +73,652 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This reflect the last code changes adding the missing Broadcast
-properties.
+This implements Transport.QoS as a dict instead of listing each field as
+a individual property.
 ---
- doc/media-api.rst | 179 +++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 138 insertions(+), 41 deletions(-)
+ client/player.c            |   6 +-
+ lib/bluetooth.h            |   2 +-
+ profiles/audio/bap.c       |   6 +-
+ profiles/audio/transport.c | 431 ++++++++-----------------------------
+ src/shared/bap.h           |   2 +-
+ src/shared/bass.c          |   2 +-
+ tools/iso-tester.c         |   6 +-
+ tools/isotest.c            |   2 +-
+ 8 files changed, 98 insertions(+), 359 deletions(-)
 
-diff --git a/doc/media-api.rst b/doc/media-api.rst
-index 34bf44e8ffbb..b37ae8f01630 100644
---- a/doc/media-api.rst
-+++ b/doc/media-api.rst
-@@ -710,28 +710,45 @@ void SetConfiguration(object transport, dict properties)
- 	properties:
+diff --git a/client/player.c b/client/player.c
+index b92f529c693a..ac8493d3cb0b 100644
+--- a/client/player.c
++++ b/client/player.c
+@@ -1873,7 +1873,7 @@ static struct bt_iso_qos bcast_qos = {
+ 	.bcast = {
+ 		.big = BT_ISO_QOS_BIG_UNSET,
+ 		.bis = BT_ISO_QOS_BIS_UNSET,
+-		.sync_interval = 24,
++		.sync_factor = 24,
+ 		.packing = 0x00,
+ 		.framing = 0x00,
+ 		.encryption = 0x00,
+@@ -1991,10 +1991,10 @@ static void append_properties(DBusMessageIter *iter,
+ 	if (!cfg->ep->broadcast)
+ 		goto done;
  
- 	:array{byte} Capabilities [Mandatory]:
-+
-+		See Endpoint.Capabilities property.
-+
- 	:array{byte} Metadata [ISO only]:
--	:byte CIG [ISO only]:
--	:byte CIS [ISO only]:
--	:uint32 Interval [ISO only]:
--	:bool Framing [ISO only]:
--	:string PHY [ISO only]:
--	:uint16 SDU [ISO only]:
--	:byte Retransmissions [ISO only]:
--	:uint16 Latency [ISO only]:
--	:uint32 Delay [ISO only]:
--	:uint8 TargetLatency [ISO Latency]:
--	:byte BIG [ISO broadcast only]:
--	:byte BIS [ISO broadcast only]:
--	:byte SyncInterval [ISO broadcast only]:
--	:byte Encryption [ISO broadcast only]:
--	:byte Options [ISO broadcast only]:
--	:uint16 Skip [ISO broadcast only]:
--	:uint16 SyncTimeout [ISO broadcast only]:
--	:byte SyncCteType [ISO broadcast only]:
--	:byte MSE [ISO broadcast only]:
--	:uint16 Timeout [ISO broadcast only]:
--	:array{byte} BroadcastCode [ISO broadcast only]:
-+
-+		See Endpoint.Metadata property.
-+
-+	:uint32 Location [ISO only]:
-+
-+		See Endpoint.Location property.
-+
-+	:byte Framing [ISO only]:
-+
-+		See Endpoint.Framing property.
-+
-+	:byte PHY [ISO only]:
-+
-+		See Endpoint.PHY property.
-+
-+	:uint16 MaximumLatency [ISO only]:
-+
-+		See Endpoint.MaximumLatency property.
-+
-+	:uint32 MinimumDelay [ISO only]:
-+
-+		See Endpoint.MinimumDelay property.
-+
-+	:uint32 MaximumDelay [ISO only]:
-+
-+		See Endpoint.MaximumDelay property.
-+
-+	:uint32 PreferredMinimumDelay [ISO only]:
-+
-+		See Endpoint.PreferredMinimumDelay property.
-+
-+	:uint32 PreferredMaximumDelay [ISO only]:
-+
-+		See Endpoint.PreferredMaximumDelay property.
-+
+-	bt_shell_printf("SyncInterval %u\n", bcast_qos.bcast.sync_interval);
++	bt_shell_printf("SyncInterval %u\n", bcast_qos.bcast.sync_factor);
  
- array{byte} SelectConfiguration(array{byte} capabilities)
- `````````````````````````````````````````````````````````
-@@ -984,33 +1001,65 @@ dict QoS [readonly, optional, ISO only, experimental]
+ 	g_dbus_dict_append_entry(&dict, "SyncInterval", DBUS_TYPE_BYTE,
+-						&bcast_qos.bcast.sync_interval);
++						&bcast_qos.bcast.sync_factor);
  
- 		Indicates configured CIG.
+ 	bt_shell_printf("Encryption %u\n", bcast_qos.bcast.encryption);
  
-+		Possible values:
-+
-+		:0x00 - 0xef:
-+
-+			Valid ID range.
-+
-+		:0xff:
-+
-+			Auto allocate.
-+
- 	:byte CIS:
+diff --git a/lib/bluetooth.h b/lib/bluetooth.h
+index 1286aa763208..ba08c70e61b8 100644
+--- a/lib/bluetooth.h
++++ b/lib/bluetooth.h
+@@ -174,7 +174,7 @@ struct bt_iso_ucast_qos {
+ struct bt_iso_bcast_qos {
+ 	uint8_t  big;
+ 	uint8_t  bis;
+-	uint8_t  sync_interval;
++	uint8_t  sync_factor;
+ 	uint8_t  packing;
+ 	uint8_t  framing;
+ 	struct bt_iso_io_qos in;
+diff --git a/profiles/audio/bap.c b/profiles/audio/bap.c
+index d61b6f677660..c1fba6b1bff5 100644
+--- a/profiles/audio/bap.c
++++ b/profiles/audio/bap.c
+@@ -533,7 +533,7 @@ static int parse_properties(DBusMessageIter *props, struct iovec **caps,
+ 				goto fail;
  
- 		Indicates configured CIS.
+ 			dbus_message_iter_get_basic(&value,
+-						&qos->bcast.sync_interval);
++						&qos->bcast.sync_factor);
+ 		} else if (!strcasecmp(key, "MSE")) {
+ 			if (var != DBUS_TYPE_BYTE)
+ 				goto fail;
+@@ -756,7 +756,7 @@ static void update_bcast_qos(struct bt_iso_qos *qos,
+ {
+ 	bap_qos->bcast.big = qos->bcast.big;
+ 	bap_qos->bcast.bis = qos->bcast.bis;
+-	bap_qos->bcast.sync_interval = qos->bcast.sync_interval;
++	bap_qos->bcast.sync_factor = qos->bcast.sync_factor;
+ 	bap_qos->bcast.packing = qos->bcast.packing;
+ 	bap_qos->bcast.framing = qos->bcast.framing;
+ 	bap_qos->bcast.encryption = qos->bcast.encryption;
+@@ -1671,7 +1671,7 @@ static void bap_create_bcast_io(struct bap_data *data, struct bap_ep *ep,
  
--	:uint32 Interval:
-+		Possible values:
+ 	iso_qos.bcast.big = ep->qos.bcast.big;
+ 	iso_qos.bcast.bis = ep->qos.bcast.bis;
+-	iso_qos.bcast.sync_interval = ep->qos.bcast.sync_interval;
++	iso_qos.bcast.sync_factor = ep->qos.bcast.sync_factor;
+ 	iso_qos.bcast.packing = ep->qos.bcast.packing;
+ 	iso_qos.bcast.framing = ep->qos.bcast.framing;
+ 	iso_qos.bcast.encryption = ep->qos.bcast.encryption;
+diff --git a/profiles/audio/transport.c b/profiles/audio/transport.c
+index 2998d6bab00d..6c2cb598fe96 100644
+--- a/profiles/audio/transport.c
++++ b/profiles/audio/transport.c
+@@ -850,160 +850,41 @@ static const GDBusPropertyTable a2dp_properties[] = {
+ 	{ }
+ };
  
--		Indicates configured ISO interval.
-+		:0x00 - 0xef:
+-static gboolean qos_exists(const GDBusPropertyTable *property, void *data)
++static void append_io_qos(DBusMessageIter *dict, struct bt_bap_io_qos *qos)
+ {
+-	struct media_transport *transport = data;
+-	struct bap_transport *bap = transport->data;
+-
+-	if (media_endpoint_is_broadcast(transport->endpoint))
+-		return bap->qos.bcast.io_qos.sdu != 0x00;
+-
+-	return bap->qos.ucast.io_qos.phy != 0x00;
++	dict_append_entry(dict, "Interval", DBUS_TYPE_UINT32, &qos->interval);
++	dict_append_entry(dict, "Latency", DBUS_TYPE_UINT16, &qos->latency);
++	dict_append_entry(dict, "SDU", DBUS_TYPE_UINT16, &qos->sdu);
++	dict_append_entry(dict, "PHY", DBUS_TYPE_BYTE, &qos->phy);
++	dict_append_entry(dict, "Retransmissions", DBUS_TYPE_BYTE, &qos->rtn);
+ }
  
--	:boolean Framing:
-+			Valid ID range.
-+
-+		:0xff:
-+
-+			Auto allocate.
-+
-+	:byte Framing:
+-static gboolean get_cig(const GDBusPropertyTable *property,
++static gboolean get_ucast_qos(const GDBusPropertyTable *property,
+ 					DBusMessageIter *iter, void *data)
+ {
+ 	struct media_transport *transport = data;
+ 	struct bap_transport *bap = transport->data;
++	DBusMessageIter dict;
  
- 		Indicates configured framing.
+-	dbus_message_iter_append_basic(iter, DBUS_TYPE_BYTE,
+-							&bap->qos.ucast.cig_id);
++	dbus_message_iter_open_container(iter, DBUS_TYPE_ARRAY,
++					DBUS_DICT_ENTRY_BEGIN_CHAR_AS_STRING
++					DBUS_TYPE_STRING_AS_STRING
++					DBUS_TYPE_VARIANT_AS_STRING
++					DBUS_DICT_ENTRY_END_CHAR_AS_STRING,
++					&dict);
  
--	:byte PHY:
-+		Possible values:
+-	return TRUE;
+-}
++	dict_append_entry(&dict, "CIG", DBUS_TYPE_BYTE,
++					&bap->qos.ucast.cig_id);
++	dict_append_entry(&dict, "CIS", DBUS_TYPE_BYTE,
++					&bap->qos.ucast.cis_id);
++	dict_append_entry(&dict, "Framing", DBUS_TYPE_BYTE,
++					&bap->qos.ucast.framing);
++	dict_append_entry(&dict, "PresentationDelay", DBUS_TYPE_UINT32,
++					&bap->qos.ucast.delay);
  
--		Indicates configured PHY.
-+		:0x00:
+-static gboolean get_big(const GDBusPropertyTable *property,
+-					DBusMessageIter *iter, void *data)
+-{
+-	struct media_transport *transport = data;
+-	struct bap_transport *bap = transport->data;
++	append_io_qos(&dict, &bap->qos.ucast.io_qos);
  
--	:uint16 SDU:
-+			Unframed.
+-	dbus_message_iter_append_basic(iter, DBUS_TYPE_BYTE,
+-							&bap->qos.bcast.big);
+-
+-	return TRUE;
+-}
+-
+-static gboolean get_cis(const GDBusPropertyTable *property,
+-					DBusMessageIter *iter, void *data)
+-{
+-	struct media_transport *transport = data;
+-	struct bap_transport *bap = transport->data;
+-
+-	dbus_message_iter_append_basic(iter, DBUS_TYPE_BYTE,
+-							&bap->qos.ucast.cis_id);
+-
+-	return TRUE;
+-}
+-
+-static gboolean get_bis(const GDBusPropertyTable *property,
+-					DBusMessageIter *iter, void *data)
+-{
+-	struct media_transport *transport = data;
+-	struct bap_transport *bap = transport->data;
+-
+-	dbus_message_iter_append_basic(iter, DBUS_TYPE_BYTE,
+-							&bap->qos.bcast.bis);
+-
+-	return TRUE;
+-}
+-
+-static gboolean get_interval(const GDBusPropertyTable *property,
+-					DBusMessageIter *iter, void *data)
+-{
+-	struct media_transport *transport = data;
+-	struct bap_transport *bap = transport->data;
+-
+-	dbus_message_iter_append_basic(iter, DBUS_TYPE_UINT32,
+-					&bap->qos.ucast.io_qos.interval);
+-
+-	return TRUE;
+-}
+-
+-static gboolean get_framing(const GDBusPropertyTable *property,
+-					DBusMessageIter *iter, void *data)
+-{
+-	struct media_transport *transport = data;
+-	struct bap_transport *bap = transport->data;
+-	dbus_bool_t val = bap->qos.ucast.framing;
+-
+-	if (media_endpoint_is_broadcast(transport->endpoint))
+-		val = bap->qos.bcast.framing;
+-
+-	dbus_message_iter_append_basic(iter, DBUS_TYPE_BOOLEAN, &val);
+-
+-	return TRUE;
+-}
+-
+-static gboolean get_phy(const GDBusPropertyTable *property,
+-					DBusMessageIter *iter, void *data)
+-{
+-	struct media_transport *transport = data;
+-	struct bap_transport *bap = transport->data;
+-
+-	if (media_endpoint_is_broadcast(transport->endpoint)) {
+-		dbus_message_iter_append_basic(iter, DBUS_TYPE_BYTE,
+-					&bap->qos.bcast.io_qos.phy);
+-		return TRUE;
+-	}
+-
+-	dbus_message_iter_append_basic(iter, DBUS_TYPE_BYTE,
+-					&bap->qos.ucast.io_qos.phy);
+-
+-	return TRUE;
+-}
+-
+-static gboolean get_sdu(const GDBusPropertyTable *property,
+-					DBusMessageIter *iter, void *data)
+-{
+-	struct media_transport *transport = data;
+-	struct bap_transport *bap = transport->data;
+-
+-	if (media_endpoint_is_broadcast(transport->endpoint)) {
+-		dbus_message_iter_append_basic(iter, DBUS_TYPE_UINT16,
+-					&bap->qos.bcast.io_qos.sdu);
+-		return TRUE;
+-	}
+-
+-	dbus_message_iter_append_basic(iter, DBUS_TYPE_UINT16,
+-					&bap->qos.ucast.io_qos.sdu);
+-
+-	return TRUE;
+-}
+-
+-static gboolean get_retransmissions(const GDBusPropertyTable *property,
+-					DBusMessageIter *iter, void *data)
+-{
+-	struct media_transport *transport = data;
+-	struct bap_transport *bap = transport->data;
+-
+-	dbus_message_iter_append_basic(iter, DBUS_TYPE_BYTE,
+-					&bap->qos.ucast.io_qos.rtn);
+-
+-	return TRUE;
+-}
+-
+-static gboolean get_latency(const GDBusPropertyTable *property,
+-					DBusMessageIter *iter, void *data)
+-{
+-	struct media_transport *transport = data;
+-	struct bap_transport *bap = transport->data;
+-
+-	dbus_message_iter_append_basic(iter, DBUS_TYPE_UINT16,
+-					&bap->qos.ucast.io_qos.latency);
+-
+-	return TRUE;
+-}
+-
+-static gboolean get_delay(const GDBusPropertyTable *property,
+-					DBusMessageIter *iter, void *data)
+-{
+-	struct media_transport *transport = data;
+-	struct bap_transport *bap = transport->data;
+-
+-	dbus_message_iter_append_basic(iter, DBUS_TYPE_UINT32,
+-						&bap->qos.ucast.delay);
++	dbus_message_iter_close_container(iter, &dict);
  
--		Indicates configured SDU.
-+		:0x01:
+ 	return TRUE;
+ }
+@@ -1084,119 +965,12 @@ static gboolean get_links(const GDBusPropertyTable *property,
+ 	return TRUE;
+ }
  
--	:byte Retransmissions:
-+			Framed.
+-static gboolean get_sync_interval(const GDBusPropertyTable *property,
+-					DBusMessageIter *iter, void *data)
++static gboolean qos_ucast_exists(const GDBusPropertyTable *property, void *data)
+ {
+ 	struct media_transport *transport = data;
+ 	struct bap_transport *bap = transport->data;
  
--		Indicates configured retransmissions.
-+	:uint32 PresentationDelay:
+-	dbus_message_iter_append_basic(iter, DBUS_TYPE_BYTE,
+-						&bap->qos.bcast.sync_interval);
+-
+-	return TRUE;
+-}
+-
+-static gboolean get_packing(const GDBusPropertyTable *property,
+-					DBusMessageIter *iter, void *data)
+-{
+-	struct media_transport *transport = data;
+-	struct bap_transport *bap = transport->data;
+-
+-	dbus_message_iter_append_basic(iter, DBUS_TYPE_BYTE,
+-						&bap->qos.bcast.packing);
+-
+-	return TRUE;
+-}
+-
+-static gboolean get_bcode(const GDBusPropertyTable *property,
+-					DBusMessageIter *iter, void *data)
+-{
+-	struct media_transport *transport = data;
+-	struct bap_transport *bap = transport->data;
+-	DBusMessageIter array;
+-
+-	dbus_message_iter_open_container(iter, DBUS_TYPE_ARRAY,
+-					DBUS_TYPE_BYTE_AS_STRING, &array);
+-
+-	if (bap->qos.bcast.bcode && bap->qos.bcast.bcode->iov_len)
+-		dbus_message_iter_append_fixed_array(&array, DBUS_TYPE_BYTE,
+-						&bap->qos.bcast.bcode->iov_base,
+-						bap->qos.bcast.bcode->iov_len);
+-
+-	dbus_message_iter_close_container(iter, &array);
+-	return TRUE;
+-}
+-
+-static gboolean get_options(const GDBusPropertyTable *property,
+-					DBusMessageIter *iter, void *data)
+-{
+-	struct media_transport *transport = data;
+-	struct bap_transport *bap = transport->data;
+-
+-	dbus_message_iter_append_basic(iter, DBUS_TYPE_BYTE,
+-					&bap->qos.bcast.options);
+-
+-	return TRUE;
+-}
+-
+-static gboolean get_skip(const GDBusPropertyTable *property,
+-					DBusMessageIter *iter, void *data)
+-{
+-	struct media_transport *transport = data;
+-	struct bap_transport *bap = transport->data;
+-
+-	dbus_message_iter_append_basic(iter, DBUS_TYPE_UINT16,
+-					&bap->qos.bcast.skip);
+-
+-	return TRUE;
+-}
+-
+-static gboolean get_sync_timeout(const GDBusPropertyTable *property,
+-					DBusMessageIter *iter, void *data)
+-{
+-	struct media_transport *transport = data;
+-	struct bap_transport *bap = transport->data;
+-
+-	dbus_message_iter_append_basic(iter, DBUS_TYPE_UINT16,
+-					&bap->qos.bcast.sync_timeout);
+-
+-	return TRUE;
+-}
+-
+-static gboolean get_sync_cte_type(const GDBusPropertyTable *property,
+-					DBusMessageIter *iter, void *data)
+-{
+-	struct media_transport *transport = data;
+-	struct bap_transport *bap = transport->data;
+-
+-	dbus_message_iter_append_basic(iter, DBUS_TYPE_BYTE,
+-					&bap->qos.bcast.sync_cte_type);
+-
+-	return TRUE;
+-}
+-
+-static gboolean get_mse(const GDBusPropertyTable *property,
+-					DBusMessageIter *iter, void *data)
+-{
+-	struct media_transport *transport = data;
+-	struct bap_transport *bap = transport->data;
+-
+-	dbus_message_iter_append_basic(iter, DBUS_TYPE_BYTE,
+-					&bap->qos.bcast.mse);
+-
+-	return TRUE;
+-}
+-
+-static gboolean get_timeout(const GDBusPropertyTable *property,
+-					DBusMessageIter *iter, void *data)
+-{
+-	struct media_transport *transport = data;
+-	struct bap_transport *bap = transport->data;
+-
+-	dbus_message_iter_append_basic(iter, DBUS_TYPE_UINT16,
+-					&bap->qos.bcast.timeout);
+-
+-	return TRUE;
++	return bap->qos.ucast.io_qos.phy != 0x00;
+ }
  
--	:uint16 Latency:
-+		Indicates configured transport presentation delay (us).
+ static const GDBusPropertyTable bap_ucast_properties[] = {
+@@ -1205,15 +979,7 @@ static const GDBusPropertyTable bap_ucast_properties[] = {
+ 	{ "Codec", "y", get_codec },
+ 	{ "Configuration", "ay", get_configuration },
+ 	{ "State", "s", get_state },
+-	{ "CIG", "y", get_cig, NULL, qos_exists },
+-	{ "CIS", "y", get_cis, NULL, qos_exists },
+-	{ "Interval", "u", get_interval, NULL, qos_exists },
+-	{ "Framing", "b", get_framing, NULL, qos_exists },
+-	{ "PHY", "y", get_phy, NULL, qos_exists },
+-	{ "SDU", "q", get_sdu, NULL, qos_exists },
+-	{ "Retransmissions", "y", get_retransmissions, NULL, qos_exists },
+-	{ "Latency", "q", get_latency, NULL, qos_exists },
+-	{ "Delay", "u", get_delay, NULL, qos_exists },
++	{ "QoS", "a{sv}", get_ucast_qos, NULL, qos_ucast_exists },
+ 	{ "Endpoint", "o", get_endpoint, NULL, endpoint_exists },
+ 	{ "Location", "u", get_location },
+ 	{ "Metadata", "ay", get_metadata },
+@@ -1221,6 +987,61 @@ static const GDBusPropertyTable bap_ucast_properties[] = {
+ 	{ }
+ };
  
--		Indicates configured transport latency.
-+	:byte TargetLatency:
++static gboolean get_bcast_qos(const GDBusPropertyTable *property,
++					DBusMessageIter *iter, void *data)
++{
++	struct media_transport *transport = data;
++	struct bap_transport *bap = transport->data;
++	DBusMessageIter dict;
 +
-+		Indicates the requested target latency.
++	dbus_message_iter_open_container(iter, DBUS_TYPE_ARRAY,
++					DBUS_DICT_ENTRY_BEGIN_CHAR_AS_STRING
++					DBUS_TYPE_STRING_AS_STRING
++					DBUS_TYPE_VARIANT_AS_STRING
++					DBUS_DICT_ENTRY_END_CHAR_AS_STRING,
++					&dict);
 +
-+		Possible values:
++	dict_append_entry(&dict, "BIG", DBUS_TYPE_BYTE,
++					&bap->qos.bcast.big);
++	dict_append_entry(&dict, "BIS", DBUS_TYPE_BYTE,
++					&bap->qos.bcast.bis);
++	dict_append_entry(&dict, "SyncFactor", DBUS_TYPE_BYTE,
++					&bap->qos.bcast.sync_factor);
++	dict_append_entry(&dict, "Packing", DBUS_TYPE_BYTE,
++					&bap->qos.bcast.packing);
++	dict_append_entry(&dict, "Framing", DBUS_TYPE_BYTE,
++					&bap->qos.bcast.framing);
++	if (bap->qos.bcast.bcode)
++		dict_append_array(&dict, "BCode", DBUS_TYPE_BYTE,
++					&bap->qos.bcast.bcode->iov_base,
++					bap->qos.bcast.bcode->iov_len);
++	dict_append_entry(&dict, "Options", DBUS_TYPE_BYTE,
++					&bap->qos.bcast.options);
++	dict_append_entry(&dict, "Skip", DBUS_TYPE_UINT16,
++					&bap->qos.bcast.skip);
++	dict_append_entry(&dict, "SyncTimeout", DBUS_TYPE_UINT16,
++					&bap->qos.bcast.sync_timeout);
++	dict_append_entry(&dict, "SyncType", DBUS_TYPE_BYTE,
++					&bap->qos.bcast.sync_cte_type);
++	dict_append_entry(&dict, "MSE", DBUS_TYPE_BYTE,
++					&bap->qos.bcast.mse);
++	dict_append_entry(&dict, "Timeout", DBUS_TYPE_UINT16,
++					&bap->qos.bcast.timeout);
 +
-+		:0x01:
++	append_io_qos(&dict, &bap->qos.bcast.io_qos);
 +
-+			Low Latency.
++	dbus_message_iter_close_container(iter, &dict);
 +
-+		:0x02:
++	return TRUE;
++}
 +
-+			Balanced Latency/Reliability.
++static gboolean qos_bcast_exists(const GDBusPropertyTable *property, void *data)
++{
++	struct media_transport *transport = data;
++	struct bap_transport *bap = transport->data;
 +
-+		:0x03:
-+
-+			High Reliability.
++	return bap->qos.bcast.io_qos.phy != 0x00;
++}
  
- 	Possible values for Broadcast:
+ static const GDBusPropertyTable bap_bcast_properties[] = {
+ 	{ "Device", "o", get_device },
+@@ -1228,17 +1049,7 @@ static const GDBusPropertyTable bap_bcast_properties[] = {
+ 	{ "Codec", "y", get_codec },
+ 	{ "Configuration", "ay", get_configuration },
+ 	{ "State", "s", get_state },
+-	{ "BIG", "y", get_big, NULL, qos_exists },
+-	{ "BIS", "y", get_bis, NULL, qos_exists },
+-	{ "SyncInterval", "y", get_sync_interval, NULL, qos_exists },
+-	{ "Packing", "y", get_packing, NULL, qos_exists },
+-	{ "BCode", "ay", get_bcode, NULL, qos_exists },
+-	{ "Options", "y", get_options, NULL, qos_exists },
+-	{ "Skip", "q", get_skip, NULL, qos_exists },
+-	{ "SyncTimeout", "q", get_sync_timeout, NULL, qos_exists },
+-	{ "SyncCteType", "y", get_sync_cte_type, NULL, qos_exists },
+-	{ "MSE", "y", get_mse, NULL, qos_exists },
+-	{ "Timeout", "q", get_timeout, NULL, qos_exists },
++	{ "QoS", "a{sv}", get_bcast_qos, NULL, qos_bcast_exists },
+ 	{ "Endpoint", "o", get_endpoint, NULL, endpoint_exists },
+ 	{ "Location", "u", get_location },
+ 	{ "Metadata", "ay", get_metadata },
+@@ -1466,31 +1277,7 @@ static void bap_update_qos(const struct media_transport *transport)
  
-@@ -1022,26 +1071,74 @@ dict QoS [readonly, optional, ISO only, experimental]
+ 	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+ 			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"CIG");
+-	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+-			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"CIS");
+-	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+-			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"Interval");
+-	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+-			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"Framing");
+-	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+-			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"PHY");
+-	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+-			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"SDU");
+-	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+-			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"Retransmissions");
+-	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+-			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"Latency");
+-	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+-			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"Delay");
++			"QoS");
+ }
  
- 		Indicates configured BIS.
+ static gboolean bap_resume_complete_cb(void *data)
+@@ -1533,55 +1320,7 @@ static void bap_update_bcast_qos(const struct media_transport *transport)
  
--	:uint32 SyncFactor:
-+	:byte SyncFactor:
+ 	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+ 			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"BIG");
+-	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+-			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"BIS");
+-	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+-			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"SyncInterval");
+-	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+-			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"Packing");
+-	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+-			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"Framing");
+-	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+-			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"BCode");
+-	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+-			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"Options");
+-	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+-			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"Skip");
+-	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+-			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"SyncTimeout");
+-	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+-			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"SyncCteType");
+-	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+-			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"MSE");
+-	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+-			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"Timeout");
+-	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+-			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"Interval");
+-	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+-			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"Latency");
+-	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+-			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"PHY");
+-	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+-			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"SDU");
+-	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+-			transport->path, MEDIA_TRANSPORT_INTERFACE,
+-			"RTN");
++			"QoS");
+ 	g_dbus_emit_property_changed(btd_get_dbus_connection(),
+ 			transport->path, MEDIA_TRANSPORT_INTERFACE,
+ 			"Codec");
+diff --git a/src/shared/bap.h b/src/shared/bap.h
+index edb5c1bed27e..e4eae86502f3 100644
+--- a/src/shared/bap.h
++++ b/src/shared/bap.h
+@@ -75,7 +75,7 @@ struct bt_bap_ucast_qos {
+ struct bt_bap_bcast_qos {
+ 	uint8_t  big;
+ 	uint8_t  bis;
+-	uint8_t  sync_interval;
++	uint8_t  sync_factor;
+ 	uint8_t  packing;
+ 	uint8_t  framing;
+ 	uint8_t  encryption;
+diff --git a/src/shared/bass.c b/src/shared/bass.c
+index 86dab03e3993..37255aff64f3 100644
+--- a/src/shared/bass.c
++++ b/src/shared/bass.c
+@@ -102,7 +102,7 @@ static struct bt_iso_qos default_qos = {
+ 	.bcast = {
+ 		.big			= BT_ISO_QOS_BIG_UNSET,
+ 		.bis			= BT_ISO_QOS_BIS_UNSET,
+-		.sync_interval		= 0x07,
++		.sync_factor		= 0x07,
+ 		.packing		= 0x00,
+ 		.framing		= 0x00,
+ 		.in			= DEFAULT_IO_QOS,
+diff --git a/tools/iso-tester.c b/tools/iso-tester.c
+index 80f72221e7f0..36879d9fc112 100644
+--- a/tools/iso-tester.c
++++ b/tools/iso-tester.c
+@@ -247,7 +247,7 @@
+ 	.bcast = { \
+ 		.big = _big, \
+ 		.bis = _bis, \
+-		.sync_interval = 0x07, \
++		.sync_factor = 0x07, \
+ 		.packing = 0x00, \
+ 		.framing = 0x00, \
+ 		.in = _in, \
+@@ -1712,9 +1712,9 @@ static bool check_bcast_qos(const struct bt_iso_qos *qos1,
+ 		return false;
+ 	}
  
--		Indicates configured sync factor.
-+		Indicates configured broadcast sync factor.
+-	if (qos1->bcast.sync_interval != qos2->bcast.sync_interval) {
++	if (qos1->bcast.sync_factor != qos2->bcast.sync_factor) {
+ 		tester_warn("Unexpected QoS sync interval: 0x%02x != 0x%02x",
+-			qos1->bcast.sync_interval, qos2->bcast.sync_interval);
++			qos1->bcast.sync_factor, qos2->bcast.sync_factor);
+ 		return false;
+ 	}
  
--	:uint32 Interval:
-+	:byte Packing:
- 
--		Indicates configured ISO interval.
-+		Indicates configured packing.
- 
--	:byte PHY:
-+	:byte Framing:
- 
--		Indicates configured PHY.
-+		Indicates configured framing.
- 
--	:uint16 SDU:
-+	:byte Options:
- 
--		Indicates configured maximum SDU.
-+		Indicates configured broadcast options.
-+
-+	:uint16 Skip:
-+
-+		Indicates configured broadcast skip.
- 
- 	:byte SyncTimeout:
- 
- 		Indicates configured broadcast sync timeout.
- 
-+	:byte SyncType:
-+
-+		Indicates configured broadcast sync CTE type.
-+
-+	:byte MSE:
-+
-+		Indicates configured broadcast MSE.
-+
-+	:uint16 Timeout:
-+
-+		Indicates configured broadcast timeout.
-+
-+	Possible values for both Unicast and Broadcast:
-+
-+	:uint32 Interval:
-+
-+		Indicates configured ISO interval (us).
-+
- 	:uint16 Latency:
- 
--		Indicates configured transport latency.
-+		Indicates configured transport latency (ms).
-+
-+	:uint16 SDU:
-+
-+		Indicates configured maximum SDU.
-+
-+	:byte PHY:
-+
-+		Indicates configured PHY.
-+
-+		Possible values:
-+
-+		:bit 0:
-+
-+			LE 1M
-+
-+		:bit 1:
-+
-+			LE 2M
-+
-+		:bit 2:
-+
-+			LE Coded
-+
-+	:byte Retransmissions:
-+
-+		Indicates configured retransmissions.
+diff --git a/tools/isotest.c b/tools/isotest.c
+index 9bbd861a92ca..4b64ea5bfa8c 100644
+--- a/tools/isotest.c
++++ b/tools/isotest.c
+@@ -1028,7 +1028,7 @@ static void multy_connect_mode(char *peer)
+ 	.bcast = { \
+ 		.big = BT_ISO_QOS_BIG_UNSET, \
+ 		.bis = BT_ISO_QOS_BIS_UNSET, \
+-		.sync_interval = 0x07, \
++		.sync_factor = 0x07, \
+ 		.packing = 0x00, \
+ 		.framing = 0x00, \
+ 		.out = QOS_IO(_interval, _latency, _sdu, _phy, _rtn), \
 -- 
 2.41.0
 
