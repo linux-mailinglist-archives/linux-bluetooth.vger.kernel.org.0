@@ -2,46 +2,48 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 80C267B74B6
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Oct 2023 01:20:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 229697B74B9
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Oct 2023 01:20:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235285AbjJCXUe (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 3 Oct 2023 19:20:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47848 "EHLO
+        id S234460AbjJCXUg (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 3 Oct 2023 19:20:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235166AbjJCXUd (ORCPT
+        with ESMTP id S235111AbjJCXUc (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 3 Oct 2023 19:20:33 -0400
+        Tue, 3 Oct 2023 19:20:32 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE52EB4
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3FFBE8
         for <linux-bluetooth@vger.kernel.org>; Tue,  3 Oct 2023 16:20:29 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 3E96CC433C7;
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 46CC8C433C9;
         Tue,  3 Oct 2023 23:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1696375229;
-        bh=ehYrD4zXwvJPWzahML2a/wbsaszioVaGbZzGsslQXsY=;
+        bh=rxWsuLcW2GdFoA1u2njszkkDPFTK++0xHcA1ZXRyQv4=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=qYOvHLveC9RJ8L+gOUhNB6E7i4jVLjb2+N6+/dUsSwVUkUFdRYYeYznSi8EH3ONPj
-         8S4G+0oNmDs9cki5eush0kbNoRDhyimS0OjGa66Y2+3huHKPsZvRMVPZVz1gfAN2do
-         4XtBiZq2FdaiEL9mFPRhZCNJDX7ZzlPXyxqimc6ER6LraMm8VpU13I5V2jzVAx0QS3
-         NPy6ZqeF+0Rq4/toFvB71x5ZqwGEAbbfLkA242O8+OUYqKTLM7mhSpa3n4CB8qSEys
-         3JAY7W//T4TUazk1EYdzCjs2PtMSUyUF3EqPYQbZ5LoRVUkshtxmwAUQ7hmYG1K3cn
-         FX3WPc01icHyA==
+        b=nfD7QcGdyt29PghJkTn8znoaIqq+ni+K/RNTIN+RxPpLZufKe4QYwrlO17o9C1Dyi
+         RnwytQIL4ZgcVBtTkC0LwLlc1XelbojRRunaq+liFLQ1EA7pzHyDq/Zvs4nuEbOQb/
+         KdPrPYHX9fN1eZPFft1K6kzFVNAHeiKLuHliwGAQR6ZTR3NnH77Dj5UBGmwOpzgEDN
+         YkV7ou2EAOUTvHtrth08XUFzQbi/Ogg29xZAFhyrgBLNCHlDN5rJJSaspE61L+/8tO
+         jksdTKC9NTAodiGRS3A9LXHkz3lT9CZpRqZTtanfaUgHEZSD/xDxJXMESFI2Sgd5KT
+         ZkzJ8q4sLKnfw==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 27DB9C595D2;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 2F789E270EF;
         Tue,  3 Oct 2023 23:20:29 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ 1/6] shared/csip: Fix returning invalid data to
- attribute Size reads
+Subject: Re: [PATCH BlueZ 0/1] iso-tester: Add test for bcast AC 13 BIS unset
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <169637522915.21629.5652337863475710909.git-patchwork-notify@kernel.org>
+Message-Id: <169637522919.21629.12052597362468031555.git-patchwork-notify@kernel.org>
 Date:   Tue, 03 Oct 2023 23:20:29 +0000
-References: <20231002231311.3104749-1-luiz.dentz@gmail.com>
-In-Reply-To: <20231002231311.3104749-1-luiz.dentz@gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org
+References: <20231003143840.3009-1-iulia.tanasescu@nxp.com>
+In-Reply-To: <20231003143840.3009-1-iulia.tanasescu@nxp.com>
+To:     Iulia Tanasescu <iulia.tanasescu@nxp.com>
+Cc:     linux-bluetooth@vger.kernel.org, claudia.rosu@nxp.com,
+        mihai-octavian.urzica@nxp.com, silviu.barbulescu@nxp.com,
+        vlad.pruteanu@nxp.com, andrei.istodorescu@nxp.com,
+        luiz.dentz@gmail.com
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -53,31 +55,24 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This series was applied to bluetooth/bluez.git (master)
+This patch was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Mon,  2 Oct 2023 16:13:05 -0700 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+On Tue,  3 Oct 2023 17:38:39 +0300 you wrote:
+> This adds a new test for the ISO Broadcast AC 13, when the BIG handle
+> is set but the advertising handle is unset.
 > 
-> The attribute Size value is stored in the size_val not on size member
-> which represents the attribute object.
-> ---
->  src/shared/csip.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+> This test depends on the kernel support implemented in
+> Bluetooth: ISO: Match QoS adv handle with BIG handle
+> 
+> Iulia Tanasescu (1):
+>   iso-tester: Add test for bcast AC 13 BIS unset
+> 
+> [...]
 
 Here is the summary with links:
-  - [BlueZ,1/6] shared/csip: Fix returning invalid data to attribute Size reads
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=b938b05559d3
-  - [BlueZ,2/6] shared/csip: Fix not requiring encryption
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=a1920af6f81f
-  - [BlueZ,3/6] shared/csip: Fix not always reading SIRK value
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=65b53b0d3a88
-  - [BlueZ,4/6] device: Add btd_device_get_ltk
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=c35304f32c42
-  - [BlueZ,5/6] csip: Add support for SIRK encryption
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=267bf36d844b
-  - [BlueZ,6/6] main.conf: Fix default of CSIS.encrypt
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=954b8e5324fd
+  - [BlueZ,1/1] iso-tester: Add test for bcast AC 13 BIS unset
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=232f6f68531b
 
 You are awesome, thank you!
 -- 
