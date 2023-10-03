@@ -2,46 +2,48 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F4127B6F4B
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  3 Oct 2023 19:10:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BED7E7B6F4D
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  3 Oct 2023 19:10:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231828AbjJCRKd (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 3 Oct 2023 13:10:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51130 "EHLO
+        id S231687AbjJCRKf (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 3 Oct 2023 13:10:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230422AbjJCRKc (ORCPT
+        with ESMTP id S231560AbjJCRKc (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Tue, 3 Oct 2023 13:10:32 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02A2FA7
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 085D1AC
         for <linux-bluetooth@vger.kernel.org>; Tue,  3 Oct 2023 10:10:28 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 9BBA1C433C8;
+Received: by smtp.kernel.org (Postfix) with ESMTPS id A42FAC433CC;
         Tue,  3 Oct 2023 17:10:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1696353027;
-        bh=sffx/fc2QiY2yopVmvlFFzi0A5WGVXMiOIaGg2Ta9tc=;
+        bh=U38/2kPU87h89iGrMM/iIVzteSQ/D1j5owmBDUG8vR4=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=MzvXx6hIxkx28nV1ak+KnfgOspASZTTH1MH9rAOg/zTPR9jpdxcAy/u4G3NCXHJGZ
-         xzIdSBNUiGXdgRGr/QqD9QoLvIFCilFRL5yRjAVrorjL34o0rrQK+QTrswiUOc3qPq
-         mOk3wxbw55FHNTSZQlK9WzyOPDYpkRN9iKQ1peMhqnfve1nKYPBu7HAZLzsZu6x2tN
-         UKWYQ8vW2Q5sbEKaEA+MbQMH1VbpKj7xdk0jc2KzJmV42Kei2s1b431N6ntBADU7Jv
-         CW9pe4swH4imFNgSi6Zrp4triofP1Npk6M59Atr87isa2v0Fa2TR4THqfxLQAli0+x
-         lpolrUHJ7An1w==
+        b=a85+iWcMSwv40hNqnjEBvCupQcK8/1rl6y2JtKVkMFYa1yy9w9FeVN8XMQPJN/Jzr
+         epg9Sev0z6CJT/IQRkoFfHb9b7if8ttS3/g8RIV9UdrfSQ5uAuY2q0ucSLfE/T1CBK
+         n7bwamzukFAlokWKjx6Ugm0nMG/Vcy2KgqRr/Czu0gTNpraDFc3ZFRYMhzTVeF2Jd7
+         oaRJ842Gey4mz/pM7KPE4HwkXzi57peicEy/5PfOh/9KzYzp+NZaq5OAv8XfO42CRo
+         iltvwHvJoN8mjzmoq1yo5Q27RqAYenoZRhUALRj+UM0aGFWCbZGumWXhCXlgDUcubj
+         4Qzeo3k+yYfHQ==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 79A6EE632D1;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 82CBFE270F0;
         Tue,  3 Oct 2023 17:10:27 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 1/2] Bluetooth: hci_sync: always check if connection is
- alive before deleting
+Subject: Re: [PATCH 0/1] Bluetooth: ISO: Allow binding a bcast listener to 0 bises
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <169635302749.22624.6754938752814022940.git-patchwork-notify@kernel.org>
+Message-Id: <169635302753.22624.4352431595380418619.git-patchwork-notify@kernel.org>
 Date:   Tue, 03 Oct 2023 17:10:27 +0000
-References: <53130b4a5fb21a15f2674c336282d25ef5d2232e.1696077070.git.pav@iki.fi>
-In-Reply-To: <53130b4a5fb21a15f2674c336282d25ef5d2232e.1696077070.git.pav@iki.fi>
-To:     Pauli Virtanen <pav@iki.fi>
-Cc:     linux-bluetooth@vger.kernel.org
+References: <20231003144933.3462-1-iulia.tanasescu@nxp.com>
+In-Reply-To: <20231003144933.3462-1-iulia.tanasescu@nxp.com>
+To:     Iulia Tanasescu <iulia.tanasescu@nxp.com>
+Cc:     linux-bluetooth@vger.kernel.org, claudia.rosu@nxp.com,
+        mihai-octavian.urzica@nxp.com, silviu.barbulescu@nxp.com,
+        vlad.pruteanu@nxp.com, andrei.istodorescu@nxp.com,
+        luiz.dentz@gmail.com
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -54,25 +56,24 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This series was applied to bluetooth/bluetooth-next.git (master)
+This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Sat, 30 Sep 2023 15:53:32 +0300 you wrote:
-> In hci_abort_conn_sync it is possible that conn is deleted concurrently
-> by something else, also e.g. when waiting for hdev->lock.  This causes
-> double deletion of the conn, so UAF or conn_hash.list corruption.
+On Tue,  3 Oct 2023 17:49:32 +0300 you wrote:
+> Some Broadcast scenarios require for a broadcast listener to listen for
+> a broadcaster only for PA sync.
 > 
-> Fix by having all code paths check that the connection is still in
-> conn_hash before deleting it, while holding hdev->lock which prevents
-> any races.
+> This patch adds support for binding to a broadcaster address without
+> asking for any BIS to sync with.
+> 
+> Iulia Tanasescu (1):
+>   Bluetooth: ISO: Allow binding a bcast listener to 0 bises
 > 
 > [...]
 
 Here is the summary with links:
-  - [v2,1/2] Bluetooth: hci_sync: always check if connection is alive before deleting
-    https://git.kernel.org/bluetooth/bluetooth-next/c/32f6776f0083
-  - [v2,2/2] Bluetooth: hci_conn: verify connection is to be aborted before doing it
-    (no matching commit)
+  - [1/1] Bluetooth: ISO: Allow binding a bcast listener to 0 bises
+    https://git.kernel.org/bluetooth/bluetooth-next/c/8e437e71f361
 
 You are awesome, thank you!
 -- 
