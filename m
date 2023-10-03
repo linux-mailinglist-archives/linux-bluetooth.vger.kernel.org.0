@@ -2,82 +2,164 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A7897B6F4C
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  3 Oct 2023 19:10:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6769F7B7045
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  3 Oct 2023 19:49:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231620AbjJCRKe (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 3 Oct 2023 13:10:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51118 "EHLO
+        id S232071AbjJCRta (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 3 Oct 2023 13:49:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230119AbjJCRKc (ORCPT
+        with ESMTP id S240669AbjJCRtZ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 3 Oct 2023 13:10:32 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8866A6
-        for <linux-bluetooth@vger.kernel.org>; Tue,  3 Oct 2023 10:10:27 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 8D9D3C433CB;
-        Tue,  3 Oct 2023 17:10:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1696353027;
-        bh=uNBTgcYyguK5XuakEVSI2EyDw6sBp3x3OJpV45EPuac=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=rXiuEhhiIIGvbEugXeyAnS+ozVk4tNAj0tM/zc+02NWODIRXcHUz6rNy/3FosC/8g
-         m4PZC7fB8k8gsK34rxGnVYz+pskZZLMkiYu1HzlWh24JGW0xYOpZ71d/WMO2Rn2m0d
-         9Gj6A5xdiARDMU6zOPrf1ZY2KU+aRd2CcClBZ5ldVMG5c94NoUqVTm70CN6V8nlXhn
-         mHzRxiDhuRSU/arfkDBWXXb8j9xdIwf9KfYpVdsh68tYmgEiiGyqY80XoqILarr4B6
-         CEtpwLMVK99uYkCCD0ohW8ydIcZfte3SM7x0+Z9xg5s7CiS+LfK933CIaiFRFMfo8Q
-         gwqonh+NzoW+A==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 6F845E632D8;
-        Tue,  3 Oct 2023 17:10:27 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Tue, 3 Oct 2023 13:49:25 -0400
+Received: from meesny.iki.fi (meesny.iki.fi [IPv6:2001:67c:2b0:1c1::201])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE62D8E
+        for <linux-bluetooth@vger.kernel.org>; Tue,  3 Oct 2023 10:49:21 -0700 (PDT)
+Received: from monolith.lan (91-152-120-176.elisa-laajakaista.fi [91.152.120.176])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: pav)
+        by meesny.iki.fi (Postfix) with ESMTPSA id 4S0QLQ0ksVzyRq;
+        Tue,  3 Oct 2023 20:49:16 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
+        t=1696355359;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=M5k91QPsDI3nSGiLWU40+DcpGwSOpNfwfI5MNpLeW7A=;
+        b=drmerg0oS/31TKf/xJZSU9RnZfX/NDf442hFLMjmqAMEUuHjGJtLEmiPVa5qjoQM5V6ZKm
+        5gkIToHlWkv3Dd+N+ZeMWF/qrZGy2MGo0buw+xUOfnRt26DAm1SdPalaynXCu5n7yi0BYb
+        xKEJwdpkqUMQ5LOgEMoD2Xdz/2LHKbM=
+ARC-Seal: i=1; s=meesny; d=iki.fi; t=1696355359; a=rsa-sha256; cv=none;
+        b=I/cOEhyJ63XS0V2/PLTRwu8MEsQijSSDJLAge+Q5ef/NFtPzh6UFOxIvyx2Ur+35LLc16k
+        qFuuDYCyQS5LxUVplUlVaF8JVfWCbBiUPqIszHptxFx69LGnqLHXu0rzOqoxy09waFKNvO
+        LixZrpuGIWND0s/35V9e1shjSDSvJVk=
+ARC-Authentication-Results: i=1;
+        ORIGINATING;
+        auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
+        s=meesny; t=1696355359;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=M5k91QPsDI3nSGiLWU40+DcpGwSOpNfwfI5MNpLeW7A=;
+        b=Yvnhk18g37+IpoIY5a/vc0McTldsmBm8RlwwM85ifCp+5dR6ddk+xB8nIHQiL9oHT18OL3
+        /gv9udXS1C9wqHTiVEflgetIYUhDR+FdfEurMRyGq0eohJ4u22pMy6zAUer9aXt3CMrhOH
+        Hl+1M/rVmSA2ielbHAoSWcxF7dtBpfU=
+From:   Pauli Virtanen <pav@iki.fi>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Pauli Virtanen <pav@iki.fi>
+Subject: [PATCH BlueZ v2 1/2] bap: use MediaEndpoint related properties consistently
+Date:   Tue,  3 Oct 2023 20:49:13 +0300
+Message-ID: <112613bc64e4d17573b75a9d245b5fe5e51b5fa1.1696354690.git.pav@iki.fi>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 0/1] Bluetooth: ISO: Match QoS adv handle with BIG handle
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <169635302745.22624.9791942110142970744.git-patchwork-notify@kernel.org>
-Date:   Tue, 03 Oct 2023 17:10:27 +0000
-References: <20231003143739.2925-1-iulia.tanasescu@nxp.com>
-In-Reply-To: <20231003143739.2925-1-iulia.tanasescu@nxp.com>
-To:     Iulia Tanasescu <iulia.tanasescu@nxp.com>
-Cc:     linux-bluetooth@vger.kernel.org, claudia.rosu@nxp.com,
-        mihai-octavian.urzica@nxp.com, silviu.barbulescu@nxp.com,
-        vlad.pruteanu@nxp.com, andrei.istodorescu@nxp.com,
-        luiz.dentz@gmail.com
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
-        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+Use the documented name "MaximumLatency" for the MediaEndpoint QoS
+Max_Transport_Latency field, in SelectProperties input parameters and
+expected client MediaEndpoint properties.
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+Put QoS fields to a "QoS" dict in SelectProperties input.
 
-On Tue,  3 Oct 2023 17:37:38 +0300 you wrote:
-> Currently, if the user wants to bind multiple broadcast sockets to the
-> same BIG handle, the BIG and BIS fields of the QoS structs must be set
-> and identical for all sockets.
-> 
-> It means that the user must remember both the BIG handle and the
-> associated advertising handle that the BIG will be opened for.
-> This information is redundant, since one BIG handle may only be
-> associated with an unique adv handle.
-> 
-> [...]
+Use the name "Locations" for SelectProperties supported locations input
+parameter, to match the MediaEndpoint property name which indicates the
+same thing.
+---
 
-Here is the summary with links:
-  - [1/1] Bluetooth: ISO: Match QoS adv handle with BIG handle
-    https://git.kernel.org/bluetooth/bluetooth-next/c/cffdc28aa2e2
+Notes:
+    v2: put SelectProperties QoS things to "QoS" dict
 
-You are awesome, thank you!
+ profiles/audio/media.c | 41 +++++++++++++++++++++++++++++++----------
+ 1 file changed, 31 insertions(+), 10 deletions(-)
+
+diff --git a/profiles/audio/media.c b/profiles/audio/media.c
+index 8345487d7..4bffc9cde 100644
+--- a/profiles/audio/media.c
++++ b/profiles/audio/media.c
+@@ -965,7 +965,7 @@ static int pac_select(struct bt_bap_pac *lpac, struct bt_bap_pac *rpac,
+ 
+ 	loc = bt_bap_pac_get_locations(rpac);
+ 	if (loc)
+-		g_dbus_dict_append_entry(&dict, "Location", DBUS_TYPE_UINT32,
++		g_dbus_dict_append_entry(&dict, "Locations", DBUS_TYPE_UINT32,
+ 									&loc);
+ 
+ 	if (metadata) {
+@@ -977,26 +977,47 @@ static int pac_select(struct bt_bap_pac *lpac, struct bt_bap_pac *rpac,
+ 	}
+ 
+ 	if (qos && qos->phy) {
+-		g_dbus_dict_append_entry(&dict, "Framing", DBUS_TYPE_BYTE,
++		DBusMessageIter entry, variant, qos_dict;
++
++		key = "QoS";
++		dbus_message_iter_open_container(&dict, DBUS_TYPE_DICT_ENTRY,
++								NULL, &entry);
++		dbus_message_iter_append_basic(&entry, DBUS_TYPE_STRING, &key);
++		dbus_message_iter_open_container(&entry, DBUS_TYPE_VARIANT,
++							"a{sv}", &variant);
++		dbus_message_iter_open_container(&variant, DBUS_TYPE_ARRAY,
++							"{sv}", &qos_dict);
++
++		g_dbus_dict_append_entry(&qos_dict, "PreferredMaximumDelay",
++					DBUS_TYPE_UINT32, &qos->ppd_min);
++
++		g_dbus_dict_append_entry(&qos_dict, "PreferredMaximumDelay",
++					DBUS_TYPE_UINT32, &qos->ppd_min);
++
++		g_dbus_dict_append_entry(&qos_dict, "Framing", DBUS_TYPE_BYTE,
+ 							&qos->framing);
+ 
+-		g_dbus_dict_append_entry(&dict, "PHY", DBUS_TYPE_BYTE,
++		g_dbus_dict_append_entry(&qos_dict, "PHY", DBUS_TYPE_BYTE,
+ 							&qos->phy);
+ 
+-		g_dbus_dict_append_entry(&dict, "Latency", DBUS_TYPE_UINT16,
+-							&qos->latency);
++		g_dbus_dict_append_entry(&qos_dict, "MaximumLatency",
++					DBUS_TYPE_UINT16, &qos->latency);
+ 
+-		g_dbus_dict_append_entry(&dict, "MinimumDelay",
++		g_dbus_dict_append_entry(&qos_dict, "MinimumDelay",
+ 					DBUS_TYPE_UINT32, &qos->pd_min);
+ 
+-		g_dbus_dict_append_entry(&dict, "MaximumDelay",
++		g_dbus_dict_append_entry(&qos_dict, "MaximumDelay",
+ 					DBUS_TYPE_UINT32, &qos->pd_max);
+ 
+-		g_dbus_dict_append_entry(&dict, "PreferredMinimumDelay",
++		g_dbus_dict_append_entry(&qos_dict, "PreferredMinimumDelay",
+ 					DBUS_TYPE_UINT32, &qos->ppd_min);
+ 
+-		g_dbus_dict_append_entry(&dict, "PreferredMaximumDelay",
++		g_dbus_dict_append_entry(&qos_dict, "PreferredMaximumDelay",
+ 					DBUS_TYPE_UINT32, &qos->ppd_min);
++
++		dbus_message_iter_close_container(&variant, &qos_dict);
++		dbus_message_iter_close_container(&entry, &variant);
++		dbus_message_iter_close_container(&dict, &entry);
+ 	}
+ 
+ 	dbus_message_iter_close_container(&iter, &dict);
+@@ -2749,7 +2770,7 @@ static void app_register_endpoint(void *data, void *user_data)
+ 		dbus_message_iter_get_basic(&iter, &qos.phy);
+ 	}
+ 
+-	if (g_dbus_proxy_get_property(proxy, "Latency", &iter)) {
++	if (g_dbus_proxy_get_property(proxy, "MaximumLatency", &iter)) {
+ 		if (dbus_message_iter_get_arg_type(&iter) != DBUS_TYPE_UINT16)
+ 			goto fail;
+ 
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.41.0
 
