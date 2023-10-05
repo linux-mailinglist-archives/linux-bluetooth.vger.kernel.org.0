@@ -2,46 +2,47 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B2FA67BABB5
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 Oct 2023 23:00:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A21307BABB7
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 Oct 2023 23:00:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231584AbjJEVAa (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 5 Oct 2023 17:00:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54362 "EHLO
+        id S231640AbjJEVAb (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 5 Oct 2023 17:00:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229535AbjJEVA3 (ORCPT
+        with ESMTP id S230029AbjJEVA3 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Thu, 5 Oct 2023 17:00:29 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70DEC95
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76F2C9F
         for <linux-bluetooth@vger.kernel.org>; Thu,  5 Oct 2023 14:00:28 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 1395BC433CB;
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 1D544C433CD;
         Thu,  5 Oct 2023 21:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1696539628;
-        bh=r+hoYA0Ghf7jPovthBLF/x/QCKvqa1Kj9Wixa6TygyI=;
+        bh=XezX4ACnFw+z6PgQVDu2GVFQqm+UZjeAJtQ0l5CvBxk=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=H2G4B25BSlGiC7EMFdAOmONAPJKQgR8Z3fm+9BvZ85ZESamvsK2J/3g6wtBe1WB4X
-         HduiU1ML2nut51Zx+2c1I4CUePoa2FTqgxpGLbWGiUb8BTy9I89oMnt+EXPIDLmdQu
-         JhUtifv9dAIQwBWlsACYREJsftcI3o5fq7Xwt6Xuc8yL2hd0mijH122OGhQ6Ui4J42
-         qld/zRFkcWQmYIPZ/7yIt81HoL+WzDqU0mdB+zi6xuzwhwoH/O1Ufphjpox4v3daiQ
-         SaiVOdXJNhJ/dulmTuGjUevEh2oPClTtUJdzLKiVvBvFKPBDxWGXXsEzjGqW3T0BJH
-         0glJYd6wjz8hQ==
+        b=gn0TUNO1Esc0G9VoR5D2MnvS1eJ3RHrf/J5kezbKIFqi7Zrc/SzPamG09IX9tXJlm
+         XXcgyJpJfL9wdBU9P8bMsx45s812D0UD5r5t2/5l8GRXp8pWxCoKgTf3LFLKLNYPKj
+         Qm5KZxaHUMlldq3nIqYpxoI4Vj7727g3cr6jdRnwere/26ai671zdvkhc6ujbaT2cP
+         FcIwICu6ReFNNapflwEVnFF4bKptfIroInt4v6pK0N47p44sbX4ymyDk8BvgdWdNhL
+         0IHmMojRL34Ncq40UESHso/mojeJKoKxjZpl8NHVIwRhnRps7EfOOoRdAIpjHpmKJN
+         pD6pIVwH5SdLw==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id F0484E11F51;
-        Thu,  5 Oct 2023 21:00:27 +0000 (UTC)
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 035FCE632D8;
+        Thu,  5 Oct 2023 21:00:28 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ 1/2] battery: mark all battery DBus APIs
- non-experimental
+Subject: Re: [PATCH BlueZ v4 0/2] MICP-MICS implementation's memory fix and Unit
+ Test case's fix
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <169653962798.16076.4314419735819907678.git-patchwork-notify@kernel.org>
-Date:   Thu, 05 Oct 2023 21:00:27 +0000
-References: <ceaf8aa40e0967b01b86008b16a26bbb111a2cf6.1696524938.git.pav@iki.fi>
-In-Reply-To: <ceaf8aa40e0967b01b86008b16a26bbb111a2cf6.1696524938.git.pav@iki.fi>
-To:     Pauli Virtanen <pav@iki.fi>
-Cc:     linux-bluetooth@vger.kernel.org
+Message-Id: <169653962801.16076.5132668673425089326.git-patchwork-notify@kernel.org>
+Date:   Thu, 05 Oct 2023 21:00:28 +0000
+References: <20231005121544.306495-1-mahesh.talewad@nxp.com>
+In-Reply-To: <20231005121544.306495-1-mahesh.talewad@nxp.com>
+To:     Mahesh Talewad <mahesh.talewad@nxp.com>
+Cc:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com,
+        devyani.godbole@nxp.com, nitin.jadhav@nxp.com
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -56,23 +57,23 @@ Hello:
 This series was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Thu,  5 Oct 2023 19:57:32 +0300 you wrote:
-> Remove experimental marker from BatteryProvider1 and Battery1.Source.
+On Thu,  5 Oct 2023 15:15:42 +0300 you wrote:
+> Hello Maintainers,
 > 
-> It's common that headsets send battery information via HFP, and often
-> this is also the only way to get it. Pipewire/pulseaudio manage HFP,
-> parse the battery commands, and use the BatteryProvider API if present
-> to forward it. No problems with the API appeared here, and it's been
-> experimental for a few years, so it's useful to enable it by default
-> now.
+> This Patch series contains following points:
+> - MICP-MICS implementation[src/shared/micp.c] memory leak issue fix.
+>   Tested all mandatory PTS test cases and all are passing.
+> - MICP-MICS Unit test cases fix: Fixed the issue that was occurred
+>   when MICP-MICS Unit Test cases ran at a time.
+>   Tested all Unit Testcases and all are passing.
 > 
 > [...]
 
 Here is the summary with links:
-  - [BlueZ,1/2] battery: mark all battery DBus APIs non-experimental
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=495a582675cf
-  - [BlueZ,2/2] doc: mark battery APIs non-experimental
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=85460c32d133
+  - [BlueZ,v4,1/2] unit/test-micp.c : MICP-MICS unit test case implementation
+    (no matching commit)
+  - [BlueZ,v4,2/2] src/shared/micp.c :MICP-MICS implementation memory leak fix
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=0a749634f597
 
 You are awesome, thank you!
 -- 
