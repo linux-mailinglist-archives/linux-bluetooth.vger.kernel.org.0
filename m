@@ -2,60 +2,60 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EAE127BEF17
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 10 Oct 2023 01:29:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB0867BEF1A
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 10 Oct 2023 01:30:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379127AbjJIX37 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 9 Oct 2023 19:29:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59048 "EHLO
+        id S1379133AbjJIXaC (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 9 Oct 2023 19:30:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379101AbjJIX35 (ORCPT
+        with ESMTP id S1379118AbjJIX36 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 9 Oct 2023 19:29:57 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAC47B8
-        for <linux-bluetooth@vger.kernel.org>; Mon,  9 Oct 2023 16:29:52 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id d9443c01a7336-1c760b34d25so34356755ad.3
-        for <linux-bluetooth@vger.kernel.org>; Mon, 09 Oct 2023 16:29:52 -0700 (PDT)
+        Mon, 9 Oct 2023 19:29:58 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00268D3
+        for <linux-bluetooth@vger.kernel.org>; Mon,  9 Oct 2023 16:29:54 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id d9443c01a7336-1c63164a2b6so44790825ad.0
+        for <linux-bluetooth@vger.kernel.org>; Mon, 09 Oct 2023 16:29:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696894191; x=1697498991; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1696894193; x=1697498993; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=RPKPTrAFTaG/VuvdOhexMV8R8338ygb3Fefuv4griHI=;
-        b=Pa+3zhcAgob3WgMa3SVOn9Ewbqzx/oazzXZnUmZyspYy30xLbza42/RNJp57+biwP/
-         9NwPqvFdzAEICraY2+7Xje5b5LfFFfkLT0Uh+v9a9sO2lC3vkiNXDIcMTTppUwyvAEk7
-         65nlTpm41gJmmMRWZMx5FwurU0p+hIHOqi+4Wh1EJNq1bBf6ivYbtovqPjil3y4aBSMe
-         BnOHodfWuti7IEjV5Kd8Oz/aqMvJfqIpWZS8/6kD9UwBtJR/9oZQ31Ol1xO0+Bfl+nMQ
-         TY8HyQtZQ6Joqm0fRP3vPkx0/cEYXjkXNZD0ugc0rbGZ88FK46ma1tKhInUnKq2+RkpC
-         oSwg==
+        bh=MbKjzGfYFvrYz69Oh9xHak9Tm1bwzVG1Okvcmnq9mbQ=;
+        b=C55mzXCywGd+3OSClnkH3A6lUYFvmeLO4zn8NACyrfl3K4vEb/AxvBvSQZhjb/2Tcc
+         WrO+SvmXsnsYKOpIbrSqJi3F++BXH4pA0a8fGKMrUkYbHsbAC6WvtZ7O56vaGMlBQJu5
+         lZF+evLc6zoXcYVF6tXvgMxtxOAkugRAK+bZ2jxHcHKbO25m8Y5vdXXJYFfNxVmpgxy2
+         sm9Q4DoqMTZBXkKsLvkPQgxL7Zc5Mhu75qncX366wVSIfZHvnNKItBIklhpSKaHzS3Gi
+         m2cu3TJg+ZxNE8IV9izbfvSvts+PbXCdCQ/IYmTsnDnsPtqXP+v1SZKo2GLvqHq2cyUT
+         PBag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696894191; x=1697498991;
+        d=1e100.net; s=20230601; t=1696894193; x=1697498993;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=RPKPTrAFTaG/VuvdOhexMV8R8338ygb3Fefuv4griHI=;
-        b=DUsZHX99UZl7ELbE5Und4gI9KDehrE+v3jNnLwcW0Td/+xYCgihl93GffvEAWkJlNs
-         1GcM6+at6fepZavTp1L7zNvPTb8bBZ4HsxhMxbS2eihNwXGmRoUcImUYlaPAo0CRQy03
-         sdUlTnJfBI3BGJo78IiV6zmkQ2dnGewWdBbB51MHVkYarYSSLMbA/xU92U5fdy8MiGrV
-         0OAJL+o4TBmHZ2bLt23Av33sDlUaTZs7tdfqxJe/bEK6v5b9F72RWJyfRoKZ9sqpGnjR
-         Dm/3p03HIUETBFjGvYU953LT6oAlZNhRcTC47hNqGd+J8kFJIMehHkeuGMHhF0SIs1Cm
-         eHjQ==
-X-Gm-Message-State: AOJu0YzVVO7piX/T50dbhtgUV6DeflthSQ+rnUEeaBwP1ONR2oKncD3M
-        wNYFf1SAbp+N2awjYYPa8vvBPrtzZfdW3VPI
-X-Google-Smtp-Source: AGHT+IHe0EUo0/U8f2HltUYdGHC7Hg/DxBsV4+OTKMJBrnJnoTA6nIcY18/5f1V0iwROj68mHqnMIQ==
-X-Received: by 2002:a17:902:da8d:b0:1c0:d17a:bfe9 with SMTP id j13-20020a170902da8d00b001c0d17abfe9mr17394592plx.46.1696894191170;
-        Mon, 09 Oct 2023 16:29:51 -0700 (PDT)
+        bh=MbKjzGfYFvrYz69Oh9xHak9Tm1bwzVG1Okvcmnq9mbQ=;
+        b=nKp10qDC3dg1QCCc6PoQofccQ1fEHIQ5VuaK47eARZI7SjM6ciZVQYL2e1GyLUOwxl
+         J8Rbwzn5ELBy2RGhs90wJCKC1yAHiRa0WMlwCUHb8Zb8jJ78ONc23enIq/EPpHJ9kL/U
+         jZfLEbql9WWVJYyyOlDnWlYI4/mrHtFPKVGehpS9d8LBiIin7BeXMgFBV5TiFi+HJE/s
+         u0AagnQUi64oKXAk5A+5Xy49piiWAQm9CLvkBaV19T8pgBlJF4krylbo3qYjNzY6kHyF
+         /Chsm6pikw+/toPtu1jVte8F6/AKgpgmnFIhAIW6yUIX22sDN60R5RWC10uhOVlXw23I
+         7/mg==
+X-Gm-Message-State: AOJu0Yy6+qg6+VPjnPUWYqqaXBO/5vB0Vq/ebDGXkJ4SphAUdm6NR8kW
+        yqwbr6xcJIyzFA2kbbY6OI0tzX4emD+g1YsS
+X-Google-Smtp-Source: AGHT+IGFdZgVfENn8XCUK4IvKjVqEiiYcmmlWqCnKO6pp6tmA/FEiw1qrynQb3HdHIXidDfGha5RrQ==
+X-Received: by 2002:a17:902:c404:b0:1c9:9fa6:ce5b with SMTP id k4-20020a170902c40400b001c99fa6ce5bmr4945303plk.16.1696894193172;
+        Mon, 09 Oct 2023 16:29:53 -0700 (PDT)
 Received: from lvondent-mobl4.. (c-98-232-221-87.hsd1.or.comcast.net. [98.232.221.87])
-        by smtp.gmail.com with ESMTPSA id s20-20020a170902989400b001c5b8087fe5sm10182711plp.94.2023.10.09.16.29.49
+        by smtp.gmail.com with ESMTPSA id s20-20020a170902989400b001c5b8087fe5sm10182711plp.94.2023.10.09.16.29.51
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Oct 2023 16:29:50 -0700 (PDT)
+        Mon, 09 Oct 2023 16:29:51 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v2 09/11] doc/battery-api: Rename to org.bluez.Battery*.rst
-Date:   Mon,  9 Oct 2023 16:29:31 -0700
-Message-ID: <20231009232933.500652-9-luiz.dentz@gmail.com>
+Subject: [PATCH v2 10/11] doc/advertisement-monitor-api: Rename to org.bluez.AdvertisementMonitor*.rst
+Date:   Mon,  9 Oct 2023 16:29:32 -0700
+Message-ID: <20231009232933.500652-10-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20231009232933.500652-1-luiz.dentz@gmail.com>
 References: <20231009232933.500652-1-luiz.dentz@gmail.com>
@@ -63,7 +63,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,234 +73,262 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This renames battery-api.txt to org.bluez.Battery*.rst and generate
-manpages org.bluez.Battery*.5.
+This renames advertisement-monitor-api.txt to
+org.bluez.AdvertisementMonitor*.rst and generate manpages
+org.bluez.AdvertisementMonitor*.5.
 ---
- Makefile.am                              | 18 ++++---
- doc/battery-api.txt                      | 69 ------------------------
- doc/org.bluez.Battery.rst                | 39 ++++++++++++++
- doc/org.bluez.BatteryProvider.rst        | 32 +++++++++++
- doc/org.bluez.BatteryProviderManager.rst | 50 +++++++++++++++++
- 5 files changed, 133 insertions(+), 75 deletions(-)
- delete mode 100644 doc/battery-api.txt
- create mode 100644 doc/org.bluez.Battery.rst
- create mode 100644 doc/org.bluez.BatteryProvider.rst
- create mode 100644 doc/org.bluez.BatteryProviderManager.rst
+ Makefile.am                                   |  12 +-
+ doc/advertisement-monitor-api.txt             | 187 ------------------
+ doc/org.bluez.AdvertisementMonitor.rst        | 153 ++++++++++++++
+ doc/org.bluez.AdvertisementMonitorManager.rst |  90 +++++++++
+ 4 files changed, 252 insertions(+), 190 deletions(-)
+ delete mode 100644 doc/advertisement-monitor-api.txt
+ create mode 100644 doc/org.bluez.AdvertisementMonitor.rst
+ create mode 100644 doc/org.bluez.AdvertisementMonitorManager.rst
 
 diff --git a/Makefile.am b/Makefile.am
-index 0b62852a7a20..239d2da7bb05 100644
+index 239d2da7bb05..ae44937a50e1 100644
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -361,7 +361,9 @@ man_MANS += doc/org.bluez.Adapter.5 doc/org.bluez.Device.5 \
- 		doc/org.bluez.DeviceSet.5 doc/org.bluez.AgentManager.5 \
- 		doc/org.bluez.Agent.5 doc/org.bluez.ProfileManager.5 \
- 		doc/org.bluez.Profile.5 doc/org.bluez.NetworkServer.5 \
--		doc/org.bluez.Network.5 doc/org.bluez.Input.5
-+		doc/org.bluez.Network.5 doc/org.bluez.Input.5 \
-+		doc/org.bluez.BatteryProviderManager.5 \
-+		doc/org.bluez.BatteryProvider.5 doc/org.bluez.Battery.5
- man_MANS += doc/org.bluez.Media.5 doc/org.bluez.MediaControl.5 \
- 		doc/org.bluez.MediaPlayer.5 doc/org.bluez.MediaFolder.5 \
- 		doc/org.bluez.MediaItem.5 doc/org.bluez.MediaEndpoint.5 \
-@@ -378,7 +380,9 @@ manual_pages += doc/org.bluez.Adapter.5 doc/org.bluez.Device.5 \
- 		doc/org.bluez.DeviceSet.5 doc/org.bluez.AgentManager.5 \
- 		doc/org.bluez.Agent.5 doc/org.bluez.ProfileManager.5 \
- 		doc/org.bluez.Profile.5 doc/org.bluez.NetworkServer.5 \
--		doc/org.bluez.Network.5 doc/org.bluez.Input.5
-+		doc/org.bluez.Network.5 doc/org.bluez.Input.5\
-+		doc/org.bluez.BatteryProviderManager.5 \
-+		doc/org.bluez.BatteryProvider.5 doc/org.bluez.Battery.5
- manual_pages += doc/org.bluez.Media.5 doc/org.bluez.MediaControl.5 \
- 		doc/org.bluez.MediaPlayer.5 doc/org.bluez.MediaFolder.5 \
- 		doc/org.bluez.MediaItem.5 doc/org.bluez.MediaEndpoint.5 \
-@@ -429,10 +433,12 @@ EXTRA_DIST += doc/mgmt-api.txt \
- 		doc/sap-api.txt
+@@ -373,7 +373,9 @@ man_MANS += doc/org.bluez.GattManager.5 doc/org.bluez.GattProfile.5 \
+ 		doc/org.bluez.GattCharacteristic.5 \
+ 		doc/org.bluez.GattDescriptor.5 \
+ 		doc/org.bluez.LEAdvertisingManager.5 \
+-		doc/org.bluez.LEAdvertisement.5
++		doc/org.bluez.LEAdvertisement.5 \
++		doc/org.bluez.AdvertisementMonitorManager.5 \
++		doc/org.bluez.AdvertisementMonitor.5
+ endif
+ manual_pages += src/bluetoothd.8
+ manual_pages += doc/org.bluez.Adapter.5 doc/org.bluez.Device.5 \
+@@ -392,7 +394,9 @@ manual_pages += doc/org.bluez.GattManager.5 doc/org.bluez.GattProfile.5 \
+ 		doc/org.bluez.GattCharacteristic.5 \
+ 		doc/org.bluez.GattDescriptor.5 \
+ 		doc/org.bluez.LEAdvertisingManager.5 \
+-		doc/org.bluez.LEAdvertisement.5
++		doc/org.bluez.LEAdvertisement.5 \
++		doc/org.bluez.AdvertisementMonitorManager.5 \
++		doc/org.bluez.AdvertisementMonitor.5
  
- EXTRA_DIST += doc/org.bluez.Adapter.rst doc/org.bluez.Device.rst \
--	      doc/org.bluez.DeviceSet.rst doc/org.bluez.AgentManager.rst \
--	      doc/org.bluez.Agent.rst doc/org.bluez.ProfileManager.rst \
--	      doc/org.bluez.Profile.rst doc/org.bluez.NetworkServer.rst \
--	      doc/org.bluez.Network.rst doc/org.bluez.Input.rst
-+		doc/org.bluez.DeviceSet.rst doc/org.bluez.AgentManager.rst \
-+		doc/org.bluez.Agent.rst doc/org.bluez.ProfileManager.rst \
-+		doc/org.bluez.Profile.rst doc/org.bluez.NetworkServer.rst \
-+		doc/org.bluez.Network.rst doc/org.bluez.Input.rst \
-+		doc/org.bluez.BatteryProviderManager.rst \
-+		doc/org.bluez.BatteryProvider.rst doc/org.bluez.Battery.rst
+ EXTRA_DIST += src/genbuiltin src/bluetooth.conf \
+ 			src/main.conf profiles/network/network.conf \
+@@ -450,7 +454,9 @@ EXTRA_DIST += doc/org.bluez.GattManager.rst doc/org.bluez.GattProfile.rst\
+ 		doc/org.bluez.GattCharacteristic.rst \
+ 		doc/org.bluez.GattDescriptor.rst \
+ 		doc/org.bluez.LEAdvertisingManager.rst \
+-		doc/org.bluez.LEAdvertisement.rst
++		doc/org.bluez.LEAdvertisement.rst \
++		doc/org.bluez.AdvertisementMonitorManager.rst \
++		doc/org.bluez.AdvertisementMonitor.rst
  
- EXTRA_DIST += doc/org.bluez.Media.rst doc/org.bluez.MediaControl.rst \
- 		doc/org.bluez.MediaPlayer.rst doc/org.bluez.MediaFolder.rst \
-diff --git a/doc/battery-api.txt b/doc/battery-api.txt
+ EXTRA_DIST += doc/obex-api.txt doc/obex-agent-api.txt
+ 
+diff --git a/doc/advertisement-monitor-api.txt b/doc/advertisement-monitor-api.txt
 deleted file mode 100644
-index c03d64fc64b6..000000000000
---- a/doc/battery-api.txt
+index 9189f2cceb96..000000000000
+--- a/doc/advertisement-monitor-api.txt
 +++ /dev/null
-@@ -1,69 +0,0 @@
--BlueZ D-Bus Battery API description
--***********************************
+@@ -1,187 +0,0 @@
+-BlueZ D-Bus Advertisement Monitor API Description
+-*************************************************
 -
+-This API allows an client to specify a job of monitoring advertisements by
+-registering the root of hierarchy and then exposing advertisement monitors
+-under the root with filtering conditions, thresholds of RSSI and timers
+-of RSSI thresholds.
 -
--Battery hierarchy
--=================
+-Once a monitoring job is activated by BlueZ, the client can expect to get
+-notified on the targeted advertisements no matter if there is an ongoing
+-discovery session (a discovery session is started/stopped with methods in
+-org.bluez.Adapter1 interface).
 -
+-Advertisement Monitor hierarchy
+-===============================
 -Service		org.bluez
--Interface	org.bluez.Battery1
--Object path	[variable prefix]/{hci0,hci1,...}/dev_XX_XX_XX_XX_XX_XX
+-Interface	org.bluez.AdvertisementMonitor1 [experimental]
+-Object path	freely definable
 -
--Properties	byte Percentage [readonly]
+-Methods		void Release() [noreply]
 -
--			The percentage of battery left as an unsigned 8-bit integer.
+-			This gets called as a signal for a client to perform
+-			clean-up when (1)a monitor cannot be activated after it
+-			was exposed or (2)a monitor has been deactivated.
 -
--		string Source [readonly, optional]
+-		void Activate() [noreply]
 -
--			Describes where the battery information comes from
--			This property is informational only and may be useful
--			for debugging purposes.
--			Providers from BatteryProvider1 may make use of this
--			property to indicate where the battery report comes from
--			(e.g. "HFP 1.7", "HID", or the profile UUID).
+-			After a monitor was exposed, this gets called as a
+-			signal for client to get acknowledged when a monitor
+-			has been activated, so the client can expect to receive
+-			calls on DeviceFound() or DeviceLost().
 -
+-		void DeviceFound(object device) [noreply]
 -
--Battery Provider Manager hierarchy
--==================================
--A battery provider starts by registering itself as a battery provider with the
--RegisterBatteryProvider method passing an object path as the provider ID. Then,
--it can start exposing org.bluez.BatteryProvider1 objects having the path
--starting with the given provider ID. It can also remove objects at any time.
--The objects and their properties exposed by battery providers will be reflected
--on org.bluez.Battery1 interface.
+-			This gets called to notify the client of finding the
+-			targeted device. Once receiving the call, the client
+-			should start to monitor the corresponding device to
+-			retrieve the changes on RSSI and advertisement content.
 -
--BlueZ will stop monitoring these exposed and removed objects after
--UnregisterBatteryProvider is called for that provider ID.
+-		void DeviceLost(object device) [noreply]
 -
+-			This gets called to notify the client of losing the
+-			targeted device. Once receiving this call, the client
+-			should stop monitoring the corresponding device.
+-
+-Properties	string Type [read-only]
+-
+-			The type of the monitor. See SupportedMonitorTypes in
+-			org.bluez.AdvertisementMonitorManager1 for the available
+-			options.
+-
+-		Int16 RSSILowThreshold [read-only, optional]
+-
+-			Used in conjunction with RSSILowTimeout to determine
+-			whether a device becomes out-of-range. Valid range is
+-			-127 to 20 (dBm), while 127 indicates unset.
+-
+-		Int16 RSSIHighThreshold [read-only, optional]
+-
+-			Used in conjunction with RSSIHighTimeout to determine
+-			whether a device becomes in-range. Valid range is
+-			-127 to 20 (dBm), while 127 indicates unset.
+-
+-		Uint16 RSSILowTimeout [read-only, optional]
+-
+-			The time it takes to consider a device as out-of-range.
+-			If this many seconds elapses without receiving any
+-			signal at least as strong as RSSILowThreshold, a
+-			currently in-range device will be considered as
+-			out-of-range (lost). Valid range is 1 to 300 (seconds),
+-			while 0 indicates unset.
+-
+-		Uint16 RSSIHighTimeout [read-only, optional]
+-
+-			The time it takes to consider a device as in-range.
+-			If this many seconds elapses while we continuously
+-			receive signals at least as strong as RSSIHighThreshold,
+-			a currently out-of-range device will be considered as
+-			in-range (found). Valid range is 1 to 300 (seconds),
+-			while 0 indicates unset.
+-
+-		Uint16 RSSISamplingPeriod [read-only, optional]
+-
+-			Grouping rules on how to propagate the received
+-			advertisement packets to the client. Valid range is 0 to
+-			255 while 256 indicates unset.
+-
+-			The meaning of this property is as follows:
+-			0:
+-				All advertisement packets from in-range devices
+-				would be propagated.
+-			255:
+-				Only the first advertisement packet of in-range
+-				devices would be propagated. If the device
+-				becomes lost, then the first packet when it is
+-				found again will also be propagated.
+-			1 to 254:
+-				Advertisement packets would be grouped into
+-				100ms * N time period. Packets in the same group
+-				will only be reported once, with the RSSI value
+-				being averaged out.
+-
+-			Currently this is unimplemented in user space, so the
+-			value is only used to be forwarded to the kernel.
+-
+-		array{(uint8, uint8, array{byte})} Patterns [read-only, optional]
+-
+-			If the Type property is set to "or_patterns", then this
+-			property must exist and have at least one entry in the
+-			array.
+-
+-			The structure of a pattern contains the following:
+-			uint8 start_position
+-				The index in an AD data field where the search
+-				should start. The beginning of an AD data field
+-				is index 0.
+-			uint8 AD_data_type
+-				See https://www.bluetooth.com/specifications/
+-				assigned-numbers/generic-access-profile/ for
+-				the possible allowed value.
+-			array{byte} content_of_pattern
+-				This is the value of the pattern. The maximum
+-				length of the bytes is 31.
+-
+-Advertisement Monitor Manager hierarchy
+-=======================================
 -Service		org.bluez
--Interface	org.bluez.BatteryProviderManager1
+-Interface	org.bluez.AdvertisementMonitorManager1 [experimental]
 -Object path	/org/bluez/{hci0,hci1,...}
 -
--Methods		void RegisterBatteryProvider(object provider)
+-Methods		void RegisterMonitor(object application)
 -
--			This registers a battery provider. A registered
--			battery provider can then expose objects with
--			org.bluez.BatteryProvider1 interface described below.
+-			This registers the root path of a hierarchy of
+-			advertisement monitors.
+-			The application object path together with the D-Bus
+-			system bus connection ID define the identification of
+-			the application registering advertisement monitors.
+-			Once a root path is registered by a client via this
+-			method, the client can freely expose/unexpose
+-			advertisement monitors without re-registering the root
+-			path again. After use, the client should call
+-			UnregisterMonitor() method to invalidate the
+-			advertisement monitors.
 -
--		void UnregisterBatteryProvider(object provider)
+-			Possible errors: org.bluez.Error.InvalidArguments
+-					 org.bluez.Error.AlreadyExists
+-					 org.bluez.Error.Failed
 -
--			This unregisters a battery provider. After
--			unregistration, the BatteryProvider1 objects provided
--			by this client are ignored by BlueZ.
+-		void UnregisterMonitor(object application)
 -
+-			This unregisters a hierarchy of advertisement monitors
+-			that has been previously registered. The object path
+-			parameter must match the same value that has been used
+-			on registration. Upon unregistration, the advertisement
+-			monitor(s) should expect to receive Release() method as
+-			the signal that the advertisement monitor(s) has been
+-			deactivated.
 -
--Battery Provider hierarchy
--==========================
+-			Possible errors: org.bluez.Error.InvalidArguments
+-					 org.bluez.Error.DoesNotExist
 -
--Service		<client D-Bus address>
--Interface	org.bluez.BatteryProvider1
--Object path	{provider_root}/{unique battery object path}
+-Properties	array{string} SupportedMonitorTypes [read-only]
 -
--Properties	Objects provided on this interface contain the same properties
--		as org.bluez.Battery1 interface. Additionally, this interface
--		needs to have the Device property indicating the object path
--		of the device this battery provides.
+-			This lists the supported types of advertisement
+-			monitors. An application should check this before
+-			instantiate and expose an object of
+-			org.bluez.AdvertisementMonitor1.
 -
--		object Device [readonly]
+-			Possible values for monitor types:
 -
--			The object path of the device that has this battery.
-diff --git a/doc/org.bluez.Battery.rst b/doc/org.bluez.Battery.rst
+-			"or_patterns"
+-				Patterns with logic OR applied. With this type,
+-				property "Patterns" must exist and has at least
+-				one pattern.
+-
+-		array{string} SupportedFeatures [read-only]
+-
+-			This lists the features of advertisement monitoring
+-			supported by BlueZ.
+-
+-			Possible values for features:
+-
+-			"controller-patterns"
+-				If the controller is capable of performing
+-				advertisement monitoring by patterns, BlueZ
+-				would offload the patterns to the controller to
+-				reduce power consumption.
+diff --git a/doc/org.bluez.AdvertisementMonitor.rst b/doc/org.bluez.AdvertisementMonitor.rst
 new file mode 100644
-index 000000000000..d7e903c496ec
+index 000000000000..98852ac68b59
 --- /dev/null
-+++ b/doc/org.bluez.Battery.rst
-@@ -0,0 +1,39 @@
-+=================
-+org.bluez.Battery
-+=================
++++ b/doc/org.bluez.AdvertisementMonitor.rst
+@@ -0,0 +1,153 @@
++==============================
++org.bluez.AdvertisementMonitor
++==============================
 +
-+-------------------------------------
-+BlueZ D-Bus Battery API documentation
-+-------------------------------------
-+
-+:Version: BlueZ
-+:Date: October 2023
-+:Manual section: 5
-+:Manual group: Linux System Administration
-+
-+Interface
-+=========
-+
-+:Service:	org.bluez
-+:Interface:	org.bluez.Battery1
-+:Object path:	[variable prefix]/{hci0,hci1,...}/dev_XX_XX_XX_XX_XX_XX
-+
-+Properties
-+----------
-+
-+byte Percentage [readonly]
-+``````````````````````````
-+
-+	The percentage of battery left as an unsigned 8-bit integer.
-+
-+string Source [readonly, optional]
-+``````````````````````````````````
-+
-+	Describes where the battery information comes from.
-+
-+	This property is informational only and may be useful for debugging
-+	purposes.
-+
-+	Providers from **org.bluez.BatteryProvider(5)** may make use
-+	of this property to indicate where the battery report comes from
-+	(e.g. "HFP 1.7", "HID", or the profile UUID).
-diff --git a/doc/org.bluez.BatteryProvider.rst b/doc/org.bluez.BatteryProvider.rst
-new file mode 100644
-index 000000000000..b8d8b1c2ddd0
---- /dev/null
-+++ b/doc/org.bluez.BatteryProvider.rst
-@@ -0,0 +1,32 @@
-+=========================
-+org.bluez.BatteryProvider
-+=========================
-+
-+---------------------------------------------
-+BlueZ D-Bus BatteryProvider API documentation
-+---------------------------------------------
-+
-+:Version: BlueZ
-+:Date: October 2023
-+:Manual section: 5
-+:Manual group: Linux System Administration
-+
-+Interface
-+=========
-+
-+:Service:	<client D-Bus address>
-+:Interface:	org.bluez.BatteryProvider1
-+:Object path:	{provider_root}/{unique battery object path}
-+
-+Properties
-+----------
-+
-+Objects provided on this interface contain the same properties as
-+**org.bluez.Battery(5)** interface. Additionally, this interface needs to have
-+the Device property indicating the object path of the device this battery
-+provides.
-+
-+object Device [readonly]
-+````````````````````````
-+
-+	The object path of the device that has this battery.
-diff --git a/doc/org.bluez.BatteryProviderManager.rst b/doc/org.bluez.BatteryProviderManager.rst
-new file mode 100644
-index 000000000000..ab5cf2d4cadc
---- /dev/null
-+++ b/doc/org.bluez.BatteryProviderManager.rst
-@@ -0,0 +1,50 @@
-+================================
-+org.bluez.BatteryProviderManager
-+================================
-+
-+----------------------------------------------------
-+BlueZ D-Bus BatteryProviderManager API documentation
-+----------------------------------------------------
++--------------------------------------------------
++BlueZ D-Bus AdvertisementMonitor API documentation
++--------------------------------------------------
 +
 +:Version: BlueZ
 +:Date: October 2023
@@ -308,42 +336,241 @@ index 000000000000..ab5cf2d4cadc
 +:Manual group: Linux System Administration
 +
 +Description
-+============
++===========
 +
-+A battery provider starts by registering itself as a battery provider with the
-+**RegisterBatteryProvider()** method passing an object path as the provider ID.
-+Then, it can start exposing **org.bluez.BatteryProvider(5)** objects having the
-+path starting with the given provider ID. It can also remove objects at any
-+time.
-+The objects and their properties exposed by battery providers will be reflected
-+on **org.bluez.Battery(5)** interface.
++This API allows an client to specify a job of monitoring advertisements by
++registering the root of hierarchy and then exposing advertisement monitors
++under the root with filtering conditions, thresholds of RSSI and timers
++of RSSI thresholds.
 +
-+**bluetoothd(8)** will stop monitoring these exposed and removed objects after
-+UnregisterBatteryProvider is called for that provider ID.
++Once a monitoring job is activated by **bluetoothd(8)**, the client can expect
++to get notified on the targeted advertisements no matter if there is an ongoing
++discovery session (see **StartDiscovery()** in **org.bluez.Adapter(5)**).
 +
 +Interface
 +=========
 +
 +:Service:	org.bluez
-+:Interface:	org.bluez.BatteryProviderManager1
-+:Object path:	/org/bluez/{hci0,hci1,...}
++:Interface:	org.bluez.AdvertisementMonitor1 [experimental]
++:Object path:	freely definable
 +
 +Methods
 +-------
 +
-+void RegisterBatteryProvider(object provider)
++void Release() [noreply]
++````````````````````````
++
++	This gets called as a signal for a client to perform clean-up when:
++
++	- Monitor cannot be activated after it was exposed
++	- Monitor has been deactivated.
++
++void Activate() [noreply]
++`````````````````````````
++
++	After a monitor was exposed, this gets called as a signal for client to
++	get acknowledged when a monitor has been activated, so the client can
++	expect to receive calls on **DeviceFound()** or **DeviceLost()**.
++
++void DeviceFound(object device) [noreply]
++`````````````````````````````````````````
++
++	This gets called to notify the client of finding the targeted device.
++	Once receiving the call, the client should start to monitor the
++	corresponding device to retrieve the changes on RSSI and advertisement
++	content.
++
++void DeviceLost(object device) [noreply]
++````````````````````````````````````````
++
++	This gets called to notify the client of losing the targeted device.
++	Once receiving this call, the client should stop monitoring the
++	corresponding device.
++
++Properties
++----------
++
++string Type [read-only]
++```````````````````````
++
++	The type of the monitor. See **SupportedMonitorTypes** in
++	**org.bluez.AdvertisementMonitorManager(5)** for the available options.
++
++int16 RSSILowThreshold [read-only, optional]
++````````````````````````````````````````````
++
++	Used in conjunction with **RSSILowTimeout** to determine whether a
++	device becomes out-of-range. Valid range is -127 to 20 (dBm), while 127
++	indicates unset.
++
++int16 RSSIHighThreshold [read-only, optional]
 +`````````````````````````````````````````````
 +
-+	Registers a battery provider. A registered battery provider can then
-+	expose objects with **org.bluez.BatteryProvider(5)** interface.
++	Used in conjunction with RSSIHighTimeout to determine whether a device
++	becomes in-range. Valid range is -127 to 20 (dBm), while 127 indicates
++	unset.
 +
-+void UnregisterBatteryProvider(object provider)
++uint16 RSSILowTimeout [read-only, optional]
++```````````````````````````````````````````
++
++	The time it takes to consider a device as out-of-range. If this many
++	seconds elapses without receiving any signal at least as strong as
++	**RSSILowThreshold**, a currently in-range device will be considered as
++	out-of-range (lost). Valid range is 1 to 300 (seconds), while 0
++	indicates unset.
++
++uint16 RSSIHighTimeout [read-only, optional]
++````````````````````````````````````````````
++
++	The time it takes to consider a device as in-range. If this many
++	seconds elapses while we continuouslyreceive signals at least as strong
++	as **RSSIHighThreshold**, a currently out-of-range device will be
++	considered as in-range (found). Valid range is 1 to 300 (seconds),
++	while 0 indicates unset.
++
++uint16 RSSISamplingPeriod [read-only, optional]
 +```````````````````````````````````````````````
 +
-+	Unregisters a battery provider previously registered with
-+	**RegisterBatteryProvider()**. After unregistration, the
-+	**org.bluez.BatteryProvider(5)** objects provided by this client are
-+	ignored by **bluetoothd(8)**.
++	Grouping rules on how to propagate the received advertisement packets
++	to the client.
++
++	Possible values:
++
++	:0:
++		All advertisement packets from in-range devices would be
++		propagated.
++
++	:255:
++		Only the first advertisement packet of in-range devices would
++		be propagated. If the device becomes lost, then the first
++		packet when it is found again will also be propagated.
++
++	:1 to 254:
++		Advertisement packets would be grouped into 100ms * N time
++		period. Packets in the same group will only be reported once,
++		with the RSSI value being averaged out.
++
++	Currently this is unimplemented in user space, so the value is only
++	used to be forwarded to the kernel.
++
++array{(uint8, uint8, array{byte})} Patterns [read-only, optional]
++`````````````````````````````````````````````````````````````````
++
++	If the **Type** property is set to **"or_patterns"**, then this
++	property must exist and have at least one entry in the array.
++
++	The structure of a pattern contains the following:
++
++	:uint8 start_position:
++
++		The index in an AD data field where the search hould start. The
++		beginning of an AD data field is index 0.
++
++	:uint8 AD_data_type:
++
++		See https://www.bluetooth.com/specifications/assigned-numbers/
++		generic-access-profile/ for the possible allowed value.
++
++	:array{byte} content_of_pattern:
++
++		This is the value of the pattern. The maximum length of the
++		bytes is 31.
+diff --git a/doc/org.bluez.AdvertisementMonitorManager.rst b/doc/org.bluez.AdvertisementMonitorManager.rst
+new file mode 100644
+index 000000000000..3775a483543c
+--- /dev/null
++++ b/doc/org.bluez.AdvertisementMonitorManager.rst
+@@ -0,0 +1,90 @@
++=====================================
++org.bluez.AdvertisementMonitorManager
++=====================================
++
++---------------------------------------------------------
++BlueZ D-Bus AdvertisementMonitorManager API documentation
++---------------------------------------------------------
++
++:Version: BlueZ
++:Date: October 2023
++:Manual section: 5
++:Manual group: Linux System Administration
++
++Interface
++=========
++
++Service		org.bluez
++Interface	org.bluez.AdvertisementMonitorManager1 [experimental]
++Object path	/org/bluez/{hci0,hci1,...}
++
++Methods
++-------
++
++void RegisterMonitor(object application)
++````````````````````````````````````````
++
++	Registers the root path of a hierarchy of advertisement monitors
++	implementing **org.bluez.AdvertisementMonitor(5)**.
++
++	The application object path together with the D-Bus ystem bus
++	connection ID define the identification of the application registering
++	advertisement monitors.
++
++	Once a root path is registered by a client via this method, the client
++	can freely expose/unexpose advertisement monitors without re-registering
++	the root path again. After use, the client should call
++	**UnregisterMonitor()** method to invalidate the advertisement monitors.
++
++	Possible errors:
++
++	:org.bluez.Error.InvalidArguments:
++	:org.bluez.Error.AlreadyExists:
++	:org.bluez.Error.Failed:
++
++void UnregisterMonitor(object application)
++``````````````````````````````````````````
++
++	Unregisters a hierarchy of advertisement monitors that has been
++	previously registered with **RegisterMonitor()**. The object path
++	parameter must match the same value that has been used on registration.
++
++	Upon unregistration, the advertisement monitor(s) should expect to
++	receive **Release()** method as the signal that the advertisement
++	monitor(s) has been deactivated.
++
++	Possible errors:
++
++	:org.bluez.Error.InvalidArguments:
++	:org.bluez.Error.DoesNotExist:
++
++Properties
++----------
++
++array{string} SupportedMonitorTypes [read-only]
++```````````````````````````````````````````````
++
++	This lists the supported types of advertisement monitors. An application
++	should check this before instantiate and expose an object of
++	**org.bluez.AdvertisementMonitor(5)**.
++
++	Possible values:
++
++	:"or_patterns":
++
++		Patterns with logic OR applied. With this type, property
++		**Patterns** must exist and has at least one pattern.
++
++array{string} SupportedFeatures [read-only]
++```````````````````````````````````````````
++
++	This lists the features of advertisement monitoring supported by
++	**bluetoothd(8)**.
++
++	Possible values:
++
++	:"controller-patterns":
++
++		If the controller is capable of performing advertisement
++		monitoring by patterns, **bluetoothd(8)** would offload the
++		patterns to the controller to reduce power consumption.
 -- 
 2.41.0
 
