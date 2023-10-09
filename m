@@ -2,60 +2,60 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 974F67BEF16
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 10 Oct 2023 01:29:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A23B17BEF18
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 10 Oct 2023 01:30:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1379104AbjJIX3u (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 9 Oct 2023 19:29:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58958 "EHLO
+        id S1379101AbjJIXaA (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 9 Oct 2023 19:30:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1379101AbjJIX3t (ORCPT
+        with ESMTP id S1379105AbjJIX35 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 9 Oct 2023 19:29:49 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2366A4
-        for <linux-bluetooth@vger.kernel.org>; Mon,  9 Oct 2023 16:29:47 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id d9443c01a7336-1c63164a2b6so44790065ad.0
-        for <linux-bluetooth@vger.kernel.org>; Mon, 09 Oct 2023 16:29:47 -0700 (PDT)
+        Mon, 9 Oct 2023 19:29:57 -0400
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5821EA4
+        for <linux-bluetooth@vger.kernel.org>; Mon,  9 Oct 2023 16:29:50 -0700 (PDT)
+Received: by mail-pl1-x630.google.com with SMTP id d9443c01a7336-1c8a1541233so12601785ad.1
+        for <linux-bluetooth@vger.kernel.org>; Mon, 09 Oct 2023 16:29:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696894186; x=1697498986; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1696894188; x=1697498988; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=38cuLNQBXrWB5OzgDJk9XBNGuRqGtwf007h1s4UEi60=;
-        b=c8hDCF+VU48F+zAibNpqzp6Zxs+Nz9cNn4uEJcWyPCPqb7WSljjHIMAyanHmjuz0gj
-         Mk4hKo7lMB+SqCBVr13rMr2gbqhPUV5EYxHJg7U4iCEy5RVmLj74WjDPKCVMv9Wp/hu0
-         U/9VbeayouGnmRYWOAxqmlXGdh8JZf0c2P6tX4PCjpMKKcgNmnLTtsDrkohmJ82wmncK
-         JopRdqDhcijbIZdfkcfmLeH0EZBmV6+d1PF80eN40ZPOkBHVbTDO5vLOnEPB8xGJOgCT
-         POyTS1tpygSP2iOSFE7sCBDUj0C/WQBps56EnyNc5/YtWJ6kjVvnNN8owMrMd0COf4Rx
-         CTpw==
+        bh=gkPh2UbzNSyJBColBTH9IoJdkJTLS0KGu6b2bTjbbRM=;
+        b=Cslg2cyr6+IsqCZTyGhxOqi5bymawJmNIkPB83AmecU8QDSfoCZia21t0oUBc4O0Xh
+         b3+YRWjF/MX+0LLW9GaDXt5OSmwNhv6T49sRTenrZPzydwhYP+J6XHN+RHpHjEVYr9hI
+         xghgqs8b0YZOhKRlVwV5XB05ZMynaw/5T786ST/0+dYVS5i4Li61ecTZoHO+64T3xtmt
+         sNMgkI02jEKTfsVTxjMhMWk5qajNECAtNSSmcVcNMgY/0/WPCOw0l8hj6h+qeXe+/UjY
+         x5YkCmu6PwgPTcqK0898EEHwKCK5viZYYLs5X2LNZtHsiDlybkiapxluw0h1c1BhIuPv
+         EdOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696894186; x=1697498986;
+        d=1e100.net; s=20230601; t=1696894188; x=1697498988;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=38cuLNQBXrWB5OzgDJk9XBNGuRqGtwf007h1s4UEi60=;
-        b=qYnQq9iffylnaHzSTOE0PUQeX1zEgE1bOs1LyWXnNHsYnf7g/XCOHsekVVVgmfxtbW
-         SMtr2ka1NMQghLhW3Tko9doxcwlksJvFUi+b3uenCaVpr1H98eCNQJxztuQwMU272htW
-         Uw2uSCNKBjNBtqmLAgMC1d+1s7QaKkAapO8uk7K+0r+IuA5rE+OrDK784RA++kQDjI2x
-         0YlZaBOZL2J12QB120WEWtlsQ/kZJuTdSpXsZuTA024OXvz+tcF2wngTrsBmF8O12snc
-         dPindPHgXslergMmsao2DRKcoaFe2lUjoS7/uhLg8I9lXFSZPjJYOE6HxCNmiYUDA4pa
-         S4mQ==
-X-Gm-Message-State: AOJu0YyCyfwDQK5ZfWOPT1S8vuOJGXw8gLMTEALnIW43Kn+rAsrWA5ns
-        5e+/r95S1w44jXoB9nUUhMz4DgKi0D+ND/nt
-X-Google-Smtp-Source: AGHT+IFHVJjUJrbPBnaD2z5tiOYCZeoKlS/Iypwi7G588yNdIvTtaOd1+YjnASdxCvfgY1Viu3JTjA==
-X-Received: by 2002:a17:902:e5c1:b0:1c6:23fd:fb18 with SMTP id u1-20020a170902e5c100b001c623fdfb18mr18776276plf.0.1696894186294;
-        Mon, 09 Oct 2023 16:29:46 -0700 (PDT)
+        bh=gkPh2UbzNSyJBColBTH9IoJdkJTLS0KGu6b2bTjbbRM=;
+        b=cPDRM34mM0wn32xHrcARtE1QKr+kVE3BTMOiUMe61plSFGmples02mwFfF4cTyim+i
+         KPFn0effwXWotnnPZr/2pssOSEK/PHSxioB39kn0/FqAe8E7HLYfLoKvkrNZqJEk5w46
+         +zEAss8pn6TnkHT6Ee1mUACOTGV44JywvgKC5b67aAfPmQii/0gqoGmqF9CnvssWTr8H
+         G+qofAHRJg0GFF6p5RvEYYGcabfxSbzNMeQm2C12dGG+xFeX0FjEsVx4mjdwH7WeIhwO
+         FdjhyLJc6jiTABLdjj3Uc3bKFcnemmurLtHL2LRCnZNewcatDY9WghDQaZ4XezgaGl0A
+         z5Yg==
+X-Gm-Message-State: AOJu0YxpLG20mZbaY4tR6KVC6/JhJ1qZjf3eHVxsyjuVJ5WqqyE2oSKP
+        zUj0MRzAQOUBpm9L2ynPuNzViNV8JekQQ/14
+X-Google-Smtp-Source: AGHT+IFBFR1TNzLsZ4vLwV3IhaBxE99wWK8ESq3oyenuNRkKNqCs/tWgam8ejuw8kjM4Hyo/oryb2A==
+X-Received: by 2002:a17:902:e550:b0:1b9:e937:9763 with SMTP id n16-20020a170902e55000b001b9e9379763mr16646835plf.12.1696894188132;
+        Mon, 09 Oct 2023 16:29:48 -0700 (PDT)
 Received: from lvondent-mobl4.. (c-98-232-221-87.hsd1.or.comcast.net. [98.232.221.87])
-        by smtp.gmail.com with ESMTPSA id s20-20020a170902989400b001c5b8087fe5sm10182711plp.94.2023.10.09.16.29.44
+        by smtp.gmail.com with ESMTPSA id s20-20020a170902989400b001c5b8087fe5sm10182711plp.94.2023.10.09.16.29.46
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Oct 2023 16:29:44 -0700 (PDT)
+        Mon, 09 Oct 2023 16:29:47 -0700 (PDT)
 From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH v2 06/11] doc/input-api: Rename to org.bluez.Input.rst
-Date:   Mon,  9 Oct 2023 16:29:28 -0700
-Message-ID: <20231009232933.500652-6-luiz.dentz@gmail.com>
+Subject: [PATCH v2 07/11] doc/advertising-api: Rename to org.bluez.LEAdvertis*.rst
+Date:   Mon,  9 Oct 2023 16:29:29 -0700
+Message-ID: <20231009232933.500652-7-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20231009232933.500652-1-luiz.dentz@gmail.com>
 References: <20231009232933.500652-1-luiz.dentz@gmail.com>
@@ -63,7 +63,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS autolearn=ham
+        RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,105 +73,548 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This renames input-api.txt to org.bluez.Input.rst and generate manpages
-org.bluez.Input.5.
+This renames advertising-api.txt to org.bluez.LEAdvertis*.rst and
+generate manpages org.bluez.LEAdvertis*.5.
 ---
- Makefile.am             |  8 +++----
- doc/input-api.txt       | 32 --------------------------
- doc/org.bluez.Input.rst | 51 +++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 55 insertions(+), 36 deletions(-)
- delete mode 100644 doc/input-api.txt
- create mode 100644 doc/org.bluez.Input.rst
+ Makefile.am                            |   7 +-
+ doc/advertising-api.txt                | 278 -------------------------
+ doc/org.bluez.LEAdvertisement.rst      | 195 +++++++++++++++++
+ doc/org.bluez.LEAdvertisingManager.rst | 144 +++++++++++++
+ 4 files changed, 345 insertions(+), 279 deletions(-)
+ delete mode 100644 doc/advertising-api.txt
+ create mode 100644 doc/org.bluez.LEAdvertisement.rst
+ create mode 100644 doc/org.bluez.LEAdvertisingManager.rst
 
 diff --git a/Makefile.am b/Makefile.am
-index 797dc6b78fa5..f717d2c2336b 100644
+index f717d2c2336b..cf72a7905274 100644
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -361,7 +361,7 @@ man_MANS += doc/org.bluez.Adapter.5 doc/org.bluez.Device.5 \
- 		doc/org.bluez.DeviceSet.5 doc/org.bluez.AgentManager.5 \
- 		doc/org.bluez.Agent.5 doc/org.bluez.ProfileManager.5 \
- 		doc/org.bluez.Profile.5 doc/org.bluez.NetworkServer.5 \
--		doc/org.bluez.Network.5
-+		doc/org.bluez.Network.5 doc/org.bluez.Input.5
- man_MANS += doc/org.bluez.Media.5 doc/org.bluez.MediaControl.5 \
+@@ -366,6 +366,8 @@ man_MANS += doc/org.bluez.Media.5 doc/org.bluez.MediaControl.5 \
  		doc/org.bluez.MediaPlayer.5 doc/org.bluez.MediaFolder.5 \
  		doc/org.bluez.MediaItem.5 doc/org.bluez.MediaEndpoint.5 \
-@@ -372,7 +372,7 @@ manual_pages += doc/org.bluez.Adapter.5 doc/org.bluez.Device.5 \
- 		doc/org.bluez.DeviceSet.5 doc/org.bluez.AgentManager.5 \
- 		doc/org.bluez.Agent.5 doc/org.bluez.ProfileManager.5 \
- 		doc/org.bluez.Profile.5 doc/org.bluez.NetworkServer.5 \
--		doc/org.bluez.Network.5
-+		doc/org.bluez.Network.5 doc/org.bluez.Input.5
- manual_pages += doc/org.bluez.Media.5 doc/org.bluez.MediaControl.5 \
+ 		doc/org.bluez.MediaTransport.5
++man_MANS += doc/org.bluez.LEAdvertisingManager.5 \
++		doc/org.bluez.LEAdvertisement.5
+ endif
+ manual_pages += src/bluetoothd.8
+ manual_pages += doc/org.bluez.Adapter.5 doc/org.bluez.Device.5 \
+@@ -377,6 +379,8 @@ manual_pages += doc/org.bluez.Media.5 doc/org.bluez.MediaControl.5 \
  		doc/org.bluez.MediaPlayer.5 doc/org.bluez.MediaFolder.5 \
  		doc/org.bluez.MediaItem.5 doc/org.bluez.MediaEndpoint.5 \
-@@ -414,13 +414,13 @@ EXTRA_DIST += doc/assigned-numbers.txt doc/supported-features.txt \
+ 		doc/org.bluez.MediaTransport.5
++manual_pages += doc/org.bluez.LEAdvertisingManager.5 \
++		doc/org.bluez.LEAdvertisement.5
  
- EXTRA_DIST += doc/mgmt-api.txt \
- 		doc/health-api.txt \
--		doc/sap-api.txt doc/input-api.txt
-+		doc/sap-api.txt
+ EXTRA_DIST += src/genbuiltin src/bluetooth.conf \
+ 			src/main.conf profiles/network/network.conf \
+@@ -427,7 +431,8 @@ EXTRA_DIST += doc/org.bluez.Media.rst doc/org.bluez.MediaControl.rst \
+ 		doc/org.bluez.MediaItem.rst doc/org.bluez.MediaEndpoint.rst \
+ 		doc/org.bluez.MediaTransport.rst
  
- EXTRA_DIST += doc/org.bluez.Adapter.rst doc/org.bluez.Device.rst \
- 	      doc/org.bluez.DeviceSet.rst doc/org.bluez.AgentManager.rst \
- 	      doc/org.bluez.Agent.rst doc/org.bluez.ProfileManager.rst \
- 	      doc/org.bluez.Profile.rst doc/org.bluez.NetworkServer.rst \
--	      doc/org.bluez.Network.rst
-+	      doc/org.bluez.Network.rst doc/org.bluez.Input.rst
+-EXTRA_DIST += doc/gatt-api.txt doc/advertising-api.txt
++EXTRA_DIST += doc/gatt-api.txt doc/org.bluez.LEAdvertisingManager.rst \
++		doc/org.bluez.LEAdvertisement.rst
  
- EXTRA_DIST += doc/org.bluez.Media.rst doc/org.bluez.MediaControl.rst \
- 		doc/org.bluez.MediaPlayer.rst doc/org.bluez.MediaFolder.rst \
-diff --git a/doc/input-api.txt b/doc/input-api.txt
+ EXTRA_DIST += doc/obex-api.txt doc/obex-agent-api.txt
+ 
+diff --git a/doc/advertising-api.txt b/doc/advertising-api.txt
 deleted file mode 100644
-index 67da08b102c9..000000000000
---- a/doc/input-api.txt
+index a0077843defd..000000000000
+--- a/doc/advertising-api.txt
 +++ /dev/null
-@@ -1,32 +0,0 @@
--BlueZ D-Bus Input API description
--*********************************
+@@ -1,278 +0,0 @@
+-BlueZ D-Bus LE Advertising API Description
+-******************************************
 -
--Input hierarchy
--===============
+-Advertising packets are structured data which is broadcast on the LE Advertising
+-channels and available for all devices in range.  Because of the limited space
+-available in LE Advertising packets (31 bytes), each packet's contents must be
+-carefully controlled.
+-
+-BlueZ acts as a store for the Advertisement Data which is meant to be sent.
+-It constructs the correct Advertisement Data from the structured
+-data and configured the kernel to send the correct advertisement.
+-
+-Advertisement Data objects are registered freely and then referenced by BlueZ
+-when constructing the data sent to the kernel.
+-
+-LE Advertisement Data hierarchy
+-===============================
+-
+-Specifies the Advertisement Data to be broadcast and some advertising
+-parameters.  Properties which are not present will not be included in the
+-data.  Required advertisement data types will always be included.
+-All UUIDs are 128-bit versions in the API, and 16 or 32-bit
+-versions of the same UUID will be used in the advertising data as appropriate.
 -
 -Service		org.bluez
--Interface	org.bluez.Input1
--Object path	[variable prefix]/{hci0,hci1,...}/dev_XX_XX_XX_XX_XX_XX
+-Interface	org.bluez.LEAdvertisement1
+-Object path	freely definable
 -
--Properties	string ReconnectMode [readonly]
+-Methods		void Release() [noreply]
 -
--			Determines the Connectability mode of the HID device as
--			defined by the HID Profile specification, Section 5.4.2.
+-			This method gets called when the service daemon
+-			removes the Advertisement. A client can use it to do
+-			cleanup tasks. There is no need to call
+-			UnregisterAdvertisement because when this method gets
+-			called it has already been unregistered.
 -
--			This mode is based in the two properties
--			HIDReconnectInitiate (see Section 5.3.4.6) and
--			HIDNormallyConnectable (see Section 5.3.4.14) which
--			define the following four possible values:
+-Properties	string Type
 -
--			"none"		Device and host are not required to
--					automatically restore the connection.
+-			Determines the type of advertising packet requested.
 -
--			"host"		Bluetooth HID host restores connection.
+-			Possible values: "broadcast" or "peripheral"
 -
--			"device"	Bluetooth HID device restores
--					connection.
+-		array{string} ServiceUUIDs
 -
--			"any"		Bluetooth HID device shall attempt to
--					restore the lost connection, but
--					Bluetooth HID Host may also restore the
--					connection.
-diff --git a/doc/org.bluez.Input.rst b/doc/org.bluez.Input.rst
+-			List of UUIDs to include in the "Service UUID" field of
+-			the Advertising Data.
+-
+-		dict ManufacturerData
+-
+-			Manufactuer Data fields to include in
+-			the Advertising Data.  Keys are the Manufacturer ID
+-			to associate with the data.
+-
+-		array{string} SolicitUUIDs
+-
+-			Array of UUIDs to include in "Service Solicitation"
+-			Advertisement Data.
+-
+-		dict ServiceData
+-
+-			Service Data elements to include. The keys are the
+-			UUID to associate with the data.
+-
+-		dict Data [Experimental]
+-
+-			Advertising Type to include in the Advertising
+-			Data. Key is the advertising type and value is the
+-			data as byte array.
+-
+-			Note: Types already handled by other properties shall
+-			not be used.
+-
+-			Possible values:
+-				<type> <byte array>
+-				...
+-
+-			Example:
+-				<Transport Discovery> <Organization Flags...>
+-				0x26                   0x01         0x01...
+-
+-		bool Discoverable [Experimental]
+-
+-			Advertise as general discoverable. When present this
+-			will override adapter Discoverable property.
+-
+-			Note: This property shall not be set when Type is set
+-			to broadcast.
+-
+-		uint16 DiscoverableTimeout [Experimental]
+-
+-			The discoverable timeout in seconds. A value of zero
+-			means that the timeout is disabled and it will stay in
+-			discoverable/limited mode forever.
+-
+-			Note: This property shall not be set when Type is set
+-			to broadcast.
+-
+-		array{string} Includes
+-
+-			List of features to be included in the advertising
+-			packet.
+-
+-			Possible values: as found on
+-					LEAdvertisingManager.SupportedIncludes
+-
+-		string LocalName
+-
+-			Local name to be used in the advertising report. If the
+-			string is too big to fit into the packet it will be
+-			truncated.
+-
+-			If this property is available 'local-name' cannot be
+-			present in the Includes.
+-
+-		uint16 Appearance
+-
+-			Appearance to be used in the advertising report.
+-
+-			Possible values: as found on GAP Service.
+-
+-		uint16_t Duration
+-
+-			Rotation duration of the advertisement in seconds. If
+-			there are other applications advertising no duration is
+-			set the default is 2 seconds.
+-
+-		uint16_t Timeout
+-
+-			Timeout of the advertisement in seconds. This defines
+-			the lifetime of the advertisement.
+-
+-		string SecondaryChannel [Experimental]
+-
+-			Secondary channel to be used. Primary channel is
+-			always set to "1M" except when "Coded" is set.
+-
+-			Possible value: "1M" (default)
+-					"2M"
+-					"Coded"
+-
+-		uint32 MinInterval [Experimental]
+-
+-			Minimum advertising interval to be used by the
+-			advertising set, in milliseconds. Acceptable values
+-			are in the range [20ms, 10,485s]. If the provided
+-			MinInterval is larger than the provided MaxInterval,
+-			the registration will return failure.
+-
+-		uint32 MaxInterval [Experimental]
+-
+-			Maximum advertising interval to be used by the
+-			advertising set, in milliseconds. Acceptable values
+-			are in the range [20ms, 10,485s]. If the provided
+-			MinInterval is larger than the provided MaxInterval,
+-			the registration will return failure.
+-
+-		int16 TxPower [Experimental]
+-
+-			Requested transmission power of this advertising set.
+-			The provided value is used only if the "CanSetTxPower"
+-			feature is enabled on the Advertising Manager. The
+-			provided value must be in range [-127 to +20], where
+-			units are in dBm.
+-
+-
+-LE Advertising Manager hierarchy
+-================================
+-
+-The Advertising Manager allows external applications to register Advertisement
+-Data which should be broadcast to devices.  Advertisement Data elements must
+-follow the API for LE Advertisement Data described above.
+-
+-Service		org.bluez
+-Interface	org.bluez.LEAdvertisingManager1
+-Object path	/org/bluez/{hci0,hci1,...}
+-
+-Methods		RegisterAdvertisement(object advertisement, dict options)
+-
+-			Registers an advertisement object to be sent over the LE
+-			Advertising channel.  The service must be exported
+-			under interface LEAdvertisement1.
+-
+-			InvalidArguments error indicates that the object has
+-			invalid or conflicting properties.
+-
+-			InvalidLength error indicates that the data
+-			provided generates a data packet which is too long.
+-
+-			The properties of this object are parsed when it is
+-			registered, and any changes are ignored.
+-
+-			If the same object is registered twice it will result in
+-			an AlreadyExists error.
+-
+-			If the maximum number of advertisement instances is
+-			reached it will result in NotPermitted error.
+-
+-			Possible errors: org.bluez.Error.InvalidArguments
+-					 org.bluez.Error.AlreadyExists
+-					 org.bluez.Error.InvalidLength
+-					 org.bluez.Error.NotPermitted
+-
+-		UnregisterAdvertisement(object advertisement)
+-
+-			This unregisters an advertisement that has been
+-			previously registered.  The object path parameter must
+-			match the same value that has been used on registration.
+-
+-			Possible errors: org.bluez.Error.InvalidArguments
+-					 org.bluez.Error.DoesNotExist
+-
+-Properties	byte ActiveInstances
+-
+-			Number of active advertising instances.
+-
+-		byte SupportedInstances
+-
+-			Number of available advertising instances.
+-
+-		array{string} SupportedIncludes
+-
+-			List of supported system includes.
+-
+-			Possible values: "tx-power"
+-					 "appearance"
+-					 "local-name"
+-					 "rsi"
+-
+-		array{string} SupportedSecondaryChannels [Experimental]
+-
+-			List of supported Secondary channels. Secondary
+-			channels can be used to advertise with the
+-			corresponding PHY.
+-
+-			Possible values: "1M"
+-					 "2M"
+-					 "Coded"
+-
+-		dict SupportedCapabilities [Experimental]
+-
+-			Enumerates Advertising-related controller capabilities
+-			useful to the client.
+-
+-			Possible Values:
+-
+-				byte MaxAdvLen
+-
+-					Max advertising data length
+-
+-				byte MaxScnRspLen
+-
+-					Max advertising scan response length
+-
+-				int16 MinTxPower
+-
+-					Min advertising tx power (dBm)
+-
+-				int16 MaxTxPower
+-
+-					Max advertising tx power (dBm)
+-
+-		array{string} SupportedFeatures [readonly,optional,Experimental]
+-
+-			List of supported platform features. If no features
+-			are available on the platform, the SupportedFeatures
+-			array will be empty.
+-
+-			Possible values: "CanSetTxPower"
+-
+-						Indicates whether platform can
+-						specify tx power on each
+-						advertising instance.
+-
+-					 "HardwareOffload"
+-
+-						Indicates whether multiple
+-						advertising will be offloaded
+-						to the controller.
+diff --git a/doc/org.bluez.LEAdvertisement.rst b/doc/org.bluez.LEAdvertisement.rst
 new file mode 100644
-index 000000000000..c3c223c913d8
+index 000000000000..4609bde74a5e
 --- /dev/null
-+++ b/doc/org.bluez.Input.rst
-@@ -0,0 +1,51 @@
-+===============
-+org.bluez.Input
-+===============
++++ b/doc/org.bluez.LEAdvertisement.rst
+@@ -0,0 +1,195 @@
++=========================
++org.bluez.LEAdvertisement
++=========================
 +
-+-----------------------------------
-+BlueZ D-Bus Input API documentation
-+-----------------------------------
++---------------------------------------------
++BlueZ D-Bus LEAdvertisement API documentation
++---------------------------------------------
++
++:Version: BlueZ
++:Date: October 2023
++:Manual section: 5
++:Manual group: Linux System Administration
++
++Description
++===========
++
++Advertising packets are structured data which is broadcast on the LE Advertising
++channels and available for all devices in range.  Because of the limited space
++available in LE Advertising packets, each packet's contents must be carefully
++controlled.
++
++The service daemon acts as a store for the Advertisement Data which is meant to
++be sent. It constructs the correct Advertisement Data from the structured
++data and configured the kernel to send the correct advertisement.
++
++Interface
++=========
++
++Specifies the Advertisement Data to be broadcast and some advertising
++parameters.  Properties which are not present will not be included in the
++data.  Required advertisement data types will always be included.
++All UUIDs are 128-bit versions in the API, and 16 or 32-bit
++versions of the same UUID will be used in the advertising data as appropriate.
++
++:Service:	org.bluez
++:Interface:	org.bluez.LEAdvertisement1
++:Object path:	freely definable
++
++Methods
++-------
++
++void Release() [noreply]
++````````````````````````
++
++	This method gets called when the service daemon removes the
++	Advertisement. A client can use it to do cleanup tasks. There is no
++	need to call **UnregisterAdvertisement()** because when this method
++	gets called it has already been unregistered.
++
++Properties
++----------
++
++string Type [readonly]
++``````````````````````
++
++	Determines the type of advertising packet requested.
++
++	Possible values:
++
++	:"broadcast":
++	:"peripheral":
++
++array{string} ServiceUUIDs
++``````````````````````````
++
++	List of UUIDs to include in the "Service UUID" field of the Advertising
++	Data.
++
++dict ManufacturerData
++`````````````````````
++
++	Manufacturer Data fields to include in the Advertising Data.  Keys are
++	the Manufacturer ID to associate with the data.
++
++array{string} SolicitUUIDs
++``````````````````````````
++
++	Array of UUIDs to include in "Service Solicitation" Advertisement Data.
++
++dict ServiceData
++````````````````
++
++	Service Data elements to include. The keys are the UUID to associate
++	with the data.
++
++dict Data [Experimental]
++````````````````````````
++
++	Advertising Data to include. Key is the advertising type and value is
++	the data as byte array.
++
++	Note: Types already handled by other properties shall not be used.
++
++	Possible values:
++
++	:<type>:
++
++		<byte array>
++
++	Example:
++		<Transport Discovery> <Organization Flags...>
++		0x26                   0x01         0x01...
++
++bool Discoverable [Experimental]
++````````````````````````````````
++
++	Advertise as general discoverable. When present this will override
++	adapter Discoverable property.
++
++	Note: This property shall not be set when **Type** is set to
++	"broadcast".
++
++uint16 DiscoverableTimeout [Experimental]
++`````````````````````````````````````````
++
++	The discoverable timeout in seconds. A value of zero means that the
++	timeout is disabled and it will stay in discoverable/limited mode
++	forever.
++
++	Note: This property shall not be set when **Type** is set to
++	"broadcast".
++
++array{string} Includes
++``````````````````````
++
++	List of features to be included in the advertising packet.
++
++	Possible values:
++
++	See **org.bluez.LEAdvertisingManager(5)** **SupportedIncludes**
++	property.
++
++string LocalName
++````````````````
++
++	Local name to be used in the advertising report. If the string is too
++	big to fit into the packet it will be truncated.
++
++	If this property is available 'local-name' cannot be present in the
++	**Includes**.
++
++uint16 Appearance
++`````````````````
++
++	Appearance to be used in the advertising report.
++
++	Possible values: as found on GAP Service.
++
++uint16_t Duration
++`````````````````
++
++	Rotation duration of the advertisement in seconds. If there are other
++	applications advertising no duration is set the default is 2 seconds.
++
++uint16_t Timeout
++````````````````
++
++	Timeout of the advertisement in seconds. This defines the lifetime of
++	the advertisement.
++
++string SecondaryChannel [Experimental]
++``````````````````````````````````````
++
++	Secondary channel to be used. Primary channel is always set to "1M"
++	except when "Coded" is set.
++
++	Possible value:
++
++	:"1M" (default):
++	:"2M":
++	:"Coded":
++
++uint32 MinInterval [Experimental]
++`````````````````````````````````
++
++	Minimum advertising interval to be used by the advertising set, in
++	milliseconds. Acceptable values are in the range [20ms, 10,485s].
++	If the provided MinInterval is larger than the provided MaxInterval,
++	the registration will return failure.
++
++uint32 MaxInterval [Experimental]
++`````````````````````````````````
++
++	Maximum advertising interval to be used by the advertising set, in
++	milliseconds. Acceptable values are in the range [20ms, 10,485s]. If the
++	provided MinInterval is larger than the provided MaxInterval, the
++	registration will return failure.
++
++int16 TxPower [Experimental]
++````````````````````````````
++
++	Requested transmission power of this advertising set. The provided value
++	is used only if the "CanSetTxPower" feature is enabled on the
++	**org.bluez.LEAdvertisingManager(5)**. The provided value must be in
++	range [-127 to +20], where units are in dBm.
+diff --git a/doc/org.bluez.LEAdvertisingManager.rst b/doc/org.bluez.LEAdvertisingManager.rst
+new file mode 100644
+index 000000000000..b9d5cafc6ff3
+--- /dev/null
++++ b/doc/org.bluez.LEAdvertisingManager.rst
+@@ -0,0 +1,144 @@
++==============================
++org.bluez.LEAdvertisingManager
++==============================
++
++-------------------------------------------------
++BlueZ D-Bus LEAvertisingManager API documentation
++-------------------------------------------------
 +
 +:Version: BlueZ
 +:Date: October 2023
@@ -181,41 +624,134 @@ index 000000000000..c3c223c913d8
 +Interface
 +=========
 +
++The Advertising Manager allows external applications to register Advertisement
++Data which should be broadcast to devices.  Advertisement Data elements must
++follow the API for LE Advertisement Data described above.
++
 +:Service:	org.bluez
-+:Interface:	org.bluez.Input1
-+:Object path:	[variable prefix]/{hci0,hci1,...}/dev_XX_XX_XX_XX_XX_XX
++:Interface:	org.bluez.LEAdvertisingManager1
++:Object path:	/org/bluez/{hci0,hci1,...}
++
++Methods
++-------
++
++void RegisterAdvertisement(object advertisement, dict options)
++``````````````````````````````````````````````````````````````
++
++	Registers an advertisement object to be sent over the LE Advertising
++	channel.  The service must implement **org.bluez.LEAdvertisement(5)**
++	interface.
++
++	Possible errors:
++
++	:org.bluez.Error.InvalidArguments:
++
++		Indicates that the object has invalid or conflicting properties.
++
++	:org.bluez.Error.AlreadyExists:
++
++		Indicates the object is already registered.
++
++	:org.bluez.Error.InvalidLength:
++
++		Indicates that the data provided generates a data packet which
++		is too long
++
++	:org.bluez.Error.NotPermitted:
++
++		Indicates the maximum number of advertisement instances has
++		been reached.
++
++void UnregisterAdvertisement(object advertisement)
++``````````````````````````````````````````````````
++
++	Unregisters an advertisement that has been previously registered using
++	**RegisterAdvertisement()**.  The object path parameter must match the
++	same value that has been used on registration.
++
++	Possible errors:
++
++	:org.bluez.Error.InvalidArguments:
++	:org.bluez.Error.DoesNotExist:
 +
 +Properties
 +----------
 +
-+string ReconnectMode [readonly]
++byte ActiveInstances [readonly]
 +```````````````````````````````
 +
-+	Indicates the Connectability mode of the HID device as defined by the
-+	HID Profile specification, Section 5.4.2.
++	Number of active advertising instances.
 +
-+	This mode is based in the two properties HIDReconnectInitiate (see
-+	Section 5.3.4.6) and HIDNormallyConnectable (see Section 5.3.4.14) which
-+	define the following four possible values:
++byte SupportedInstances [readonly]
++``````````````````````````````````
 +
-+	:"none":
++	Number of available advertising instances.
 +
-+		Device and host are not required to automatically restore the
-+		connection.
++array{string} SupportedIncludes [readonly]
++``````````````````````````````````````````
 +
-+	:"host":
++	List of supported system includes.
 +
-+		Bluetooth HID host restores connection.
++	Possible values:
 +
-+	:"device":
++	:"tx-power":
++	:"appearance":
++	:"local-name":
++	:"rsi":
 +
-+		Bluetooth HID device restores connection.
++array{string} SupportedSecondaryChannels [readonly, Experimental]
++`````````````````````````````````````````````````````````````````
 +
-+	:"any":
++	List of supported Secondary channels. Secondary channels can be used to
++	advertise with the corresponding PHY.
 +
-+		Bluetooth HID device shall attempt to restore the lost
-+		connection, but Bluetooth HID Host may also restore the
-+		connection.
++	Possible values:
++
++	:"1M":
++	:"2M":
++	:"Coded":
++
++dict SupportedCapabilities [readonly, Experimental]
++```````````````````````````````````````````````````
++
++	Enumerates Advertising-related controller capabilities useful to the
++	client.
++
++	Possible Values:
++
++	:byte MaxAdvLen:
++
++		Max advertising data length
++
++	:byte MaxScnRspLen:
++
++		Max advertising scan response length
++
++	;int16 MinTxPower:
++
++		Min advertising tx power (dBm)
++
++	:int16 MaxTxPower:
++
++		Max advertising tx power (dBm)
++
++array{string} SupportedFeatures [readonly,optional,Experimental]
++````````````````````````````````````````````````````````````````
++
++	List of supported platform features. If no features are available on
++	the platform, the SupportedFeatures array will be empty.
++
++	Possible values:
++
++	:"CanSetTxPower":
++
++		Indicates whether platform can specify tx power on each
++		advertising instance.
++
++	:"HardwareOffload":
++
++		Indicates whether multiple advertising will be offloaded to the
++		controller.
 -- 
 2.41.0
 
