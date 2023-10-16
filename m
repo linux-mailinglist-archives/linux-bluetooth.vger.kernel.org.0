@@ -2,155 +2,90 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A79257CA538
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Oct 2023 12:23:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D3DB57CA9DC
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Oct 2023 15:40:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232643AbjJPKXD (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Mon, 16 Oct 2023 06:23:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59298 "EHLO
+        id S233961AbjJPNkI (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Mon, 16 Oct 2023 09:40:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232401AbjJPKXC (ORCPT
+        with ESMTP id S234023AbjJPNjy (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Mon, 16 Oct 2023 06:23:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99B6ADE
-        for <linux-bluetooth@vger.kernel.org>; Mon, 16 Oct 2023 03:22:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1697451739;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=Gp85qeDzi8U6mzQo/nR8ijZYIV2Eq5Pjoam1JtOSHss=;
-        b=g3noSIbf4LV9xTzlxYysJTe7Ng6pxcSOv3jZlJ3pdtDgOg37V/51W6b2AxLKDENPSadiQs
-        VVRHlJtCqKPDB21yk5mqJAHJ9+MFhbx4BILyvUPGBU362LH0wQXTUtuya96/IbCaAKxnCd
-        9cQQ0PS7q8hUM6SDd43KkFum9bFbBh0=
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
- [209.85.210.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-607-wZOUxAXUMj2A8s8vCDO81Q-1; Mon, 16 Oct 2023 06:22:18 -0400
-X-MC-Unique: wZOUxAXUMj2A8s8vCDO81Q-1
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-6936a25f49bso3915040b3a.1
-        for <linux-bluetooth@vger.kernel.org>; Mon, 16 Oct 2023 03:22:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697451737; x=1698056537;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Gp85qeDzi8U6mzQo/nR8ijZYIV2Eq5Pjoam1JtOSHss=;
-        b=Qk3XiwtaakQs+3jiIDxbeUPN6ynSVxAV0V8ybp/EdzHT+w+jZlGUQRWfIKTG7H5MXE
-         eiswiE2QFrQ5Kn93nesCfNqWMvfgiMUw1D11Y96Pmyi66/eHifuxbX1MiykFLgb6H1n0
-         f26U9hOyoEJoocxssWfztwmp54wCvPEQaZQV2MGzgGssw4tbFp/RsqQ8BfQcGQseBd9s
-         kd0xkkq0jKr2gBp9krfpuhjpb4fHoe/X8qG4eNbEy8J6cVGW2Xkar3ukcHV0ANfvPlIK
-         wU7xPC8NN1DsHUvpyBl6tV4W441F7UgxhwEC79FJ02U3zu5Z7ua4KkHVNpCUWxN0PkQm
-         KA3g==
-X-Gm-Message-State: AOJu0YwxAODYt2pFh8mxHaEn5ufoyY1Qq0sA2qZ6B273hVQyDsLLl0po
-        ff7tHhmmRP2z1+CX+9UHGwhglEGui+RBzm+2vz9kb8J+3ZHZIos7vJXSNClqMTWUyW5WGwUbD+s
-        PkigqAU4SIimpGyXXYCyG9RGHXccd9LU7I0+44lp2idAo
-X-Received: by 2002:a05:6a21:819c:b0:169:535f:2687 with SMTP id pd28-20020a056a21819c00b00169535f2687mr29186292pzb.49.1697451737407;
-        Mon, 16 Oct 2023 03:22:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH6NFZbUqAnxzUeRwXsjJ2wD+9lzj4oz8AbfJAYlMT5H+FPNWTMEdzeJdUlW0ZcPPLf3ZC6bpKJ5qo+m110tjE=
-X-Received: by 2002:a05:6a21:819c:b0:169:535f:2687 with SMTP id
- pd28-20020a056a21819c00b00169535f2687mr29186286pzb.49.1697451737127; Mon, 16
- Oct 2023 03:22:17 -0700 (PDT)
+        Mon, 16 Oct 2023 09:39:54 -0400
+X-Greylist: delayed 2525 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 16 Oct 2023 06:39:48 PDT
+Received: from mail.sig21.net (mail.sig21.net [217.197.84.222])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EF2ED63
+        for <linux-bluetooth@vger.kernel.org>; Mon, 16 Oct 2023 06:39:47 -0700 (PDT)
+Received: from localhorst ([127.0.0.1])
+         by mail.sig21.net with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+         (Exim 4.94.2)
+        (envelope-from <michael.hunold@eu.panasonic.com>)
+         id 1qsN84-0004FR-JZ ; Mon, 16 Oct 2023 14:55:28 +0200
+From:   Michael Hunold <michael.hunold@eu.panasonic.com>
+To:     linux-bluetooth@vger.kernel.org
+Cc:     Michael Hunold <michael.hunold@eu.panasonic.com>
+Subject: [PATCH 0/1] Make initialization work for newer versions of TI CC2564
+Date:   Mon, 16 Oct 2023 14:55:25 +0200
+Message-Id: <20231016125526.749848-1-michael.hunold@eu.panasonic.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20231016-bt-bcm4377-quirk-broken-le-coded-v1-1-52ea69d3c979@jannau.net>
-In-Reply-To: <20231016-bt-bcm4377-quirk-broken-le-coded-v1-1-52ea69d3c979@jannau.net>
-From:   Eric Curtin <ecurtin@redhat.com>
-Date:   Mon, 16 Oct 2023 11:21:41 +0100
-Message-ID: <CAOgh=Fxn7Ga7p-FaP-ef=+F1MTFWs-5OOna9piJa-nFcCwe=NA@mail.gmail.com>
-Subject: Re: [PATCH] Bluetooth: hci_bcm4377: Mark bcm4378/bcm4387 as BROKEN_LE_CODED
-To:     j@jannau.net
-Cc:     Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-        asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        regressions@lists.linux.dev, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,T_SPF_PERMERROR autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-On Mon, 16 Oct 2023 at 08:21, Janne Grunau via B4 Relay
-<devnull+j.jannau.net@kernel.org> wrote:
->
-> From: Janne Grunau <j@jannau.net>
->
-> bcm4378 and bcm4387 claim to support LE Coded PHY but fail to pair
-> (reliably) with BLE devices if it is enabled.
-> On bcm4378 pairing usually succeeds after 2-3 tries. On bcm4387
-> pairing appears to be completely broken.
->
-> Cc: stable@vger.kernel.org # 6.4.y+
-> Link: https://discussion.fedoraproject.org/t/mx-master-3-bluetooth-mouse-doesnt-connect/87072/33
-> Link: https://github.com/AsahiLinux/linux/issues/177
-> Fixes: 288c90224eec ("Bluetooth: Enable all supported LE PHY by default")
-> Signed-off-by: Janne Grunau <j@jannau.net>
-> ---
+My company recently released a new evaluation kit for the Panasonic PAN1326C2 Bluetooth module which is based on the revision B of the CC2564C chipset ("C2") from Texas Instruments.
 
-Reviewed-by: Eric Curtin <ecurtin@redhat.com>
+This evaluation kit has a built-in USB-to-serial adapter, which makes it easy to attach it to any Linux-bases system and add Bluetooth functionality to it.
 
-Is mise le meas/Regards,
+The CC2564 family is very well supported by BlueZ for years now, however this variant of the chipset does not work out-of-the-box.
 
-Eric Curtin
+You are probably well aware that these devices require a so-called initscript to be uploaded using vendor-specific HCI commands. For this "hciattach" has the special "texas" parameter and the necessary code for this special handling is in bluez/tools/hciattach_ti.c
 
->  drivers/bluetooth/hci_bcm4377.c | 5 +++++
->  1 file changed, 5 insertions(+)
->
-> diff --git a/drivers/bluetooth/hci_bcm4377.c b/drivers/bluetooth/hci_bcm4377.c
-> index 19ad0e788646..a61757835695 100644
-> --- a/drivers/bluetooth/hci_bcm4377.c
-> +++ b/drivers/bluetooth/hci_bcm4377.c
-> @@ -512,6 +512,7 @@ struct bcm4377_hw {
->         unsigned long disable_aspm : 1;
->         unsigned long broken_ext_scan : 1;
->         unsigned long broken_mws_transport_config : 1;
-> +       unsigned long broken_le_coded : 1;
->
->         int (*send_calibration)(struct bcm4377_data *bcm4377);
->         int (*send_ptb)(struct bcm4377_data *bcm4377,
-> @@ -2372,6 +2373,8 @@ static int bcm4377_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->                 set_bit(HCI_QUIRK_BROKEN_MWS_TRANSPORT_CONFIG, &hdev->quirks);
->         if (bcm4377->hw->broken_ext_scan)
->                 set_bit(HCI_QUIRK_BROKEN_EXT_SCAN, &hdev->quirks);
-> +       if (bcm4377->hw->broken_le_coded)
-> +               set_bit(HCI_QUIRK_BROKEN_LE_CODED, &hdev->quirks);
->
->         pci_set_drvdata(pdev, bcm4377);
->         hci_set_drvdata(hdev, bcm4377);
-> @@ -2461,6 +2464,7 @@ static const struct bcm4377_hw bcm4377_hw_variants[] = {
->                 .bar0_core2_window2 = 0x18107000,
->                 .has_bar0_core2_window2 = true,
->                 .broken_mws_transport_config = true,
-> +               .broken_le_coded = true,
->                 .send_calibration = bcm4378_send_calibration,
->                 .send_ptb = bcm4378_send_ptb,
->         },
-> @@ -2474,6 +2478,7 @@ static const struct bcm4377_hw bcm4377_hw_variants[] = {
->                 .has_bar0_core2_window2 = true,
->                 .clear_pciecfg_subsystem_ctrl_bit19 = true,
->                 .broken_mws_transport_config = true,
-> +               .broken_le_coded = true,
->                 .send_calibration = bcm4387_send_calibration,
->                 .send_ptb = bcm4378_send_ptb,
->         },
->
-> ---
-> base-commit: 0bb80ecc33a8fb5a682236443c1e740d5c917d1d
-> change-id: 20231016-bt-bcm4377-quirk-broken-le-coded-599688e3c4a0
->
-> Best regards,
-> --
-> Janne Grunau <j@jannau.net>
->
->
+CC2464C revision B requires the TIInit_6.12.26.bts initscript which can be obtained from https://git.ti.com/cgit/ti-bt/service-packs/tree/initscripts and has to be stored at /lib/firmware/ti-connectivity/ Usually you use something like hciattach -n /dev/ttyUSB0 texas 115200 in order to initialize a CC2564-based to be used in conjunction with BlueZ.
+
+This works fine for earlier variants of CC2564, but not with CC2564C revision B. The initialization procedure seems to start, but stops at a certain point and the following error message is shown:
+
+> Cannot send hci command to socket: Connection timed out
+
+It seems that this problem is already known in the community for a long time, because it is described in the following thread in the Texas Instruments Bluetooth forum: https://e2e.ti.com/support/wireless-connectivity/bluetooth-group/bluetooth/f/bluetooth-forum/375766/can-t-init-device-cc2564b
+
+It boils down to call to hci_send_req() in the function brf_send_command_socket() in bluez/tools/hciattach_ti.c.
+
+> if (hci_send_req(fd, &rq, 15) < 0) {
+>	perror("Cannot send hci command to socket");
+>	return -1;
+> }
+
+The number 15 is a timeout value in milliseconds that in the end is passed down to a call to poll() on the file descriptor for the serial device.
+
+I traced all the calls to brf_send_command_socket() and matched them with the commands that are included in the initscript.
+
+The initial upload of some big vendor-specific data using the vendor-specific Send_HCI_VS_Write_Memory_Block command is working fine. Later in the script two calls to Send_HCI_VS_Read_Modify_Write_Hardware_Register() are done and it is always the second call that times out.
+
+As described in the forum thread it seems that the CC2564C revision B (and already some earlier variants) take more than 15 milliseconds to complete these vendor-specific commands.
+
+I verified that the solution to increase the timeout time from 15ms to something bigger actually works. By trial-and-error I could find out that starting with 20ms everything starts working fine again.
+
+The original code was added approx. 15 years ago with the following commit: https://github.com/bluez/bluez/commit/14f84d602a7584f0805c93ae9ad1bd26e2387f6d
+
+I think there is no way to find out today why 15 milliseconds were chosen as a timeout value at that time. From the way I understand the code it should not matter if a (way) higher timeout value is used here. If the low-level HCI command is successful it will return as quickly as possible and if there is an error, it will timeout no matter what.
+
+So my suggestion is to increase the timeout value to something reasonable like 100ms instead.
+
+I am aware that this patch is for the hciattach tool which is already deprecated and is not built by default any more. However, hciattach is the only tool to start and initialize the CC2564 series correctly under Linux and I guess it is still used by the people that use the CC2564 device under Linux.
+
+Michael Hunold (1):
+  tools/hciattach: Increase timeout for TI-specific initialization
+
+ tools/hciattach_ti.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+-- 
+2.34.1
 
