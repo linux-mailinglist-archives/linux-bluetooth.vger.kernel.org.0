@@ -2,49 +2,44 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 83DEE7CD0C6
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 18 Oct 2023 01:30:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2874A7CD5D6
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 18 Oct 2023 09:59:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235013AbjJQXa3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 17 Oct 2023 19:30:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45482 "EHLO
+        id S1344651AbjJRH7Q (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Wed, 18 Oct 2023 03:59:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234836AbjJQXa2 (ORCPT
+        with ESMTP id S1344638AbjJRH7P (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 17 Oct 2023 19:30:28 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EEDC103;
-        Tue, 17 Oct 2023 16:30:26 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C90FEC433CB;
-        Tue, 17 Oct 2023 23:30:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1697585425;
-        bh=ZAyjbke2TjqJcwoIhucIv9TG3uMrAnnnU9qwH6ECYQ0=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=t919TXtE9N1pfTLgLwbTwfhFjIJL6DO6rB1sdnr1hfyGYpL7YSLfddg7Ij7y1XDB7
-         yIh71a5cCpBI3gyhC2gOGxXE5MgW1uK43r4zt2IwncbPk3lp4udziBXaHWtGImjj4+
-         ovJRT2ujOyN+71CxXCefyqDdZLtL/TTfAPsaaaKOwEc5QVxUxfmDJJgIai2SLxKiSF
-         IVpVa/R07xt7rTqWomy3Zr5WmLDiEuQ0hoAFy1sB2UKtUdzfIb4min8iPcDEQIJJCk
-         pa39l0pEV79zJI4QS/nR+JK3nnXsKZlkvc2/8WEHT/fLkzbt2rg1KtVLMQaQUX1rg9
-         lFcwHSlZyxAgg==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id A942BC04E24;
-        Tue, 17 Oct 2023 23:30:25 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        Wed, 18 Oct 2023 03:59:15 -0400
+X-Greylist: delayed 476 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 18 Oct 2023 00:59:11 PDT
+Received: from mail.raportygospodarcze.pl (mail.raportygospodarcze.pl [51.195.117.175])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA269FF
+        for <linux-bluetooth@vger.kernel.org>; Wed, 18 Oct 2023 00:59:11 -0700 (PDT)
+Received: by mail.raportygospodarcze.pl (Postfix, from userid 1002)
+        id 5F571A2AE6; Wed, 18 Oct 2023 07:51:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+        d=raportygospodarcze.pl; s=mail; t=1697615471;
+        bh=Q787bUI8wqiKELAtyWRvCTxaBwNaZfpooGhkyk63cfU=;
+        h=Date:From:To:Subject:From;
+        b=hHe1Ze4+y8d90lzsISC5J07e4u/8YHnbZbG/gPjU8gdtaQ4+w1d/zVDjFYG6JCo+B
+         JGSEsRdSfcJuWzPSka9i3lbOK1YYbzI+Zv5mFlKAq7B0eAQl9bKe+CW102vEMVG1Qq
+         ak9GBeahJFGK8nGioF1+4zMhSBJCowvKSItSVzKtvmK+tl7oKajS732zVaI0XUzme2
+         Ra5YZ69qUC9cKOXfPHZQFno52DSijQR3MCu7T3fOxs/oY82VnEg9vv40sAA6LU1fxz
+         6yCARgaQYtr+i3XyNhMTrLiovJAeacKkUJfatZtomh4y6l8hAL1g6/jQnmwPtLP06p
+         1RlTAXBdePKNg==
+Received: by mail.raportygospodarcze.pl for <linux-bluetooth@vger.kernel.org>; Wed, 18 Oct 2023 07:51:08 GMT
+Message-ID: <20231018064500-0.1.b1.1fbkj.0.pb4clemgkd@raportygospodarcze.pl>
+Date:   Wed, 18 Oct 2023 07:51:08 GMT
+From:   "Maksymilian Ciszewski" <maksymilian.ciszewski@raportygospodarcze.pl>
+To:     <linux-bluetooth@vger.kernel.org>
+Subject: =?UTF-8?Q?Prosz=C4=99_o_kontakt?=
+X-Mailer: mail.raportygospodarcze.pl
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] Bluetooth: btusb: Add 0bda:b85b for Fn-Link RTL8852BE
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <169758542568.4587.5920833611147387224.git-patchwork-notify@kernel.org>
-Date:   Tue, 17 Oct 2023 23:30:25 +0000
-References: <20231012112118.11431-1-guanwentao@uniontech.com>
-In-Reply-To: <20231012112118.11431-1-guanwentao@uniontech.com>
-To:     Guan Wentao <guanwentao@uniontech.com>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
-        stable@vger.kernel.org
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=0.6 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -52,28 +47,18 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+Dzie=C5=84 dobry,
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+Czy jest mo=C5=BCliwo=C5=9B=C4=87 nawi=C4=85zania wsp=C3=B3=C5=82pracy z =
+Pa=C5=84stwem?
 
-On Thu, 12 Oct 2023 19:21:17 +0800 you wrote:
-> Add PID/VID 0bda:b85b for Realtek RTL8852BE USB bluetooth part.
-> The PID/VID was reported by the patch last year. [1]
-> Some SBCs like rockpi 5B A8 module contains the device.
-> And it`s founded in website. [2] [3]
-> 
-> Here is the device tables in /sys/kernel/debug/usb/devices .
-> 
-> [...]
+Z ch=C4=99ci=C4=85 porozmawiam z osob=C4=85 zajmuj=C4=85c=C4=85 si=C4=99 =
+dzia=C5=82aniami zwi=C4=85zanymi ze sprzeda=C5=BC=C4=85.
 
-Here is the summary with links:
-  - Bluetooth: btusb: Add 0bda:b85b for Fn-Link RTL8852BE
-    https://git.kernel.org/bluetooth/bluetooth-next/c/9bb309db620f
+Pomagamy skutecznie pozyskiwa=C4=87 nowych klient=C3=B3w.
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+Zapraszam do kontaktu.
 
 
+Pozdrawiam
+Maksymilian Ciszewski
