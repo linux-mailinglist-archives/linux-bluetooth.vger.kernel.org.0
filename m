@@ -2,65 +2,63 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 435C37D157C
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Oct 2023 20:08:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D95F77D16CB
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Oct 2023 22:12:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1377970AbjJTSIs (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Fri, 20 Oct 2023 14:08:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49518 "EHLO
+        id S229603AbjJTUMW (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Fri, 20 Oct 2023 16:12:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230084AbjJTSIq (ORCPT
+        with ESMTP id S229559AbjJTUMV (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Fri, 20 Oct 2023 14:08:46 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41942D57
-        for <linux-bluetooth@vger.kernel.org>; Fri, 20 Oct 2023 11:08:43 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id 98e67ed59e1d1-27cfb8bc7eeso891018a91.0
-        for <linux-bluetooth@vger.kernel.org>; Fri, 20 Oct 2023 11:08:43 -0700 (PDT)
+        Fri, 20 Oct 2023 16:12:21 -0400
+Received: from mail-vs1-xe32.google.com (mail-vs1-xe32.google.com [IPv6:2607:f8b0:4864:20::e32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB173D63
+        for <linux-bluetooth@vger.kernel.org>; Fri, 20 Oct 2023 13:12:15 -0700 (PDT)
+Received: by mail-vs1-xe32.google.com with SMTP id ada2fe7eead31-457c057bdb5so498507137.0
+        for <linux-bluetooth@vger.kernel.org>; Fri, 20 Oct 2023 13:12:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697825322; x=1698430122; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cwt/O4BE9qXnQZw8zoFRGFUPhkxOc2BZrusO3xMXvaQ=;
-        b=jClA7HcbjhWha4S9rvfb37MyHBWwN0DpuEgYjIVozDmcn7aVhm101IWQ0afLxbYJJs
-         ARN+L5JbQBTMofFSE4wa928OpSxxfiRaAUA14HYg2SOApmh31A7446eFpO0QiuDmS1pH
-         PqADD470UpIczeM4bMb5fKDjWRevoUdJoU6W0qOP95VSbhDxzKvRQJY8cnPcTqahxS8N
-         Zl41n5VrvF3/DLTbIu88YbKmzKv6+cAAgJu2/zPMECKTsPIeCY57jlJwpnWop4FlStFy
-         9OB8W8ADk/ilE5NwGjBaFwU3F32QdCu/48JnklVEzEvj5goWSyTzVIQQWWD9bCpYqpjV
-         tWXg==
+        d=gmail.com; s=20230601; t=1697832734; x=1698437534; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=rBM5TzpFi0HCqH8JqE+pbn4CeHzCghPd0dwJZ6obmxo=;
+        b=ACMFuAQBBSPVe3FX7T8MqU5RV6LX3YIp+PWreWxHuJ7dVZk6K9Fv4XSz+DIp+U/ZHa
+         nmiI6tiZCYdIa2vbJtLzPqFxLTgC6tv2lhaUiQYVENhX2pyqB+xY1YmtU+TH7B1uljnX
+         N3QkqvVwIRe50Hfi3mCO3X2QEuJ7Kg3hzCEeYc9CV+A9UqS3bQ5IMH0ufyYGkqJlyMwM
+         lBjJeUpjRTlgm5H0YMvyByV2EEhuzhcBQbIHdM5i51QRKv/lW1/XWjCxDy6xO/XkYhno
+         W+R5moEGYgoBRlTYRrcP5HEYV6VBIpza8JZoYT5VR8AtQPlKmqlsg/kLVNWvSGXiCQGn
+         gnTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697825322; x=1698430122;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cwt/O4BE9qXnQZw8zoFRGFUPhkxOc2BZrusO3xMXvaQ=;
-        b=lgFcSJtRJytgM6KejmyDvAH9diy41WlftoFJbhvRJoaCB7tiPw/v3lxUGO5oGm26MM
-         XZaIqA4F//aTiwb3Kn+2vnz1BHLygA5u+qPZAvs55nz1BDENhSGZ9163uY0dKJjJupUw
-         LGVv7dbtJB007iEiFWl5mJo2/N+Net2CUFa9bCa0bYZdGYSByb859HOjsSpMKBKfP0Ty
-         iY3jNWQ/ywRQnCkh973e0GvK4RrLP3hVulVET4TX/EQ0gtyJJFT8PFXHHm3cQP1CaXpH
-         3YGmU1e685CodQ1EYP4vbAMeMsTJCXLBo5xAvCWgTtXSUwFGHLfqNOhBNbZ9wiBa3c6e
-         x/Cg==
-X-Gm-Message-State: AOJu0YwXKoKelXe4f2DGvkhNunsYiPmrAHgg0n4BCcWr1gNsc3lW0/Cv
-        5lprLB8r1myZRfI6NEeBVH9zx4UAH7K5I5Vh0Yo=
-X-Google-Smtp-Source: AGHT+IFCYxxjePkeE8GhnAVSn9MY3MpHvbpsrrjHYO8437dJ8I2/58AMNF/Ik2UXJugM7yWVdMuUJA==
-X-Received: by 2002:a17:90b:2890:b0:27d:63ae:f376 with SMTP id qc16-20020a17090b289000b0027d63aef376mr2906266pjb.38.1697825321849;
-        Fri, 20 Oct 2023 11:08:41 -0700 (PDT)
-Received: from lvondent-mobl4.. (c-98-232-221-87.hsd1.or.comcast.net. [98.232.221.87])
-        by smtp.gmail.com with ESMTPSA id i4-20020a17090ad34400b00263b9e75aecsm1729800pjx.41.2023.10.20.11.08.40
-        for <linux-bluetooth@vger.kernel.org>
+        d=1e100.net; s=20230601; t=1697832734; x=1698437534;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rBM5TzpFi0HCqH8JqE+pbn4CeHzCghPd0dwJZ6obmxo=;
+        b=O6WpYyqzgoXsFJ5jgSc+CH7Tx+s5u42E2pGMBqpjpy5xwZIbvjjxAfF3SaiA8kc+q5
+         faRpX0wJha0BzzYeklVz5HzStvJEXmsCFI1YYV1l51GFXfnkcmx7ZZu25G26QqN0m618
+         fvBKRjrfhKI1XeanWZ/f+2pYuEUA37PGKxWK16vhHeQHI3F9QlDs5Vy1adE1uSwagOU7
+         v9Sfp3sMUx4lQTV8onF0RF0lwOST166mb6V3NFVAyTJDpuPk1B2aE+PlI+q+/EO3+4Od
+         0Jt4x3R4MVB7jvsErItrtTqblxvOAOVbluNtBMNSe9unQ5skf/WVmbf/3hC/f002rt2c
+         GORQ==
+X-Gm-Message-State: AOJu0YwTUR+NL5rk/dIGWpdwVltK5qmBeKrFOnKYdqtOoo/RZPTftCC6
+        arE710SJkEZYbckBtoIsgAWEawS/Nq8=
+X-Google-Smtp-Source: AGHT+IFZkefMpwhFV2hkWpY/xTT4pobXXloDNRyZX0tdJIsWRRRSS7JUrh+vWWLMJ95PQOjwmcXpjA==
+X-Received: by 2002:a67:c283:0:b0:457:bc46:8ba3 with SMTP id k3-20020a67c283000000b00457bc468ba3mr3043185vsj.9.1697832734552;
+        Fri, 20 Oct 2023 13:12:14 -0700 (PDT)
+Received: from [172.17.0.2] ([20.57.76.129])
+        by smtp.gmail.com with ESMTPSA id vv6-20020a05620a562600b007770d47c621sm860879qkn.66.2023.10.20.13.12.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Oct 2023 11:08:41 -0700 (PDT)
-From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To:     linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v2 4/4] client: Make use of bap-debug functions
-Date:   Fri, 20 Oct 2023 11:08:34 -0700
-Message-ID: <20231020180834.3010421-4-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.41.0
+        Fri, 20 Oct 2023 13:12:14 -0700 (PDT)
+Message-ID: <6532df1e.050a0220.351c3.42f2@mx.google.com>
+Date:   Fri, 20 Oct 2023 13:12:14 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============3897125527613006995=="
+MIME-Version: 1.0
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
+Subject: RE: [BlueZ,v2,1/4] shared/util: Add util_debug_{tlv, bit} helpers
 In-Reply-To: <20231020180834.3010421-1-luiz.dentz@gmail.com>
 References: <20231020180834.3010421-1-luiz.dentz@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Reply-To: linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_BLOCKED,SPF_HELO_NONE,SPF_PASS autolearn=ham
@@ -71,205 +69,71 @@ Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+--===============3897125527613006995==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-This make use of bap-debug functions to decode Capabilities,
-Configuration and Metadata.
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=795210
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      2.89 seconds
+GitLint                       PASS      1.37 seconds
+BuildEll                      PASS      29.71 seconds
+BluezMake                     PASS      1085.10 seconds
+MakeCheck                     PASS      12.59 seconds
+MakeDistcheck                 PASS      185.35 seconds
+CheckValgrind                 PASS      284.84 seconds
+CheckSmatch                   WARNING   377.39 seconds
+bluezmakeextell               PASS      122.42 seconds
+IncrementalBuild              PASS      3643.09 seconds
+ScanBuild                     WARNING   1170.95 seconds
+
+Details
+##############################
+Test: CheckSmatch - WARNING
+Desc: Run smatch tool with source
+Output:
+monitor/att.c: note: in included file:monitor/display.h:82:26: warning: Variable length array is used.monitor/packet.c: note: in included file:monitor/display.h:82:26: warning: Variable length array is used.monitor/packet.c:1859:26: warning: Variable length array is used.monitor/packet.c: note: in included file:monitor/bt.h:3606:52: warning: array of flexible structuresmonitor/bt.h:3594:40: warning: array of flexible structures
+##############################
+Test: ScanBuild - WARNING
+Desc: Run Scan Build
+Output:
+In file included from tools/mesh-gatt/crypto.c:32:
+./src/shared/util.h:221:9: warning: 1st function call argument is an uninitialized value
+        return be32_to_cpu(get_unaligned((const uint32_t *) ptr));
+               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+./src/shared/util.h:33:26: note: expanded from macro 'be32_to_cpu'
+#define be32_to_cpu(val) bswap_32(val)
+                         ^~~~~~~~~~~~~
+/usr/include/byteswap.h:34:21: note: expanded from macro 'bswap_32'
+#define bswap_32(x) __bswap_32 (x)
+                    ^~~~~~~~~~~~~~
+In file included from tools/mesh-gatt/crypto.c:32:
+./src/shared/util.h:231:9: warning: 1st function call argument is an uninitialized value
+        return be64_to_cpu(get_unaligned((const uint64_t *) ptr));
+               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+./src/shared/util.h:34:26: note: expanded from macro 'be64_to_cpu'
+#define be64_to_cpu(val) bswap_64(val)
+                         ^~~~~~~~~~~~~
+/usr/include/byteswap.h:37:21: note: expanded from macro 'bswap_64'
+#define bswap_64(x) __bswap_64 (x)
+                    ^~~~~~~~~~~~~~
+2 warnings generated.
+
+
+
 ---
- client/player.c | 124 ++++++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 116 insertions(+), 8 deletions(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/client/player.c b/client/player.c
-index d1809f24fd27..603447a9df46 100644
---- a/client/player.c
-+++ b/client/player.c
-@@ -42,6 +42,7 @@
- #include "src/shared/shell.h"
- #include "src/shared/io.h"
- #include "src/shared/queue.h"
-+#include "src/shared/bap-debug.h"
- #include "print.h"
- #include "player.h"
- 
-@@ -1451,6 +1452,34 @@ static struct codec_preset lc3_presets[] = {
- 			LC3_10_UNFRAMED(155u, 13u, 100u, 40000u)),
- };
- 
-+static void print_ltv(const char *str, void *user_data)
-+{
-+	const char *label = user_data;
-+
-+	bt_shell_printf("\t%s.%s\n", label, str);
-+}
-+
-+static void print_lc3_caps(uint8_t *data, int len)
-+{
-+	const char *label = "Capabilities";
-+
-+	bt_bap_debug_caps(data, len, print_ltv, (void *)label);
-+}
-+
-+static void print_lc3_cfg(void *data, int len)
-+{
-+	const char *label = "Configuration";
-+
-+	bt_bap_debug_config(data, len, print_ltv, (void *)label);
-+}
-+
-+static void print_lc3_meta(void *data, int len)
-+{
-+	const char *label = "Metadata";
-+
-+	bt_bap_debug_metadata(data, len, print_ltv, (void *)label);
-+}
-+
- #define PRESET(_uuid, _codec, _presets, _default_index) \
- 	{ \
- 		.uuid = _uuid, \
-@@ -1941,8 +1970,12 @@ static void append_properties(DBusMessageIter *iter,
- 
- 	dbus_message_iter_open_container(iter, DBUS_TYPE_ARRAY, "{sv}", &dict);
- 
--	bt_shell_printf("Capabilities: ");
--	bt_shell_hexdump(cfg->caps->iov_base, cfg->caps->iov_len);
-+	if (cfg->ep->codec == LC3_ID) {
-+		print_lc3_cfg(cfg->caps->iov_base, cfg->caps->iov_len);
-+	} else {
-+		bt_shell_printf("Capabilities: ");
-+		bt_shell_hexdump(cfg->caps->iov_base, cfg->caps->iov_len);
-+	}
- 
- 	g_dbus_dict_append_basic_array(&dict, DBUS_TYPE_STRING, &key,
- 					DBUS_TYPE_BYTE, &cfg->caps->iov_base,
-@@ -1955,8 +1988,13 @@ static void append_properties(DBusMessageIter *iter,
- 				DBUS_TYPE_BYTE, &cfg->meta->iov_base,
- 				cfg->meta->iov_len);
- 
--		bt_shell_printf("Metadata:\n");
--		bt_shell_hexdump(cfg->meta->iov_base, cfg->meta->iov_len);
-+		if (cfg->ep->codec == LC3_ID) {
-+			print_lc3_meta(cfg->meta->iov_base, cfg->meta->iov_len);
-+		} else {
-+			bt_shell_printf("Metadata:\n");
-+			bt_shell_hexdump(cfg->meta->iov_base,
-+						cfg->meta->iov_len);
-+		}
- 	}
- 
- 	append_qos(&dict, cfg);
-@@ -2124,6 +2162,42 @@ static struct endpoint *endpoint_find(const char *pattern)
- 	return NULL;
- }
- 
-+static void print_capabilities(GDBusProxy *proxy)
-+{
-+	DBusMessageIter iter, subiter;
-+	uint8_t codec;
-+	uint8_t *data;
-+	int len;
-+
-+	if (!g_dbus_proxy_get_property(proxy, "Codec", &iter))
-+		return;
-+
-+	dbus_message_iter_get_basic(&iter, &codec);
-+
-+	if (codec != LC3_ID) {
-+		print_property(proxy, "Capabilities");
-+		return;
-+	}
-+
-+	if (!g_dbus_proxy_get_property(proxy, "Capabilities", &iter))
-+		return;
-+
-+	dbus_message_iter_recurse(&iter, &subiter);
-+
-+	dbus_message_iter_get_fixed_array(&subiter, &data, &len);
-+
-+	print_lc3_caps(data, len);
-+
-+	if (!g_dbus_proxy_get_property(proxy, "Metadata", &iter))
-+		return;
-+
-+	dbus_message_iter_recurse(&iter, &subiter);
-+
-+	dbus_message_iter_get_fixed_array(&subiter, &data, &len);
-+
-+	print_lc3_meta(data, len);
-+}
-+
- static void cmd_show_endpoint(int argc, char *argv[])
- {
- 	GDBusProxy *proxy;
-@@ -2139,7 +2213,7 @@ static void cmd_show_endpoint(int argc, char *argv[])
- 
- 	print_property(proxy, "UUID");
- 	print_property(proxy, "Codec");
--	print_property(proxy, "Capabilities");
-+	print_capabilities(proxy);
- 	print_property(proxy, "Device");
- 	print_property(proxy, "DelayReporting");
- 	print_property(proxy, "Locations");
-@@ -3817,6 +3891,42 @@ static void cmd_list_transport(int argc, char *argv[])
- 	return bt_shell_noninteractive_quit(EXIT_SUCCESS);
- }
- 
-+static void print_configuration(GDBusProxy *proxy)
-+{
-+	DBusMessageIter iter, subiter;
-+	uint8_t codec;
-+	uint8_t *data;
-+	int len;
-+
-+	if (!g_dbus_proxy_get_property(proxy, "Codec", &iter))
-+		return;
-+
-+	dbus_message_iter_get_basic(&iter, &codec);
-+
-+	if (codec != LC3_ID) {
-+		print_property(proxy, "Configuration");
-+		return;
-+	}
-+
-+	if (!g_dbus_proxy_get_property(proxy, "Configuration", &iter))
-+		return;
-+
-+	dbus_message_iter_recurse(&iter, &subiter);
-+
-+	dbus_message_iter_get_fixed_array(&subiter, &data, &len);
-+
-+	print_lc3_cfg(data, len);
-+
-+	if (!g_dbus_proxy_get_property(proxy, "Metadata", &iter))
-+		return;
-+
-+	dbus_message_iter_recurse(&iter, &subiter);
-+
-+	dbus_message_iter_get_fixed_array(&subiter, &data, &len);
-+
-+	print_lc3_meta(data, len);
-+}
-+
- static void cmd_show_transport(int argc, char *argv[])
- {
- 	GDBusProxy *proxy;
-@@ -3832,16 +3942,14 @@ static void cmd_show_transport(int argc, char *argv[])
- 
- 	print_property(proxy, "UUID");
- 	print_property(proxy, "Codec");
--	print_property(proxy, "Configuration");
-+	print_configuration(proxy);
- 	print_property(proxy, "Device");
- 	print_property(proxy, "State");
- 	print_property(proxy, "Delay");
- 	print_property(proxy, "Volume");
- 	print_property(proxy, "Endpoint");
--
- 	print_property(proxy, "QoS");
- 	print_property(proxy, "Location");
--	print_property(proxy, "Metadata");
- 	print_property(proxy, "Links");
- 
- 	return bt_shell_noninteractive_quit(EXIT_SUCCESS);
--- 
-2.41.0
 
+--===============3897125527613006995==--
