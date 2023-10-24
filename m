@@ -2,46 +2,48 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BA1747D5A2E
+	by mail.lfdr.de (Postfix) with ESMTP id 647767D5A2D
 	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Oct 2023 20:10:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343937AbjJXSK3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        id S1343865AbjJXSK3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
         Tue, 24 Oct 2023 14:10:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40748 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343767AbjJXSK1 (ORCPT
+        with ESMTP id S1343587AbjJXSK1 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
         Tue, 24 Oct 2023 14:10:27 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64E5010D3
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64FA010D4
         for <linux-bluetooth@vger.kernel.org>; Tue, 24 Oct 2023 11:10:25 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id DC134C433C9;
+Received: by smtp.kernel.org (Postfix) with ESMTPS id E18BAC433C8;
         Tue, 24 Oct 2023 18:10:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1698171024;
-        bh=t2ps2iXmY8ndXq6MoXhhogAk7NTGIcNwtw9PFxWDIOs=;
+        bh=ac30dm6sbLTS+ofXOODU8A6sQRIOjsYpkUHPq2wwMEI=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=kGj09haCw0QCd4qWCrNr5P3cKw/YhkjHnv+qNhiC7RbQlQGe018mB+DU0x8tGVuMk
-         417rXL7NhZV/wk00Aw5CQ8xlbnkjmPlLuzvgqcC7e4LbcK/b/OvjiWhpx5EEX7CcEj
-         j5rd56Mhh/Af8TdCHpMWOsF6i5GdMf+9RlRxy3wSzfLXmQ6XvTsq8Tm31CvQ4wPLGH
-         Qxji5sNDCIASy1zjsgJc9X9bx7+PDMd9yyidV3yq2VFMDH4e9JIUhHVtqFJoZAj0E9
-         4tQDbiqN6QtxkhjTLNrs7Hlggtyrm8xsnJ1ZYs0JD5LAM7vd7o4kuLStgo9FKyJtWm
-         INC+oNOKuI3lw==
+        b=lInqJv2n5BWdmrjMi2v/SnvDiW/8EV7KxX4RL971pQ3/fTspjiKcOoFyuUsmqx7io
+         Z38qmVUMTbVUb50PjlV8HTZLAwYB1g5F2oWJbajXULj+N+sR6YnPNkg7pX2iY4aLMp
+         q7mKlKY12oD5APGSmZXQY4BtK+y2k2V+uycSZLuHwdYAVm+b/L1huGo/VfxhUDon6I
+         ycujOBacMNPnw+zn7gkX0QBbmffyjI+02WrM7u+n5bjzH0OnyyIlJXtln1NIIo5iO/
+         TZxTmeWinpnMVbIGK49HkuUXqtmzTQl0Ym5cCEh4YqPGS8Tzb1qNg+yWo/3ylWOBVm
+         HX8AXqZNxci6w==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id B62D4C00446;
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id BF029C3959F;
         Tue, 24 Oct 2023 18:10:24 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v1] Bluetooth: Fix not notifying when connection encryption
- changes
+Subject: Re: [PATCH v3 0/1] Bluetooth: ISO: Allow binding a PA sync socket
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <169817102473.23101.4955967355357457403.git-patchwork-notify@kernel.org>
+Message-Id: <169817102477.23101.13839519077367788681.git-patchwork-notify@kernel.org>
 Date:   Tue, 24 Oct 2023 18:10:24 +0000
-References: <20231023233839.3700728-1-luiz.dentz@gmail.com>
-In-Reply-To: <20231023233839.3700728-1-luiz.dentz@gmail.com>
-To:     Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc:     linux-bluetooth@vger.kernel.org
+References: <20231024105735.3216-1-iulia.tanasescu@nxp.com>
+In-Reply-To: <20231024105735.3216-1-iulia.tanasescu@nxp.com>
+To:     Iulia Tanasescu <iulia.tanasescu@nxp.com>
+Cc:     linux-bluetooth@vger.kernel.org, claudia.rosu@nxp.com,
+        mihai-octavian.urzica@nxp.com, silviu.barbulescu@nxp.com,
+        vlad.pruteanu@nxp.com, andrei.istodorescu@nxp.com,
+        luiz.dentz@gmail.com
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
@@ -56,19 +58,19 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Mon, 23 Oct 2023 16:38:39 -0700 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+On Tue, 24 Oct 2023 13:57:34 +0300 you wrote:
+> A Broadcast Sink has no way to know how many BISes are available for
+> sync or their indexes, before establishing PA sync and reading the base
+> struct.
 > 
-> Some layer such as SMP depend on getting notified about encryption
-> changes immediately as they only allow certain PDU to be transmitted
-> over an encrypted link which may cause SMP implementation to reject
-> valid PDUs received thus causing pairing to fail when it shouldn't.
+> PA sync is established by calling listen with DEFER_SETUP and accepting
+> a PA sync socket.
 > 
 > [...]
 
 Here is the summary with links:
-  - [v1] Bluetooth: Fix not notifying when connection encryption changes
-    https://git.kernel.org/bluetooth/bluetooth-next/c/3fa702baa02c
+  - [v3,1/1] Bluetooth: ISO: Allow binding a PA sync socket
+    https://git.kernel.org/bluetooth/bluetooth-next/c/0783375f2c56
 
 You are awesome, thank you!
 -- 
