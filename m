@@ -2,43 +2,43 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 647767D5A2D
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Oct 2023 20:10:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DBD107D5AE1
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Oct 2023 20:50:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343865AbjJXSK3 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 24 Oct 2023 14:10:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40758 "EHLO
+        id S1343817AbjJXSu1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 24 Oct 2023 14:50:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343587AbjJXSK1 (ORCPT
+        with ESMTP id S234875AbjJXSuZ (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 24 Oct 2023 14:10:27 -0400
+        Tue, 24 Oct 2023 14:50:25 -0400
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64FA010D4
-        for <linux-bluetooth@vger.kernel.org>; Tue, 24 Oct 2023 11:10:25 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id E18BAC433C8;
-        Tue, 24 Oct 2023 18:10:24 +0000 (UTC)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EE8ED7D
+        for <linux-bluetooth@vger.kernel.org>; Tue, 24 Oct 2023 11:50:23 -0700 (PDT)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 058D4C433C8;
+        Tue, 24 Oct 2023 18:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1698171024;
-        bh=ac30dm6sbLTS+ofXOODU8A6sQRIOjsYpkUHPq2wwMEI=;
+        s=k20201202; t=1698173423;
+        bh=H2zdFJ5u0puhN9LYu+Tg4mC6TrjnHB9Qi/d9P7xvgTA=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=lInqJv2n5BWdmrjMi2v/SnvDiW/8EV7KxX4RL971pQ3/fTspjiKcOoFyuUsmqx7io
-         Z38qmVUMTbVUb50PjlV8HTZLAwYB1g5F2oWJbajXULj+N+sR6YnPNkg7pX2iY4aLMp
-         q7mKlKY12oD5APGSmZXQY4BtK+y2k2V+uycSZLuHwdYAVm+b/L1huGo/VfxhUDon6I
-         ycujOBacMNPnw+zn7gkX0QBbmffyjI+02WrM7u+n5bjzH0OnyyIlJXtln1NIIo5iO/
-         TZxTmeWinpnMVbIGK49HkuUXqtmzTQl0Ym5cCEh4YqPGS8Tzb1qNg+yWo/3ylWOBVm
-         HX8AXqZNxci6w==
+        b=oReVVvD+I81Unii+2ut1pBtmpzgPJ91W3RrHC8bPY46ZvTtBDsIk3pzyOXEG96p9t
+         FApxRHuiZ3686n5U2OcE5bioJFRdenkdeFa7VG0Folm6TFrtOVY3YzQcwTttdYbWGn
+         emivW/m32SGYKncEJM+/X6pNYj1ed6I/HftTQLNQttVLL0Ap/+NHdlHfumCpwsw4zY
+         +Nu1Tebg2+t/1/AEulRW5yZh/RnK0ESPn66xl9R4M5d4SGl67iPg2x33B6hbxjEysB
+         Uu/TPmP89EGySO6WDg2mIeCs22NdWIeOL10ErwYdO+O1RNjRJqvj9Og12lZaml2MA4
+         yZCt7X5ik65xQ==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id BF029C3959F;
-        Tue, 24 Oct 2023 18:10:24 +0000 (UTC)
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id D56CFE4CC1C;
+        Tue, 24 Oct 2023 18:50:22 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3 0/1] Bluetooth: ISO: Allow binding a PA sync socket
+Subject: Re: [PATCH BlueZ 0/1] iso-tester: Add test for bcast receiver PA bind
 From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <169817102477.23101.13839519077367788681.git-patchwork-notify@kernel.org>
-Date:   Tue, 24 Oct 2023 18:10:24 +0000
-References: <20231024105735.3216-1-iulia.tanasescu@nxp.com>
-In-Reply-To: <20231024105735.3216-1-iulia.tanasescu@nxp.com>
+Message-Id: <169817342286.13534.5307923934042632577.git-patchwork-notify@kernel.org>
+Date:   Tue, 24 Oct 2023 18:50:22 +0000
+References: <20231024110345.3292-1-iulia.tanasescu@nxp.com>
+In-Reply-To: <20231024110345.3292-1-iulia.tanasescu@nxp.com>
 To:     Iulia Tanasescu <iulia.tanasescu@nxp.com>
 Cc:     linux-bluetooth@vger.kernel.org, claudia.rosu@nxp.com,
         mihai-octavian.urzica@nxp.com, silviu.barbulescu@nxp.com,
@@ -55,22 +55,24 @@ X-Mailing-List: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
+This patch was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Tue, 24 Oct 2023 13:57:34 +0300 you wrote:
-> A Broadcast Sink has no way to know how many BISes are available for
-> sync or their indexes, before establishing PA sync and reading the base
-> struct.
+On Tue, 24 Oct 2023 14:03:44 +0300 you wrote:
+> This patch adds a test for binding a Broadcast Receiver to a number of
+> BISes after PA sync has been established.
 > 
-> PA sync is established by calling listen with DEFER_SETUP and accepting
-> a PA sync socket.
+> This test depends on the kernel update introduced by
+> [PATCH v3 0/1] Bluetooth: ISO: Allow binding a PA sync socket.
+> 
+> Iulia Tanasescu (1):
+>   iso-tester: Add test for bcast receiver PA bind
 > 
 > [...]
 
 Here is the summary with links:
-  - [v3,1/1] Bluetooth: ISO: Allow binding a PA sync socket
-    https://git.kernel.org/bluetooth/bluetooth-next/c/0783375f2c56
+  - [BlueZ,1/1] iso-tester: Add test for bcast receiver PA bind
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=a17455cdcd21
 
 You are awesome, thank you!
 -- 
