@@ -2,81 +2,85 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B2D207D5AE0
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Oct 2023 20:50:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D5757D5B45
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Oct 2023 21:13:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234902AbjJXSu0 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Tue, 24 Oct 2023 14:50:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60376 "EHLO
+        id S1344219AbjJXTN1 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Tue, 24 Oct 2023 15:13:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232357AbjJXSuZ (ORCPT
+        with ESMTP id S1343884AbjJXTN0 (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Tue, 24 Oct 2023 14:50:25 -0400
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D930A6
-        for <linux-bluetooth@vger.kernel.org>; Tue, 24 Oct 2023 11:50:23 -0700 (PDT)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 022DCC433C9;
-        Tue, 24 Oct 2023 18:50:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1698173423;
-        bh=sAnIaf0zzoOhzNik+0AekQ1/9TL0jVO6VxO2sbcl43c=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=N2KqFwiaGFEMJhJQTYKjM+VDjWTfdSc8pSC2e+jkXlHZZ42ewq+k9Tax0hgcl+NyE
-         rNxn3hOwOlj9yYm5Xz6ZHfSkaM7G11AJLIDTs9C1glk/NlbiFYPlV2EiVCC39t05sf
-         zO1rLA6OvDw1OSXNNMSRtrpw/UdT00ZrYcwxMEQdS/NHqmtQiTpWg6zSQWsiUvRZHB
-         u0cG3kB12IsbcA+0FdpS/xupIooLRLAhnPgJYm2XGB4CuGl/OvCn1uVXXpFz7Werym
-         FKe9ngiv6mBimlKrbnarVJ7BoyeHKSpTZ3KyqUbme8hkcQEM8D00D9PJb6qArygLRg
-         8M/NydHHLW05g==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id CD77CC3959F;
-        Tue, 24 Oct 2023 18:50:22 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ v2 0/1] btio: Allow binding a bcast listener before
- accept
-From:   patchwork-bot+bluetooth@kernel.org
-Message-Id: <169817342283.13534.14599969182820704167.git-patchwork-notify@kernel.org>
-Date:   Tue, 24 Oct 2023 18:50:22 +0000
-References: <20231024110430.3323-1-iulia.tanasescu@nxp.com>
-In-Reply-To: <20231024110430.3323-1-iulia.tanasescu@nxp.com>
-To:     Iulia Tanasescu <iulia.tanasescu@nxp.com>
-Cc:     linux-bluetooth@vger.kernel.org, claudia.rosu@nxp.com,
-        mihai-octavian.urzica@nxp.com, silviu.barbulescu@nxp.com,
-        vlad.pruteanu@nxp.com, andrei.istodorescu@nxp.com,
-        luiz.dentz@gmail.com
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+        Tue, 24 Oct 2023 15:13:26 -0400
+Received: from out-20.smtp.github.com (out-20.smtp.github.com [192.30.252.203])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBEBB10C9
+        for <linux-bluetooth@vger.kernel.org>; Tue, 24 Oct 2023 12:13:24 -0700 (PDT)
+Received: from github.com (hubbernetes-node-67fbd61.va3-iad.github.net [10.48.144.34])
+        by smtp.github.com (Postfix) with ESMTPA id F2BD48C06D5
+        for <linux-bluetooth@vger.kernel.org>; Tue, 24 Oct 2023 12:13:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+        s=pf2023; t=1698174803;
+        bh=pWEcMO1pnlOnsAofX7Fc9b6DpucK5lqKkPlXpum7C5M=;
+        h=Date:From:To:Subject:From;
+        b=R2hSgeezfbKkmMZq8p2FVeLrLCNwlVQbsUPCD//KevZzljOL8gCST+UUaiX7XUPZo
+         q16tiTPVM0zOuWia+S/G6taAN7Ppqtn7t8knjcWRLL99caOh3S0SC4lwjXAu6DD31p
+         b9vVFVVss1cRN0elueLeBEaL9CMkPaOndC7uBQUk=
+Date:   Tue, 24 Oct 2023 12:13:23 -0700
+From:   iulia-tanasescu <noreply@github.com>
+To:     linux-bluetooth@vger.kernel.org
+Message-ID: <bluez/bluez/push/refs/heads/master/e126cf-00fdb6@github.com>
+Subject: [bluez/bluez] a17455: iso-tester: Add test for bcast receiver PA bind
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Hello:
+  Branch: refs/heads/master
+  Home:   https://github.com/bluez/bluez
+  Commit: a17455cdcd213b4210571d4ec2a066d9daf91b15
+      https://github.com/bluez/bluez/commit/a17455cdcd213b4210571d4ec2a066d9daf91b15
+  Author: Iulia Tanasescu <iulia.tanasescu@nxp.com>
+  Date:   2023-10-24 (Tue, 24 Oct 2023)
 
-This patch was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+  Changed paths:
+    M tools/iso-tester.c
 
-On Tue, 24 Oct 2023 14:04:29 +0300 you wrote:
-> This patch adds btio support for binding a PA sync io to a number of
-> BISes, before proceeding with BIG Create Sync.
-> 
-> This depends on the kernel update introduced by
-> [PATCH v3 0/1] Bluetooth: ISO: Allow binding a PA sync socket.
-> 
-> This patch version fixes scan-build warning.
-> 
-> [...]
+  Log Message:
+  -----------
+  iso-tester: Add test for bcast receiver PA bind
 
-Here is the summary with links:
-  - [BlueZ,v2,1/1] btio: Allow binding a bcast listener before accept
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=00fdb61d5616
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+This adds a test for binding a Broadcast Receiver to a number of
+BISes after PA sync has been established.
 
 
+  Commit: 00fdb61d56161f523e975b4c044030f4b40abb6d
+      https://github.com/bluez/bluez/commit/00fdb61d56161f523e975b4c044030f4b40abb6d
+  Author: Iulia Tanasescu <iulia.tanasescu@nxp.com>
+  Date:   2023-10-24 (Tue, 24 Oct 2023)
+
+  Changed paths:
+    M btio/btio.c
+    M btio/btio.h
+    M profiles/audio/bap.c
+    M src/shared/bass.c
+
+  Log Message:
+  -----------
+  btio: Allow binding a bcast listener before accept
+
+This adds btio support for binding a PA sync io to a number of BISes,
+before proceeding with BIG Create Sync.
+
+
+Compare: https://github.com/bluez/bluez/compare/e126cf204907...00fdb61d5616
