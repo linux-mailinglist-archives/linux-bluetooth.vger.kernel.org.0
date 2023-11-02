@@ -2,198 +2,106 @@ Return-Path: <linux-bluetooth-owner@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 28BCF7DF73A
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  2 Nov 2023 16:58:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 17E7D7DF9EB
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  2 Nov 2023 19:29:24 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347662AbjKBP67 (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
-        Thu, 2 Nov 2023 11:58:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52168 "EHLO
+        id S1377151AbjKBS3Y (ORCPT <rfc822;lists+linux-bluetooth@lfdr.de>);
+        Thu, 2 Nov 2023 14:29:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1377113AbjKBP65 (ORCPT
+        with ESMTP id S1377123AbjKBS3W (ORCPT
         <rfc822;linux-bluetooth@vger.kernel.org>);
-        Thu, 2 Nov 2023 11:58:57 -0400
-Received: from EUR05-AM6-obe.outbound.protection.outlook.com (mail-am6eur05on2064.outbound.protection.outlook.com [40.107.22.64])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A823194
-        for <linux-bluetooth@vger.kernel.org>; Thu,  2 Nov 2023 08:58:52 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=oXMhgWVr0jXGkZAUS544UNpFzUWwVv1eyeQH0QyrtaUxBYRBymS5S6EhAYj/PDWJ/Fkp2fSWbJUWtZGr6t6GJ/n1/jBc/iZ6tr91jaef9L51YcOdeavNxMon1GdwMn2IfhMz0JGa6iVST07ugFYVwB9OtNw/OEDToaehqh/X3TMSoqEDNgbiKJk0uxFJmBZyUK/4e/Z0rDaTwgfJQSP/+dNiUAgmVERTzma6YGSOTzpPejmEZplQ3HmlshPmFTSMR7lnc6LHLYQWYyNuWXHrUoLuNAhnyqoNTLGvgwNwAe00IEnO9cNmvSyfConaP9QYb/F8/yaZx5HSFIXYTwOlPg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=b4P7N6R0YZ7jVM++ZH6BIFAcsphVZ+UzRMM1Nptk+J8=;
- b=TPZBoDFQwJ8ObU8/3kJiwSArce0g5eDiBqqoAjPUSfI6+dGTmS4NBmz5D5xgz6mdVGPP2HI390FPENfoFH0iqGeF4BQ9sU/HNZApD/0kfLXNqKpdbkPFUYxr0N2oBHAXNWWK9sg8nvsoBRt3zCDGQzt+iiStV6KhuccmlyW7c/4LKEuNIOMTz9dCJ2bCIiHCPmXZTRVHKi4gcEGOCA7yPViz6Bul0RTJAdQ/jZLs5FsLb5dxYnb88iMpO/FtX5caldjYw65Q3sLrEIyQ04+8HyKJer5/FfVWm5fUkG5DhZTosOKs7gJi8zFvb+wTqyEX2r/kZYbivveTWCBdIpzOFw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=b4P7N6R0YZ7jVM++ZH6BIFAcsphVZ+UzRMM1Nptk+J8=;
- b=iRHyMRQNNrPp/OReJ0IT6Gm6Azr241aHDUBnjndU5HZ1GoCS3/xfTNeIaPhhtBddxPhdx0Wpi0SuToshAPvABNToySslOWih00ELX7mURwATsg3JwaCRDvNTFrneoxRyJ7edm5wBgNuXGSAdzuI6VGEvAe98edLaskPNyCignOE=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-Received: from DBBPR04MB6331.eurprd04.prod.outlook.com (2603:10a6:10:ca::21)
- by PAXPR04MB9005.eurprd04.prod.outlook.com (2603:10a6:102:210::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6954.18; Thu, 2 Nov
- 2023 15:58:45 +0000
-Received: from DBBPR04MB6331.eurprd04.prod.outlook.com
- ([fe80::7c8a:c8da:e6a5:8a4a]) by DBBPR04MB6331.eurprd04.prod.outlook.com
- ([fe80::7c8a:c8da:e6a5:8a4a%7]) with mapi id 15.20.6954.019; Thu, 2 Nov 2023
- 15:58:45 +0000
-From:   Silviu Florian Barbulescu <silviu.barbulescu@nxp.com>
-To:     linux-bluetooth@vger.kernel.org
-Cc:     claudia.rosu@nxp.com, mihai-octavian.urzica@nxp.com,
-        silviu.barbulescu@nxp.com, vlad.pruteanu@nxp.com,
-        andrei.istodorescu@nxp.com, luiz.dentz@gmail.com,
-        iulia.tanasescu@nxp.com
-Subject: [PATCH v3 5/5] client/player.c: Add support for multiple BISes
-Date:   Thu,  2 Nov 2023 17:58:27 +0200
-Message-Id: <20231102155827.4219-6-silviu.barbulescu@nxp.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20231102155827.4219-1-silviu.barbulescu@nxp.com>
-References: <20231102155827.4219-1-silviu.barbulescu@nxp.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: VI1PR09CA0108.eurprd09.prod.outlook.com
- (2603:10a6:803:78::31) To DBBPR04MB6331.eurprd04.prod.outlook.com
- (2603:10a6:10:ca::21)
+        Thu, 2 Nov 2023 14:29:22 -0400
+Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4A76136
+        for <linux-bluetooth@vger.kernel.org>; Thu,  2 Nov 2023 11:29:18 -0700 (PDT)
+Received: by mail-qk1-x72b.google.com with SMTP id af79cd13be357-7789cb322deso70350585a.3
+        for <linux-bluetooth@vger.kernel.org>; Thu, 02 Nov 2023 11:29:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1698949758; x=1699554558; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=mjtvDncwuSRoLsaZOYEjm52tMRIEYPxiDkU8a9uvXWg=;
+        b=EBJ6trUUN1ubiBrVke4dgLPXem4f8ieFLaCGJgMtLKSgHUGzHbaw+G63FtQt72f8YS
+         9EHDnc3NEVqqVqNNHr11yKICFL53iVqjoVr1sDBXp87JP9Qs4az0dS81DWwPv9U175Dd
+         Q3F8DalHa2IOy63A/OgTp1B8GYIHUEuyt7emieawAsx8fNEBBxXnp1VIiK44yP37pLQb
+         AE+IRS6/LqYtpafHqwF2Mz29aZQftJA54WE/HPiYho7KT63WQOBF1qRZQ6pZTNxsYei2
+         zi8yYQqHUbiMqHsMJCWLw99MRm+LCMKl44TVGgX2bN+y3v4d2eqB0LcgEVZHfQozMOab
+         ncdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698949758; x=1699554558;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mjtvDncwuSRoLsaZOYEjm52tMRIEYPxiDkU8a9uvXWg=;
+        b=isHJ4p2Z3ZzHp4xXwAn/O7OI3F8lHzxFlGFjXxeVrO243a2lmgq2O1RT1DG4ghGqdi
+         0Vmuos3BrqC2Ghkb5WyTSp8GWoJAXzmL7cYis8E5YJQtbemRyT8AqHd4PRx2eEo6shHN
+         6VYi8N/RZa2QpkniqRoX1ioTBujhAQbC/cA4JvjhQgzdxyEjOqRAi17rMUu6PZ3OPSAo
+         Nh3JpYk1AedlnWDqoEfOnqqXirWoIYtvm79EfrKETAKAfyveV2kqMBvU0ZuFjm7X/mBk
+         jeu4lJfrkcY5HiXhOUETMU6ervKPtdLZRWzBhOfP7ss3/zoZGowdxZ2C8ahZeb37Z3Xw
+         Ieqg==
+X-Gm-Message-State: AOJu0YwcgHzS5dCeGiANHIjOJbI5lWdkWFGBXcfEzspINh3oe13pH8mI
+        0uAJcd+VXwoeDel1zNa/JezvQ7buaBRhzQ==
+X-Google-Smtp-Source: AGHT+IG+m+//S8X+pljQf12ts4dwSq1uOJQdnz3W8fFzfY/fHGA4GYexmYnq+ZkBwd+pLoQHrpYMdw==
+X-Received: by 2002:ac8:5849:0:b0:41e:7686:fa27 with SMTP id h9-20020ac85849000000b0041e7686fa27mr9623310qth.5.1698949757583;
+        Thu, 02 Nov 2023 11:29:17 -0700 (PDT)
+Received: from [172.17.0.2] ([20.51.152.212])
+        by smtp.gmail.com with ESMTPSA id gx3-20020a05622a27c300b0041e383d527esm153968qtb.66.2023.11.02.11.29.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Nov 2023 11:29:17 -0700 (PDT)
+Message-ID: <6543ea7d.050a0220.a22c4.1670@mx.google.com>
+Date:   Thu, 02 Nov 2023 11:29:17 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============2967720229118260578=="
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DBBPR04MB6331:EE_|PAXPR04MB9005:EE_
-X-MS-Office365-Filtering-Correlation-Id: 64fec5dc-553e-46ca-ad4a-08dbdbbc9827
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: dwXuvZj1vEu2NGKvEGimJ7GrvJrcre/6MAVMvyJEopc14fAcGQcjCg8rW8qmMdkfNARfmXCF08ZT4H7DOP/N4NtyXww+SODpOmDq/imf1k4yN51m6X14fQ0tkJTYeyhHtXSldgVIYJre32+H8EOGOE4mDyQnAB3QJfEtB0rNRTeTgMHn+fYywRcc6OQsFRNVnKhjLtamRki+D83Q/ukq/b3DLZqsInCwUBDRBPDKsCk5zG78PM5W57KU8x/TtH5GFOs7cn1wTx75a3nDumjazVHrPPIjHcyS+MpHPHSeJqG1pmbuDh+3RFTmVP7xT/1UI3+b3yN2WE6T+h553rdTi/U47YKB/ZPS2JtTA26S9U3+EySK187s+P186dfNfQa5V+t7Q8KN888zPmXLBl6//oh8fXklH+OL2HL2VGyaDdlw1FQOs3thuObedOIObl8aLJsKgnxeHPz0bkpACWRMXm1FkZ6xwLzyKXrzcutYwAfb0JOWOv5ktqv2D9mVNdiyg3jMGbcobVxz6Ly2DGEZT2D2ync0tdKZO5ggX2xurtgofbeu8S5FJapAyiekYRQv
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DBBPR04MB6331.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(39860400002)(346002)(366004)(376002)(136003)(396003)(230922051799003)(451199024)(1800799009)(186009)(64100799003)(26005)(6512007)(1076003)(478600001)(6506007)(83380400001)(6666004)(8936002)(8676002)(66946007)(41300700001)(5660300002)(66556008)(6486002)(2616005)(66476007)(6916009)(316002)(4326008)(38100700002)(86362001)(36756003)(2906002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?JaTr1fKJMFBUHuCuFadvuSJkgPhj8yUhw2TNgaxJH0pkeQx+MDZTRgnffHjo?=
- =?us-ascii?Q?LcYB7LZuLokLrVIyBLyO2htvgH103egutZB4ni9hdSD24+vMAWz+eFJkqeSo?=
- =?us-ascii?Q?U9M5VO7avfIKY6/OZMTvLyIVVh57EYI5yMDZmpYt7SQk+KyAs6+vaTyrDKgd?=
- =?us-ascii?Q?f/qLANu3vBZZhIgezNZOv2mB0brMZnsiOUA6G5+jghG+owCSwat1BC31X/yO?=
- =?us-ascii?Q?MelaSdRERDAmotSrxI3MzrZ9b2rJLef+o3YpHnh/uT3dc+52iTkrI0BCBo0c?=
- =?us-ascii?Q?cdSEZ0LPBQ2WuMQfZ+ppZrGuVk6StV5rRHaiGB6DBz4pbBGBvWKNdByJsqwV?=
- =?us-ascii?Q?mfx38IJc3Krhz+KsdKn+LCD5yIOU/TRHCrqmTWRSUPBmZ4QSTJB4poqwqT67?=
- =?us-ascii?Q?SLcNDkaJuO6fpMFsKE0rP0pu8jljKCrl+yr3cFeoWJI4ksRRIARVPD3u9D3S?=
- =?us-ascii?Q?xAblivGkwtxbvgJ+gSvX94ji+EILzizAs2Q6YfsfHyzJFW7j+lMS7orNe1/H?=
- =?us-ascii?Q?YNf4TWotOyQdSE8QicFlWx5PegzIN4p5bhj6nwgp+aFLM6tOeXhbUsUfYvB8?=
- =?us-ascii?Q?shHqjaTOskuGo7YAPi7pARyq202DyBqH6e8uYq69ksIq8g64U6GHBbgRP8fj?=
- =?us-ascii?Q?uUaADMIcJuD+vsG876feaPj4KnqZ+2XlJootMiyKArfJ/YX/3YaXVWDFHCNT?=
- =?us-ascii?Q?koPyovV7jhEP84lI9n6MipkUY/ECiyHdNSYOa5Y0ITMaCHNwSR5UJt9pONtA?=
- =?us-ascii?Q?iAegKCCbhwzjZb7qI+prBu4a662YeeWEjamqoySomnUJno3Y8sJR8abV/jy6?=
- =?us-ascii?Q?llcuLmjUQoK6E3Yr4/2MfTo7WiN/3iYS4Ltt9Qa4FKp4ThKN58SK75YA0Hj4?=
- =?us-ascii?Q?ClpULWuyfYeqIL9zSuX4NcJQCVTb9ragHV+QeNgWwfAQnmiBNoANIJUKWUIS?=
- =?us-ascii?Q?xSBbgKCXvQNhK4ifsqj7w/ZMRDmEA/orOmtWHPx7wDvLyXYRGhpY3n4sjpED?=
- =?us-ascii?Q?/YeNxpk/0XSiU//of/WlHVRMgtq0BpwFa0Xh/OEjlnuWxUXKNkzmNyBQtCu3?=
- =?us-ascii?Q?an9zn2ncyZTDOgprBP/vgeGWt37UhpU7stB8ufuT/s2fhZ0ioLzIdJ2x8FS2?=
- =?us-ascii?Q?GEihnlZ+DC2NFANp/mbPXAXBRDwvF0crn6W5K2w96DAvFNrj6Ecu2yO1ext8?=
- =?us-ascii?Q?isHvTT6qgdK7HQ1jvIG5vz4/emHnz7YZ3x2JXmK3lof+s3JR/2+wNGvkdB8C?=
- =?us-ascii?Q?F787WXaOpOxrRK9LvZd2gMZpQs1BEc6cCt7jEfnKSUJ/Pja990EO/5p62FuL?=
- =?us-ascii?Q?WTfJR8lnSgjx4tVhR96vIWT3vxNtNfvU23TGHTU6HEIxTCKZQ/6x7I5cMDnr?=
- =?us-ascii?Q?WZlELdsYSRwZqhG4+cMY1YggIUbkm1sm8CK5IRZG97bfz59EMlHXTX/4o9io?=
- =?us-ascii?Q?ztSQHX8AMaSa/6QaeAt5epzNfIxKhKMJqyhP+yGpBFG52+PN2tHjwE3c/PG8?=
- =?us-ascii?Q?FXamymYRroyWL5cgxSEz9geZ6TTBrsbExnyxKCURnLFgiYHcS5WYsRqhSiao?=
- =?us-ascii?Q?0fF9KxGIucmHJlayUxix5g9MOr/EakL38L57n7sAdJIzfWWqFdgDXZs6KTnI?=
- =?us-ascii?Q?ig=3D=3D?=
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 64fec5dc-553e-46ca-ad4a-08dbdbbc9827
-X-MS-Exchange-CrossTenant-AuthSource: DBBPR04MB6331.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Nov 2023 15:58:45.7163
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: xitzCBcnWSVvRLvpNyhdHDRls/pawAlrICg3FlYOi+aTKqY8Xstvd6t1OsxVgbi5jtAPmk81rnzOoVyKTkr7u4PFzCFPKPz0fMTPuZaBprs=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR04MB9005
+From:   bluez.test.bot@gmail.com
+To:     linux-bluetooth@vger.kernel.org, silviu.barbulescu@nxp.com
+Subject: RE: Add support for bcast multiple BISes
+In-Reply-To: <20231102155827.4219-2-silviu.barbulescu@nxp.com>
+References: <20231102155827.4219-2-silviu.barbulescu@nxp.com>
+Reply-To: linux-bluetooth@vger.kernel.org
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_BLOCKED,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-bluetooth.vger.kernel.org>
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 
-Add support for bcast multiple BISes
+--===============2967720229118260578==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=798448
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      4.43 seconds
+GitLint                       PASS      1.82 seconds
+BuildEll                      PASS      34.02 seconds
+BluezMake                     PASS      1025.29 seconds
+MakeCheck                     PASS      13.80 seconds
+MakeDistcheck                 PASS      213.88 seconds
+CheckValgrind                 PASS      328.50 seconds
+CheckSmatch                   PASS      433.14 seconds
+bluezmakeextell               PASS      140.35 seconds
+IncrementalBuild              PASS      4345.83 seconds
+ScanBuild                     PASS      1313.66 seconds
+
+
 
 ---
- client/player.c | 46 +++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 45 insertions(+), 1 deletion(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/client/player.c b/client/player.c
-index 715598aa9..e060e6a5f 100644
---- a/client/player.c
-+++ b/client/player.c
-@@ -2999,7 +2999,45 @@ static void endpoint_config(const char *input, void *user_data)
- 	endpoint_set_config(cfg);
- }
- 
-+static void config_endpoint_iso_stream(const char *input, void *user_data)
-+{
-+	struct endpoint_config *cfg = user_data;
-+	char *endptr = NULL;
-+	int value;
-+
-+	value = strtol(input, &endptr, 0);
-+
-+	if (!endptr || *endptr != '\0' || value > UINT8_MAX) {
-+		bt_shell_printf("Invalid argument: %s\n", input);
-+		return bt_shell_noninteractive_quit(EXIT_FAILURE);
-+	}
-+
-+	bcast_qos.bcast.bis = value;
-+
-+	endpoint_set_config(cfg);
-+}
-+
-+static void config_endpoint_iso_group(const char *input, void *user_data)
-+{
-+	struct endpoint_config *cfg = user_data;
-+	char *endptr = NULL;
-+	int value;
-+
-+	value = strtol(input, &endptr, 0);
-+
-+	if (!endptr || *endptr != '\0' || value > UINT8_MAX) {
-+		bt_shell_printf("Invalid argument: %s\n", input);
-+		return bt_shell_noninteractive_quit(EXIT_FAILURE);
-+	}
-+
-+	bcast_qos.bcast.big = value;
-+
-+	bt_shell_prompt_input(cfg->ep->path, "BIS (value):",
-+			config_endpoint_iso_stream, cfg);
-+}
-+
- static struct endpoint *endpoint_new(const struct capabilities *cap);
-+static void endpoint_init_defaults(struct endpoint *ep);
- 
- static void cmd_config_endpoint(int argc, char *argv[])
- {
-@@ -3033,6 +3071,7 @@ static void cmd_config_endpoint(int argc, char *argv[])
- 		if (cap) {
- 			broadcast = true;
- 			cfg->ep = endpoint_new(cap);
-+			endpoint_init_defaults(cfg->ep);
- 			cfg->ep->preset = find_presets_name(uuid, argv[3]);
- 			if (!cfg->ep->preset)
- 				bt_shell_printf("Preset not found\n");
-@@ -3068,7 +3107,12 @@ static void cmd_config_endpoint(int argc, char *argv[])
- 		/* Set QoS parameters */
- 		cfg->qos = &preset->qos;
- 
--		endpoint_set_config(cfg);
-+		if ((cfg->ep->broadcast) && (strcmp(cfg->ep->uuid,
-+						BCAA_SERVICE_UUID) == 0))
-+			bt_shell_prompt_input(cfg->ep->path, "BIG (value):",
-+					config_endpoint_iso_group, cfg);
-+		else
-+			endpoint_set_config(cfg);
- 		return;
- 	}
- 
--- 
-2.39.2
 
+--===============2967720229118260578==--
