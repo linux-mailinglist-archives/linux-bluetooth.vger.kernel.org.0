@@ -1,74 +1,78 @@
-Return-Path: <linux-bluetooth+bounces-44-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-46-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 215DF7E9193
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 12 Nov 2023 17:00:28 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2BACC7E9195
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 12 Nov 2023 17:00:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A5C21280CA3
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 12 Nov 2023 16:00:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id ADDE71F20E0A
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 12 Nov 2023 16:00:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2558314F8D;
-	Sun, 12 Nov 2023 16:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 21C4615490;
+	Sun, 12 Nov 2023 16:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="R4hwEyeh"
+	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="tQbLA+O/"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B92614AA4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04CAD14ABA
 	for <linux-bluetooth@vger.kernel.org>; Sun, 12 Nov 2023 16:00:17 +0000 (UTC)
 Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [IPv6:2a0b:5c81:1c1::37])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA2BB2726
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B908F103
 	for <linux-bluetooth@vger.kernel.org>; Sun, 12 Nov 2023 08:00:15 -0800 (PST)
 Received: from monolith.lan (unknown [193.138.7.158])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4SSy242yP8z49Q1r;
-	Sun, 12 Nov 2023 18:00:07 +0200 (EET)
+	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4SSy255pYYz49Q36;
+	Sun, 12 Nov 2023 18:00:13 +0200 (EET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
 	t=1699804813;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=3ddU2F39Yz3+abifU68xlt+o74WQz6fWioDl3MPSS0w=;
-	b=R4hwEyehFZWDpbTo6xGmGXy9QPkinYm0TqavYW2liNixhIdm0/exg3CeC2UzYrUqVZw5Ya
-	6b7HyF+9NA16hs9GHJwp6fRp5dqz0tmSMaWH00DuEjeCfzROmckPi6g3jNigi8kRL3+lt0
-	Gg/ktZi7Rs0ATCrgeSs6TSRp5vFoAehEi9rtyQ1UtTAL1BO5Zs4s6+js6/ltQvaghyhMeq
-	+SmKf0jcd2JFO2xyyWvNLefloXdJnJG0ATfsXsxlCy6qb38JPc4AIXs1BQL8xcbT+szlVr
-	3Bktm9fMOp6JGgkph5U/5gG8sSbaaHlRePT8HXloyx73m8xRNwtAX2aHGTX08Q==
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=9DfoCNBUtbS3pLQrARPLBiO/szoZxGBpmRfhr/IqJR4=;
+	b=tQbLA+O/j1vy452qSiVTtMOvqAKhZgyBQcast1dsPSE/XTs20Y8HB3m3WrbZF3cCot22Yn
+	4jKvtCbRWoog4rBBkjG1RmrQZWkqOu74BumjoBsDLipJQkhLrsb3+536U4xjEnvH2G3z4p
+	or7B9mRFcAqN7kkz9DT0FdkwBinTz3c166ruWdqMaCqOTsTAH9DJiIKMCMs4o3BZQUB6GN
+	1JQq0fURaO5oaODVd+ztl3vq2IS0abIrx2HxmfircrqEzkgpNiafLn0H7r3WBctZEt0RmN
+	tyH4x087w8wpXWgi7B8l+1+2AAeXD1pKXzIpHedEiKYnV6Avu/zSHHRy06msjg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
 	s=lahtoruutu; t=1699804813;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=3ddU2F39Yz3+abifU68xlt+o74WQz6fWioDl3MPSS0w=;
-	b=Eh0rjBUgCOiiiRo0zZXeMGA+I9rod5Es++vZdcTiXnnCJPeU2BB7lmH+U0amUOIs5IuBm5
-	mMIVJiWFy8doqvd7jRG3Ew5+XuHw65ujXQI928pq0qxLfqGZ3bP8odj3Ef+1qMc34r1u/h
-	eSJiBQFOhl+fSxgFogfGPoap4DqAZSMoWeRZBMUb4OaQ1drTkiaevenigFHx5E9F4HSjSi
-	aTpS74UV7f6Ufpg7fmp3gdryBWgRwVCzYKNr9+azi5G2qe9HNjQ3Keai5Hw///lDik6uDE
-	Ba+ZJ+r3jAeLbD+WvQDkZQCYVr/oP2uKaIWYz0XzrEJs80gZ3K3WhB/Y9nldwA==
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=9DfoCNBUtbS3pLQrARPLBiO/szoZxGBpmRfhr/IqJR4=;
+	b=bPkIrsXtVESgplyfpqItiuZNMCUpz/6nJ1cLM0R+FEF2EY1m4DaXVn/rv5MWjpmwMKgkq2
+	KQJtmrMT0W/cU273egyn2jZL5BDcbpwH5Y08s/d+VnaUdRunvOxuimHCfp+vPPm3cdnOe0
+	QU23rgMjT+bHPiAjB00/pBbUbENERaXi4qP69k+jD6jTiV1m4e6KNyEJv4sGRoR72eysgR
+	IR37xmAZg60tCrnu0nyVhBxMbaL9ayiDQosa1oLtnl4hAwWcAnSQ7vo6LNTtvhjG2DzS40
+	vztdBNCr873KGwVsOMCgSgjklOgSVgsQvmALnEaUJQM0g7Dpc3tlUpfu6a/Ijw==
 ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1699804813; a=rsa-sha256;
 	cv=none;
-	b=nWjrmhHtfEfWoMlxJGohSTFRzRjk1KQRnmvRrfKzg0mn2GKyUwpk+wzgf0JG/2WqjRCs0w
-	vZ6R/dH3bmgdUSKjPb2CQolDlfPYoYPhZ98dABz3md/vSRVxKFimqeZ14ycAkL4eWM1jj2
-	eDXwsm2R2saPd7VxILgCsM1iCT8PHaxsgWAW/8nvcH1j59PWT26Wm5LDFYa1AIcWl6eDfk
-	XTXg96dKBwOmDHxEvqmcX4T5/TXOOLLiEzJYl9EnTbMIxLs98L+H1DAo8OVzf0V06fk3aI
-	sJETk7yHQ9L2Uo2ghw9dLnuG8nOUQxp+unLJCiGKbb4HqbGMOeg4f6xGbAwPwg==
+	b=dKGaXiJCph3UMOET6YQQvWs1i0AOwexR3Wp1bRs7lmIWVK6+Fie3NhfwRlF3z/rx8udlP2
+	Ip8Fl3RqPB+Jnj6hSMn2Idlw3KhfYnqy1X31oon9/dpXc5wxUpSesHW+ZVdX4c5PoopYRc
+	gxGKDBvECqNjpIjQKDB4rNR8eQT05phwCTuYRHOsvbieSwfdWmnfHppgfiVVHn5LIxsTXS
+	rpmSpr7qHFcmR2lQlDSTj/UsSan620vK9nFEcYHJ2UVGhmvB+IUhYIJTcrJb7+BOch/T7g
+	Bf78IpWKlbmMseK7ConEp5+k2jPE3oIvyOz4siBOk79ViQ2E6QgIXcZKakQcNQ==
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ 1/4] shared/bap: add bt_bap_stream_config_update for updating QoS choice
-Date: Sun, 12 Nov 2023 18:00:02 +0200
-Message-ID: <b48261aeab5a4f5927c9da5296b2ffb079bee375.1699802164.git.pav@iki.fi>
+Subject: [PATCH BlueZ 2/4] shared/bap: move bcast configure finish out from set_user_data
+Date: Sun, 12 Nov 2023 18:00:03 +0200
+Message-ID: <4a7871ce4bffa5b39adcd4b710c0a225492ef267.1699802164.git.pav@iki.fi>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <b48261aeab5a4f5927c9da5296b2ffb079bee375.1699802164.git.pav@iki.fi>
+References: <b48261aeab5a4f5927c9da5296b2ffb079bee375.1699802164.git.pav@iki.fi>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -77,56 +81,75 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add bt_bap_stream_config_update for updating the QoS while in Codec
-Configured state.
+Creating transports for broadcast streams should not be a side effect of
+bt_bap_stream_set_user_data, but via a separate function.
+
+Move that to new function bt_bap_stream_bcast_configured.
 ---
- src/shared/bap.c | 18 ++++++++++++++++++
- src/shared/bap.h |  3 +++
- 2 files changed, 21 insertions(+)
+
+Notes:
+    This might be something that should be done in bt_bap_stream_config(),
+    however that is sometimes called when it appears creating transports is
+    not intended. Possibly these calls should use
+    bt_bap_stream_config_update instead.
+    
+    The broadcast setup logic probably can be cleaned up here, but I don't
+    currently have a setup to test it, so this is minimal cleanup.
+
+ src/shared/bap.c | 19 +++++++++++++++----
+ src/shared/bap.h |  2 ++
+ 2 files changed, 17 insertions(+), 4 deletions(-)
 
 diff --git a/src/shared/bap.c b/src/shared/bap.c
-index 13bbcf793..d90e39f7c 100644
+index d90e39f7c..085a46216 100644
 --- a/src/shared/bap.c
 +++ b/src/shared/bap.c
-@@ -4600,6 +4600,24 @@ unsigned int bt_bap_stream_config(struct bt_bap_stream *stream,
+@@ -1522,6 +1522,21 @@ static uint8_t stream_config(struct bt_bap_stream *stream, struct iovec *cc,
  	return 0;
  }
  
-+int bt_bap_stream_config_update(struct bt_bap_stream *stream,
-+					struct bt_bap_qos *qos)
++int bt_bap_stream_bcast_configured(struct bt_bap_stream *stream)
 +{
-+	if (!bap_stream_valid(stream))
++	if (!stream)
++		return -EINVAL;
++	if (!stream->lpac->ops || !stream->lpac->ops->config)
++		return -EINVAL;
++	if (bt_bap_stream_get_type(stream) != BT_BAP_STREAM_TYPE_BCAST)
 +		return -EINVAL;
 +
-+	if (stream->ep->state != BT_BAP_STREAM_STATE_CONFIG)
-+		return -EINVAL;
++	stream->lpac->ops->config(stream, stream->cc, &stream->qos,
++			ep_config_cb, stream->lpac->user_data);
 +
-+	switch (bt_bap_stream_get_type(stream)) {
-+	case BT_BAP_STREAM_TYPE_UCAST:
-+		stream->qos = *qos;
-+		return 0;
-+	}
-+
-+	return -EINVAL;
++	return 0;
 +}
 +
- static bool match_pac(struct bt_bap_pac *lpac, struct bt_bap_pac *rpac,
- 							void *user_data)
- {
+ static uint8_t ep_config(struct bt_bap_endpoint *ep, struct bt_bap *bap,
+ 				 struct bt_ascs_config *req,
+ 				 struct iovec *iov, struct iovec *rsp)
+@@ -4748,10 +4763,6 @@ bool bt_bap_stream_set_user_data(struct bt_bap_stream *stream, void *user_data)
+ 
+ 	stream->user_data = user_data;
+ 
+-	if (bt_bap_stream_get_type(stream) == BT_BAP_STREAM_TYPE_BCAST)
+-		stream->lpac->ops->config(stream, stream->cc, &stream->qos,
+-					ep_config_cb, stream->lpac->user_data);
+-
+ 	return true;
+ }
+ 
 diff --git a/src/shared/bap.h b/src/shared/bap.h
-index 23edbf4c6..099c2edd0 100644
+index 099c2edd0..0f9ae27b7 100644
 --- a/src/shared/bap.h
 +++ b/src/shared/bap.h
-@@ -255,6 +255,9 @@ unsigned int bt_bap_stream_config(struct bt_bap_stream *stream,
+@@ -263,6 +263,8 @@ unsigned int bt_bap_stream_qos(struct bt_bap_stream *stream,
  					bt_bap_stream_func_t func,
  					void *user_data);
  
-+int bt_bap_stream_config_update(struct bt_bap_stream *stream,
-+					struct bt_bap_qos *pqos);
++int bt_bap_stream_bcast_configured(struct bt_bap_stream *stream);
 +
- unsigned int bt_bap_stream_qos(struct bt_bap_stream *stream,
- 					struct bt_bap_qos *qos,
- 					bt_bap_stream_func_t func,
+ unsigned int bt_bap_stream_enable(struct bt_bap_stream *stream,
+ 					bool enable_links,
+ 					struct iovec *metadata,
 -- 
 2.41.0
 
