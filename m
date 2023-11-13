@@ -1,39 +1,39 @@
-Return-Path: <linux-bluetooth+bounces-66-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-65-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B5337EA3B1
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Nov 2023 20:22:32 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83C2F7EA3AF
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Nov 2023 20:22:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C3A98B20B36
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Nov 2023 19:22:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B47001C20748
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Nov 2023 19:22:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 628B123767;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 623062375F;
 	Mon, 13 Nov 2023 19:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NQqYFKLD"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bAOujbis"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0BBB23743
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B5421A07
 	for <linux-bluetooth@vger.kernel.org>; Mon, 13 Nov 2023 19:22:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 5153EC433CA;
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 4506DC433C9;
 	Mon, 13 Nov 2023 19:22:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1699903337;
-	bh=JA3Lii686ynJ1zlFmQqTbM6s/kMobnl+jmInKZcbXhs=;
+	bh=3MFlsJd533eyasRSxxb1MFgO7ddZ8PMX2zHsXK4Ygi0=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=NQqYFKLDYulVLwesbJoLFEAlyyLxEB1n9+3MzHSzfhO5h7PuIXljF1X+CNx46/+Pd
-	 n4yRIIJOIQe7mt4ZRbwu9Lzv47578Fj9KY5J/e6N1ojQlbs2plpkohc1oALV07jKuX
-	 DMfG48/xndnvpr6xrUPMXUKOhJCdJFefiaQubIuoPen4C+rKpOIp2KteX4y6XA+jIW
-	 LPRup3uK6Vvi8+jhCaA0cudL7uiAJU81a/v//4uIhJKLQ/mDOq5AiQbb/rq2JZsWRQ
-	 793PSnLY8wZGy/S0hByiy1tNkmeSMv3uxv6NocXupd4LxydDBOIcd2BUq+6pcSy4Y1
-	 p3zY81uaO72AQ==
+	b=bAOujbis60biHh3OrDfsdHWzcvHSB3MbQTlIQshCmqfPyWdC0NC4fS1MDzafhIj19
+	 9UVxfoW081fZlE6EmnnfqmDIwyFnZdidnp1JwIwPCe2wDCcxZ8qDt229nz1DRdZGlM
+	 0QvX2qBTW3Mrw0TMXwu8ujIpJzKMSc+ZahzSfV5cbVBD30+xC9BHbY1Q8k8fczXIAC
+	 YInIZd1w4I+pxvNB1NLje1R0AOK5VShJPzLXIffGGTZOqzoHygA/H3QmTvbrFCDZ2M
+	 aCnv/YvHZjSd2SqhlaUw92ZT7xIuu1Bl3b1T5FY9C592na2lwF7jxiVRvyIZia1x1E
+	 eurVHRyBtWKOw==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 3AAB0E32711;
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 2BA80C04DD9;
 	Mon, 13 Nov 2023 19:22:17 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
@@ -43,35 +43,41 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2] shared/shell: Fix --init-script commandline option
+Subject: Re: [PATCH BlueZ 0/4] Fix an allocation oversight in SDP parsing
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <169990333723.26848.7920910573164487116.git-patchwork-notify@kernel.org>
+ <169990333717.26848.2520772808995215197.git-patchwork-notify@kernel.org>
 Date: Mon, 13 Nov 2023 19:22:17 +0000
-References: <20231030065341.8998-1-juerg.haefliger@canonical.com>
-In-Reply-To: <20231030065341.8998-1-juerg.haefliger@canonical.com>
-To: Juerg Haefliger <juerg.haefliger@canonical.com>
-Cc: linux-bluetooth@vger.kernel.org
+References: <20231103182150.60088-1-verdre@v0yd.nl>
+In-Reply-To: <20231103182150.60088-1-verdre@v0yd.nl>
+To: =?utf-8?q?Jonas_Dre=C3=9Fler_=3Cverdre=40v0yd=2Enl=3E?=@codeaurora.org
+Cc: linux-bluetooth@vger.kernel.org, zbrown@gnome.org
 
 Hello:
 
-This patch was applied to bluetooth/bluez.git (master)
+This series was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Mon, 30 Oct 2023 07:53:41 +0100 you wrote:
-> The newly added option -i/--init-script introduced a short option
-> namespace collision with btmgmt's --index, both of which use '-i'.
+On Fri,  3 Nov 2023 19:21:46 +0100 you wrote:
+> There's fairly old oversight in the SDP parsing code where it was forgotten to
+> add a NULL termination byte to strings that are later handled using strlen().
 > 
-> As a result, a provided --index is treated as a file name:
+> This series fixes that oversight, with a few commits to better follow best
+> practices on top.
 > 
-> $ sudo btmgmt --index 0 info
-> Unable to open 0: No such file or directory (2)
+> Found by running with address sanitizer.
 > 
 > [...]
 
 Here is the summary with links:
-  - [v2] shared/shell: Fix --init-script commandline option
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=303925b28110
+  - [BlueZ,1/4] lib/sdp: Allocate strings in sdp_data_t with NULL termination
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=fdb5ba2cbff3
+  - [BlueZ,2/4] lib/sdp: Don't assume uint8_t has size 1
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=cfcc6346a96a
+  - [BlueZ,3/4] lib/sdp: Use correct string length in sdp_copy_seq()
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=5afa25c95e6a
+  - [BlueZ,4/4] lib/sdp: Pass size_t to sdp_get_string_attr()
+    (no matching commit)
 
 You are awesome, thank you!
 -- 
