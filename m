@@ -1,114 +1,145 @@
-Return-Path: <linux-bluetooth+bounces-72-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-74-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23DC27EAAB8
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 14 Nov 2023 08:05:24 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9876B7EAAEB
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 14 Nov 2023 08:32:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 546B31C20844
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 14 Nov 2023 07:05:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C93AC1C20A2E
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 14 Nov 2023 07:32:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFCFBF9E1;
-	Tue, 14 Nov 2023 07:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 801D211C8F;
+	Tue, 14 Nov 2023 07:32:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=marcan.st header.i=@marcan.st header.b="iPgDBBrf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f8j0Swwh"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from lindbergh.monkeyblade.net (lindbergh.monkeyblade.net [23.128.96.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BDBF11732
-	for <linux-bluetooth@vger.kernel.org>; Tue, 14 Nov 2023 07:05:15 +0000 (UTC)
-X-Greylist: delayed 310 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 13 Nov 2023 23:05:13 PST
-Received: from mail.marcansoft.com (marcansoft.com [212.63.210.85])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AE2513D;
-	Mon, 13 Nov 2023 23:05:13 -0800 (PST)
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: sendonly@marcansoft.com)
-	by mail.marcansoft.com (Postfix) with ESMTPSA id 6CD7542623;
-	Tue, 14 Nov 2023 07:05:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=marcan.st; s=default;
-	t=1699945511; bh=80m1kJxaIPINrUcVygyqLzCx1957gvMScN5A9MDipys=;
-	h=From:Date:Subject:To:Cc;
-	b=iPgDBBrfcNrIJJg8uajAf8QQaoufmxztBlh+2ccuXAdt55utwfM7r4TcCjjXyIxoo
-	 2CCSEspJLP7UV8lQ3e6ceBHalOUtQ4mGq6LWqaKYDsD9/Fw42wA5YGepmhMu0g3DIH
-	 qGWY+P+wwlbGsNl7vxqRX8PGlbarBaxVZYxId81x22jrBq5pipJH7TfY7uYdO36jNR
-	 wP8M/H/aWpDkYgVK6+n+mTRxF1uTTcytVx3Lmd8cwwiOBT6pqsfB/lD4PNIxxFPLRp
-	 qMulXNK488PtGR91wYwK21O9eH3UqEKoA0BqS5QoJb6IAHefXXLGc/8mwzVYKYUdfb
-	 UHBfM9xEU3HMw==
-From: Hector Martin <marcan@marcan.st>
-Date: Tue, 14 Nov 2023 16:05:04 +0900
-Subject: [PATCH] Bluetooth: hci_bcm4377: Fix msgid release
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279231173B
+	for <linux-bluetooth@vger.kernel.org>; Tue, 14 Nov 2023 07:32:25 +0000 (UTC)
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCEDD196
+	for <linux-bluetooth@vger.kernel.org>; Mon, 13 Nov 2023 23:32:23 -0800 (PST)
+Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-1cc1e1e74beso48039875ad.1
+        for <linux-bluetooth@vger.kernel.org>; Mon, 13 Nov 2023 23:32:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1699947143; x=1700551943; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=iKBkBMnlq9mKP7sTAYXv2kA+ucbgpt2LmpnOVMHBRDY=;
+        b=f8j0SwwhTlvMx22BCPb463hkw95GHM03JtxTP3v4AIyILjk4OPq1L7f7ZY/hEPfgf6
+         jek2OMMCbdyuS7v2hTu3l6U2oEaSBudm3ep605bbbAmLK0joDY9KkN6tqQoycwQgsRpQ
+         Cd2LouF79qhUq1OxHGA5+Y4RkGwjrWsCtTaJurS6/o9ovDtQljXTHiQBXdQopDjfe9rA
+         qrBy1WAv8Dln2iDzahCxmb/U5OLuVXtFxAa2XmDnRvh/alR0kPfwR54rAHjDq4UK9o6x
+         6nVorC9ab44EHbHhaHEHd7CtN1ngP8xbRnn4fxPQ7ZyxnMPggZ0ew8vwAxvjTSOsPuIW
+         h5KA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1699947143; x=1700551943;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iKBkBMnlq9mKP7sTAYXv2kA+ucbgpt2LmpnOVMHBRDY=;
+        b=duWm0vps0H2AvbMlLXrQd1OtboVdsoeHf0jCUDoD70Ubri9eyjTO1Eg5OAH+Qlmr6X
+         2G4/r16jK6oVdRBVnTH2Yslt/kg5E4WBTrgQxgTEF5WyUtyfibjlvbtZOm1zJaSVyZBv
+         4D2iJHraOdYonJKe9f99b3oWY4c7RMtgz/UvJFGJregFMNUtZ7pMQ1EeXEVtxg3pcYd7
+         vwovqV+0SCLrsXShacmUJKgg1nvyCttDDBv+JgeIwa+JvLE6BC7Rund2vY+cIW8lBJVI
+         IDH1e2L2sP6tbvRZlJlarPbk4JU+okxnHZ1V/U+ortYBHhyY//EfIBxv9/IisP/tun9h
+         BdpA==
+X-Gm-Message-State: AOJu0YwcVDMxqukKUWNMHEY78N5N4Bi16S3ylVRkzfCVCR3SlnPxIh55
+	yd4KiFbSIM2Wews76DHs/hBT1d7Zrso=
+X-Google-Smtp-Source: AGHT+IHYLBNZUQmrRsC5RMzLGDskNre0c8mfiVkF+YR78VMzHVxuuCGPxn3gRRyIMkJCdajIqoULNg==
+X-Received: by 2002:a17:903:cc:b0:1cc:5db8:7eb1 with SMTP id x12-20020a17090300cc00b001cc5db87eb1mr1284949plc.51.1699947143006;
+        Mon, 13 Nov 2023 23:32:23 -0800 (PST)
+Received: from [172.17.0.2] ([20.172.24.208])
+        by smtp.gmail.com with ESMTPSA id b4-20020a170902d50400b001cc307bcdbdsm5069962plg.211.2023.11.13.23.32.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Nov 2023 23:32:22 -0800 (PST)
+Message-ID: <65532286.170a0220.fe9b2.be9f@mx.google.com>
+Date: Mon, 13 Nov 2023 23:32:22 -0800 (PST)
+Content-Type: multipart/mixed; boundary="===============4046268754091773363=="
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+From: bluez.test.bot@gmail.com
+To: linux-bluetooth@vger.kernel.org, marcan@marcan.st
+Subject: RE: Bluetooth: hci_bcm4377: Fix msgid release
+In-Reply-To: <20231114-bluetooth-msgid-fix-v1-1-1d15394bf342@marcan.st>
+References: <20231114-bluetooth-msgid-fix-v1-1-1d15394bf342@marcan.st>
+Reply-To: linux-bluetooth@vger.kernel.org
+
+--===============4046268754091773363==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Message-Id: <20231114-bluetooth-msgid-fix-v1-1-1d15394bf342@marcan.st>
-X-B4-Tracking: v=1; b=H4sIAB8cU2UC/x2M0QpAMBRAf0X32S2bIX5FHozLbmHaRmr5d8vjO
- XVOBE+OyUOXRXB0s2d7JBB5BpMZj5WQ58QgC1kKIRTq7aJgbTC4+5VnXPhB2TZ1q6khVWlI5ek
- o6f/aD+/7AZ7rsRRlAAAA
-To: Sven Peter <sven@svenpeter.dev>, 
- Alyssa Rosenzweig <alyssa@rosenzweig.io>, 
- Marcel Holtmann <marcel@holtmann.org>, 
- Johan Hedberg <johan.hedberg@gmail.com>, 
- Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: Aditya Garg <gargaditya08@live.com>, 
- Luiz Augusto von Dentz <luiz.von.dentz@intel.com>, asahi@lists.linux.dev, 
- linux-arm-kernel@lists.infradead.org, linux-bluetooth@vger.kernel.org, 
- linux-kernel@vger.kernel.org, stable@vger.kernel.org, 
- Hector Martin <marcan@marcan.st>
-X-Mailer: b4 0.12.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1185; i=marcan@marcan.st;
- h=from:subject:message-id; bh=80m1kJxaIPINrUcVygyqLzCx1957gvMScN5A9MDipys=;
- b=owGbwMvMwCUm+yP4NEe/cRLjabUkhtRgGeU93tEGHw3nLDjvFzHlw+pwv1Pcufc5r8+Q3/768
- /tdfG8PdJSyMIhxMciKKbI0nug91e05/Zy6asp0mDmsTCBDGLg4BWAi7EqMDLOlrN7ckHKZEK2i
- +jXquETo4qUr5Bycdbn9eq43n46e+47hf3ywobuqWN6u5ZEH8i9PZz84b/Va6Sl+fi48q2Iv3LW
- +xwQA
-X-Developer-Key: i=marcan@marcan.st; a=openpgp;
- fpr=FC18F00317968B7BE86201CBE22A629A4C515DD5
 
-We are releasing a single msgid, so the order argument to
-bitmap_release_region must be zero.
+This is automated email and please do not reply to this email!
 
-In practice this was probably harmlessly masked to 0 anyway, which is
-why it worked, but it trips ubsan.
+Dear submitter,
 
-Fixes: 8a06127602de ("Bluetooth: hci_bcm4377: Add new driver for BCM4377 PCIe boards")
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=800912
+
+---Test result---
+
+Test Summary:
+CheckPatch                    FAIL      0.84 seconds
+GitLint                       PASS      0.22 seconds
+SubjectPrefix                 PASS      0.07 seconds
+BuildKernel                   PASS      28.15 seconds
+CheckAllWarning               PASS      30.67 seconds
+CheckSparse                   PASS      36.38 seconds
+CheckSmatch                   PASS      99.46 seconds
+BuildKernel32                 PASS      27.21 seconds
+TestRunnerSetup               PASS      423.58 seconds
+TestRunner_l2cap-tester       PASS      23.34 seconds
+TestRunner_iso-tester         PASS      37.47 seconds
+TestRunner_bnep-tester        PASS      7.03 seconds
+TestRunner_mgmt-tester        PASS      169.49 seconds
+TestRunner_rfcomm-tester      PASS      10.98 seconds
+TestRunner_sco-tester         PASS      14.79 seconds
+TestRunner_ioctl-tester       PASS      12.41 seconds
+TestRunner_mesh-tester        PASS      8.96 seconds
+TestRunner_smp-tester         PASS      9.94 seconds
+TestRunner_userchan-tester    PASS      7.40 seconds
+IncrementalBuild              PASS      26.28 seconds
+
+Details
+##############################
+Test: CheckPatch - FAIL
+Desc: Run checkpatch.pl script
+Output:
+Bluetooth: hci_bcm4377: Fix msgid release
+WARNING: Reported-by: should be immediately followed by Closes: with a URL to the report
+#78: 
 Reported-by: Aditya Garg <gargaditya08@live.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Hector Martin <marcan@marcan.st>
----
- drivers/bluetooth/hci_bcm4377.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/hci_bcm4377.c b/drivers/bluetooth/hci_bcm4377.c
-index 19ad0e788646..5e9f79235cde 100644
---- a/drivers/bluetooth/hci_bcm4377.c
-+++ b/drivers/bluetooth/hci_bcm4377.c
-@@ -715,7 +715,7 @@ static void bcm4377_handle_ack(struct bcm4377_data *bcm4377,
- 		ring->events[msgid] = NULL;
- 	}
- 
--	bitmap_release_region(ring->msgids, msgid, ring->n_entries);
-+	bitmap_release_region(ring->msgids, msgid, 0);
- 
- unlock:
- 	spin_unlock_irqrestore(&ring->lock, flags);
+total: 0 errors, 1 warnings, 8 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/github/workspace/src/src/13454901.patch has style problems, please review.
+
+NOTE: Ignored message types: UNKNOWN_COMMIT_ID
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+
 
 ---
-base-commit: ffc253263a1375a65fa6c9f62a893e9767fbebfa
-change-id: 20231114-bluetooth-msgid-fix-29769be7e45b
+Regards,
+Linux Bluetooth
 
-Best regards,
--- 
-Hector Martin <marcan@marcan.st>
 
+--===============4046268754091773363==--
 
