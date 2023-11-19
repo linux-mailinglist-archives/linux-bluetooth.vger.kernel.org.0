@@ -1,31 +1,31 @@
-Return-Path: <linux-bluetooth+bounces-120-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-121-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 587717F067B
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 19 Nov 2023 14:41:09 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B9D057F0687
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 19 Nov 2023 14:43:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 01BFB1F22019
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 19 Nov 2023 13:41:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D26D01C20432
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 19 Nov 2023 13:43:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0492711C8B;
-	Sun, 19 Nov 2023 13:40:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96C1A11CAC;
+	Sun, 19 Nov 2023 13:43:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dkim=none
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 108C1E6;
-	Sun, 19 Nov 2023 05:40:49 -0800 (PST)
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7109E8F;
+	Sun, 19 Nov 2023 05:43:09 -0800 (PST)
 Received: from [192.168.0.183] (ip5f5af668.dynamic.kabel-deutschland.de [95.90.246.104])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pmenzel)
-	by mx.molgen.mpg.de (Postfix) with ESMTPSA id D6F0561E5FE01;
-	Sun, 19 Nov 2023 14:40:35 +0100 (CET)
-Message-ID: <d994bd71-8d8b-4b6a-855e-8ea5bfede3ca@molgen.mpg.de>
-Date: Sun, 19 Nov 2023 14:40:35 +0100
+	by mx.molgen.mpg.de (Postfix) with ESMTPSA id 24A9961E5FE01;
+	Sun, 19 Nov 2023 14:42:59 +0100 (CET)
+Message-ID: <22494842-a785-4151-915d-6f3a677d96cb@molgen.mpg.de>
+Date: Sun, 19 Nov 2023 14:42:58 +0100
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -33,18 +33,22 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: Qualcomm Atheros QCA61x4 keeps drawing 0.85 W despite Bluetooth
+ being disable in GNOME
 Content-Language: en-US
+From: Paul Menzel <pmenzel@molgen.mpg.de>
 To: Marcel Holtmann <marcel@holtmann.org>,
  Johan Hedberg <johan.hedberg@gmail.com>,
  Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 Cc: linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-usb@vger.kernel.org, linux-pm@vger.kernel.org,
  Hans de Goede <hdegoede@redhat.com>
-From: Paul Menzel <pmenzel@molgen.mpg.de>
-Subject: Qulcomm Atheros QCA61x4 keeps drawing 0.85 W despite Bluetooth being
- disable in GNOME
+References: <d994bd71-8d8b-4b6a-855e-8ea5bfede3ca@molgen.mpg.de>
+In-Reply-To: <d994bd71-8d8b-4b6a-855e-8ea5bfede3ca@molgen.mpg.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+
+[Fix typo in subject line]
 
 Dear Linux folks,
 
