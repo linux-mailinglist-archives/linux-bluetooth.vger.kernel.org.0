@@ -1,81 +1,114 @@
-Return-Path: <linux-bluetooth+bounces-213-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-215-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C1E47F9272
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 26 Nov 2023 12:15:18 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C03857F951F
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 26 Nov 2023 20:47:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 80B6D28112D
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 26 Nov 2023 11:15:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 80541280CD1
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 26 Nov 2023 19:47:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C414CA63;
-	Sun, 26 Nov 2023 11:15:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 494A212E5E;
+	Sun, 26 Nov 2023 19:47:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dkim=none
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2450107
-	for <linux-bluetooth@vger.kernel.org>; Sun, 26 Nov 2023 03:15:05 -0800 (PST)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-1cfc15e4af2so14741615ad.3
-        for <linux-bluetooth@vger.kernel.org>; Sun, 26 Nov 2023 03:15:05 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700997305; x=1701602105;
-        h=to:from:subject:message-id:in-reply-to:date:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yHaxLzHaMrVuEynKFwAXmqb1IBUV1cZFLGQCi6lgPdg=;
-        b=sE+QEsDyPvGGlTo3J/q8Y3jnB8+dY/S8Fj0H2dzI+dFoh8N/cqgSderoQdSRyowjiF
-         pmP3olpJ5i9rr/y4m3Nh3jXie2foF/mTgfNW1TeKYixZUpH8hXm8Hr6tJLPwqfo+k6Su
-         /SuiVWT+5ogOVtQVS3xPDCLSG2XNGRBAZdUflt0a4G2hg9ohxEQyqjt8xa6IXoXYfuY4
-         40OW2jRRUVuN0G2PaUr29WDvEuguYtXFIFQK9yhIYicJuSUESkCifylsB7NIz/5+WqUT
-         +a+rzklFuQpwc1wSKQUgOQ1KQzr+3zPTk8ctnhBGl46bxdPyQoKHq83okRUcsiMH06rn
-         TdPg==
-X-Gm-Message-State: AOJu0YyTRW0GsxJQvOK0QhstcttsDwWfzrVWyg2gZId0ay1JWeOqTZ3w
-	0H0wFKyjE3i6RPpsqBm/ZV50WXPNS3+Mx/iZYdBHJ+pQMNLn
-X-Google-Smtp-Source: AGHT+IE0WR/9nta+zaUgKm7UCxRX3Ot8aDCrNULWGKAS247az7Z4XU/pN/NfDGZq7w8qAr1qX/4xDp1eaWge8tvxtmAFd5e2n1Vh
+Received: from mail.andi.de1.cc (mail.andi.de1.cc [IPv6:2a02:c205:3004:2154::1])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E365107
+	for <linux-bluetooth@vger.kernel.org>; Sun, 26 Nov 2023 11:46:58 -0800 (PST)
+Received: from p200301077700a9001a3da2fffebfd33a.dip0.t-ipconnect.de ([2003:107:7700:a900:1a3d:a2ff:febf:d33a] helo=aktux)
+	by mail.andi.de1.cc with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <andreas@kemnade.info>)
+	id 1r7KeS-006khO-Q3; Sun, 26 Nov 2023 20:18:44 +0100
+Received: from andi by aktux with local (Exim 4.96)
+	(envelope-from <andreas@kemnade.info>)
+	id 1r7KeR-000Slb-0I;
+	Sun, 26 Nov 2023 20:18:43 +0100
+From: Andreas Kemnade <andreas@kemnade.info>
+To: marcel@holtmann.org,
+	johan.hedberg@gmail.com,
+	luiz.dentz@gmail.com,
+	johan@kernel.org,
+	arnd@arndb.de,
+	gregkh@linuxfoundation.org,
+	andreas@kemnade.info,
+	linux-bluetooth@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	tomi.valkeinen@ideasonboard.com,
+	Tony Lindgren <tony@atomide.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@gmail.com>,
+	robh@kernel.org
+Subject: [RFC PATCH 0/3] bluetooth/gnss: GNSS support for TiWi chips
+Date: Sun, 26 Nov 2023 20:18:37 +0100
+Message-Id: <20231126191840.110564-1-andreas@kemnade.info>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Received: by 2002:a17:902:9883:b0:1cf:9f36:d983 with SMTP id
- s3-20020a170902988300b001cf9f36d983mr1599271plp.8.1700997305280; Sun, 26 Nov
- 2023 03:15:05 -0800 (PST)
-Date: Sun, 26 Nov 2023 03:15:05 -0800
-In-Reply-To: <000000000000a135c0060a2260b3@google.com>
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <000000000000252e5e060b0c4ccc@google.com>
-Subject: Re: [syzbot] [bluetooth?] KASAN: null-ptr-deref Read in ida_free (4)
-From: syzbot <syzbot+51baee846ddab52d5230@syzkaller.appspotmail.com>
-To: davem@davemloft.net, edumazet@google.com, johan.hedberg@gmail.com, 
-	kuba@kernel.org, linux-bluetooth@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, luiz.dentz@gmail.com, luiz.von.dentz@intel.com, 
-	marcel@holtmann.org, netdev@vger.kernel.org, pabeni@redhat.com, 
-	syzkaller-bugs@googlegroups.com, william.xuanziyang@huawei.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-syzbot has bisected this issue to:
+Some of these chips have GNSS support. In some vendor kernels
+a driver on top of misc/ti-st can be found providing a /dev/tigps
+device which speaks the secretive Air Independent Interface (AI2) protocol.
+Implement something comparable as a GNSS interface.
 
-commit 181a42edddf51d5d9697ecdf365d72ebeab5afb0
-Author: Ziyang Xuan <william.xuanziyang@huawei.com>
-Date:   Wed Oct 11 09:57:31 2023 +0000
+With some userspace tools a proof-of-concept can be shown. A position
+can be successfully read out.  Basic properties of the protocol are
+understood.
 
-    Bluetooth: Make handle of hci_conn be unique
+This was tested on the Epson Moverio BT-200.
 
-bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=1345177ce80000
-start commit:   8c9660f65153 Add linux-next specific files for 20231124
-git tree:       linux-next
-final oops:     https://syzkaller.appspot.com/x/report.txt?x=10c5177ce80000
-console output: https://syzkaller.appspot.com/x/log.txt?x=1745177ce80000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=ca1e8655505e280
-dashboard link: https://syzkaller.appspot.com/bug?extid=51baee846ddab52d5230
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=10d54c08e80000
-C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=160ef1a4e80000
+This is sent out as an early RFC to ensure I am going onto the right
+track:
 
-Reported-by: syzbot+51baee846ddab52d5230@syzkaller.appspotmail.com
-Fixes: 181a42edddf5 ("Bluetooth: Make handle of hci_conn be unique")
+So the main questions I see:
+- is the approach right to abandon drivers/misc/ti-st?
 
-For information about bisection process see: https://goo.gl/tpsmEJ#bisection
+- Output at /dev/gnssX:
+  AI2 vs. NMEA
+  The chip can be configured into sending AI2-encapsulated NMEA,
+  or proving data in a binary format.
+  Some research has to be done yet for the details.
+  A pile of logs is waiting for further analysis...
+
+  Arguments for/against NMEA:
+  + Userspace is prepared to handle it
+  + Power management can be easily done by the kernel
+  - Less functionality can be used.
+
+  Arguments for/against AI2:
+  + Full functionality can be accessed from userspace (incl. A-GPS,
+    maybe raw satellite data)
+  - Userspace has to behave to have proper power management
+  - No freely (not even as in beer) tool available to fully use AI2,
+    so there will be only a real advantage after long "French Cafe"
+    sessions.
+
+More detailed tings:
+  - Some live cycle management is left out. Since it depends
+    on the decisions above, I have not put much thought into it.
+  - Should some pieces go into drivers/gnss?
+  - detection for GNSS availability: For now the node name is
+    used. But the device should be there if the chip supports it
+    and things are wired up properly.
+
+Andreas Kemnade (3):
+  gnss: Add AI2 protocol used by some TI combo chips.
+  bluetooth: ti-st: add GNSS support for TI Wilink chips
+  drivers: misc: ti-st: begin to deorbit
+
+ drivers/bluetooth/hci_ll.c | 154 ++++++++++++++++++++++++++++++++++++-
+ drivers/gnss/core.c        |   1 +
+ drivers/misc/ti-st/Kconfig |   2 +-
+ include/linux/gnss.h       |   1 +
+ 4 files changed, 156 insertions(+), 2 deletions(-)
+
+-- 
+2.39.2
+
 
