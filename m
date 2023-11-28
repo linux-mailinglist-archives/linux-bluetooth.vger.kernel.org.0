@@ -1,189 +1,103 @@
-Return-Path: <linux-bluetooth+bounces-273-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-274-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4FF57FC05D
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Nov 2023 18:38:17 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 519C67FC06C
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Nov 2023 18:40:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A41C81C20D5C
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Nov 2023 17:38:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 825701C20EC9
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Nov 2023 17:40:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 366645D4B8;
-	Tue, 28 Nov 2023 17:38:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A559639AE1;
+	Tue, 28 Nov 2023 17:40:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b="itPmQsLE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q6uDQAq4"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-19.smtp.github.com (out-19.smtp.github.com [192.30.252.202])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 845D9CA
-	for <linux-bluetooth@vger.kernel.org>; Tue, 28 Nov 2023 09:38:08 -0800 (PST)
-Received: from github.com (hubbernetes-node-3ae383d.va3-iad.github.net [10.48.221.32])
-	by smtp.github.com (Postfix) with ESMTPA id BE5E3E0B30
-	for <linux-bluetooth@vger.kernel.org>; Tue, 28 Nov 2023 09:38:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1701193087;
-	bh=RjzcdpPoBIUG8Jbi8N0Bkca8BRUWfnn5erGszZtP1rw=;
-	h=Date:From:To:Subject:From;
-	b=itPmQsLEMb99IBvAyvjTfiSfab/qlUhLnFEB9UXT8wHLbcfLcgKnaz1Yd3r4E1RpW
-	 zRiiEWyiDxQG7Hbgz5cFKsgvP90k0S4tyXIprKvI1CJZlBeEpJxu+s8LdhlJu1VFJs
-	 cV0KP/FdcPN1Oqjnypm+RfseoTT+UIlQuIAb1tNs=
-Date: Tue, 28 Nov 2023 09:38:07 -0800
-From: Claudia Draghicescu <noreply@github.com>
-To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/master/8b4484-bd5342@github.com>
-Subject: [bluez/bluez] 2ba614: iso-tester: Add tests for GMAP broadcast QoS
- presets
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E747E39ACD
+	for <linux-bluetooth@vger.kernel.org>; Tue, 28 Nov 2023 17:40:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 83BE6C433C8;
+	Tue, 28 Nov 2023 17:40:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1701193229;
+	bh=uE5AIGH2oamF8b24T/eEO4nQxlBAUa1KygbfjW0OLOs=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=q6uDQAq4wfr+Q8+uTMgPS4DRdBf9eEfMfVnOeNmbaH1PT3kctqTn/OOXQJX9aZ4vO
+	 M+Luwt0e7FrIWK+mo3hI1AWwL/l61ajT5SaXQ4KmG9g2Vl43TtBUNDxTmfCo0AEIb+
+	 EYlS+TF8sIvm+5d4IumElU4nvlOOCnO5URdb4+IMUFQmXVjB40QBmPfGV4EBLesTm0
+	 QHniiUv4Qz/8JBbuTfCcnagUdkypbceosZUpzgStKUo+SoxUH3N4oBcbGH4zBgdXj9
+	 ojr/lSIKlnYSVW/znKLt9XlRdDGmwjosqQ0uTM+o19eyFyhpyjLEIDUyjdczxV2qkG
+	 aEAvnoZURKeXA==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 66196DFAA80;
+	Tue, 28 Nov 2023 17:40:29 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH BlueZ v6 0/5] Add support for bcast multiple BISes
+From: patchwork-bot+bluetooth@kernel.org
+Message-Id: 
+ <170119322939.16253.4423205736477387431.git-patchwork-notify@kernel.org>
+Date: Tue, 28 Nov 2023 17:40:29 +0000
+References: <20231123215935.73501-1-silviu.barbulescu@nxp.com>
+In-Reply-To: <20231123215935.73501-1-silviu.barbulescu@nxp.com>
+To: Silviu Florian Barbulescu <silviu.barbulescu@nxp.com>
+Cc: linux-bluetooth@vger.kernel.org, claudia.rosu@nxp.com,
+ mihai-octavian.urzica@nxp.com, vlad.pruteanu@nxp.com,
+ andrei.istodorescu@nxp.com, luiz.dentz@gmail.com, iulia.tanasescu@nxp.com
 
-  Branch: refs/heads/master
-  Home:   https://github.com/bluez/bluez
-  Commit: 2ba6148139718a6eb38f14290d04a960c170b8a3
-      https://github.com/bluez/bluez/commit/2ba6148139718a6eb38f14290d04a960c170b8a3
-  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-  Date:   2023-11-28 (Tue, 28 Nov 2023)
+Hello:
 
-  Changed paths:
-    M tools/iso-tester.c
+This series was applied to bluetooth/bluez.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-  Log Message:
-  -----------
-  iso-tester: Add tests for GMAP broadcast QoS presets
+On Thu, 23 Nov 2023 23:59:30 +0200 you wrote:
+> Add support for multiple BISes
+> Register the broadcast source endpoint
+> endpoint.register 00001852-0000-1000-8000-00805f9b34fb 0x06
+> After registration a new remote endpoint is created
+> Use the endpoint.config command to set the BIS codec configuration by
+> specifying the BIS when prompted by the command
+> endpoint.config /org/bluez/hci0/pac_bcast0 /local/endpoint/ep0 16_2_1
+> [/local/endpoint/ep0] BIG (value): 0
+> [/local/endpoint/ep0] BIS (value): 1
+> Based on the number of BISes seted in the base_lc3_16_2_1 more
+> remote endoints wil be created (If more then one bis is setted)
+> Use the endpoint.config command to set the BIS codec configuration by
+> specifying the BIS when prompted by the command
+> endpoint.config /org/bluez/hci0/pac_bcast0 /local/endpoint/ep0 16_2_1
+> [/local/endpoint/ep0] BIG (value): 0
+> [/local/endpoint/ep0] BIS (value): 2
+> Use the endpoint config command to configure all the BISes
+> After all BISes are configured, use the transports to send data
+> 
+> [...]
 
-This adds the following tests:
+Here is the summary with links:
+  - [BlueZ,v6,1/5] shared/bap: Fix source+sink endpoint registration
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=b93690e72d9e
+  - [BlueZ,v6,2/5] audio/bap: Fix source+sink endpoint registration
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=bd5342fdf46a
+  - [BlueZ,v6,3/5] Add support for multiple BISes
+    (no matching commit)
+  - [BlueZ,v6,4/5] audio/transport.c: Add support for multiple BISes
+    (no matching commit)
+  - [BlueZ,v6,5/5] client/player.c: Add support for multiple BISes
+    (no matching commit)
 
-ISO QoS 48_1_g - Success
-ISO QoS 48_2_g - Success
-ISO QoS 48_3_g - Success
-ISO QoS 48_4_g - Success
-
-
-  Commit: acaf8f866d2906cfb229aa4d8cab599ac8cb7316
-      https://github.com/bluez/bluez/commit/acaf8f866d2906cfb229aa4d8cab599ac8cb7316
-  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-  Date:   2023-11-28 (Tue, 28 Nov 2023)
-
-  Changed paths:
-    M src/shared/bap-debug.c
-    M src/shared/util.c
-    M src/shared/util.h
-
-  Log Message:
-  -----------
-  util: Make debugger arg of util_debug_ltv const
-
-This makes the debugger argument of util_debug_ltv const as they are not
-suppose to change during its call.
-
-
-  Commit: c9a1f20808287ecb8db183a537b210e7a26116d9
-      https://github.com/bluez/bluez/commit/c9a1f20808287ecb8db183a537b210e7a26116d9
-  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-  Date:   2023-11-28 (Tue, 28 Nov 2023)
-
-  Changed paths:
-    M monitor/packet.c
-
-  Log Message:
-  -----------
-  monitor: Add proper decoding of TLV for BASE
-
-This uses bt_bap_debug_{config, metadata} to decode the TLV entries
-found in Basic Audio Announcement:
-
-< HCI Command: LE Set Peri.. (0x08|0x003f) plen 41
-        Handle: 1
-        Operation: Complete ext advertising data (0x03)
-        Data length: 0x26
-        Service Data: Basic Audio Announcement (0x1851)
-          Presetation Delay: 10000
-          Number of Subgroups: 1
-            Subgroup #0:
-            Number of BIS(s): 1
-            Codec: LC3 (0x06)
-            Codec Specific Configuration: #0: len 0x02 type 0x01
-            Codec Specific Configuration: Sampling Frequency: 48 Khz (0x08)
-            Codec Specific Configuration: #1: len 0x02 type 0x02
-            Codec Specific Configuration: Frame Duration: 7.5 ms (0x00)
-            Codec Specific Configuration: #2: len 0x03 type 0x04
-            Codec Specific Configuration: Frame Length: 75 (0x004b)
-            Metadata: #0: len 0x03 type 0x02
-            Metadata: Context: 0x0002
-            Metadata: Context	Conversational (0x0002)
-              BIS #0:
-              Index: 1
-              Codec Specific Configuration: #0: len 0x05 type 0x03
-              Codec Specific Configuration: Location: 0x00000001
-              Codec Specific Configuration: Location: Front Left (0x00000001)
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
-  Commit: ee04d309651c0ca8828c5ae34ae36a707b534a70
-      https://github.com/bluez/bluez/commit/ee04d309651c0ca8828c5ae34ae36a707b534a70
-  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-  Date:   2023-11-28 (Tue, 28 Nov 2023)
-
-  Changed paths:
-    M tools/isotest.c
-
-  Log Message:
-  -----------
-  isotest: Fix high-reliability QoS presets
-
-This changes the high-reliability QoS presets to be conformant to
-BAP[1] specification:
-
-  Table 5.2: QoS configuration support setting requirements for the
-  Unicast Client and Unicast Server
-
-[1] https://www.bluetooth.com/specifications/bap-1-0-1/
-
-Fixes: https://github.com/bluez/bluez/issues/665
-
-
-  Commit: b93690e72d9ea287a730fa271925979c225d6861
-      https://github.com/bluez/bluez/commit/b93690e72d9ea287a730fa271925979c225d6861
-  Author: Claudia Draghicescu <claudia.rosu@nxp.com>
-  Date:   2023-11-28 (Tue, 28 Nov 2023)
-
-  Changed paths:
-    M src/shared/bap.c
-    M src/shared/bap.h
-
-  Log Message:
-  -----------
-  shared/bap: Fix source+sink endpoint registration
-
-When registering both sink and source endpoints,
-the register endpoint method call results in 2 remote endpoints for each
-scanned broadcast source
-
-
-  Commit: bd5342fdf46af482c851af754cca14c1b51ee2d3
-      https://github.com/bluez/bluez/commit/bd5342fdf46af482c851af754cca14c1b51ee2d3
-  Author: Claudia Draghicescu <claudia.rosu@nxp.com>
-  Date:   2023-11-28 (Tue, 28 Nov 2023)
-
-  Changed paths:
-    M profiles/audio/bap.c
-
-  Log Message:
-  -----------
-  audio/bap: Fix source+sink endpoint registration
-
-When registering both sink and source endpoints,
-the register endpoint method call results in 2 remote endpoints for each
-scanned broadcast source
-
-
-Compare: https://github.com/bluez/bluez/compare/8b448400ece6...bd5342fdf46a
 
