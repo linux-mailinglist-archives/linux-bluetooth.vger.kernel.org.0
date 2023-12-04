@@ -1,64 +1,64 @@
-Return-Path: <linux-bluetooth+bounces-378-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-380-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D8AD80416F
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  4 Dec 2023 23:15:51 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A29D804171
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  4 Dec 2023 23:16:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5503B1F212A0
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  4 Dec 2023 22:15:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2F932B20B7C
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  4 Dec 2023 22:15:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FEAD3AC26;
-	Mon,  4 Dec 2023 22:15:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9321A3A8E1;
+	Mon,  4 Dec 2023 22:15:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XOAWTFpy"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TY+fsEjr"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-vs1-xe29.google.com (mail-vs1-xe29.google.com [IPv6:2607:f8b0:4864:20::e29])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BB51183
-	for <linux-bluetooth@vger.kernel.org>; Mon,  4 Dec 2023 14:15:37 -0800 (PST)
-Received: by mail-vs1-xe29.google.com with SMTP id ada2fe7eead31-464811e5b3cso1406204137.1
-        for <linux-bluetooth@vger.kernel.org>; Mon, 04 Dec 2023 14:15:37 -0800 (PST)
+Received: from mail-ua1-x932.google.com (mail-ua1-x932.google.com [IPv6:2607:f8b0:4864:20::932])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72C8D18A
+	for <linux-bluetooth@vger.kernel.org>; Mon,  4 Dec 2023 14:15:39 -0800 (PST)
+Received: by mail-ua1-x932.google.com with SMTP id a1e0cc1a2514c-7c51dd41046so1000547241.2
+        for <linux-bluetooth@vger.kernel.org>; Mon, 04 Dec 2023 14:15:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701728136; x=1702332936; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1701728137; x=1702332937; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Jzu0Gbgf988x22ji0B5m/8VKcTqn+nCtaQs42XgrVkw=;
-        b=XOAWTFpyajHscvNBUJNflcu1YELR9cyYI9oJxZGdumlIrOh/4OZM6VWCu1tMaxiY4F
-         VvKd44SNf8mn0OhdcPINO/7J6RyofGkm+PaB6nqPOGXL6yZOBkK8rFhngwMKh9UzRUhL
-         /wdrFNKXkkzNtuD6PCp/oqyu8hH3Ct5M3q8gGNZHuMu/4FtImS3gTap3ffxzyXWXpSXj
-         aqQYicWAUuoL/votVKs/OxHlzRvHFZ8rx7KZst6aDSKf+IdqR6IG25C4WWGC+vNzCpGA
-         01YmpMxpjmkidxzgxTJdjjR4NHPT35ItymE4IBNewvmRHOZluIkT2Iv6qTnHxSwLM9QW
-         rvhA==
+        bh=K3b7r1p1Ur3sHOjYjWNF6OJfv/yxkBqTEAW1r1VZz9c=;
+        b=TY+fsEjrij7+R/9Uvf1WlDhAy75AtJwLKf7Lp9xVPshgHCp5AtNc+OUlJRVuWQNFtm
+         bnJZ8BFKTKeUqRERofFjk7lA3C8r5dPbULwEttcMd3Z5xAxerqeAGjYGqrqbfTIV5z+N
+         pYbn363g5r9JmxcrWXyq8qDWwHhOHKfXjDKauT9MThu0G+CQk1TMQ7/qThcX/Q/un3UN
+         tJo6DPVKK0xEHhj3Hq8Z5lWcuJ7AzwHzVn942IEDKCpogMNODVgO+AU4ogALDLq5FVDz
+         iOKrQnoLSw3faPOEkUl4caaJHYpXXJ30k8XUPaRV8jwhGvOQnmGsaxDPdi+j2iBEeKUb
+         N5MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701728136; x=1702332936;
+        d=1e100.net; s=20230601; t=1701728137; x=1702332937;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Jzu0Gbgf988x22ji0B5m/8VKcTqn+nCtaQs42XgrVkw=;
-        b=V4CGftM6NV7EBoFVt+r4X3d0ZRK3Ht+Z9cfgNCbbKL1AkK6VBbGNY3SgX1rtDeELC4
-         a0nFEOd9r20qrheoRZgte7WU0m2Bcuqa13FVe/JrWjVIe13Xq0LHM/SmAX9gLXNo2bQ/
-         XqphzbFpX/DLTqdC0d/pw/dSX6kCJkKg0u2ozwJoOh2R7X6Z1AIV4AsMmvq+pyttj4ET
-         nLdLkNqzdVNdu1IOdFyPzstSjoSuuHv5JHZ8rAPtzlfguaivipWGnShEFwGyR5KU8dPG
-         TXc+EYB8jsJ/gGGFaxOhmYTpOw/9kuJYtLj6hWD2USPXQSI9eb4Cu6knw+ykeNMwKXTu
-         Pnmw==
-X-Gm-Message-State: AOJu0Ywg7pourUucl7uwOLSUQJeT++tdP+NSMTSCU8dYu4m8su1/1RiF
-	Ri2GJ3x5IzDYsGr+m9WpRPjkn55RsJ8=
-X-Google-Smtp-Source: AGHT+IFLsX6tkqAtUjB+vJaQLUx4T2hbT4PdCTFoi8HFx4y2uizQ4WhGbDPsk13HVkCnAHP34Kf8zw==
-X-Received: by 2002:a05:6102:390d:b0:464:9159:ba8e with SMTP id e13-20020a056102390d00b004649159ba8emr715773vsu.31.1701728135823;
-        Mon, 04 Dec 2023 14:15:35 -0800 (PST)
+        bh=K3b7r1p1Ur3sHOjYjWNF6OJfv/yxkBqTEAW1r1VZz9c=;
+        b=shjrgSyHI4y1qZBXMsa22tagZmOTUBF6RBeX4XhHiyhVYi9SwANWxBa0QG7G1CZGxN
+         SDw1XJkWwu4iddSZgYmmCDyTn2EguxYFkhDugKm6ktnyiPSjqMvLKmTlBcC/RUtabFjv
+         bnM3/YCyHK+2h40C+4lHQHifIxOoXRWFKeoJ7eCONjK+lJ/J6PUAiT5KZDByh1AgqhGc
+         MVL1of6IbMeuvrZdND9hGiJaoTIxn11K7s17sW49UQ4lToRnYMK04xG8P99sCLAysdJZ
+         6fPRIoeP6/LYRSSKuuztbUhwrwUxb76+5KALNMyzhATl8szGk2a3xlUGmBwJyfFtCx/T
+         NUdw==
+X-Gm-Message-State: AOJu0YwX/tlYYMPoOWs9j1oOhe3iq7+kXYzgHEgMd3tNAAvqhBII6G4S
+	xKpAz+Q2pzqmpoJDsUOZn1uALbYPPqI=
+X-Google-Smtp-Source: AGHT+IHdrJb7dApSKeu0WwkhokbtkJFv+hV366Cv8e3k3tS9MRXWYrf+7WDhPQd1cQpBYuvmFnNZLg==
+X-Received: by 2002:a67:fc14:0:b0:465:390b:3c96 with SMTP id o20-20020a67fc14000000b00465390b3c96mr10325vsq.2.1701728137340;
+        Mon, 04 Dec 2023 14:15:37 -0800 (PST)
 Received: from lvondent-mobl4.. (071-047-239-151.res.spectrum.com. [71.47.239.151])
-        by smtp.gmail.com with ESMTPSA id bl13-20020a056102508d00b0044d4e63aa03sm1136612vsb.25.2023.12.04.14.15.33
+        by smtp.gmail.com with ESMTPSA id bl13-20020a056102508d00b0044d4e63aa03sm1136612vsb.25.2023.12.04.14.15.35
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Dec 2023 14:15:34 -0800 (PST)
+        Mon, 04 Dec 2023 14:15:36 -0800 (PST)
 From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v3 4/8] test-bap: Add SCC Enable tests
-Date: Mon,  4 Dec 2023 17:15:23 -0500
-Message-ID: <20231204221527.2990674-4-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ v3 5/8] test-bap: Add SCC Disable tests
+Date: Mon,  4 Dec 2023 17:15:24 -0500
+Message-ID: <20231204221527.2990674-5-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20231204221527.2990674-1-luiz.dentz@gmail.com>
 References: <20231204221527.2990674-1-luiz.dentz@gmail.com>
@@ -72,106 +72,133 @@ Content-Transfer-Encoding: 8bit
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-4.8.5 Unicast Client Initiates Enable Operation (Page 48)
+4.8.6 Unicast Client Initiates Disable Operation (Page 50):
 
   Test Purpose:
-  Verify that a Unicast Client IUT can initiate an Enable operation for an ASE
-  with a Unicast Server that is either in the Audio Sink role or the Audio
-  Source role.
+  Verify that a Unicast Client IUT can initiate a Disable operation for an ASE
+  in the Enabling or Streaming state.
 
   Pass verdict:
   The IUT successfully writes to the ASE Control Point characteristic with the
-  opcode set to 0x03 (Enable) and the specified parameters.
+  opcode set to 0x05 (Disable) and the specified parameters.
 
 Test Summary
 ------------
-BAP/UCL/SCC/BV-101-C [UCL SRC Enable]                Passed
-BAP/UCL/SCC/BV-102-C [UCL SNK Enable]                Passed
-Total: 2, Passed: 2 (100.0%), Failed: 0, Not Run: 0
+BAP/UCL/SCC/BV-103-C [UCL SNK Disable in Enabling State] Passed
+BAP/UCL/SCC/BV-104-C [UCL SRC Disable in Enabling or Streaming state] Passed
+BAP/UCL/SCC/BV-105-C [UCL SNK Disable in Streaming State] Passed
+Total: 3, Passed: 3 (100.0%), Failed: 0, Not Run: 0
 ---
- unit/test-bap.c | 92 ++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 91 insertions(+), 1 deletion(-)
+ unit/test-bap.c | 153 +++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 152 insertions(+), 1 deletion(-)
 
 diff --git a/unit/test-bap.c b/unit/test-bap.c
-index fdfedde6b965..9369983ba97d 100644
+index 9369983ba97d..4e518b010def 100644
 --- a/unit/test-bap.c
 +++ b/unit/test-bap.c
 @@ -335,7 +335,7 @@ static void test_complete_cb(const void *user_data)
  	tester_test_passed();
  }
  
--static void bap_qos(struct bt_bap_stream *stream,
-+static void bap_enable(struct bt_bap_stream *stream,
+-static void bap_enable(struct bt_bap_stream *stream,
++static void bap_disable(struct bt_bap_stream *stream,
  					uint8_t code, uint8_t reason,
  					void *user_data)
  {
-@@ -343,6 +343,26 @@ static void bap_qos(struct bt_bap_stream *stream,
+@@ -343,6 +343,50 @@ static void bap_enable(struct bt_bap_stream *stream,
  		tester_test_failed();
  }
  
-+static void bap_qos(struct bt_bap_stream *stream,
++static void bap_start(struct bt_bap_stream *stream,
 +					uint8_t code, uint8_t reason,
 +					void *user_data)
 +{
 +	struct test_data *data = user_data;
++	unsigned int id;
 +
 +	if (code) {
 +		tester_test_failed();
 +		return;
 +	}
 +
-+	if (data->cfg->state > BT_BAP_STREAM_STATE_QOS) {
-+		unsigned int qos_id;
++	id = bt_bap_stream_disable(data->stream, true, bap_disable, data);
 +
-+		qos_id = bt_bap_stream_enable(data->stream, true, NULL,
-+							bap_enable, data);
-+		g_assert(qos_id);
-+	}
++	g_assert(id);
 +}
 +
- static void bap_config(struct bt_bap_stream *stream,
++static void bap_enable(struct bt_bap_stream *stream,
++					uint8_t code, uint8_t reason,
++					void *user_data)
++{
++	struct test_data *data = user_data;
++	unsigned int id = 0;
++
++	if (code) {
++		tester_test_failed();
++		return;
++	}
++
++	switch (data->cfg->state) {
++	case BT_BAP_STREAM_STATE_ENABLING:
++		return;
++	case BT_BAP_STREAM_STATE_DISABLING:
++		id = bt_bap_stream_disable(data->stream, true, bap_disable,
++						data);
++		break;
++	case BT_BAP_STREAM_STATE_STREAMING:
++		id = bt_bap_stream_start(data->stream, bap_start, data);
++		break;
++	}
++
++	g_assert(id);
++}
++
+ static void bap_qos(struct bt_bap_stream *stream,
  					uint8_t code, uint8_t reason,
  					void *user_data)
-@@ -2188,12 +2208,82 @@ static void test_scc_qos_vs(void)
- 			test_client, &cfg_snk_qos_vs, SCC_SNK_QOS_VS);
+@@ -2277,6 +2321,112 @@ static void test_scc_enable(void)
+ 			test_client, &cfg_src_enable, SCC_SRC_ENABLE);
  }
  
-+static struct test_config cfg_snk_enable = {
++static struct test_config cfg_snk_disable = {
 +	.cc = LC3_CONFIG_16_2,
 +	.qos = LC3_QOS_16_2_1,
 +	.snk = true,
-+	.state = BT_BAP_STREAM_STATE_ENABLING
++	.state = BT_BAP_STREAM_STATE_DISABLING
 +};
 +
 +/* ATT: Write Command (0x52) len 23
 + *  Handle: 0x0022
-+ *    Data: 03010104030201
++ *    Data: 050101
 + * ATT: Handle Value Notification (0x1b) len 7
 + *  Handle: 0x0022
-+ *    Data: 0301010000
++ *    Data: 0501010000
 + * ATT: Handle Value Notification (0x1b) len 37
 + *   Handle: 0x0016
-+ *     Data: 0101010300403020100
++ *     Data: 01010102010a00204e00409c00204e00409c00_qos
 + */
-+#define SCC_SNK_ENABLE \
-+	SCC_SNK_16_2_1, \
-+	IOV_DATA(0x52, 0x22, 0x00, 0x03, 0x01, 0x01, 0x04, 0x03, 0x02, 0x01, \
-+			00), \
-+	IOV_DATA(0x1b, 0x22, 0x00, 0x03, 0x01, 0x01, 0x00, 0x00), \
++#define ASE_SNK_DISABLE \
++	IOV_DATA(0x52, 0x22, 0x00, 0x05, 0x01, 0x01), \
++	IOV_DATA(0x1b, 0x22, 0x00, 0x05, 0x01, 0x01, 0x00, 0x00), \
 +	IOV_NULL, \
-+	IOV_DATA(0x1b, 0x16, 0x00, 0x01, 0x03, 0x00, 0x00, 0x04, 0x03, 0x02, \
-+			0x01, 0x00)
++	IOV_DATA(0x1b, 0x16, 0x00, 0x01, 0x02, 0x00, 0x00, 0x4c, 0x1d, 0x00, \
++			0x00, 0x02, 0x1a, 0x00, 0x02, 0x08, 0x00, 0x40, 0x9c, \
++			0x00)
 +
-+static struct test_config cfg_src_enable = {
++#define SCC_SNK_DISABLE \
++	SCC_SNK_ENABLE, \
++	ASE_SNK_DISABLE
++
++static struct test_config cfg_src_disable = {
 +	.cc = LC3_CONFIG_16_2,
 +	.qos = LC3_QOS_16_2_1,
 +	.src = true,
-+	.state = BT_BAP_STREAM_STATE_ENABLING
++	.state = BT_BAP_STREAM_STATE_DISABLING
 +};
 +
 +/* ATT: Write Command (0x52) len 23
 + *  Handle: 0x0022
-+ *    Data: 0301030403020100
++ *    Data: 050103
 + * ATT: Handle Value Notification (0x1b) len 7
 + *  Handle: 0x0022
 + *    Data: 0301030000
@@ -179,39 +206,74 @@ index fdfedde6b965..9369983ba97d 100644
 + *   Handle: 0x001c
 + *     Data: 030300000403020100
 + */
-+#define SCC_SRC_ENABLE \
-+	SCC_SRC_16_2_1, \
-+	IOV_DATA(0x52, 0x22, 0x00, 0x03, 0x01, 0x03, 0x04, 0x03, 0x02, 0x01, \
-+			00), \
-+	IOV_DATA(0x1b, 0x22, 0x00, 0x03, 0x01, 0x01, 0x00, 0x00), \
++#define ASE_SRC_DISABLE \
++	IOV_DATA(0x52, 0x22, 0x00, 0x05, 0x01, 0x03), \
++	IOV_DATA(0x1b, 0x22, 0x00, 0x05, 0x01, 0x03, 0x00, 0x00), \
 +	IOV_NULL, \
-+	IOV_DATA(0x1b, 0x1c, 0x00, 0x03, 0x03, 0x00, 0x00, 0x04, 0x03, 0x02, \
++	IOV_DATA(0x1b, 0x1c, 0x00, 0x03, 0x02, 0x00, 0x00, 0x4c, 0x1d, 0x00, \
++			0x00, 0x02, 0x1a, 0x00, 0x02, 0x08, 0x00, 0x40, 0x9c, \
++			0x00)
++#define SCC_SRC_DISABLE \
++	SCC_SRC_ENABLE, \
++	ASE_SRC_DISABLE
++
++static struct test_config cfg_src_disable_streaming = {
++	.cc = LC3_CONFIG_16_2,
++	.qos = LC3_QOS_16_2_1,
++	.src = true,
++	.state = BT_BAP_STREAM_STATE_STREAMING
++};
++
++/* ATT: Write Command (0x52) len 23
++ *  Handle: 0x0022
++ *    Data: 040101
++ * ATT: Handle Value Notification (0x1b) len 7
++ *  Handle: 0x0022
++ *    Data: 0401010000
++ * ATT: Handle Value Notification (0x1b) len 37
++ *   Handle: 0x0016
++ *     Data: 0101010400403020100
++ */
++#define ASE_SRC_START \
++	IOV_DATA(0x52, 0x22, 0x00, 0x04, 0x01, 0x03), \
++	IOV_DATA(0x1b, 0x22, 0x00, 0x04, 0x01, 0x03, 0x00, 0x00), \
++	IOV_NULL, \
++	IOV_DATA(0x1b, 0x1c, 0x00, 0x03, 0x04, 0x00, 0x00, 0x04, 0x03, 0x02, \
 +			0x01, 0x00)
 +
++#define SCC_SRC_DISABLE_STREAMING \
++	SCC_SRC_ENABLE, \
++	ASE_SRC_START, \
++	ASE_SRC_DISABLE
++
 +/* Test Purpose:
-+ * Verify that a Unicast Client IUT can initiate an Enable operation for an ASE
-+ * with a Unicast Server that is either in the Audio Sink role or the Audio
-+ * Source role.
++ * Verify that a Unicast Client IUT can initiate a Disable operation for an ASE
++ * in the Enabling or Streaming state.
 + *
 + * Pass verdict:
 + * The IUT successfully writes to the ASE Control Point characteristic with the
-+ * opcode set to 0x03 (Enable) and the specified parameters.
++ * opcode set to 0x05 (Disable) and the specified parameters.
 + */
-+static void test_scc_enable(void)
++static void test_scc_disable(void)
 +{
-+	define_test("BAP/UCL/SCC/BV-101-C [UCL SRC Enable]",
-+			test_client, &cfg_snk_enable, SCC_SNK_ENABLE);
-+	define_test("BAP/UCL/SCC/BV-102-C [UCL SNK Enable]",
-+			test_client, &cfg_src_enable, SCC_SRC_ENABLE);
++	define_test("BAP/UCL/SCC/BV-103-C [UCL SNK Disable in Enabling State]",
++			test_client, &cfg_src_disable, SCC_SRC_DISABLE);
++	define_test("BAP/UCL/SCC/BV-104-C [UCL SRC Disable in Enabling or "
++			"Streaming state]",
++			test_client, &cfg_snk_disable, SCC_SNK_DISABLE);
++	define_test("BAP/UCL/SCC/BV-105-C [UCL SNK Disable in Streaming State]",
++			test_client, &cfg_src_disable_streaming,
++			SCC_SRC_DISABLE_STREAMING);
 +}
 +
  static void test_scc(void)
  {
  	test_scc_cc_lc3();
- 	test_scc_cc_vs();
+@@ -2284,6 +2434,7 @@ static void test_scc(void)
  	test_scc_qos_lc3();
  	test_scc_qos_vs();
-+	test_scc_enable();
+ 	test_scc_enable();
++	test_scc_disable();
  }
  
  int main(int argc, char *argv[])
