@@ -1,39 +1,39 @@
-Return-Path: <linux-bluetooth+bounces-475-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-474-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D41380A663
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Dec 2023 16:00:42 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 69C4480A662
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Dec 2023 16:00:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9E4551C20DD8
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Dec 2023 15:00:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 20BF31F2149C
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Dec 2023 15:00:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A292C208C5;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FAFA208B5;
 	Fri,  8 Dec 2023 15:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CpCJNmDv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FUMO2TPH"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF66B2031A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0AF1DFFE
 	for <linux-bluetooth@vger.kernel.org>; Fri,  8 Dec 2023 15:00:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 61E90C433D9;
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 4BFF1C433C7;
 	Fri,  8 Dec 2023 15:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1702047630;
-	bh=CuneD4C42Kb7Lq7eB1k6/vRQLJE57KCt6g1F2P7hZrc=;
+	bh=tZk+axX8BYLOHsACx4OxxbQ9aD7WTDbQJ1TuqK3MTh4=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=CpCJNmDvZNi1Vu16Cp0wQ2dbN1uGDw9UojVZMiW8wOgpHeMNOOe5K3/kFOEimX0AI
-	 kXKTZm4rrlSMMqtx3gidEoGeY+BPDj7Kjd6OC81c7Zg/MOE7HZ7H7KfFs4emGrCANr
-	 vW9lwzEYfscCemtq7mtR8TDZKuSr8GQl1616EnQbfLkSh0ICf6u5QeSNscIJXY+Biq
-	 KA7606hpgC6YtRz+W95ib0fc1bm/5A0iXOnPlT2wC+KMfdAKg2OsqMCFU8UqtMPTqZ
-	 M5U4RLhTrEAN4EtKfrPMn3ADdFq2wBDgVdSnpwS4eSFK/rOcgGEnzLXcKFaLmzrqA2
-	 kQ9lcYolOoepA==
+	b=FUMO2TPHItNcS/lQn3G4ZCfOq0uPikOATs4MmFarxe7bFEuBSUltLUHrppWf5U/l9
+	 B70fx/pHoRSBeAmIXYBpyTfa1MKt5O9U6oIz53VPdEYvaGjtrpl1UiD4VaFvs1SkvU
+	 nCttyzUHb6epr/kcnVo1esGTBm3vrhEiAgDms8WcERCPHWKp0rfkZd8hb9hHrsQ7aV
+	 U/JuZWDimOFUfRh+NOc/rsNbyLlj87gCsbP6bKdK6/bZiwGneY2NI7FTg0J2/rQxCp
+	 MIeynkAhFDpLj1TF9aZegaSzSNw1HZxzkoG1R31bTEVxWaW8Qrjv+L/hEIoQOQ5lx7
+	 hs3fqrPEYfmDw==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 46A08C04E32;
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 31B7CC04E24;
 	Fri,  8 Dec 2023 15:00:30 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
@@ -43,33 +43,35 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ v1] test-vcp: Fix CCC value endianness
+Subject: Re: [PATCH BlueZ v2] Pattern match on service- and manufacturer data
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <170204763028.28520.3588495372277409614.git-patchwork-notify@kernel.org>
+ <170204763019.28520.7832975435305918666.git-patchwork-notify@kernel.org>
 Date: Fri, 08 Dec 2023 15:00:30 +0000
-References: <20231206220430.3713081-1-luiz.dentz@gmail.com>
-In-Reply-To: <20231206220430.3713081-1-luiz.dentz@gmail.com>
-To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: linux-bluetooth@vger.kernel.org
+References: <20231207061900.194-1-sebastif@axis.com>
+In-Reply-To: <20231207061900.194-1-sebastif@axis.com>
+To: Sebastian Forslund <sebastian.david.forslund@gmail.com>
+Cc: linux-bluetooth@vger.kernel.org, sebastif@axis.com
 
 Hello:
 
 This patch was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Wed,  6 Dec 2023 17:04:30 -0500 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+On Thu,  7 Dec 2023 07:19:00 +0100 you wrote:
+> When advertisement monitoring, manufacturer data and service data was
+> not being matched against. This made it so that advertisement monitoring
+> with or_patterns did not work that type of data.
 > 
-> CCC value is 2 octects long so it needs to be converted using
-> cpu_to_le16 in order to not fail in Big Endian architectures.
-> ---
->  unit/test-vcp.c | 21 ++++++---------------
->  1 file changed, 6 insertions(+), 15 deletions(-)
+> We must start matching against the data in the manufacturer_data and
+> service_data queues. Run a different match-function depending on the
+> type of monitor that is being matched against.
+> 
+> [...]
 
 Here is the summary with links:
-  - [BlueZ,v1] test-vcp: Fix CCC value endianness
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=71188eb0e752
+  - [BlueZ,v2] Pattern match on service- and manufacturer data
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=b0656c2cf14d
 
 You are awesome, thank you!
 -- 
