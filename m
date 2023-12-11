@@ -1,39 +1,39 @@
-Return-Path: <linux-bluetooth+bounces-533-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-532-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2295980D7D9
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Dec 2023 19:41:37 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8931C80D7D7
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Dec 2023 19:41:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D18FD281949
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 42E7B281894
 	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Dec 2023 18:41:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D188053814;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D173053812;
 	Mon, 11 Dec 2023 18:40:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s9OWC+ic"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="auKiWxhy"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F80B52F92
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 046D751C44
 	for <linux-bluetooth@vger.kernel.org>; Mon, 11 Dec 2023 18:40:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id D3C7FC433D9;
+Received: by smtp.kernel.org (Postfix) with ESMTPS id CF770C433CA;
 	Mon, 11 Dec 2023 18:40:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1702320024;
-	bh=ot3ef9+BNwUMcqgKXjn5uFOP74Xo6AKgluKP1L5+7HM=;
+	bh=2XkplhreRlkq03SKAzCcK1PP1OUNnO3hmUvwSZ96yQw=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=s9OWC+icPmPlpmM5Ib5zQPe4+2ZIjSdKpZzL7HO+3iMZWLt/b2Mr4/UtnaaUEYssP
-	 Q19/iDEk41nLEJOojt+xQrSrgZkl6SWKFU6xJDZktvY9xEK0amOGdDY2acMiEV3XdT
-	 eyFK2e5fnf6c7U/bB8kCBzO5gy8ZZNuUu/l4rlwlbRi4J8VC8flCVio7g4h5v8zQdf
-	 slm7JgOJwOmuO9koxL0M3DY0/YiBxq2BuL/wuOcU5gqQtIAJKt7RVQbXFh1iyOjWlt
-	 +bQVMXpNa1l7cHWzbUK35Of2CLJCKvILx6rkcW2scmOahpywtLWqFAwKOsybI7gZWe
-	 fwUfKwatW5N9Q==
+	b=auKiWxhyVsQU7Rxp2K2zoL9V0/Q9OFzBC807Qbq9P7Qm/lTkDF/QCtN31XeUkP7tB
+	 1jam+lp7ZamApL3wmIpf2hQHbBahBTVxpdqsDFxRA/44s+GnPH0dM209m5wqj7Q92o
+	 P8cjx1PZWM52kqLYYK4kJR0j1sen/xrAXXcsbmrGHzCaSfPWM33CRL7xD3RX3A5TRe
+	 gBja42KKGvbHb8JZHvqszCuRGnRnInl7QzPwAbj9ugMbGFijZu4Da01ajrEi4s1hJT
+	 vJ0qfNre4MCnjf6L/PRLCWLYPgHBA110Ui38u9Nekz3aavXHLtSO3bTAKXGiSIvxQ8
+	 cL9CjQrrRjakg==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id BD84EDFC908;
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id B427FDD4F0E;
 	Mon, 11 Dec 2023 18:40:24 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
@@ -43,30 +43,35 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] shared/bap: Update Available context for source
+Subject: Re: [PATCH BlueZ v3] tools: avtest: Add reject-code option
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <170232002477.25763.17213923004587985956.git-patchwork-notify@kernel.org>
+ <170232002473.25763.12111995761836114309.git-patchwork-notify@kernel.org>
 Date: Mon, 11 Dec 2023 18:40:24 +0000
-References: <20231211083507.3363494-1-kiran.k@intel.com>
-In-Reply-To: <20231211083507.3363494-1-kiran.k@intel.com>
-To: Kiran K <kiran.k@intel.com>
-Cc: linux-bluetooth@vger.kernel.org, ravishankar.srivatsa@intel.com
+References: <20231208101711.624001-1-frederic.danis@collabora.com>
+In-Reply-To: <20231208101711.624001-1-frederic.danis@collabora.com>
+To: =?utf-8?b?RnLDqWTDqXJpYyBEYW5pcyA8ZnJlZGVyaWMuZGFuaXNAY29sbGFib3JhLmNvbT4=?=@codeaurora.org
+Cc: linux-bluetooth@vger.kernel.org
 
 Hello:
 
 This patch was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Mon, 11 Dec 2023 14:05:07 +0530 you wrote:
-> Available Context of sink was getting updated instead of source.
-> ---
->  src/shared/bap.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+On Fri,  8 Dec 2023 11:17:11 +0100 you wrote:
+> Some PTS tests like A2DP/SNK/AVP/BI-03-C, A2DP/SNK/AVP/BI-08-C , …
+> request some specific rejection code to pass.
+> This commit adds an option to specify the rejection code during
+> AVDTP_SET_CONFIGURATION rejection.
+> 
+> E.g. "avtest --reject setconf --reject-code 195" to reject setconf with
+> INVALID_SAMPLING_FREQUENCY code.
+> 
+> [...]
 
 Here is the summary with links:
-  - shared/bap: Update Available context for source
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=87477b7ffefc
+  - [BlueZ,v3] tools: avtest: Add reject-code option
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=fb681e795027
 
 You are awesome, thank you!
 -- 
