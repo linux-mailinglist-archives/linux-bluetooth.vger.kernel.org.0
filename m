@@ -1,39 +1,39 @@
-Return-Path: <linux-bluetooth+bounces-534-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-531-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35B0A80D7DA
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Dec 2023 19:41:38 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7168A80D7D5
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Dec 2023 19:41:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 672861C20A19
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Dec 2023 18:41:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1D3291F2124F
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Dec 2023 18:41:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7A725381A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A50FC5380F;
 	Mon, 11 Dec 2023 18:40:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FxhimRtZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cbEQhh2B"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A1552F9A
-	for <linux-bluetooth@vger.kernel.org>; Mon, 11 Dec 2023 18:40:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id DC635C43395;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE61551038
+	for <linux-bluetooth@vger.kernel.org>; Mon, 11 Dec 2023 18:40:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id B6802C433C8;
 	Mon, 11 Dec 2023 18:40:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1702320024;
-	bh=aj+iqJma6IPywb/8+/mPziaKNjYqdQWNWJF1ll7t/28=;
+	bh=MLfsW1yb4mP4Q+UtDoixxMXXkhNxJhGSqDESUeva5kQ=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=FxhimRtZKaGtsyw5ngCLckWkHtN/wLXnL+6I+3r879xBfQ8sLQ0CmIDqTkEfCTkhI
-	 e+a/uprU32vs68/tHIfDcU3uy+ryWa8dHxg+evWAkpQ+w60qB1ieByTlBGWy4/xb8C
-	 r6H2mHbzJTDegTH6M4lQI8cVCsUkvigrpR8x0Uppxn1gsTWJgtGxQy2N2iZojZGMrZ
-	 6pq3kPeKXJES1YsVc5fe/6VjX9RQnjR8uV8hOwM80Sz1YJ8jt50Og1Fbn1ETSocnex
-	 4pqZxfUgI/I54/5Zx/Pnjxsqb2KvDq8ccuag3lybQtKzlHzjj5XZ1ElXgpPJ0liOW/
-	 ieIZ9q4lQZS6A==
+	b=cbEQhh2BW3SKuTF0yGhzKbpmfIUCcVoaOuZ2u4DS3E8y4C9jEJDf5T9+/nZ3FGQ1A
+	 pmNeJAft9Xs87Sb3UfjnW/os6wfmtpus5rO9Nn0a3TFocMaKI1J9+DkL36UZcuiKHP
+	 XgV5Qhgg4m5IrV7X4FMrU6vb1V7pL5AfLRqwRrzb2zCOGvJ63JpHOgTQHiY+gqcIhp
+	 28e6C7r5R8dmLto2OXRGRUg9iwdqIG734xa9tSkC9V+uK2kyQvwUo1sgopjzKmpC3f
+	 bOWzViRjzskBH3gVcQlESfw+LNXuc5lGeqfFDNeaMjD4jE1WR/9JDFixJBrWnyMY9i
+	 G8AL32qUKWg5A==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id C672EDD4F10;
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id A11F2C4314C;
 	Mon, 11 Dec 2023 18:40:24 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
@@ -43,37 +43,36 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ v1] shared/vcp: Fix notification endianness
+Subject: Re: [PATCH 1/2] adapter: Fix addr_type for smp_irk/ltk_info/link_key
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <170232002480.25763.12600598782695945445.git-patchwork-notify@kernel.org>
+ <170232002465.25763.975828867553046058.git-patchwork-notify@kernel.org>
 Date: Mon, 11 Dec 2023 18:40:24 +0000
-References: <20231211171135.437354-1-luiz.dentz@gmail.com>
-In-Reply-To: <20231211171135.437354-1-luiz.dentz@gmail.com>
-To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: linux-bluetooth@vger.kernel.org
+References: <20231211162729.1183207-1-xiaokeqinhealth@126.com>
+In-Reply-To: <20231211162729.1183207-1-xiaokeqinhealth@126.com>
+To: Xiao Yao <xiaokeqinhealth@126.com>
+Cc: linux-bluetooth@vger.kernel.org, xiaoyao@rock-chips.com
 
 Hello:
 
-This patch was applied to bluetooth/bluez.git (master)
+This series was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Mon, 11 Dec 2023 12:11:35 -0500 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+On Tue, 12 Dec 2023 00:27:28 +0800 you wrote:
+> From: Xiao Yao <xiaoyao@rock-chips.com>
 > 
-> 4db4d5fa1c4f ("shared/vcp: Fix endianness errors") does attempt to fix
-> the endianness of stored volume offset but in the process it broke the
-> notification since the value is no longer stored in the Bluetooth byte
-> order (Little Endian) but instead in the cpu byte order which is then
-> used in the notification as is, to fix this instead of notifying using
-> the stored value it now uses a dedicated variable which does use the
-> value from the request itself.
+> According to BLUETOOTH CORE SPECIFICATION Version 5.4 | Vol 3,
+> Part H, 2.4.24/2.4.25, The LE LTK and BR/EDR link keys can be
+> converted between each other, so the addr type can be either
+> BREDR or LE, so fix it.
 > 
 > [...]
 
 Here is the summary with links:
-  - [BlueZ,v1] shared/vcp: Fix notification endianness
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=95838efc07d3
+  - [1/2] adapter: Fix addr_type for smp_irk/ltk_info/link_key
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=d5536e0cd431
+  - [2/2] device: Add notifications when the bdaddr_type changes
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=ba9fda12d26b
 
 You are awesome, thank you!
 -- 
