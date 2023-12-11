@@ -1,42 +1,43 @@
-Return-Path: <linux-bluetooth+bounces-522-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-519-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E200A80D27E
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Dec 2023 17:42:55 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0BF680D23A
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Dec 2023 17:40:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1F4D21C2142C
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Dec 2023 16:42:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AC4D3281963
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Dec 2023 16:40:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B12A20DEF;
-	Mon, 11 Dec 2023 16:42:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="IpGQlHWl"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4BC5321A3;
+	Mon, 11 Dec 2023 16:40:33 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-X-Greylist: delayed 904 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 11 Dec 2023 08:42:42 PST
-Received: from m15.mail.126.com (m15.mail.126.com [45.254.50.223])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTP id 9986198
-	for <linux-bluetooth@vger.kernel.org>; Mon, 11 Dec 2023 08:42:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-	s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=34RTL
-	E4latA1ndwKWr6wBHgOPTLPG/f2WMiFpqc09jo=; b=IpGQlHWlQocdLvpmSltcg
-	SzQ/oJm4D6Qa/GqhAHHSorEW+sdWTmW8df9tx6cW+TxIesKCWeZvrBgj5bnw+hir
-	wwrFteb5NgOReU0jUWlPWpI+BznuVZfRqKrH+VjJ2u6wR3RvMyYpv2m14ZeDr2Av
-	SWrlBffFw4D+x6yUyiCEt0=
-Received: from localhost.localdomain (unknown [58.22.7.114])
-	by zwqz-smtp-mta-g1-0 (Coremail) with SMTP id _____wDnT5NyOHdllbAiDw--.21285S3;
-	Tue, 12 Dec 2023 00:27:32 +0800 (CST)
-From: Xiao Yao <xiaokeqinhealth@126.com>
-To: linux-bluetooth@vger.kernel.org
-Cc: Xiao Yao <xiaoyao@rock-chips.com>
-Subject: [PATCH 2/2] device: Add notifications when the bdaddr_type changes
-Date: Tue, 12 Dec 2023 00:27:29 +0800
-Message-Id: <20231211162729.1183207-2-xiaokeqinhealth@126.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231211162729.1183207-1-xiaokeqinhealth@126.com>
-References: <20231211162729.1183207-1-xiaokeqinhealth@126.com>
+Received: from mail11.truemail.it (mail11.truemail.it [IPv6:2001:4b7e:0:8::81])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D76FD8;
+	Mon, 11 Dec 2023 08:40:27 -0800 (PST)
+Received: from francesco-nb.pivistrello.it (93-49-2-63.ip317.fastwebnet.it [93.49.2.63])
+	by mail11.truemail.it (Postfix) with ESMTPA id 1DDDE2075D;
+	Mon, 11 Dec 2023 17:40:25 +0100 (CET)
+From: Francesco Dolcini <francesco@dolcini.it>
+To: Sean Wang <sean.wang@mediatek.com>,
+	Marcel Holtmann <marcel@holtmann.org>,
+	Johan Hedberg <johan.hedberg@gmail.com>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Amitkumar Karwar <amitkumar.karwar@nxp.com>,
+	Neeraj Kale <neeraj.sanjaykale@nxp.com>
+Cc: Francesco Dolcini <francesco.dolcini@toradex.com>,
+	linux-bluetooth@vger.kernel.org,
+	linux-mediatek@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Jiri Slaby <jirislaby@kernel.org>
+Subject: [PATCH v2 0/3] Bluetooth: fix recv_buf() return value
+Date: Mon, 11 Dec 2023 17:40:17 +0100
+Message-Id: <20231211164020.173253-1-francesco@dolcini.it>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -44,33 +45,28 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:_____wDnT5NyOHdllbAiDw--.21285S3
-X-Coremail-Antispam: 1Uf129KBjDUn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7v73
-	VFW2AGmfu7bjvjm3AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvj4RN18BDUUUU
-X-CM-SenderInfo: 50ld0yhhtl0xhhdo3xa6rslhhfrp/1tbi6BhD1WVLY0IN1AAAsw
 
-From: Xiao Yao <xiaoyao@rock-chips.com>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-Signed-off-by: Xiao Yao <xiaoyao@rock-chips.com>
----
- src/device.c | 3 +++
- 1 file changed, 3 insertions(+)
+Serdev recv_buf() callback is supposed to return the amount of bytes consumed, therefore an int in between 0 and count.
 
-diff --git a/src/device.c b/src/device.c
-index a734fff0d..17bcfbc49 100644
---- a/src/device.c
-+++ b/src/device.c
-@@ -4472,6 +4472,9 @@ void device_set_le_support(struct btd_device *device, uint8_t bdaddr_type)
- 	device->le = true;
- 	device->bdaddr_type = bdaddr_type;
- 
-+	g_dbus_emit_property_changed(dbus_conn, device->path,
-+					DEVICE_INTERFACE, "AddressType");
-+
- 	store_device_info(device);
- }
- 
+Do not return negative number in case of issue, just print an error and return count. This fixes a WARN in ttyport_receive_buf().
+
+In addition to that a small cleanup patch is added on btnxpuart to remove a useless assignment.
+
+v2:
+ - improved commit messages
+
+Francesco Dolcini (3):
+  Bluetooth: btnxpuart: fix recv_buf() return value
+  Bluetooth: btmtkuart: fix recv_buf() return value
+  Bluetooth: btnxpuart: remove useless assignment
+
+ drivers/bluetooth/btmtkuart.c | 11 +++--------
+ drivers/bluetooth/btnxpuart.c |  8 +++-----
+ 2 files changed, 6 insertions(+), 13 deletions(-)
+
 -- 
-2.34.1
+2.25.1
 
 
