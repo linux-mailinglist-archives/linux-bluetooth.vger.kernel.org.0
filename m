@@ -1,111 +1,164 @@
-Return-Path: <linux-bluetooth+bounces-507-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-509-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F87880BD6B
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 10 Dec 2023 22:50:50 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55CE980C32F
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Dec 2023 09:29:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 918D51C2084E
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 10 Dec 2023 21:50:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 118DB280D61
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Dec 2023 08:29:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 066D21D52D;
-	Sun, 10 Dec 2023 21:50:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kemnade.info header.i=@kemnade.info header.b="6WiLE4GA"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1153020DCC;
+	Mon, 11 Dec 2023 08:29:45 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail.andi.de1.cc (mail.andi.de1.cc [IPv6:2a02:c205:3004:2154::1])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4444CF;
-	Sun, 10 Dec 2023 13:50:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=kemnade.info; s=20220719; h=Content-Transfer-Encoding:Content-Type:
-	MIME-Version:References:In-Reply-To:Message-ID:Subject:Cc:To:From:Date:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=FewMH2e65vLlSlAlvvNbXt8MICx3KL/gTD+zmuCLG/M=; b=6WiLE4GA5TFbCooHIYnga01kqi
-	C9hC0tViHv8oP/IZ6ouEkJOJNTTBo9p9fDtohOZQrmuQE/sn1LhQYcz9RrtbjbA5scS17WxgpJB/a
-	19cH/bH7JhQX0j/yQulhoVdzdL+vzgT5afCQLKFQj9NeoWKOn6HfgLJaZn4eI4oU63nyIIhh62cDk
-	7i8TvxqJnsgft3IGV+iWvvS95Drk1+D6redXYCChqM8SemB515nFbJ+AO0wPJeotDuI9rMqyZtd/f
-	8XZjfOXNs4lSWIyfbTjYIwi7emWjZAgwvn7KnzznksExdl8fythfBpONpgD1ooTCCyqp6bRJvJdR3
-	1zALeNZw==;
-Received: from p200301077700c3001a3da2fffebfd33a.dip0.t-ipconnect.de ([2003:107:7700:c300:1a3d:a2ff:febf:d33a] helo=aktux)
-	by mail.andi.de1.cc with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <andreas@kemnade.info>)
-	id 1rCRh5-007FGn-Fp; Sun, 10 Dec 2023 22:50:35 +0100
-Date: Sun, 10 Dec 2023 22:50:32 +0100
-From: Andreas Kemnade <andreas@kemnade.info>
-To: Greg KH <gregkh@linuxfoundation.org>
-Cc: marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
- johan@kernel.org, arnd@arndb.de, linux-bluetooth@vger.kernel.org,
- linux-kernel@vger.kernel.org, tomi.valkeinen@ideasonboard.com, Tony
- Lindgren <tony@atomide.com>, =?UTF-8?B?UMOpdGVy?= Ujfalusi
- <peter.ujfalusi@gmail.com>, robh@kernel.org
-Subject: Re: [RFC PATCH 3/3] drivers: misc: ti-st: begin to deorbit
-Message-ID: <20231210225032.38d8c36f@aktux>
-In-Reply-To: <2023112729-qualify-relearn-6a72@gregkh>
-References: <20231126191840.110564-1-andreas@kemnade.info>
-	<20231126191840.110564-4-andreas@kemnade.info>
-	<2023112729-qualify-relearn-6a72@gregkh>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-pc-linux-gnu)
+Received: from rtits2.realtek.com.tw (rtits2.realtek.com [211.75.126.72])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F221FE5;
+	Mon, 11 Dec 2023 00:29:39 -0800 (PST)
+X-SpamFilter-By: ArmorX SpamTrap 5.78 with qID 3BB8TPNC02597530, This message is accepted by code: ctloc85258
+Received: from RSEXMBS01.realsil.com.cn ([172.29.17.195])
+	by rtits2.realtek.com.tw (8.15.2/2.95/5.92) with ESMTPS id 3BB8TPNC02597530
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=FAIL);
+	Mon, 11 Dec 2023 16:29:31 +0800
+Received: from alexlu (172.29.36.158) by RSEXMBS01.realsil.com.cn
+ (172.29.17.195) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.27; Mon, 11 Dec
+ 2023 16:29:25 +0800
+Date: Mon, 11 Dec 2023 16:29:12 +0800
+From: Alex Lu <alex_lu@realsil.com.cn>
+To: Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg
+	<johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        <linux-bluetooth@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC: Max Chou <max.chou@realtek.com>, Karen Hsu <karenhsu@realtek.com>
+Subject: [PATCH] Bluetooth: Add more enc key size check
+Message-ID: <ZXbIWMZyZIYyetff@alexlu>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+X-ClientProxiedBy: RSEXH36502.realsil.com.cn (172.29.17.3) To
+ RSEXMBS01.realsil.com.cn (172.29.17.195)
 
-Hi Greg,
+From: Alex Lu <alex_lu@realsil.com.cn>
 
-On Mon, 27 Nov 2023 08:25:46 +0000
-Greg KH <gregkh@linuxfoundation.org> wrote:
+When we are slave role and receives l2cap conn req when encryption has
+started, we should check the enc key size to avoid KNOB attack or BLUFFS
+attack.
+From SIG recommendation, implementations are advised to reject
+service-level connections on an encrypted baseband link with key
+strengths below 7 octets.
 
-> On Sun, Nov 26, 2023 at 08:18:40PM +0100, Andreas Kemnade wrote:
-> > The TI-ST driver seems not to be used anymore. For bluetooth needs
-> > there is hci_ll.c which has device tree support and can work without
-> > this one. Also firmware download support is there, so it is also not needed
-> > here. GPS can also reuse parts of the framework in hci_ll
-> > 
-> > Contrary from this driver, device tree support has been removed.
-> > 
-> > So start deorbiting it by marking it as broken.
-> > 
-> > Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
-> > ---
-> >  drivers/misc/ti-st/Kconfig | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/misc/ti-st/Kconfig b/drivers/misc/ti-st/Kconfig
-> > index 1503a6496f632..6bf9cc845745c 100644
-> > --- a/drivers/misc/ti-st/Kconfig
-> > +++ b/drivers/misc/ti-st/Kconfig
-> > @@ -7,7 +7,7 @@ menu "Texas Instruments shared transport line discipline"
-> >  config TI_ST
-> >  	tristate "Shared transport core driver"
-> >  	depends on NET && TTY
-> > -	depends on GPIOLIB || COMPILE_TEST
-> > +	depends on GPIOLIB || COMPILE_TEST || BROKEN  
-> 
-> Why not just delete it?  Why have it stick around any longer?
-> 
-Well, I just thought that marking something as broken and then deleting
-it if no one complains would be the standard procedure. So we can
-delete it now since there are obviously no users (no board files, no
-device tree support)?
+The btmon log below shows the case that lacks enc key size check.
 
-The logical connection between the other patches of this series is given
-only by the fact that patches 1+2 are for me the proof that we do not
-need that ti-st driver. 
-I think since there are no in-tree users, having that proof in lkml is
-enough, so we can probably remove the driver now?
+> HCI Event: Connect Request (0x04) plen 10
+        Address: BB:22:33:44:55:99 (OUI BB-22-33)
+        Class: 0x480104
+          Major class: Computer (desktop, notebook, PDA, organizers)
+          Minor class: Desktop workstation
+          Capturing (Scanner, Microphone)
+          Telephony (Cordless telephony, Modem, Headset)
+        Link type: ACL (0x01)
+< HCI Command: Accept Connection Request (0x01|0x0009) plen 7
+        Address: BB:22:33:44:55:99 (OUI BB-22-33)
+        Role: Peripheral (0x01)
+> HCI Event: Command Status (0x0f) plen 4
+      Accept Connection Request (0x01|0x0009) ncmd 2
+        Status: Success (0x00)
+> HCI Event: Connect Complete (0x03) plen 11
+        Status: Success (0x00)
+        Handle: 1
+        Address: BB:22:33:44:55:99 (OUI BB-22-33)
+        Link type: ACL (0x01)
+        Encryption: Disabled (0x00)
+...
 
-I will send a separate remove patch including going with a brush through
-include/linux/ti_wilink_st.h
+> HCI Event: Encryption Change (0x08) plen 4
+        Status: Success (0x00)
+        Handle: 1 Address: BB:22:33:44:55:99 (OUI BB-22-33)
+        Encryption: Enabled with E0 (0x01)
+< HCI Command: Read Encryption Key Size (0x05|0x0008) plen 2
+        Handle: 1 Address: BB:22:33:44:55:99 (OUI BB-22-33)
+> HCI Event: Command Complete (0x0e) plen 7
+      Read Encryption Key Size (0x05|0x0008) ncmd 2
+        Status: Success (0x00)
+        Handle: 1 Address: BB:22:33:44:55:99 (OUI BB-22-33)
+        Key size: 6
+...
 
-Regards,
-Andreas
+// We should check the enc key size
+> ACL Data RX: Handle 1 flags 0x02 dlen 12
+      L2CAP: Connection Request (0x02) ident 3 len 4
+        PSM: 25 (0x0019)
+        Source CID: 64
+< ACL Data TX: Handle 1 flags 0x00 dlen 16
+      L2CAP: Connection Response (0x03) ident 3 len 8
+        Destination CID: 64
+        Source CID: 64
+        Result: Connection pending (0x0001)
+        Status: Authorization pending (0x0002)
+> HCI Event: Number of Completed Packets (0x13) plen 5
+        Num handles: 1
+        Handle: 1 Address: BB:22:33:44:55:99 (OUI BB-22-33)
+        Count: 1
+        #35: len 16 (25 Kb/s)
+        Latency: 5 msec (2-7 msec ~4 msec)
+< ACL Data TX: Handle 1 flags 0x00 dlen 16
+      L2CAP: Connection Response (0x03) ident 3 len 8
+        Destination CID: 64
+        Source CID: 64
+        Result: Connection successful (0x0000)
+        Status: No further information available (0x0000)
+
+Signed-off-by: Alex Lu <alex_lu@realsil.com.cn>
+Signed-off-by: Max Chou <max.chou@realtek.com>
+---
+ net/bluetooth/l2cap_core.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
+
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 17ca13e8c044..b0f31d798132 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -1669,7 +1669,13 @@ static void l2cap_conn_start(struct l2cap_conn *conn)
+ 			rsp.dcid = cpu_to_le16(chan->scid);
+ 
+ 			if (l2cap_chan_check_security(chan, false)) {
+-				if (test_bit(FLAG_DEFER_SETUP, &chan->flags)) {
++				if (!l2cap_check_enc_key_size(conn->hcon)) {
++					l2cap_state_change(chan, BT_DISCONN);
++					__set_chan_timer(chan,
++							 L2CAP_DISC_TIMEOUT);
++					rsp.result = L2CAP_CR_SEC_BLOCK;
++					rsp.status = L2CAP_CS_NO_INFO;
++				} else if (test_bit(FLAG_DEFER_SETUP, &chan->flags)) {
+ 					rsp.result = cpu_to_le16(L2CAP_CR_PEND);
+ 					rsp.status = cpu_to_le16(L2CAP_CS_AUTHOR_PEND);
+ 					chan->ops->defer(chan);
+@@ -4202,7 +4208,15 @@ static struct l2cap_chan *l2cap_connect(struct l2cap_conn *conn,
+ 
+ 	if (conn->info_state & L2CAP_INFO_FEAT_MASK_REQ_DONE) {
+ 		if (l2cap_chan_check_security(chan, false)) {
+-			if (test_bit(FLAG_DEFER_SETUP, &chan->flags)) {
++			/* As slave role, we should check the enc key size when
++			 * l2cap conn req is received.
++			 */
++			if (!l2cap_check_enc_key_size(conn->hcon)) {
++				l2cap_state_change(chan, BT_DISCONN);
++				__set_chan_timer(chan, L2CAP_DISC_TIMEOUT);
++				result = L2CAP_CR_SEC_BLOCK;
++				status = L2CAP_CS_NO_INFO;
++			} else if (test_bit(FLAG_DEFER_SETUP, &chan->flags)) {
+ 				l2cap_state_change(chan, BT_CONNECT2);
+ 				result = L2CAP_CR_PEND;
+ 				status = L2CAP_CS_AUTHOR_PEND;
+-- 
+2.39.2
+
 
