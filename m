@@ -1,90 +1,130 @@
-Return-Path: <linux-bluetooth+bounces-508-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-510-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 245F780C2EF
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Dec 2023 09:23:05 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 01D4980C3CC
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Dec 2023 09:59:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 574061C20987
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Dec 2023 08:23:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B184A280D7C
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Dec 2023 08:59:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2735C20B3D;
-	Mon, 11 Dec 2023 08:22:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEC2621102;
+	Mon, 11 Dec 2023 08:59:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="F/shY9Mg"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FH+YRpxL"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
-	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BCEBB6
-	for <linux-bluetooth@vger.kernel.org>; Mon, 11 Dec 2023 00:22:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1702282976; x=1733818976;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=i86niv1nqiMIApRSykL6cnQkSDRcfNNPYZ2lRUuTGfU=;
-  b=F/shY9Mgn0Ei1IbhaQCr4QuGkjSUWE/gLRjbaicxTXsKm3fTrsvz4J7l
-   thw4CLpXfYuVIJN791t9Xs+eCe8F/Pairlx8rFRF6F+GrBHWZQZZPUmIY
-   SQTdtWcHI3UGUQjUlMzO2mJ4vb2BLJpI4voOWtwr8KikhoEvP9X9zntFE
-   hLvXVWYig2rjVy447VQcMTsRXawEGvyzbprrSN/mP38aSPvbym96aECnX
-   3HLPid/Co5571UfFveB6QnKffrCo/XMxJXHwdk7HbgJ/Wah7WiavYfmLj
-   lebcNIQdMJ8LQKY6UnXP8OZzHiHPBVtpmbNR8Y+41/hW/MqLaZauPNC8J
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10920"; a="1422652"
-X-IronPort-AV: E=Sophos;i="6.04,267,1695711600"; 
-   d="scan'208";a="1422652"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Dec 2023 00:22:55 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10920"; a="776582596"
-X-IronPort-AV: E=Sophos;i="6.04,267,1695711600"; 
-   d="scan'208";a="776582596"
-Received: from intel-lenovo-legion-y540-15irh-pg0.iind.intel.com ([10.224.186.95])
-  by fmsmga007.fm.intel.com with ESMTP; 11 Dec 2023 00:22:54 -0800
-From: Kiran K <kiran.k@intel.com>
-To: linux-bluetooth@vger.kernel.org
-Cc: ravishankar.srivatsa@intel.com,
-	Kiran K <kiran.k@intel.com>
-Subject: [PATCH] shared/bap: Update Available context for source
-Date: Mon, 11 Dec 2023 14:05:07 +0530
-Message-Id: <20231211083507.3363494-1-kiran.k@intel.com>
-X-Mailer: git-send-email 2.34.1
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+	by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE8B5A0
+	for <linux-bluetooth@vger.kernel.org>; Mon, 11 Dec 2023 00:59:35 -0800 (PST)
+Received: by mail-pl1-x62f.google.com with SMTP id d9443c01a7336-1d319a7a35bso6501835ad.1
+        for <linux-bluetooth@vger.kernel.org>; Mon, 11 Dec 2023 00:59:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1702285175; x=1702889975; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=qKZsj4ztesGgExG4wQG/JFmnNpoIiLPqhLh9K1hKS9I=;
+        b=FH+YRpxLZuHzxKoeqxG2ILazPmaxuZNlBo6HPPvfm4Ha448gTEBWoMZTX99R4zdRqs
+         0FWeYmG2ylUihMr4EWWpQc+g5SzcljVo6f9K/0cqZMe3yIgqed26dONzCDu1GkHsiuK0
+         +iYRPh6O2zT8tRAUEmyL3Wf0Ird7QBuVPTmb7pBdcAtUP1wnPteOKcOCOFbZ20HOtz7R
+         ZxJe0gHdXfAOStAJ6bZs04AZmrgIKoG874TtAoj+osWrS4+IuWYbzQGTmCZK0dEqPJBs
+         TEhG/zlGB2gY86d0u0IiR+yuCp3WIEtXEH2/3VtdiwoPgPOXNWDto3C8NKV0M1yzyAqH
+         +deQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702285175; x=1702889975;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qKZsj4ztesGgExG4wQG/JFmnNpoIiLPqhLh9K1hKS9I=;
+        b=tiNcM+OMNB2Wm4pZrp0YZTwxLbBfHk9gyI1h8JY7BewMmI6P/5vlQKSP882YaAbK3V
+         BqDhpHuCMJGTbdh43NPoAtYLY5QMW9bQoDXsa01HdebxIvm5NM09CsTnCTqwmNe+zDf7
+         Rzuy320CJenOV2spAnUQGjtrwIRUVcetz0HUl5Jchz5tgPOEYGISBYPi3KZgvaFMGvcc
+         dOuPRDuBr9Rw77m9VZViEmwJxYGhRaqucYYafipaTd/r4h+E7m+MIw5J+qxIX09My31E
+         02tEQ96qlZku8lxuh+/D19qJ4VPF/5kxTPrLNNWULGJHd+BZQSCFt6a3c1Y+LKijPeZQ
+         aRfQ==
+X-Gm-Message-State: AOJu0YzbhPUntL0Kc78GAeaTKquiGS0/E66HdF8F+0GCvmZVR4+MItRF
+	0gKLna5rYnL9UQR8NqrCVojD8FzUfqM=
+X-Google-Smtp-Source: AGHT+IEHT6GQA94bVt4s32oW4fE52//B1pQlYCi3E9Dzx16nsW5MJ9/CCYsiQuIu3ZuWVHZyi9hZxg==
+X-Received: by 2002:a17:902:db0b:b0:1d0:bc5f:ce62 with SMTP id m11-20020a170902db0b00b001d0bc5fce62mr4138284plx.107.1702285174944;
+        Mon, 11 Dec 2023 00:59:34 -0800 (PST)
+Received: from [172.17.0.2] ([20.171.122.189])
+        by smtp.gmail.com with ESMTPSA id v4-20020a17090331c400b001d0c5037ed3sm6168195ple.46.2023.12.11.00.59.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Dec 2023 00:59:34 -0800 (PST)
+Message-ID: <6576cf76.170a0220.a1291.0caa@mx.google.com>
+Date: Mon, 11 Dec 2023 00:59:34 -0800 (PST)
+Content-Type: multipart/mixed; boundary="===============4435674666118046501=="
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: bluez.test.bot@gmail.com
+To: linux-bluetooth@vger.kernel.org, alex_lu@realsil.com.cn
+Subject: RE: Bluetooth: Add more enc key size check
+In-Reply-To: <ZXbIWMZyZIYyetff@alexlu>
+References: <ZXbIWMZyZIYyetff@alexlu>
+Reply-To: linux-bluetooth@vger.kernel.org
 
-Available Context of sink was getting updated instead of source.
+--===============4435674666118046501==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=808696
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      0.52 seconds
+GitLint                       PASS      0.24 seconds
+SubjectPrefix                 PASS      0.19 seconds
+BuildKernel                   PASS      27.94 seconds
+CheckAllWarning               PASS      30.11 seconds
+CheckSparse                   WARNING   36.38 seconds
+CheckSmatch                   PASS      98.37 seconds
+BuildKernel32                 PASS      26.50 seconds
+TestRunnerSetup               PASS      425.18 seconds
+TestRunner_l2cap-tester       PASS      23.09 seconds
+TestRunner_iso-tester         PASS      44.69 seconds
+TestRunner_bnep-tester        PASS      6.99 seconds
+TestRunner_mgmt-tester        FAIL      168.41 seconds
+TestRunner_rfcomm-tester      PASS      10.96 seconds
+TestRunner_sco-tester         PASS      14.52 seconds
+TestRunner_ioctl-tester       PASS      12.26 seconds
+TestRunner_mesh-tester        PASS      8.79 seconds
+TestRunner_smp-tester         PASS      10.18 seconds
+TestRunner_userchan-tester    PASS      7.36 seconds
+IncrementalBuild              PASS      25.61 seconds
+
+Details
+##############################
+Test: CheckSparse - WARNING
+Desc: Run sparse tool with linux kernel
+Output:
+net/bluetooth/l2cap_core.c:1676:52: warning: incorrect type in assignment (different base types)net/bluetooth/l2cap_core.c:1676:52:    expected restricted __le16 [assigned] [usertype] resultnet/bluetooth/l2cap_core.c:1676:52:    got int
+##############################
+Test: TestRunner_mgmt-tester - FAIL
+Desc: Run mgmt-tester with test-runner
+Output:
+Total: 497, Passed: 496 (99.8%), Failed: 1, Not Run: 0
+
+Failed Test Cases
+LL Privacy - Start Discovery 2 (Disable RL)          Failed       0.289 seconds
+
+
 ---
- src/shared/bap.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/src/shared/bap.c b/src/shared/bap.c
-index a1495ca84bcc..e9d7072ef3be 100644
---- a/src/shared/bap.c
-+++ b/src/shared/bap.c
-@@ -2599,13 +2599,13 @@ static void pacs_add_source_supported_context(struct bt_pacs *pacs,
- 
- static void pacs_add_source_context(struct bt_pacs *pacs, uint16_t context)
- {
--	context |= pacs->supported_sink_context_value;
-+	context |= pacs->supported_source_context_value;
- 
- 	/* Check if context value needs updating */
--	if (context == pacs->sink_context_value)
-+	if (context == pacs->source_context_value)
- 		return;
- 
--	pacs->sink_context_value = context;
-+	pacs->source_context_value = context;
- 
- 	pacs_context_changed(pacs);
- }
--- 
-2.34.1
 
+--===============4435674666118046501==--
 
