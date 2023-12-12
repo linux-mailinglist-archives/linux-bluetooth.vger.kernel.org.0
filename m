@@ -1,39 +1,39 @@
-Return-Path: <linux-bluetooth+bounces-561-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-562-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7E4A80F24C
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 12 Dec 2023 17:20:39 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8423380F24E
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 12 Dec 2023 17:20:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 52AE61F21718
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 12 Dec 2023 16:20:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3F7D0281A8B
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 12 Dec 2023 16:20:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88DAC77F26;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEA9577F2E;
 	Tue, 12 Dec 2023 16:20:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YjaaCOW1"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qEqswQd8"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6DD77765B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B1C77F0D
 	for <linux-bluetooth@vger.kernel.org>; Tue, 12 Dec 2023 16:20:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id A5A0CC433C9;
+Received: by smtp.kernel.org (Postfix) with ESMTPS id C4BE0C433CC;
 	Tue, 12 Dec 2023 16:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1702398025;
-	bh=Gv+mO4PMFcKCSTAW/D0ZVcdMq7d8CoX5pEYybTDqgPE=;
+	bh=ZL9A822sK+ot0+7LIqNl5Xq0dOOhCY16KdFNGm+GEOk=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=YjaaCOW1fCwRdEEdOl0SVCkPGKPdXzosMlrVNXS6mJLoyFN7V8yCuOK439aihW5q6
-	 Kd6VYSryGu9NKDwCQnMfqYwoQf4p/7bNzD3Hz6hXU2gl11HjGQv2cK4d8G4OxZHRod
-	 gXnsuz4AqrB2OZifQjmhpubDMJTMXq13qwSdvTg7/VYIn36+oyCfTxs901uWn8HspY
-	 ZE418llpCZrBmPmoW+bshBpKQO2w9vyom5wryOMov93dVogs5eQEUkHDz5JWP7EzG/
-	 NYxMBTUKsZ6MAf5nEtNXIJ/UwfSLuho6vg71bqbYQNPoEbW7tuFUyU3cbDTRIo0wK/
-	 dug9xTU6yfq5Q==
+	b=qEqswQd89hZoWZTLbrx8c7Jb8pMEOpf992Mw7kb5urQJaG4Hp40w8kTgk0nclrJrQ
+	 hHYD57uQZWulw2DK1ir5oesUcPzGmma9xpVLdDYS6OaJApgd3kLdVrgOl352U4IIM6
+	 6y4q7V6tnZ0J8t89FKRElWDTEpLISWGBSY0zMWJGSKauc1/G1SBDNz62Q/F1cZ/h1q
+	 +KgNVVqIvEvjFHGguj4+tH83/zDVI/Y+Na2FJtpzKgdFKz5rhU4AH2eml8Vn0cB43x
+	 Lb7HwfBm2p07zp8oAAUOLO1JVW2e0+UAg3eblMPltzbI0lje0BNU264TT89vOalG+A
+	 uPjCKLL2vb69A==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 8D7EBC4314C;
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id AA0DEDD4F03;
 	Tue, 12 Dec 2023 16:20:25 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
@@ -43,45 +43,34 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 0/3] Bluetooth: fix recv_buf() return value
+Subject: Re: [PATCH] Bluetooth: L2CAP: Send reject on command corrupted request
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <170239802557.22444.1717551799062581956.git-patchwork-notify@kernel.org>
+ <170239802569.22444.11101954474016641561.git-patchwork-notify@kernel.org>
 Date: Tue, 12 Dec 2023 16:20:25 +0000
-References: <20231211164020.173253-1-francesco@dolcini.it>
-In-Reply-To: <20231211164020.173253-1-francesco@dolcini.it>
-To: Francesco Dolcini <francesco@dolcini.it>
-Cc: sean.wang@mediatek.com, marcel@holtmann.org, johan.hedberg@gmail.com,
- luiz.dentz@gmail.com, matthias.bgg@gmail.com,
- angelogioacchino.delregno@collabora.com, amitkumar.karwar@nxp.com,
- neeraj.sanjaykale@nxp.com, francesco.dolcini@toradex.com,
- linux-bluetooth@vger.kernel.org, linux-mediatek@lists.infradead.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- jirislaby@kernel.org
+References: <20231208174150.1313389-1-frederic.danis@collabora.com>
+In-Reply-To: <20231208174150.1313389-1-frederic.danis@collabora.com>
+To: =?utf-8?b?RnLDqWTDqXJpYyBEYW5pcyA8ZnJlZGVyaWMuZGFuaXNAY29sbGFib3JhLmNvbT4=?=@codeaurora.org
+Cc: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This series was applied to bluetooth/bluetooth-next.git (master)
+This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Mon, 11 Dec 2023 17:40:17 +0100 you wrote:
-> From: Francesco Dolcini <francesco.dolcini@toradex.com>
+On Fri,  8 Dec 2023 18:41:50 +0100 you wrote:
+> L2CAP/COS/CED/BI-02-C PTS test send a malformed L2CAP signaling packet
+> with 2 commands in it (a connection request and an unknown command) and
+> expect to get a connection response packet and a command reject packet.
+> The second is currently not sent.
 > 
-> Serdev recv_buf() callback is supposed to return the amount of bytes consumed, therefore an int in between 0 and count.
-> 
-> Do not return negative number in case of issue, just print an error and return count. This fixes a WARN in ttyport_receive_buf().
-> 
-> In addition to that a small cleanup patch is added on btnxpuart to remove a useless assignment.
+> Signed-off-by: Frédéric Danis <frederic.danis@collabora.com>
 > 
 > [...]
 
 Here is the summary with links:
-  - [v2,1/3] Bluetooth: btnxpuart: fix recv_buf() return value
-    https://git.kernel.org/bluetooth/bluetooth-next/c/7954bbcdd7ea
-  - [v2,2/3] Bluetooth: btmtkuart: fix recv_buf() return value
-    https://git.kernel.org/bluetooth/bluetooth-next/c/687d2de93b11
-  - [v2,3/3] Bluetooth: btnxpuart: remove useless assignment
-    https://git.kernel.org/bluetooth/bluetooth-next/c/99f188d71731
+  - Bluetooth: L2CAP: Send reject on command corrupted request
+    https://git.kernel.org/bluetooth/bluetooth-next/c/37b85190ca1e
 
 You are awesome, thank you!
 -- 
