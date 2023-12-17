@@ -1,44 +1,44 @@
-Return-Path: <linux-bluetooth+bounces-632-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-633-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 836ED815C8E
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 17 Dec 2023 00:20:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CF8AA815CD4
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 17 Dec 2023 01:31:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 37DB61F21005
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 16 Dec 2023 23:20:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 858C21F22250
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 17 Dec 2023 00:31:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D34137176;
-	Sat, 16 Dec 2023 23:20:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28BF77FA;
+	Sun, 17 Dec 2023 00:31:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X/3AOzD3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nPDXggLr"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7888336B0C
-	for <linux-bluetooth@vger.kernel.org>; Sat, 16 Dec 2023 23:20:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id F1EC8C433CD
-	for <linux-bluetooth@vger.kernel.org>; Sat, 16 Dec 2023 23:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944FA137B
+	for <linux-bluetooth@vger.kernel.org>; Sun, 17 Dec 2023 00:31:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 164C3C433CB
+	for <linux-bluetooth@vger.kernel.org>; Sun, 17 Dec 2023 00:31:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702768845;
-	bh=7Q76JZ4wHTpCzlSzC9vNh3YcHLWpkmbdvu4zztGyGKo=;
+	s=k20201202; t=1702773061;
+	bh=X+Blzxw7DQ26VIMEeTUNIsoqXYR1OGgZczz8DmaGvEA=;
 	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=X/3AOzD3N52PIfSIYyxUpgDvJ7mM0aybgpWyo5GLrO7dg3yzxYlqPXRh5/Kx2ZrFR
-	 2SqUBYGbWbFgRx71vSfJnDxmq8SrLtDNw/FNZe7enuC1l5t2V8bOpsqnLyCmNo+7Tr
-	 4JkCJk8Hw98e9/mj22cgMElH8v+h/J66OV+sgOBJnkAqObwIezl7Si2SjvTPNX2hmQ
-	 ph5UOez5pnr/+rIAT5xrv47NqwGbdbbw2lt8mXfFrwIWmziEQKHGilkgOp2yd2+syD
-	 KE3KwxOh5t9xv+VNCjDA5UyBOhNLXG/aL+po9ag4pIYTYOnmHLaiVFJrgV2ERCv1+I
-	 8F+KK9l991kiw==
+	b=nPDXggLrNTGJIElBh8ST9NjFSwZ2kXQK6s6N0QMYU/A1VEBsLbc8Urz9OQG92u1dv
+	 wRion6AL4oxQJBqRSJR5UxLYXRFpJEwKQdJ0YrtcEVlLlnyeYlBBQST5q50nW6CuD/
+	 9MhWef5Cy1MSduyG4Z977G0ySYwQcE+qcWe+UkzDArMNQQRjVyeiWju3Y9JIms88im
+	 N2mFC4G0BF8u6cXYA+62lYaLVesaJxB9WJmKcRX2KzNK01fZx6AW+ep3/vQ3xcS+e5
+	 kZVjJ40oel+RPjXmmT4mloMZSejJtyoF2VKkKSqSHqXJ+swRol5KL7eGKcYwqRu651
+	 qzmznQ22RMCjQ==
 Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-	id DA8ADC53BD1; Sat, 16 Dec 2023 23:20:44 +0000 (UTC)
+	id F1CDBC53BCD; Sun, 17 Dec 2023 00:31:00 +0000 (UTC)
 From: bugzilla-daemon@kernel.org
 To: linux-bluetooth@vger.kernel.org
 Subject: [Bug 204589] Bluetooth touchpad (Apple Magic Trackpad) disconnects
  every few minutes
-Date: Sat, 16 Dec 2023 23:20:44 +0000
+Date: Sun, 17 Dec 2023 00:31:00 +0000
 X-Bugzilla-Reason: AssignedTo
 X-Bugzilla-Type: changed
 X-Bugzilla-Watch-Reason: None
@@ -47,14 +47,14 @@ X-Bugzilla-Component: Bluetooth
 X-Bugzilla-Version: 2.5
 X-Bugzilla-Keywords: 
 X-Bugzilla-Severity: normal
-X-Bugzilla-Who: scherbakov.al@gmail.com
+X-Bugzilla-Who: heavy@ungoverned.org
 X-Bugzilla-Status: NEW
 X-Bugzilla-Resolution: 
 X-Bugzilla-Priority: P1
 X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
 X-Bugzilla-Flags: 
 X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-204589-62941-7rXwwX4ewE@https.bugzilla.kernel.org/>
+Message-ID: <bug-204589-62941-TGCb3Oft5t@https.bugzilla.kernel.org/>
 In-Reply-To: <bug-204589-62941@https.bugzilla.kernel.org/>
 References: <bug-204589-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
@@ -70,12 +70,9 @@ MIME-Version: 1.0
 
 https://bugzilla.kernel.org/show_bug.cgi?id=3D204589
 
---- Comment #18 from scherbakov_al (scherbakov.al@gmail.com) ---
-I tested it. The trackpad worked for more than an hour without the same
-disconnections every 10 minutes that we had before. But an hour later it
-disconnected and could not restore the connection. Only restarting bluetooth
-helped. This happened several times. The problem has not yet been resolved.
-Fedora 39.
+--- Comment #19 from heavy@ungoverned.org ---
+Unfortunately, I think the issue is still not resolved. The touchpad still
+disconnects for me on a fully updated Fedora 39 with Gnome 45.2.
 
 --=20
 You may reply to this email to add a comment.
