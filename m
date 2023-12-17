@@ -1,84 +1,89 @@
-Return-Path: <linux-bluetooth+bounces-636-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-638-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2F5F816003
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 17 Dec 2023 15:54:20 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A689081605C
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 17 Dec 2023 17:21:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 77B8E1F22061
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 17 Dec 2023 14:54:20 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6EC30B219DA
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 17 Dec 2023 16:21:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 785B344C7A;
-	Sun, 17 Dec 2023 14:54:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D14C45BE4;
+	Sun, 17 Dec 2023 16:21:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rEP2dLoo"
+	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="fAPS6Zmh"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66C9446B2
-	for <linux-bluetooth@vger.kernel.org>; Sun, 17 Dec 2023 14:54:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 7A744C433C8
-	for <linux-bluetooth@vger.kernel.org>; Sun, 17 Dec 2023 14:54:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702824846;
-	bh=j3lrumldoAf2q3wTr318zekJQZ+xd3X10jy9ERqnyr8=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=rEP2dLooTrk50phhyBrJlf5lAbIcggt3NBTRwnBpbCZ8YrU8XT8H5bXz9LhTnGq0Y
-	 c+w4hTh9HQXhCXEV5/IesVQgQ6yCEJMmqKyHwQaLCorBkvLDwjovDcZJEOKqX5cAcG
-	 I1B2QuY+8wefGybbxOdgg1GAJcmlmRuStDWrxR8X4PHBq79aTuUBueck7lFjygDemC
-	 mmefUBhgGislarbQqm+Yshn2Wmxko47hZqm44vXzk9jobQrlp88xaD5qBPRcLd6U82
-	 EZ1ix0MLom/l75uVcUGCDWDoRpErdZg2ZbOSa4X3cUl1xmXz8Ydw/L9R6i/9OaujSb
-	 YMjm49fMO/8dw==
-Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-	id 5B1C1C4332E; Sun, 17 Dec 2023 14:54:06 +0000 (UTC)
-From: bugzilla-daemon@kernel.org
+Received: from m126.mail.126.com (m126.mail.126.com [220.181.12.35])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00BB545970
+	for <linux-bluetooth@vger.kernel.org>; Sun, 17 Dec 2023 16:21:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=126.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
+	s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=/+aCD
+	SDvCkWff7kQfh+ZT1atrjsQegON3DWG1uWF/Gw=; b=fAPS6Zmhe4hXyvq7BCIGA
+	kcN1FtTlcP9Kugj1fIbYHpa4JaQbYD5dVLgYOZoSjX6KdG2M/uQvrpb9MBvQ/gih
+	ebLnr4miOKaBUjxBUhyWb0hOkCuASYBSKKVy0TsKDSoc22HBy2EN9gZPWqd/ctHl
+	xO1DWCJVRupwMneqipW9ck=
+Received: from localhost.localdomain (unknown [58.22.7.114])
+	by zwqz-smtp-mta-g3-0 (Coremail) with SMTP id _____wDHDjic_H5ldFh4EA--.9809S2;
+	Sun, 17 Dec 2023 21:50:22 +0800 (CST)
+From: Xiao Yao <xiaokeqinhealth@126.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [Bug 218264] Potential kernel regression with bluetooth pairing on
- specific radios
-Date: Sun, 17 Dec 2023 14:54:06 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: marco.rodolfi@tuta.io
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P3
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-218264-62941-9hxmSLkVGE@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-218264-62941@https.bugzilla.kernel.org/>
-References: <bug-218264-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+Cc: antiz@archlinux.org,
+	Xiao Yao <xiaoyao@rock-chips.com>
+Subject: [PATCH BlueZ] adapter: Fix link key address type for old kernels
+Date: Sun, 17 Dec 2023 21:50:12 +0800
+Message-Id: <20231217135012.1476534-1-xiaokeqinhealth@126.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:_____wDHDjic_H5ldFh4EA--.9809S2
+X-Coremail-Antispam: 1Uf129KBjvdXoWrtr4DJry3uryrJF13GFWktFb_yoWkWrXE9a
+	1UWryxGrW5AFsxGa95X3Z7uryxKw4furykZ3Wftas3Ar15Xa13XFnrXFs3ArnxJa15ta9r
+	JFs8Wr98tF1xGjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IUjAhL5UUUUU==
+X-CM-SenderInfo: 50ld0yhhtl0xhhdo3xa6rslhhfrp/1tbiEANJ1WVLY6CMOgAAsU
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D218264
+From: Xiao Yao <xiaoyao@rock-chips.com>
 
---- Comment #2 from Marco (marco.rodolfi@tuta.io) ---
-tested now with a live usb with 6.4.15 + bluez 5.69 and it works perfectly
-fine, I'll try to find a live usb with 6.5 and test again. To me it seems m=
-ore
-and more a kernel regression now.
+Fixes: https://github.com/bluez/bluez/issues/686
 
---=20
-You may reply to this email to add a comment.
+Signed-off-by: Xiao Yao <xiaoyao@rock-chips.com>
+---
+ src/adapter.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-You are receiving this mail because:
-You are the assignee for the bug.=
+diff --git a/src/adapter.c b/src/adapter.c
+index ee70b00d2..b4628a411 100644
+--- a/src/adapter.c
++++ b/src/adapter.c
+@@ -4347,7 +4347,17 @@ static void load_link_keys(struct btd_adapter *adapter, GSList *keys,
+ 		struct link_key_info *info = l->data;
+ 
+ 		bacpy(&key->addr.bdaddr, &info->bdaddr);
+-		key->addr.type = info->bdaddr_type;
++
++		/*
++		 * According to the Bluetooth specification, the address
++		 * type of the link key is not fixed. However, the
++		 * load_link_keys function in the old kernel code requires
++		 * that the address type must be BREDR. Since the address
++		 * type is not actually used by the link key, to maintain
++		 * compatibility with older kernel versions, the addr.type
++		 * of the link key is set to BDADDR_BREDR.
++		 */
++		key->addr.type = BDADDR_BREDR;
+ 		key->type = info->type;
+ 		memcpy(key->val, info->key, 16);
+ 		key->pin_len = info->pin_len;
+-- 
+2.34.1
+
 
