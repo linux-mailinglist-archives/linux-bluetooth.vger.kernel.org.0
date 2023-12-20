@@ -1,69 +1,89 @@
-Return-Path: <linux-bluetooth+bounces-674-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-675-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 758C1819D66
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 20 Dec 2023 11:55:12 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8345F819D67
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 20 Dec 2023 11:56:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D57B3B21CE4
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 20 Dec 2023 10:55:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3F5E92894D2
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 20 Dec 2023 10:56:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1D3B20DC3;
-	Wed, 20 Dec 2023 10:55:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBAFF20DC9;
+	Wed, 20 Dec 2023 10:55:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=rjp.ie header.i=@rjp.ie header.b="HdTFRaHB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RAk+0uLF"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-183.mta1.migadu.com (out-183.mta1.migadu.com [95.215.58.183])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63EF920DE2
-	for <linux-bluetooth@vger.kernel.org>; Wed, 20 Dec 2023 10:55:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=rjp.ie
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rjp.ie
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rjp.ie; s=key1;
-	t=1703069698;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Laj8y3iGa1nNa0MObsZbMxFu0s7RXAGHUjE0l0PMik0=;
-	b=HdTFRaHB26DYEAKcrGcmv9tnl8n7jpkj4+qlkCq7OfT/sZN54FJQPLiePuMC5zLrNID+Rw
-	0woNOSPvxatkaoRPTu41WOXtCG12R4nnfTmUF8Nsc8IKCrCOC+UNw84c0iZ1Br3ldD+hZ6
-	V62T2FlbRzWsgREQGngkbOMIUi9pbgE=
-From: Ronan Pigott <ronan@rjp.ie>
-To: vlad.pruteanu@nxp.com
-Cc: andrei.istodorescu@nxp.com,
-	claudia.rosu@nxp.com,
-	iulia.tanasescu@nxp.com,
-	linux-bluetooth@vger.kernel.org,
-	luiz.dentz@gmail.com,
-	mihai-octavian.urzica@nxp.com,
-	silviu.barbulescu@nxp.com,
-	Ronan Pigott <ronan@rjp.ie>
-Subject: Re: [PATCH 1/1] transport: Check if transport is bcast before it's cast to bap_transport
-Date: Wed, 20 Dec 2023 03:49:49 -0700
-Message-ID: <20231220104955.541287-5-ronan@rjp.ie>
-In-Reply-To: <20231219124916.44173-2-vlad.pruteanu@nxp.com>
-References: <20231219124916.44173-2-vlad.pruteanu@nxp.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351BD20B1E
+	for <linux-bluetooth@vger.kernel.org>; Wed, 20 Dec 2023 10:55:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id AB00CC433C8
+	for <linux-bluetooth@vger.kernel.org>; Wed, 20 Dec 2023 10:55:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1703069751;
+	bh=UJjj6u8SyuFsTrLdvwqjeSb+C7px3TLJdm0j5SvF77E=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=RAk+0uLFuxy7RFEDEeobsvgYdk+s5D3W27nQvNo1YP2r+uQ9HmUgpQaMvtnoXCkmS
+	 Z/wgQz01m5fz9NLOBihQSM7u8p1GKE3jYeLGHKDedhtKtNzvCEwlfhwMs1iyN235EF
+	 Nc4Wm0BDijJKNJVhc1Su9h0Xb0d6WKSn4ZuW78ryG+46c32ZuLAN7OIhqP5oGh/0M+
+	 pzohKQ0phRiHFJKziCR/aUZvMKltP5vzPJK+8EhMo7sCx/VOmnTqUyfFXf0jxNZlJx
+	 MQrXdy4Yh/z+NzivZxkNcp4QaFGG7W/vs0YuV4k/ukF2HTi8qwcP7PKYBBPz/uPO0S
+	 5hSxhYbnZNYsQ==
+Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
+	id 8F7B6C53BD0; Wed, 20 Dec 2023 10:55:51 +0000 (UTC)
+From: bugzilla-daemon@kernel.org
+To: linux-bluetooth@vger.kernel.org
+Subject: [Bug 217256] Bluetooth disappears after suspend
+Date: Wed, 20 Dec 2023 10:55:51 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: franzferdinand1999@gmail.com
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: cc
+Message-ID: <bug-217256-62941-deMnqQUD7T@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-217256-62941@https.bugzilla.kernel.org/>
+References: <bug-217256-62941@https.bugzilla.kernel.org/>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
 
-Hi Vlad,
+https://bugzilla.kernel.org/show_bug.cgi?id=3D217256
 
-This appears to fix the use-after-free in bluez 5.71. Thanks.
+Franz (franzferdinand1999@gmail.com) changed:
 
-Tested-by: Ronan Pigott <ronan@rjp.ie>
+           What    |Removed                     |Added
+----------------------------------------------------------------------------
+                 CC|                            |franzferdinand1999@gmail.co
+                   |                            |m
 
-Cheers,
+--- Comment #5 from Franz (franzferdinand1999@gmail.com) ---
+Did you send an error report to the mailing list? I am facing the same prob=
+lems
+with a Realtek RTL8852BE chipset.
 
-Ronan
+--=20
+You may reply to this email to add a comment.
+
+You are receiving this mail because:
+You are the assignee for the bug.=
 
