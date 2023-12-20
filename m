@@ -1,236 +1,164 @@
-Return-Path: <linux-bluetooth+bounces-682-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-684-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE29881A680
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 20 Dec 2023 18:40:55 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9305181A6D1
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 20 Dec 2023 19:25:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E269F1C240CD
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 20 Dec 2023 17:40:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0A73D1F23201
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 20 Dec 2023 18:25:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 844E847A7B;
-	Wed, 20 Dec 2023 17:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6CE9482E2;
+	Wed, 20 Dec 2023 18:25:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JPQG/Yqu"
+	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="WpwGpM8E"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-m17236.xmail.ntesmail.com (mail-m17236.xmail.ntesmail.com [45.195.17.236])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA2A47A61
-	for <linux-bluetooth@vger.kernel.org>; Wed, 20 Dec 2023 17:40:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-dbdb2433800so600361276.3
-        for <linux-bluetooth@vger.kernel.org>; Wed, 20 Dec 2023 09:40:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1703094044; x=1703698844; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=KAcv0cJEoeqOXt6CURKXaYpKKYBk0AkiyzCATDp7kRQ=;
-        b=JPQG/Yquin0zt7UQi0j5tLWPki5mFSkndVISZjMCiWEwczWByn0UK93nLhlWgK8DIH
-         mbSSp3WruNrvDXWFyAno+BO7ypLE4sXV2yIqeRK/sDZLo42a33M3gX3aiGZTJ8ttMdU/
-         V8qHR1YqAO8iFOLMh0siYKDYLBIAxGT89DzOrZXC4DGR3gu/XUjVPhCoS0uaBIF9WYAz
-         iTHxEpjRZHtlSfnT3s/XD7bLHGUq1Xfq0OevJ89ltt2/+YXkeYImOq356vPBSUhYtsE8
-         cADGZqEp1CjMbkNv6E0kH31pIEFD/9mzZGb7ct5SHJ6kNu7nNrOYhnBHsNPl8c9GThEw
-         EBMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1703094044; x=1703698844;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KAcv0cJEoeqOXt6CURKXaYpKKYBk0AkiyzCATDp7kRQ=;
-        b=S+NpxqgRyRQadhKoaI07Nw05s/Pz1k8EeFU2yrJdXmUg9V7LZPvZw6Q/YKz5RuQs6D
-         56BaY+01q6lXXHvdBLHLX6hC8LP2xP6efy/ssA+oNjhtI/s2PFYmEe0C04EF4a3Delln
-         wN5GUXW9DAjk7mMiVJzMXKkqUvJ16pNYl/owhRzvLlngrGq9D78Z+pwoCACCiDndyg/O
-         P6PsapH5oO/W6iSpSwTFdKcstAFCo5LD/46GYQPy20pK7MvpU1S7Kvt9BpL8fNM/iwkX
-         2IdeyJPuR2cCy3mDbi23t7KRwHwbJfsYYrm0VhHrNQqd+Qczs2s+s+KnUg42AcYKwOCo
-         3S1Q==
-X-Gm-Message-State: AOJu0YyEGIN3X52fJDj1UFuwuhN4V+H4mTzjQ2pC7SHmkJtLUdIRjAoE
-	qtCkbg2e0/lHNPm4fq11o/P1eNL1CNU=
-X-Google-Smtp-Source: AGHT+IE3xNTsTEgM3ZpE5ZAl0ZYrYqR0uqtNVfKHNglYZQoa0DRom7Lzv2q0ZDQ1uu23Z9z949Uhrg==
-X-Received: by 2002:a25:c789:0:b0:db7:dacf:622f with SMTP id w131-20020a25c789000000b00db7dacf622fmr44806ybe.129.1703094044230;
-        Wed, 20 Dec 2023 09:40:44 -0800 (PST)
-Received: from lvondent-mobl4.. (071-047-239-151.res.spectrum.com. [71.47.239.151])
-        by smtp.gmail.com with ESMTPSA id t12-20020a25838c000000b00dbd15c3b753sm92583ybk.46.2023.12.20.09.40.43
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Dec 2023 09:40:43 -0800 (PST)
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v2] adapter: Fix link key address type for old kernels
-Date: Wed, 20 Dec 2023 12:40:42 -0500
-Message-ID: <20231220174042.2335819-1-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EB5482C2
+	for <linux-bluetooth@vger.kernel.org>; Wed, 20 Dec 2023 18:25:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
+DKIM-Signature: a=rsa-sha256;
+	b=WpwGpM8EdnjY9uJ6Rx5WrSpEng3TJJluAsxAUjiuJ3kcpazREnZ9QhSqJonrtz1x0n9YzOEz263thRain+9pEdpkDHw81znzlqT5DZrJZD868RkKOS6WeQ//biM4HukQwENDo9csTx8aqSDMKuO8a4Hy73gU3MO1Q+sH8S3b+9M=;
+	s=default; c=relaxed/relaxed; d=rock-chips.com; v=1;
+	bh=Rd7bZpht3MgZ3e3emFUxwJYRNe3vQDRwIjiS4osZT7s=;
+	h=date:mime-version:subject:message-id:from;
+Received: from rock-chips.com (localhost [127.0.0.1])
+	by mail-m12744.qiye.163.com (Hmail) with ESMTP id 6A0D2100224;
+	Thu, 21 Dec 2023 01:48:43 +0800 (CST)
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+Message-ID: <APQAQAAJGHLYMZR7jBqi*4pR.1.1703094523428.Hmail.xiaoyao@rock-chips.com>
+To: luiz.dentz@gmail.com
+Cc: Xiao Yao <xiaokeqinhealth@126.com>, 
+	linux-bluetooth <linux-bluetooth@vger.kernel.org>, 
+	antiz <antiz@archlinux.org>
+Subject: =?UTF-8?B?UmU6UmU6IFtQQVRDSCB2Ml0gYWRhcHRlcjogRml4IGxpbmsga2V5IGFkZHJlc3MgdHlwZSBmb3Igb2xkIGtlcm5lbHM=?=
+X-Priority: 3
+X-Mailer: HMail Webmail Server V2.0 Copyright (c) 2016-163.com web
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Received: from xiaoyao@rock-chips.com( [205.178.182.76) ] by ajax-webmail ( [127.0.0.1] ) ; Thu, 21 Dec 2023 01:48:43 +0800 (GMT+08:00)
+From: =?UTF-8?B?6IKW5Z6a?= <xiaoyao@rock-chips.com>
+Date: Thu, 21 Dec 2023 01:48:43 +0800 (GMT+08:00)
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkZGhhKVh9OTE9NGUMeSR1CSFUTARMWGhIXJBQOD1
+	lXWRgSC1lBWUlLTlVKTENVSkNJVUxNWVdZFhoPEhUdFFlBWU9LSFVKT0NPTExVSktLVUpCWQY+
+X-HM-Tid: 0a8c8856cde1b217kuuu18c86ebbb4a
+X-HM-MType: 1
+X-HM-NTES-SC: AL0_4z5B86Wr4Tz9jdMF+bhXMfNG2w9N2nM6QCGwQmST2JrTCMbUPBxAZ6ApCD
+	e8CEmSFmbiwmlS+Ep5af8oLSW6vq4VQrzmr9HeAs8ENTFCUGHFqaJ912xENObSfepupK4MdLONFW
+	8Jd9UTqRIZ9K6vfZneaCJ7rKt4uuBiT7Zpu7I=
+X-HM-Sender-Digest: e1kMHhlZQQ8JDh5XWRIfHhUPWUFZRzorKjoqOjoxPDM3IjYhKUwROQoS
+	UU8LKVVKVUpMS0hLQk9OSUhCQ0pVMxYaEhdVAxIaFAIaFDsJFBgQVhgTEgsIVRgUFkVZV1kSC1lB
+	WUlLTlVKTENVSkNJVUxNWVdZCAFZQUJNTks3Bg++
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-
-On old kernels only BDADDR_BREDR is supported so this attempts to detect
-that and retry.
-
-Fixes: https://github.com/bluez/bluez/issues/686
----
- src/adapter.c | 59 ++++++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 44 insertions(+), 15 deletions(-)
-
-diff --git a/src/adapter.c b/src/adapter.c
-index ee70b00d249e..022390f0d95d 100644
---- a/src/adapter.c
-+++ b/src/adapter.c
-@@ -311,6 +311,7 @@ struct btd_adapter {
- 	bool pincode_requested;		/* PIN requested during last bonding */
- 	GSList *connections;		/* Connected devices */
- 	GSList *devices;		/* Devices structure pointers */
-+	GSList *load_keys;		/* Devices keys to be loaded */
- 	GSList *connect_list;		/* Devices to connect when found */
- 	struct btd_device *connect_le;	/* LE device waiting to be connected */
- 	sdp_list_t *services;		/* Services associated to adapter */
-@@ -4284,6 +4285,9 @@ static int set_privacy(struct btd_adapter *adapter, uint8_t privacy)
- 	return -1;
- }
- 
-+static void load_link_keys(struct btd_adapter *adapter, bool debug_keys,
-+							bool retry);
-+
- static void load_link_keys_complete(uint8_t status, uint16_t length,
- 					const void *param, void *user_data)
- {
-@@ -4293,18 +4297,31 @@ static void load_link_keys_complete(uint8_t status, uint16_t length,
- 		btd_error(adapter->dev_id,
- 			"Failed to load link keys for hci%u: %s (0x%02x)",
- 				adapter->dev_id, mgmt_errstr(status), status);
-+
-+		if (status == MGMT_STATUS_INVALID_PARAMS) {
-+			load_link_keys(adapter, btd_opts.debug_keys, true);
-+			/* Release keys after retry since we shall only retry
-+			 * once.
-+			 */
-+			goto done;
-+		}
-+
- 		return;
- 	}
- 
- 	DBG("link keys loaded for hci%u", adapter->dev_id);
-+
-+done:
-+	g_slist_free_full(adapter->load_keys, g_free);
-+	adapter->load_keys = NULL;
- }
- 
--static void load_link_keys(struct btd_adapter *adapter, GSList *keys,
--							bool debug_keys)
-+static void load_link_keys(struct btd_adapter *adapter, bool debug_keys,
-+							bool retry)
- {
- 	struct mgmt_cp_load_link_keys *cp;
- 	struct mgmt_link_key_info *key;
--	size_t key_count, cp_size;
-+	size_t count, cp_size;
- 	unsigned int id;
- 	GSList *l;
- 
-@@ -4318,12 +4335,14 @@ static void load_link_keys(struct btd_adapter *adapter, GSList *keys,
- 	if (!(adapter->supported_settings & MGMT_SETTING_BREDR))
- 		return;
- 
--	key_count = g_slist_length(keys);
-+	count = g_slist_length(adapter->load_keys);
-+	if (!count)
-+		return;
- 
--	DBG("hci%u keys %zu debug_keys %d", adapter->dev_id, key_count,
--								debug_keys);
-+	DBG("hci%u keys %zu debug_keys %d retry %s", adapter->dev_id, count,
-+				debug_keys, retry ? "true" : "false");
- 
--	cp_size = sizeof(*cp) + (key_count * sizeof(*key));
-+	cp_size = sizeof(*cp) + (count * sizeof(*key));
- 
- 	cp = g_try_malloc0(cp_size);
- 	if (cp == NULL) {
-@@ -4341,13 +4360,18 @@ static void load_link_keys(struct btd_adapter *adapter, GSList *keys,
- 	 * behavior for debug keys.
- 	 */
- 	cp->debug_keys = debug_keys;
--	cp->key_count = htobs(key_count);
-+	cp->key_count = htobs(count);
- 
--	for (l = keys, key = cp->keys; l != NULL; l = g_slist_next(l), key++) {
-+	for (l = adapter->load_keys, key = cp->keys; l != NULL;
-+					l = g_slist_next(l), key++) {
- 		struct link_key_info *info = l->data;
- 
- 		bacpy(&key->addr.bdaddr, &info->bdaddr);
--		key->addr.type = info->bdaddr_type;
-+		/* Old kernels might only support loading with type set to
-+		 * BDADDR_BREDR so on retry set that instead of using the stored
-+		 * info.
-+		 */
-+		key->addr.type = retry ? BDADDR_BREDR : info->bdaddr_type;
- 		key->type = info->type;
- 		memcpy(key->val, info->key, 16);
- 		key->pin_len = info->pin_len;
-@@ -4359,9 +4383,12 @@ static void load_link_keys(struct btd_adapter *adapter, GSList *keys,
- 
- 	g_free(cp);
- 
--	if (id == 0)
-+	if (id == 0) {
- 		btd_error(adapter->dev_id, "Failed to load link keys for hci%u",
- 							adapter->dev_id);
-+		g_slist_free_full(adapter->load_keys, g_free);
-+		adapter->load_keys = NULL;
-+	}
- }
- 
- static void load_ltks_complete(uint8_t status, uint16_t length,
-@@ -4873,7 +4900,6 @@ done:
- static void load_devices(struct btd_adapter *adapter)
- {
- 	char dirname[PATH_MAX];
--	GSList *keys = NULL;
- 	GSList *ltks = NULL;
- 	GSList *irks = NULL;
- 	GSList *params = NULL;
-@@ -4964,7 +4990,8 @@ static void load_devices(struct btd_adapter *adapter)
- 		}
- 
- 		if (key_info)
--			keys = g_slist_append(keys, key_info);
-+			adapter->load_keys = g_slist_append(adapter->load_keys,
-+								key_info);
- 
- 		if (ltk_info)
- 			ltks = g_slist_append(ltks, ltk_info);
-@@ -5013,8 +5040,7 @@ free:
- 
- 	closedir(dir);
- 
--	load_link_keys(adapter, keys, btd_opts.debug_keys);
--	g_slist_free_full(keys, g_free);
-+	load_link_keys(adapter, btd_opts.debug_keys, false);
- 
- 	load_ltks(adapter, ltks);
- 	g_slist_free_full(ltks, g_free);
-@@ -6930,6 +6956,9 @@ static void adapter_remove(struct btd_adapter *adapter)
- 	g_slist_free(adapter->devices);
- 	adapter->devices = NULL;
- 
-+	g_slist_free(adapter->load_keys);
-+	adapter->load_keys = NULL;
-+
- 	discovery_cleanup(adapter, 0);
- 
- 	unload_drivers(adapter);
--- 
-2.43.0
-
+SGkgTHVpeiwKVGhhbmsgeW91IHZlcnkgbXVjaCBmb3IgZml4aW5nIHRoaXMgaXNzdWU7IHBsZWFz
+ZSBkaXNyZWdhcmQgdGhpcyBwYXRjaC4KQmVzdCBSZWdhcmRzCgo+T24gV2VkLCBEZWMgMjAsIDIw
+MjMgYXQgMTI6MzHigK9QTSBYaWFvIFlhbyA8eGlhb2tlcWluaGVhbHRoQDEyNi5jb20+IHdyb3Rl
+Ogo+Pgo+PiBGcm9tOiBYaWFvIFlhbyA8eGlhb3lhb0Byb2NrLWNoaXBzLmNvbT4KPj4KPj4gQWNj
+b3JkaW5nIHRvIHRoZSBCbHVldG9vdGggc3BlY2lmaWNhdGlvbiwgdGhlIGFkZHJlc3MKPj4gdHlw
+ZSBvZiB0aGUgbGluayBrZXkgaXMgbm90IGZpeGVkLiBIb3dldmVyLCB0aGUKPj4gbG9hZF9saW5r
+X2tleXMgZnVuY3Rpb24gaW4gdGhlIG9sZCBrZXJuZWwgY29kZSByZXF1aXJlcwo+PiB0aGF0IHRo
+ZSBhZGRyZXNzIHR5cGUgbXVzdCBiZSBCREFERFJfQlJFRFIsIHNvIGF0dGVtcHQKPj4gaXQgd2hl
+biB0aGUgZmlyc3QgbG9hZCBmYWlscy4KPj4KPj4gRml4ZXM6IGh0dHBzOi8vZ2l0aHViLmNvbS9i
+bHVlei9ibHVlei9pc3N1ZXMvNjg2Cj4+Cj4+IFNpZ25lZC1vZmYtYnk6IFhpYW8gWWFvIDx4aWFv
+eWFvQHJvY2stY2hpcHMuY29tPgo+PiAtLS0KPj4gdjEgLT4gdjIKPj4gUHJpb3JpdGl6ZSBsb2Fk
+aW5nIGtleXMgd2l0aCBzdGFuZGFyZCBhZGRyZXNzIHR5cGVzLAo+PiBhbmQgc3dpdGNoIHRvIEJS
+RURSIGFkZHJlc3MgdHlwZXMgdXBvbiBmYWlsdXJlLCBhcwo+PiBzdWdnZXN0ZWQgYnkgdGhlIG1h
+aW50YWluZXIuCj4+IC0tLQo+PiAgc3JjL2FkYXB0ZXIuYyB8IDQ1ICsrKysrKysrKysrKysrKysr
+KysrKysrKysrKysrKysrKysrKy0tLS0tLS0tLQo+PiAgMSBmaWxlIGNoYW5nZWQsIDM2IGluc2Vy
+dGlvbnMoKyksIDkgZGVsZXRpb25zKC0pCj4+Cj4+IGRpZmYgLS1naXQgYS9zcmMvYWRhcHRlci5j
+IGIvc3JjL2FkYXB0ZXIuYwo+PiBpbmRleCBlZTcwYjAwZDIuLmUxYjcwNGVjYyAxMDA2NDQKPj4g
+LS0tIGEvc3JjL2FkYXB0ZXIuYwo+PiArKysgYi9zcmMvYWRhcHRlci5jCj4+IEBAIC0xNjgsNiAr
+MTY4LDkgQEAgc3RhdGljIEdTTGlzdCAqYWRhcHRlcl9kcml2ZXJzID0gTlVMTDsKPj4gIHN0YXRp
+YyBHU0xpc3QgKmRpc2Nvbm5lY3RfbGlzdCA9IE5VTEw7Cj4+ICBzdGF0aWMgR1NMaXN0ICpjb25u
+X2ZhaWxfbGlzdCA9IE5VTEw7Cj4+Cj4+ICtzdGF0aWMgR1NMaXN0ICpsaW5rX2tleXMgPSBOVUxM
+Owo+PiArc3RhdGljIGJvb2wgbGlua19rZXlzX2JyZGVyID0gZmFsc2U7Cj4+ICsKPj4gIHN0cnVj
+dCBsaW5rX2tleV9pbmZvIHsKPj4gICAgICAgICBiZGFkZHJfdCBiZGFkZHI7Cj4+ICAgICAgICAg
+dWludDhfdCBiZGFkZHJfdHlwZTsKPj4gQEAgLTQyODQsMjMgKzQyODcsNDUgQEAgc3RhdGljIGlu
+dCBzZXRfcHJpdmFjeShzdHJ1Y3QgYnRkX2FkYXB0ZXIgKmFkYXB0ZXIsIHVpbnQ4X3QgcHJpdmFj
+eSkKPj4gICAgICAgICByZXR1cm4gLTE7Cj4+ICB9Cj4+Cj4+ICtzdGF0aWMgdm9pZCBsb2FkX2xp
+bmtfa2V5cyhzdHJ1Y3QgYnRkX2FkYXB0ZXIgKmFkYXB0ZXIsIEdTTGlzdCAqa2V5cywKPj4gKyAg
+ICAgICAgICAgICAgICAgICAgICAgICAgYm9vbCBkZWJ1Z19rZXlzLCBib29sIGxpbmtfa2V5X2Jy
+ZWRyKTsKPj4gKwo+PiAgc3RhdGljIHZvaWQgbG9hZF9saW5rX2tleXNfY29tcGxldGUodWludDhf
+dCBzdGF0dXMsIHVpbnQxNl90IGxlbmd0aCwKPj4gICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgIGNvbnN0IHZvaWQgKnBhcmFtLCB2b2lkICp1c2VyX2RhdGEpCj4+ICB7Cj4+
+ICAgICAgICAgc3RydWN0IGJ0ZF9hZGFwdGVyICphZGFwdGVyID0gdXNlcl9kYXRhOwo+Pgo+PiAg
+ICAgICAgIGlmIChzdGF0dXMgIT0gTUdNVF9TVEFUVVNfU1VDQ0VTUykgewo+PiArICAgICAgICAg
+ICAgICAgLyoKPj4gKyAgICAgICAgICAgICAgICAqIEFjY29yZGluZyB0byB0aGUgQmx1ZXRvb3Ro
+IHNwZWNpZmljYXRpb24sIHRoZSBhZGRyZXNzCj4+ICsgICAgICAgICAgICAgICAgKiB0eXBlIG9m
+IHRoZSBsaW5rIGtleSBpcyBub3QgZml4ZWQuIEhvd2V2ZXIsIHRoZQo+PiArICAgICAgICAgICAg
+ICAgICogbG9hZF9saW5rX2tleXMgZnVuY3Rpb24gaW4gdGhlIG9sZCBrZXJuZWwgY29kZSByZXF1
+aXJlcwo+PiArICAgICAgICAgICAgICAgICogdGhhdCB0aGUgYWRkcmVzcyB0eXBlIG11c3QgYmUg
+QkRBRERSX0JSRURSLCBzbyBhdHRlbXB0IGl0Lgo+PiArICAgICAgICAgICAgICAgICovCj4+ICsg
+ICAgICAgICAgICAgICBpZiAobGlua19rZXlzX2JyZGVyID09IGZhbHNlICYmIHN0YXR1cyA9PSAw
+eDBkKSB7Cj4+ICsgICAgICAgICAgICAgICAgICAgICAgIGxpbmtfa2V5c19icmRlciA9IHRydWU7
+Cj4+ICsgICAgICAgICAgICAgICAgICAgICAgIGxvYWRfbGlua19rZXlzKGFkYXB0ZXIsIGxpbmtf
+a2V5cywgYnRkX29wdHMuZGVidWdfa2V5cywKPj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgbGlua19rZXlzX2JyZGVyKTsKPj4gKyAgICAgICAgICAgICAgICAgICAgICAg
+cmV0dXJuOwo+PiArICAgICAgICAgICAgICAgfQo+PiArCj4+ICAgICAgICAgICAgICAgICBidGRf
+ZXJyb3IoYWRhcHRlci0+ZGV2X2lkLAo+PiAgICAgICAgICAgICAgICAgICAgICAgICAiRmFpbGVk
+IHRvIGxvYWQgbGluayBrZXlzIGZvciBoY2kldTogJXMgKDB4JTAyeCkiLAo+PiAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgIGFkYXB0ZXItPmRldl9pZCwgbWdtdF9lcnJzdHIoc3RhdHVz
+KSwgc3RhdHVzKTsKPj4gLSAgICAgICAgICAgICAgIHJldHVybjsKPj4gKwo+PiArICAgICAgICAg
+ICAgICAgZ290byBmcmVlOwo+PiAgICAgICAgIH0KPj4KPj4gICAgICAgICBEQkcoImxpbmsga2V5
+cyBsb2FkZWQgZm9yIGhjaSV1IiwgYWRhcHRlci0+ZGV2X2lkKTsKPj4gKwo+PiArZnJlZToKPj4g
+KyAgICAgICBnX3NsaXN0X2ZyZWVfZnVsbChsaW5rX2tleXMsIGdfZnJlZSk7Cj4+ICsgICAgICAg
+bGlua19rZXlzID0gTlVMTDsKPj4gKyAgICAgICBsaW5rX2tleXNfYnJkZXIgPSBmYWxzZTsKPj4g
+IH0KPj4KPj4gIHN0YXRpYyB2b2lkIGxvYWRfbGlua19rZXlzKHN0cnVjdCBidGRfYWRhcHRlciAq
+YWRhcHRlciwgR1NMaXN0ICprZXlzLAo+PiAtICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgIGJvb2wgZGVidWdfa2V5cykKPj4gKyAgICAgICAgICAg
+ICAgICAgICAgICAgICAgYm9vbCBkZWJ1Z19rZXlzLCBib29sIGxpbmtfa2V5X2JyZWRyKQo+PiAg
+ewo+PiAgICAgICAgIHN0cnVjdCBtZ210X2NwX2xvYWRfbGlua19rZXlzICpjcDsKPj4gICAgICAg
+ICBzdHJ1Y3QgbWdtdF9saW5rX2tleV9pbmZvICprZXk7Cj4+IEBAIC00MzIwLDggKzQzNDUsOCBA
+QCBzdGF0aWMgdm9pZCBsb2FkX2xpbmtfa2V5cyhzdHJ1Y3QgYnRkX2FkYXB0ZXIgKmFkYXB0ZXIs
+IEdTTGlzdCAqa2V5cywKPj4KPj4gICAgICAgICBrZXlfY291bnQgPSBnX3NsaXN0X2xlbmd0aChr
+ZXlzKTsKPj4KPj4gLSAgICAgICBEQkcoImhjaSV1IGtleXMgJXp1IGRlYnVnX2tleXMgJWQiLCBh
+ZGFwdGVyLT5kZXZfaWQsIGtleV9jb3VudCwKPj4gLSAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGRlYnVnX2tleXMpOwo+PiArICAg
+ICAgIERCRygiaGNpJXUga2V5cyAlenUgZGVidWdfa2V5cyAlZCAoJXMpIiwgYWRhcHRlci0+ZGV2
+X2lkLCBrZXlfY291bnQsCj4+ICsgICAgICAgICAgICAgICAgICAgICAgIGRlYnVnX2tleXMsIGxp
+bmtfa2V5X2JyZWRyID8gImZvcmNlIGJyZWRyIiA6ICJub3JtYWwiKTsKPj4KPj4gICAgICAgICBj
+cF9zaXplID0gc2l6ZW9mKCpjcCkgKyAoa2V5X2NvdW50ICogc2l6ZW9mKCprZXkpKTsKPj4KPj4g
+QEAgLTQzNDcsNyArNDM3MiwxMCBAQCBzdGF0aWMgdm9pZCBsb2FkX2xpbmtfa2V5cyhzdHJ1Y3Qg
+YnRkX2FkYXB0ZXIgKmFkYXB0ZXIsIEdTTGlzdCAqa2V5cywKPj4gICAgICAgICAgICAgICAgIHN0
+cnVjdCBsaW5rX2tleV9pbmZvICppbmZvID0gbC0+ZGF0YTsKPj4KPj4gICAgICAgICAgICAgICAg
+IGJhY3B5KCZrZXktPmFkZHIuYmRhZGRyLCAmaW5mby0+YmRhZGRyKTsKPj4gLSAgICAgICAgICAg
+ICAgIGtleS0+YWRkci50eXBlID0gaW5mby0+YmRhZGRyX3R5cGU7Cj4+ICsgICAgICAgICAgICAg
+ICBpZiAobGlua19rZXlfYnJlZHIpCj4+ICsgICAgICAgICAgICAgICAgICAgICAgIGtleS0+YWRk
+ci50eXBlID0gQkRBRERSX0JSRURSOwo+PiArICAgICAgICAgICAgICAgZWxzZQo+PiArICAgICAg
+ICAgICAgICAgICAgICAgICBrZXktPmFkZHIudHlwZSA9IGluZm8tPmJkYWRkcl90eXBlOwo+PiAg
+ICAgICAgICAgICAgICAga2V5LT50eXBlID0gaW5mby0+dHlwZTsKPj4gICAgICAgICAgICAgICAg
+IG1lbWNweShrZXktPnZhbCwgaW5mby0+a2V5LCAxNik7Cj4+ICAgICAgICAgICAgICAgICBrZXkt
+PnBpbl9sZW4gPSBpbmZvLT5waW5fbGVuOwo+PiBAQCAtNDg3Myw3ICs0OTAxLDYgQEAgZG9uZToK
+Pj4gIHN0YXRpYyB2b2lkIGxvYWRfZGV2aWNlcyhzdHJ1Y3QgYnRkX2FkYXB0ZXIgKmFkYXB0ZXIp
+Cj4+ICB7Cj4+ICAgICAgICAgY2hhciBkaXJuYW1lW1BBVEhfTUFYXTsKPj4gLSAgICAgICBHU0xp
+c3QgKmtleXMgPSBOVUxMOwo+PiAgICAgICAgIEdTTGlzdCAqbHRrcyA9IE5VTEw7Cj4+ICAgICAg
+ICAgR1NMaXN0ICppcmtzID0gTlVMTDsKPj4gICAgICAgICBHU0xpc3QgKnBhcmFtcyA9IE5VTEw7
+Cj4+IEBAIC00OTY0LDcgKzQ5OTEsNyBAQCBzdGF0aWMgdm9pZCBsb2FkX2RldmljZXMoc3RydWN0
+IGJ0ZF9hZGFwdGVyICphZGFwdGVyKQo+PiAgICAgICAgICAgICAgICAgfQo+Pgo+PiAgICAgICAg
+ICAgICAgICAgaWYgKGtleV9pbmZvKQo+PiAtICAgICAgICAgICAgICAgICAgICAgICBrZXlzID0g
+Z19zbGlzdF9hcHBlbmQoa2V5cywga2V5X2luZm8pOwo+PiArICAgICAgICAgICAgICAgICAgICAg
+ICBsaW5rX2tleXMgPSBnX3NsaXN0X2FwcGVuZChsaW5rX2tleXMsIGtleV9pbmZvKTsKPj4KPj4g
+ICAgICAgICAgICAgICAgIGlmIChsdGtfaW5mbykKPj4gICAgICAgICAgICAgICAgICAgICAgICAg
+bHRrcyA9IGdfc2xpc3RfYXBwZW5kKGx0a3MsIGx0a19pbmZvKTsKPj4gQEAgLTUwMTMsOCArNTA0
+MCw4IEBAIGZyZWU6Cj4+Cj4+ICAgICAgICAgY2xvc2VkaXIoZGlyKTsKPj4KPj4gLSAgICAgICBs
+b2FkX2xpbmtfa2V5cyhhZGFwdGVyLCBrZXlzLCBidGRfb3B0cy5kZWJ1Z19rZXlzKTsKPj4gLSAg
+ICAgICBnX3NsaXN0X2ZyZWVfZnVsbChrZXlzLCBnX2ZyZWUpOwo+PiArICAgICAgIGxvYWRfbGlu
+a19rZXlzKGFkYXB0ZXIsIGxpbmtfa2V5cywgYnRkX29wdHMuZGVidWdfa2V5cywKPj4gKyAgICAg
+ICAgICAgICAgICAgICAgICAgbGlua19rZXlzX2JyZGVyKTsKPj4KPj4gICAgICAgICBsb2FkX2x0
+a3MoYWRhcHRlciwgbHRrcyk7Cj4+ICAgICAgICAgZ19zbGlzdF9mcmVlX2Z1bGwobHRrcywgZ19m
+cmVlKTsKPj4gLS0KPj4gMi4zNC4xCj4KPkl2ZSBqdXN0IHNlbnQgYSBzaW1pbGFyIGZpeDoKPgo+
+aHR0cHM6Ly9wYXRjaHdvcmsua2VybmVsLm9yZy9wcm9qZWN0L2JsdWV0b290aC9wYXRjaC8yMDIz
+MTIyMDE3MjIyMi4yMzMzMDY0LTEtbHVpei5kZW50ekBnbWFpbC5jb20vCj4KPj4KPgo+Cj4tLSAK
+Pkx1aXogQXVndXN0byB2b24gRGVudHoKPgoKCg0KDQo=
 
