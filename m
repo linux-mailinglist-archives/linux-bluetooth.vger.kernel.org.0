@@ -1,129 +1,83 @@
-Return-Path: <linux-bluetooth+bounces-805-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-808-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F488821CA5
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Jan 2024 14:35:07 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 88FFC821D14
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Jan 2024 14:50:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E6815B21F40
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Jan 2024 13:35:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3927E2837CD
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Jan 2024 13:50:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40E4BFC19;
-	Tue,  2 Jan 2024 13:34:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5A3A1078D;
+	Tue,  2 Jan 2024 13:50:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fJxmM1Xd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q+LnktMn"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3D810A03
-	for <linux-bluetooth@vger.kernel.org>; Tue,  2 Jan 2024 13:34:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-680a9796b38so18397986d6.0
-        for <linux-bluetooth@vger.kernel.org>; Tue, 02 Jan 2024 05:34:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704202457; x=1704807257; darn=vger.kernel.org;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=xKg47vgEFwXOpFzIpuDEQ8AsB66s2kNwkxJppLXmKNo=;
-        b=fJxmM1XdnaUvvdv/N10mixnnGexmbGNG1ediXvggVB68rT8Tu67tbCLUNJg72bR8Ta
-         kGuuv0KM1eJ57Reu7X9hrEwylXnm5nXJpeMJE/xp9wpmtA37JcW7AYTajr5yydxygMwb
-         TwC/1taGC60n/oJdRMFXinlvF5CualhKbfKFuG2omdHmn6AblozwJKHDwdj5wsqo6KTq
-         jQyB97pQH166jewlIZvuZQXGw7zLPHiFQAYawEUf+rUY828MjT1UqQxUI2JWCenASJm5
-         HmJO5b1+AJ8dPeD4tEFnwLLI4qW2c93MlnqWV/aRJbzGOYcMauoX4KjBHF0HmO1pgnyg
-         8/kA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704202457; x=1704807257;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xKg47vgEFwXOpFzIpuDEQ8AsB66s2kNwkxJppLXmKNo=;
-        b=KvG6thEGiim9K8Ca1ZF7FsCGfOE0Hhbxowas2JEfpujTdzTYORgPgO7Q4skSP1s06/
-         vMPhi0nE/WYwHXEIApeHMUD9/5O3Yk+N4Pqk2ab/AyTsKqO0+ZmYrzIPlCx4p8zgNT+f
-         NdlRj/NaAfxnzb21qDmPndnurxPlLMsidD3ndnbEKrMUFFeUVEVfo/dKJUXjs8yGIjUE
-         tibRxIegMA5Ml0RSECt2aKGRaWbss3r6SnHd2R/dayD5R41fmDJbOnWsLdlN/EqvMaL5
-         7TLgQU+E//uTSAwWE3DWd6FVYAU+fgngKJwCka8yyJuvpW27TJ6uWFfunSwLwiE6Mjs2
-         kIIQ==
-X-Gm-Message-State: AOJu0YzEK7NP0kV1y7JFp3VfYUngil7/Ivqnl8HvoomqJSVVwO38fEr+
-	/1RFw0zmPxrmaCp3+MJgRzgXi1cJY1o=
-X-Google-Smtp-Source: AGHT+IHCBBdfliQ4lRYLhzwrYlT5LPWuJBFuM8RXdpDgDYVthfVvDUzB+tb2juSuwQq08Gya5lNOJw==
-X-Received: by 2002:a05:6214:508d:b0:67f:273e:6aba with SMTP id kk13-20020a056214508d00b0067f273e6abamr31669536qvb.57.1704202457063;
-        Tue, 02 Jan 2024 05:34:17 -0800 (PST)
-Received: from [172.17.0.2] ([172.183.131.42])
-        by smtp.gmail.com with ESMTPSA id ek5-20020ad45985000000b0067f8046a1acsm9495008qvb.144.2024.01.02.05.34.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jan 2024 05:34:16 -0800 (PST)
-Message-ID: <659410d8.d40a0220.d80a0.a788@mx.google.com>
-Date: Tue, 02 Jan 2024 05:34:16 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============8400856307541696441=="
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565C5125D5;
+	Tue,  2 Jan 2024 13:50:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id EB85EC433D9;
+	Tue,  2 Jan 2024 13:50:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1704203431;
+	bh=6IqGUwbS5Nj/uWqmnYGoibvQ3Ou6BAF8Helju32xKJE=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=Q+LnktMnTeoTuuIWDLDAHotGPVU3pCZSwVKS0/wR/qgt/dN3Ux6GY59oQ6q+I/C8X
+	 aW1jg8kNoJv4ZFAXlwxA8so3uzxpVABmZ6F9Y0nhZtcm05gtmLdxbZgo6N3jiQm6hq
+	 qEWkq3p49LhfsrJ8M9p27nTr1gOfa1wHrp6tkp9ZIXEmRDF24FQ0jr+lE96FKX62xH
+	 goBR2XsrVZSBdp9hB1N0EXu15H+3+lEYZQcA+8ksdjW13+IszwuvQFCHgfxKvKMmX5
+	 xv9Rbfx0eNSftRz10fm51I7s14t8GfP83oarrpB8KdStiz580545cXUw0Yoepdqf3T
+	 ZGHq5XFucbWgA==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id CD406DCB6D0;
+	Tue,  2 Jan 2024 13:50:30 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: bluez.test.bot@gmail.com
-To: linux-bluetooth@vger.kernel.org, hao.qin@mediatek.com
-Subject: RE: [v2,1/2] Bluetooth: btusb: mediatek: refactor btusb_mtk_reset function
-In-Reply-To: <20240102124747.21644-1-hao.qin@mediatek.com>
-References: <20240102124747.21644-1-hao.qin@mediatek.com>
-Reply-To: linux-bluetooth@vger.kernel.org
+Content-Transfer-Encoding: 8bit
+Subject: Re: pull request: bluetooth-next 2023-12-22
+From: patchwork-bot+netdevbpf@kernel.org
+Message-Id: 
+ <170420343083.29739.6967311595901529200.git-patchwork-notify@kernel.org>
+Date: Tue, 02 Jan 2024 13:50:30 +0000
+References: <20231222184625.2813676-1-luiz.dentz@gmail.com>
+In-Reply-To: <20231222184625.2813676-1-luiz.dentz@gmail.com>
+To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: davem@davemloft.net, kuba@kernel.org, linux-bluetooth@vger.kernel.org,
+ netdev@vger.kernel.org
 
---===============8400856307541696441==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Hello:
 
-This is automated email and please do not reply to this email!
+This pull request was applied to netdev/net-next.git (main)
+by David S. Miller <davem@davemloft.net>:
 
-Dear submitter,
+On Fri, 22 Dec 2023 13:46:24 -0500 you wrote:
+> The following changes since commit 27c346a22f816b1d02e9303c572b4b8e31b75f98:
+> 
+>   octeontx2-af: Fix a double free issue (2023-12-22 13:31:54 +0000)
+> 
+> are available in the Git repository at:
+> 
+>   git://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git tags/for-net-next-2023-12-22
+> 
+> [...]
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=813831
+Here is the summary with links:
+  - pull request: bluetooth-next 2023-12-22
+    https://git.kernel.org/netdev/net-next/c/8a48a2dc24f8
 
----Test result---
-
-Test Summary:
-CheckPatch                    PASS      1.20 seconds
-GitLint                       PASS      0.68 seconds
-SubjectPrefix                 PASS      0.23 seconds
-BuildKernel                   PASS      28.23 seconds
-CheckAllWarning               PASS      31.25 seconds
-CheckSparse                   PASS      36.46 seconds
-CheckSmatch                   PASS      99.93 seconds
-BuildKernel32                 PASS      27.54 seconds
-TestRunnerSetup               PASS      437.60 seconds
-TestRunner_l2cap-tester       PASS      23.05 seconds
-TestRunner_iso-tester         PASS      47.30 seconds
-TestRunner_bnep-tester        PASS      6.85 seconds
-TestRunner_mgmt-tester        FAIL      160.98 seconds
-TestRunner_rfcomm-tester      PASS      10.80 seconds
-TestRunner_sco-tester         PASS      14.39 seconds
-TestRunner_ioctl-tester       PASS      12.03 seconds
-TestRunner_mesh-tester        PASS      8.68 seconds
-TestRunner_smp-tester         PASS      9.70 seconds
-TestRunner_userchan-tester    PASS      7.10 seconds
-IncrementalBuild              PASS      31.60 seconds
-
-Details
-##############################
-Test: TestRunner_mgmt-tester - FAIL
-Desc: Run mgmt-tester with test-runner
-Output:
-Total: 497, Passed: 495 (99.6%), Failed: 1, Not Run: 1
-
-Failed Test Cases
-LL Privacy - Start Discovery 2 (Disable RL)          Failed       0.269 seconds
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
----
-Regards,
-Linux Bluetooth
-
-
---===============8400856307541696441==--
 
