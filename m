@@ -1,41 +1,46 @@
-Return-Path: <linux-bluetooth+bounces-900-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-902-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F705824ACE
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Jan 2024 23:20:49 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B179824D4B
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Jan 2024 03:56:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 46FCA1F22D0A
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Jan 2024 22:20:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 42A3F1C21A45
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Jan 2024 02:56:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8245E2CCB8;
-	Thu,  4 Jan 2024 22:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 265FC440E;
+	Fri,  5 Jan 2024 02:56:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VBk9numn"
+	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="jvpN7Cfe"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65902C857;
-	Thu,  4 Jan 2024 22:20:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 67BD3C433C9;
-	Thu,  4 Jan 2024 22:20:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1704406826;
-	bh=Jn4T0B5wwaKEY8ncGAfsMVFvyghd4aVAmoAoz7sR8iI=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=VBk9numn2jGap9l0Um73an2WgbasH1U8Pkx/mij2HeQKbAjZBwoNEw7Vwq+LFaygv
-	 UauwQrEw2juDjMq+fzL4f6NaMOhZeegoibjd3pCVAUM60LV4iaMQ+Bqh0knMV9YXwC
-	 rACnVzQXLWJhcj3kQ3qSnO+3K0U/7UgqRAcEaJVAHihmQ7sltvyzq5Dn29Ov9U6VIf
-	 rNUoT6wPYlKyycWI9VJxzpv8xHFtjqiH+cOQuhrRk1R/bulo3a8ra1ry96X2aS0YlB
-	 6Dj+WWbw5dKDVIZ+pEagREj1xbFaoElS6W5GZJDA+XEG3mvUu5/zpidX0eOihPUxFS
-	 Hax6yFvd2k0+g==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 4FBB9C3959F;
-	Thu,  4 Jan 2024 22:20:26 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+Received: from m12.mail.163.com (m12.mail.163.com [220.181.12.215])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECBA42113;
+	Fri,  5 Jan 2024 02:56:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=R3eE9
+	rNt+y7Qg78dWmtNHFDBWNey1yaJMNeWausqG00=; b=jvpN7CfeZD+lnKHO7rNZd
+	R6lNIwMz4SCzoaCSnEXyxAFEFQrGmZGiUNDe18LggjkE8DC0N+e9K3Us+BMp2ec2
+	XfvgRmdc/srZwwnKUAeWaJabE8vXugwWfhL1Nvgzmh47Y63w4eSdU/KPzIuAzaoR
+	u2jUW1OzjzLu53uLBVkfz0=
+Received: from WH-D-007635B.QUECTEL.COM (unknown [223.76.229.213])
+	by zwqz-smtp-mta-g5-0 (Coremail) with SMTP id _____wD3P+bbb5dl+sU1AQ--.18223S2;
+	Fri, 05 Jan 2024 10:56:27 +0800 (CST)
+From: clancy_shang@163.com
+To: marcel@holtmann.org,
+	johan.hedberg@gmail.com,
+	luiz.dentz@gmail.com
+Cc: linux-bluetooth@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	zhongjun.yu@quectel.com,
+	Clancy Shang <clancy.shang@quectel.com>
+Subject: [PATCH] Bluetooth: hci_sync: Fix BLE devices were unable to disable the wakeup function
+Date: Fri,  5 Jan 2024 10:56:25 +0800
+Message-Id: <20240105025625.125895-1-clancy_shang@163.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -43,50 +48,53 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] Bluetooth: Avoid potential use-after-free in hci_error_reset
-From: patchwork-bot+bluetooth@kernel.org
-Message-Id: 
- <170440682632.8457.15681827016026801324.git-patchwork-notify@kernel.org>
-Date: Thu, 04 Jan 2024 22:20:26 +0000
-References: <20240104115453.1.Iaa08c695d3dcf819910ea723c3eb502935638172@changeid>
-In-Reply-To: <20240104115453.1.Iaa08c695d3dcf819910ea723c3eb502935638172@changeid>
-To: Ying Hsu <yinghsu@chromium.org>
-Cc: linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com,
- linux-kernel@vger.kernel.org, chromeos-bluetooth-upstreaming@chromium.org
+X-CM-TRANSID:_____wD3P+bbb5dl+sU1AQ--.18223S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7uF17Cw4DKr45CF4DWF1Dtrb_yoW8Jw4fp3
+	yY93ZaqF4DJr1Sk347ta18GF95CF4kWrW7KFW0kr4Y9anIqr48Aa1DCryaqa15ArZ5uF43
+	ZF10qF95Cry5GrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jRYL9UUUUU=
+X-CM-SenderInfo: xfod0ux1bvxtlqj6il2tof0z/1tbisB1cuGV4HNfAnwAAsA
 
-Hello:
+From: Clancy Shang <clancy.shang@quectel.com>
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+when BLE master enter suspend,  it does not delete the peripheral that
+in acceptlist. so if disable the wakeup function, the BLE master scans with
+basic filter next time, the peripheral can be scanned which is unexpected
 
-On Thu,  4 Jan 2024 11:56:32 +0000 you wrote:
-> While handling the HCI_EV_HARDWARE_ERROR event, if the underlying
-> BT controller is not responding, the GPIO reset mechanism would
-> free the hci_dev and lead to a use-after-free in hci_error_reset.
-> 
-> Here's the call trace observed on a ChromeOS device with Intel AX201:
->    queue_work_on+0x3e/0x6c
->    __hci_cmd_sync_sk+0x2ee/0x4c0 [bluetooth <HASH:3b4a6>]
->    ? init_wait_entry+0x31/0x31
->    __hci_cmd_sync+0x16/0x20 [bluetooth <HASH:3b4a 6>]
->    hci_error_reset+0x4f/0xa4 [bluetooth <HASH:3b4a 6>]
->    process_one_work+0x1d8/0x33f
->    worker_thread+0x21b/0x373
->    kthread+0x13a/0x152
->    ? pr_cont_work+0x54/0x54
->    ? kthread_blkcg+0x31/0x31
->     ret_from_fork+0x1f/0x30
-> 
-> [...]
+Signed-off-by: Clancy Shang <clancy.shang@quectel.com>
+---
+ net/bluetooth/hci_sync.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-Here is the summary with links:
-  - Bluetooth: Avoid potential use-after-free in hci_error_reset
-    https://git.kernel.org/bluetooth/bluetooth-next/c/c6d011a4e7d3
-
-You are awesome, thank you!
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index d85a7091a116..abc7f614da5f 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -2533,6 +2533,7 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
+ 	struct bdaddr_list *b, *t;
+ 	u8 num_entries = 0;
+ 	bool pend_conn, pend_report;
++	struct hci_conn_params *conn_params;
+ 	u8 filter_policy;
+ 	size_t i, n;
+ 	int err;
+@@ -2585,6 +2586,15 @@ static u8 hci_update_accept_list_sync(struct hci_dev *hdev)
+ 			continue;
+ 		}
+ 
++		conn_params = hci_conn_params_lookup(hdev, &b->bdaddr, b->bdaddr_type);
++		/* During suspend, only wakeable devices can be in acceptlist */
++		if (conn_params && hdev->suspended &&
++		    !(conn_params->flags & HCI_CONN_FLAG_REMOTE_WAKEUP)) {
++			hci_le_del_accept_list_sync(hdev, &b->bdaddr,
++						    b->bdaddr_type);
++			continue;
++		}
++
+ 		num_entries++;
+ 	}
+ 
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.25.1
 
 
