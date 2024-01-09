@@ -1,149 +1,131 @@
-Return-Path: <linux-bluetooth+bounces-1006-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1008-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 182CE828B88
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Jan 2024 18:54:19 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 63F8A828B91
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Jan 2024 18:55:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9696CB234B2
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Jan 2024 17:54:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8928A1C20FD0
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Jan 2024 17:55:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4370A3BB30;
-	Tue,  9 Jan 2024 17:54:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10B8A3BB25;
+	Tue,  9 Jan 2024 17:55:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="ONGmHqBf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bDePQSSc"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C083C087
-	for <linux-bluetooth@vger.kernel.org>; Tue,  9 Jan 2024 17:54:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-7beda2e6794so33141239f.1
-        for <linux-bluetooth@vger.kernel.org>; Tue, 09 Jan 2024 09:54:03 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E593BB24
+	for <linux-bluetooth@vger.kernel.org>; Tue,  9 Jan 2024 17:55:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-783269124a8so130819285a.1
+        for <linux-bluetooth@vger.kernel.org>; Tue, 09 Jan 2024 09:55:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1704822842; x=1705427642; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=uvxQk9rfheLP9Xtji27sCGT3Sv4bNLZc44jbbgusrDU=;
-        b=ONGmHqBfC1ejBCiK95L/gKcx3N81BvYLZ0b2EkYRCOJoWTJ9/Yhz4EdmUERPQWGhus
-         FptUlXtgTzBIsA/xeUfVugvbhq8iALAGLmHftOKjPoYrJDeZbh4K1KTQg/vYQOJ+8yj9
-         +dCc+ruL4a31Dh1J9oHMbkzlOMLlucY9szbPg=
+        d=gmail.com; s=20230601; t=1704822948; x=1705427748; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=VCMtQgC1AT5Ci2r2xuX0GcJco4v3mVtSHTcmD5JFgM4=;
+        b=bDePQSSc0JkBF1SwNMe0d7cAloTYBrVs3T2If1YHA7ddBTdwBeu01Fo1hsSatZN0uH
+         LNLd/kybZ7yHUIDBjeL+2P2vavhhVU9f6dO6/VIntUgv+Qv+FbFuxp7QmYWRON/617Qi
+         +hmcq2iJeRqNQLS9qBAjwSkxzq+zAzWnN8xQm79E6rZy8cOqRWyG89QTZqirYE6XEKiE
+         TSax6dGd8nInNW9UOGFrTICRdZuPUgsydEjFPdSbdkdf/mnibyBt2QvF8ln2jCasTgm5
+         /H/0VP0+z+RCGAiJKFDbXcWWOahdZK0Xs+xrW+HOX5n7/37/IPA9MG5qpVg9RnyemKtB
+         PNKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704822842; x=1705427642;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uvxQk9rfheLP9Xtji27sCGT3Sv4bNLZc44jbbgusrDU=;
-        b=AzIWtSvts+8PiNDv37D2Ty2lgFkQnDvxcodTcVBDJovb6KeBJur0mQdeUax0fDNDwv
-         bL+uulSCKVBT5kfB02cTLfYpp36s1XR4+rWb/xuvmDLZPbeeT9r55ZR7Dj+4GOpQKcut
-         ZykNaqrOlZSjXKCZw+5/FmpkUb2wHWaC04mAnH9FXJzakWlQwrhege9UsTVWF5CsYhC6
-         LLzTSSHbSFeJtz2DU49c7859WitE/swHcUIc4ipLHzr5Yf7c16y+pLNzBbd2IgCj+p2I
-         tsHdOQlPlHJmeiM+uK0JQA94dkH4fw2BvXaLjTZj5+xhU11YkgeLdV3eDA2OshimPse1
-         iXWQ==
-X-Gm-Message-State: AOJu0Yx7irYZpIEl4sDrxMSVVpqfM1yBBjVtmd/7thd1VhdyHTfEPw1S
-	6LwHo58/X/LFQlrk0qwgrC+Up7nMeg+9
-X-Google-Smtp-Source: AGHT+IETNvPU0pqR+rjwETC6lClyltQG+AAsL2rUrDmov8iCP0gjm6NfVC+6GYU4F02uh16JW6lf7g==
-X-Received: by 2002:a5d:94ce:0:b0:7bc:2607:7caf with SMTP id y14-20020a5d94ce000000b007bc26077cafmr850204ior.21.1704822842469;
-        Tue, 09 Jan 2024 09:54:02 -0800 (PST)
-Received: from localhost (110.41.72.34.bc.googleusercontent.com. [34.72.41.110])
-        by smtp.gmail.com with UTF8SMTPSA id e15-20020a6b500f000000b007bedb7d78b3sm441971iob.24.2024.01.09.09.54.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Jan 2024 09:54:02 -0800 (PST)
-Date: Tue, 9 Jan 2024 17:54:01 +0000
-From: Matthias Kaehlcke <mka@chromium.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Johan Hedberg <johan.hedberg@gmail.com>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
-	Doug Anderson <dianders@google.com>,
-	Stephen Boyd <swboyd@google.com>
-Subject: Re: [PATCH] Bluetooth: qca: fix device-address endianness
-Message-ID: <ZZ2IOQEekFffJoHQ@google.com>
-References: <20231227180306.6319-1-johan+linaro@kernel.org>
- <ZZ15c1HUQIH2cY5o@google.com>
- <ZZ1-ehpU-g6i9Qem@hovoldconsulting.com>
+        d=1e100.net; s=20230601; t=1704822948; x=1705427748;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VCMtQgC1AT5Ci2r2xuX0GcJco4v3mVtSHTcmD5JFgM4=;
+        b=NTGW3aNh3YRZnr7bD2xkMWSDH0jHzFkZBvhcTSylKTQYFRWnUdVKEea4ZlbPhdjGJ4
+         U/LAQVF7SuqOeMUXMKo1tDtE/BSzFO4ngoxRtd+9dQqsWrXWZ0YJJEXy9zeVrIL3ryEH
+         LCWFz9f0wMqO38s3Z5G7mjIcqIi7AU49U69euBbKo50v9qNoNmoGpQHEmUQiCaWorSpm
+         GOB8e4+zflcFuxxR0KAUqRxkyZyBZ5BeWa7dcGQH4E6XDBURpVg5za2kZEexLnbjHKng
+         LzBPN8BcKXut5HjSjBEufGCWjWCSv1bmR95BcRibnzGlZi54OjVq/BXlvz6LfeWY0sA6
+         gl8A==
+X-Gm-Message-State: AOJu0YwW7Z2GLXpXLyCGq+1eTS1lXNkG1/H0NXoARHYFbIkQDTiMx76J
+	kqJ/Y9GlxGOG44cub7pWRYuPhC2E/Ik=
+X-Google-Smtp-Source: AGHT+IGRV5++D0/WJq+ZiFlGFtoXWsCa8wb2jLu6hQzL3Fsaf9VW1kGSDFv5clKhRkwdHc+3CJvYcQ==
+X-Received: by 2002:a05:620a:b06:b0:783:3237:f779 with SMTP id t6-20020a05620a0b0600b007833237f779mr710748qkg.78.1704822947976;
+        Tue, 09 Jan 2024 09:55:47 -0800 (PST)
+Received: from [172.17.0.2] ([74.249.14.209])
+        by smtp.gmail.com with ESMTPSA id g12-20020a37e20c000000b0078327d52206sm970154qki.63.2024.01.09.09.55.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Jan 2024 09:55:47 -0800 (PST)
+Message-ID: <659d88a3.370a0220.f2f4b.553a@mx.google.com>
+Date: Tue, 09 Jan 2024 09:55:47 -0800 (PST)
+Content-Type: multipart/mixed; boundary="===============5932456328982867859=="
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZZ1-ehpU-g6i9Qem@hovoldconsulting.com>
+From: bluez.test.bot@gmail.com
+To: linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
+Subject: RE: [RFC] Bluetooth: hci_event: Rework hci_store_wake_reason
+In-Reply-To: <20240109153041.403337-1-luiz.dentz@gmail.com>
+References: <20240109153041.403337-1-luiz.dentz@gmail.com>
+Reply-To: linux-bluetooth@vger.kernel.org
 
-On Tue, Jan 09, 2024 at 06:12:26PM +0100, Johan Hovold wrote:
-> On Tue, Jan 09, 2024 at 04:50:59PM +0000, Matthias Kaehlcke wrote:
-> 
-> > On Wed, Dec 27, 2023 at 07:03:06PM +0100, Johan Hovold wrote:
-> > > The WCN6855 firmware on the Lenovo ThinkPad X13s expects the Bluetooth
-> > > device address in MSB order when setting it using the
-> > > EDL_WRITE_BD_ADDR_OPCODE command.
-> > > 
-> > > Presumably, this is the case for all non-ROME devices which all use the
-> > > EDL_WRITE_BD_ADDR_OPCODE command for this (unlike the ROME devices which
-> > > use a different command and expect the address in LSB order).
-> > > 
-> > > Reverse the little-endian address before setting it to make sure that
-> > > the address can be configured using tools like btmgmt or using the
-> > > 'local-bd-address' devicetree property.
-> > > 
-> > > Note that this can potentially break systems with boot firmware which
-> > > has started relying on the broken behaviour and is incorrectly passing
-> > > the address via devicetree in MSB order.
-> > 
-> > We should not break existing devices. Their byte order for
-> > 'local-bd-address' may not adhere to the 'spec', however in practice
-> > it is the correct format for existing kernels.
-> 
-> That depends on in what way the current devices are broken.
-> 
-> Any machines that correctly specify their address in little-endian order
-> in the devicetree would no longer be configured using the wrong address.
-> So no problem there (except requiring users to re-pair their gadgets).
-> 
-> And tools like btgmt is broken on all of these Qualcomm machine in any
-> case and would now start working as expected. So no problem there either
-> (unless user space had adapted an inverted the addresses to btmgmt).
-> 
-> So the first question is whether there actually is any boot firmware out
-> there which passes the BD_ADDR in reverse order?
+--===============5932456328982867859==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-Yes, (at least) the boot firmware for sc7180-trogdor devices.
+This is automated email and please do not reply to this email!
 
-hexdump -C /proc/device-tree/soc\@0/geniqup\@8c0000/serial\@88c000/bluetooth/local-bd-address
-00000000  8c fd f0 40 15 dc
+Dear submitter,
 
-hciconfig
-hci0:   Type: Primary  Bus: UART
-        BD Address: 8C:FD:F0:40:15:DC  ACL MTU: 1024:8  SCO MTU: 240:8
-        UP RUNNING 
-        RX bytes:1700 acl:0 sco:0 events:95 errors:0
-        TX bytes:128949 acl:0 sco:0 commands:578 errors:0
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=815440
 
-> > I suggest adding a quirk like 'local-bd-address-msb-quirk' or
-> > 'qcom,local-bd-address-msb-quirk' to make sure existing devices keep
-> > working properly.
-> 
-> I don't think that would work. If this is something that we really need
-> to handle, then there's probably no way around introducing new
-> compatible strings for boot firmware that isn't broken while maintaining
-> the current broken behaviour with respect to 'local-bd-address' for some
-> of the current ones.
+---Test result---
 
-I think it should work for sc7180-trogdor. For these devices the device tree
-is bundled with the kernel image and can be updated. That might not be true
-for other devices though.
+Test Summary:
+CheckPatch                    PASS      0.67 seconds
+GitLint                       PASS      0.34 seconds
+SubjectPrefix                 PASS      0.13 seconds
+BuildKernel                   PASS      27.86 seconds
+CheckAllWarning               PASS      30.76 seconds
+CheckSparse                   WARNING   36.03 seconds
+CheckSmatch                   WARNING   99.10 seconds
+BuildKernel32                 PASS      27.23 seconds
+TestRunnerSetup               PASS      431.79 seconds
+TestRunner_l2cap-tester       PASS      22.75 seconds
+TestRunner_iso-tester         PASS      46.87 seconds
+TestRunner_bnep-tester        PASS      6.84 seconds
+TestRunner_mgmt-tester        PASS      161.82 seconds
+TestRunner_rfcomm-tester      PASS      10.68 seconds
+TestRunner_sco-tester         PASS      14.35 seconds
+TestRunner_ioctl-tester       PASS      12.01 seconds
+TestRunner_mesh-tester        PASS      8.81 seconds
+TestRunner_smp-tester         PASS      9.60 seconds
+TestRunner_userchan-tester    PASS      7.18 seconds
+IncrementalBuild              PASS      25.99 seconds
 
-Matthias
+Details
+##############################
+Test: CheckSparse - WARNING
+Desc: Run sparse tool with linux kernel
+Output:
+net/bluetooth/hci_event.c: note: in included file (through include/net/bluetooth/hci_core.h):
+##############################
+Test: CheckSmatch - WARNING
+Desc: Run smatch tool with source
+Output:
+net/bluetooth/hci_event.c: note: in included file (through include/net/bluetooth/hci_core.h):
+
+
+---
+Regards,
+Linux Bluetooth
+
+
+--===============5932456328982867859==--
 
