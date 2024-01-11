@@ -1,164 +1,306 @@
-Return-Path: <linux-bluetooth+bounces-1047-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1045-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E0A982AE7B
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Jan 2024 13:11:52 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D76982AD69
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Jan 2024 12:30:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 220EA1C22EA5
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Jan 2024 12:11:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3750D289ABF
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Jan 2024 11:30:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 950DD156F6;
-	Thu, 11 Jan 2024 12:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C089E15482;
+	Thu, 11 Jan 2024 11:30:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=nxp.com header.i=@nxp.com header.b="IHesj43X"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="oQy+byo0"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05on2084.outbound.protection.outlook.com [40.107.21.84])
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2B3B15AC0;
-	Thu, 11 Jan 2024 12:11:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Fu11iy7oXTVgnuowQac0mZ1fJb1KW5Mnrne7eP+Hu/42/CpGNImVkza71IUQyOhFul6SWVNnAFZGChDUACCK94oYoHYPzkNSgC+QWTMA23JB273RB62rk8IvbYuQss/hZOiKEt1mKEQKHjwhfOAkQvUaLlJlbbTe8jHiEFzvNrx8g284hlbTOEQTu1leV8cNUD1xoYv77TZrG/sQbI2kpOeLmKSgEfTt8GZQ+SZE8mYKKmRzeDV9ZPgz6e33q8/b70jAj9JQSO49myARQb9REd8EOxycx/OqmQlwGVPy6I0zk/8gZdQbpTMW0oOMXUK/C03yvpRIJ3fLHtj7B1TdMA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=G/nWN7XPM8jgUPBcCZtG5OmYiBD48zD2gTuvoHsdoGs=;
- b=RhGt5VmagH6NJ4SesO9EMlVY/u5/+p4PVrWKSKl+2TMRTbp3X9IzQYVln9KxFX00yM+rgg8Hi9wfAQAYGGtFA0ba5OVq13A1kHqRO2OU7lB6vXnQC90Z8EOmN31GxNRdYm/WznvA9Sow1AYsDFuvukA6a0PSGNuRhJ11t9s+B7Ggssve/2PpbBjejqE/TM6hYWtPnzXxCHY8URtFHMpQBKkX9/WBBHIVBC7Hbgo9eV0zH9Vww/yRtar0gq0nrEL5yUK2mGhYBGB6seO2APc1b3IkD5X+595sthQo0dfbCQlrWEs6Dwah4UlxkTASVoYMmbtucWFQLCOOIgT8TJtNSA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=G/nWN7XPM8jgUPBcCZtG5OmYiBD48zD2gTuvoHsdoGs=;
- b=IHesj43XdIlT03asgjs03HAfxyxJbUH0KrFoMhSWRsoHykJqoyOwMaSHUgFNaq5kJrZQH6HYX2RDO4LA7/SC64I9IkVROkFW7OhPKMJlZ8qtPBgph3qWuQdr5OGPZURD1xs3pi4wSFIznMpkrtAkI0RiyFEI/gVJEzx85E9AJ0U=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-Received: from AS4PR04MB9692.eurprd04.prod.outlook.com (2603:10a6:20b:4fe::20)
- by PAXPR04MB8407.eurprd04.prod.outlook.com (2603:10a6:102:1c7::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7181.19; Thu, 11 Jan
- 2024 12:11:33 +0000
-Received: from AS4PR04MB9692.eurprd04.prod.outlook.com
- ([fe80::748a:98f4:59fa:f206]) by AS4PR04MB9692.eurprd04.prod.outlook.com
- ([fe80::748a:98f4:59fa:f206%7]) with mapi id 15.20.7181.015; Thu, 11 Jan 2024
- 12:11:33 +0000
-From: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
-To: marcel@holtmann.org,
-	johan.hedberg@gmail.com,
-	luiz.dentz@gmail.com
-Cc: amitkumar.karwar@nxp.com,
-	neeraj.sanjaykale@nxp.com,
-	linux-bluetooth@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	sherry.sun@nxp.com,
-	rohit.fule@nxp.com
-Subject: [PATCH v2] Bluetooth: btnxpuart: Enable Power Save feature on startup
-Date: Thu, 11 Jan 2024 15:41:35 +0530
-Message-Id: <20240111101135.272065-1-neeraj.sanjaykale@nxp.com>
-X-Mailer: git-send-email 2.34.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: AM9P193CA0021.EURP193.PROD.OUTLOOK.COM
- (2603:10a6:20b:21e::26) To AS4PR04MB9692.eurprd04.prod.outlook.com
- (2603:10a6:20b:4fe::20)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ECBE15484
+	for <linux-bluetooth@vger.kernel.org>; Thu, 11 Jan 2024 11:30:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1704972612;
+	bh=e8f64Uo0cW+y1Xmq572kSyBDIAvRQL0mkC+gpr4bsaw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=oQy+byo0nfv6Wt9VSwuKjYb7kni8fq9hoe7GUtLJ0da7M87wgTjVfXvlefPJv027C
+	 gqKHmxsdFfhLYt6sjPkFSrOlrhNmqZOLdC6Hj42/SAaefrn20HycK88v7jk1vGBAgv
+	 MluBjAgg6sfLtr0d81T2Hm7YbsFZD/VIrFazW/YV4EwauP2DFtHoSrnWT3qBOYg44e
+	 wMPhMeUCIhpKH5zj3tsLxDwRcdnC06tAZBQ3kRze+PY428lq1/aKAh4+oBWldLwgC4
+	 xywxHu/whaMkfAi0KvXX9W0hMEAsdKIflk6quOrYofEYtYvGtR3UXui5mXyRfB5mni
+	 PY/difzA1xKBQ==
+Received: from [100.72.96.248] (cola.collaboradmins.com [195.201.22.229])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: fdanis)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 809653781182;
+	Thu, 11 Jan 2024 11:30:12 +0000 (UTC)
+Message-ID: <41a872ab-52d6-4387-97e7-eae215592fac@collabora.com>
+Date: Thu, 11 Jan 2024 12:30:11 +0100
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AS4PR04MB9692:EE_|PAXPR04MB8407:EE_
-X-MS-Office365-Filtering-Correlation-Id: 307db95e-350b-4339-05d2-08dc129e7357
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	ZE7fkIlvMIzPi5IW2gCd9z+9RI0AYb59ADjKaXUzmwLmI0sAqZE3XET7wQMSB8AFXuYeTH6XpKdOXZFCc6fEvn+/zRtg9afhCRMfio4Uf2bvZaeVnQ90lAdCebF3JttKbI8Ae84e+vTpUafCJmJNfvg8XOfFckT/o+Fff8vvAi/Ir5plOJYYZ2wVNEC5cwHKAojZKq5rhlnVxXANYQI+WihcNDQ3iWCXwhxlUl6aqZ34aLiiL4aum9PW7pW+Z9nz5jlULhTM1qa7Y9wBa7BghpN2xomVAnPx6iZI/JyuLnoAXNfdvnuSpaVCMRMt0+QxNHMJj4KROD/WS8Kt2bF73XPD73y9Fq2RShOYiOtqLT990C9F21u9HUH0KyvLovntoNLhPAKlO7HgiaGvi3uk4nE4IkXBR+wkPmOXLB17wqmKqzzC+KkNK6eHjvYGxbdkqltoNxJ1D+XgSlMq/uR6FdlkGT73jXcD3r2S4p3Plq/CtGg6HXYRzBiW9KZmlfujZhz0oD/9jiqs+1OOX+7UTS1OTJvuciK82NxB+36Pt1z3424SZKa1rFFhrp0t4nH4u3W60YK14F7IZ2d3xvkS9DxbhInDbTsGBty13PCMyuCNnwDWr2TKq0ufbG7rytBG
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS4PR04MB9692.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(136003)(366004)(376002)(39860400002)(346002)(396003)(230922051799003)(1800799012)(64100799003)(451199024)(186009)(36756003)(4326008)(5660300002)(1076003)(26005)(2616005)(8936002)(8676002)(41300700001)(2906002)(478600001)(86362001)(38100700002)(6486002)(6506007)(6512007)(316002)(66476007)(66556008)(66946007)(38350700005)(83380400001)(52116002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?0gkgG/cY6RIti7IbCj//FNCMNNxkb+8z8GSMlq2ocxU5kntQ4CSwKaOSzWQp?=
- =?us-ascii?Q?YD2JJBWtJ9Td8SkU1ufb8wtip5ENnQPrXyUUokOVPJqnmRz7LTp3H49yPKRq?=
- =?us-ascii?Q?imvl++3AK37Ia9ZNZ0qpPMlR5WUANHJTyDXR3ZvveVauiaepH1rCnx4wUWUv?=
- =?us-ascii?Q?fJGf1NFD9b8xInfp+W2v2DVWzACddyvjog+zEb0fSoJk9pBJXKI6a+3R7LYi?=
- =?us-ascii?Q?xS4Fq+rM8huCHt6hYHQp+reaoWS+rJtsbZTaJ+ajzbDvJxEHWiWPMlEtk42Q?=
- =?us-ascii?Q?GUw2diK37QR6gRXLCOyScgPFsrQLbeiXhJEDPWGJ+gRm1dVKtnheMEH+vN1t?=
- =?us-ascii?Q?qzL+1s/iG3GgDw4uTpzdqlUs3/80O6y9uB9+TlurIQZhrd7khxpSU0At+Huc?=
- =?us-ascii?Q?Wbq3lfWIlz+cTTt8es9n7RHpEvbnRmzmE2e/J+UaZYHuZVGVJ88NIV1BBI0N?=
- =?us-ascii?Q?9LpRmyGIqDdHgQOs/sWdFDFDGG4TqYWoDNvlqflxsKg4jg0DJt+HYByHvGA3?=
- =?us-ascii?Q?hAF30ONNcW/bVECoM73stWIox2pC24FXrO24MdN+PP0/WAwEJKGt6zOrVjW7?=
- =?us-ascii?Q?u0QlHRyQNEp5mHgOGPp/Y/65q2DD9b79GZrAEtpj6mprOBKPMKsO8OF2E/pp?=
- =?us-ascii?Q?EoPMeBO//avyhSSbYB/ZkiKpRCurvUCUQaQpIhrEL/SkZlW+iyRHlXOpQFJV?=
- =?us-ascii?Q?DqmJcgBQlbM05VhBWVmfcyCg9pYgWK2ayxZL69cwI9PdpKlO0YLVeeyfrFD6?=
- =?us-ascii?Q?tVrFKCJJnvl1QkO3bVMqB+LPRYx3NKJTkRecdXWbFIqjzZWDuEjjy57QDOe8?=
- =?us-ascii?Q?bpmUvq2FqsMHqwBiCq+CV8oyhVs3nLkX/MX7Vu5HZo4PiZBYqLDT1TB/T9pq?=
- =?us-ascii?Q?PB/JgvMoFoBrEfP4D/QAOAqenMecY22qrRFxq60xBOXSpWGdpmKdgkErreo3?=
- =?us-ascii?Q?lKqCaDN8d6Vc+/JxtqEkPj6L+VNN3Bkpdsii2wXD2MnSkpn4v+j+TSw1ze8v?=
- =?us-ascii?Q?jtbKBPeI0xASN3zX0zkiE4Lra5yqjfaSF6qbvnhWWayvnljvefkLbyBfUfJM?=
- =?us-ascii?Q?ccP9optBe1UXisIoMVbOnjzbd0qeR8N8rLdcLkpmBkMp7z5LGy0H/XBJpBiL?=
- =?us-ascii?Q?Q4ndnSe0srci8ZsitRGwlxlGuuUFgud2EU7dCG5939ulkIEf1c4mcER5WMEJ?=
- =?us-ascii?Q?LXmd7c2TwZaY38/wM7nM7CD6/kpMzy9gxQb8UQ6305H6YKXSYrdUddUcIGVt?=
- =?us-ascii?Q?OtRaYIfPzEGmRroOQB1EyxjCDrF8adKcNc4QX6pwQWTAjnGDoLu+0U9T3F4R?=
- =?us-ascii?Q?2mdkpzYIqeA9aPL6cRI4VwD38OJO7oSka/GSzakCgmQu3LdWGlGf9jSaXZQ6?=
- =?us-ascii?Q?DPjH8Sn+YOCsRyyhEzn641S8A/yMoXDiRM84QCldMwoGFmOykQFiizuJXJbL?=
- =?us-ascii?Q?FV7fnDHC/9u1kxGsJ8CYpl5rbuZFc7zNKHVTaDBqLcFxDs0YlJfH3VekRlw7?=
- =?us-ascii?Q?hFHjSgUC0qYIlteUwfTJGVMsL1mDWU1vMt6X+rB9cGDPhnFrtO1lde4x+aKj?=
- =?us-ascii?Q?XoHbUQnimzgKtjom4OJnIv+zChSVThU8t3YJonGUQ3Cyoc/lXNLFHWUTjwv0?=
- =?us-ascii?Q?wg=3D=3D?=
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 307db95e-350b-4339-05d2-08dc129e7357
-X-MS-Exchange-CrossTenant-AuthSource: AS4PR04MB9692.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jan 2024 12:11:33.2024
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: dKoT49hYxzFdv6kf7hpO+8rYY/ddhjwQ0Gudh4Zi1EuYehtEqLuK+9/YggwnYRi7QnMJj15JGo5OmAppKUt+jlvg2y0fg1tMUCJLoHpv6yQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR04MB8407
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH BlueZ v3] shared/gatt-db: Fix munmap_chunk invalid pointer
+Content-Language: en-US
+To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: linux-bluetooth@vger.kernel.org
+References: <20240105123404.151860-1-frederic.danis@collabora.com>
+ <CABBYNZ+xUJ=XJOzOtq0inJmKA_MwxGaYokWqpDBjgBcmNc5koA@mail.gmail.com>
+From: =?UTF-8?Q?Fr=C3=A9d=C3=A9ric_Danis?= <frederic.danis@collabora.com>
+In-Reply-To: <CABBYNZ+xUJ=XJOzOtq0inJmKA_MwxGaYokWqpDBjgBcmNc5koA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-This sets the default power save mode setting to enabled.
+Hi Luiz,
 
-The power save feature is now stable and stress test issues, such as the
-TX timeout error, have been resolved.
-commit c7ee0bc8db32 ("Bluetooth: btnxpuart: Resolve TX timeout error in
-power save stress test")
+On 05/01/2024 16:08, Luiz Augusto von Dentz wrote:
+> Hi Frédéric,
+>
+> On Fri, Jan 5, 2024 at 7:34 AM Frédéric Danis
+> <frederic.danis@collabora.com> wrote:
+>> PTS test GATT/CL/GAD/BV-03-C published a service starting at handle 0xfffd
+>> and ending at 0xffff.
+>> This resets the next_handle to 0 in gatt_db_insert_service() instead of
+>> setting it to 0x10000. Other services are added later.
+>> This could end-up by a crash in db_hash_update() if not enough space has
+>> been allocated for hash.iov and some entries are overwritten.
+>> ---
+>> v1 -> v2: Replace next_handle by last_handle
+>>            Check empty db using gatt_db_isempty(db) instead of
+>>              next_handle == 0
+>>            Add robustness unit test to check that gatt_db_get_hash()
+>>              doesn't crash
+>> v2 -> v3: Fix line length checkpatch errors
+>> ---
+>>   src/shared/gatt-db.c | 19 ++++++-----
+>>   unit/test-gatt.c     | 80 +++++++++++++++++++++++++++++++++++++++++++-
+>>   2 files changed, 89 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/src/shared/gatt-db.c b/src/shared/gatt-db.c
+>> index 676f963ec..9559583d1 100644
+>> --- a/src/shared/gatt-db.c
+>> +++ b/src/shared/gatt-db.c
+>> @@ -58,7 +58,7 @@ struct gatt_db {
+>>          struct bt_crypto *crypto;
+>>          uint8_t hash[16];
+>>          unsigned int hash_id;
+>> -       uint16_t next_handle;
+>> +       uint16_t last_handle;
+> Don't we have the last_handle already by doing queue_peek_tail, etc
+> and look into the database? Perhaps we want to avoid this sort of
+> lookup though, but I'd leave a comment in that case.
 
-With this setting, the driver will send the vendor command to FW at
-startup, to enable power save feature.
+Ok, I will add a comment about it in the commit message.
 
-User can disable this feature using the following vendor
-command:
-hcitool cmd 3f 23 03 00 00 (HCI_NXP_AUTO_SLEEP_MODE)
+>>          struct queue *services;
+>>
+>>          struct queue *notify_list;
+>> @@ -255,7 +255,7 @@ struct gatt_db *gatt_db_new(void)
+>>          db->crypto = bt_crypto_new();
+>>          db->services = queue_new();
+>>          db->notify_list = queue_new();
+>> -       db->next_handle = 0x0001;
+>> +       db->last_handle = 0x0000;
+>>
+>>          return gatt_db_ref(db);
+>>   }
+>> @@ -356,14 +356,15 @@ static bool db_hash_update(void *user_data)
+>>
+>>          db->hash_id = 0;
+>>
+>> -       if (!db->next_handle)
+>> +       if (gatt_db_isempty(db))
+>>                  return false;
+>>
+>> -       hash.iov = new0(struct iovec, db->next_handle);
+>> +       hash.iov = new0(struct iovec, db->last_handle + 1);
+>>          hash.i = 0;
+>>
+>>          gatt_db_foreach_service(db, NULL, service_gen_hash_m, &hash);
+>> -       bt_crypto_gatt_hash(db->crypto, hash.iov, db->next_handle, db->hash);
+>> +       bt_crypto_gatt_hash(db->crypto, hash.iov, db->last_handle + 1,
+>> +                               db->hash);
+>>
+>>          for (i = 0; i < hash.i; i++)
+>>                  free(hash.iov[i].iov_base);
+>> @@ -624,7 +625,7 @@ bool gatt_db_clear_range(struct gatt_db *db, uint16_t start_handle,
+>>
+>>   done:
+>>          if (gatt_db_isempty(db))
+>> -               db->next_handle = 0;
+>> +               db->last_handle = 0;
+>>
+>>          return true;
+>>   }
+>> @@ -700,7 +701,7 @@ struct gatt_db_attribute *gatt_db_insert_service(struct gatt_db *db,
+>>                  return NULL;
+>>
+>>          if (!handle)
+>> -               handle = db->next_handle;
+>> +               handle = db->last_handle + 1;
+>>
+>>          if (num_handles < 1 || (handle + num_handles - 1) > UINT16_MAX)
+>>                  return NULL;
+>> @@ -747,8 +748,8 @@ struct gatt_db_attribute *gatt_db_insert_service(struct gatt_db *db,
+>>          service->attributes[0]->handle = handle;
+>>          service->num_handles = num_handles;
+>>
+>> -       /* Fast-forward next_handle if the new service was added to the end */
+>> -       db->next_handle = MAX(handle + num_handles, db->next_handle);
+>> +       /* Fast-forward last_handle if the new service was added to the end */
+>> +       db->last_handle = MAX(handle + num_handles - 1, db->last_handle);
+>>
+>>          return service->attributes[0];
+> Let's split the new test case into its own patch.
 
-Signed-off-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
----
-v2: Corrected subject line. Added commit reference. (Paul Menzel)
- drivers/bluetooth/btnxpuart.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Ok
 
-diff --git a/drivers/bluetooth/btnxpuart.c b/drivers/bluetooth/btnxpuart.c
-index 7f88b6f52f26..42e929f0d141 100644
---- a/drivers/bluetooth/btnxpuart.c
-+++ b/drivers/bluetooth/btnxpuart.c
-@@ -281,7 +281,7 @@ static u8 crc8_table[CRC8_TABLE_SIZE];
- 
- /* Default configurations */
- #define DEFAULT_H2C_WAKEUP_MODE	WAKEUP_METHOD_BREAK
--#define DEFAULT_PS_MODE		PS_MODE_DISABLE
-+#define DEFAULT_PS_MODE		PS_MODE_ENABLE
- #define FW_INIT_BAUDRATE	HCI_NXP_PRI_BAUDRATE
- 
- static struct sk_buff *nxp_drv_send_cmd(struct hci_dev *hdev, u16 opcode,
+>> diff --git a/unit/test-gatt.c b/unit/test-gatt.c
+>> index f92d860c4..9457d9079 100644
+>> --- a/unit/test-gatt.c
+>> +++ b/unit/test-gatt.c
+>> @@ -1908,6 +1908,67 @@ static struct gatt_db *make_test_spec_large_db_1(void)
+>>          return make_db(specs);
+>>   }
+>>
+>> +/*
+>> + * Defined Test database 3:
+>> + * Tiny database fits into a single minimum sized-pdu with services unordered.
+>> + * Satisfies requirements:
+>> + * 5. At least one characteristic at the MAX handle
+>> + * 7. at least one service uuid with multiple instances
+>> + * 8. Some simple services, some with included services
+>> + * 9. an instance where handle of included service comes before the including
+>> + * service
+>> + * 11. Simple characteristics (no desc) and complex characteristics
+>> + *     (multiple descriptors)
+>> + * 12. Instances of complex chars with 16-bit and 128-bit uuids
+>> + *     (although not in scrambled order)
+>> + */
+>> +
+>> +static struct gatt_db *make_test_spec_unordered_db(void)
+>> +{
+>> +       const struct att_handle_spec specs[] = {
+>> +               SECONDARY_SERVICE(0x0003, DEVICE_INFORMATION_UUID, 16),
+>> +               CHARACTERISTIC_STR(GATT_CHARAC_MANUFACTURER_NAME_STRING,
+>> +                                               BT_ATT_PERM_READ |
+>> +                                               BT_ATT_PERM_WRITE,
+>> +                                               BT_GATT_CHRC_PROP_READ |
+>> +                                               BT_GATT_CHRC_PROP_NOTIFY |
+>> +                                               BT_GATT_CHRC_PROP_INDICATE |
+>> +                                               BT_GATT_CHRC_PROP_EXT_PROP,
+>> +                                               "BlueZ"),
+>> +               DESCRIPTOR(GATT_CLIENT_CHARAC_CFG_UUID, BT_ATT_PERM_READ |
+>> +                                               BT_ATT_PERM_WRITE, 0x00, 0x00),
+>> +               DESCRIPTOR_STR(GATT_CHARAC_USER_DESC_UUID, BT_ATT_PERM_READ,
+>> +                                                       "Manufacturer Name"),
+>> +               DESCRIPTOR(GATT_CHARAC_EXT_PROPER_UUID, BT_ATT_PERM_READ, 0x01,
+>> +                                                                       0x00),
+>> +               CHARACTERISTIC_STR(GATT_CHARAC_SOFTWARE_REVISION_STRING,
+>> +                                               BT_ATT_PERM_READ,
+>> +                                               BT_GATT_CHRC_PROP_READ |
+>> +                                               BT_GATT_CHRC_PROP_INDICATE,
+>> +                                               "5.59"),
+>> +               DESCRIPTOR(GATT_CLIENT_CHARAC_CFG_UUID, BT_ATT_PERM_READ
+>> +                       | BT_ATT_PERM_WRITE, 0x00, 0x00),
+>> +
+>> +               PRIMARY_SERVICE(0xFFFF - 9 + 1, GAP_UUID, 9),
+>> +               INCLUDE(0x0003),
+>> +               CHARACTERISTIC_STR(GATT_CHARAC_DEVICE_NAME, BT_ATT_PERM_READ,
+>> +                                                       BT_GATT_CHRC_PROP_READ,
+>> +                                                       "BlueZ Unit Tester"),
+>> +               CHARACTERISTIC(0000B009-0000-0000-0123-456789abcdef,
+>> +                                       BT_ATT_PERM_READ | BT_ATT_PERM_WRITE,
+>> +                                       BT_GATT_CHRC_PROP_READ |
+>> +                                       BT_GATT_CHRC_PROP_EXT_PROP, 0x09),
+>> +               DESCRIPTOR(GATT_CHARAC_EXT_PROPER_UUID, BT_ATT_PERM_READ, 0x01,
+>> +                                                                       0x00),
+>> +               CHARACTERISTIC(GATT_CHARAC_APPEARANCE, BT_ATT_PERM_READ,
+>> +                                       BT_GATT_CHRC_PROP_READ, 0x00, 0x00),
+>> +               PRIMARY_SERVICE(0x0001, DEVICE_INFORMATION_UUID, 1),
+>> +               { }
+>> +       };
+>> +
+>> +       return make_db(specs);
+>> +}
+>> +
+>>   static void test_client(gconstpointer data)
+>>   {
+>>          create_context(512, data);
+>> @@ -2345,10 +2406,22 @@ static const struct test_step test_indication_server_1 = {
+>>          .length = 0x03,
+>>   };
+>>
+>> +static void test_hash_db(gconstpointer data)
+>> +{
+>> +       struct context *context = create_context(512, data);
+>> +
+>> +       /* test that gatt_db_get_hash is able to manage unordered db and
+>> +        * doesn't crash
+>> +        */
+>> +       gatt_db_get_hash(context->server_db);
+>> +
+>> +       context_quit(context);
+>> +}
+>> +
+>>   int main(int argc, char *argv[])
+>>   {
+>>          struct gatt_db *service_db_1, *service_db_2, *service_db_3;
+>> -       struct gatt_db *ts_small_db, *ts_large_db_1;
+>> +       struct gatt_db *ts_small_db, *ts_large_db_1, *ts_unordered_db;
+>>
+>>          tester_init(&argc, &argv);
+>>
+>> @@ -2357,6 +2430,7 @@ int main(int argc, char *argv[])
+>>          service_db_3 = make_service_data_3_db();
+>>          ts_small_db = make_test_spec_small_db();
+>>          ts_large_db_1 = make_test_spec_large_db_1();
+>> +       ts_unordered_db = make_test_spec_unordered_db();
+> Afaik the db cannot be unordered, handles always must be in ascending
+> order, what can happen is to have gaps in between, so I'd rename this
+> to be something like ts_tail_db or something like that. Is there a
+> specific test case in the test spec that does require this db though,
+> looks like you are just introducing a custom one, which is valid, but
+> I also want  to make use of this db on the standard tests as well if
+> that is how they are intended.
+
+Yes, the db is not unordered, the crash occurs when the db is setup in 
+unordered way, e.g. if handle 0x0001 is added after handle 0xFFFF.
+This is not defined in the specs, so I added a custom function to create 
+the db and will update the comment on it.
+
+>>          /*
+>>           * Server Configuration
+>> @@ -4487,5 +4561,9 @@ int main(int argc, char *argv[])
+>>                          raw_pdu(0xff, 0x00),
+>>                          raw_pdu());
+>>
+>> +       define_test_server("/robustness/hash-db",
+>> +                       test_hash_db, ts_unordered_db, NULL,
+>> +                       {});
+>> +
+>>          return tester_run();
+>>   }
+>> --
+>> 2.34.1
+>>
+>>
+>
+
 -- 
-2.34.1
+Frédéric Danis
+Senior Software Engineer
+
+Collabora Ltd.
+Platinum Building, St John's Innovation Park, Cambridge CB4 0DS, United Kingdom
+Registered in England & Wales, no. 5513718
 
 
