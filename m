@@ -1,120 +1,126 @@
-Return-Path: <linux-bluetooth+bounces-1085-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1089-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D54D882E206
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 15 Jan 2024 21:57:20 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B306982EFFC
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 Jan 2024 14:52:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 889551F22DE3
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 15 Jan 2024 20:57:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D9EB71C23412
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 Jan 2024 13:52:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0597D1AAD7;
-	Mon, 15 Jan 2024 20:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 837501BF35;
+	Tue, 16 Jan 2024 13:51:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LN9F2H9G"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FISa6OOQ"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 290F118EB0
-	for <linux-bluetooth@vger.kernel.org>; Mon, 15 Jan 2024 20:57:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-4b71b86ef81so1644933e0c.2
-        for <linux-bluetooth@vger.kernel.org>; Mon, 15 Jan 2024 12:57:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705352231; x=1705957031; darn=vger.kernel.org;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=CBrvomtL8B3nbzAKZ1JDN0n+R4+p5m9nXf2IC08pFlo=;
-        b=LN9F2H9GhGwggpOcFllTZw4Dwevjfb4OIQVSOZIXAt6VxLV3tTlc8Wa3ipeeZdEBfK
-         AjKVr5RFGQyEC1YdCtiPHoHLJGv4FDtLwv//g4y/cGEIYjW9rCkPQYWGSqXuF/gLQzvb
-         ZSbzms03igrA2AkdQ35H77yelIGH2dnhMKRhvOFPBLvi3OoMnhpAUQWhjKrzj5YqdWDS
-         3RSUfJDvNVIZ+LmMRKP6AxhS9f0Z+Dzt0GsUOWiRO3swnH/EKUD+7X56N+CDBaII3Huw
-         ZXaAP/24g7eDWt2lJpemJB7XV8RApYV5J9DzYBZ2hd8CuNNRrW2PxLudiCBtrIaEnYsc
-         ocGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705352231; x=1705957031;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CBrvomtL8B3nbzAKZ1JDN0n+R4+p5m9nXf2IC08pFlo=;
-        b=g7Zqndj+bexLmpv3tCheEHyOM1CV9XHsVn16350SVYW/5NilCErs9cN/EjRp283nZF
-         NWvquicZIiiOkPuU6Y73EG8JtFXafe8B8FYK8cAk29L9SMz9cgn31dBoG9DkWSbpUqA7
-         7GFxPGZfyl8sh+JjhR2vxy6TiCchbQG2Y5V/fe0WrkSAQuFYJbFtiNNFjbJEqWLS3gM6
-         mU/RuineF96X23siA/B5kIse/agxu1rV9fHpzMgSCCV040gnnriZSOBnXI0X2a1IjJnr
-         mOtfODZe0oe4PhCi6SyYUG7XLsWH5Q2lYd5FsdtgXriDPHFPqIO/MVb84mR7LIr/mPao
-         tXmw==
-X-Gm-Message-State: AOJu0YxtOwkiccmUG/E3EzRyPU5hyu0wsWvVdMnGEKc1TZDCff5d2z3j
-	Lfvh1O0/e9tHw0QUSKHMLekGW+i1qSg=
-X-Google-Smtp-Source: AGHT+IHs6hAR+kj0ftWJOJLjselRTCH6x7ayrqHXOIjQMRwMnCeAjVCLE4S09HgK18EIMlGVfgsm7A==
-X-Received: by 2002:a05:6122:1988:b0:4b6:e467:ec9a with SMTP id bv8-20020a056122198800b004b6e467ec9amr2979394vkb.16.1705352230795;
-        Mon, 15 Jan 2024 12:57:10 -0800 (PST)
-Received: from [172.17.0.2] ([20.75.95.36])
-        by smtp.gmail.com with ESMTPSA id w12-20020a0ce10c000000b0067f70cc986asm3611106qvk.92.2024.01.15.12.57.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jan 2024 12:57:10 -0800 (PST)
-Message-ID: <65a59c26.0c0a0220.49363.ec20@mx.google.com>
-Date: Mon, 15 Jan 2024 12:57:10 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============1726580431904341237=="
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E812B1BDEE
+	for <linux-bluetooth@vger.kernel.org>; Tue, 16 Jan 2024 13:51:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 70372C43141;
+	Tue, 16 Jan 2024 13:51:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1705413118;
+	bh=qMVrXkmg4Fgyp38JOJtFMNb6rJOsPj4pytAyiNylZ1o=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=FISa6OOQQo7MVPehFsZ6teK+Vw7iKrZra+/ztq52QvzNtrsqVk0zbW9cUBdRDJsRa
+	 YFDgUnMQB6nTAJHJk27y1pCZ1QCWQXY0xgSJJhy6aS5c4hituWrXybDCQzuoUeuGF/
+	 0BJCxvAaj43OmbZKRRYuPQC8rZkWYxO0oXdRAulKvqC4Xa9Eg7/SjskdFeSbGI1vDM
+	 ae8LAr1+AUa3wLjUu/Y7DCcMtbwBcxD9yf0zv70jInbHc6O8iX14MYbcujw9KcBPYf
+	 9weY8u7XkTBuMmeDG3pdwojZoc7Oh8fBIv+1sb8w62nYN+sWJ88l53AqhVW369jtCM
+	 s2JO53boTyLcw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56039C47077;
+	Tue, 16 Jan 2024 13:51:58 +0000 (UTC)
+From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
+Subject: [PATCH BlueZ 00/10] Autotools papercuts, linker GC, symlink
+ dbus-org.bluez.obex.service
+Date: Tue, 16 Jan 2024 13:51:54 +0000
+Message-Id: <20240116-autofoo-v1-0-626f6b54bd06@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: bluez.test.bot@gmail.com
-To: linux-bluetooth@vger.kernel.org, christophe.jaillet@wanadoo.fr
-Subject: RE: Bluetooth: Remove usage of the deprecated ida_simple_xx() API
-In-Reply-To: <3b3523b475d0f5cadf81b3131bb1a38b7476b020.1705349526.git.christophe.jaillet@wanadoo.fr>
-References: <3b3523b475d0f5cadf81b3131bb1a38b7476b020.1705349526.git.christophe.jaillet@wanadoo.fr>
-Reply-To: linux-bluetooth@vger.kernel.org
-
---===============1726580431904341237==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPqJpmUC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDQ0Mz3cTSkvy0/HzdlCSjtFSjZHMDS1NDJaDqgqLUtMwKsEnRsbW1AOo
+ 5nHxZAAAA
+To: linux-bluetooth@vger.kernel.org
+Cc: Emil Velikov <emil.velikov@collabora.com>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1705413116; l=2083;
+ i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
+ bh=qMVrXkmg4Fgyp38JOJtFMNb6rJOsPj4pytAyiNylZ1o=;
+ b=aPKfZIFRlWYuJQ804uFLlrxAfw6vtk+x4XgsaCJpxgCpJSlGb+6hrynUdQRU5ebgKvqj9f077
+ MOcg01vDz7ODWjwOKYgjEkahKYylR2XZBx6nH+b4gKxlF3mE8zJCtsK
+X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
+ pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
+X-Endpoint-Received:
+ by B4 Relay for emil.l.velikov@gmail.com/20230301 with auth_id=35
+X-Original-From: Emil Velikov <emil.l.velikov@gmail.com>
+Reply-To: <emil.l.velikov@gmail.com>
 
-This is automated email and please do not reply to this email!
+Hello everyone,
 
-Dear submitter,
+While looking at our bluez package for the SteamDeck a handful of
+paper cuts stood out. Here we tackle the build related ones - a couple
+more series will be incoming shortly.
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=817021
+In a gist we have the following:
+ - remove manual tracking of .services.in, DEPENDENCIES
+ - remove unused variables
+ - polish PKG_CHECK_MODULES handling
+ - enable linker garbage collection
+ - create a symlink to dbus-org.bluez.obex.service
 
----Test result---
+The last change is slightly out of topic here, although since there's
+a high chance of merge conflicts, I've added it here. Let me know if
+you'd like it send out as separate series.
 
-Test Summary:
-CheckPatch                    PASS      0.78 seconds
-GitLint                       PASS      0.99 seconds
-SubjectPrefix                 PASS      0.13 seconds
-BuildKernel                   PASS      27.82 seconds
-CheckAllWarning               PASS      30.32 seconds
-CheckSparse                   PASS      35.92 seconds
-CheckSmatch                   PASS      99.05 seconds
-BuildKernel32                 PASS      27.00 seconds
-TestRunnerSetup               PASS      433.53 seconds
-TestRunner_l2cap-tester       PASS      23.07 seconds
-TestRunner_iso-tester         PASS      50.97 seconds
-TestRunner_bnep-tester        PASS      6.89 seconds
-TestRunner_mgmt-tester        PASS      164.42 seconds
-TestRunner_rfcomm-tester      PASS      10.71 seconds
-TestRunner_sco-tester         PASS      14.35 seconds
-TestRunner_ioctl-tester       PASS      12.36 seconds
-TestRunner_mesh-tester        PASS      8.78 seconds
-TestRunner_smp-tester         PASS      9.76 seconds
-TestRunner_userchan-tester    PASS      7.35 seconds
-IncrementalBuild              PASS      25.77 seconds
+This is my first time diving into bluez, so any comments and input is
+greatly appreciated.
 
-
+Thanks
+Emil
 
 ---
-Regards,
-Linux Bluetooth
+Emil Velikov (10):
+      build: remove unused AM_CONDITIONAL
+      build: tweak PKG_CHECK_MODULES calls
+      build: require libudev 196, circa 2012
+      build: remove dummy {conf,state}{dir,_DATA}
+      build: remove unused variable builtin_nodist
+      build: remove .service files from DEPENDENCIES lists
+      build: remove explicit DEPENDENCIES handling
+      build: manage .service.in files via configure.ac
+      build: enable gc/dead code removal
+      build: install dbus-org.bluez.obex.service symlink
 
+ Makefile.am                       | 31 ++--------------
+ Makefile.mesh                     |  7 +---
+ Makefile.obexd                    | 10 ++++--
+ Makefile.tools                    |  6 ----
+ acinclude.m4                      |  2 ++
+ configure.ac                      | 75 ++++++++++++---------------------------
+ mesh/bluetooth-mesh.service.in    |  2 +-
+ monitor/hwdb.c                    |  2 +-
+ obexd/src/obex.service.in         |  2 +-
+ src/bluetooth.service.in          |  2 +-
+ src/oui.c                         |  2 +-
+ tools/bluetooth-logger.service.in |  2 +-
+ 12 files changed, 43 insertions(+), 100 deletions(-)
+---
+base-commit: 770ad5614e7e8074133e6f563495ce4822f63fe4
+change-id: 20240116-autofoo-db2fe2c70951
 
---===============1726580431904341237==--
+Best regards,
+-- 
+Emil Velikov <emil.l.velikov@gmail.com>
+
 
