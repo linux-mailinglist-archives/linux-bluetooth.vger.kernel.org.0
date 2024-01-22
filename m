@@ -1,58 +1,58 @@
-Return-Path: <linux-bluetooth+bounces-1230-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1232-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3AAB5836DB4
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 22 Jan 2024 18:37:53 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2EB25836DB6
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 22 Jan 2024 18:38:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DE503287377
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 22 Jan 2024 17:37:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5083F1C26F84
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 22 Jan 2024 17:37:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9824B5A782;
-	Mon, 22 Jan 2024 16:50:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82BB35A793;
+	Mon, 22 Jan 2024 16:50:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="sjVMTKOs"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="3YiziCbM"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887065A0F6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E6C85A104
 	for <linux-bluetooth@vger.kernel.org>; Mon, 22 Jan 2024 16:50:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705942212; cv=none; b=pRp7Xv3UehoymJiYJ7ek6pXn+0CuLXj5uKzXqhB8yf58H+ZrktKmPBFUUSR5KUyvJVAh1B+Wqk+GM3fk7CKoO7AVFOOJFkal2pOytdYYwNu54eG8lKd/mA8kOqM+HKCUBZY8peeqOIFHbNd5x9y1WeYziTDiOiSv4TgutOtfCAk=
+	t=1705942213; cv=none; b=GDNuf4XaXdVrRXJ01aW9ZeIKcqxHbv6Cjl8GxRoBOJYGgUcpd8XkoDEMan5GOFDsMiG2IkQOktMBqKw+8Me8wQ1BytoujMtvrzIqqMsR2ec1x1utrY07Z7JCdoN1hQREsB+4gEIeMBGpaFttc+/aHQcdOKv5j6XxJBX+Al60hK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705942212; c=relaxed/simple;
-	bh=fPQmdE+Oy2gu6q4gm52BqkJE2isNjgA/hC6NjUp7Om0=;
+	s=arc-20240116; t=1705942213; c=relaxed/simple;
+	bh=eGTP426tTtmM9oAuZJ87Nw94T9Av1eNGI4oqHYe62+k=;
 	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bqg6I7sx5R0v4YXIk/Vs9PcDYmx8xx2zrVMzRWI2Jm1YRiU7JTe+nUq0kyRFW4ecWJzVIG+JDMS13+MadqQrfHXHIMO2qUy5oM1caR1pglWkMHXO5pdyH4ddkwiaNhc8xKVZvc0yYvEmSsOvdrjmw5D6eFK+8rtv+s/U4HdZWqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=sjVMTKOs; arc=none smtp.client-ip=46.235.227.194
+	 MIME-Version:Content-Type; b=ch6unBUY/38gDKf/Ppl88UyvORN15ZeLc7SFLQ0X8oPO8gsIHuuC3lGVcidDAPxoxODWmqJ/dAgkDR3ho1b1P0KNWeN3uMrYTsZQfY99t6zWhi1+9EcyzbSNd6n1GfDQ8Y47tukKxBzCLcb/rg0QwcTiTYCYr2Bf3GxnLnNLQE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=3YiziCbM; arc=none smtp.client-ip=46.235.227.194
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
 	s=mail; t=1705942209;
-	bh=fPQmdE+Oy2gu6q4gm52BqkJE2isNjgA/hC6NjUp7Om0=;
+	bh=eGTP426tTtmM9oAuZJ87Nw94T9Av1eNGI4oqHYe62+k=;
 	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=sjVMTKOsxPstDTiI6PnlPPSrqHv/0Cm3EzqJziHuDI9A7FgUuoxXTxJJEk94quW8I
-	 oLFWnflcHdCsEeWZsqafuEvywW1HRzsSueErO//NBkWmX7Ll6jnhqZKDvpWV3FQWhE
-	 EFBIwllnPR3uaCkZCXPmyLyFC15YAxGTMd7iwYzkrpjeFyhFe2/Ca3JuFrDBpXFwIe
-	 tqCMs41UJCP08TcgeTQ6wcXwDmfaXAJYj6U9CDsHSj0Oc9a64ZWxJMzopauHZrACy9
-	 T9o9nz9QCElvc5biochIWrH/sa0lPFBKaSyfPwJ+p5ftz0EPRjrN2Gfc6aQOxzwaNc
-	 xdulWAHMUbDIw==
+	b=3YiziCbMWeTEEecJTdz6pHOpWEDXAZmswlID1N6sVCZkamdU4xxCu40gRLLLWvKz6
+	 zEdGTPIvpACfhfq2qHZm4WiKm3p17qgA3Nzn5aooXnjc9rpoYFlXNdmsKqy7uBw8ox
+	 w1faurhpl50k/4WKuxjCN49MuDBDJ+9Ey6dEqGTavZzTaYMrois6mgnJMGenkUT3CX
+	 TOsr4jIe+lb+zISaXGgfdDnVIKNy3yJxAjNyFWAriFx9rYZ5ZYGNbkUloFFK2crO92
+	 /WVIswWep86lTkOsdfOHKqntH+3s/X7dACr5PJ/IVbvznCEg7E8+sZYyE9bT1jlOan
+	 ug1lRacovXFuQ==
 Received: from fdanis-XPS-13-9370.. (cola.collaboradmins.com [195.201.22.229])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: fdanis)
-	by madrid.collaboradmins.com (Postfix) with ESMTPSA id E237E3782006
-	for <linux-bluetooth@vger.kernel.org>; Mon, 22 Jan 2024 16:50:08 +0000 (UTC)
+	by madrid.collaboradmins.com (Postfix) with ESMTPSA id 47B4E378200E
+	for <linux-bluetooth@vger.kernel.org>; Mon, 22 Jan 2024 16:50:09 +0000 (UTC)
 From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 2/5] btgatt-client: Add function to search service based on UUID
-Date: Mon, 22 Jan 2024 17:49:57 +0100
-Message-Id: <20240122165000.279381-3-frederic.danis@collabora.com>
+Subject: [PATCH BlueZ 3/5] btgatt-client: Add function to search characteristics
+Date: Mon, 22 Jan 2024 17:49:58 +0100
+Message-Id: <20240122165000.279381-4-frederic.danis@collabora.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240122165000.279381-1-frederic.danis@collabora.com>
 References: <20240122165000.279381-1-frederic.danis@collabora.com>
@@ -65,46 +65,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-This is requested to pass PTS GATT/CL/GAD/BV-02-C test.
+This is requested to pass PTS GATT/CL/GAD/BV-05-C test.
+This search characteristics based on UUID, start and end handles.
 ---
- tools/btgatt-client.c | 75 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 75 insertions(+)
+ tools/btgatt-client.c | 88 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 88 insertions(+)
 
 diff --git a/tools/btgatt-client.c b/tools/btgatt-client.c
-index 76c74c7a8..631e26879 100644
+index 631e26879..bb0822658 100644
 --- a/tools/btgatt-client.c
 +++ b/tools/btgatt-client.c
-@@ -33,6 +33,7 @@
- #include "src/shared/queue.h"
- #include "src/shared/gatt-db.h"
- #include "src/shared/gatt-client.h"
-+#include "src/shared/gatt-helpers.h"
- 
- #define ATT_CID 4
- 
-@@ -1331,6 +1332,78 @@ static void cmd_set_retry_on_sec_error(struct client *cli, char *cmd_str)
- 		printf("Invalid argument: %s\n", argv[0]);
+@@ -1404,6 +1404,92 @@ static void cmd_search_service(struct client *cli, char *cmd_str)
+ 						NULL);
  }
  
-+static void search_service_usage(void)
++static void search_characteristics_usage(void)
 +{
-+	printf("Usage: search-service <uuid>\n"
++	printf("Usage: search-characteristics <start_hanlde> <end_handle> "
++		"<uuid>\n"
 +		"e.g.:\n"
-+		"\tsearch-service 1800\n");
++		"\tsearch-characteristics 0x0001 0xFFFF 1800\n");
 +}
 +
-+static void search_service_cb(bool success, uint8_t att_ecode,
++static void search_characteristics_cb(bool success, uint8_t att_ecode,
 +					struct bt_gatt_result *result,
 +					void *user_data)
 +{
 +	struct bt_gatt_iter iter;
-+	uint16_t start_handle, end_handle;
-+	uint128_t u128;
-+	bt_uuid_t uuid;
-+	char uuid_str[MAX_LEN_UUID_STR];
++	uint16_t handle, length;
++	const uint8_t *value;
++	int i;
 +
 +	if (!success) {
-+		PRLOG("\nService discovery failed: %s (0x%02x)\n",
++		PRLOG("\nCharacteristics discovery failed: %s (0x%02x)\n",
 +				ecode_to_string(att_ecode), att_ecode);
 +		return;
 +	}
@@ -113,21 +106,22 @@ index 76c74c7a8..631e26879 100644
 +		return;
 +
 +	printf("\n");
-+	while (bt_gatt_iter_next_service(&iter, &start_handle, &end_handle,
-+						u128.data)) {
-+		bt_uuid128_create(&uuid, u128);
-+		bt_uuid_to_string(&uuid, uuid_str, sizeof(uuid_str));
-+		printf("Found start handle: 0x%04x, end handle: 0x%04x, "
-+			"UUID: %s\n",
-+			start_handle, end_handle, uuid_str);
++	while (bt_gatt_iter_next_read_by_type(&iter, &handle, &length,
++						&value)) {
++		printf("Found handle: 0x%04x value: ", handle);
++		for (i = 0; i < length; i++)
++			printf("%02x ", value[i]);
++		printf("\n");
 +	}
 +	PRLOG("\n");
 +}
 +
-+static void cmd_search_service(struct client *cli, char *cmd_str)
++static void cmd_search_characteristics(struct client *cli, char *cmd_str)
 +{
-+	char *argv[2];
++	char *argv[4];
 +	int argc = 0;
++	uint16_t start_handle, end_handle;
++	char *endptr = NULL;
 +	bt_uuid_t uuid;
 +
 +	if (!bt_gatt_client_is_ready(cli->gatt)) {
@@ -135,25 +129,38 @@ index 76c74c7a8..631e26879 100644
 +		return;
 +	}
 +
-+	if (!parse_args(cmd_str, 1, argv, &argc)) {
++	if (!parse_args(cmd_str, 3, argv, &argc)) {
 +		printf("Too many arguments\n");
-+		search_service_usage();
++		search_characteristics_usage();
 +		return;
 +	}
 +
 +	if (argc < 1) {
-+		search_service_usage();
++		search_characteristics_usage();
 +		return;
 +	}
 +
-+	if (bt_string_to_uuid(&uuid, argv[0]) < 0) {
-+		printf("Invalid UUID: %s\n", argv[0]);
++	start_handle = strtol(argv[0], &endptr, 0);
++	if (!endptr || *endptr != '\0') {
++		printf("Invalid start handle: %s\n", argv[0]);
 +		return;
 +	}
 +
-+	bt_gatt_discover_primary_services(bt_gatt_client_get_att(cli->gatt),
-+						&uuid, 0x0001, 0xFFFF,
-+						search_service_cb,
++	end_handle = strtol(argv[1], &endptr, 0);
++	if (!endptr || *endptr != '\0') {
++		printf("Invalid end handle: %s\n", argv[1]);
++		return;
++	}
++
++	if (bt_string_to_uuid(&uuid, argv[2]) < 0) {
++		printf("Invalid UUID: %s\n", argv[2]);
++		return;
++	}
++
++	bt_gatt_read_by_type(bt_gatt_client_get_att(cli->gatt), start_handle,
++						end_handle,
++						&uuid,
++						search_characteristics_cb,
 +						NULL,
 +						NULL);
 +}
@@ -161,12 +168,12 @@ index 76c74c7a8..631e26879 100644
  static void cmd_help(struct client *cli, char *cmd_str);
  
  typedef void (*command_func_t)(struct client *cli, char *cmd_str);
-@@ -1367,6 +1440,8 @@ static struct {
- 				"\tSet signing key for signed write command"},
- 	{ "set-retry-on-sec-error", cmd_set_retry_on_sec_error,
+@@ -1442,6 +1528,8 @@ static struct {
  			"\tSet retry on security error by elevating security"},
-+	{ "search-service", cmd_search_service,
-+				"\tSearch service"},
+ 	{ "search-service", cmd_search_service,
+ 				"\tSearch service"},
++	{ "search-characteristics", cmd_search_characteristics,
++				"\tSearch characteristics"},
  	{ }
  };
  
