@@ -1,201 +1,124 @@
-Return-Path: <linux-bluetooth+bounces-1303-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1307-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7296D83AE2D
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Jan 2024 17:17:56 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 86E0583AE3A
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Jan 2024 17:20:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DD3D11F24851
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Jan 2024 16:17:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BA0451C23619
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Jan 2024 16:20:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5FF87E570;
-	Wed, 24 Jan 2024 16:17:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7475A7E571;
+	Wed, 24 Jan 2024 16:20:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D/DAL+AN"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mout-p-101.mailbox.org (mout-p-101.mailbox.org [80.241.56.151])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5E97E562;
-	Wed, 24 Jan 2024 16:17:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9217CF22
+	for <linux-bluetooth@vger.kernel.org>; Wed, 24 Jan 2024 16:20:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706113047; cv=none; b=B20QLNcWJAgvQyATpBUy8ATPg198iq2HzTW4w3c8l0F+IAYJsW2gQnJkyEFhVh+1IGZv5PXusaKN0QSHdRCi0vZ/+9iCVR0ebDMeLufDZggTD5wF9/79klW1l2IyL+rvVhslO7f+CgqFRDkfn47DZpkZq1KpFSsnnhUKEey4qCw=
+	t=1706113209; cv=none; b=XuxwGCKrrV1tGHg/yav7xEjjegzMiu1gc93ib+2cP8NiDiDgfu4w5xxNtLxBaKyfHD5ociLmJ2Pzixy3l2C2kyHh5rqa0eC2RPzyjrp9tR/csojjXCc3JwLKQ1Fh0TBiGh26oQIWvYlagtAboERSCPVXwqKRw6Gkx7lcmFUsGRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706113047; c=relaxed/simple;
-	bh=rXNeYjIbp304MydXOXcFoTjwZoS/dhBpt7AXuSBz4Ro=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NCCz1rI7HOh3OkQCzI0LUUaIqIZRVWf6avEUi0lZLd+MKanFNL3QIdVInfMxAl4AeWhY0tPd8BuQN34SWbSFyW84/t+3x/mP27L7hJ3kHIa6BX2ZuBadbObPoGQQqLcfeW6iIdLBoB/eTAU3pBnmjoF1VLy8YZHmLgatToGY5AM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=v0yd.nl; spf=pass smtp.mailfrom=v0yd.nl; arc=none smtp.client-ip=80.241.56.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=v0yd.nl
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=v0yd.nl
-Received: from smtp2.mailbox.org (smtp2.mailbox.org [10.196.197.2])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4TKpy30F5Vz9swq;
-	Wed, 24 Jan 2024 17:17:15 +0100 (CET)
-Message-ID: <6e618827-c9c1-4ef8-9c98-27ef10b6d6a2@v0yd.nl>
-Date: Wed, 24 Jan 2024 17:17:12 +0100
+	s=arc-20240116; t=1706113209; c=relaxed/simple;
+	bh=5WUSuXRnSfJ9iHmo+afEdRZ3dZUoO2iqL708lpDPlpw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=qfoMzLIlx4fTQu2psYyxlQVO/N3EJwEFVmmId516HdKj9sJvhHypYFUCneN2Y88h8lL16BhTMzRW99DGZ/XD72/D0AZRVx6AbAfSc1f50NVU8RJydwpokctqZpLvSVue374Pr7dimfD9KI2N6yxsyfot5ANROYkplC/Dbnz+ZzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D/DAL+AN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 60A95C433C7;
+	Wed, 24 Jan 2024 16:20:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706113209;
+	bh=5WUSuXRnSfJ9iHmo+afEdRZ3dZUoO2iqL708lpDPlpw=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=D/DAL+ANbUaHa7+Kiko5auEa5UsdB74K+LFhqEby8yzlCiPfMide7lkefRUpPoz46
+	 kSGMWmEVQp/hpqH1E/mJ+zz4UkFwsXBeBQxrGyD28B+2WfhNeJ3J6L9fYLH487/JVG
+	 f33o5Ae3tpeWx9rLOST7xNcB+qwbEQeDtYQ3Q7mukm15yheIP9vNtj7rgCaoN5Oump
+	 f/eIMyHdEkNTDayE3raYXBw0FDo5bZM7ZyHrCnpjpMcObHq/OFBezj+TANEilgXfH0
+	 U+brkH8T8k3HAmco1OCmNlgmbtRk8K+p0UyyPbBCiU44/1qM+ZmruT9iif236/ho/o
+	 ZDcpmPSm6maPg==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B8DAC47DDC;
+	Wed, 24 Jan 2024 16:20:09 +0000 (UTC)
+From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
+Subject: [PATCH BlueZ v2 0/6] Autotools papercuts, linker GC, symlink
+ dbus-org.bluez.obex.service
+Date: Wed, 24 Jan 2024 16:20:05 +0000
+Message-Id: <20240124-autofoo-v2-0-a210f20aa2f7@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH v3 0/4] Bluetooth: Improve retrying of connection attempts
-To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: Marcel Holtmann <marcel@holtmann.org>,
- Johan Hedberg <johan.hedberg@gmail.com>, linux-bluetooth@vger.kernel.org,
- linux-kernel@vger.kernel.org, netdev@vger.kernel.org
-References: <20240108224614.56900-1-verdre@v0yd.nl>
- <CABBYNZKV176teECGnGKTCNNo45ZYbCRs=YddETOUMUsJQX5PdA@mail.gmail.com>
- <efcc7b97-6bfc-4e5d-8e73-78f2b190fa02@v0yd.nl>
-Content-Language: en-US
-From: =?UTF-8?Q?Jonas_Dre=C3=9Fler?= <verdre@v0yd.nl>
-In-Reply-To: <efcc7b97-6bfc-4e5d-8e73-78f2b190fa02@v0yd.nl>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALU4sWUC/2XMyw6CMBCF4Vchs7amnUCNrnwPwqJXmEQY0yLRk
+ L67la3L/+Tk2yGHRCHDrdkhhY0y8VIDTw24ySxjEORrA0pspVJamNfKkVl4izGgu8hrp6C+nyl
+ Eeh9SP9SeKK+cPge8qd/6b2xKSKFRR2271nqp7+Ns6HF2PMNQSvkCsebg6Z4AAAA=
+To: linux-bluetooth@vger.kernel.org
+Cc: Emil Velikov <emil.velikov@collabora.com>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1706113208; l=1641;
+ i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
+ bh=5WUSuXRnSfJ9iHmo+afEdRZ3dZUoO2iqL708lpDPlpw=;
+ b=EfFd90IVDc5vXag36Q3nz+MwbvB0XUBlQyWExPaI3ICA3bl3PDMESgWueFhHPvvGxhuQeMLSM
+ rtcGVj477biC2pBtSNr0vjkpsm8HBTJmYZIMj40iRdpF8yGJofoAu8p
+X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
+ pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
+X-Endpoint-Received:
+ by B4 Relay for emil.l.velikov@gmail.com/20230301 with auth_id=35
+X-Original-From: Emil Velikov <emil.l.velikov@gmail.com>
+Reply-To: <emil.l.velikov@gmail.com>
 
-Hi Luiz,
+Hello everyone,
 
-On 1/9/24 10:57 PM, Jonas Dreßler wrote:
-> Hi Luiz,
-> 
-> On 1/9/24 18:53, Luiz Augusto von Dentz wrote:
->> Hi Jonas,
->>
->> On Mon, Jan 8, 2024 at 5:46 PM Jonas Dreßler <verdre@v0yd.nl> wrote:
->>>
->>> Since commit 4c67bc74f016 ("[Bluetooth] Support concurrent connect
->>> requests"), the kernel supports trying to connect again in case the
->>> bluetooth card is busy and fails to connect.
->>>
->>> The logic that should handle this became a bit spotty over time, and also
->>> cards these days appear to fail with more errors than just "Command
->>> Disallowed".
->>>
->>> This series refactores the handling of concurrent connection requests
->>> by serializing all "Create Connection" commands for ACL connections
->>> similar to how we do it for LE connections.
->>>
->>> ---
->>>
->>> v1: https://lore.kernel.org/linux-bluetooth/20240102185933.64179-1-verdre@v0yd.nl/
->>> v2: https://lore.kernel.org/linux-bluetooth/20240108183938.468426-1-verdre@v0yd.nl/
->>> v3:
->>>    - Move the new sync function to hci_sync.c as requested by review
->>>    - Abort connection on failure using hci_abort_conn_sync() instead of
->>>      hci_abort_conn()
->>>    - Make the last commit message a bit more precise regarding the meaning
->>>      of BT_CONNECT2 state
->>>
->>> Jonas Dreßler (4):
->>>    Bluetooth: Remove superfluous call to hci_conn_check_pending()
->>>    Bluetooth: hci_event: Use HCI error defines instead of magic values
->>>    Bluetooth: hci_conn: Only do ACL connections sequentially
->>>    Bluetooth: Remove pending ACL connection attempts
->>>
->>>   include/net/bluetooth/hci.h      |  3 ++
->>>   include/net/bluetooth/hci_core.h |  1 -
->>>   include/net/bluetooth/hci_sync.h |  3 ++
->>>   net/bluetooth/hci_conn.c         | 83 +++-----------------------------
->>>   net/bluetooth/hci_event.c        | 29 +++--------
->>>   net/bluetooth/hci_sync.c         | 72 +++++++++++++++++++++++++++
->>>   6 files changed, 93 insertions(+), 98 deletions(-)
->>>
->>> -- 
->>> 2.43.0
->>
->> After rebasing and fixing a little bit here and there, see v4, looks
->> like this changes is affecting the following mgmt-tester -s "Pair
->> Device - Power off 1":
->>
->> Pair Device - Power off 1 - init
->>    Read Version callback
->>      Status: Success (0x00)
->>      Version 1.22
->>    Read Commands callback
->>      Status: Success (0x00)
->>    Read Index List callback
->>      Status: Success (0x00)
->>    Index Added callback
->>      Index: 0x0000
->>    Enable management Mesh interface
->>    Enabling Mesh feature
->>    Read Info callback
->>      Status: Success (0x00)
->>      Address: 00:AA:01:00:00:00
->>      Version: 0x09
->>      Manufacturer: 0x05f1
->>      Supported settings: 0x0001bfff
->>      Current settings: 0x00000080
->>      Class: 0x000000
->>      Name:
->>      Short name:
->>    Mesh feature is enabled
->> Pair Device - Power off 1 - setup
->>    Setup sending Set Bondable (0x0009)
->>    Setup sending Set Powered (0x0005)
->>    Initial settings completed
->>    Test setup condition added, total 1
->>    Client set connectable: Success (0x00)
->>    Test setup condition complete, 0 left
->> Pair Device - Power off 1 - setup complete
->> Pair Device - Power off 1 - run
->>    Sending Pair Device (0x0019)
->> Bluetooth: hci0: command 0x0405 tx timeout
->> Bluetooth: hci0: command 0x0408 tx timeout
->>    Test condition added, total 1
->> Pair Device - Power off 1 - test timed out
->>    Pair Device (0x0019): Disconnected (0x0e)
->> Pair Device - Power off 1 - test not run
->> Pair Device - Power off 1 - teardown
->> Pair Device - Power off 1 - teardown
->>    Index Removed callback
->>      Index: 0x0000
->> Pair Device - Power off 1 - teardown complete
->> Pair Device - Power off 1 - done
->>
-> 
-> Thanks for landing the first two commits!
-> 
-> I think this is actually the same issue causing the test failure
-> as in the other issue I had:
-> https://lore.kernel.org/linux-bluetooth/7cee4e74-3a0c-4b7c-9984-696e646160f8@v0yd.nl/
-> 
-> It seems that the emulator is unable to reply to HCI commands sent
-> from the hci_sync machinery, possibly because that is sending things
-> on a separate thread?
+Here is v2 of the autotoo papercuts.
 
-Okay I did some further digging now: Turns out this actually not a problem
-with vhci and the emulator, but (in this test case) it's actually intended
-that there's the command times out, because force_power_off is TRUE for
-this test case, and the HCI device gets shut down right after sending the MGMT
-command.
+Changes in this revision:
+ - dropped already merged patches - thanks o/
+ - drop "build: remove dummy {conf,state}{dir,_DATA}" patch
 
-The test broke because the "Command Complete" MGMT event comes back with status
-"Disconnected" instead of "Not Powered": The reason for that is the
-hci_abort_conn_sync() that I added in the case where the "Create Connection" HCI
-times out. hci_abort_conn_sync() calls hci_conn_failed() with
-HCI_ERROR_LOCAL_HOST_TERM as expected, this in turn calls the hci_connect_cfm()
-callback (pairing_complete_cb), and there we we look up HCI_ERROR_LOCAL_HOST_TERM
-in mgmt_status_table, ending up with MGMT_STATUS_DISCONNECTED.
+The latter patch was causing some unexpected and unrelated issues with
+the CI. At a glance I couldn't quite track down why, it removes some
+dead code and reproducing the CI is a time sink ... So I caved in :-P
 
-When I remove the hci_abort_conn_sync() we get the "Not Powered" failure again,
-I'm not exactly sure why that happens (I assume there's some kind of generic mgmt
-failure return handler that checks hdev_is_powered() and then sets the error).
+Link to the original v1 cover letter and patches can be found below.
 
-So the question now is do we want to adjust the test (and possibly bluetoothd?)
-to expect "Disconnected" instead of "Not Powered", or should I get rid of the
-hci_abort_conn_sync() again? Fwiw, in hci_le_create_conn_sync() we also clean
-up like this on ETIMEDOUT (maybe the spec is just different there?), so
-consistency wise it seems better to adjust the test to expect "Disconnected".
+Thanks
+Emil
 
-Cheers,
-Jonas
+- Link to v1: https://lore.kernel.org/r/20240116-autofoo-v1-0-626f6b54bd06@gmail.com
 
-> 
-> Cheers,
-> Jonas
+---
+Emil Velikov (6):
+      build: remove unused variable builtin_nodist
+      build: remove .service files from DEPENDENCIES lists
+      build: remove explicit DEPENDENCIES handling
+      build: manage .service.in files via configure.ac
+      build: enable gc/dead code removal
+      build: install dbus-org.bluez.obex.service symlink
+
+ Makefile.am                       | 25 +++----------------------
+ Makefile.mesh                     |  7 +------
+ Makefile.obexd                    | 10 ++++++++--
+ Makefile.tools                    |  6 ------
+ acinclude.m4                      |  2 ++
+ configure.ac                      | 11 ++++++++++-
+ mesh/bluetooth-mesh.service.in    |  2 +-
+ obexd/src/obex.service.in         |  2 +-
+ src/bluetooth.service.in          |  2 +-
+ tools/bluetooth-logger.service.in |  2 +-
+ 10 files changed, 28 insertions(+), 41 deletions(-)
+---
+base-commit: a9d1f6f6a625607de6c3f5b7a40a3aac5f36c02b
+change-id: 20240116-autofoo-db2fe2c70951
+
+Best regards,
+-- 
+Emil Velikov <emil.l.velikov@gmail.com>
+
 
