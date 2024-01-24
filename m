@@ -1,52 +1,53 @@
-Return-Path: <linux-bluetooth+bounces-1310-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1309-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3016883AE4A
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Jan 2024 17:24:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A72583AE5D
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Jan 2024 17:30:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A1051B26232
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1515BB24600
 	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Jan 2024 16:20:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8D227E57E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8CE47E57D;
 	Wed, 24 Jan 2024 16:20:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WHzs9UK6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YCaLWdeb"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA1A7CF25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9C17CF24
 	for <linux-bluetooth@vger.kernel.org>; Wed, 24 Jan 2024 16:20:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706113210; cv=none; b=kqSDHxObnykYkRbkNQkbnmvTAu6sLKYis4Qy8GcB9MwbT1kh4KJIU5DtelgaYAetz+jCgCAu7q+o0uYBRtgykWOi9ivpt76UFM2re8hOYXg92YdaMcHysbRTFwhrPZVBJ4jqhc+omkXzdb2qUNEB9BS5VKCp0OuQPCdqMTb0O9w=
+	t=1706113210; cv=none; b=b29l7WwGO8czTCiYy0G9jioJp7JSjdoBE9MVvztlUDQ9YWfx6rynuU41nvSOTAnwFKmi+/1On7Rxj2Ta1QRtep23mDIA9TOwwL8mT64LYTKE7yMLTJpsRm+1bQuKaUzYueRKmvGReLBR7ug1+GjpopRxiqFhVs0cVvzM8VNzvJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706113210; c=relaxed/simple;
-	bh=LY6HxNa1Rb7kL6kWsoMm88OVVfL0zYKMiI+DT18wXSc=;
+	bh=mt/cAQdRVMGpUk5mi/AqEYZMGwI2MZPm2Ce6zyWCPO4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=BQTxgoDKeBN+wb+S4QOmLD8ZlGwoLta2+gAnKOeI75LO89cq9mqX6HCh0oCBze6JDV/6Oi6S1dbZXUxJ5hyYCbg7jt/puju8Ol8JvW5AyDAqAudi6owQ6dtwLOk+EdykzXdGHQH1E77meKQXrTwZFpC6aTGB5iHY/X0wYVr+ZAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WHzs9UK6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 9153BC433B1;
+	 In-Reply-To:To:Cc; b=Td8WaJKeUk8BdniSTlv/kIag4r2p8uzJR5Yus+T4ZKH4pdCOxigPM15+9egsXKYxIjqCdj/hKRMdoNq0FOBMTBm2303BP/4ltKxzaX8AakuboCGtklpxQYzO2Gt1EghwzciDAGhHoVIY3TQJWPz/nQL4GUwkeP1NwFdbnKhgP6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YCaLWdeb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 93931C433F1;
 	Wed, 24 Jan 2024 16:20:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1706113209;
-	bh=LY6HxNa1Rb7kL6kWsoMm88OVVfL0zYKMiI+DT18wXSc=;
+	bh=mt/cAQdRVMGpUk5mi/AqEYZMGwI2MZPm2Ce6zyWCPO4=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=WHzs9UK6xWwA/88i7xd4tQhIOw/MhuwysJRRTF45/i2r5yrj3qYIP/SO2WkuFfiw0
-	 k/cteV8MJg26XFfX8YJdmhzLGM0ojRdwfSsfvNqe1T8CR3hRTi2kMl+sfl/R536zpa
-	 9ypnEobghKYUWJoDgm3MtFPr6pm3P6Fqh0lBFYWFDjHZ5DXAdkua1jhNukFgxCyZZz
-	 RTa1lw88GhnvhAWE6tBjDbqITQsmPQwjmOUxPWiFArTX1QpyjnFdIGjTsqWWGlJlCy
-	 csunMpxmY9jdT3Qj9P+Hgrj8zWf93XWmTr20KzZSQlE0fG7V8GA4+YAQJc9d30CXBd
-	 bFeU4b+mx5H6A==
+	b=YCaLWdebPrOv3Uhavx1VE8hNdF8fjD7XOccpYU9Zsdr4DmK2U6cMkq12grBwBe/95
+	 ptp1OClbV0q9xK16sV0JPk1qOBahB+lKq/8OJzUKq7kxCcKzRn29zaswLdfFTcyXk8
+	 LepisMT/urcV+3WHUOTFVWGOQASDdW2+LjHSHphpoO5CPrS61te92wysNNpH/LJnpd
+	 9AkxuDLMKiXwtY3J07hMbTxILIg07joW+wl5lSE6aldOsaerWVVXbtkohGd4F5l7p0
+	 BWhUhXvrKUM98rVxRXexUuxYsP4xX5J7Q+Uk+4HaKdrDBzknQbn2Ng7bm/lQTxDNye
+	 G+Pe3sAmnCn4Q==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E067C48277;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86121C48286;
 	Wed, 24 Jan 2024 16:20:09 +0000 (UTC)
 From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
-Date: Wed, 24 Jan 2024 16:20:10 +0000
-Subject: [PATCH BlueZ v2 5/6] build: enable gc/dead code removal
+Date: Wed, 24 Jan 2024 16:20:11 +0000
+Subject: [PATCH BlueZ v2 6/6] build: install dbus-org.bluez.obex.service
+ symlink
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -55,17 +56,17 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240124-autofoo-v2-5-a210f20aa2f7@gmail.com>
+Message-Id: <20240124-autofoo-v2-6-a210f20aa2f7@gmail.com>
 References: <20240124-autofoo-v2-0-a210f20aa2f7@gmail.com>
 In-Reply-To: <20240124-autofoo-v2-0-a210f20aa2f7@gmail.com>
 To: linux-bluetooth@vger.kernel.org
 Cc: Emil Velikov <emil.velikov@collabora.com>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1706113208; l=776;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1706113208; l=1158;
  i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
- bh=tXVcdUfXETqQpcM+wIkv5sahEbGpnPS14+ukiFkfzcc=;
- b=O47pFB1MpHutfgeP+aMWlBF+ARi5rE1aUctgbZlF5tjqT3JInSAszK8MFhNauFUT3ImJQdtfk
- RYCwnpcXebACBvbPeTzkFwXt9S7YToicJ6vi3y5hWFNMVSbRkUKCo/3
+ bh=fbR9nv2+W1T7EdTJDnrPWv8eu5ZYYznbyAyGjdmqMMc=;
+ b=7+IjkrXQNVb3h8u9JdTKomQWY65njHFNRhxiSfCXMEb9MH4lByR/ro5trZ7/qXHQNwobV8mgv
+ whH7cqBNPwDD61XkF7Qbyi0W0r02hhgD0AdniwJZRExIP8P87EIhhZI
 X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
  pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
 X-Endpoint-Received:
@@ -75,29 +76,39 @@ Reply-To: <emil.l.velikov@gmail.com>
 
 From: Emil Velikov <emil.velikov@collabora.com>
 
-Currently, there's plenty of unused code in most binaries. Enable
--fdata/function-sections, which allows the linker garbage collection to
-do its job.
+obex.service has an alias(dbus-org.bluez.obex.service) which is created
+as it's enabled. At the same time, the dbus service references the alias
+itself.
 
-On a maintainer build, this reduces the (unstriped) binaries from 117 to
-114MiB.
+Thus the dbus socket activation can happen, only when the service is
+already enabled/running... Which defeats the whole purpose.
+
+Create/install the respective symlink/alias, so that any user looking
+for the dbus will start it.
+
+Note: we need a hook here instead of LN_S to create the in-tree file,
+since `install' aggressively dereferences it.
 ---
- acinclude.m4 | 2 ++
- 1 file changed, 2 insertions(+)
+ Makefile.obexd | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/acinclude.m4 b/acinclude.m4
-index c5d6de7b3..4b73a5bfc 100644
---- a/acinclude.m4
-+++ b/acinclude.m4
-@@ -134,6 +134,8 @@ AC_DEFUN([MISC_FLAGS], [
- 		misc_cflags="$misc_cflags --coverage"
- 		misc_ldflags="$misc_ldflags --coverage"
- 	fi
-+	misc_cflags="$misc_cflags -ffunction-sections -fdata-sections"
-+	misc_ldflags="$misc_ldflags -Wl,--gc-sections"
- 	AC_SUBST([MISC_CFLAGS], $misc_cflags)
- 	AC_SUBST([MISC_LDFLAGS], $misc_ldflags)
- ])
+diff --git a/Makefile.obexd b/Makefile.obexd
+index c2b5c6d7a..363295d0e 100644
+--- a/Makefile.obexd
++++ b/Makefile.obexd
+@@ -3,6 +3,12 @@ if SYSTEMD
+ systemduserunitdir = $(SYSTEMD_USERUNITDIR)
+ systemduserunit_DATA = obexd/src/obex.service
+ 
++install-data-hook:
++	$(LN_S) -f obex.service $(DESTDIR)$(SYSTEMD_USERUNITDIR)/dbus-org.bluez.obex.service
++
++uninstall-hook:
++	rm -f $(DESTDIR)$(SYSTEMD_USERUNITDIR)/dbus-org.bluez.obex.service
++
+ dbussessionbusdir = $(DBUS_SESSIONBUSDIR)
+ dbussessionbus_DATA = obexd/src/org.bluez.obex.service
+ endif
 
 -- 
 2.43.0
