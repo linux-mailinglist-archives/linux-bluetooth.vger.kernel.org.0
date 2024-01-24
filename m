@@ -1,156 +1,201 @@
-Return-Path: <linux-bluetooth+bounces-1299-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1303-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D758383ADFE
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Jan 2024 17:09:10 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7296D83AE2D
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Jan 2024 17:17:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 89DEF1F24BD2
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Jan 2024 16:09:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DD3D11F24851
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Jan 2024 16:17:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D776D7E766;
-	Wed, 24 Jan 2024 16:08:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O8f5G2K0"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5FF87E570;
+	Wed, 24 Jan 2024 16:17:27 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout-p-101.mailbox.org (mout-p-101.mailbox.org [80.241.56.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35C87E574
-	for <linux-bluetooth@vger.kernel.org>; Wed, 24 Jan 2024 16:08:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5E97E562;
+	Wed, 24 Jan 2024 16:17:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706112484; cv=none; b=J3BWuBgSlty+7hfhHntKOCLX17GvB/qY2aWUXV3VUnaoemXi44CLz2i4E2fo2+8vPe058Nf1UfW+FA/0/AXlymN7GtfxhG7fRMA9Pzc9QJlRmYxlOdkZp+lIWj0GRRCNDqq23p7XA9HnwCkyCjBKBApUvamUg2HIv0Iq1aeooNg=
+	t=1706113047; cv=none; b=B20QLNcWJAgvQyATpBUy8ATPg198iq2HzTW4w3c8l0F+IAYJsW2gQnJkyEFhVh+1IGZv5PXusaKN0QSHdRCi0vZ/+9iCVR0ebDMeLufDZggTD5wF9/79klW1l2IyL+rvVhslO7f+CgqFRDkfn47DZpkZq1KpFSsnnhUKEey4qCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706112484; c=relaxed/simple;
-	bh=mb3vibSeCho7dxgk/hsygvpcHcp9zzLKyD4RpuB1Dx8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=QBckkgin4TWPBRDlw5HWzhbzmP2k7VWxVIpY7MOhIjm7Jdxt0iHrnfETjA3Oh7lsfRszliNMzh4GDdf0fXgga9cgZ4ATqOTdJNLNRV/ITjTu9j00y40/irU1aZ5Ub4FNY2p0RcRmUhSa4w30R/7OOWVBRGFEbBql2KWWKcXTHow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O8f5G2K0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 69EA2C4166B;
-	Wed, 24 Jan 2024 16:08:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706112484;
-	bh=mb3vibSeCho7dxgk/hsygvpcHcp9zzLKyD4RpuB1Dx8=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=O8f5G2K0G0fvoTuxZ3B4cTuH99JWMl8ueaN8cM/EFJWpx+cuU3K4tuRxrYvbiOneY
-	 //Mh8j2qHhKmFjfbgxfTrNLObpSsFx2kUb+cnpDqlECpz4aNpP1Mgh8tOCLDvySlNB
-	 EXoZr/FW93DOBa9Hje2M0DdrjPCiWFO30Yk2oKh4KXFhn8GPn4b0hZtWaFkSL0XcLA
-	 56zn2I9vWUXTnPl2HDZkk4i7yTJBlqocS+rOpS2XyAzaZosa4dZjlPtUuAsw6go8WB
-	 cwWC1r9IMgCvOJhhc4lCaG26yp9GhGHrgwtHS8JAEjubWQPV+BI51fuRW+ucbsYzyS
-	 xrBaXwhDwBkTg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B91EC47E49;
-	Wed, 24 Jan 2024 16:08:04 +0000 (UTC)
-From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
-Date: Wed, 24 Jan 2024 16:08:04 +0000
-Subject: [PATCH BlueZ v2 8/8] android: export only (android) entrypoint
- from the modules
+	s=arc-20240116; t=1706113047; c=relaxed/simple;
+	bh=rXNeYjIbp304MydXOXcFoTjwZoS/dhBpt7AXuSBz4Ro=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NCCz1rI7HOh3OkQCzI0LUUaIqIZRVWf6avEUi0lZLd+MKanFNL3QIdVInfMxAl4AeWhY0tPd8BuQN34SWbSFyW84/t+3x/mP27L7hJ3kHIa6BX2ZuBadbObPoGQQqLcfeW6iIdLBoB/eTAU3pBnmjoF1VLy8YZHmLgatToGY5AM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=v0yd.nl; spf=pass smtp.mailfrom=v0yd.nl; arc=none smtp.client-ip=80.241.56.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=v0yd.nl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=v0yd.nl
+Received: from smtp2.mailbox.org (smtp2.mailbox.org [10.196.197.2])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4TKpy30F5Vz9swq;
+	Wed, 24 Jan 2024 17:17:15 +0100 (CET)
+Message-ID: <6e618827-c9c1-4ef8-9c98-27ef10b6d6a2@v0yd.nl>
+Date: Wed, 24 Jan 2024 17:17:12 +0100
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240124-rm-ext-plugins-v2-8-5244906f05ff@gmail.com>
-References: <20240124-rm-ext-plugins-v2-0-5244906f05ff@gmail.com>
-In-Reply-To: <20240124-rm-ext-plugins-v2-0-5244906f05ff@gmail.com>
-To: linux-bluetooth@vger.kernel.org
-Cc: Emil Velikov <emil.velikov@collabora.com>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1706112482; l=3016;
- i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
- bh=A9wt+5pbCxd+p0NIbARFNH3H5ujiQXTs0z8giNMkb3Y=;
- b=ITc6p1jQLAbmwB2EdKW21hAv0n7dm3IlquDg+W6O8B6aBYEVagJ5p6E/Y/MxpKWc6rlk3Q0/q
- KSRSV2MsDQsDeQ7eo5aFr5aHtq5y9TW4RgChpQmpVLZSIqVSTQbzAjx
-X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
- pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
-X-Endpoint-Received:
- by B4 Relay for emil.l.velikov@gmail.com/20230301 with auth_id=35
-X-Original-From: Emil Velikov <emil.l.velikov@gmail.com>
-Reply-To: <emil.l.velikov@gmail.com>
+Subject: Re: [PATCH v3 0/4] Bluetooth: Improve retrying of connection attempts
+To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: Marcel Holtmann <marcel@holtmann.org>,
+ Johan Hedberg <johan.hedberg@gmail.com>, linux-bluetooth@vger.kernel.org,
+ linux-kernel@vger.kernel.org, netdev@vger.kernel.org
+References: <20240108224614.56900-1-verdre@v0yd.nl>
+ <CABBYNZKV176teECGnGKTCNNo45ZYbCRs=YddETOUMUsJQX5PdA@mail.gmail.com>
+ <efcc7b97-6bfc-4e5d-8e73-78f2b190fa02@v0yd.nl>
+Content-Language: en-US
+From: =?UTF-8?Q?Jonas_Dre=C3=9Fler?= <verdre@v0yd.nl>
+In-Reply-To: <efcc7b97-6bfc-4e5d-8e73-78f2b190fa02@v0yd.nl>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-From: Emil Velikov <emil.velikov@collabora.com>
+Hi Luiz,
 
-The android specific modules, have a designated HMI entrypoint. Hide
-everything else with -fvisibility=hidden.
----
- android/Makefile.am     | 3 +++
- android/hal-audio.c     | 1 +
- android/hal-bluetooth.c | 1 +
- android/hal-sco.c       | 1 +
- 4 files changed, 6 insertions(+)
+On 1/9/24 10:57 PM, Jonas Dreßler wrote:
+> Hi Luiz,
+> 
+> On 1/9/24 18:53, Luiz Augusto von Dentz wrote:
+>> Hi Jonas,
+>>
+>> On Mon, Jan 8, 2024 at 5:46 PM Jonas Dreßler <verdre@v0yd.nl> wrote:
+>>>
+>>> Since commit 4c67bc74f016 ("[Bluetooth] Support concurrent connect
+>>> requests"), the kernel supports trying to connect again in case the
+>>> bluetooth card is busy and fails to connect.
+>>>
+>>> The logic that should handle this became a bit spotty over time, and also
+>>> cards these days appear to fail with more errors than just "Command
+>>> Disallowed".
+>>>
+>>> This series refactores the handling of concurrent connection requests
+>>> by serializing all "Create Connection" commands for ACL connections
+>>> similar to how we do it for LE connections.
+>>>
+>>> ---
+>>>
+>>> v1: https://lore.kernel.org/linux-bluetooth/20240102185933.64179-1-verdre@v0yd.nl/
+>>> v2: https://lore.kernel.org/linux-bluetooth/20240108183938.468426-1-verdre@v0yd.nl/
+>>> v3:
+>>>    - Move the new sync function to hci_sync.c as requested by review
+>>>    - Abort connection on failure using hci_abort_conn_sync() instead of
+>>>      hci_abort_conn()
+>>>    - Make the last commit message a bit more precise regarding the meaning
+>>>      of BT_CONNECT2 state
+>>>
+>>> Jonas Dreßler (4):
+>>>    Bluetooth: Remove superfluous call to hci_conn_check_pending()
+>>>    Bluetooth: hci_event: Use HCI error defines instead of magic values
+>>>    Bluetooth: hci_conn: Only do ACL connections sequentially
+>>>    Bluetooth: Remove pending ACL connection attempts
+>>>
+>>>   include/net/bluetooth/hci.h      |  3 ++
+>>>   include/net/bluetooth/hci_core.h |  1 -
+>>>   include/net/bluetooth/hci_sync.h |  3 ++
+>>>   net/bluetooth/hci_conn.c         | 83 +++-----------------------------
+>>>   net/bluetooth/hci_event.c        | 29 +++--------
+>>>   net/bluetooth/hci_sync.c         | 72 +++++++++++++++++++++++++++
+>>>   6 files changed, 93 insertions(+), 98 deletions(-)
+>>>
+>>> -- 
+>>> 2.43.0
+>>
+>> After rebasing and fixing a little bit here and there, see v4, looks
+>> like this changes is affecting the following mgmt-tester -s "Pair
+>> Device - Power off 1":
+>>
+>> Pair Device - Power off 1 - init
+>>    Read Version callback
+>>      Status: Success (0x00)
+>>      Version 1.22
+>>    Read Commands callback
+>>      Status: Success (0x00)
+>>    Read Index List callback
+>>      Status: Success (0x00)
+>>    Index Added callback
+>>      Index: 0x0000
+>>    Enable management Mesh interface
+>>    Enabling Mesh feature
+>>    Read Info callback
+>>      Status: Success (0x00)
+>>      Address: 00:AA:01:00:00:00
+>>      Version: 0x09
+>>      Manufacturer: 0x05f1
+>>      Supported settings: 0x0001bfff
+>>      Current settings: 0x00000080
+>>      Class: 0x000000
+>>      Name:
+>>      Short name:
+>>    Mesh feature is enabled
+>> Pair Device - Power off 1 - setup
+>>    Setup sending Set Bondable (0x0009)
+>>    Setup sending Set Powered (0x0005)
+>>    Initial settings completed
+>>    Test setup condition added, total 1
+>>    Client set connectable: Success (0x00)
+>>    Test setup condition complete, 0 left
+>> Pair Device - Power off 1 - setup complete
+>> Pair Device - Power off 1 - run
+>>    Sending Pair Device (0x0019)
+>> Bluetooth: hci0: command 0x0405 tx timeout
+>> Bluetooth: hci0: command 0x0408 tx timeout
+>>    Test condition added, total 1
+>> Pair Device - Power off 1 - test timed out
+>>    Pair Device (0x0019): Disconnected (0x0e)
+>> Pair Device - Power off 1 - test not run
+>> Pair Device - Power off 1 - teardown
+>> Pair Device - Power off 1 - teardown
+>>    Index Removed callback
+>>      Index: 0x0000
+>> Pair Device - Power off 1 - teardown complete
+>> Pair Device - Power off 1 - done
+>>
+> 
+> Thanks for landing the first two commits!
+> 
+> I think this is actually the same issue causing the test failure
+> as in the other issue I had:
+> https://lore.kernel.org/linux-bluetooth/7cee4e74-3a0c-4b7c-9984-696e646160f8@v0yd.nl/
+> 
+> It seems that the emulator is unable to reply to HCI commands sent
+> from the hci_sync machinery, possibly because that is sending things
+> on a separate thread?
 
-diff --git a/android/Makefile.am b/android/Makefile.am
-index 309910147..e3756e89c 100644
---- a/android/Makefile.am
-+++ b/android/Makefile.am
-@@ -96,6 +96,7 @@ android_bluetooth_default_la_SOURCES = android/hal.h android/hal-bluetooth.c \
- 					android/hal-log.h \
- 					android/hal-ipc.h android/hal-ipc.c \
- 					android/hal-utils.h android/hal-utils.c
-+android_bluetooth_default_la_CFLAGS = $(AM_CFLAGS) -fvisibility=hidden
- android_bluetooth_default_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/android
- android_bluetooth_default_la_LDFLAGS = $(AM_LDFLAGS) -module -avoid-version \
- 					-no-undefined
-@@ -195,6 +196,7 @@ android_audio_a2dp_default_la_SOURCES = android/audio-msg.h \
- 					android/hardware/audio_effect.h \
- 					android/hardware/hardware.h \
- 					android/system/audio.h
-+android_audio_a2dp_default_la_CFLAGS = $(AM_CFLAGS) -fvisibility=hidden
- android_audio_a2dp_default_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/android \
- 					$(SBC_CFLAGS)
- android_audio_a2dp_default_la_LIBADD = $(SBC_LIBS) -lrt
-@@ -212,6 +214,7 @@ android_audio_sco_default_la_SOURCES = android/hal-log.h \
- 					android/audio_utils/resampler.c \
- 					android/audio_utils/resampler.h \
- 					android/system/audio.h
-+android_audio_sco_default_la_CFLAGS = $(AM_CFLAGS) -fvisibility=hidden
- android_audio_sco_default_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/android
- android_audio_sco_default_la_LIBADD = $(SPEEXDSP_LIBS) -lrt
- android_audio_sco_default_la_LDFLAGS = $(AM_LDFLAGS) -module -avoid-version \
-diff --git a/android/hal-audio.c b/android/hal-audio.c
-index d37d6098c..f3d9b40a6 100644
---- a/android/hal-audio.c
-+++ b/android/hal-audio.c
-@@ -1618,6 +1618,7 @@ static struct hw_module_methods_t hal_module_methods = {
- 	.open = audio_open,
- };
- 
-+__attribute__ ((visibility("default")))
- struct audio_module HAL_MODULE_INFO_SYM = {
- 	.common = {
- 		.tag = HARDWARE_MODULE_TAG,
-diff --git a/android/hal-bluetooth.c b/android/hal-bluetooth.c
-index d4442e620..7d1e5ac63 100644
---- a/android/hal-bluetooth.c
-+++ b/android/hal-bluetooth.c
-@@ -1117,6 +1117,7 @@ static struct hw_module_methods_t bluetooth_module_methods = {
- 	.open = open_bluetooth,
- };
- 
-+__attribute__ ((visibility("default")))
- struct hw_module_t HAL_MODULE_INFO_SYM = {
- 	.tag = HARDWARE_MODULE_TAG,
- 	.version_major = 1,
-diff --git a/android/hal-sco.c b/android/hal-sco.c
-index d7c08a68b..3d66ad357 100644
---- a/android/hal-sco.c
-+++ b/android/hal-sco.c
-@@ -1507,6 +1507,7 @@ static struct hw_module_methods_t hal_module_methods = {
- 	.open = sco_open,
- };
- 
-+__attribute__ ((visibility("default")))
- struct audio_module HAL_MODULE_INFO_SYM = {
- 	.common = {
- 		.tag = HARDWARE_MODULE_TAG,
+Okay I did some further digging now: Turns out this actually not a problem
+with vhci and the emulator, but (in this test case) it's actually intended
+that there's the command times out, because force_power_off is TRUE for
+this test case, and the HCI device gets shut down right after sending the MGMT
+command.
 
--- 
-2.43.0
+The test broke because the "Command Complete" MGMT event comes back with status
+"Disconnected" instead of "Not Powered": The reason for that is the
+hci_abort_conn_sync() that I added in the case where the "Create Connection" HCI
+times out. hci_abort_conn_sync() calls hci_conn_failed() with
+HCI_ERROR_LOCAL_HOST_TERM as expected, this in turn calls the hci_connect_cfm()
+callback (pairing_complete_cb), and there we we look up HCI_ERROR_LOCAL_HOST_TERM
+in mgmt_status_table, ending up with MGMT_STATUS_DISCONNECTED.
 
+When I remove the hci_abort_conn_sync() we get the "Not Powered" failure again,
+I'm not exactly sure why that happens (I assume there's some kind of generic mgmt
+failure return handler that checks hdev_is_powered() and then sets the error).
+
+So the question now is do we want to adjust the test (and possibly bluetoothd?)
+to expect "Disconnected" instead of "Not Powered", or should I get rid of the
+hci_abort_conn_sync() again? Fwiw, in hci_le_create_conn_sync() we also clean
+up like this on ETIMEDOUT (maybe the spec is just different there?), so
+consistency wise it seems better to adjust the test to expect "Disconnected".
+
+Cheers,
+Jonas
+
+> 
+> Cheers,
+> Jonas
 
