@@ -1,86 +1,173 @@
-Return-Path: <linux-bluetooth+bounces-1392-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1394-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5DCD983CF3D
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Jan 2024 23:20:35 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3900A83CF82
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Jan 2024 23:37:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 15CFD295951
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Jan 2024 22:20:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A08551F21E10
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Jan 2024 22:37:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53A0213B789;
-	Thu, 25 Jan 2024 22:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A455134C5;
+	Thu, 25 Jan 2024 22:36:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CMuHOVZV"
+	dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b="FfBxwOo+"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-28.smtp.github.com (out-28.smtp.github.com [192.30.252.211])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D5213A272
-	for <linux-bluetooth@vger.kernel.org>; Thu, 25 Jan 2024 22:20:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4439C134B4
+	for <linux-bluetooth@vger.kernel.org>; Thu, 25 Jan 2024 22:36:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.211
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706221225; cv=none; b=H+IC5rcySjr94dGLn8e0scXgd6igdonWNdnruQBhAyPfH6r2Q11QFTd/2irR2YEDqRVoVlCPur/v2Vuobmk+GqCBEwD4odFPTjvF1XV24JAswN0F8BeHjE50ot26q6poCBe1ZSaXfiKPmPHLlFT5QQW2TH5yk1UJAimXsYtq/So=
+	t=1706222179; cv=none; b=liQLHMKKw/OT5j4GWhI8GFEP8oKhq6GGrfJHYLzxFbbQUWT5uA5zWxzh+cPBytUqI0Ld4WsJ1GNPAn1p4C/vpwhXjJbauqrc9yZDDv/n5TqFGb5azWBl9HwMpCbbTVl3KZK/88bA65Zm6DEHKPY6sp9Gl8LA0C81agv4A7s+Ivw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706221225; c=relaxed/simple;
-	bh=GNrvTmx2mJRJ4hzTXHBdZtg1SFB3FSeGlRdT/l0XcWc=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=ab6DqgGluMMQCiBWJ+DFlQaNBrkxtzraeMm1t1uwldX1Lxd8L1XkWuPDHApZga3Sp4coxNH69YTqTHwFC7ZvDYsGEZ5qd0pT4AkWgU5iX9f9aFY/1cyZ1GXor/qxl1GRxiBanlSmKOinjf3IuJSuLIo75y53VwdjGwfZcl1ElqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CMuHOVZV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 5B90DC433C7;
-	Thu, 25 Jan 2024 22:20:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706221225;
-	bh=GNrvTmx2mJRJ4hzTXHBdZtg1SFB3FSeGlRdT/l0XcWc=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=CMuHOVZVH0LZCh2eNOBAjpVNBXaTKdYEfRWkpHCclRZT5V+Uno4Pqm4i5XPq6J23Q
-	 ZnRsIx5x0CFSsz6pR/jBYjq4ZE45TAJyc7bi6fT+7PPVk8/siZekTq9bS+rlTyjXeS
-	 Pod23CT+r6Qjk0MKM9IYc5cMzMfQWlt6C0yxIXqQyyj37oA9ny3b7chC7YsMVrvyIm
-	 CffqTSQjsy06P2YIur+8uNDiWyag1QIRefqMs3dQDr4Qyl/fJu6ZqDWN8TICIlgBnU
-	 kFttY0hS47jnDxM7IDHnK3lTNXsR4booszMnwYH6muLQpmStf1yGzOgxU7jMHO7mxX
-	 7AOsYF9yo7m0w==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 44E35D8C966;
-	Thu, 25 Jan 2024 22:20:25 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1706222179; c=relaxed/simple;
+	bh=jGspU/RKIYq6fNpFJwTOUvtzdh8FGE5OfPt0Et4rIOw=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=Cyeh7ss3mLjvOoToTWIYifxA4RJ7K2wNH3BPusMWv+3ff8+8hy2lN4CmR1/WZODSFbIgLyydh9kg2xV4sM7kgxYqILF/OC9GmzSrCfIAdxq1uTDQSpNOVlL67lkoXfUtR4IS69d574h/puqCQqdyv7okP0pK18QR4GpNXLF0HU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=FfBxwOo+; arc=none smtp.client-ip=192.30.252.211
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
+Received: from github.com (hubbernetes-node-331f118.ash1-iad.github.net [10.56.159.32])
+	by smtp.github.com (Postfix) with ESMTPA id 5F388100294
+	for <linux-bluetooth@vger.kernel.org>; Thu, 25 Jan 2024 14:36:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+	s=pf2023; t=1706222174;
+	bh=NSPnA4XU/uXwoXVvkgm4tbNSnepgt8bMOgsDCC7uaqY=;
+	h=Date:From:To:Subject:From;
+	b=FfBxwOo+sNUPMHYUOY0QHkHJN7j+Y/fYq68o1+cYuJYJRCjc8h5Vgvu97hGfTdK5B
+	 dDFsGg99+1rlWfsqU55VqymUw4mMDqiSzJSl70qUxj7hKfeHBm+ptdwaMa+tq0/QLa
+	 mzaBsB/57dOfC77QUrA/p3HrfY5w4q9miwGqceu4=
+Date: Thu, 25 Jan 2024 14:36:14 -0800
+From: fdanis-oss <noreply@github.com>
+To: linux-bluetooth@vger.kernel.org
+Message-ID: <bluez/bluez/push/refs/heads/master/d39719-0de32f@github.com>
+Subject: [bluez/bluez] 2e2e50: bap: Fix update of context
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] bap: Fix update of context
-From: patchwork-bot+bluetooth@kernel.org
-Message-Id: 
- <170622122527.3098.15721809471546714184.git-patchwork-notify@kernel.org>
-Date: Thu, 25 Jan 2024 22:20:25 +0000
-References: <20240125125156.1679513-1-kiran.k@intel.com>
-In-Reply-To: <20240125125156.1679513-1-kiran.k@intel.com>
-To: Kiran K <kiran.k@intel.com>
-Cc: linux-bluetooth@vger.kernel.org, ravishankar.srivatsa@intel.com
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
 
-Hello:
+  Branch: refs/heads/master
+  Home:   https://github.com/bluez/bluez
+  Commit: 2e2e50011d0c6685a7e2f3dc1d777a19fb4b11e6
+      https://github.com/bluez/bluez/commit/2e2e50011d0c6685a7e2f3dc1d777=
+a19fb4b11e6
+  Author: Kiran K <kiran.k@intel.com>
+  Date:   2024-01-25 (Thu, 25 Jan 2024)
 
-This patch was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+  Changed paths:
+    M src/shared/bap.c
 
-On Thu, 25 Jan 2024 18:21:56 +0530 you wrote:
-> Fix context getting updated with support_context.
-> ---
->  src/shared/bap.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+  Log Message:
+  -----------
+  bap: Fix update of context
 
-Here is the summary with links:
-  - bap: Fix update of context
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=2e2e50011d0c
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+Fix context getting updated with support_context.
 
 
+  Commit: 6c15afefcd7187cab0b299fb49f67def2254d9ac
+      https://github.com/bluez/bluez/commit/6c15afefcd7187cab0b299fb49f67=
+def2254d9ac
+  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
+  Date:   2024-01-25 (Thu, 25 Jan 2024)
+
+  Changed paths:
+    M src/shared/att.c
+    M src/shared/att.h
+    M src/shared/gatt-client.c
+    M src/shared/gatt-client.h
+
+  Log Message:
+  -----------
+  shared/gatt: Prevent security level change for PTS GATT tests
+
+Some PTS GATT tests like GATT/CL/GAR/BI-04-C request to be able to get th=
+e
+security error and do not try to change the security level.
+
+This commit adds the ability to prevent to change the security level for
+an operation.
+
+
+  Commit: f0cef854f9637bcb16b5cf04c2720c8edc81b200
+      https://github.com/bluez/bluez/commit/f0cef854f9637bcb16b5cf04c2720=
+c8edc81b200
+  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
+  Date:   2024-01-25 (Thu, 25 Jan 2024)
+
+  Changed paths:
+    M tools/btgatt-client.c
+
+  Log Message:
+  -----------
+  btgatt-client: Add command to prevent security level change
+
+Some PTS GATT tests like GATT/CL/GAR/BI-04-C request to be able to get th=
+e
+security error and do not try to change the security level.
+
+This commit adds the ability to prevent to change the security level.
+
+
+  Commit: 68cd2ae6f5134888b6285d20f3b6232c5bf641f0
+      https://github.com/bluez/bluez/commit/68cd2ae6f5134888b6285d20f3b62=
+32c5bf641f0
+  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
+  Date:   2024-01-25 (Thu, 25 Jan 2024)
+
+  Changed paths:
+    M tools/btgatt-client.c
+
+  Log Message:
+  -----------
+  btgatt-client: Add function to search service based on UUID
+
+This is requested to pass PTS GATT/CL/GAD/BV-02-C test.
+
+
+  Commit: 647adf9260ff554a5b2907ce2c327a9d8b5bd258
+      https://github.com/bluez/bluez/commit/647adf9260ff554a5b2907ce2c327=
+a9d8b5bd258
+  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
+  Date:   2024-01-25 (Thu, 25 Jan 2024)
+
+  Changed paths:
+    M tools/btgatt-client.c
+
+  Log Message:
+  -----------
+  btgatt-client: Add function to search characteristics
+
+This is requested to pass PTS GATT/CL/GAD/BV-05-C test.
+This search characteristics based on UUID, start and end handles.
+
+
+  Commit: 0de32f67f685b95c35a5c2f1206081af89bd88b6
+      https://github.com/bluez/bluez/commit/0de32f67f685b95c35a5c2f120608=
+1af89bd88b6
+  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
+  Date:   2024-01-25 (Thu, 25 Jan 2024)
+
+  Changed paths:
+    M tools/btgatt-client.c
+
+  Log Message:
+  -----------
+  btgatt-client: Add function to search all primary services
+
+This is requested to pass PTS GATT/CL/GAD/BV-01-C test.
+
+
+Compare: https://github.com/bluez/bluez/compare/d3971990d926...0de32f67f6=
+85
 
