@@ -1,48 +1,48 @@
-Return-Path: <linux-bluetooth+bounces-1393-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1392-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E513783CF3E
+	by mail.lfdr.de (Postfix) with ESMTPS id 5DCD983CF3D
 	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Jan 2024 23:20:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9E6B82958EA
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 15CFD295951
 	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Jan 2024 22:20:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53B7713B78A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53A0213B789;
 	Thu, 25 Jan 2024 22:20:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Si5n2XLx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CMuHOVZV"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D1D130E3C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D5213A272
 	for <linux-bluetooth@vger.kernel.org>; Thu, 25 Jan 2024 22:20:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706221225; cv=none; b=dK/PMoEdK+eke1VMR1kucEW8ZvdFUV/tPy5ljgJ6EbiXgc/yGFUSLZKSlCr/9bYGxyvlDf90VApHpe9S3q7us0bTaURInsiOiJZEgK2LWl+IrEPNkPsjXKOw7WIEBoNa118+33W0AQTO+sE385hVWRas1Fau1is0eV6raKP8m/w=
+	t=1706221225; cv=none; b=H+IC5rcySjr94dGLn8e0scXgd6igdonWNdnruQBhAyPfH6r2Q11QFTd/2irR2YEDqRVoVlCPur/v2Vuobmk+GqCBEwD4odFPTjvF1XV24JAswN0F8BeHjE50ot26q6poCBe1ZSaXfiKPmPHLlFT5QQW2TH5yk1UJAimXsYtq/So=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706221225; c=relaxed/simple;
-	bh=ZxOlWqTz68VWqPX3cd00QnWQ2cXAi2dRMTkQHl/Xd/Y=;
+	bh=GNrvTmx2mJRJ4hzTXHBdZtg1SFB3FSeGlRdT/l0XcWc=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=QxLJxoRIQcSIcdjJJN5edJzZ+OoTnapcUMPf1jCbt/VYOeMpcv7JJIvriE0xeY7nfevfo9aeBb2aIw+0tmXt7QNrrMQVeB4LRkH+5hbB4SiWt0kg3ej8XEe7ISUisL0oArK4+y7beMO+TFykg6ulf6N3hG4FzPb+jB2Y1FHABQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Si5n2XLx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 53D28C43390;
+	 In-Reply-To:To:Cc; b=ab6DqgGluMMQCiBWJ+DFlQaNBrkxtzraeMm1t1uwldX1Lxd8L1XkWuPDHApZga3Sp4coxNH69YTqTHwFC7ZvDYsGEZ5qd0pT4AkWgU5iX9f9aFY/1cyZ1GXor/qxl1GRxiBanlSmKOinjf3IuJSuLIo75y53VwdjGwfZcl1ElqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CMuHOVZV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 5B90DC433C7;
 	Thu, 25 Jan 2024 22:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1706221225;
-	bh=ZxOlWqTz68VWqPX3cd00QnWQ2cXAi2dRMTkQHl/Xd/Y=;
+	bh=GNrvTmx2mJRJ4hzTXHBdZtg1SFB3FSeGlRdT/l0XcWc=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=Si5n2XLxCzwjf6WXJP7mQUe8O4nOMPagA5DPJDz15FktMh5B7NyjhhMWOoBpwOUo2
-	 wuzqcJYSSVT0GfvTWGpbqQo1OMwDOeZ/Er2iDaCIzTkbPuIiz7nlzAfwuKKhuDaZ3H
-	 yyaa+TlUgZMO8tbnUOOeyBRVPyWA55zR1O7fW+9pMjZJWP6gpfrMzHJeb1Ed6FbNEd
-	 Mc1Srre9ECqRCjkCOHYq06LvT5i/O4KlEqdrPzDytIOzDLBCKggQq+DEczWBiUwqMv
-	 EJAGVjpA/Vt3JklQ1iluWBMHhq1IDsh/Y5wOQrXo4b90iXUc6FiMXCftxj0n2H7QPi
-	 6aGcLrhtRpfDQ==
+	b=CMuHOVZVH0LZCh2eNOBAjpVNBXaTKdYEfRWkpHCclRZT5V+Uno4Pqm4i5XPq6J23Q
+	 ZnRsIx5x0CFSsz6pR/jBYjq4ZE45TAJyc7bi6fT+7PPVk8/siZekTq9bS+rlTyjXeS
+	 Pod23CT+r6Qjk0MKM9IYc5cMzMfQWlt6C0yxIXqQyyj37oA9ny3b7chC7YsMVrvyIm
+	 CffqTSQjsy06P2YIur+8uNDiWyag1QIRefqMs3dQDr4Qyl/fJu6ZqDWN8TICIlgBnU
+	 kFttY0hS47jnDxM7IDHnK3lTNXsR4booszMnwYH6muLQpmStf1yGzOgxU7jMHO7mxX
+	 7AOsYF9yo7m0w==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 3D0F3DFF766;
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 44E35D8C966;
 	Thu, 25 Jan 2024 22:20:25 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
@@ -52,42 +52,30 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ v3 0/5] Enhance GATT to pass PTS tests
+Subject: Re: [PATCH] bap: Fix update of context
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <170622122524.3098.8603359358102733822.git-patchwork-notify@kernel.org>
+ <170622122527.3098.15721809471546714184.git-patchwork-notify@kernel.org>
 Date: Thu, 25 Jan 2024 22:20:25 +0000
-References: <20240125190805.1244787-1-frederic.danis@collabora.com>
-In-Reply-To: <20240125190805.1244787-1-frederic.danis@collabora.com>
-To: =?utf-8?b?RnLDqWTDqXJpYyBEYW5pcyA8ZnJlZGVyaWMuZGFuaXNAY29sbGFib3JhLmNvbT4=?=@codeaurora.org
-Cc: linux-bluetooth@vger.kernel.org
+References: <20240125125156.1679513-1-kiran.k@intel.com>
+In-Reply-To: <20240125125156.1679513-1-kiran.k@intel.com>
+To: Kiran K <kiran.k@intel.com>
+Cc: linux-bluetooth@vger.kernel.org, ravishankar.srivatsa@intel.com
 
 Hello:
 
-This series was applied to bluetooth/bluez.git (master)
+This patch was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Thu, 25 Jan 2024 20:08:00 +0100 you wrote:
-> The two first patches  allow to prevent automatic security level change
-> to allow to display the security error when running GATT/CL/GAR/BI-04-C
-> using btgatt-client.
-> 
-> The other patches add commands to be able to call GATT discovery
-> functions from btgatt-client and get their results.
-> 
-> [...]
+On Thu, 25 Jan 2024 18:21:56 +0530 you wrote:
+> Fix context getting updated with support_context.
+> ---
+>  src/shared/bap.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
 Here is the summary with links:
-  - [BlueZ,v3,1/5] shared/gatt: Prevent security level change for PTS GATT tests
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=6c15afefcd71
-  - [BlueZ,v3,2/5] btgatt-client: Add command to prevent security level change
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=f0cef854f963
-  - [BlueZ,v3,3/5] btgatt-client: Add function to search service based on UUID
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=68cd2ae6f513
-  - [BlueZ,v3,4/5] btgatt-client: Add function to search characteristics
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=647adf9260ff
-  - [BlueZ,v3,5/5] btgatt-client: Add function to search all primary services
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=0de32f67f685
+  - bap: Fix update of context
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=2e2e50011d0c
 
 You are awesome, thank you!
 -- 
