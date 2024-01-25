@@ -1,52 +1,52 @@
-Return-Path: <linux-bluetooth+bounces-1337-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1338-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74FE383B5D7
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Jan 2024 01:07:47 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 29EC783B5D9
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Jan 2024 01:07:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2BE331F21F57
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Jan 2024 00:07:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D4F2328742A
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Jan 2024 00:07:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B6C1321D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D026363D1;
 	Thu, 25 Jan 2024 00:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qpAn5Z+D"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="io/b2CsC"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE62C38C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE64F399
 	for <linux-bluetooth@vger.kernel.org>; Thu, 25 Jan 2024 00:07:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706141249; cv=none; b=vEP7cplVqquVy/UOniSq2Vp85MsYE755mh6uPQAqt62K2xIbyN3GJSzr2UB3kxd19PIuh0hojRnUjbggIC3Swa86g3qR0lvhJWh7hTcjUbjtiHf/1nQr1pvXQpKAXuizbN2vpE4TGzRq1wa59Wv3+G1sbCX1roznAsYqZYobP1U=
+	t=1706141249; cv=none; b=UHPDcsgyFWk8Ic1aLX/7JrpL9OfPGpCwSHZI7KEVMKP31IxMEcY329oyZG4xCco9VeIuDtPY3lxe5/DGlDC9K/HuyH/bVbuyY9kOHOKf3NA1LwNAJdRiT3MOwUtCl6NwpQdBngdF8QD+9qwPtax/gXA+oIYKvU8hUjoZKfMX+Dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706141249; c=relaxed/simple;
-	bh=jAEahC6aEhwGsx03XeCGs0r51Ila42pXjrHeGrsvCtM=;
+	bh=G9genvZ+XzEEPgL5CU4jnpFYI5JsJj4sQ/6exI14zAQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=cMKjriNaYRThgSWgltxQHSiqlSJjnmwvForP41miwo3MgCxj6xULR+ISht59fBvWhHwY+2UHUquHF6HDyYYdhvtdNeAW/R7eaECOV3sGXPH+NAOUqABFqWWA5aIfMlgYXnQZVASmpwQA/taUZc/mzkVU8EtOu6x7uaTKF8FrXr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qpAn5Z+D; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 7B9E0C433B1;
+	 In-Reply-To:To:Cc; b=oxZUItQDIOw7E+QEF/ojyqGPdP8LYwjyGKfRwZOfNUwXOLs3tvPwrXYLSFyN5Zu33/W2i/vG72anS2B7YJLHhUifxF/ITAgRCQalTGsJ2saSQwHekcUw5DYilOIKmflIVn9Z2sSa6tGSJpQqcpgeCjwCAoouQdbBtfZ99kV7oCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=io/b2CsC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 819D7C43330;
 	Thu, 25 Jan 2024 00:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1706141249;
-	bh=jAEahC6aEhwGsx03XeCGs0r51Ila42pXjrHeGrsvCtM=;
+	bh=G9genvZ+XzEEPgL5CU4jnpFYI5JsJj4sQ/6exI14zAQ=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=qpAn5Z+DbOd8P1iHF/tc316/IXFisRrbo/tHB9lrK/km6WTBekIggJXya/VblKFxK
-	 6gKEXfvAFPmuypQtSPp3hiiYXB1lcb+BDf9OTSz89jQi67Jl3kKmk6ZdH6U0hmvXlK
-	 lwIn2jBFarQUG8jkkulAf2/q4GX1ykPg8Mt/wWD752289CqKa5rL3CbS3ebLZbmStj
-	 QnW8s1qFpuZnNe4ndo8PfvZ+i/DDn+UurSSZnMSPw9v5oIntmaBELHwkNDcw+qF/Go
-	 CLDa+GwXVMfvqtChbcwn1VYEuJMUFzPwUtyIHP796tjs71x9guKkVEYDBgFo0mJO+4
-	 4dpAGiu/PIlqQ==
+	b=io/b2CsC/KZ8uTVFakQaMkU/Dwj/JMPeFaHsYX5ootxTkqqhfM0p/jQ0W6kBC132D
+	 HM7AGSdnYTnaxh/eoHtqoJrzrgEq/x9QuE9uxEkhAcuYpgsu7uVGzfJEdSrfyp9o4x
+	 ekyhfWPSw42IU2YI62h2OvQq/9ouV20sk0S07U9Txbu2/DlgAA/tpPS9jN6xMxDEFI
+	 TmqjPCdcO1/LrUBN767CGjZR7PQhgt7efcPOorNXcoAtY4KVBW/Z6XuQ0hf3zjXYrc
+	 SwpVAQvvX5Ye/MjwjbAP3QJLYrYCSbDe03ULkbdaE4rs2QJX8UkMHb05kUQy5ju4sz
+	 UrketYFwc/m5Q==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68189C48286;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71AFEC47422;
 	Thu, 25 Jan 2024 00:07:29 +0000 (UTC)
 From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
-Date: Thu, 25 Jan 2024 00:07:31 +0000
-Subject: [PATCH BlueZ v3 6/8] bluetoothd: don't export internal API
+Date: Thu, 25 Jan 2024 00:07:32 +0000
+Subject: [PATCH BlueZ v3 7/8] bluetoothd: change plugin loading alike obexd
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -55,17 +55,17 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240125-rm-ext-plugins-v3-6-d141f7870bb6@gmail.com>
+Message-Id: <20240125-rm-ext-plugins-v3-7-d141f7870bb6@gmail.com>
 References: <20240125-rm-ext-plugins-v3-0-d141f7870bb6@gmail.com>
 In-Reply-To: <20240125-rm-ext-plugins-v3-0-d141f7870bb6@gmail.com>
 To: linux-bluetooth@vger.kernel.org
 Cc: Emil Velikov <emil.velikov@collabora.com>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1706141247; l=1034;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1706141247; l=3470;
  i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
- bh=oJMu/7JQ1+IQo+7iiJJvhOj5+NWG/IUCz9D6MPY+H5E=;
- b=gqoFk2vwm70LpS2pC9QJH75kEM3NxbTIZ63sgK1kmGy8o1KYGJBUdvV7TSpU2mVkhjacaZfIw
- CZLlNz79mG3C7O67OgjRegHIEjZ+tlvivofPTx7n18hwMKW+Ksv6+eq
+ bh=6yElFux7++NnGhXn3yTR7PlLXi4XViEHuKoqMgyFigw=;
+ b=lXobeEKJxrFM52Kbj5OKm+XlDLerbaNjVpH6BHJ+gVI6v9prO3Dq3yf8MN1lpY74DOfrslXio
+ 9dmelYX4Up5DokHJDjLYU6/lUlWsrR7KgtmfxLmtqeRLBWvN5yx4WFB
 X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
  pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
 X-Endpoint-Received:
@@ -75,36 +75,133 @@ Reply-To: <emil.l.velikov@gmail.com>
 
 From: Emil Velikov <emil.velikov@collabora.com>
 
-... when building without external plugins.
----
- Makefile.am | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+Currently, we print "Loading foobar" for every plugin, before we try the
+respective init() callback. Instead we handle the latter in a bunch, at
+the end of the process.
 
-diff --git a/Makefile.am b/Makefile.am
-index 1b82e8551..b98519e84 100644
---- a/Makefile.am
-+++ b/Makefile.am
-@@ -293,7 +293,6 @@ pkglibexec_PROGRAMS += src/bluetoothd
+Do the init() call early, print "Loaded" once it's actually successful
+and drop the no-longer "active" tracking.
+---
+ src/plugin.c | 53 +++++++++++++++++++++++++++++------------------------
+ 1 file changed, 29 insertions(+), 24 deletions(-)
+
+diff --git a/src/plugin.c b/src/plugin.c
+index ae9406375..3895792bc 100644
+--- a/src/plugin.c
++++ b/src/plugin.c
+@@ -32,7 +32,6 @@ struct bluetooth_plugin {
+ #if EXTERNAL_PLUGINS
+ 	void *handle;
+ #endif
+-	gboolean active;
+ 	const struct bluetooth_plugin_desc *desc;
+ };
  
- src_bluetoothd_SOURCES = $(builtin_sources) \
- 			$(attrib_sources) $(btio_sources) \
--			src/bluetooth.ver \
- 			src/main.c src/log.h src/log.c \
- 			src/backtrace.h src/backtrace.c \
- 			src/rfkill.c src/btd.h src/sdpd.h \
-@@ -325,8 +324,12 @@ src_bluetoothd_LDADD = lib/libbluetooth-internal.la \
- 			src/libshared-glib.la \
- 			$(BACKTRACE_LIBS) $(GLIB_LIBS) $(DBUS_LIBS) -ldl -lrt \
- 			$(builtin_ldadd)
+@@ -44,6 +43,22 @@ static int compare_priority(gconstpointer a, gconstpointer b)
+ 	return plugin2->desc->priority - plugin1->desc->priority;
+ }
+ 
++static int init_plugin(const struct bluetooth_plugin_desc *desc)
++{
++	int err;
 +
-+if EXTERNAL_PLUGINS
-+src_bluetoothd_SOURCES += src/bluetooth.ver
- src_bluetoothd_LDFLAGS = $(AM_LDFLAGS) -Wl,--export-dynamic \
- 				-Wl,--version-script=$(srcdir)/src/bluetooth.ver
-+endif
++	err = desc->init();
++	if (err < 0) {
++		if (err == -ENOSYS || err == -ENOTSUP)
++			warn("System does not support %s plugin",
++						desc->name);
++		else
++			error("Failed to init %s plugin",
++						desc->name);
++	}
++	return err;
++}
++
+ #if EXTERNAL_PLUGINS
+ static gboolean add_external_plugin(void *handle,
+ 				const struct bluetooth_plugin_desc *desc)
+@@ -58,19 +73,22 @@ static gboolean add_external_plugin(void *handle,
+ 		return FALSE;
+ 	}
  
- src_bluetoothd_DEPENDENCIES = lib/libbluetooth-internal.la \
- 				gdbus/libgdbus-internal.la \
+-	DBG("Loading %s plugin", desc->name);
+-
+ 	plugin = g_try_new0(struct bluetooth_plugin, 1);
+ 	if (plugin == NULL)
+ 		return FALSE;
+ 
+ 	plugin->handle = handle;
+-	plugin->active = FALSE;
+ 	plugin->desc = desc;
+ 
++	if (init_plugin(desc) < 0) {
++		g_free(plugin);
++		return FALSE;
++	}
++
+ 	__btd_enable_debug(desc->debug_start, desc->debug_stop);
+ 
+ 	plugins = g_slist_insert_sorted(plugins, plugin, compare_priority);
++	DBG("Plugin %s loaded", desc->name);
+ 
+ 	return TRUE;
+ }
+@@ -88,7 +106,13 @@ static void add_plugin(const struct bluetooth_plugin_desc *desc)
+ 
+ 	plugin->desc = desc;
+ 
++	if (init_plugin(desc) < 0) {
++		g_free(plugin);
++		return;
++	}
++
+ 	plugins = g_slist_insert_sorted(plugins, plugin, compare_priority);
++	DBG("Plugin %s loaded", desc->name);
+ }
+ 
+ static gboolean enable_plugin(const char *name, char **cli_enable,
+@@ -181,7 +205,6 @@ static void external_plugin_init(char **cli_disabled, char **cli_enabled)
+ 
+ void plugin_init(const char *enable, const char *disable)
+ {
+-	GSList *list;
+ 	char **cli_disabled = NULL;
+ 	char **cli_enabled = NULL;
+ 	unsigned int i;
+@@ -208,24 +231,6 @@ void plugin_init(const char *enable, const char *disable)
+ 
+ 	external_plugin_init(cli_enabled, cli_disabled);
+ 
+-	for (list = plugins; list; list = list->next) {
+-		struct bluetooth_plugin *plugin = list->data;
+-		int err;
+-
+-		err = plugin->desc->init();
+-		if (err < 0) {
+-			if (err == -ENOSYS || err == -ENOTSUP)
+-				warn("System does not support %s plugin",
+-							plugin->desc->name);
+-			else
+-				error("Failed to init %s plugin",
+-							plugin->desc->name);
+-			continue;
+-		}
+-
+-		plugin->active = TRUE;
+-	}
+-
+ 	g_strfreev(cli_enabled);
+ 	g_strfreev(cli_disabled);
+ }
+@@ -239,7 +244,7 @@ void plugin_cleanup(void)
+ 	for (list = plugins; list; list = list->next) {
+ 		struct bluetooth_plugin *plugin = list->data;
+ 
+-		if (plugin->active == TRUE && plugin->desc->exit)
++		if (plugin->desc->exit)
+ 			plugin->desc->exit();
+ 
+ #if EXTERNAL_PLUGINS
 
 -- 
 2.43.0
