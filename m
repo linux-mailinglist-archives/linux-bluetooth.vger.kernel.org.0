@@ -1,78 +1,93 @@
-Return-Path: <linux-bluetooth+bounces-1386-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1389-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E3AE83CD82
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Jan 2024 21:36:56 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 793E783CDC7
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Jan 2024 21:50:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 20CF52897E3
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Jan 2024 20:36:55 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C8D7DB24995
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Jan 2024 20:50:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A8BB137C31;
-	Thu, 25 Jan 2024 20:36:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 018D11386DD;
+	Thu, 25 Jan 2024 20:50:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b="TV0sS55a"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OKJMFM7C"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-24.smtp.github.com (out-24.smtp.github.com [192.30.252.207])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B92FD745F9
-	for <linux-bluetooth@vger.kernel.org>; Thu, 25 Jan 2024 20:36:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.207
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D29E137C2E;
+	Thu, 25 Jan 2024 20:50:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706215008; cv=none; b=AnkEi9KYSmZTQZ/lSpi89SLZ2EoiV+cm1TWdyfnHhTE2P6GT5FltxHaAQ1KarWu4Ng7oTmhdrXy61myCzz/gEv1ErgOK86VqEOoblwAJjG7i9kowemYgEU5g6GYvTNQmYrwZ4uIysBHbw2KcTB6FgA5jiuBsecdmP9OvP3RkFC4=
+	t=1706215826; cv=none; b=l2j2v9DLpZDwXelRSLRoxIze5wv6qT3jLY/3vjN19Zqw66PzZ2hdD7v7ibAMxzn1LCR7LFP5gwzi1zKst2taUG3nfrRRlCuwwgv4OYQ2TdT43A09JKzk+eK0X+NDga/FcjZDsV/w/lDgMhUkbZXh0Vi67DLjw7/FcztHwh+BJyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706215008; c=relaxed/simple;
-	bh=fJKjvCw/7Q+cwzG4Za/p5eDjYfUOppyiMQFxQwc+SIA=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=uRAtsUZk025VW4SuxYAAzEAbKqY8wHY0DYzuQXQEw825ETU+iiTgi7D4lKU8/G15aFZ1sFqEZCxSp79Au/PIoDhQERJWkIU2U3yNMtz6PU09VX+lY5q73gLhwAZMkFdIWTgubRq/bAPi90bxkhNE1hQy76ghN/e6mvBlPeUfyaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=TV0sS55a; arc=none smtp.client-ip=192.30.252.207
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-50bb8f4.ac4-iad.github.net [10.52.138.36])
-	by smtp.github.com (Postfix) with ESMTPA id C32776410F2
-	for <linux-bluetooth@vger.kernel.org>; Thu, 25 Jan 2024 12:36:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1706215005;
-	bh=XY/zle35mwwkzRfzWhiP0cuB7y+PuY7xf23mjj2Jjco=;
-	h=Date:From:To:Subject:From;
-	b=TV0sS55arAHNQqdtpivIHK3mseUWeTD08wNOD1m3SWa6Cn+SLisXZ3NL6Cv9X3FD1
-	 cxxx/BuM1uWhON6VTkA6uByYjDtP7/OkZPZRUk3r9/nl0vBtpcALGHafHgbfa7nBRC
-	 cMbBKp4eXUEvVvjuZ1/JZoENE9mtXGvqbI3mMj9w=
-Date: Thu, 25 Jan 2024 12:36:45 -0800
-From: Luiz Augusto von Dentz <noreply@github.com>
-To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/master/1cd6c8-d39719@github.com>
-Subject: [bluez/bluez] d39719: bap: Fix crash when attempting to set device as
- co...
+	s=arc-20240116; t=1706215826; c=relaxed/simple;
+	bh=Rqy/AFJCDQT9Ckknyj2IIpBFakoM1s8u2yNmCjQun+0=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=lhgRZ3eQtqcS4ipGQUzo4S/XU2BTxKA43KPu1fkWluPfM7Lq3cCXjiZXFvNqhnQl/AxwHFmE7BxS99l9rVZ7SS3Bg4KJsdbcmF7scwZNNnBZebWZPMkGBZD91Dx/ymaDte+vOGtWTGkF6M5KzfPQOj1yDMR+zHGIEZj8h9oNoSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OKJMFM7C; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id DF31CC433F1;
+	Thu, 25 Jan 2024 20:50:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1706215825;
+	bh=Rqy/AFJCDQT9Ckknyj2IIpBFakoM1s8u2yNmCjQun+0=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=OKJMFM7Cdu5lxYWJMcTdjxYN6GiCJE8onPN5MTeFaLqDr879UJt7uXJcrtQN2dBUo
+	 GTgTnijwP6RJvu0sF2A2PLq/0+4zNHNJ/kBnOdtzBTTZ+h5FId2JD7ke1C7DI/F0c1
+	 OU9ktc0eAd6/+KCSxcrj/kaekb7lQGBLxI+P1Ue95ploL25GWQwhWgRFbpWDsk5DJf
+	 1KkhlUcBTOwe+t0awgKP5FIkaNL9CVEc+5+fBrlxO5TmUPp9X22saoquNlPL1RnGP0
+	 nAXULSk5D3No0CU5XadG20DBgZeAsQKmYub4e48e9SC1QgbpreJ96bR4344wHz20UF
+	 5+1/nOf6uGKLA==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id C050CD8C966;
+	Thu, 25 Jan 2024 20:50:25 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH] Bluetooth: Enforce validation on max value of connection
+ interval
+From: patchwork-bot+bluetooth@kernel.org
+Message-Id: 
+ <170621582578.16174.210804050492510894.git-patchwork-notify@kernel.org>
+Date: Thu, 25 Jan 2024 20:50:25 +0000
+References: <20240125065028.228877-1-kai.heng.feng@canonical.com>
+In-Reply-To: <20240125065028.228877-1-kai.heng.feng@canonical.com>
+To: Kai-Heng Feng <kai.heng.feng@canonical.com>
+Cc: marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+ linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
 
-  Branch: refs/heads/master
-  Home:   https://github.com/bluez/bluez
-  Commit: d3971990d9268afd3628996876c756bf15849c56
-      https://github.com/bluez/bluez/commit/d3971990d9268afd3628996876c756bf15849c56
-  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-  Date:   2024-01-25 (Thu, 25 Jan 2024)
+Hello:
 
-  Changed paths:
-    M profiles/audio/bap.c
+This patch was applied to bluetooth/bluetooth-next.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-  Log Message:
-  -----------
-  bap: Fix crash when attempting to set device as connectable
+On Thu, 25 Jan 2024 14:50:28 +0800 you wrote:
+> Right now Linux BT stack cannot pass test case "GAP/CONN/CPUP/BV-05-C
+> 'Connection Parameter Update Procedure Invalid Parameters Central
+> Responder'" in Bluetooth Test Suite revision GAP.TS.p44. [0]
+> 
+> That was revoled by commit c49a8682fc5d ("Bluetooth: validate BLE
+> connection interval updates"), but later got reverted due to devices
+> like keyboards and mice may require low connection interval.
+> 
+> [...]
 
-Broadcast source endpoints don't have a device object.
+Here is the summary with links:
+  - Bluetooth: Enforce validation on max value of connection interval
+    https://git.kernel.org/bluetooth/bluetooth-next/c/9434e62334d5
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
 
