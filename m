@@ -1,156 +1,266 @@
-Return-Path: <linux-bluetooth+bounces-1340-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1342-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2422783B5DC
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Jan 2024 01:07:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id AFF7A83B722
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Jan 2024 03:29:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 563B51C22F5F
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Jan 2024 00:07:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BA12E1C221CD
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Jan 2024 02:29:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D21196ABA;
-	Thu, 25 Jan 2024 00:07:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 258525CA1;
+	Thu, 25 Jan 2024 02:29:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rJFb358M"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OlTGtncB"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D443D7FB
-	for <linux-bluetooth@vger.kernel.org>; Thu, 25 Jan 2024 00:07:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF3B67C61
+	for <linux-bluetooth@vger.kernel.org>; Thu, 25 Jan 2024 02:29:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706141249; cv=none; b=hggfsj0ry/WjBkBvoODEteVp+QQwYvK0kUSVbSky7MSVl22wEAChx7O2XRRuI4MTEzJgeQ3RhhaXY/yytjsFxCR0g8IxteJHAEgPWdTUq+YDPDuGb9DkTEOG0fWwVpq3BfRJyo6NCgN8STR7hOxOGe4NdD+xJfmUbwGygTg8KWY=
+	t=1706149747; cv=none; b=jtqyiNxpx0IYay4AMsW5PQFx7lBBuUKF9OrK2hhAz2+0y6vsQMl1w6oGkZV8/WlivUYsxVxfkUnU7C6iqczq6A/bhN83Ma/QWNzKte2K2ecw71DubjKl6Mu3JMfYbOGgHvOfKZfKjZ6D+Y0QfveYhDcOfa5rU7Qc9miXA3+fEm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706141249; c=relaxed/simple;
-	bh=mb3vibSeCho7dxgk/hsygvpcHcp9zzLKyD4RpuB1Dx8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=WbpxzUyxsw+LFrNidmoTI8frNAvdoCRhDKYthnvFtcDJYnhZCScs/VwDC6Rup41wY0GcQZyjMhC2l5qLzm0ddt2cDHZMFh+Edu2eEWxBf+gyu2ZI88vlSUBQ+EtHPvZ9VAh/C7NOhJg1IHsSIrhjC3XmDBqg73ZOJZ7RS1Q6pvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rJFb358M; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 8F90BC433B2;
-	Thu, 25 Jan 2024 00:07:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706141249;
-	bh=mb3vibSeCho7dxgk/hsygvpcHcp9zzLKyD4RpuB1Dx8=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=rJFb358MzAw5LZ67Gm+tYneIvcCoDvCRCRy/QdV+iJTsfe0YaUQLvZa7YloIuEQXL
-	 V3CJcfhNWZTbDcMwfQIZRAhnpIO0Qjv9hLyqFuL7ZECdwQowoBWoKAPH9DlygdBqz/
-	 suxCr5wp9PVkpTx1UAVPtL9akZUUFhK5gAt5VDwpNTbWJ/3Aa5p6/IIcjDIvBVlxaH
-	 gqKKRo111rGm4iBmQEcWuLiQCzXsi4olReWBzRz7KcpK9UpGijsKRg6X4sHifbJokA
-	 thXEyLGuf881VhoW234eP3smjdcSZ1Ymz8atAkqBm6p1jprXVdDYQ7Nj5Q1EOtLJom
-	 n5V0UCjPEBzsQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 808A1C47E49;
-	Thu, 25 Jan 2024 00:07:29 +0000 (UTC)
-From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
-Date: Thu, 25 Jan 2024 00:07:33 +0000
-Subject: [PATCH BlueZ v3 8/8] android: export only (android) entrypoint
- from the modules
+	s=arc-20240116; t=1706149747; c=relaxed/simple;
+	bh=LrP97k2WlDYwsAhHUwV/tSAyfddGHMl9+3Y+5V+DBiE=;
+	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
+	 In-Reply-To:References; b=nDJgdNaOQLgiYGDxHWsCjsjN9iIDjCNtsy17KNNsQXm/5f29yaPeCExP3YIt/hncDrpQJ4d/utvVIFCZGMdpIfrv7PlHOfS1VZmlHM5EC8t+6Vt92Bzy7CR/gMhGoWwJy7nfXhG681zbZZkZ7fJMHE27l7U+hZEcjuBobrWLNNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OlTGtncB; arc=none smtp.client-ip=209.85.219.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6818aa08a33so2167246d6.0
+        for <linux-bluetooth@vger.kernel.org>; Wed, 24 Jan 2024 18:29:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706149744; x=1706754544; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=PCCvGATzt1VhH82nozRrzxkQurL3aAQ50vtCjXYMPd0=;
+        b=OlTGtncBO3nrSiTqIKuOZPGCqxueDrSx5SDxrAf5RiebqjlrWVFEkZNmJIP2KtAusd
+         4UwAWQyU/qighmjajvm+pOgHiXZXo4BqbEn6aTsJKEVy5icL3RCRdFj1HsRBhtIeF0Wn
+         pAOo6hcOGk8j1pVGWmJ0BHKoBFisvdajarrtF1Bo6mLNb2J/FHJ2T//tktQnh0OmCSAV
+         HeKp5CCYaF2ktS+KZ0qLRrPclUW7BGEi8a9QQengCzCIbe5jc/q7lO8JeENMGHFb+4/d
+         f3YtdyDTL7eP5fnLp6WwHDqdNFlIJ1bGK+VJ1SmK7TsoZFGvqf9YBtQKkAIgWZTTV3bB
+         asYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706149744; x=1706754544;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PCCvGATzt1VhH82nozRrzxkQurL3aAQ50vtCjXYMPd0=;
+        b=I+Nmzku+Yw4uzluLjYb8dnrCCmuR5b8VXRCBp3uVdJeCseoTq4D6rImoqvvjceCMbw
+         MAKeTF9wVezsibAslmb84sQgDOsWqL1jKj37hXEj4l9CwFYgweULjkQiTQpp2nleIGWv
+         GxahfdwFLHNICsYwT9RuKo/aypDujPu5tZYlb2Fppzhqgbhve1sxo6efjofprzF0VUEP
+         pc1uxPE7Me7UIsGU7uTvNo9b0wBwL521c6t4QqwnGLVKMAtcAMlFCE6t/KgVRmdhJf3l
+         xefMi39LLH3qdqxbvqUDjV9p7BOWhNju7l2fDPceAubewkFBWiCONzxTNHHSTs9TFHXQ
+         gAKA==
+X-Gm-Message-State: AOJu0YySOBOoz2PASYP5xjQdYK6AhfWnRm64RYtVXPEzOuyO0GOm2lBD
+	+MIKDQUMHn/Y1J2pbk3MxHGG0kOFfyp1Fr62F6NIjKNtLeXIJ16nFzfQ+1eN
+X-Google-Smtp-Source: AGHT+IEwBl3bvkXDjIemCNykVIZJCQNoQPz37opqWRIvrlCGDwM2ICoNDXdE1qCoLJEhsqKPbMsheQ==
+X-Received: by 2002:a05:6214:f22:b0:681:35b:ff6f with SMTP id iw2-20020a0562140f2200b00681035bff6fmr482589qvb.29.1706149744469;
+        Wed, 24 Jan 2024 18:29:04 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCWAFrC2w5/NhBIKF65DF36i2EJ9g2lhn1F171QnA95o1FQtlneh8E4GSxuKnmDEpsmd3aZvw+O+GJj+/9MqD4IGT2ubAHDVBK9pvLOQ96BAGT4Bk0b3CNjaSysA
+Received: from [172.17.0.2] ([172.183.88.181])
+        by smtp.gmail.com with ESMTPSA id kr10-20020a0562142b8a00b006862b537412sm4568758qvb.123.2024.01.24.18.29.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Jan 2024 18:29:04 -0800 (PST)
+Message-ID: <65b1c770.050a0220.5db35.6b77@mx.google.com>
+Date: Wed, 24 Jan 2024 18:29:04 -0800 (PST)
+Content-Type: multipart/mixed; boundary="===============8986247116691463970=="
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+From: bluez.test.bot@gmail.com
+To: linux-bluetooth@vger.kernel.org, devnull+emil.l.velikov.gmail.com@kernel.org
+Subject: RE: Distribution inspired fixes
+In-Reply-To: <20240124-disto-patches-v1-1-97e0eb5625a3@gmail.com>
+References: <20240124-disto-patches-v1-1-97e0eb5625a3@gmail.com>
+Reply-To: linux-bluetooth@vger.kernel.org
+
+--===============8986247116691463970==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240125-rm-ext-plugins-v3-8-d141f7870bb6@gmail.com>
-References: <20240125-rm-ext-plugins-v3-0-d141f7870bb6@gmail.com>
-In-Reply-To: <20240125-rm-ext-plugins-v3-0-d141f7870bb6@gmail.com>
-To: linux-bluetooth@vger.kernel.org
-Cc: Emil Velikov <emil.velikov@collabora.com>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1706141247; l=3016;
- i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
- bh=A9wt+5pbCxd+p0NIbARFNH3H5ujiQXTs0z8giNMkb3Y=;
- b=/aEvjGs3MbYixjLOan9wWHGqwyPZWWCZK59mBHKklNkQ5PYGLAlkoCB4NKv7P+fayVcjuXLYp
- PAWOS9I/kbvBH54JomfS9UfDqU1y7LBVAgRtWiLL4eDfiWL/x3R/AXH
-X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
- pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
-X-Endpoint-Received:
- by B4 Relay for emil.l.velikov@gmail.com/20230301 with auth_id=35
-X-Original-From: Emil Velikov <emil.l.velikov@gmail.com>
-Reply-To: <emil.l.velikov@gmail.com>
 
-From: Emil Velikov <emil.velikov@collabora.com>
+This is automated email and please do not reply to this email!
 
-The android specific modules, have a designated HMI entrypoint. Hide
-everything else with -fvisibility=hidden.
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=819667
+
+---Test result---
+
+Test Summary:
+CheckPatch                    FAIL      4.59 seconds
+GitLint                       PASS      2.64 seconds
+BuildEll                      PASS      24.25 seconds
+BluezMake                     FAIL      4.89 seconds
+MakeCheck                     FAIL      0.12 seconds
+MakeDistcheck                 FAIL      4.40 seconds
+CheckValgrind                 FAIL      4.38 seconds
+CheckSmatch                   FAIL      4.52 seconds
+bluezmakeextell               FAIL      4.42 seconds
+IncrementalBuild              FAIL      4731.57 seconds
+ScanBuild                     FAIL      480.27 seconds
+
+Details
+##############################
+Test: CheckPatch - FAIL
+Desc: Run checkpatch.pl script
+Output:
+[BlueZ,1/9] Enable alternate Bluetooth connection modes
+WARNING:BAD_SIGN_OFF: Non-standard signature: Co-Authored-By:
+#87: 
+Co-Authored-By: Rachel Blackman <rachel.blackman@synapse.com>
+
+WARNING:BAD_SIGN_OFF: 'Co-authored-by:' is the preferred signature form
+#87: 
+Co-Authored-By: Rachel Blackman <rachel.blackman@synapse.com>
+
+WARNING:LONG_LINE: line length of 102 exceeds 80 columns
+#133: FILE: src/adapter.c:869:
++								adapter->dev_id, mgmt_errstr(status));
+
+WARNING:LONG_LINE: line length of 84 exceeds 80 columns
+#146: FILE: src/adapter.c:882:
++				set_phy_support_complete, (void*)adapter, NULL) > 0)
+
+ERROR:POINTER_LOCATION: "(foo*)" should be "(foo *)"
+#146: FILE: src/adapter.c:882:
++				set_phy_support_complete, (void*)adapter, NULL) > 0)
+
+WARNING:LONG_LINE_COMMENT: line length of 81 exceeds 80 columns
+#163: FILE: src/adapter.c:10503:
++	// Some adapters do not want to accept this before being started/powered.
+
+WARNING:STATIC_CONST_CHAR_ARRAY: static const char * array should probably be static const char * const
+#199: FILE: src/main.c:186:
++static const char *conf_phys_str[] = {
+
+/github/workspace/src/src/13529758.patch total: 1 errors, 6 warnings, 182 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/github/workspace/src/src/13529758.patch has style problems, please review.
+
+NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+[BlueZ,5/9] profiles: remove unused suspend-dummy.c
+WARNING:UNKNOWN_COMMIT_ID: Unknown commit id 'fb55b7a6a', maybe rebased or not pulled?
+#77: 
+The file has been used for about 8 years now - see commit fb55b7a6a
+
+/github/workspace/src/src/13529762.patch total: 0 errors, 1 warnings, 8 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/github/workspace/src/src/13529762.patch has style problems, please review.
+
+NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+##############################
+Test: BluezMake - FAIL
+Desc: Build BlueZ
+Output:
+
+configure.ac:21: installing './compile'
+configure.ac:36: installing './config.guess'
+configure.ac:36: installing './config.sub'
+configure.ac:5: installing './install-sh'
+configure.ac:5: installing './missing'
+Makefile.am: installing './depcomp'
+parallel-tests: installing './test-driver'
+./configure: line 15145: syntax error: unexpected end of file
+##############################
+Test: MakeCheck - FAIL
+Desc: Run Bluez Make Check
+Output:
+
+make: *** No rule to make target 'check'.  Stop.
+##############################
+Test: MakeDistcheck - FAIL
+Desc: Run Bluez Make Distcheck
+Output:
+
+configure.ac:21: installing './compile'
+configure.ac:5: installing './missing'
+Makefile.am: installing './depcomp'
+./configure: line 15145: syntax error: unexpected end of file
+##############################
+Test: CheckValgrind - FAIL
+Desc: Run Bluez Make Check with Valgrind
+Output:
+
+configure.ac:21: installing './compile'
+configure.ac:5: installing './missing'
+Makefile.am: installing './depcomp'
+./configure: line 15145: syntax error: unexpected end of file
+##############################
+Test: CheckSmatch - FAIL
+Desc: Run smatch tool with source
+Output:
+
+configure.ac:21: installing './compile'
+configure.ac:5: installing './missing'
+Makefile.am: installing './depcomp'
+./configure: line 15145: syntax error: unexpected end of file
+##############################
+Test: bluezmakeextell - FAIL
+Desc: Build Bluez with External ELL
+Output:
+
+configure.ac:21: installing './compile'
+configure.ac:5: installing './missing'
+Makefile.am: installing './depcomp'
+./configure: line 15145: syntax error: unexpected end of file
+##############################
+Test: IncrementalBuild - FAIL
+Desc: Incremental build with the patches in the series
+Output:
+[BlueZ,8/9] obex: remove phonebook tracker backend
+
+./configure: line 15145: syntax error: unexpected end of file
+make: *** [Makefile:4713: config.status] Error 2
+configure.ac:21: installing './compile'
+configure.ac:5: installing './missing'
+Makefile.am: installing './depcomp'
+./configure: line 15145: syntax error: unexpected end of file
+##############################
+Test: ScanBuild - FAIL
+Desc: Run Scan Build
+Output:
+
+configure.ac:21: installing './compile'
+configure.ac:36: installing './config.guess'
+configure.ac:36: installing './config.sub'
+configure.ac:5: installing './install-sh'
+configure.ac:5: installing './missing'
+Makefile.am: installing './depcomp'
+parallel-tests: installing './test-driver'
+./configure: line 15145: syntax error: unexpected end of file
+
+
 ---
- android/Makefile.am     | 3 +++
- android/hal-audio.c     | 1 +
- android/hal-bluetooth.c | 1 +
- android/hal-sco.c       | 1 +
- 4 files changed, 6 insertions(+)
+Regards,
+Linux Bluetooth
 
-diff --git a/android/Makefile.am b/android/Makefile.am
-index 309910147..e3756e89c 100644
---- a/android/Makefile.am
-+++ b/android/Makefile.am
-@@ -96,6 +96,7 @@ android_bluetooth_default_la_SOURCES = android/hal.h android/hal-bluetooth.c \
- 					android/hal-log.h \
- 					android/hal-ipc.h android/hal-ipc.c \
- 					android/hal-utils.h android/hal-utils.c
-+android_bluetooth_default_la_CFLAGS = $(AM_CFLAGS) -fvisibility=hidden
- android_bluetooth_default_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/android
- android_bluetooth_default_la_LDFLAGS = $(AM_LDFLAGS) -module -avoid-version \
- 					-no-undefined
-@@ -195,6 +196,7 @@ android_audio_a2dp_default_la_SOURCES = android/audio-msg.h \
- 					android/hardware/audio_effect.h \
- 					android/hardware/hardware.h \
- 					android/system/audio.h
-+android_audio_a2dp_default_la_CFLAGS = $(AM_CFLAGS) -fvisibility=hidden
- android_audio_a2dp_default_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/android \
- 					$(SBC_CFLAGS)
- android_audio_a2dp_default_la_LIBADD = $(SBC_LIBS) -lrt
-@@ -212,6 +214,7 @@ android_audio_sco_default_la_SOURCES = android/hal-log.h \
- 					android/audio_utils/resampler.c \
- 					android/audio_utils/resampler.h \
- 					android/system/audio.h
-+android_audio_sco_default_la_CFLAGS = $(AM_CFLAGS) -fvisibility=hidden
- android_audio_sco_default_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/android
- android_audio_sco_default_la_LIBADD = $(SPEEXDSP_LIBS) -lrt
- android_audio_sco_default_la_LDFLAGS = $(AM_LDFLAGS) -module -avoid-version \
-diff --git a/android/hal-audio.c b/android/hal-audio.c
-index d37d6098c..f3d9b40a6 100644
---- a/android/hal-audio.c
-+++ b/android/hal-audio.c
-@@ -1618,6 +1618,7 @@ static struct hw_module_methods_t hal_module_methods = {
- 	.open = audio_open,
- };
- 
-+__attribute__ ((visibility("default")))
- struct audio_module HAL_MODULE_INFO_SYM = {
- 	.common = {
- 		.tag = HARDWARE_MODULE_TAG,
-diff --git a/android/hal-bluetooth.c b/android/hal-bluetooth.c
-index d4442e620..7d1e5ac63 100644
---- a/android/hal-bluetooth.c
-+++ b/android/hal-bluetooth.c
-@@ -1117,6 +1117,7 @@ static struct hw_module_methods_t bluetooth_module_methods = {
- 	.open = open_bluetooth,
- };
- 
-+__attribute__ ((visibility("default")))
- struct hw_module_t HAL_MODULE_INFO_SYM = {
- 	.tag = HARDWARE_MODULE_TAG,
- 	.version_major = 1,
-diff --git a/android/hal-sco.c b/android/hal-sco.c
-index d7c08a68b..3d66ad357 100644
---- a/android/hal-sco.c
-+++ b/android/hal-sco.c
-@@ -1507,6 +1507,7 @@ static struct hw_module_methods_t hal_module_methods = {
- 	.open = sco_open,
- };
- 
-+__attribute__ ((visibility("default")))
- struct audio_module HAL_MODULE_INFO_SYM = {
- 	.common = {
- 		.tag = HARDWARE_MODULE_TAG,
 
--- 
-2.43.0
-
+--===============8986247116691463970==--
 
