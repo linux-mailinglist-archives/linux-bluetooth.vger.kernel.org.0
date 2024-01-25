@@ -1,48 +1,48 @@
-Return-Path: <linux-bluetooth+bounces-1390-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1388-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C485F83CDC8
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Jan 2024 21:50:50 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D40E483CDC6
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Jan 2024 21:50:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6BD1DB24CB6
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Jan 2024 20:50:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7DB83297691
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 25 Jan 2024 20:50:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D4BE1386DF;
-	Thu, 25 Jan 2024 20:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE1961386DA;
+	Thu, 25 Jan 2024 20:50:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cb38I28h"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AzBA8s2k"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B166137C57;
-	Thu, 25 Jan 2024 20:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BBCB135A5E
+	for <linux-bluetooth@vger.kernel.org>; Thu, 25 Jan 2024 20:50:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706215826; cv=none; b=AAaXR/1CiBZsiJxLyvOx/10BjUjrso0GQ9Ly7KkkaG3VhuhsWLswqxYXd4aQY9eUDyGQxuZ/wfqF3zRMwLJXZQxAboGWGpu4l9I5z/KsN4s5XrNGn9V1ecsOsXgnOfKKpolfZ0VSeSKuHgXuxeTzjF1Bj8Px81+CZYUPeufm/oY=
+	t=1706215826; cv=none; b=Aon/z6tesydInpERsViuPVb75zjZF/XnUjPh7zXIMb8ux+YSDL6EReEXN16bdPTZauRIYPf4cgoYLX+31d//KcD1bUTtVdOOTNv26PhSc8dBdCiUrg3fJDONrt5PSicJcxevO+LUiUTsfIy8E6JALlThFrqttfv2KrLnnC8/T3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706215826; c=relaxed/simple;
-	bh=EGPXup5wTorebySd/H/IW/H3xweM3JbfKLa6avHjXcs=;
+	bh=inRM3ksETguj58F4fI6R0tgJA1R8Q24ZVyDe5285uaA=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=qQl6YQegST4LrtcyYUVUELSA1CLy9NWSVC4++ZEwlbk+pZuGbBU5EexvzbBi5ryitpEoxrloK1+4tS6tef/Saw4jqP7WOSMhef8kB7gEsYsfFy9L6HEJbjXlIF6vdNv/BcwsPqhzeFXAnBojJAbs+9jg7cePjrpofLUbMH8q4DQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cb38I28h; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id EDC50C43399;
+	 In-Reply-To:To:Cc; b=gskbvR3leB0M36d4xb6l8NGylOEValY4tVWn8ZbMEaUS4+aUtwt+CihMrtg2d+s525Xfp18zrFfyzgRgkcxYLhi+/navGW4Uou7s6yVZOxqeNBtHYY6LV5YZEbxj1g/iYr1Q3iCPoQvoyFX4kRqM0dK6yRia7R7SnspB9xipwVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AzBA8s2k; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id D508FC433C7;
 	Thu, 25 Jan 2024 20:50:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706215826;
-	bh=EGPXup5wTorebySd/H/IW/H3xweM3JbfKLa6avHjXcs=;
+	s=k20201202; t=1706215825;
+	bh=inRM3ksETguj58F4fI6R0tgJA1R8Q24ZVyDe5285uaA=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=Cb38I28h0HCYCNUweYziq92qdAMHcyOfqhihhJriPh8VL5hb8V1V9dknPXoyMJqja
-	 5tIHQwO5wfOtgpPUFev9imujJggTartxvRZeY6gTHyAa9MvgaL2eH1feo7ARzYaZgK
-	 7TbtSJghlVLD9bQ6CHt+7SEfebpokjiYPZARMB097u0frmatrkLfdGF/cqqysAqNfA
-	 5op2xfPZeKv/87KHeb7Y22smrhFctorepOZnNngmcr757st/bf85sXMoybiAF/3vfx
-	 iaJJ/0VCCOAo2vadBLk9oqIn5+F5naJnXw3WZ1tIuywQ6GnlD9LLR1aAzbOLAGuZbZ
-	 mM+OUq04WKoNg==
+	b=AzBA8s2kWCIxw5PaTGMmzFmELtLPJlWrij/TyWAzN7mxB4w4OoeEku9boYI0HgI8d
+	 KgtJLvszSCvRwvFrQEiO7X0JRaqo3FiEUlgCHUEZi9+iFOXfG1hNWvBc//WQnpk7KT
+	 NCouvPR9K3wVBv89hNhPwS+aYzzee3Dp+Te6+VlwaFhAGAkxcoSe/tAnq0k4vfvWhJ
+	 Yhm+ntFDpXa45zV/n3SEE12fDGDV0Znw3f1APq0TC7Tu/nBPCRZv0R7K2gWoKEXu0G
+	 CKvRgF+qXQ/UsjSMl5s2+na5mMdA45nocCS1QQBmdbxdzwFpsaydRa4iNHK/uMfzSJ
+	 vCzE8imStpH6Q==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id D127CDC9A05;
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id B70BDDFF765;
 	Thu, 25 Jan 2024 20:50:25 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
@@ -52,38 +52,38 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH next] bluetooth/btintel: fix null ptr deref in
- btintel_read_version
+Subject: Re: [PATCH v1] Bluetooth: hci_event: Fix handling of
+ HCI_EV_IO_CAPA_REQUEST
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <170621582585.16174.6159364307548424799.git-patchwork-notify@kernel.org>
+ <170621582574.16174.15450598739287006126.git-patchwork-notify@kernel.org>
 Date: Thu, 25 Jan 2024 20:50:25 +0000
-References: <tencent_E60894D8E85AEEF2CD9C787A6CA82F656C0A@qq.com>
-In-Reply-To: <tencent_E60894D8E85AEEF2CD9C787A6CA82F656C0A@qq.com>
-To: Edward Adam Davis <eadavis@qq.com>
-Cc: syzbot+830d9e3fa61968246abd@syzkaller.appspotmail.com,
- johan.hedberg@gmail.com, linux-bluetooth@vger.kernel.org,
- linux-kernel@vger.kernel.org, luiz.dentz@gmail.com, marcel@holtmann.org,
- syzkaller-bugs@googlegroups.com
+References: <20240122161521.2650805-1-luiz.dentz@gmail.com>
+In-Reply-To: <20240122161521.2650805-1-luiz.dentz@gmail.com>
+To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: linux-bluetooth@vger.kernel.org
 
 Hello:
 
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Thu, 18 Jan 2024 12:40:34 +0800 you wrote:
-> If hci_cmd_sync_complete() is triggered and skb is NULL, then hdev->req_skb is NULL,
-> which will cause this issue.
+On Mon, 22 Jan 2024 11:15:21 -0500 you wrote:
+> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 > 
-> Reported-and-tested-by: syzbot+830d9e3fa61968246abd@syzkaller.appspotmail.com
-> Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-> ---
->  drivers/bluetooth/btintel.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> If we received HCI_EV_IO_CAPA_REQUEST while
+> HCI_OP_READ_REMOTE_EXT_FEATURES is yet to be responded assume the remote
+> does support SSP since otherwise this event shouldn't be generated.
+> 
+> Link: https://lore.kernel.org/linux-bluetooth/CABBYNZ+9UdG1cMZVmdtN3U2aS16AKMCyTARZZyFX7xTEDWcMOw@mail.gmail.com/T/#t
+> Fixes: c7f59461f5a7 ("Bluetooth: Fix a refcnt underflow problem for hci_conn")
+> Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> 
+> [...]
 
 Here is the summary with links:
-  - [next] bluetooth/btintel: fix null ptr deref in btintel_read_version
-    https://git.kernel.org/bluetooth/bluetooth-next/c/693a94db9e8c
+  - [v1] Bluetooth: hci_event: Fix handling of HCI_EV_IO_CAPA_REQUEST
+    https://git.kernel.org/bluetooth/bluetooth-next/c/c931eafc5a82
 
 You are awesome, thank you!
 -- 
