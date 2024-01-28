@@ -1,255 +1,118 @@
-Return-Path: <linux-bluetooth+bounces-1415-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1417-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2971B83F574
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 28 Jan 2024 13:18:11 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 62E0183F901
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 28 Jan 2024 19:06:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4E6331C20C84
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 28 Jan 2024 12:18:10 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E1B15B21819
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 28 Jan 2024 18:06:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C2B7208B4;
-	Sun, 28 Jan 2024 12:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18B792E62A;
+	Sun, 28 Jan 2024 18:06:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="seo3Fbmi"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kemnade.info header.i=@kemnade.info header.b="lxF8NAYQ"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.andi.de1.cc (mail.andi.de1.cc [178.238.236.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B67F20DC1
-	for <linux-bluetooth@vger.kernel.org>; Sun, 28 Jan 2024 12:18:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E8AA2E64F;
+	Sun, 28 Jan 2024 18:06:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.238.236.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706444284; cv=none; b=qxf+gIyqI1X8W87uGXE1sdErmZ0O9CghBzGNc7EqsKOzSu/s2V/6ad1+ibtBgAQdga0WVjNiAJ00XWiRy/DzvDYsjN8ney0h1iFbHO7ddbaPqZ9TFU4lGheN5I4eyuyVdTDiyr+PAsP2l/8Du2oWA0DoFdxkX8M2UcKm/6AhaR0=
+	t=1706465181; cv=none; b=JGgL4AFG3vk3n6Dt/Lg1RHfh2cS8AfAVWR08at/niDVADdsa3Bmt7qBjiu/sutzqeVwIWS0g5ud8UHl2A2HDfrOjUfOwA1U8eVlDJuUecOgUpKOSQeJ1QeN1Ljz2pKLFtPJbP3keVn9ag29GaYMv7d0TiWf7izJRdYKVV3MbWCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706444284; c=relaxed/simple;
-	bh=o+gnhH9bKTbZcPKWHQwzRTnm1rex1mIjSZu7lcAa7FM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Y4HW5IgppdgCvf1ATf18W4ycHPlBCZ5sB9wWtBynQaixQsLYjx3+F0D07zmz3s+AW0dZ7kQC+BDhhIJbyNnwIbrQPHpCqTbH2tc6L2cegH3TNJz6e7zcVuJ7Eke3F2eHX0PdeHrw9ebmVyx4InRMgNaa6vgLSfg1fQSy9eIal+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=seo3Fbmi; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-40ef0d6e5c2so13985e9.0
-        for <linux-bluetooth@vger.kernel.org>; Sun, 28 Jan 2024 04:18:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1706444281; x=1707049081; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kbN1jMuq8FzYNa4x/7jBDwDdnxNxzVTrCOU+MQEUobw=;
-        b=seo3FbmifiEsIzAh4pozASPtjA4yonKnlEO7puWoO+veIis/MPeJKtSY/Zq016d37k
-         WJJSE0Q+Y+V8DoctdkX5EvyzsQO78XcJ6uw770PAXnuT7ZouzTp9Cwi1H/BzTShHuGHR
-         UGEDPjNGrRP9TfQOBYtZC0axz5vWf8VFeWqd2wF3k7mV0hDXiOA5tYrdcvTKTeYmZUkl
-         lxesTUtKIVr/aed6sWKGyQAkahULze7JGii1vBsOlLz1ipxTCE6nqDKGDncrVpTRAeHy
-         IKow4uwDVMlp4jI2qWwobwRxwwNz3zPqesKMFfbLexqh840MXZCYl7siDTn7WkA4Us2V
-         caqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706444281; x=1707049081;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kbN1jMuq8FzYNa4x/7jBDwDdnxNxzVTrCOU+MQEUobw=;
-        b=Oz9+SXFiPWKiemawptwNsCbirkgEOplx0t14p1TnQTWXFE5+kVcQV+aPtabIONu+RI
-         G+z2ZR6OX1a+/PTsIZaP7hjn28tR/A6W9pHKoNGWZMHTURgmKj4FKJxwKr3BzYzk9Fli
-         qD2lToEldl5jzaNQ2mfNrIlsepJffMhxool3n1ToJsNIXx1sWwQcOeYgBDcJnZ30iDpd
-         FtxYueCwCFU7y/JOZwHtndjhWvoUY+el2r52cEZgc35QZA25vz4wkGMqUHphDK926jvF
-         KzvWruCu8GHwUzq9vNPZDUWtQJ8mB3Eb+i1TVxMLFu6AdMxPKiSBMfhieJbZZ4YVtY4g
-         MYNA==
-X-Gm-Message-State: AOJu0YwLHiG734q7GSq/lbnh79pM9moSiXVTJczMKIGTGKrbgc78EltC
-	60rgrO1dr2vDeISqnPdqZRYscrQ9b1cMRjGR3g0ok7K1nUa/z2trbrEpcv8FtqTg6Hp/wVmygEi
-	+9z7rZG5bENcxmj5dq24JU20UkUBJxC0HkU/u
-X-Google-Smtp-Source: AGHT+IE9MKeupfPnqLseeH01vAiT+esU/mBK3PdKOrvWumS2UIecsQ41C4crHyQ5E2cSCMJQtQoxRqpGxhq6E0liVj8=
-X-Received: by 2002:a05:600c:510f:b0:40d:87df:92ca with SMTP id
- o15-20020a05600c510f00b0040d87df92camr393651wms.3.1706444281067; Sun, 28 Jan
- 2024 04:18:01 -0800 (PST)
+	s=arc-20240116; t=1706465181; c=relaxed/simple;
+	bh=FtmQA5VLzpRyOURP1pEGDKv6HjrVhjrwbslF9OnywoQ=;
+	h=From:To:Subject:Date:Message-Id:MIME-Version; b=JARZ/v1CyDIjJL2lwZkGXx7llbT2TORBe+5Kp2FRznjzYOAvE+lpYEXre6pRqTSoU55aveE7kTNP8+da7kOchkXiYydo9TKEZEzDBvv8xVnH9jeULNrfGq129kqdyts4pah1B7ZUZxoWCogprNu4lRmKpkh8HbCJV1F+YBnIwwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kemnade.info; spf=pass smtp.mailfrom=kemnade.info; dkim=pass (2048-bit key) header.d=kemnade.info header.i=@kemnade.info header.b=lxF8NAYQ; arc=none smtp.client-ip=178.238.236.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kemnade.info
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kemnade.info
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=kemnade.info; s=20220719; h=Content-Transfer-Encoding:MIME-Version:
+	Message-Id:Date:Subject:To:From:Sender:Reply-To:Cc:Content-Type:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=g3UtZfHsaHF+F1LjF+H3KyxBStiMSrgKhAoXtLNAUb4=; b=lxF8NAYQ2xiYnVxFLKwnoQRDuf
+	C8fAJCv5AVyXSA9zghwGx3I4Tp5IgLhracq14tzduNyxiTOLqir9YGW216Ln/vi4sC772a/krMtsd
+	+gUR9gnX7/y6X5XwHFfptoxWj9HUspD5K3dGPXsdNr7Ur9CLVtsnuP0FEEkZXe7UDYYqDWk2jr4LD
+	C3m/cnVKfxaIdTBPiNL9vHSDPZyS80Rdev/dqDqxai9duy8fOw5jyp6jYd/6iZEQ3mrUTfJ/SvI3J
+	Af0AAGh2rZUtlSph92QP2V/ddzHz56O9xQv7BwHpl8Yzw2aHJE5Va/MWY2yS93o/GkD0r0qcqpThf
+	2e6yf8Pg==;
+Received: from p200300c2070939001a3da2fffebfd33a.dip0.t-ipconnect.de ([2003:c2:709:3900:1a3d:a2ff:febf:d33a] helo=aktux)
+	by mail.andi.de1.cc with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <andreas@kemnade.info>)
+	id 1rU92b-008qDZ-MH; Sun, 28 Jan 2024 18:33:57 +0100
+Received: from andi by aktux with local (Exim 4.96)
+	(envelope-from <andreas@kemnade.info>)
+	id 1rU92a-00BO9d-29;
+	Sun, 28 Jan 2024 18:33:56 +0100
+From: Andreas Kemnade <andreas@kemnade.info>
+To: marcel@holtmann.org,
+	johan.hedberg@gmail.com,
+	luiz.dentz@gmail.com,
+	johan@kernel.org,
+	jirislaby@kernel.org,
+	andreas@kemnade.info,
+	gregkh@linuxfoundation.org,
+	linux-kernel@vger.kernel.org,
+	linux-bluetooth@vger.kernel.org,
+	Adam Ford <aford173@gmail.com>,
+	Tony Lindgren <tony@atomide.com>,
+	tomi.valkeinen@ideasonboard.com,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@gmail.com>,
+	robh@kernel.org,
+	hns@goldelico.com
+Subject: [RFC PATCH v2 0/3] bluetooth/gnss: GNSS support for TiWi chips
+Date: Sun, 28 Jan 2024 18:33:49 +0100
+Message-Id: <20240128173352.2714442-1-andreas@kemnade.info>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240126144120.Bluez.1.If74ccbca4d541c5f576765a3a78cb8923b5f85b1@changeid>
- <CABBYNZL3yZ1_7wVyGg6fMZ=a3thqia2i+WSBFFyvBxTt4KPEgA@mail.gmail.com>
-In-Reply-To: <CABBYNZL3yZ1_7wVyGg6fMZ=a3thqia2i+WSBFFyvBxTt4KPEgA@mail.gmail.com>
-From: Archie Pusaka <apusaka@google.com>
-Date: Sun, 28 Jan 2024 20:17:50 +0800
-Message-ID: <CAJQfnxFwuhDnZRKYXMO3-i0YVuHTXgp6wdRNmAmob_xMm4n+5Q@mail.gmail.com>
-Subject: Re: [Bluez PATCH] Monitor: Remove handle before assigning
-To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: linux-bluetooth <linux-bluetooth@vger.kernel.org>, 
-	Johan Hedberg <johan.hedberg@gmail.com>, Marcel Holtmann <marcel@holtmann.org>, 
-	CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>, 
-	Archie Pusaka <apusaka@chromium.org>, Zhengping Jiang <jiangzp@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Luiz,
+Some of these chips have GNSS support. In some vendor kernels
+a driver on top of misc/ti-st can be found providing a /dev/tigps
+device which speaks the secretive Air Independent Interface (AI2) protocol.
 
-On Sat, 27 Jan 2024 at 03:01, Luiz Augusto von Dentz
-<luiz.dentz@gmail.com> wrote:
->
-> Hi Archie,
->
-> On Fri, Jan 26, 2024 at 1:42=E2=80=AFAM Archie Pusaka <apusaka@google.com=
-> wrote:
-> >
-> > From: Archie Pusaka <apusaka@chromium.org>
-> >
-> > It is possible to have some handles not removed, for example the host
-> > may decide not to wait for disconnection complete event when it is
-> > suspending. In this case, when the peer device reconnected, we might
-> > have two of the same handle assigned and create problem down the road.
-> >
-> > This patch solves the issue by always removing any previous handles
-> > when assigning a new handle if they are the same.
-> >
-> > Reviewed-by: Zhengping Jiang <jiangzp@google.com>
-> >
-> > ---
-> >
-> >  monitor/packet.c | 50 +++++++++++++++++++++++++-----------------------
-> >  1 file changed, 26 insertions(+), 24 deletions(-)
-> >
-> > diff --git a/monitor/packet.c b/monitor/packet.c
-> > index 42e711cafa..b5dea6384a 100644
-> > --- a/monitor/packet.c
-> > +++ b/monitor/packet.c
-> > @@ -189,11 +189,33 @@ static struct packet_conn_data *lookup_parent(uin=
-t16_t handle)
-> >         return NULL;
-> >  }
-> >
-> > +static void release_handle(uint16_t handle)
-> > +{
-> > +       int i;
-> > +
-> > +       for (i =3D 0; i < MAX_CONN; i++) {
-> > +               struct packet_conn_data *conn =3D &conn_list[i];
-> > +
-> > +               if (conn->handle =3D=3D handle) {
-> > +                       if (conn->destroy)
-> > +                               conn->destroy(conn->data);
-> > +
-> > +                       queue_destroy(conn->tx_q, free);
-> > +                       queue_destroy(conn->chan_q, free);
-> > +                       memset(conn, 0, sizeof(*conn));
-> > +                       conn->handle =3D 0xffff;
-> > +                       break;
-> > +               }
-> > +       }
-> > +}
->
-> We might as well return if we find out there is a packet_conn_data,
-> that way we don't need to do 2 lookups in a row.
+To be more compatible with userspace send out NMEA by default but
+allow a more raw mode by using a module parameter.
 
-Do you mean to return the index, so we can immediately use the index
-in the assign_handle function?
->
-> >  static void assign_handle(uint16_t index, uint16_t handle, uint8_t typ=
-e,
-> >                                         uint8_t *dst, uint8_t dst_type)
-> >  {
-> >         int i;
-> >
-> > +       release_handle(handle);
-> > +
-> >         for (i =3D 0; i < MAX_CONN; i++) {
-> >                 if (conn_list[i].handle =3D=3D 0xffff) {
-> >                         hci_devba(index, (bdaddr_t *)conn_list[i].src);
-> > @@ -225,26 +247,6 @@ static void assign_handle(uint16_t index, uint16_t=
- handle, uint8_t type,
-> >         }
-> >  }
-> >
-> > -static void release_handle(uint16_t handle)
-> > -{
-> > -       int i;
-> > -
-> > -       for (i =3D 0; i < MAX_CONN; i++) {
-> > -               struct packet_conn_data *conn =3D &conn_list[i];
-> > -
-> > -               if (conn->handle =3D=3D handle) {
-> > -                       if (conn->destroy)
-> > -                               conn->destroy(conn->data);
-> > -
-> > -                       queue_destroy(conn->tx_q, free);
-> > -                       queue_destroy(conn->chan_q, free);
-> > -                       memset(conn, 0, sizeof(*conn));
-> > -                       conn->handle =3D 0xffff;
-> > -                       break;
-> > -               }
-> > -       }
-> > -}
-> > -
-> >  struct packet_conn_data *packet_get_conn_data(uint16_t handle)
-> >  {
-> >         int i;
-> > @@ -10076,7 +10078,7 @@ static void conn_complete_evt(struct timeval *t=
-v, uint16_t index,
-> >         const struct bt_hci_evt_conn_complete *evt =3D data;
-> >
-> >         print_status(evt->status);
-> > -       print_handle(evt->handle);
-> > +       print_field("Handle: %d", le16_to_cpu(evt->handle));
-> >         print_bdaddr(evt->bdaddr);
-> >         print_link_type(evt->link_type);
-> >         print_enable("Encryption", evt->encr_mode);
-> > @@ -10648,7 +10650,7 @@ static void sync_conn_complete_evt(struct timev=
-al *tv, uint16_t index,
-> >         const struct bt_hci_evt_sync_conn_complete *evt =3D data;
-> >
-> >         print_status(evt->status);
-> > -       print_handle(evt->handle);
-> > +       print_field("Handle: %d", le16_to_cpu(evt->handle));
-> >         print_bdaddr(evt->bdaddr);
-> >         print_link_type(evt->link_type);
-> >         print_field("Transmission interval: 0x%2.2x", evt->tx_interval)=
-;
-> > @@ -11077,7 +11079,7 @@ static void le_conn_complete_evt(struct timeval=
- *tv, uint16_t index,
-> >         const struct bt_hci_evt_le_conn_complete *evt =3D data;
-> >
-> >         print_status(evt->status);
-> > -       print_handle(evt->handle);
-> > +       print_field("Handle: %d", le16_to_cpu(evt->handle));
-> >         print_role(evt->role);
-> >         print_peer_addr_type("Peer address type", evt->peer_addr_type);
-> >         print_addr("Peer address", evt->peer_addr, evt->peer_addr_type)=
-;
-> > @@ -11206,7 +11208,7 @@ static void le_enhanced_conn_complete_evt(struc=
-t timeval *tv, uint16_t index,
-> >         const struct bt_hci_evt_le_enhanced_conn_complete *evt =3D data=
-;
-> >
-> >         print_status(evt->status);
-> > -       print_handle(evt->handle);
-> > +       print_field("Handle: %d", le16_to_cpu(evt->handle));
-> >         print_role(evt->role);
-> >         print_peer_addr_type("Peer address type", evt->peer_addr_type);
-> >         print_addr("Peer address", evt->peer_addr, evt->peer_addr_type)=
-;
->
-> Are these changes really intentional? Or perhaps we don't want to
-> attempt to resolve the address since these are the event that would
-> assign them in the first place? In that case I had these fixed
-> separately with a proper patch description.
+This was tested on the Epson Moverio BT-200.
 
-Yes, these are intentional. Otherwise, we would still print the
-previous (faulty) address as the printing happens before we release
-the handle.
-Also, we print the (correct) address anyway immediately on the next line.
-Do you still want this to be in a separate patch?
->
-> > --
-> > 2.43.0.429.g432eaa2c6b-goog
-> >
->
->
-> --
-> Luiz Augusto von Dentz
+Changes since V1:
+- Set up things for NMEA output
+- Powerup/down at open()/close()
+- split out logic between drivers/bluetooth and drivers/gnss
+- leave out drivers/misc/ti-st driver removal to avoid
+  filling up mailboxes during the iterations, this series is
+  still a proof that it is not needed, will take the brush after
+  this series is accepted.
 
-Thanks,
-Archie
+Andreas Kemnade (3):
+  gnss: Add AI2 protocol used by some TI combo chips.
+  bluetooth: ti-st: Add GNSS subdevice for TI Wilink chips
+  gnss: Add driver for AI2 protocol
+
+ drivers/bluetooth/hci_ll.c   |  81 ++++++
+ drivers/gnss/Kconfig         |  13 +
+ drivers/gnss/Makefile        |   3 +
+ drivers/gnss/ai2.c           | 523 +++++++++++++++++++++++++++++++++++
+ drivers/gnss/core.c          |   1 +
+ include/linux/gnss.h         |   1 +
+ include/linux/ti_wilink_st.h |   8 +
+ 7 files changed, 630 insertions(+)
+ create mode 100644 drivers/gnss/ai2.c
+
+-- 
+2.39.2
+
 
