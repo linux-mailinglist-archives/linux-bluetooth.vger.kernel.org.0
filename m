@@ -1,52 +1,52 @@
-Return-Path: <linux-bluetooth+bounces-1439-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1440-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 594248408DB
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 29 Jan 2024 15:44:37 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E86E8408D9
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 29 Jan 2024 15:44:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B427CB25720
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 29 Jan 2024 14:44:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3F1CB1F27212
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 29 Jan 2024 14:44:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D144D152E1A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D47FD1534E3;
 	Mon, 29 Jan 2024 14:44:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cy2KltPE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dYpFA0jO"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3A15B1FE
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B476664DE
 	for <linux-bluetooth@vger.kernel.org>; Mon, 29 Jan 2024 14:44:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706539457; cv=none; b=oB08OcsAF/rkVg509Z7+HRUu6pLR8BDFlKfMEIiCUJAea3G1FwzUaZ4ou4dU5yGAnC1Nvq70odfUbXLmA9cnK67xOaTKzxq6tLch/HbA9/KK8zLjjUZ4neNv2fsAPl9LKf6feKrmtHAcJt5rX94p/GSmwQwNWCR/eL+yS4ABNtE=
+	t=1706539457; cv=none; b=CIPQytmK9AoyHExnI0dvnwaFKMBasnhZeqANqm4DvzOEYt1BgG7Qe9E286VSFqinQgpk0oCSkdZYolKOciOB8iU53zf3p5NjNSaPJd6TgWsImw4yjvNLG3OJE5At2XlpmViUKRyLEDJX8wJ6UgzcGoKuRvKJ0lX03f+uz4pjKjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706539457; c=relaxed/simple;
-	bh=z2zwOAIJdLbSH5OWauqgK8n/AiJg9/e9ESmn51K3eGE=;
+	bh=XLSO3l0XdIpPwkgoc4l1xpQ1HRftjj49icAZy3iAi/0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ghSFXbXeA+shLBcCeW8wI11gzg2hapLZjot5d2gXahCMPnuRqXJPGMl/OPPWvICAsaEToVBqpMfCzs7gaWyu95fKBQoioyXgEfLNpMh3kHJArOMZ008Rl9rbAbl5p75UQ+VcXhFVccYo0Ne7+Hab6aBViwKVf7Ws+jwLH3htNYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cy2KltPE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id D98A4C43390;
+	 In-Reply-To:To:Cc; b=D9VQlLQSefKTt3PPCIwYKoZ1ipShgd6P+hlErajOVpXSm9EbDlh/661bB4Ioff2++4o8WgchgdAJ+CY9Ga5v5l8/atjsdY26Hu5PYKBwmcyNC4lTuvNLU7e68r2v6w2ihn5ObTGRpGvKeMgb11toDCVTnsCBuSNtph5SW+mA2jk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dYpFA0jO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id E62F7C43394;
 	Mon, 29 Jan 2024 14:44:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1706539456;
-	bh=z2zwOAIJdLbSH5OWauqgK8n/AiJg9/e9ESmn51K3eGE=;
+	bh=XLSO3l0XdIpPwkgoc4l1xpQ1HRftjj49icAZy3iAi/0=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=Cy2KltPE/cL43bD1hv2wqUdior3sEGLlt2II+kGJM91jtprj9aI8IIGXEz+U+esjU
-	 LvODii3VpxI1pGp/ExzsiSntPRuOI2d2czV41YK4BntfLpKA4L09KWlZmkecEaka4R
-	 xiq+e1B+8q9hM6tQTk6D1F1SBEd7jr9yongCq6OUcGvKYNbZRlTVnxE4Cxd96DmKS3
-	 hSzg1+QTpyD1E0lMOclcadwrNr4Wj2LY7V4M5axg9qkcWadoOmi9sMkIY3uHK9iPU5
-	 IAab71IsEYnJmN1V3u0XJHSeVD+GWt5xYYWzV2qxcler6ryOKLBpcH5npk+GyssX1D
-	 vtVw/vKTO0asg==
+	b=dYpFA0jO3qxS6mlvqOrtJxwYYUPS9uwtVqe0RX+/67nGiSB5ztG9WFzOOiejX0ajF
+	 WmshwIOSMIkAVha2/OjZSA+EVsfMR9jlyFIwtU9NKeFCXrlGBt0BU7eDfEKILOZ7HI
+	 OtCxAhL8tEGJrNEPCG7sN4/GCfJSG1BAtwpwrQpV/r2FnY8x55ARj+Sdg7klPncllo
+	 Evy3sXrRupxffhO5OEzB9S3G03hR8Hbau8zrp7hzwAzfj/nibYFLNSttwU4k3kS9VB
+	 i6jHH4tRyyGHGsFKe2DQnc5mV5733ou9z5P2jPsO343mlaTU0Q7kxO5kfm16lPUk+z
+	 9KGFnoXHoAu2w==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C173EC47DB3;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CED37C4828C;
 	Mon, 29 Jan 2024 14:44:16 +0000 (UTC)
 From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
-Date: Mon, 29 Jan 2024 14:44:16 +0000
-Subject: [PATCH BlueZ v4 2/8] obexd: factor out external plugin support
+Date: Mon, 29 Jan 2024 14:44:17 +0000
+Subject: [PATCH BlueZ v4 3/8] bluetoothd: remove external-dummy plugin
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -55,17 +55,17 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240129-rm-ext-plugins-v4-2-bfd1e08c7f99@gmail.com>
+Message-Id: <20240129-rm-ext-plugins-v4-3-bfd1e08c7f99@gmail.com>
 References: <20240129-rm-ext-plugins-v4-0-bfd1e08c7f99@gmail.com>
 In-Reply-To: <20240129-rm-ext-plugins-v4-0-bfd1e08c7f99@gmail.com>
 To: linux-bluetooth@vger.kernel.org
 Cc: Emil Velikov <emil.velikov@collabora.com>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1706539455; l=5559;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1706539455; l=1499;
  i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
- bh=cIMdx6HXhTyyf9nrZXFXunU9oNAXB+a/bweqZhHYUuc=;
- b=tYiy9kcFNgVL5ypyASR6SaY9uxeukDmHzK39nDhlEwqseYQpcqk33MTilzvMk93Mm72x0ICuz
- RY6eKf0hOF3AAk3nF+sxQPZ6QZwTHPe0DNqvbJreudK3uwq/bCg42uE
+ bh=Qkz58Z8cPMkE6Ps/NGmx2S8bmRGDQE2Anw+Id8KSNeI=;
+ b=80WqH9lZJW+58Gc8dcVjtF+auOhXuPiXyTvdcxmGnkuuWl6QuaghsRHkdZ0Ph6AYI9i5Ey+0Z
+ 5JYEfcrBOAMALIC1hmXRR3m12ZZy2KeS9AyoWpk2N7gqoetO9I6izGG
 X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
  pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
 X-Endpoint-Received:
@@ -75,212 +75,66 @@ Reply-To: <emil.l.velikov@gmail.com>
 
 From: Emil Velikov <emil.velikov@collabora.com>
 
-As a whole all plugins should be built-in, otherwise they would be using
-internal, undocumented, unversioned, unstable API.
-
-Flesh out the external plugin support into a few blocks and simplify the
-normal path. Guard the external plugin support behind a runtime check,
-which will be dead-code eliminated in the default case.
-
-Hide the internal API (omit export-dynamic) when built without external
-plugins.
+The external plugins infra is getting deprecated and disabled by
+default. Remove this dummy plugin.
 ---
- Makefile.obexd     |  2 ++
- obexd/src/obexd.h  |  2 +-
- obexd/src/plugin.c | 89 ++++++++++++++++++++++++++++++++++++------------------
- obexd/src/plugin.h |  4 +++
- 4 files changed, 66 insertions(+), 31 deletions(-)
+ Makefile.am              |  8 --------
+ plugins/external-dummy.c | 28 ----------------------------
+ 2 files changed, 36 deletions(-)
 
-diff --git a/Makefile.obexd b/Makefile.obexd
-index 363295d0e..0e50b1fa4 100644
---- a/Makefile.obexd
-+++ b/Makefile.obexd
-@@ -92,7 +92,9 @@ obexd_src_obexd_LDADD = lib/libbluetooth-internal.la \
- 			$(ICAL_LIBS) $(DBUS_LIBS) $(LIBEBOOK_LIBS) \
- 			$(LIBEDATASERVER_LIBS) $(GLIB_LIBS) -ldl
+diff --git a/Makefile.am b/Makefile.am
+index 59603a0b7..9e35d7fd9 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -289,14 +289,6 @@ builtin_ldadd =
  
-+if EXTERNAL_PLUGINS
- obexd_src_obexd_LDFLAGS = $(AM_LDFLAGS) -Wl,--export-dynamic
-+endif
+ include Makefile.plugins
  
- obexd_src_obexd_CPPFLAGS = $(AM_CPPFLAGS) $(GLIB_CFLAGS) $(DBUS_CFLAGS) \
- 				$(ICAL_CFLAGS) -DOBEX_PLUGIN_BUILTIN \
-diff --git a/obexd/src/obexd.h b/obexd/src/obexd.h
-index fe312a65b..af5265da5 100644
---- a/obexd/src/obexd.h
-+++ b/obexd/src/obexd.h
-@@ -18,7 +18,7 @@
- #define OBEX_MAS	(1 << 8)
- #define OBEX_MNS	(1 << 9)
- 
--gboolean plugin_init(const char *pattern, const char *exclude);
-+void plugin_init(const char *pattern, const char *exclude);
- void plugin_cleanup(void);
- 
- gboolean manager_init(void);
-diff --git a/obexd/src/plugin.c b/obexd/src/plugin.c
-index a3eb24753..14327782d 100644
---- a/obexd/src/plugin.c
-+++ b/obexd/src/plugin.c
-@@ -34,6 +34,8 @@
- #define PLUGINFLAG (RTLD_NOW)
- #endif
- 
-+#define IS_ENABLED(x) (x)
-+
- static GSList *plugins = NULL;
- 
- struct obex_plugin {
-@@ -41,7 +43,8 @@ struct obex_plugin {
- 	const struct obex_plugin_desc *desc;
- };
- 
--static gboolean add_plugin(void *handle, const struct obex_plugin_desc *desc)
-+static gboolean add_external_plugin(void *handle,
-+					const struct obex_plugin_desc *desc)
- {
- 	struct obex_plugin *plugin;
- 
-@@ -66,6 +69,25 @@ static gboolean add_plugin(void *handle, const struct obex_plugin_desc *desc)
- 	return TRUE;
- }
- 
-+static void add_plugin(const struct obex_plugin_desc *desc)
-+{
-+	struct obex_plugin *plugin;
-+
-+	plugin = g_try_new0(struct obex_plugin, 1);
-+	if (plugin == NULL)
-+		return;
-+
-+	plugin->desc = desc;
-+
-+	if (desc->init() < 0) {
-+		g_free(plugin);
-+		return;
-+	}
-+
-+	plugins = g_slist_append(plugins, plugin);
-+	DBG("Plugin %s loaded", desc->name);
-+}
-+
- static gboolean check_plugin(const struct obex_plugin_desc *desc,
- 				char **patterns, char **excludes)
- {
-@@ -93,42 +115,22 @@ static gboolean check_plugin(const struct obex_plugin_desc *desc,
- }
- 
- 
--#include "builtin.h"
+-if MAINTAINER_MODE
+-plugin_LTLIBRARIES += plugins/external-dummy.la
+-plugins_external_dummy_la_SOURCES = plugins/external-dummy.c
+-plugins_external_dummy_la_LDFLAGS = $(AM_LDFLAGS) -module -avoid-version \
+-				    -no-undefined
+-plugins_external_dummy_la_CFLAGS = $(AM_CFLAGS) -fvisibility=hidden
+-endif
 -
--gboolean plugin_init(const char *pattern, const char *exclude)
-+static void external_plugin_init(char **patterns, char **excludes)
- {
--	char **patterns = NULL;
--	char **excludes = NULL;
- 	GDir *dir;
- 	const char *file;
--	unsigned int i;
+ pkglibexec_PROGRAMS += src/bluetoothd
  
--	if (strlen(PLUGINDIR) == 0)
--		return FALSE;
-+	info("Using external plugins is not officially supported.\n");
-+	info("Consider upstreaming your plugins into the BlueZ project.");
- 
--	if (pattern)
--		patterns = g_strsplit_set(pattern, ":, ", -1);
+ src_bluetoothd_SOURCES = $(builtin_sources) \
+diff --git a/plugins/external-dummy.c b/plugins/external-dummy.c
+deleted file mode 100644
+index 1c209e8b7..000000000
+--- a/plugins/external-dummy.c
++++ /dev/null
+@@ -1,28 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0-or-later
+-/*
+- *
+- *  BlueZ - Bluetooth protocol stack for Linux
+- *
+- */
 -
--	if (exclude)
--		excludes = g_strsplit_set(exclude, ":, ", -1);
+-#ifdef HAVE_CONFIG_H
+-#include <config.h>
+-#endif
 -
--	DBG("Loading builtin plugins");
+-#include "src/plugin.h"
+-#include "src/log.h"
 -
--	for (i = 0; __obex_builtin[i]; i++) {
--		if (check_plugin(__obex_builtin[i],
--					patterns, excludes) == FALSE)
--			continue;
+-static int dummy_init(void)
+-{
+-	DBG("");
 -
--		add_plugin(NULL,  __obex_builtin[i]);
--	}
-+	if (strlen(PLUGINDIR) == 0)
-+		return;
- 
- 	DBG("Loading plugins %s", PLUGINDIR);
- 
- 	dir = g_dir_open(PLUGINDIR, 0, NULL);
- 	if (!dir) {
--		g_strfreev(patterns);
--		g_strfreev(excludes);
--		return FALSE;
-+		return;
- 	}
- 
- 	while ((file = g_dir_read_name(dir)) != NULL) {
-@@ -164,15 +166,42 @@ gboolean plugin_init(const char *pattern, const char *exclude)
- 			continue;
- 		}
- 
--		if (add_plugin(handle, desc) == FALSE)
-+		if (add_external_plugin(handle, desc) == FALSE)
- 			dlclose(handle);
- 	}
- 
- 	g_dir_close(dir);
-+}
-+
-+#include "builtin.h"
-+
-+void plugin_init(const char *pattern, const char *exclude)
-+{
-+	char **patterns = NULL;
-+	char **excludes = NULL;
-+	unsigned int i;
-+
-+	if (pattern)
-+		patterns = g_strsplit_set(pattern, ":, ", -1);
-+
-+	if (exclude)
-+		excludes = g_strsplit_set(exclude, ":, ", -1);
-+
-+	DBG("Loading builtin plugins");
-+
-+	for (i = 0; __obex_builtin[i]; i++) {
-+		if (check_plugin(__obex_builtin[i],
-+					patterns, excludes) == FALSE)
-+			continue;
-+
-+		add_plugin(__obex_builtin[i]);
-+	}
-+
-+	if IS_ENABLED(EXTERNAL_PLUGINS)
-+		external_plugin_init(patterns, excludes);
-+
- 	g_strfreev(patterns);
- 	g_strfreev(excludes);
+-	return 0;
+-}
 -
--	return TRUE;
- }
- 
- void plugin_cleanup(void)
-diff --git a/obexd/src/plugin.h b/obexd/src/plugin.h
-index a91746cbc..e1756b9bf 100644
---- a/obexd/src/plugin.h
-+++ b/obexd/src/plugin.h
-@@ -20,10 +20,14 @@ struct obex_plugin_desc {
- 			#name, init, exit \
- 		};
- #else
-+#if EXTERNAL_PLUGINS
- #define OBEX_PLUGIN_DEFINE(name,init,exit) \
- 		extern struct obex_plugin_desc obex_plugin_desc \
- 				__attribute__ ((visibility("default"))); \
- 		const struct obex_plugin_desc obex_plugin_desc = { \
- 			#name, init, exit \
- 		};
-+#else
-+#error "Requested non built-in plugin, while external plugins is disabled"
-+#endif
- #endif
+-static void dummy_exit(void)
+-{
+-	DBG("");
+-}
+-
+-BLUETOOTH_PLUGIN_DEFINE(external_dummy, VERSION,
+-		BLUETOOTH_PLUGIN_PRIORITY_LOW, dummy_init, dummy_exit)
 
 -- 
 2.43.0
