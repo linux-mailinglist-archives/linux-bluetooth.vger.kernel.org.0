@@ -1,156 +1,100 @@
-Return-Path: <linux-bluetooth+bounces-1443-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1446-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AAD178408DD
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 29 Jan 2024 15:44:49 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C26D8408E6
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 29 Jan 2024 15:49:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 615021F26412
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 29 Jan 2024 14:44:49 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 63A3EB20DF9
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 29 Jan 2024 14:49:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 715FB153504;
-	Mon, 29 Jan 2024 14:44:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78FD3148316;
+	Mon, 29 Jan 2024 14:49:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hquQLg2J"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CoBXTVAi"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82FB8152DF8
-	for <linux-bluetooth@vger.kernel.org>; Mon, 29 Jan 2024 14:44:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 815438F6C
+	for <linux-bluetooth@vger.kernel.org>; Mon, 29 Jan 2024 14:48:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706539457; cv=none; b=CKwfRuBdQZta6UZWpRkqq5az5XPdgc+SwPy7m+o7TI383m2znh/9ghQoQ9WyXCKIy9Lt/URwAoCJzyIFZHwD0DXBBGT0sQOKMSqbhiSD6Bdv4JIQoqCiMH5tHOt9ZelcpmyaR1mV9jcHXCw7W5gG/ePi/RMFVbxW63voMLcnoDw=
+	t=1706539740; cv=none; b=Hl6AhPyB2MYmVexfYRabpqZ2kMsvF1ubeGVwHdncjxx6Z57bpl6g6f9cao2nnYST+AjVKQ4bL/2/SQzeOuGuvpRPTXEIR31l763z7xF1wxr5pAMspUQfBYRbZlk2BLo3mQyVMg6YsHNpehTH/PoRzR6XButl1fDJ3oWiOzyhua4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706539457; c=relaxed/simple;
-	bh=mb3vibSeCho7dxgk/hsygvpcHcp9zzLKyD4RpuB1Dx8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=RBasCbcfIr+UXlCAbSsjTsRuxDoUdHj7kPoRAjXiBko1HDR06M6Wc8tPDon7zhmFQwDSiRwnX1vjJaEYJduhYo+fyzCpmLNg/Xp++5JgbUUTJKXH3d0arxqgePOsYwZrVK6XfiYIj8Io+b/du1bb49R7nGig/PqIWjjgaVSO41Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hquQLg2J; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 22A59C43601;
-	Mon, 29 Jan 2024 14:44:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1706539457;
-	bh=mb3vibSeCho7dxgk/hsygvpcHcp9zzLKyD4RpuB1Dx8=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=hquQLg2J3Xr5ZqIP/iNSdbU8AqopGCuS4Cwmz+02dxdDwiWDxCkf7OpdM+zvVO3SK
-	 lGpVPNNj1EnUg2c5OHoVF6G2tpeMBnZXKI181RXyMSiIL6PuBbSJKUTEuXVV7ggftV
-	 v4Da3Cf0JtWsszL8QGilbpSzUhwzkMukKoSr88XRncZVtOvf/7wIZEc06DqVuMebb+
-	 wwzyARtjRtdGplf8i+YFY9O5O1k6S0oF6h2h9q2Ebali6ivCvhAG+IbBwWIsk/0c6j
-	 NAOo4r/3cZwDUsmp4rbnTJ+iEg+BAXo3YkCQUgcvibXMs1HqZPcIria3/wOzetkXL8
-	 e34rFOhFoCISw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12DC6C47DDB;
-	Mon, 29 Jan 2024 14:44:17 +0000 (UTC)
-From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
-Date: Mon, 29 Jan 2024 14:44:22 +0000
-Subject: [PATCH BlueZ v4 8/8] android: export only (android) entrypoint
- from the modules
+	s=arc-20240116; t=1706539740; c=relaxed/simple;
+	bh=IIwzTKt5FOc95k5tLHIIt8op3AWIeLxlM/3CZ1yGhes=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=I4siM0TrGZjRiEcnXPAImPfviDWgUD8bUBi06Gp0ry3CgJyB+smYexQYPTmm5mt4224yVncE+iPtlRxjxTBIi0JHUhupWvfmHzExEr6Ec6q3wnbmV30qMaWXx5W8FBiwi86neJ1ZyjOYjNXxfFWqfCVXmFX7E4vQOxey1IMQ90g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CoBXTVAi; arc=none smtp.client-ip=209.85.128.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-603e7d19725so4687607b3.0
+        for <linux-bluetooth@vger.kernel.org>; Mon, 29 Jan 2024 06:48:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706539738; x=1707144538; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=IIwzTKt5FOc95k5tLHIIt8op3AWIeLxlM/3CZ1yGhes=;
+        b=CoBXTVAixreqNLCAIU6K/ebo7RZ7d1oP1TtYeeXUg8aMqrawCngf1htAYquSEnLQ+w
+         AnctEk2HQPMvqNIwU70fcvZlY+dCSefavxlZcobxlcZIn9Sfvi8dK343DRlcrWIDalW0
+         4+0nA0rkBwyHJt/H8UFYpCQcy0C/GCzsWCrCW+nQxST4Vj+OGBB90V7J8Cio1tEDfa7s
+         t3ZuGcZ9T6J/F3BYnXl33ZIA/eDTS+Iydz0ay1efsye5DAv8saGacjtYrOTOCMUoPtAR
+         shWf1RrWDPJgU0O9YURahhwwEL3+adlFb9IMnBQoCpfXKXYsc/V8VrVNnczchUNYeido
+         qLSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706539738; x=1707144538;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=IIwzTKt5FOc95k5tLHIIt8op3AWIeLxlM/3CZ1yGhes=;
+        b=Xr8uEeWipi+U2vl4r8MV5qN4rczE6PwckAzsEMIZp9EpnQT3KAYIVCqGj5aOXzUbod
+         eZVVo7G4CqOas4K7a4BkXRJRymYMTiaoj7xBUHO2mpdJMZq+04sxm/gkXY1K0iUvKBLe
+         hTKQlCY+AN42xjVTf1yWbqryzm6TvhkF5IvohyB+rItrhLf3u2bGatQDH4IYCSsshX/N
+         a4DDe76kiPnmGcpYyF53TkhC2gIxaxEg2w2UtOAhlB4LtVj3zgPazmZ7zRba2xEbQ1vz
+         OxB3rq/Rw3Kxp7ywthExwvCAjYgALxNfNuXNt1dHTZqXdl/lYdQ/3KHTVYO8wHUQB/BE
+         b/DQ==
+X-Gm-Message-State: AOJu0YxoKXs53ycgx0bk+sBLCTFOGI/2TiJwEOQINnrxsnoXIDt+UHAJ
+	8PWK4CBGAZDkVUJzQ7C3VA0SAreE/26xjwYThmX6kuPclNxDYC4Cfb3QTW77QEGyTp7T1zzgFwa
+	cP+ENWC+rpYkD1L7u0dpv1+4MMI6u2dHx
+X-Google-Smtp-Source: AGHT+IFZTllfHVatcFg/EP8Mqn4RF9R86p8dWDkIqWlGh/hpMwpZmyFNZJ9E1SfhJofvmkG72TYgNO+cIPxmf6eu1sc=
+X-Received: by 2002:a81:f901:0:b0:602:a5ef:effa with SMTP id
+ x1-20020a81f901000000b00602a5efeffamr5079900ywm.18.1706539738403; Mon, 29 Jan
+ 2024 06:48:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240129-rm-ext-plugins-v4-8-bfd1e08c7f99@gmail.com>
-References: <20240129-rm-ext-plugins-v4-0-bfd1e08c7f99@gmail.com>
-In-Reply-To: <20240129-rm-ext-plugins-v4-0-bfd1e08c7f99@gmail.com>
-To: linux-bluetooth@vger.kernel.org
-Cc: Emil Velikov <emil.velikov@collabora.com>
-X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1706539455; l=3016;
- i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
- bh=A9wt+5pbCxd+p0NIbARFNH3H5ujiQXTs0z8giNMkb3Y=;
- b=K76VOkTcnUI3PuCqNvoo+6kvKl0OiLlo1ASE+yYAnkjP5r9Rj//Yh7YSN/e0O+h4rIxOR315X
- gnD3Z6uYd5zCwHWjTq7ONZyMD3J1jzH8lXv82vqReehAVxtDA8bk/WS
-X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
- pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
-X-Endpoint-Received:
- by B4 Relay for emil.l.velikov@gmail.com/20230301 with auth_id=35
-X-Original-From: Emil Velikov <emil.l.velikov@gmail.com>
-Reply-To: <emil.l.velikov@gmail.com>
+References: <20240125-rm-ext-plugins-v3-0-d141f7870bb6@gmail.com>
+ <20240125-rm-ext-plugins-v3-2-d141f7870bb6@gmail.com> <CABBYNZKafK6LRauk4RMVeE8PpsazFd75nxSA+a0-v2iHqsYQcQ@mail.gmail.com>
+In-Reply-To: <CABBYNZKafK6LRauk4RMVeE8PpsazFd75nxSA+a0-v2iHqsYQcQ@mail.gmail.com>
+From: Emil Velikov <emil.l.velikov@gmail.com>
+Date: Mon, 29 Jan 2024 14:48:46 +0000
+Message-ID: <CACvgo50tsiaLV=8XFSV89r_1DQzdfaTYV6b2e8h7GLoQqkGDUg@mail.gmail.com>
+Subject: Re: [PATCH BlueZ v3 2/8] obexd: factor out external plugin support
+To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: linux-bluetooth@vger.kernel.org, Emil Velikov <emil.velikov@collabora.com>
+Content-Type: text/plain; charset="UTF-8"
 
-From: Emil Velikov <emil.velikov@collabora.com>
+Hi Luiz,
 
-The android specific modules, have a designated HMI entrypoint. Hide
-everything else with -fvisibility=hidden.
----
- android/Makefile.am     | 3 +++
- android/hal-audio.c     | 1 +
- android/hal-bluetooth.c | 1 +
- android/hal-sco.c       | 1 +
- 4 files changed, 6 insertions(+)
+On Fri, 26 Jan 2024 at 18:50, Luiz Augusto von Dentz
+<luiz.dentz@gmail.com> wrote:>> How about we do something like:
 
-diff --git a/android/Makefile.am b/android/Makefile.am
-index 309910147..e3756e89c 100644
---- a/android/Makefile.am
-+++ b/android/Makefile.am
-@@ -96,6 +96,7 @@ android_bluetooth_default_la_SOURCES = android/hal.h android/hal-bluetooth.c \
- 					android/hal-log.h \
- 					android/hal-ipc.h android/hal-ipc.c \
- 					android/hal-utils.h android/hal-utils.c
-+android_bluetooth_default_la_CFLAGS = $(AM_CFLAGS) -fvisibility=hidden
- android_bluetooth_default_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/android
- android_bluetooth_default_la_LDFLAGS = $(AM_LDFLAGS) -module -avoid-version \
- 					-no-undefined
-@@ -195,6 +196,7 @@ android_audio_a2dp_default_la_SOURCES = android/audio-msg.h \
- 					android/hardware/audio_effect.h \
- 					android/hardware/hardware.h \
- 					android/system/audio.h
-+android_audio_a2dp_default_la_CFLAGS = $(AM_CFLAGS) -fvisibility=hidden
- android_audio_a2dp_default_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/android \
- 					$(SBC_CFLAGS)
- android_audio_a2dp_default_la_LIBADD = $(SBC_LIBS) -lrt
-@@ -212,6 +214,7 @@ android_audio_sco_default_la_SOURCES = android/hal-log.h \
- 					android/audio_utils/resampler.c \
- 					android/audio_utils/resampler.h \
- 					android/system/audio.h
-+android_audio_sco_default_la_CFLAGS = $(AM_CFLAGS) -fvisibility=hidden
- android_audio_sco_default_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(srcdir)/android
- android_audio_sco_default_la_LIBADD = $(SPEEXDSP_LIBS) -lrt
- android_audio_sco_default_la_LDFLAGS = $(AM_LDFLAGS) -module -avoid-version \
-diff --git a/android/hal-audio.c b/android/hal-audio.c
-index d37d6098c..f3d9b40a6 100644
---- a/android/hal-audio.c
-+++ b/android/hal-audio.c
-@@ -1618,6 +1618,7 @@ static struct hw_module_methods_t hal_module_methods = {
- 	.open = audio_open,
- };
- 
-+__attribute__ ((visibility("default")))
- struct audio_module HAL_MODULE_INFO_SYM = {
- 	.common = {
- 		.tag = HARDWARE_MODULE_TAG,
-diff --git a/android/hal-bluetooth.c b/android/hal-bluetooth.c
-index d4442e620..7d1e5ac63 100644
---- a/android/hal-bluetooth.c
-+++ b/android/hal-bluetooth.c
-@@ -1117,6 +1117,7 @@ static struct hw_module_methods_t bluetooth_module_methods = {
- 	.open = open_bluetooth,
- };
- 
-+__attribute__ ((visibility("default")))
- struct hw_module_t HAL_MODULE_INFO_SYM = {
- 	.tag = HARDWARE_MODULE_TAG,
- 	.version_major = 1,
-diff --git a/android/hal-sco.c b/android/hal-sco.c
-index d7c08a68b..3d66ad357 100644
---- a/android/hal-sco.c
-+++ b/android/hal-sco.c
-@@ -1507,6 +1507,7 @@ static struct hw_module_methods_t hal_module_methods = {
- 	.open = sco_open,
- };
- 
-+__attribute__ ((visibility("default")))
- struct audio_module HAL_MODULE_INFO_SYM = {
- 	.common = {
- 		.tag = HARDWARE_MODULE_TAG,
+>
+> https://gist.github.com/Vudentz/0b8bcb78a8898614fc4848cbf44a0a9f
+>
+> That way we leave it to the compiler to remove the dead code when
+> linking but it still build checks which catches errors such as:
+>
 
--- 
-2.43.0
+Not sure why I did not use that from the start. Considering I've done
+similar changes in the kernel :facepalm:
 
+Thanks an updated series is on the list,
+-Emil
 
