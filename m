@@ -1,48 +1,48 @@
-Return-Path: <linux-bluetooth+bounces-1496-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1494-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 284AA842BF9
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 30 Jan 2024 19:40:37 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D691D842BF8
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 30 Jan 2024 19:40:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5AEC31C24116
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 30 Jan 2024 18:40:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9391A282282
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 30 Jan 2024 18:40:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A5F278B68;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A55778B67;
 	Tue, 30 Jan 2024 18:40:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ssgElbKL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u3uv+cD7"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B7078B53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B9B78B55
 	for <linux-bluetooth@vger.kernel.org>; Tue, 30 Jan 2024 18:40:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706640027; cv=none; b=Xi6w3JBWqSd7rg7rDbUZq26QLgR+TZ3cjMKgMqSzSw+Ol+hLuT3i++qNYQaxB3r1/c76uCiCzZDRtYJZ+jveO/c1E49GlRGcBZ4JQBBChCfddQ1KibC0RXXEK1+/R1xvieXDwwF7R2DwhgenpQ8+D8lEauE9yUF718mYcpUDFz4=
+	t=1706640027; cv=none; b=YkMSfRgIreXPyXSCCJuXYH5Mh7aF9+ivWhNEBVi7NQr4/eaf0XhEB9x6ktM31O7o+NZnrsTaHIPLybg2HCmCz8Gp5I6yOGjFcsXeYtRdTTYbE/rrS+iFYsaZ70j+1awHIg7MyaVN/GMK4InpM3mjW304T7OwqMxUbestM9YAWA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706640027; c=relaxed/simple;
-	bh=ytHmaqAXCqyUmS7J0O470n3D99ePQBv4Lf5UK4sv7MM=;
+	bh=UZ9HkEPtGs3qnEZ9zfOMEdgP9xiSONjOkEryrsxD5p4=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=oEfRs0ZwZX9EyNFr8bYuX23cR3Rmk1W/Pi/LlR3M/D9jtmv2dTSn9LUoP1nboTyt+obMz8JQ7oCKgc96Ck6twX/gdMzO1HN7z+dVukix/KxwF1F9Uosy3Asw/5+0YXi+UmYtrTwnGg6kbebNDNpq0q1g4lIUV6Qi8T5AmEnGg1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ssgElbKL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 93D36C433C7;
+	 In-Reply-To:To:Cc; b=ui3VfiYMiZOQjgV9wQRoCRkGp3n5cZmA4cGcJxj5QvaF+6Ws+4GjX4phpavFXFiFt8BkZFlrTYS5K1cqv02AfAYgPa0AqOiN4mgONYK6c9x5nyNbdp5zBJhFiKqFMren9XFtCglti4OAq/tgAFvVJSsfUVa31TZbnTZ+xzsW0/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u3uv+cD7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 9C481C43399;
 	Tue, 30 Jan 2024 18:40:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1706640026;
-	bh=ytHmaqAXCqyUmS7J0O470n3D99ePQBv4Lf5UK4sv7MM=;
+	bh=UZ9HkEPtGs3qnEZ9zfOMEdgP9xiSONjOkEryrsxD5p4=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=ssgElbKLkC/v08ptH5wyr2YdxKYMu5aGo5I5aTpcDLXsrIqXlRdJQhuUoFXRXnIRD
-	 wDW7csMCIUndmwZFgudj6ki1n4vQKDmyKU/EgcMN3Q6gxPncAO77XDD6hLrRWA0pWQ
-	 nhZkKH+ibZrMnXtqV50vAxWcsAczozHgC9a163REFxGGJyMGGGQP5+QBBEY/r604ny
-	 vYY8fvRFCa3LQqrw8K36egot92KD9jljA7QFDHCCn4B4ZFKjSttWKponBEqWwxlG5l
-	 Tp+j11aP6AgiKNACkduwyr9V2Ox3JJ2xkt5nNxDrZqbTLvT01JXtL6Mvem8NfUndb8
-	 u2Cxp+ctsZwpw==
+	b=u3uv+cD7Ofkm3o857Jf8nf2tBg2MXwXQ7Sm8wPdPwkaFd672/8zX9MPxbxcKms4g0
+	 fOdKTy/sEOmtVwhy6fHXBl7pPaxOqWpo6J2/rpxehJc5qfV4JVaATVVnrKIPoaDPDh
+	 rfoGnlvQNIhConIAbHcMqbLa8+OBqayDxD3qP2h6+ecw+BAx1a7T2FpRI2BRTDr02M
+	 /SHovZZk5ujY/97ZgprZh5M4aC1r563hqcEfkbDafD9W+x9Mo1ys91QU2oUiMekIQV
+	 qLOSItxc/kqeLV6WujszT/H3d4k7JJgfwhumItrcuHrISuaeDMOlu07sqQUoJCpkxW
+	 qhoclBqEMa49w==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 7B6B0C3274C;
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 83A3FDC99E4;
 	Tue, 30 Jan 2024 18:40:26 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
@@ -52,42 +52,39 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ v2 0/4] Update bcast ep register and config props
+Subject: Re: [Bluez PATCH v2 1/2] Monitor: Remove handle before assigning
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <170664002650.26337.975019276194048908.git-patchwork-notify@kernel.org>
+ <170664002653.26337.12062276527654167832.git-patchwork-notify@kernel.org>
 Date: Tue, 30 Jan 2024 18:40:26 +0000
-References: <20240130154412.3157-1-iulia.tanasescu@nxp.com>
-In-Reply-To: <20240130154412.3157-1-iulia.tanasescu@nxp.com>
-To: Iulia Tanasescu <iulia.tanasescu@nxp.com>
-Cc: linux-bluetooth@vger.kernel.org, claudia.rosu@nxp.com,
- mihai-octavian.urzica@nxp.com, silviu.barbulescu@nxp.com,
- vlad.pruteanu@nxp.com, andrei.istodorescu@nxp.com, luiz.dentz@gmail.com
+References: <20240130182459.Bluez.v2.1.If74ccbca4d541c5f576765a3a78cb8923b5f85b1@changeid>
+In-Reply-To: <20240130182459.Bluez.v2.1.If74ccbca4d541c5f576765a3a78cb8923b5f85b1@changeid>
+To: Archie Pusaka <apusaka@google.com>
+Cc: linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com,
+ johan.hedberg@gmail.com, marcel@holtmann.org,
+ chromeos-bluetooth-upstreaming@chromium.org, apusaka@chromium.org,
+ jiangzp@google.com
 
 Hello:
 
 This series was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Tue, 30 Jan 2024 17:44:08 +0200 you wrote:
-> This patch removes unnecessary input prompts from broadcast ep register.
-> It also adds support to provide stream config options at broadcast
-> source endpoint config.
+On Tue, 30 Jan 2024 18:24:59 +0800 you wrote:
+> From: Archie Pusaka <apusaka@chromium.org>
 > 
-> This is useful for a broadcast source supporting multiple streams,
-> since each stream could require a different config.
+> It is possible to have some handles not removed, for example the host
+> may decide not to wait for disconnection complete event when it is
+> suspending. In this case, when the peer device reconnected, we might
+> have two of the some handle assigned and create problem down the road.
 > 
 > [...]
 
 Here is the summary with links:
-  - [BlueZ,v2,1/4] bap: Parse BIG handle at endpoint config
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=2aecc09ada8b
-  - [BlueZ,v2,2/4] shared/bap: Set bcast stream metadata
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=5c90ef8d8247
-  - [BlueZ,v2,3/4] shared/lc3: Add macro for Channel Allocation LTV len
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=711814570bad
-  - [BlueZ,v2,4/4] client/player: Update bcast endpoint input prompts
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=a692cc44dc87
+  - [Bluez,v2,1/2] Monitor: Remove handle before assigning
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=12ccf5ea0fa5
+  - [Bluez,v2,2/2] Monitor: Avoid printing stale address on connection event
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=e98bbe3f1cb2
 
 You are awesome, thank you!
 -- 
