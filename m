@@ -1,152 +1,160 @@
-Return-Path: <linux-bluetooth+bounces-1521-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1523-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A04D1845BB7
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Feb 2024 16:38:44 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 07134845BFC
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Feb 2024 16:46:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5B762287B98
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Feb 2024 15:38:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 204D41C22870
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Feb 2024 15:46:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9487E626AC;
-	Thu,  1 Feb 2024 15:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D5836217F;
+	Thu,  1 Feb 2024 15:46:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M/Yk0EOT"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ixjzN/J7"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F7A6216A
-	for <linux-bluetooth@vger.kernel.org>; Thu,  1 Feb 2024 15:38:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A7762159
+	for <linux-bluetooth@vger.kernel.org>; Thu,  1 Feb 2024 15:46:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706801914; cv=none; b=JiDJJs8h9IJiPFg8M8hcrCcn3Mxdi11R0/tVydrdC0vTHiesUBvZKCn9wkzT5B9iYMprp9/k1qSYgl8xy9Y7PmbtW7WFOHAvLp7xUYwpR42C5tkE7KW4n0aiFNmh4ONcEayS70ZdhEcEHrlGYyjtrfNr115arOFk6PUuD5cyBN8=
+	t=1706802386; cv=none; b=iAL6GOdkGc+c+Verj2/Zplwy2WdR7tQVEBtOmAyFCUz74JR9JWFSf2u90NswbNIlrn3OdloM3U0Cy5GKG3oG4sPsxdcP08yuv9Y0nJSnGwRmChkXGN4vfNi4Smk9jbF2AqTKhIwliukMrofuqdblhi6rd9iP4zCO5gwd2nzMDWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706801914; c=relaxed/simple;
-	bh=AAOtZ8xC+h1vmDpGmod5czlcvsYkjYt1Bxoa+kp7CgA=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jVi8g7N8wBkSiyPPGv+iu6X1Jy4ecUlzrQ2Jmp60XeNMJ5qBNVXZblvjYF6ls/4zcKal9hgLS2Gt1QMzg2RYXyrQLKS1L/75f2cDlMY6LSOpwDHF9QztrC7+sHTcyRmSPBOC/ANy5lOQnGS5WDSKUKClVmnJtIC/bHF073ykp0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M/Yk0EOT; arc=none smtp.client-ip=209.85.222.44
+	s=arc-20240116; t=1706802386; c=relaxed/simple;
+	bh=qO84xf0TAnzBPeZnOdovQFxAhlvEhkH9b9OtYABuFAc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Xf9QAkCZKJnZZcn8TnklhUg9EEdLzzU3AbEuTlHLoiy5IXWI17Rd97yoyexKJFHFX9i3F4F38YwY9TMwzli1X69LqEgvm8kHY/8/+C8ym1b1rsjHb5bEnHzA84tkOhh9kd/SocKDEhMZpZzGh9fTy7qnJfIduAY+Icml3UOJaPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ixjzN/J7; arc=none smtp.client-ip=209.85.208.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-7d5fce59261so540822241.3
-        for <linux-bluetooth@vger.kernel.org>; Thu, 01 Feb 2024 07:38:31 -0800 (PST)
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2cf1288097aso14682051fa.0
+        for <linux-bluetooth@vger.kernel.org>; Thu, 01 Feb 2024 07:46:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706801909; x=1707406709; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=G+0d8Hy5JsXKOl1rOEs9vku4hGWhA4odGKzZJQAiN/U=;
-        b=M/Yk0EOTn7+IstCmDI3xA65DZKMtmyKxH7Q8xfiuZI+wnDedQlhwN1+7Rs0ARlL/Kq
-         ROS2Ez7/qW/FDlRXmgrVHv/o8kt/C1iOxgKPMpv84v9st3SOFK379ox3DyauxZa+1x4r
-         JUee9MQsFnOF/IHtJUN7KvlNnJR6ifqRktYPee4nRcY1BSnjiVAi9+82JopVJa9Taryq
-         iqwsyVK6wvTrY1Tw19bqEzxLFhK8h0WtH6m0/S3xv8288eRPcyA7MebwaTVaBhMlnoGD
-         IM/BjpI8i1BUHYtbGz1Cw8Vn8xIcaao0kKdx3f3aACfiHfKFRU4sZjopERLeijQxUdy1
-         s6tA==
+        d=gmail.com; s=20230601; t=1706802383; x=1707407183; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nJVlBzJscMcA2voHMWrDxawYWbtejRaZS3mMueBEAW8=;
+        b=ixjzN/J7sOnmSX9PeZl1U17HsGeuDgns+4CduKG4BBZouJC9vcV2sqdhrTz6qyhAGn
+         +lmgUSXbjM6a5WPxugw+j4dR6JOlmbow6eeapKaaxSGtxoXKCO7ZeZR+qFEp/avNG3ff
+         el3c8+poxFTrte15j/gnkHKrODzTSgL6GNsHsv96dbOKzZpoCYGqxoA5LwpJjruyCJrI
+         d2AOUTOQCZ1J+KXuZ1m9b/3LnJx90UuxiUxnutnOKoRhjBkueECQi67dhY+j0MEfdbJ8
+         bWuwcQ+L1difAYzER1zW7x2KraOTgZeXXRrCbYLJYIlpIH62V+EpW2dr1Uuq8QSUrr2n
+         Z+tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706801909; x=1707406709;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1706802383; x=1707407183;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=G+0d8Hy5JsXKOl1rOEs9vku4hGWhA4odGKzZJQAiN/U=;
-        b=LP1cpMIPiy7kQKlnr4uGq221N9fknAMHdqjVR5v65q61oJ9VAf6d+XurWw30bGZB8n
-         KOIWCYYUCcBeCXUW86jSCpfhsIniQW/B8gdniRw7sVdOxt8010oyrXaBYel8ev5zML/m
-         eAK5B+VjbdUkvncpDqtelG7Ob7XkIZoSZWFZxpqBw8EDEV4Yb7QCRAFhANpAwujKF40t
-         odSSzCT4tT1HnxVkva2HGZ4h4NJ48+offHilWjrEagpNiv+BT3rTIxwjYlleNfR4EbKh
-         Nop44JbdtmwSvVlmbhuB6GTzIs3tmLbEcOsmnykAFlBrMEpAVBmeoaQSR9TJtSaRYQ/X
-         q7fw==
-X-Gm-Message-State: AOJu0YwXn4/ptRgIghD0AHGP2avlRRa4RbM1rBGC0bNNXDPYhPpEsCRf
-	5ejFStciD7DQBKrujJUHT4ZcGwqxYThMZS61104r6ypXBYMonb5VIBAYroy9
-X-Google-Smtp-Source: AGHT+IEjQmPCBzwR1qPhysfcKse1zn/wg0SuW3g8IKIvAl/7o1i1at6TO7MmqTPwmTt3gsGSa0mS4A==
-X-Received: by 2002:ac5:c76b:0:b0:4bd:3d31:353a with SMTP id c11-20020ac5c76b000000b004bd3d31353amr4544564vkn.4.1706801908920;
-        Thu, 01 Feb 2024 07:38:28 -0800 (PST)
-Received: from lvondent-mobl4.. (071-047-239-151.res.spectrum.com. [71.47.239.151])
-        by smtp.gmail.com with ESMTPSA id ca5-20020a056122400500b004bd503f054asm1624586vkb.42.2024.02.01.07.38.27
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Feb 2024 07:38:28 -0800 (PST)
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v1 5/5] bap: Fix crash when a broadcast strean setup is pending
-Date: Thu,  1 Feb 2024 10:38:20 -0500
-Message-ID: <20240201153820.1016507-5-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240201153820.1016507-1-luiz.dentz@gmail.com>
-References: <20240201153820.1016507-1-luiz.dentz@gmail.com>
+        bh=nJVlBzJscMcA2voHMWrDxawYWbtejRaZS3mMueBEAW8=;
+        b=wV8ls+uW4kEUg8eBdhmC+LNui8urgC/VwforQawrXj64Zcwnl3TqHkpcAkRjuV08Te
+         Bvs8uP5Z6X9OXCTrxrt0MXZifTXK6ZSiTnkDO5jGYQ44JDWncWGN4G6ydavUbFhU8c24
+         CZhqo5PrBSZ81/LFbtqLSZo2sva1jlnuag5Bo+Jeq5ayG2GytvfW2sqtmFB5OoA0htXF
+         uvadmnhK24u4nMkvoWAp8O/DlsKFTrFOVTh3/a/avPMAxXZOMJG7pEkYRTTaJTCkNL/W
+         9cBg9vx5YyoeE66sJ3alg78g5RkvMH+McHdA8o2t2boU1Pp4Hu9BdeBDCL+QQgYcRskg
+         v+Hw==
+X-Gm-Message-State: AOJu0Yy0CYxglIE90kUUlNHpJ6owlJh8TqTOpEtEOD8bIfrAejliYwmY
+	rKgjMgswB5iaUOvL6fjsIx0K9kK6CE89+wV3o5STb4SLAOMc0WeAQVmuQQbGi1FREfBGRPbqprl
+	YbIkOfrH9G/On0rZoD2SSiF8cmEE=
+X-Google-Smtp-Source: AGHT+IHfm9mY7zZd3hoPPVPTS5A6Xtd5WSAPnJev2T4N1n2AuKDvZaAoXMtWseDKEVOQi2rKEhzee6XfDwUvBKelrTM=
+X-Received: by 2002:a2e:a26f:0:b0:2cf:1174:44a with SMTP id
+ k15-20020a2ea26f000000b002cf1174044amr3565314ljm.13.1706802382477; Thu, 01
+ Feb 2024 07:46:22 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240201152835.196617-1-silviu.barbulescu@nxp.com>
+In-Reply-To: <20240201152835.196617-1-silviu.barbulescu@nxp.com>
+From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date: Thu, 1 Feb 2024 10:46:09 -0500
+Message-ID: <CABBYNZ+HidHsCYBPrhedgsPOZ+=bHGzP==JyWELcaieLqYVT2w@mail.gmail.com>
+Subject: Re: [PATCH BlueZ 0/7] Add support for multiple BISes on the bcast source
+To: Silviu Florian Barbulescu <silviu.barbulescu@nxp.com>
+Cc: linux-bluetooth@vger.kernel.org, mihai-octavian.urzica@nxp.com, 
+	vlad.pruteanu@nxp.com, andrei.istodorescu@nxp.com, iulia.tanasescu@nxp.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Hi Silviu,
 
-This fixes the following crash when a broadcast stream setup is
-pending and the device is remove:
+On Thu, Feb 1, 2024 at 10:28=E2=80=AFAM Silviu Florian Barbulescu
+<silviu.barbulescu@nxp.com> wrote:
+>
+> This patch adds support for multiple BISes in broadcast sources.
+>
+> Example commands:
+> Create a local endpoint and an endpoint for BIS1:
+> endpoint.register 00001852-0000-1000-8000-00805f9b34fb 0x06
+> [/local/endpoint/ep0] Auto Accept (yes/no): y
+> [/local/endpoint/ep0] Max Transports (auto/value): a
+> [/local/endpoint/ep0] Locations: 0x03
+> [/local/endpoint/ep0] Supported Context (value): 0
+>
+> Configure BIS1, create BIS1 transport and endpoint for BIS2:
+> endpoint.config /org/bluez/hci0/pac_bcast0 /local/endpoint/ep0 48_4_1
+> [/local/endpoint/ep0] BIG (auto/value): 0x01
+> [/local/endpoint/ep0] Enter channel location (value/no): 0x01
+> [/local/endpoint/ep0] Enter Metadata (value/no): n
+>
+> Configure BIS2, create BIS2 transport and endpoint for BIS3:
+> endpoint.config /org/bluez/hci0/pac_bcast1 /local/endpoint/ep0 48_4_1
+> [/local/endpoint/ep0] BIG (auto/value): 0x01
+> [/local/endpoint/ep0] Enter channel location (value/no): 0x02
+> [/local/endpoint/ep0] Enter Metadata (value/no): n
+>
+> For multiple BISes acquire must be called on all transports
+> before the BIG is created:
+> transport.acquire /org/bluez/hci0/pac_bcast0/fd0
+> transport.acquire /org/bluez/hci0/pac_bcast1/fd1
+> .....
+> transport.release /org/bluez/hci0/pac_bcast0/fd0
+> transport.release /org/bluez/hci0/pac_bcast1/fd1
+>
+> Silviu Florian Barbulescu (7):
+>   bap: Remove set lpac user data at bcast ep register
+>   shared/bap: Add support to create multiple streams for the same pac
+>   bap: Create a new endpoint to be available for the next BIS
+>     configuration
+>   bap: Split bap_state and bap_connecting in two functions
+>   shared/bap: Check the state of all the streams with the same BIG ID
+>   bap: Set the generated BASE on all setups from the same BIG
+>   shared/bap: Generate single BIS BASE for a configuration with BIG ID
+>     0xFF
+>
+>  profiles/audio/bap.c | 239 ++++++++++++++++++++++++++++++++-----------
+>  src/shared/bap.c     |  67 ++++++++++--
+>  src/shared/bap.h     |   2 +
+>  3 files changed, 238 insertions(+), 70 deletions(-)
+>
+>
+> base-commit: a692cc44dc8735b9303f8893f784306b4d2654fe
+> --
+> 2.39.2
 
-bluetoothd[37]: src/device.c:device_free() 0x89a500
-bluetoothd[37]: GLib: Invalid file descriptor.
-bluetoothd[37]: ++++++++ backtrace ++++++++
-bluetoothd[37]: #1  g_logv+0x270 (/usr/lib64/libglib-2.0.so.0.7600.6) [0x7feb557e3120]
-bluetoothd[37]: #2  g_log+0x93 (/usr/lib64/libglib-2.0.so.0.7600.6) [0x7feb557e3403]
-bluetoothd[37]: #3  g_io_channel_error_from_errno+0x4a (/usr/lib64/libglib-2.0.so.0.7600.6) [0x7feb557cd9da]
-bluetoothd[37]: #4  g_io_unix_close+0x53 (/usr/lib64/libglib-2.0.so.0.7600.6) [0x7feb55839d53]
-bluetoothd[37]: #5  g_io_channel_shutdown+0x10f (/usr/lib64/libglib-2.0.so.0.7600.6) [0x7feb557cdf7f]
-bluetoothd[37]: #6  g_io_channel_unref+0x39 (/usr/lib64/libglib-2.0.so.0.7600.6) [0x7feb557ce1e9]
-bluetoothd[37]: #7  g_source_unref_internal+0x24f (/usr/lib64/libglib-2.0.so.0.7600.6) [0x7feb557db79f]
-bluetoothd[37]: #8  g_main_context_dispatch+0x288 (/usr/lib64/libglib-2.0.so.0.7600.6) [0x7feb557dd638]
-bluetoothd[37]: #9  g_main_context_iterate.isra.0+0x318 (/usr/lib64/libglib-2.0.so.0.7600.6) [0x7feb5583b6b8]
-bluetoothd[37]: #10 g_main_loop_run+0x7f (/usr/lib64/libglib-2.0.so.0.7600.6) [0x7feb557dcaff]
-bluetoothd[37]: #11 mainloop_run+0x15 (src/shared/mainloop-glib.c:68) [0x662e65]
-bluetoothd[37]: #12 mainloop_run_with_signal+0x128 (src/shared/mainloop-notify.c:190) [0x663368]
-bluetoothd[37]: #13 main+0x154b (src/main.c:1454) [0x41521b]
-bluetoothd[37]: #14 __libc_start_call_main+0x7a (/usr/lib64/libc.so.6) [0x7feb54e1fb8a]
-bluetoothd[37]: #15 __libc_start_main@@GLIBC_2.34+0x8b (/usr/lib64/libc.so.6) [0x7feb54e1fc4b]
-bluetoothd[37]: #16 _start+0x25 (src/main.c:1197) [0x416305]
-bluetoothd[37]: +++++++++++++++++++++++++++
----
- profiles/audio/bap.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+Not sure how you guys are testing these changes but currently I can't
+get Broadcast Sink to work, and it crashes on the the cleanup:
 
-diff --git a/profiles/audio/bap.c b/profiles/audio/bap.c
-index 7e87d12d02f1..26fd465bf560 100644
---- a/profiles/audio/bap.c
-+++ b/profiles/audio/bap.c
-@@ -974,6 +974,9 @@ static DBusMessage *set_configuration(DBusConnection *conn, DBusMessage *msg,
- 			setup->id = 0;
- 		}
- 
-+		if (ep->data->service)
-+			service_set_connecting(ep->data->service);
-+
- 		return g_dbus_create_reply(msg, DBUS_TYPE_INVALID);
- 	}
- 
-@@ -2437,6 +2440,11 @@ static int bap_bcast_probe(struct btd_service *service)
- 		return -EINVAL;
- 	}
- 
-+	if (!bt_bap_attach(data->bap, NULL)) {
-+		error("BAP unable to attach");
-+		return -EINVAL;
-+	}
-+
- 	bap_data_add(data);
- 
- 	data->ready_id = bt_bap_ready_register(data->bap, bap_ready, service,
-@@ -2644,6 +2652,7 @@ static struct btd_profile bap_bcast_profile = {
- 	.remote_uuid	= BCAAS_UUID_STR,
- 	.device_probe	= bap_bcast_probe,
- 	.device_remove	= bap_bcast_remove,
-+	.disconnect	= bap_disconnect,
- 	.auto_connect	= false,
- 	.experimental	= true,
- };
--- 
-2.43.0
+https://gist.github.com/Vudentz/00a62914b0dc08261065cea65c0e04f0
 
+So until we fix that I'm actually not merging new code on top, I'm
+also considering moving the driver out of bap plugin and perhaps have
+it as a standalone bcaa plugin since there have been quite a few
+occasions where broadcast code has caused regressions on unicast.
+
+Anyway Ive been working on the following fixes and I do appreciate
+some feedback:
+
+https://patchwork.kernel.org/project/bluetooth/patch/20240131173002.834951-=
+1-luiz.dentz@gmail.com/
+https://patchwork.kernel.org/project/bluetooth/list/?series=3D822175
+
+--=20
+Luiz Augusto von Dentz
 
