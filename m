@@ -1,77 +1,77 @@
-Return-Path: <linux-bluetooth+bounces-1520-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1522-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B003F845BBD
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Feb 2024 16:39:51 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9226A845BB8
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Feb 2024 16:38:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6C5CCB25EEA
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Feb 2024 15:38:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C434D1C26CC6
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Feb 2024 15:38:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1064626A9;
-	Thu,  1 Feb 2024 15:38:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A039862159;
+	Thu,  1 Feb 2024 15:38:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AC0bXsCy"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fgyx98zJ"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
+Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30C56217A
-	for <linux-bluetooth@vger.kernel.org>; Thu,  1 Feb 2024 15:38:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995D6626AD
+	for <linux-bluetooth@vger.kernel.org>; Thu,  1 Feb 2024 15:38:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706801909; cv=none; b=qqS5vKdmjamnGZGeEyksp4/VMsODKBjlExMe7lIlVpp41gdQ+mEMjo8cG6DWz+2ZiraQAx+3LQzsfYcWgpo2ClnYlyhKlCzFzkij8RLrv2B3+coIxfh+BCYo1JofwcJ+pFQ4Z1xJL68F1/tUfH9VOhCJITIFUub6LoRowNDPUu8=
+	t=1706801916; cv=none; b=HtbnFcmB+s628FSg+jlRC15Ern2uB/nbv6qbys9LwB6HofhuD3falf7wFEsTwFgLZ8pYlPbf+Rz9E8pruiXClAKmcjrJVlqfB0e1+IIDJYDaBKN6If80IyimA+7/+cBdfuSRbmsuGyvTGV4IH1cs7cP1K0Eq3+Hmkrj05RJc+AU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706801909; c=relaxed/simple;
-	bh=J/kS8l2g9RZhxNAzKJ52nEU68D48vn31wNKus36nRsc=;
+	s=arc-20240116; t=1706801916; c=relaxed/simple;
+	bh=gyuyQ/aK4rZwWgwe0gruyYcDUQyzIfPAlXAzVb6Vozg=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T7kkMp9dezHNfj3wlvvXZzB6RabPcrepp3EU4N+k03+pE88GJ289Y4EK6tNKhNqZbtC+G+KJiUs6USDuNBJUQ4RrSVec663aQ/BPvOB0/B3ITLGE2lLXQLUqJnq+0oklsQzsQUyrJaAg7KL4q2KIdmYI4sOzqmPCJsfcWvASB90=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AC0bXsCy; arc=none smtp.client-ip=209.85.221.180
+	 MIME-Version; b=ZKv4dtkZQlslVNejYKh7DIvfvTuw5+JL6SQ5iYHr7LVhy7cNisKBr0b7GwYlZ/G8pqI5WEL2r+IlPx3NLIZJ+OTWdAkisTyjsrIk16s+Gu5i6LAmJSwZBX6j9r624Fq07jit0KOmdAqzyOQmh2c2bY7y2q7sh71MoIheNwCzTAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fgyx98zJ; arc=none smtp.client-ip=209.85.222.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-4bd8977f1c5so417753e0c.3
-        for <linux-bluetooth@vger.kernel.org>; Thu, 01 Feb 2024 07:38:27 -0800 (PST)
+Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-7d6024b181bso469830241.2
+        for <linux-bluetooth@vger.kernel.org>; Thu, 01 Feb 2024 07:38:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706801906; x=1707406706; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1706801913; x=1707406713; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=+HC5SdNvCWeKEwtYq4o6Mizban1zGXB05RzkUe4htxw=;
-        b=AC0bXsCyOF0Ogn+91VcTv94xvFcSoNKcwrQMcrkW/IyRCR6Rr8veTqVl4Gx0rXBkCC
-         LtNRxe99hKc9qLeXv3l7V3VqX43hdbNozI5C7TrLmev297jI0OG7FIKMhYy+95+4LUm6
-         f4HFYaZMm3WBKUmQ/RQ+od7gCSnshBPWd1or1UMQxCXkvGgHp3CBRghh3h7h9ilR1BHV
-         Dj5ZCWLFfF7ZG8PF7ZA7R7a+D2V4bTvdALZ/RAeOV2KsBwN6yObV7Ql7zwN+gLFePMZP
-         6u1s5bqDOLjb8BseDwroDyPGZSUnvElgzBnEtlzacapUZKid7sDxSXjAUgeS+qr49hBy
-         nRqg==
+        bh=NfocMJ4OgAO3HX5ciQuRwEHA66Qb0abBxdrZu7QgJK8=;
+        b=fgyx98zJOxDvNAMgT8TKfsyPF06wwf3Hxakq49nL5P4+Zx5zYND85uJ3TS1+gvrEbc
+         Orm+GSB4KLXz7di0eJP+R3m1Dcmj8gU9BXQPV3r7h5WEVqr912Tz0zjVS4vNRV8jBBAx
+         9C3pdSdDOe/lPFrFklG0btyP4WAIxJsE/azwoGNACTbz8LiYcO40xmaC1E7gHPwT1aVO
+         dkoaUgfVaCz3sZAVTxbPO8YrfRKo9guQNDH1aWWaIlyyFYsYf5RBUpgJnqMgd7jP75EG
+         PQ4xIJR83G+cGp/6c5r9fCD/TuVj7hde4aidcvD3T4HgAL3s534Aa5ABq59/KmlOzE+W
+         iVrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706801906; x=1707406706;
+        d=1e100.net; s=20230601; t=1706801913; x=1707406713;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+HC5SdNvCWeKEwtYq4o6Mizban1zGXB05RzkUe4htxw=;
-        b=p5rl8pSHI0vFYVmAuTYitclajeuWCUI82URt/W6Gf+q1oiBzQXgyEBWPpS06mYP65h
-         SIvJqULTaRORuwCB0gG4jKrclquD7rB0mvoZaUJmXKLKu+voKJyWQ+5ZbTNm3XisrQSt
-         dljfv+FqOyZTmVdLDn0j+LXzXZrrGSg/qWwYTY7/4CcjOq2uGajiIuvNMxm9gllCxE8F
-         ngP60yucp1tufR0iJDo60GXDaJup+0s35yqCrCAYpJLS1n8Y7Hzv2sFtuRR5EU1X0xUL
-         FFZQJZotNAgkIbTpN0Ml84NLG+ZFnmOx5h8UyKITH7t/jbKYi9U33TgzNYgBbkUUXTWE
-         7Ueg==
-X-Gm-Message-State: AOJu0Ywmv17+H2gZlcNrk9wxPwNuLP7dhG5qtEK3OwrNUcVBUuCVpOOd
-	XQ951NOgCGIP5tYLJSech0ljWznFWKoHc4sm+gs248ga8aBUSBTFiZ/JUe9j
-X-Google-Smtp-Source: AGHT+IH8e5UiSlZMl10l9BdjyjWqM7K0Vwzdu0FFdXqMWmCZ7iobK2iQR0Tf5ypkDJsovNJykzn71A==
-X-Received: by 2002:a05:6122:4a06:b0:4c0:79e:6653 with SMTP id ez6-20020a0561224a0600b004c0079e6653mr764510vkb.0.1706801905915;
-        Thu, 01 Feb 2024 07:38:25 -0800 (PST)
+        bh=NfocMJ4OgAO3HX5ciQuRwEHA66Qb0abBxdrZu7QgJK8=;
+        b=hQAADA/5efLT5Aoe3YHn3aQerl4XizwbUnv8NxoBFqccqdowxckZ3Fw+9iWFz1ShXf
+         O1CWLCjb0p6U12KNwr1sQtRByTBqFAUQOvxHRGof5HMSbBx4MlkUMdfgaWIEPqDj/StI
+         RxbWjOF3+fChinDzt22AJvXpLNPdjVJWbLE/mDGszdfXirXI7DRtCi1gFcPoY3Sg+K0s
+         y5qpqrr5doZOuVHWq61bVDeL0pw9ptTMYU/sBXe3VVzaW4sOHNhbCTFudvKfnzIf85v2
+         L7acnKG8yJfUDE5N1mtSIr6J4rsonn1AKFYUHS1dPFoiMJ+cTmsbQ7cQTKlprJRjGzCD
+         koRw==
+X-Gm-Message-State: AOJu0YxqtgPsssmvaTodG4bKqqmEjam4zNZy2v52G37xZcfCusIWtaZ5
+	s/rnUC3++qEfhIAlFr87vXzW+0cyA3Q7P6BIj2H27KVMQxesHRq1w2Dw3lkd
+X-Google-Smtp-Source: AGHT+IHoQ+STx0Mtklo+82AQiYzym0FxwtREoYYkvWJJFLvYAR+q0n/qO/TxOD+ql7cJimr41fmKxA==
+X-Received: by 2002:a05:6122:17a1:b0:4b7:185a:d8d with SMTP id o33-20020a05612217a100b004b7185a0d8dmr5268349vkf.1.1706801907778;
+        Thu, 01 Feb 2024 07:38:27 -0800 (PST)
 Received: from lvondent-mobl4.. (071-047-239-151.res.spectrum.com. [71.47.239.151])
-        by smtp.gmail.com with ESMTPSA id ca5-20020a056122400500b004bd503f054asm1624586vkb.42.2024.02.01.07.38.23
+        by smtp.gmail.com with ESMTPSA id ca5-20020a056122400500b004bd503f054asm1624586vkb.42.2024.02.01.07.38.26
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Feb 2024 07:38:23 -0800 (PST)
+        Thu, 01 Feb 2024 07:38:26 -0800 (PST)
 From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v1 3/5] device: Don't remove object if a service is connecting
-Date: Thu,  1 Feb 2024 10:38:18 -0500
-Message-ID: <20240201153820.1016507-3-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ v1 4/5] shared/bap: Allow using bt_bap_attach for broadcast
+Date: Thu,  1 Feb 2024 10:38:19 -0500
+Message-ID: <20240201153820.1016507-4-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240201153820.1016507-1-luiz.dentz@gmail.com>
 References: <20240201153820.1016507-1-luiz.dentz@gmail.com>
@@ -85,30 +85,26 @@ Content-Transfer-Encoding: 8bit
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-If a service is connecting just restart the timer to give it more time
-to complete the connection or disconnect.
+This enables use of bt_bap_attach for broadcast by checking if there is
+a client or ATT instance.
 ---
- src/device.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ src/shared/bap.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/src/device.c b/src/device.c
-index afd073c6c2a5..1db96d9a672c 100644
---- a/src/device.c
-+++ b/src/device.c
-@@ -3276,6 +3276,13 @@ static bool device_disappeared(gpointer user_data)
- {
- 	struct btd_device *dev = user_data;
+diff --git a/src/shared/bap.c b/src/shared/bap.c
+index 851d6a5facc3..ce8d35f86af3 100644
+--- a/src/shared/bap.c
++++ b/src/shared/bap.c
+@@ -4156,7 +4156,8 @@ bool bt_bap_attach(struct bt_bap *bap, struct bt_gatt_client *client)
+ 	queue_foreach(bap_cbs, bap_attached, bap);
  
-+	/* If there are services connecting restart the timer to give more time
-+	 * for the service to either complete the connection or disconnect.
-+	 */
-+	if (find_service_with_state(dev->services,
-+					BTD_SERVICE_STATE_CONNECTING))
-+		return TRUE;
-+
- 	dev->temporary_timer = 0;
+ 	if (!client) {
+-		bap_attach_att(bap, bap->att);
++		if (bap->att)
++			bap_attach_att(bap, bap->att);
+ 		return true;
+ 	}
  
- 	btd_adapter_remove_device(dev->adapter, dev);
 -- 
 2.43.0
 
