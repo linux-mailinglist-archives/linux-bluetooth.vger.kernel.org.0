@@ -1,77 +1,77 @@
-Return-Path: <linux-bluetooth+bounces-1545-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1547-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D4FB8460AE
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Feb 2024 20:10:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 748718460B0
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Feb 2024 20:11:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 07C1E28F6B5
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Feb 2024 19:10:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2A0EE28539C
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Feb 2024 19:11:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 669DA8529E;
-	Thu,  1 Feb 2024 19:10:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A15A085627;
+	Thu,  1 Feb 2024 19:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J/Q/S3u1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PTAR8xzw"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
+Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678D38529B
-	for <linux-bluetooth@vger.kernel.org>; Thu,  1 Feb 2024 19:10:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF9C84FD8
+	for <linux-bluetooth@vger.kernel.org>; Thu,  1 Feb 2024 19:10:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706814632; cv=none; b=Dh1omMCxrhd5DB543YRqdQYoaDn5WQf5zvhoO2JKn/CLbBMujNtgalaaiogQI6Cui5IAaOkbh1ncchJ9WkKgD3gQ6BeJVngZU/YQZ+uB7U5iPQkU1fN9+qjyyavtxN91YKNPPxEdGw9HxwVvFJ2DEN1+8npYDnpUA0Y/u0e6+fA=
+	t=1706814635; cv=none; b=HMZiRbTYnTu8moqZN9aW0yUarSw2GWLyylej0x7kJ+hY/nZ466PfQoi+SnbWKu0YLDncSgqYH2nb5I0ZC2M98tQqQSQNNtZr434uhqbyH+51MhToSMoeUB0gkVl7VHr5xVa7mGd3ivZwhWqe8F0G4CvA+WE0aLZUKDQudvE1L3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706814632; c=relaxed/simple;
-	bh=/52bgWmfzVBdBycWkeYpSqsNuz91qjGOeus3xfaIrU8=;
+	s=arc-20240116; t=1706814635; c=relaxed/simple;
+	bh=uM8Gep3U13CUEwBIglcJfDvyNyo5H9RIH/fAek0o15c=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=syfMsiO44rFNpkMvV8ydSb1dvutSkzY3zqA/ZUyOD2CNwU6WilyxO/isnFZMan6F4KQ3aMSaf/xqozQeCpYwDLujI8aV8i8ieHodhtyJHZSCs9brNRZFTImMTDI2OkE4B1FvxEHmNh7kwD5Z+j/egtDuyh+IVK7ZoMJMekDxsH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J/Q/S3u1; arc=none smtp.client-ip=209.85.167.177
+	 MIME-Version; b=V7A7rlFrXqyPnRY+A45L/OVo5nLjwthrfjT7Y4qv2nv8MD5Yof+C2KxUNCn3X4BwxQGI2EerGiKu+xT0c1Di3mFKgHd1ZqsXAHQfM0C4v+6BUV67rGwTeIw0YbCA1Abw0H/EyMNGe0mSoLaBi1dF85CRuJT0klxPxnE+/thnuuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PTAR8xzw; arc=none smtp.client-ip=209.85.210.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-3bda4bd14e2so1030289b6e.2
-        for <linux-bluetooth@vger.kernel.org>; Thu, 01 Feb 2024 11:10:30 -0800 (PST)
+Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-6e133d5271cso628550a34.0
+        for <linux-bluetooth@vger.kernel.org>; Thu, 01 Feb 2024 11:10:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706814629; x=1707419429; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1706814632; x=1707419432; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=iqkf6vTxx5YRE7E2hXtKrZibTUoWwFKj03+5JwG7p+o=;
-        b=J/Q/S3u1J1Isv7YqHCScz+Z/SwIMfeBgQtUBo+8+eqC3l8irBlJTy0/p4P4rS+iory
-         QezsLyYSAqgGYCMiUSmT6SJ9HMS+/fZfTnT/ULVDy0ET55iRvLdU4nBB/uoArkdr3+GQ
-         ntS6pp6P+XmvpRUVz2fznw03MUOLsIxGewiYV3SpX7JXLws7LHI+ue9Bzz+7X1mLJaYf
-         FoVs4UC/OQEDz/uY6jnM1OlZz/yHPwYgzx0WWGqZK5MZSno+YXd+8UNnWxxg4Rj+UgtE
-         Q7bYqx6YBiRd96fpb8ZTUV3UcRUykwHxn409dT1KiSqFQF8krM1j9NPWqfqHMhfTIs+6
-         8euQ==
+        bh=qIl/eGvO+Rr3euE6aD0rfqQ1CAoMMey4PPG/IxwCfDU=;
+        b=PTAR8xzwG91cbyQlSJnv+IaiOCrCkoW9i5wUOgnkiM5fi3rVLHtVTSZk0TmBxafwWa
+         F5gUP3WKFqU9rjlPtTaA6ZamJzew1n2CNPzJZhgJLoFRlA0u8+0Ig11oB0Hpvzva4wUQ
+         n95NgDVgxr/TcwEdIG2Yg0MLV1WQiZBVB8S4Qndxp/XPDQ76iyHlqBjgcyg6CrwSJwFR
+         1kQVgijfQBBXHmjCvTNjxPpkr6kc0AqNL9mVPkRyOLYWx9KZ00gE7zjPdSi2eI49PByk
+         tQqiLJEisQBDDsxVzhM5Dg98mk3jlAMd992RfZuwhVnrUY7suyFf8KRtzTKg3bVELUDx
+         cTvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706814629; x=1707419429;
+        d=1e100.net; s=20230601; t=1706814632; x=1707419432;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=iqkf6vTxx5YRE7E2hXtKrZibTUoWwFKj03+5JwG7p+o=;
-        b=dA3OBeqdjsH8ZZZ9DbdvgUxFldXacqLEDVRnpMiDiF0rjg4tN40CwyJEiFUnzsaUV9
-         QlsOxK4QAzkBNUH+WN5FMvNNPTy55TM0yHoH7lQcjPWvrp/CG92OH2k/83hbn7StxA7H
-         OtzLUsZyzKl95ES15gEfKp/JLMlkpVkB43nbs4O9inKLqHdRuXm7aaYWjVIImmJgfkie
-         XG6KLT3+fMctdFo8QPJ/P1z/PRfyXD9uBlr89LFnVM3g26DlvZEzTAIsqlAYGBNkoSfW
-         kCH8/WDi8mePMAcolBTq1H7brrS//ow38XzUHm8w6/LCKtvdNARGhROxowqrpTpahWFP
-         b+iQ==
-X-Gm-Message-State: AOJu0Yy/10ZIdz8udr3F+KfqiZVjpEUEb9NJC50R1Kk29ZHky5RslbVp
-	p64ZhDaoa9aYgrrqcxThK0n4G94GTIGJldZPKp1deC2T1KyQ267Js3NZG+UB
-X-Google-Smtp-Source: AGHT+IFWEPoGkVvUO1haqdeT4g9EyHvFlupbuWNOlbZyCExsMH09QB1RPwpMm6vpxRlHpUGEGlrvpQ==
-X-Received: by 2002:a05:6808:e86:b0:3bd:59da:57ba with SMTP id k6-20020a0568080e8600b003bd59da57bamr6152479oil.59.1706814629225;
-        Thu, 01 Feb 2024 11:10:29 -0800 (PST)
+        bh=qIl/eGvO+Rr3euE6aD0rfqQ1CAoMMey4PPG/IxwCfDU=;
+        b=bNa2VxJvJqGZ6faMNXqSmwdI0IU7CQzJuaaAA77PNsYAM9A+29jmg3WN3ac1g5CH2z
+         WBAD0g6wm/Zroageg1Mva1eBp+ZZbLi+FfrubYssp4OiHkkRXv0swzh/mFWaX61wUglE
+         N+JbW4Xs6GOi/yzDx6UQsqtTZ3p1LKgGwWXiSBFCV4gYsOGcPDr8s51FyDXrNJHj5hzE
+         cLeCRGRwL88QdSSHtrv0P8O4H8q4H3/lUusxsIFyYvlt9ecbcEO/c0c1gLp7A0bY7dJ3
+         uQcStNpD2wO4X595s+47geekI6OC2sgmvfpy0ht7CL1mlj34BeHwOmScfFFiXefeh+AW
+         q14A==
+X-Gm-Message-State: AOJu0Yz/V5hGP3FyjsfUYn2xo0Udl4NOwz+FqvTxe8HTlsAv0pZsXAfv
+	0J0VXx3+QUZpczFlVtGMr5gzQ2759rdQ3ev8PV0pp4W+ixFWm2vvY0874x98
+X-Google-Smtp-Source: AGHT+IE4L75FrR3FHXaD41QLfnkDVdezCXtHq8Us/L27p12+zg9H1hnxufUkeqLQSzF3aJLAMjQu+Q==
+X-Received: by 2002:a9d:618e:0:b0:6e1:29f3:6fbd with SMTP id g14-20020a9d618e000000b006e129f36fbdmr5605440otk.22.1706814632091;
+        Thu, 01 Feb 2024 11:10:32 -0800 (PST)
 Received: from lvondent-mobl4.. (071-047-239-151.res.spectrum.com. [71.47.239.151])
-        by smtp.gmail.com with ESMTPSA id db16-20020a056130239000b007d2e2f14bd4sm35912uab.29.2024.02.01.11.10.28
+        by smtp.gmail.com with ESMTPSA id db16-20020a056130239000b007d2e2f14bd4sm35912uab.29.2024.02.01.11.10.29
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Feb 2024 11:10:28 -0800 (PST)
+        Thu, 01 Feb 2024 11:10:29 -0800 (PST)
 From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v2 7/8] transport: Fix crash when disable bcast stream
-Date: Thu,  1 Feb 2024 14:10:15 -0500
-Message-ID: <20240201191016.1122194-7-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ v2 8/8] shared/bap: Make broadcast disable and release more consistent
+Date: Thu,  1 Feb 2024 14:10:16 -0500
+Message-ID: <20240201191016.1122194-8-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240201191016.1122194-1-luiz.dentz@gmail.com>
 References: <20240201191016.1122194-1-luiz.dentz@gmail.com>
@@ -85,24 +85,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-bt_bap_stream_disable does cause the stream to go to releasing state
-removing the owner in the process so calling bap_disable_complete
-passing the existing owner would likely cause a crash.
+This makes bt_bap_stream_disable and bt_bap_stream_release use disabling
+and releasing states to be more consistent with their procedures.
 ---
- profiles/audio/transport.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ src/shared/bap.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/profiles/audio/transport.c b/profiles/audio/transport.c
-index 796017a4c6de..bd8960ef74fd 100644
---- a/profiles/audio/transport.c
-+++ b/profiles/audio/transport.c
-@@ -1532,7 +1532,8 @@ static guint transport_bap_suspend(struct media_transport *transport,
- 	id = bt_bap_stream_disable(bap->stream, bap->linked, func, owner);
+diff --git a/src/shared/bap.c b/src/shared/bap.c
+index f2d2ca09bb24..ac17eea13556 100644
+--- a/src/shared/bap.c
++++ b/src/shared/bap.c
+@@ -1377,10 +1377,14 @@ static void stream_set_state_broadcast(struct bt_bap_stream *stream,
+ 	case BT_ASCS_ASE_STATE_IDLE:
+ 		bap_stream_detach(stream);
+ 		break;
+-	case BT_ASCS_ASE_STATE_RELEASING:
++	case BT_ASCS_ASE_STATE_DISABLING:
+ 		bap_stream_io_detach(stream);
+ 		stream_set_state_broadcast(stream, BT_BAP_STREAM_STATE_QOS);
+ 		break;
++	case BT_ASCS_ASE_STATE_RELEASING:
++		bap_stream_io_detach(stream);
++		stream_set_state_broadcast(stream, BT_BAP_STREAM_STATE_IDLE);
++		break;
+ 	}
  
- 	if (bt_bap_stream_get_type(bap->stream) == BT_BAP_STREAM_TYPE_BCAST) {
--		bap_disable_complete(bap->stream, 0x00, 0x00, owner);
-+		if (transport->owner == owner)
-+			bap_disable_complete(bap->stream, 0x00, 0x00, owner);
+ 	bt_bap_unref(bap);
+@@ -5064,7 +5068,7 @@ unsigned int bt_bap_stream_disable(struct bt_bap_stream *stream,
+ 
+ 	case BT_BAP_STREAM_TYPE_BCAST:
+ 		stream_set_state_broadcast(stream,
+-					BT_BAP_STREAM_STATE_RELEASING);
++					BT_BAP_STREAM_STATE_DISABLING);
+ 		return 1;
+ 	}
+ 
+@@ -5161,11 +5165,8 @@ unsigned int bt_bap_stream_release(struct bt_bap_stream *stream,
+ 
+ 	/* If stream is broadcast, no BT_ASCS_RELEASE is required */
+ 	if (bt_bap_stream_get_type(stream) == BT_BAP_STREAM_TYPE_BCAST) {
+-		if (!bap_stream_valid(stream)) {
+-			stream_set_state_broadcast(stream,
+-					BT_BAP_STREAM_STATE_IDLE);
+-			stream = NULL;
+-		}
++		stream_set_state_broadcast(stream,
++					BT_BAP_STREAM_STATE_RELEASING);
  		return 0;
  	}
  
