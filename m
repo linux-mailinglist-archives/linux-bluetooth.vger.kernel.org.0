@@ -1,121 +1,183 @@
-Return-Path: <linux-bluetooth+bounces-1786-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1789-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10E68851DF1
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 12 Feb 2024 20:34:35 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0EA0A851E44
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 12 Feb 2024 21:02:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BFF2B281B9D
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 12 Feb 2024 19:34:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AE0EF2836F8
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 12 Feb 2024 20:02:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 988F246B8B;
-	Mon, 12 Feb 2024 19:34:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7FD5482C0;
+	Mon, 12 Feb 2024 20:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A46Y4zMm"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nc+aVY7I"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4EFB4776F
-	for <linux-bluetooth@vger.kernel.org>; Mon, 12 Feb 2024 19:34:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F05247A70
+	for <linux-bluetooth@vger.kernel.org>; Mon, 12 Feb 2024 20:02:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707766467; cv=none; b=QxHGR621GS7OkJuB4I0S7q51jRlzwP3xY0sWecWvGRTIpreJPtVQTG3H7cPgnjWzgefqIyD/NRV90/zEFB4np9BYxlhdUYQm5/uwHEHsN8q6Beix59DaNnYQ9IwdeDILFPVskGKdxLrAIyo0dSU/XGWccAuVAkE/TLId80ui4yI=
+	t=1707768160; cv=none; b=fDtYWDKYSm+CLKqzD3PkoV640J41h+q++eN7ymSz6eKiiDiMNn+v8X7wdhOevsO8kwdB2kfjBqAnVFPHBUV9i6phQjjHH7XamQfCNG2mbQVYheAYUshldJkH8ZjBbc+NC/3OzKnGQcLuaZC3bIIqPwRfiVRbSaslRKD9J/1frn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707766467; c=relaxed/simple;
-	bh=BfK5RmTNJTH5o/ScZd4dB78aCrIGRjll6fTtcV9huA0=;
-	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
-	 In-Reply-To:References; b=YqgPkkySYrdFwjV7YlQKyTG10jMFiwRyDoBcX1kuDTKv1wu1q78x6MDk0sQ1Rf5F9B/coN4V4+CMbTO/TIIKMmTos+j1Q/Swyo52hJks/MYoO+bsTiggXCeLjSjDDdnBnyQyPdmF7lJGTFWsoL0VSO2TFrrOmImXDju0ZwHlzVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A46Y4zMm; arc=none smtp.client-ip=209.85.219.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6860ff3951aso17777816d6.1
-        for <linux-bluetooth@vger.kernel.org>; Mon, 12 Feb 2024 11:34:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707766464; x=1708371264; darn=vger.kernel.org;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=mtDyUpwyPZOy/6kUdZhimz//miFdbYaeeN7RWX1I/oM=;
-        b=A46Y4zMmzNzh3HyAFi8gD3skGHUfhhk2FOjvqpdGwVDND2D5Dk+0VES02wg7ZYvxEv
-         yHr0xIolBfGpyh2kyL9eupvixY0oHojEIjlMGIIE+W4nF14s9svET+ibyYCL9Am/PzTn
-         6TkttDxjWXylsdSjk+ejl4a9Gs6X0C9GKC3oS5d7M0MTV3AUjVrPd5VX5QGZCDZ5fZSu
-         jOql/La1JBnejnMd+trB3WlAMWK5UaAA6BX1LAb5FrsgonBy+NhHlB6Yb+eJGRpCZbbX
-         ezWW53CD6TUUO5/Hn+oVr6eP4gvvNMYY+SGQsc+gGtXfc21o7kZWLjbHjaKoaqNa0oZe
-         foAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707766464; x=1708371264;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mtDyUpwyPZOy/6kUdZhimz//miFdbYaeeN7RWX1I/oM=;
-        b=ju6RX8B3BBk3ApNIui40rE9xafLuBrkc9WgKpJu7QdQ0RQVdZ2muQB2jSuI/wBQ6xx
-         Q62GufPp7LdXD1ft7F6Q5M1sImZIE6bQU5/jqX3S4HxPZKEsmsmSfxnPjlWmrDloWUyu
-         TTVcQReKwoWInd3g9g9v3GR5Y4X0SsbASxnCM2jN7OZANNT3l5F5ykES4JWb0Hp5lY3g
-         MTaEMEq5DJsF0x5HrHSf18vemXVF9Z2sHHS6CTPZ20LyYjNtp3NHXsb0IP5QgMtztwty
-         c73tPRyNQYeWqaXt8qbqQFgJP4DN1BJ++ONk4TJw6qhjeqjAIdnGlzbQW+W5iccPQGTV
-         TdUg==
-X-Gm-Message-State: AOJu0Yy4O6//iOl9i1PxyHYn+NOc9Ry7XF+O4lEB8GLOuc39lfyFiUgh
-	ljiHcpF9vjt/YxDt2hSrhrB+dLw7VW1lP2bjTlwZW3GiiWJQbP/PncFTCKh/8aI=
-X-Google-Smtp-Source: AGHT+IFh4BmpoQk2Mk4RYk+TZsqnPBWZIgj4aVZshzM9XXOqd6wP++Tm0cAHUTJjHnVhZCMeYBtHQw==
-X-Received: by 2002:a0c:e2cc:0:b0:68c:64d3:d98c with SMTP id t12-20020a0ce2cc000000b0068c64d3d98cmr7894897qvl.53.1707766464413;
-        Mon, 12 Feb 2024 11:34:24 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCWwwVs5gZC0CY0unST2C5maTS5/lrePVRVS55h1KIw9Qunur5AhqHgq5Z+2O0JG0JkMbYCknAoEh2/2HhfYJjdTXxuZLg==
-Received: from [172.17.0.2] ([23.96.249.170])
-        by smtp.gmail.com with ESMTPSA id oo12-20020a056214450c00b0068cbacf7327sm457795qvb.107.2024.02.12.11.34.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Feb 2024 11:34:23 -0800 (PST)
-Message-ID: <65ca72bf.050a0220.e1591.3f41@mx.google.com>
-Date: Mon, 12 Feb 2024 11:34:23 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============8185093916255391985=="
+	s=arc-20240116; t=1707768160; c=relaxed/simple;
+	bh=lzfrFProzoQf+DY+OgPnU7nG2ioiHDSOCOxKL0Ukrxg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=MWkXDeVlrsvdaiEnyNfiSsU8JcAnS0nolvAtP20OIZti9KgdA9KKIuAFgDmEpXBfsgW6H4s6pVIO8NdsLF7rCv8OoPHKQ0gY/7ny3O+kbHqMCofbXDm41NsleeJsP2t1R4hIqYP0pv8YHNWgnSMmTVS74zZ2snh9HCHOG3oHhwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nc+aVY7I; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id BC617C433C7;
+	Mon, 12 Feb 2024 20:02:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707768159;
+	bh=lzfrFProzoQf+DY+OgPnU7nG2ioiHDSOCOxKL0Ukrxg=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=nc+aVY7I+Cnc9Q1h+15aas8SpcItQ/wj1ewwaIe1vp/vaOBnu9Nrcxlb6PLvgq3hj
+	 uzRRa9SVd0dJd1mQD4Uuba4zorfKeLrkeRgmBZ9IvGs1n7T5oZY3R64FE+o6nsGp75
+	 LUk54kUWCKy/lCmvUNvT8QozqPRyahBgq5A6TFqWihTUycyaa6S16eHw2LA3UGARPW
+	 N+KdGKl2N9kRbQVZadkitTDmHEDAoS2+6u2NrTqaqZmGIdMMDhynqB0EiS2HAXJhyM
+	 P47AvGs5S/aBkDYeuO1kwdW0Zhl0YD49hiZKPE1C6n9JNeOy4y5fUPXDa71yNC7ieZ
+	 rydyQptasm8Tw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E71DC48297;
+	Mon, 12 Feb 2024 20:02:39 +0000 (UTC)
+From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
+Subject: [PATCH BlueZ v2 00/10] Distribution inspired fixes
+Date: Mon, 12 Feb 2024 20:02:36 +0000
+Message-Id: <20240212-disto-patches-v2-0-8bab1bd08f4d@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: bluez.test.bot@gmail.com
-To: linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
-Subject: RE: [BlueZ,v3,1/3] hog-lib: Don't destroy UHID device on detach
-In-Reply-To: <20240212173910.4061556-1-luiz.dentz@gmail.com>
-References: <20240212173910.4061556-1-luiz.dentz@gmail.com>
-Reply-To: linux-bluetooth@vger.kernel.org
-
---===============8185093916255391985==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFx5ymUC/3WMyw6DIBBFf8XMujQ4VUy76n80LhAGmaQ+Aoa0M
+ fx70X2X5+aes0OkwBThUe0QKHHkZS6AlwqM1/NIgm1hQImNrLERluO2iFVvxlMU5KwaOlRKooP
+ irIEcf87eqy/sj3f4nvlUH+u/UqqFFPeOJA2twlbfnuOk+X01ywR9zvkHmWKHO6oAAAA=
+To: linux-bluetooth@vger.kernel.org
+Cc: Sam Lantinga <slouken@libsdl.org>, Bastien Nocera <hadess@hadess.net>, 
+ Emil Velikov <emil.velikov@collabora.com>, 
+ Nobuhiro Iwamatsu <iwamatsu@debian.org>, 
+ Giovanni Campagna <gcampagna-cNUdlRotFMnNLxjTenLetw@public.gmane.org>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1707768157; l=4885;
+ i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
+ bh=lzfrFProzoQf+DY+OgPnU7nG2ioiHDSOCOxKL0Ukrxg=;
+ b=CrbWyQcw0dqUXwwAGoNZG3Ns2RpQDC1i6x9nffdSB8LcqKKnWHB2w+Rkf6J59h4k5fA+2jFCn
+ ShCyL1u8+mDCKteKRUUJBR4PCxHyMz2k7Zm4DhCXwdaORoARqV6Ba+E
+X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
+ pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
+X-Endpoint-Received:
+ by B4 Relay for emil.l.velikov@gmail.com/20230301 with auth_id=35
+X-Original-From: Emil Velikov <emil.l.velikov@gmail.com>
+Reply-To: <emil.l.velikov@gmail.com>
 
-This is automated email and please do not reply to this email!
+Hello team,
 
-Dear submitter,
+This is v2 of the earlier upstreaming effort, aiming to reduce and in
+some cases patches carried by distributions.
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=825316
+Changes in v2:
+ - dropped the first patch - no longer applicable with newer kernels
+ - fixed bug in phonebook/tracker patch
+ - added use glib helper for obex file handling - Gentoo, Debian
+ - added obex dbus service w/o systemd - Gentoo, Debian, OpenWRT
 
----Test result---
+In summary, as this series is merged here's the status across distros:
+ - Arch - zero patches or hacks needed \o/
+ - Gentoo - one hid2hci.rules patch outstanding
+ - Fedora - zero patches \o/
+ - Debian - some good (hid2hci.rules, typos) patches and some outdated
+   (potential infinite loop, gatt PIN segfault) - @iwamatsu can you
+   verify which patches are still applicable and send them upstream?
+ - OpenWRT - handful of patches
 
-Test Summary:
-CheckPatch                    PASS      1.25 seconds
-GitLint                       PASS      0.89 seconds
-BuildEll                      PASS      24.49 seconds
-BluezMake                     PASS      735.31 seconds
-MakeCheck                     PASS      11.79 seconds
-MakeDistcheck                 PASS      162.84 seconds
-CheckValgrind                 PASS      226.50 seconds
-CheckSmatch                   PASS      328.83 seconds
-bluezmakeextell               PASS      107.23 seconds
-IncrementalBuild              PASS      2067.00 seconds
-ScanBuild                     PASS      921.72 seconds
+Above said, Gentoo, Fedora, Debian and SteamOS will need more elaborate
+config infra, as mentioned before. Patches for that will be sent out
+soon (tm).
 
+If you're curious about v1, please follow the link below.
+- Link to v1: https://lore.kernel.org/r/20240124-disto-patches-v1-0-97e0eb5625a3@gmail.com
 
+As always feedback is greatly appreciated o/
+
+Thanks
+Emil
 
 ---
-Regards,
-Linux Bluetooth
+Bastien Nocera (2):
+      adapter: Remove experimental flag for PowerState
+      obex: Use GLib helper function to manipulate paths
 
+Emil Velikov (6):
+      test: consistently use /usr/bin/env python3 shebang
+      profiles: remove unused suspend-dummy.c
+      obex: remove unused syncevolution plugin
+      obex: remove unused mas/messages-tracker impl
+      obex: remove phonebook tracker backend
+      build: ship all config files with --enable-datafiles
 
---===============8185093916255391985==--
+Giovanni Campagna (1):
+      Allow using obexd without systemd in the user session
+
+Sam Lantinga (1):
+      Return at least the title attribute from player_list_metadata()
+
+ Makefile.am                                        |    8 +-
+ Makefile.mesh                                      |    1 +
+ Makefile.obexd                                     |    7 +-
+ Makefile.plugins                                   |    2 -
+ configure.ac                                       |    7 +-
+ obexd/plugins/messages-tracker.c                   |  332 ----
+ obexd/plugins/phonebook-tracker.c                  | 1704 --------------------
+ obexd/plugins/syncevolution.c                      |  470 ------
+ obexd/src/manager.c                                |   15 +-
+ ...luez.obex.service => org.bluez.obex.service.in} |    2 +-
+ profiles/audio/avrcp.c                             |    4 +
+ profiles/input/suspend-dummy.c                     |  149 --
+ src/adapter.c                                      |    3 +-
+ test/agent.py                                      |    2 +-
+ test/example-adv-monitor                           |    2 +-
+ test/example-advertisement                         |    2 +-
+ test/example-endpoint                              |    2 +-
+ test/example-player                                |    2 +-
+ test/exchange-business-cards                       |    2 +-
+ test/ftp-client                                    |    2 +-
+ test/get-managed-objects                           |    2 +-
+ test/get-obex-capabilities                         |    2 +-
+ test/list-devices                                  |    2 +-
+ test/list-folders                                  |    2 +-
+ test/map-client                                    |    2 +-
+ test/monitor-bluetooth                             |    2 +-
+ test/opp-client                                    |    2 +-
+ test/pbap-client                                   |    2 +-
+ test/simple-agent                                  |    2 +-
+ test/simple-endpoint                               |    2 +-
+ test/simple-obex-agent                             |    2 +-
+ test/simple-player                                 |    2 +-
+ test/test-adapter                                  |    2 +-
+ test/test-device                                   |    2 +-
+ test/test-discovery                                |    2 +-
+ test/test-gatt-profile                             |    2 +-
+ test/test-health                                   |    2 +-
+ test/test-health-sink                              |    2 +-
+ test/test-hfp                                      |    2 +-
+ test/test-manager                                  |    2 +-
+ test/test-nap                                      |    2 +-
+ test/test-network                                  |    2 +-
+ test/test-profile                                  |    2 +-
+ test/test-sap-server                               |    2 +-
+ 44 files changed, 56 insertions(+), 2710 deletions(-)
+---
+base-commit: c1851987ca2c6e41d1e0e166e959b754e369c254
+change-id: 20240124-disto-patches-efd6b726602f
+
+Best regards,
+-- 
+Emil Velikov <emil.l.velikov@gmail.com>
+
 
