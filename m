@@ -1,64 +1,64 @@
-Return-Path: <linux-bluetooth+bounces-1748-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1750-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97226850F3E
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 12 Feb 2024 10:04:00 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2BD27851048
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 12 Feb 2024 11:04:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4E3C9281B43
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 12 Feb 2024 09:03:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D74C228161D
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 12 Feb 2024 10:04:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3055A10A16;
-	Mon, 12 Feb 2024 09:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7031917BD5;
+	Mon, 12 Feb 2024 10:04:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="bkbecaQg"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="XyxLuNob"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AEFFF9FF
-	for <linux-bluetooth@vger.kernel.org>; Mon, 12 Feb 2024 09:03:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00B1E17BAC
+	for <linux-bluetooth@vger.kernel.org>; Mon, 12 Feb 2024 10:04:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=134.134.136.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707728622; cv=none; b=OG+8yVl4SMkV807QESy3nVneC9wdop5gaGPfb+SfFrutl+PxK1uMQ4NiklzGE5y7QMSdGq2846VPb4YVHN2Csw6nDHKVSzQhDKQje5cvPSaQNiaK4xIrrqkgx5QX4cWdkBvhWCAQL9eSIKoLUm5wmYKJHiKWdRrU5VLYdlgfSN4=
+	t=1707732264; cv=none; b=GSTzBONlxd8qUjM8KOYUuYevXkS1kTIoFFdcYn3/4wk+LwsvtTpGiFWxNnpvuRWOrYU4UUnxHiXxFAfChps8Ul+Z9pC8Z6uu1OAFG9Di58B/09Xc1cEbIu7wR4Yz/7iNUqqSDr4XupCUA7OksrkC7j6XH08TDvxWOO+GHVrobUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707728622; c=relaxed/simple;
-	bh=fIzGvQ3EFueqlmf1LUNocqiz25izpx2iGcet7Fe94Jw=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=uIrWHuWjFFMxu4c4idOzDZj7dbY5JNPoQcTSXrsO6Zeourfv5QthwoV1dyumXfWcZIVJacz3wjUtTOtlycVZGikySalYb/if7uBugHoRhUZRYyFvcmE2A8zPof3jazV+5/bikezMkDtpHGAS5GZoFZA9z4gEdhEJannxc30CDDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=bkbecaQg; arc=none smtp.client-ip=192.198.163.17
+	s=arc-20240116; t=1707732264; c=relaxed/simple;
+	bh=RbIQxXbhXMoqRP1b44KqDmfm70XWD1FUp+3Klz7ObWY=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=msIQjM7wci4OJp1LDPCpcPKF6XFKNiopQAd5pHYSTUzuBt4KZCrAu+NyQDLUFgSOFUw7h2O4E5lZPjUYAO+hEdpX3lcD0oZM8u3qBw/SM/taR7TvP2Ce+lp/vN2TFCPSWzMEE9scuFMIJ23UvDRqVOHkW+2VzH8EgqLtbgwGDlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=XyxLuNob; arc=none smtp.client-ip=134.134.136.20
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1707728619; x=1739264619;
+  t=1707732261; x=1739268261;
   h=from:to:cc:subject:date:message-id:mime-version:
    content-transfer-encoding;
-  bh=fIzGvQ3EFueqlmf1LUNocqiz25izpx2iGcet7Fe94Jw=;
-  b=bkbecaQgQjkniB5zC0dGlIqUhMftNdXcSso2K8t89iArZBrbtx7fFH6t
-   kCcOLjnGPWi2OESiZK+dsrMEY47eO1RZGXNcJhpZiPjzjxKk19kUJg90y
-   e1OCWGmhJ58wG8Gv+xaEWKKZVy/WAtbYJi4Rm7LMJEVX1Pfg1964LeeJJ
-   Kp5ef0ifTmGhn78aYLZOENjrqok2UjEqcGe3BH/God/wrjfBT86ZmLhxt
-   EahjdDPJUElWD5FQtIyR0srS7yU++51u5GLhecS64uk/6YS3s4nreXwRK
-   z43jRWQ8vfWikzV1LKUnyBJkPyvjAGlVbMFJt0XQ+IZwc+4Y+u45/mRVN
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10981"; a="1573102"
+  bh=RbIQxXbhXMoqRP1b44KqDmfm70XWD1FUp+3Klz7ObWY=;
+  b=XyxLuNobJm+Djtfr0w24b9ehVZWbYeo3Dro5zxTxZGlYbF4tW5sWO/XR
+   atia8eYjQ5r06af3HNKIUo0mNZkfkcq4y6xkJ4WrOAF9kggyAfFWCqFEv
+   ZNs1fpnL1t3KZ/Dx8JAqs6UXEelcB4OMzMNoANyTVDOO8XaspuhusLkVV
+   NkSnDTKtMGFDkRxLHM2q7PbNM8oXWeCvXSPeRhDC55ew3qziyVU0fBrVK
+   ybVjVSC7BniRpE4QsP1hwLjEsX4I5b2E8KnDcFwItdvQ6CqIIf63tnsH6
+   HaGWl9PRsq/KnGM5fqyBI3+d+QFuHwQe50mkI3GKBGNIDsj8bRkvhFtlo
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10981"; a="396137222"
 X-IronPort-AV: E=Sophos;i="6.05,262,1701158400"; 
-   d="scan'208";a="1573102"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Feb 2024 01:03:37 -0800
+   d="scan'208";a="396137222"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Feb 2024 02:04:20 -0800
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.05,262,1701158400"; 
-   d="scan'208";a="33322846"
+   d="scan'208";a="33616612"
 Received: from lbtoe.iind.intel.com ([10.224.186.133])
-  by orviesa002.jf.intel.com with ESMTP; 12 Feb 2024 01:03:35 -0800
+  by fmviesa001.fm.intel.com with ESMTP; 12 Feb 2024 02:04:19 -0800
 From: Shahid Vichhi <shahid.bashir.vichhi@intel.com>
 To: linux-bluetooth@vger.kernel.org
-Cc: shahid.bashir.vichhi@intel.com
-Subject: [PATCH] monitor/att: Enable the notification logging support for the CCP
-Date: Mon, 12 Feb 2024 04:04:45 +0200
-Message-Id: <20240212020503.563973-1-shahid.bashir.vichhi@intel.com>
+Cc: Shahid Vichhi <shahid.bashir.vichhi@intel.com>
+Subject: [PATCH v3] monitor/att: Enable the notification logging support for the CCP
+Date: Mon, 12 Feb 2024 05:05:46 +0200
+Message-Id: <20240212030546.614055-1-shahid.bashir.vichhi@intel.com>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
@@ -67,8 +67,6 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-
-From: Shahid Vichhi <shahid.bashir.vichhi.com>
 
 ---
  monitor/att.c | 669 ++++++++++++++++++++++++++++++++++++++++++++++++++
