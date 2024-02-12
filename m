@@ -1,53 +1,53 @@
-Return-Path: <linux-bluetooth+bounces-1797-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1796-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C849A851E4A
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 12 Feb 2024 21:03:20 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B2A2851E4B
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 12 Feb 2024 21:03:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 84344283C63
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6C338B23270
 	for <lists+linux-bluetooth@lfdr.de>; Mon, 12 Feb 2024 20:03:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2BEF4BAA6;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CF0E4BA94;
 	Mon, 12 Feb 2024 20:02:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G47AdXp1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RWh6xI+m"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26A5481B7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10CD481B4
 	for <linux-bluetooth@vger.kernel.org>; Mon, 12 Feb 2024 20:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707768160; cv=none; b=iwHy5SC1PPuh1CDboVliZ8FYZjNcVFfmjLSmZf1Q5LB3y2lPRigMX6nwfF+/KOc49ebAJXMKK5NxCCKZgfqkmJ/XrH4fF4OvPFdBY/GcqGuFU6s8x24ApdP9mbd9iT5cpV532A7afS/uStBy8xUAhZZPPrxeDxAeoHm0sZNPn6A=
+	t=1707768160; cv=none; b=DVstvQqXWmrR5OtA7gIpTfYpd+7DP/sKFpXnFVWgIvlTu/ldOWhbwwgeipKKibCcsaLr3aBS8d6z8VnWIqxaGBAagsSJf7lFqit4EaMZj+HNxXzb7cb8XrW387w3gg63k46Y0vvqCsXXivtomG8gzsx9URg9+zHw+0T9fkN6Qtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1707768160; c=relaxed/simple;
-	bh=86t49+zrMpop3+LBasTQDP6WPhep6F5sBzb6VCO3Wq4=;
+	bh=qZ2uzciqi4+RwnW8iju+QrSzvIe2nSE2ggeNLNb1+Tc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=PmEs3zmzKMOQcxy9DIAkdXPMQlMcGiiJXleHsv2q1f/7LxMfm6skbXkjdmaNoSjsg+iKTMXwekwPW6QwI6dH/CvrFyu6iTK3JtoTZCHGC34bAq39z91QeLOS837jYetYQXRZefDqK2jzdHHCe3+q55pYKgsjHlWcdGKKs98j224=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G47AdXp1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 2B6A4C43330;
+	 In-Reply-To:To:Cc; b=n0J4Upgt5CptghgQDdYNK2937vErpaTcevxFuq6tO1LGReA30fFHxq1W+gwZNCzm04jT2NmDybTAjOrC6AlLFU3daWWcs//SGGP16H85yku3tF8Ehm6lwO4qLwkr5AJ2xHvz+xxLYg5Ns2gdabhbpIjdaB86KvZ1iPWsAkziyHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RWh6xI+m; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 39172C43609;
 	Mon, 12 Feb 2024 20:02:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1707768160;
-	bh=86t49+zrMpop3+LBasTQDP6WPhep6F5sBzb6VCO3Wq4=;
+	bh=qZ2uzciqi4+RwnW8iju+QrSzvIe2nSE2ggeNLNb1+Tc=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=G47AdXp1Yx8Fbt/rIV7md4ZSXNgcComT5o1jTeCmOSP0rHKWPT+OVATCr6t7lSGWA
-	 zumZ7ScSiTpsP/z/SnkTIg7Db3xQ8iO7SWhOG6mJ+qABblwWfC62SoRG42iv3lG9sq
-	 l+TlnQe9ayo8pyt0lacPSAbqLvspECFwpAqrk9Qc7P06XOUqBczNc/AZ7Mxn7DJREq
-	 s2pLcWORKw2bEHxBqMGbCjqxOM5snVbWcviXt2GY7FfFa2yvQkIvyKSy7LPwRZ6p62
-	 +lUOcVCvvUgfsbDf+1DXqIXVWmcBmxaO6PD07+h+x/eiTPPJhD7geZKVWRpOsAy6TN
-	 /I2zSMtT0XQ0g==
+	b=RWh6xI+mFVWMPK1zDRwmRAXCdfBi/j0Py+40kcX4Z3vWwKVrqcDqpWEsKedTKPFpj
+	 R/tdyRuASQvC+KeYlI19MC07ybY84N8HL1UXCODCpiY8mpifKfFktufZ5dU29V/6R7
+	 olPxAlQL40MGp5BHeyQ6ZfRfgHDKJsKUffQXMpGVdnDjT/4ATKLDiLVL2mlkmBa5DT
+	 +ZefTV9StX03LzeZqZIvhW2yyv70uG2tMAQX9oyzBMkyPQUFVImmQS0jhAecY1yvO7
+	 fNfti0HFyMVHQWxnzTX33p7RpXT8Z85XkrOQj6vrrLXIqXLwz+huWr7l24vrJP+7T+
+	 2ZkdSvjXPzlgQ==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C0D7C48BC4;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28CA5C48BC1;
 	Mon, 12 Feb 2024 20:02:40 +0000 (UTC)
 From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
-Date: Mon, 12 Feb 2024 20:02:44 +0000
-Subject: [PATCH BlueZ v2 08/10] build: ship all config files with
- --enable-datafiles
+Date: Mon, 12 Feb 2024 20:02:45 +0000
+Subject: [PATCH BlueZ v2 09/10] obex: Use GLib helper function to
+ manipulate paths
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -56,17 +56,17 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240212-disto-patches-v2-8-8bab1bd08f4d@gmail.com>
+Message-Id: <20240212-disto-patches-v2-9-8bab1bd08f4d@gmail.com>
 References: <20240212-disto-patches-v2-0-8bab1bd08f4d@gmail.com>
 In-Reply-To: <20240212-disto-patches-v2-0-8bab1bd08f4d@gmail.com>
 To: linux-bluetooth@vger.kernel.org
-Cc: Emil Velikov <emil.velikov@collabora.com>
+Cc: Bastien Nocera <hadess@hadess.net>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1707768157; l=1705;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1707768157; l=1584;
  i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
- bh=ukSb4msDR5fjqRG8A0bYJ7QVffGjcQu3Z3Tc8kb10CQ=;
- b=xK9CkzK5fzFcBBf720C/4yHCdPEbAhMR5/IPP7H4Utn9Q6IxtCEuQdWid5wFzg/1UgK7/n5nW
- erVHcLvEa7xDpk2ornXWv57kq853YKNOtRfvzMBeU1DNOQM2GP9fqBe
+ bh=GCUo/Nwzng2MpKTdvtQwQRt2p4nwTwzY0gaSQk+Xr7Y=;
+ b=RRoKj0QjKCRqD8xfnN2FNs9AmfqfPFWy3NGEAPoYb6kR9t3DnLMdKUnhKvXrkYoKTz7Ee4YDh
+ oCs3Rd8L+1SCgjpDZsqTWrUAYOxxG+cjQZVsJyJRhV9dvB9NwvH4wrK
 X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
  pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
 X-Endpoint-Received:
@@ -74,62 +74,52 @@ X-Endpoint-Received:
 X-Original-From: Emil Velikov <emil.l.velikov@gmail.com>
 Reply-To: <emil.l.velikov@gmail.com>
 
-From: Emil Velikov <emil.velikov@collabora.com>
+From: Bastien Nocera <hadess@hadess.net>
 
-Currently we ship only the dbus/systemd policy files and omit the other
-four - /etc/bluetooth/{main,mesh-main,input,network}.conf.
+Instead of trying to do it by hand. This also makes sure that
+relative paths aren't used by the agent.
 
-Outside of those files, there is no documentation what the defaults are
-and the other possible options. A number of distributions (Arch, Gentoo,
-Fedora) have opted to manually copy those into the package. Alas this
-does not scale and leaves other distros at disadvantage, in a sense.
+[Emil Velikov]
+Originally this patch was posted in 2013, but deferred since bluez was
+planning to move away from glib. Presently there's no obvious action
+towards that goal, so I think we can safely land this.
 
-Note: we need a custom install target to ensure confdir and statedir
-have the correct permissions.
+As mentioned by the author, current code allows for relative paths and
+considering that obexd service runs without meaningful sandboxing and on
+some distributions it is ran as root, we should plug the whole before
+anyone (ab)uses it.
 ---
-Some distributions do toggle some of the default values, by patching the
-source tree. Future patches will add support for more maintainable
-configuration handling akin to `man sysctl.d`.
----
- Makefile.am   | 8 +++++++-
- Makefile.mesh | 1 +
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ obexd/src/manager.c | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
-diff --git a/Makefile.am b/Makefile.am
-index 2b1b9acdf..2cbfed2db 100644
---- a/Makefile.am
-+++ b/Makefile.am
-@@ -31,11 +31,17 @@ AM_LDFLAGS = $(MISC_LDFLAGS)
- confdir = $(sysconfdir)/bluetooth
- statedir = $(localstatedir)/lib/bluetooth
+diff --git a/obexd/src/manager.c b/obexd/src/manager.c
+index 73fd6b9af..cc1de7ae2 100644
+--- a/obexd/src/manager.c
++++ b/obexd/src/manager.c
+@@ -644,18 +644,13 @@ static void agent_reply(DBusPendingCall *call, void *user_data)
+ 				DBUS_TYPE_STRING, &name,
+ 				DBUS_TYPE_INVALID)) {
+ 		/* Splits folder and name */
+-		const char *slash = strrchr(name, '/');
++		gboolean is_relative = !g_path_is_absolute(name);
+ 		DBG("Agent replied with %s", name);
+-		if (!slash) {
+-			agent->new_name = g_strdup(name);
++		agent->new_name = g_path_get_basename(name);
++		if (is_relative)
+ 			agent->new_folder = NULL;
+-		} else {
+-			if (strlen(slash) == 1)
+-				agent->new_name = NULL;
+-			else
+-				agent->new_name = g_strdup(slash + 1);
+-			agent->new_folder = g_strndup(name, slash - name);
+-		}
++		else
++			agent->new_folder = g_path_get_dirname(name);
+ 	}
  
-+install-data-hook:
-+	install -dm555 $(DESTDIR)$(confdir)
-+	install -dm700 $(DESTDIR)$(statedir)
-+
- if DATAFILES
- dbusdir = $(DBUS_CONFDIR)/dbus-1/system.d
- dbus_DATA = src/bluetooth.conf
- 
--conf_DATA =
-+conf_DATA = src/main.conf
-+conf_DATA += profiles/input/input.conf
-+conf_DATA += profiles/network/network.conf
- state_DATA =
- endif
- 
-diff --git a/Makefile.mesh b/Makefile.mesh
-index ea50383d2..e4c9fa6a3 100644
---- a/Makefile.mesh
-+++ b/Makefile.mesh
-@@ -3,6 +3,7 @@ if MESH
- 
- if DATAFILES
- dbus_DATA += mesh/bluetooth-mesh.conf
-+conf_DATA += mesh/mesh-main.conf
- endif
- 
- if SYSTEMD
+ 	dbus_message_unref(reply);
 
 -- 
 2.43.0
