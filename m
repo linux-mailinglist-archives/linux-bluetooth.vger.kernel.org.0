@@ -1,70 +1,65 @@
-Return-Path: <linux-bluetooth+bounces-1757-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1759-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD64085118B
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 12 Feb 2024 11:54:08 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 69B73851302
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 12 Feb 2024 13:08:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 96BBEB25827
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 12 Feb 2024 10:54:05 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B7CF3B2707E
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 12 Feb 2024 12:08:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66EC03B195;
-	Mon, 12 Feb 2024 10:50:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F3C13CF7E;
+	Mon, 12 Feb 2024 12:02:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="O0U3vEjA"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ONi1dI85"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609C23AC0C
-	for <linux-bluetooth@vger.kernel.org>; Mon, 12 Feb 2024 10:50:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415A83D0A1
+	for <linux-bluetooth@vger.kernel.org>; Mon, 12 Feb 2024 12:02:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707735035; cv=none; b=FJGIp5Z+favTCW/o5xpONXkTmngqzVMVzP6Q9oxie9t70y7eb5w57ooRIxod5extUJCWw6MSBzKcfqZ3KeoE+nOkeg4lUyQKHMil7jU1UqZ6y/U6AmV1aDlonnOQL4QV8yNwfEWmTlNQiStdj6yLa6YrX7OxS9K95hmyvxogKaY=
+	t=1707739351; cv=none; b=QstB4zOgHxkmx8VrS3rVLA1EvVEIFpZUVR4/l5gieJ3W6aeopBMgR945uOdE5D7cNF3DXyMazZ2UX4yEMlBWaH7kSfm03DUwTZ7rxAolKPfumIYhG0smgaG5/twdi1cbaiP79diN0yWBJWZ4tx0/YwWTgjqR8ehvxe1Tge6cP4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707735035; c=relaxed/simple;
-	bh=mTUS3SLWvGyqyymXIMdJMOmF3VwB+FUVcYVGHpdHHeQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=qERYSAtdts8LPlxXM1AaqGfHF7ius1QNHa0bT8x7HUOOCbcOT40+YkXhuYLae1jr75KlG+KIoudmmxGJwZzlV/tCN9JBzFX3pmtFsW8+DejJMgUna2HalCgyWPykQn5lqkgVDZlfn5S9GnlrAQ+H9jK3Ft/G17hqS7QrAsjwdbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=O0U3vEjA; arc=none smtp.client-ip=198.175.65.21
+	s=arc-20240116; t=1707739351; c=relaxed/simple;
+	bh=Gau8lbmjtw8M7cmiQTWRcqqXvw3YmT1Ez7fqHr4y7Uo=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=IuJJV2PLkFnGFYZo8KL3QHX+PA24r5naPNFnX3zq7fDJPdrMM7X0TG62ypIGdKt7HoVPu5F1yaT/YdjV/eG0w9XjTDXR8FYucJdnVwXg2SU7RWuGWGiiEk0JqU4ldyimaqSO7Atc+6INMUBjMKn3bNf+8iIWvc3rP3cWWMWKg/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ONi1dI85; arc=none smtp.client-ip=192.198.163.7
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1707735033; x=1739271033;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=mTUS3SLWvGyqyymXIMdJMOmF3VwB+FUVcYVGHpdHHeQ=;
-  b=O0U3vEjAwLtJE3aT095BlZKsHgwlx2FJXem0ErSHQJmboPnlSqutgjif
-   pKnClb360aF6bM5xFgAEhAWoaI/6sTSH0czUgFiui1CWVENDlHdYWc2CD
-   aOe8cbZAY1TAIJVGN4zjol9x/4JiRmSCiKRpBNM3zduG9VzdDEjRnLgZ9
-   EByf9gK3F8PSzHzIwycS1urSU/46bJLZ/Obkv/MRQk2WnbrJLx3J1zoOF
-   t2pbynsJTUGwm9zHigPcM74e+Cg/PoKOF91vmUQ0SagBiXu2SpOxAypU1
-   B1m7nopB7dX7b+/GT+5RJCl+FswFFeNe0qD5gJbUmddqL+nbB7H7FRhAm
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10981"; a="1609243"
-X-IronPort-AV: E=Sophos;i="6.05,263,1701158400"; 
-   d="scan'208";a="1609243"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Feb 2024 02:50:33 -0800
+  t=1707739349; x=1739275349;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=Gau8lbmjtw8M7cmiQTWRcqqXvw3YmT1Ez7fqHr4y7Uo=;
+  b=ONi1dI85dkON0gZDkpKiS6Wlmy/h/QP7e6TPAY2OsnMWsE5GqG71Ir0b
+   LkGHG+Cg9B+WIMjJQUELKHCsN0Zk+VlOFZkKetUCygraYyi0aTq6MzppY
+   yo8qN8D1wrVpb92tw93E1rIu3BddSQabqrDMHGtRvdMFnCalyAyWU2TXC
+   8jPGO+BKh9UleiS5QyjBNOlUl3rcLwBQKOSKdBVD8PzGVjvOEUJ3UzN91
+   cDqRBUKfhm+4ho5Fe7OhatwsaJ+27vG70qU8b2qKyFBl1qH02E8Me1aED
+   8TO87VWaal6LAbNB5JXwUkEJDCNL4TfFTB9mUXdVjEqLj7Qa53t1fCiL3
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10981"; a="27157803"
+X-IronPort-AV: E=Sophos;i="6.06,263,1705392000"; 
+   d="scan'208";a="27157803"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Feb 2024 04:02:28 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.05,263,1701158400"; 
-   d="scan'208";a="33347579"
-Received: from weba0535.iind.intel.com ([10.224.186.30])
-  by orviesa002.jf.intel.com with ESMTP; 12 Feb 2024 02:50:32 -0800
-From: Ajay KV <ajay.k.v@intel.com>
+X-IronPort-AV: E=Sophos;i="6.06,263,1705392000"; 
+   d="scan'208";a="2912359"
+Received: from lbtoe.iind.intel.com ([10.224.186.133])
+  by orviesa006.jf.intel.com with ESMTP; 12 Feb 2024 04:02:26 -0800
+From: Shahid Vichhi <shahid.bashir.vichhi@intel.com>
 To: linux-bluetooth@vger.kernel.org
-Cc: ravishankar.sriv@intel.com,
-	kiran.k@intel.com,
-	Ajay KV <ajay.k.v@intel.com>
-Subject: [PATCH BlueZ 3/3] shared/ccp: Add initial code for Call Control Profile for Client Role.
-Date: Mon, 12 Feb 2024 18:17:26 +0200
-Message-Id: <20240212161726.3097145-3-ajay.k.v@intel.com>
+Cc: Shahid Vichhi <shahid.bashir.vichhi@intel.com>
+Subject: [PATCH v4] monitor/att: Enable the notification logging support for the CCP
+Date: Mon, 12 Feb 2024 07:03:58 +0200
+Message-Id: <20240212050358.687112-1-shahid.bashir.vichhi@intel.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240212161726.3097145-1-ajay.k.v@intel.com>
-References: <20240212161726.3097145-1-ajay.k.v@intel.com>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -74,1229 +69,688 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
 ---
- Makefile.am      |    1 +
- src/shared/ccp.c | 1147 ++++++++++++++++++++++++++++++++++++++++++++++
- src/shared/ccp.h |   45 ++
- 3 files changed, 1193 insertions(+)
- create mode 100644 src/shared/ccp.c
- create mode 100644 src/shared/ccp.h
+ monitor/att.c | 661 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 661 insertions(+)
 
-diff --git a/Makefile.am b/Makefile.am
-index 2b1b9acdf825..fdffdc478a16 100644
---- a/Makefile.am
-+++ b/Makefile.am
-@@ -230,6 +230,7 @@ shared_sources = src/shared/io.h src/shared/timeout.h \
- 			src/shared/micp.c src/shared/micp.h \
- 			src/shared/csip.c src/shared/csip.h \
- 			src/shared/bass.h src/shared/bass.c \
-+			src/shared/ccp.h src/shared/ccp.c \
- 			src/shared/lc3.h src/shared/tty.h
+diff --git a/monitor/att.c b/monitor/att.c
+index e0164f3ddf3b..03e101d6a6b8 100644
+--- a/monitor/att.c
++++ b/monitor/att.c
+@@ -2433,6 +2433,645 @@ static void seeking_speed_notify(const struct l2cap_frame *frame)
+ 	print_seeking_speed(frame);
+ }
  
- if READLINE
-diff --git a/src/shared/ccp.c b/src/shared/ccp.c
-new file mode 100644
-index 000000000000..9089779603bf
---- /dev/null
-+++ b/src/shared/ccp.c
-@@ -0,0 +1,1147 @@
-+// SPDX-License-Identifier: LGPL-2.1-or-later
-+/*
-+ *
-+ *  BlueZ - Bluetooth protocol stack for Linux
-+ *
-+ *  Copyright (C) 2022  Intel Corporation. All rights reserved.
-+ *
-+ */
-+
-+#define _GNU_SOURCE
-+#include <inttypes.h>
-+#include <string.h>
-+#include <stdlib.h>
-+#include <stdbool.h>
-+#include <unistd.h>
-+#include <errno.h>
-+
-+#include "lib/bluetooth.h"
-+#include "lib/uuid.h"
-+#include "lib/hci.h"
-+
-+#include "src/shared/queue.h"
-+#include "src/shared/util.h"
-+#include "src/shared/timeout.h"
-+#include "src/shared/att.h"
-+#include "src/shared/gatt-db.h"
-+#include "src/shared/gatt-server.h"
-+#include "src/shared/gatt-client.h"
-+#include "src/shared/ccp.h"
-+
-+#define DBG(_ccp, fmt, arg...) \
-+	ccp_debug(_ccp, "%s:%s() " fmt, __FILE__, __func__, ## arg)
-+
-+struct bt_ccp_db {
-+	struct gatt_db *db;
-+	struct bt_ccs *ccs;
-+};
-+
-+struct bt_ccp_pending {
-+	unsigned int id;
-+	struct bt_ccp *ccp;
-+	bt_gatt_client_read_callback_t func;
-+	void *user_data;
-+};
-+
-+struct event_callback {
-+	const struct bt_ccp_event_callback *cbs;
-+	void *user_data;
-+};
-+
-+struct bt_ccp {
-+	int ref_count;
-+	struct bt_gatt_client *client;
-+	struct bt_ccp_db *ldb;
-+	struct bt_ccp_db *rdb;
-+
-+	unsigned int bearer_name_id;
-+	unsigned int bearer_uci_id;
-+	unsigned int bearer_technology_id;
-+	unsigned int bearer_uri_schemes_list_id;
-+	unsigned int signal_strength_id;
-+	unsigned int signal_reporting_intrvl_id;
-+	unsigned int current_call_list_id;
-+	unsigned int ccid_id;
-+	unsigned int status_flag_id;
-+	unsigned int target_bearer_uri_id;
-+	unsigned int call_state_id;
-+	unsigned int call_control_pt_id;
-+	unsigned int call_control_opt_opcode_id;
-+	unsigned int termination_reason_id;
-+	unsigned int incoming_call_id;
-+	unsigned int friendly_name_id;
-+
-+	struct event_callback *cb;
-+	struct queue *pending;
-+
-+	bt_ccp_debug_func_t debug_func;
-+	bt_ccp_destroy_func_t debug_destroy;
-+	void *debug_data;
-+	void *user_data;
-+};
-+
-+struct bt_ccs {
-+	struct bt_ccp_db *mdb;
-+	struct gatt_db_attribute *service;
-+	struct gatt_db_attribute *bearer_name;
-+	struct gatt_db_attribute *bearer_name_ccc;
-+	struct gatt_db_attribute *bearer_uci;
-+	struct gatt_db_attribute *bearer_technology;
-+	struct gatt_db_attribute *bearer_technology_ccc;
-+	struct gatt_db_attribute *bearer_uri_schemes_list;
-+	struct gatt_db_attribute *signal_strength;
-+	struct gatt_db_attribute *signal_strength_ccc;
-+	struct gatt_db_attribute *signal_reporting_intrvl;
-+	struct gatt_db_attribute *current_call_list;
-+	struct gatt_db_attribute *current_call_list_ccc;
-+	struct gatt_db_attribute *ccid;
-+	struct gatt_db_attribute *status_flag;
-+	struct gatt_db_attribute *status_flag_ccc;
-+	struct gatt_db_attribute *target_bearer_uri;
-+	struct gatt_db_attribute *call_state;
-+	struct gatt_db_attribute *call_state_ccc;
-+	struct gatt_db_attribute *call_ctrl_point;
-+	struct gatt_db_attribute *call_ctrl_point_ccc;
-+	struct gatt_db_attribute *call_ctrl_opt_opcode;
-+	struct gatt_db_attribute *termination_reason;
-+	struct gatt_db_attribute *termination_reason_ccc;
-+	struct gatt_db_attribute *incoming_call;
-+	struct gatt_db_attribute *incoming_call_ccc;
-+	struct gatt_db_attribute *friendly_name;
-+	struct gatt_db_attribute *friendly_name_ccc;
-+};
-+
-+static struct queue *ccp_db;
-+
-+static void ccp_debug(struct bt_ccp *ccp, const char *format, ...)
++static void print_bearer_name(const struct l2cap_frame *frame)
 +{
-+	va_list ap;
++	char *name;
 +
-+	if (!ccp || !format || !ccp->debug_func)
-+		return;
++	name = name2utf8((uint8_t *)frame->data, frame->size);
 +
-+	va_start(ap, format);
-+	util_debug_va(ccp->debug_func, ccp->debug_data, format, ap);
-+	va_end(ap);
++	print_field("  Bearer Name: %s", name);
 +}
 +
-+static bool ccp_db_match(const void *data, const void *match_data)
++static void bearer_name_read(const struct l2cap_frame *frame)
 +{
-+	const struct bt_ccp_db *mdb = data;
-+	const struct gatt_db *db = match_data;
-+
-+	return (mdb->db == db);
++	print_bearer_name(frame);
 +}
 +
-+static void ccp_db_free(void *data)
++static void bearer_name_notify(const struct l2cap_frame *frame)
 +{
-+	struct bt_ccp_db *bdb = data;
-+
-+	if (!bdb)
-+		return;
-+
-+	gatt_db_unref(bdb->db);
-+
-+	free(bdb->ccs);
-+	free(bdb);
++	print_bearer_name(frame);
 +}
 +
-+static void ccp_free(void *data)
++static void bearer_uci_read(const struct l2cap_frame *frame)
 +{
-+	struct bt_ccp *ccp = data;
++	char *name;
 +
-+	DBG(ccp, "");
++	name = name2utf8((uint8_t *)frame->data, frame->size);
 +
-+	bt_ccp_detach(ccp);
-+	ccp_db_free(ccp->rdb);
-+	queue_destroy(ccp->pending, NULL);
-+
-+	free(ccp);
++	print_field("  Bearer Uci Name: %s", name);
 +}
 +
-+struct bt_ccp *bt_ccp_ref(struct bt_ccp *ccp)
++static void print_technology_name(const struct l2cap_frame *frame)
 +{
-+	if (!ccp)
-+		return NULL;
-+
-+	__sync_fetch_and_add(&ccp->ref_count, 1);
-+
-+	return ccp;
-+}
-+
-+void bt_ccp_unref(struct bt_ccp *ccp)
-+{
-+	if (!ccp)
-+		return;
-+
-+	if (__sync_sub_and_fetch(&ccp->ref_count, 1))
-+		return;
-+
-+	ccp_free(ccp);
-+}
-+
-+bool bt_ccp_set_user_data(struct bt_ccp *ccp, void *user_data)
-+{
-+	if (!ccp)
-+		return false;
-+
-+	ccp->user_data = user_data;
-+
-+	return true;
-+}
-+
-+void *bt_ccp_get_user_data(struct bt_ccp *ccp)
-+{
-+	if (!ccp)
-+		return NULL;
-+
-+	return ccp->user_data;
-+}
-+
-+bool bt_ccp_set_debug(struct bt_ccp *ccp, bt_ccp_debug_func_t func,
-+      void *user_data, bt_ccp_destroy_func_t destroy)
-+{
-+	if (!ccp)
-+		return false;
-+
-+	if (ccp->debug_destroy)
-+		ccp->debug_destroy(ccp->debug_data);
-+
-+	ccp->debug_func = func;
-+	ccp->debug_destroy = destroy;
-+	ccp->debug_data = user_data;
-+
-+	return true;
-+}
-+
-+static void ccs_call_state_read(struct gatt_db_attribute *attrib,
-+				unsigned int id, uint16_t offset,
-+				uint8_t opcode, struct bt_att *att,
-+				void *user_data)
-+{
-+	int call_state = 0;
-+	struct iovec iov;
-+
-+	iov.iov_base = &call_state;
-+	iov.iov_len = sizeof(int);
-+
-+	gatt_db_attribute_read_result(attrib, id, 0, iov.iov_base,
-+							iov.iov_len);
-+}
-+
-+static void ccs_call_state_write(struct gatt_db_attribute *attrib,
-+				unsigned int id, uint16_t offset,
-+				const uint8_t *value, size_t len,
-+				uint8_t opcode, struct bt_att *att,
-+				void *user_data)
-+{
-+	gatt_db_attribute_write_result(attrib, id,
-+				BT_ATT_ERROR_INSUFFICIENT_RESOURCES);
-+}
-+
-+static struct bt_ccs *ccs_new(struct gatt_db *db)
-+{
-+	struct bt_ccs *ccs;
-+	bt_uuid_t uuid;
-+
-+	if (!db)
-+		return NULL;
-+
-+	ccs = new0(struct bt_ccs, 1);
-+
-+	/* Populate DB with ccs attributes */
-+	bt_uuid16_create(&uuid, GTBS_UUID);
-+	ccs->service = gatt_db_add_service(db, &uuid, true, 42);
-+
-+	bt_uuid16_create(&uuid, BEARER_PROVIDER_NAME_CHRC_UUID);
-+	ccs->bearer_name = gatt_db_service_add_characteristic(ccs->service,
-+      &uuid, BT_ATT_PERM_READ,
-+      BT_GATT_CHRC_PROP_READ | BT_GATT_CHRC_PROP_NOTIFY,
-+      ccs_call_state_read, NULL, ccs);
-+
-+	ccs->bearer_name_ccc = gatt_db_service_add_ccc(ccs->service,
-+					BT_ATT_PERM_READ | BT_ATT_PERM_WRITE);
-+
-+	bt_uuid16_create(&uuid, BEARER_UCI_CHRC_UUID);
-+	ccs->bearer_uci = gatt_db_service_add_characteristic(ccs->service,
-+			&uuid, BT_ATT_PERM_READ,
-+			BT_GATT_CHRC_PROP_READ, ccs_call_state_read,
-+			NULL, ccs);
-+
-+	bt_uuid16_create(&uuid, BEARER_TECH_CHRC_UUID);
-+	ccs->bearer_technology = gatt_db_service_add_characteristic(ccs->service,
-+			&uuid, BT_ATT_PERM_READ,
-+			BT_GATT_CHRC_PROP_READ | BT_GATT_CHRC_PROP_NOTIFY,
-+			ccs_call_state_read, NULL,
-+			ccs);
-+
-+	ccs->bearer_technology_ccc = gatt_db_service_add_ccc(ccs->service,
-+					BT_ATT_PERM_READ | BT_ATT_PERM_WRITE);
-+
-+	bt_uuid16_create(&uuid, BEARER_URI_SCHEME_CHRC_UUID);
-+	ccs->bearer_uri_schemes_list = gatt_db_service_add_characteristic(ccs->service,
-+			&uuid, BT_ATT_PERM_READ,
-+			BT_GATT_CHRC_PROP_READ,
-+			ccs_call_state_read, NULL,
-+			ccs);
-+
-+	bt_uuid16_create(&uuid, BEARER_SIGNAL_STR_CHRC_UUID);
-+	ccs->signal_strength = gatt_db_service_add_characteristic(ccs->service,
-+			&uuid, BT_ATT_PERM_READ,
-+			BT_GATT_CHRC_PROP_READ | BT_GATT_CHRC_PROP_NOTIFY,
-+			ccs_call_state_read, NULL,
-+			ccs);
-+
-+	ccs->signal_strength_ccc = gatt_db_service_add_ccc(ccs->service,
-+					BT_ATT_PERM_READ | BT_ATT_PERM_WRITE);
-+
-+	bt_uuid16_create(&uuid, BEARER_SIGNAL_INTRVL_CHRC_UUID);
-+	ccs->signal_reporting_intrvl = gatt_db_service_add_characteristic(ccs->service,
-+			&uuid, BT_ATT_PERM_READ | BT_ATT_PERM_WRITE,
-+			BT_GATT_CHRC_PROP_READ | BT_GATT_CHRC_PROP_WRITE |
-+			BT_GATT_CHRC_PROP_WRITE_WITHOUT_RESP,
-+			ccs_call_state_read, ccs_call_state_write,
-+			ccs);
-+
-+	bt_uuid16_create(&uuid, CURR_CALL_LIST_CHRC_UUID);
-+	ccs->current_call_list = gatt_db_service_add_characteristic(ccs->service,
-+			&uuid, BT_ATT_PERM_READ,
-+			BT_GATT_CHRC_PROP_READ | BT_GATT_CHRC_PROP_NOTIFY,
-+			ccs_call_state_read, NULL,
-+			ccs);
-+
-+	ccs->current_call_list_ccc = gatt_db_service_add_ccc(ccs->service,
-+					BT_ATT_PERM_READ | BT_ATT_PERM_WRITE);
-+
-+	bt_uuid16_create(&uuid, BEARER_CCID_CHRC_UUID);
-+	ccs->ccid = gatt_db_service_add_characteristic(ccs->service,
-+			&uuid, BT_ATT_PERM_READ,
-+			BT_GATT_CHRC_PROP_READ,
-+			ccs_call_state_read, NULL,
-+			ccs);
-+
-+	bt_uuid16_create(&uuid, CALL_STATUS_FLAG_CHRC_UUID);
-+	ccs->status_flag = gatt_db_service_add_characteristic(ccs->service,
-+			&uuid, BT_ATT_PERM_READ,
-+			BT_GATT_CHRC_PROP_READ | BT_GATT_CHRC_PROP_NOTIFY,
-+			ccs_call_state_read, NULL,
-+			ccs);
-+
-+	ccs->status_flag_ccc = gatt_db_service_add_ccc(ccs->service,
-+					BT_ATT_PERM_READ | BT_ATT_PERM_WRITE);
-+
-+	bt_uuid16_create(&uuid, INCOM_CALL_TARGET_URI_CHRC_UUID);
-+	ccs->target_bearer_uri = gatt_db_service_add_characteristic(ccs->service,
-+			&uuid, BT_ATT_PERM_READ,
-+			BT_GATT_CHRC_PROP_READ,
-+			ccs_call_state_read, NULL,
-+			ccs);
-+
-+	bt_uuid16_create(&uuid, CALL_STATE_CHRC_UUID);
-+	ccs->call_ctrl_point = gatt_db_service_add_characteristic(ccs->service,
-+			&uuid, BT_ATT_PERM_READ,
-+			BT_GATT_CHRC_PROP_READ | BT_GATT_CHRC_PROP_NOTIFY,
-+			ccs_call_state_read, NULL,
-+			ccs);
-+
-+	ccs->call_ctrl_point_ccc = gatt_db_service_add_ccc(ccs->service,
-+					BT_ATT_PERM_READ | BT_ATT_PERM_WRITE);
-+
-+	bt_uuid16_create(&uuid, CALL_CTRL_POINT_CHRC_UUID);
-+	ccs->call_ctrl_opt_opcode = gatt_db_service_add_characteristic(ccs->service,
-+			&uuid, BT_ATT_PERM_WRITE,
-+			BT_GATT_CHRC_PROP_WRITE | BT_GATT_CHRC_PROP_WRITE_WITHOUT_RESP |
-+			BT_GATT_CHRC_PROP_NOTIFY,
-+			NULL, ccs_call_state_write,
-+			ccs);
-+
-+	bt_uuid16_create(&uuid, CALL_CTRL_POINT_OPT_OPCODE_CHRC_UUID);
-+	ccs->call_ctrl_opt_opcode = gatt_db_service_add_characteristic(ccs->service,
-+			&uuid, BT_ATT_PERM_READ,
-+			BT_GATT_CHRC_PROP_READ,
-+			ccs_call_state_read, NULL,
-+			ccs);
-+
-+	bt_uuid16_create(&uuid, TERMINATION_REASON_CHRC_UUID);
-+	ccs->termination_reason = gatt_db_service_add_characteristic(ccs->service,
-+			&uuid, BT_ATT_PERM_READ,
-+			BT_GATT_CHRC_PROP_READ | BT_GATT_CHRC_PROP_NOTIFY,
-+			ccs_call_state_read, NULL,
-+			ccs);
-+
-+	bt_uuid16_create(&uuid, INCOMING_CALL_CHRC_UUID);
-+	ccs->incoming_call = gatt_db_service_add_characteristic(ccs->service,
-+			&uuid, BT_ATT_PERM_NONE,
-+			BT_GATT_CHRC_PROP_NOTIFY,
-+			NULL, NULL,
-+			ccs);
-+
-+	ccs->incoming_call_ccc = gatt_db_service_add_ccc(ccs->service,
-+					BT_ATT_PERM_READ | BT_ATT_PERM_WRITE);
-+
-+	bt_uuid16_create(&uuid, CALL_FRIENDLY_NAME_CHRC_UUID);
-+	ccs->friendly_name = gatt_db_service_add_characteristic(ccs->service,
-+			&uuid, BT_ATT_PERM_READ,
-+			BT_GATT_CHRC_PROP_READ | BT_GATT_CHRC_PROP_NOTIFY,
-+			ccs_call_state_read, NULL,
-+			ccs);
-+
-+	ccs->friendly_name_ccc = gatt_db_service_add_ccc(ccs->service,
-+					BT_ATT_PERM_READ | BT_ATT_PERM_WRITE);
-+
-+	gatt_db_service_set_active(ccs->service, false);
-+
-+	return ccs;
-+}
-+
-+static struct bt_ccs *ccp_get_ccs(struct bt_ccp *ccp)
-+{
-+	if (!ccp)
-+		return NULL;
-+
-+	if (ccp->rdb->ccs)
-+		return ccp->rdb->ccs;
-+
-+	ccp->rdb->ccs = new0(struct bt_ccs, 1);
-+	ccp->rdb->ccs->mdb = ccp->rdb;
-+
-+	return ccp->rdb->ccs;
-+}
-+
-+static void ccp_pending_destroy(void *data)
-+{
-+	struct bt_ccp_pending *pending = data;
-+	struct bt_ccp *ccp = pending->ccp;
-+
-+	queue_remove_if(ccp->pending, NULL, pending);
-+}
-+
-+static void ccp_pending_complete(bool success, uint8_t att_ecode,
-+				const uint8_t *value, uint16_t length,
-+				void *user_data)
-+{
-+	struct bt_ccp_pending *pending = user_data;
-+
-+	if (pending->func)
-+		pending->func(success, att_ecode, value, length,
-+						pending->user_data);
-+}
-+
-+static void ccp_read_value(struct bt_ccp *ccp, uint16_t value_handle,
-+				bt_gatt_client_read_callback_t func,
-+				void *user_data)
-+{
-+	struct bt_ccp_pending *pending;
-+
-+	pending = new0(struct bt_ccp_pending, 1);
-+	pending->ccp = ccp;
-+	pending->func = func;
-+	pending->user_data = user_data;
-+
-+	pending->id = bt_gatt_client_read_value(ccp->client, value_handle,
-+						ccp_pending_complete, pending,
-+						ccp_pending_destroy);
-+	if (!pending->id) {
-+		DBG(ccp, "Unable to send Read request");
-+		free(pending);
-+		return;
-+	}
-+
-+	queue_push_tail(ccp->pending, pending);
-+}
-+
-+static void read_call_back(bool success, uint8_t att_ecode,
-+				const uint8_t *value, uint16_t length,
-+				void *user_data)
-+{
-+	struct bt_ccp *ccp = user_data;
-+
-+	DBG(ccp, "");
-+
-+	if (!success) {
-+		DBG(ccp, "Unable to read call state: error 0x%02x",
-+				att_ecode);
-+		return;
-+	}
-+}
-+
-+static void ccp_cb_register(uint16_t att_ecode, void *user_data)
-+{
-+	struct bt_ccp *ccp = user_data;
-+
-+	if (att_ecode)
-+		DBG(ccp, "ccp cb notification failed: 0x%04x",
-+					att_ecode);
-+
-+	/* TODO: generic handler for non-mandatory CCP call backs */
-+}
-+
-+static void ccp_cb_notify(uint16_t value_handle, const uint8_t *value,
-+					uint16_t length, void *user_data)
-+{
-+	 /* TODO: generic handler for non-mandatory CCP notifications */
-+}
-+
-+static void ccp_cb_status_flag_register(uint16_t att_ecode, void *user_data)
-+{
-+	struct bt_ccp *ccp = user_data;
-+
-+	if (att_ecode)
-+		DBG(ccp, "ccp cb notification failed: 0x%04x", att_ecode);
-+}
-+
-+static void ccp_cb_status_flag_notify(uint16_t value_handle, const uint8_t *value,
-+					uint16_t length, void *user_data)
-+{
-+	struct bt_ccp *ccp = user_data;
-+
-+  DBG(ccp, "");
-+
-+	if (!length)
-+		return;
-+}
-+
-+static void ccp_cb_terminate_register(uint16_t att_ecode, void *user_data)
-+{
-+	struct bt_ccp *ccp = user_data;
-+
-+	if (att_ecode)
-+		DBG(ccp, "ccp cb notification failed: 0x%04x",
-+					att_ecode);
-+}
-+
-+static void ccp_cb_terminate_notify(uint16_t value_handle, const uint8_t *value,
-+					uint16_t length, void *user_data)
-+{
-+	struct bt_ccp *ccp = user_data;
-+
-+  DBG(ccp, "");
-+
-+	if (!length)
-+		return;
-+
-+	/* TODO: update call state in Local context */
-+}
-+
-+static void ccp_cb_bearer_name_register(uint16_t att_ecode, void *user_data)
-+{
-+	struct bt_ccp *ccp = user_data;
-+
-+	DBG(ccp, "");
-+
-+	if (att_ecode)
-+		DBG(ccp, "ccp cb notification failed: 0x%04x",
-+					att_ecode);
-+}
-+
-+static void ccp_cb_bearer_name_notify(uint16_t value_handle, const uint8_t *value,
-+					uint16_t length, void *user_data)
-+{
-+	struct bt_ccp *ccp = user_data;
-+
-+	DBG(ccp, "");
-+
-+	if (!length)
-+		return;
-+
-+	/* TODO: update call details in Local context */
-+}
-+
-+static void ccp_cb_call_list_register(uint16_t att_ecode, void *user_data)
-+{
-+	struct bt_ccp *ccp = user_data;
-+
-+	DBG(ccp, "");
-+
-+	if (att_ecode)
-+		DBG(ccp, "ccp cb notification failed: 0x%04x", att_ecode);
-+}
-+
-+static void ccp_cb_call_list_notify(uint16_t value_handle, const uint8_t *value,
-+					uint16_t length, void *user_data)
-+{
-+	struct bt_ccp *ccp = user_data;
-+
-+	DBG(ccp, "");
-+
-+	if (!length)
-+		return;
-+
-+	 /* TODO: update call list in Local context */
-+}
-+
-+static void ccp_cb_call_state_register(uint16_t att_ecode, void *user_data)
-+{
-+	struct bt_ccp *ccp = user_data;
-+
-+	DBG(ccp, "");
-+
-+	if (att_ecode)
-+		DBG(ccp, "ccp cb notification failed: 0x%04x",
-+					att_ecode);
-+}
-+
-+static void ccp_cb_call_state_notify(uint16_t value_handle, const uint8_t *value,
-+					uint16_t length, void *user_data)
-+{
-+	struct bt_ccp *ccp = user_data;
-+
-+	DBG(ccp, "");
-+
-+	if (!length)
-+		return;
-+
-+	/* TODO: update call state in Local context */
-+}
-+
-+static void ccp_cb_incom_call_register(uint16_t att_ecode, void *user_data)
-+{
-+	struct bt_ccp *ccp = user_data;
-+
-+	DBG(ccp, "");
-+
-+	if (att_ecode)
-+		DBG(ccp, "ccp cb notification failed: 0x%04x",
-+					att_ecode);
-+}
-+
-+static void ccp_cb_incom_call_notify(uint16_t value_handle, const uint8_t *value,
-+					uint16_t length, void *user_data)
-+{
-+	struct bt_ccp *ccp = user_data;
-+
-+	DBG(ccp, "");
-+
-+	if (!length)
-+		return;
-+
-+	/* TODO: Handle incoming call notofiation, Answer/reject etc */
-+}
-+
-+static void bt_ccp_incom_call_attach(struct bt_ccp *ccp)
-+{
-+	uint16_t value_handle;
-+	struct bt_ccs *ccs = ccp_get_ccs(ccp);
-+
-+	DBG(ccp, "");
-+
-+	if (!gatt_db_attribute_get_char_data(ccs->incoming_call, NULL, &value_handle,
-+						NULL, NULL, NULL))
-+		return;
-+
-+	ccp_read_value(ccp, value_handle, read_call_back, ccp);
-+
-+	ccp->incoming_call_id = bt_gatt_client_register_notify(ccp->client,
-+				value_handle, ccp_cb_incom_call_register,
-+				ccp_cb_incom_call_notify, ccp, NULL);
-+}
-+
-+static void bt_ccp_call_state_attach(struct bt_ccp *ccp)
-+{
-+	uint16_t value_handle;
-+	struct bt_ccs *ccs = ccp_get_ccs(ccp);
-+
-+	DBG(ccp, "");
-+
-+	if (!gatt_db_attribute_get_char_data(ccs->call_state, NULL, &value_handle,
-+						NULL, NULL, NULL))
-+		return;
-+
-+	ccp_read_value(ccp, value_handle, read_call_back, ccp);
-+
-+	ccp->call_state_id = bt_gatt_client_register_notify(ccp->client,
-+				value_handle, ccp_cb_call_state_register,
-+				ccp_cb_call_state_notify, ccp, NULL);
-+}
-+
-+static void bt_ccp_call_list_attach(struct bt_ccp *ccp)
-+{
-+	uint16_t value_handle;
-+	struct bt_ccs *ccs = ccp_get_ccs(ccp);
-+
-+	DBG(ccp, "");
-+
-+	if (!gatt_db_attribute_get_char_data(ccs->current_call_list, NULL, &value_handle,
-+						NULL, NULL, NULL))
-+		return;
-+
-+	ccp_read_value(ccp, value_handle, read_call_back, ccp);
-+
-+	ccp->current_call_list_id = bt_gatt_client_register_notify(ccp->client,
-+				value_handle, ccp_cb_call_list_register,
-+				ccp_cb_call_list_notify, ccp, NULL);
-+}
-+
-+static void bt_ccp_name_attach(struct bt_ccp *ccp)
-+{
-+	uint16_t value_handle;
-+	struct bt_ccs *ccs = ccp_get_ccs(ccp);
-+
-+	DBG(ccp, "");
-+
-+	if (!gatt_db_attribute_get_char_data(ccs->bearer_name, NULL, &value_handle,
-+						NULL, NULL, NULL))
-+		return;
-+
-+	ccp_read_value(ccp, value_handle, read_call_back, ccp);
-+
-+	ccp->bearer_name_id = bt_gatt_client_register_notify(ccp->client,
-+				value_handle, ccp_cb_bearer_name_register,
-+				ccp_cb_bearer_name_notify, ccp, NULL);
-+}
-+
-+static void bt_ccp_term_reason_attach(struct bt_ccp *ccp)
-+{
-+	uint16_t value_handle;
-+	struct bt_ccs *ccs = ccp_get_ccs(ccp);
-+
-+	DBG(ccp, "");
-+
-+	if (!gatt_db_attribute_get_char_data(ccs->termination_reason, NULL, &value_handle,
-+						NULL, NULL, NULL))
-+		return;
-+
-+	ccp_read_value(ccp, value_handle, read_call_back, ccp);
-+
-+	ccp->termination_reason_id = bt_gatt_client_register_notify(ccp->client,
-+				value_handle, ccp_cb_terminate_register,
-+				ccp_cb_terminate_notify, ccp, NULL);
-+}
-+
-+static void bt_ccp_status_attach(struct bt_ccp *ccp)
-+{
-+	uint16_t value_handle;
-+	struct bt_ccs *ccs = ccp_get_ccs(ccp);
-+
-+	DBG(ccp, "");
-+
-+	if (!gatt_db_attribute_get_char_data(ccs->status_flag, NULL, &value_handle,
-+						NULL, NULL, NULL))
-+		return;
-+
-+	ccp_read_value(ccp, value_handle, read_call_back, ccp);
-+
-+	ccp->status_flag_id = bt_gatt_client_register_notify(ccp->client,
-+				value_handle, ccp_cb_status_flag_register,
-+				ccp_cb_status_flag_notify, ccp, NULL);
-+}
-+
-+static void bt_ccp_uci_attach(struct bt_ccp *ccp)
-+{
-+	uint16_t value_handle;
-+	struct bt_ccs *ccs = ccp_get_ccs(ccp);
-+
-+	DBG(ccp, "");
-+
-+	if (!gatt_db_attribute_get_char_data(ccs->bearer_uci, NULL, &value_handle,
-+						NULL, NULL, NULL))
-+		return;
-+
-+	ccp_read_value(ccp, value_handle, read_call_back, ccp);
-+
-+	ccp->bearer_uci_id = bt_gatt_client_register_notify(ccp->client,
-+				value_handle, ccp_cb_register,
-+				ccp_cb_notify, ccp, NULL);
-+}
-+
-+static void bt_ccp_technology_attach(struct bt_ccp *ccp)
-+{
-+	uint16_t value_handle;
-+	struct bt_ccs *ccs = ccp_get_ccs(ccp);
-+
-+	DBG(ccp, "");
-+
-+	if (!gatt_db_attribute_get_char_data(ccs->bearer_technology, NULL, &value_handle,
-+						NULL, NULL, NULL))
-+		return;
-+
-+	ccp_read_value(ccp, value_handle, read_call_back, ccp);
-+
-+	ccp->bearer_technology_id = bt_gatt_client_register_notify(ccp->client,
-+				value_handle, ccp_cb_register,
-+				ccp_cb_notify, ccp, NULL);
-+}
-+static void bt_ccp_strength_attach(struct bt_ccp *ccp)
-+{
-+	uint16_t value_handle;
-+	struct bt_ccs *ccs = ccp_get_ccs(ccp);
-+
-+	DBG(ccp, "");
-+
-+	if (!gatt_db_attribute_get_char_data(ccs->signal_strength, NULL, &value_handle,
-+						NULL, NULL, NULL))
-+		return;
-+
-+	ccp_read_value(ccp, value_handle, read_call_back, ccp);
-+
-+	ccp->signal_strength_id = bt_gatt_client_register_notify(ccp->client,
-+				value_handle, ccp_cb_register,
-+				ccp_cb_notify, ccp, NULL);
-+}
-+
-+static void bt_ccp_ccid_attach(struct bt_ccp *ccp)
-+{
-+	uint16_t value_handle;
-+	struct bt_ccs *ccs = ccp_get_ccs(ccp);
-+
-+	DBG(ccp, "");
-+
-+	if (!gatt_db_attribute_get_char_data(ccs->ccid, NULL, &value_handle,
-+						NULL, NULL, NULL))
-+		return;
-+
-+	ccp_read_value(ccp, value_handle, read_call_back, ccp);
-+
-+	ccp->ccid_id = bt_gatt_client_register_notify(ccp->client,
-+				value_handle, ccp_cb_register,
-+				ccp_cb_notify, ccp, NULL);
-+}
-+static void bt_ccp_tar_uri_attach(struct bt_ccp *ccp)
-+{
-+	uint16_t value_handle;
-+	struct bt_ccs *ccs = ccp_get_ccs(ccp);
-+
-+	DBG(ccp, "");
-+
-+	if (!gatt_db_attribute_get_char_data(ccs->target_bearer_uri, NULL, &value_handle,
-+						NULL, NULL, NULL))
-+		return;
-+
-+	ccp_read_value(ccp, value_handle, read_call_back, ccp);
-+
-+	ccp->target_bearer_uri_id = bt_gatt_client_register_notify(ccp->client,
-+				value_handle, ccp_cb_register,
-+				ccp_cb_notify, ccp, NULL);
-+}
-+
-+static void bt_ccp_ctrl_point_attach(struct bt_ccp *ccp)
-+{
-+	uint16_t value_handle;
-+	struct bt_ccs *ccs = ccp_get_ccs(ccp);
-+
-+	DBG(ccp, "");
-+
-+	if (!gatt_db_attribute_get_char_data(ccs->call_ctrl_point, NULL, &value_handle,
-+						NULL, NULL, NULL))
-+		return;
-+
-+	ccp_read_value(ccp, value_handle, read_call_back, ccp);
-+
-+	ccp->call_control_pt_id = bt_gatt_client_register_notify(ccp->client,
-+				value_handle, ccp_cb_register,
-+				ccp_cb_notify, ccp, NULL);
-+}
-+
-+static void bt_ccp_ctrl_opcode_attach(struct bt_ccp *ccp)
-+{
-+	uint16_t value_handle;
-+	struct bt_ccs *ccs = ccp_get_ccs(ccp);
-+
-+  DBG(ccp, "");
-+
-+	if (!gatt_db_attribute_get_char_data(ccs->call_ctrl_opt_opcode, NULL, &value_handle,
-+						NULL, NULL, NULL))
-+		return;
-+
-+	ccp_read_value(ccp, value_handle, read_call_back, ccp);
-+
-+	ccp->call_control_opt_opcode_id = bt_gatt_client_register_notify(ccp->client,
-+				value_handle, ccp_cb_register,
-+				ccp_cb_notify, ccp, NULL);
-+}
-+
-+static void bt_ccp_friendly_name_attach(struct bt_ccp *ccp)
-+{
-+	uint16_t value_handle;
-+	struct bt_ccs *ccs = ccp_get_ccs(ccp);
-+
-+	DBG(ccp, "");
-+
-+	if (!gatt_db_attribute_get_char_data(ccs->friendly_name, NULL, &value_handle,
-+						NULL, NULL, NULL))
-+		return;
-+
-+	ccp_read_value(ccp, value_handle, read_call_back, ccp);
-+
-+	ccp->friendly_name_id = bt_gatt_client_register_notify(ccp->client,
-+				value_handle, ccp_cb_register,
-+				ccp_cb_notify, ccp, NULL);
-+}
-+
-+static void bt_ccp_signal_intrvl_attach(struct bt_ccp *ccp)
-+{
-+	uint16_t value_handle;
-+	struct bt_ccs *ccs = ccp_get_ccs(ccp);
-+
-+	DBG(ccp, "");
-+
-+	if (!gatt_db_attribute_get_char_data(ccs->signal_reporting_intrvl, NULL, &value_handle,
-+						NULL, NULL, NULL))
-+		return;
-+
-+	ccp_read_value(ccp, value_handle, read_call_back, ccp);
-+
-+	ccp->signal_reporting_intrvl_id = bt_gatt_client_register_notify(ccp->client,
-+				value_handle, ccp_cb_register,
-+				ccp_cb_notify, ccp, NULL);
-+}
-+
-+static void bt_ccp_uri_list_attach(struct bt_ccp *ccp)
-+{
-+	uint16_t value_handle;
-+	struct bt_ccs *ccs = ccp_get_ccs(ccp);
-+
-+	DBG(ccp, "");
-+
-+	if (!gatt_db_attribute_get_char_data(ccs->bearer_uri_schemes_list, NULL, &value_handle,
-+						NULL, NULL, NULL))
-+		return;
-+
-+	ccp_read_value(ccp, value_handle, read_call_back, ccp);
-+
-+	ccp->bearer_uri_schemes_list_id = bt_gatt_client_register_notify(ccp->client,
-+				value_handle, ccp_cb_register,
-+				ccp_cb_notify, ccp, NULL);
-+}
-+
-+static void foreach_ccs_char(struct gatt_db_attribute *attr, void *user_data)
-+{
-+	struct bt_ccp *ccp = user_data;
-+	struct bt_ccs *ccs;
-+	uint16_t value_handle;
-+	bt_uuid_t uuid;
-+
-+	if (!gatt_db_attribute_get_char_data(attr, NULL, &value_handle,
-+						NULL, NULL, &uuid))
-+		return;
-+
-+	ccs = ccp_get_ccs(ccp);
-+	if (!ccs || ccs->call_state)
-+		return;
-+
-+	if (bt_uuid16_cmp(&uuid, BEARER_PROVIDER_NAME_CHRC_UUID)) {
-+		DBG(ccp, "Found Bearer Name, handle 0x%04x", value_handle);
-+
-+		ccs->bearer_name = attr;
-+		bt_ccp_name_attach(ccp);
-+	}
-+
-+	if (bt_uuid16_cmp(&uuid, BEARER_UCI_CHRC_UUID)) {
-+		DBG(ccp, "Found Bearer Uci, handle 0x%04x", value_handle);
-+
-+		ccs->bearer_uci = attr;
-+		bt_ccp_uci_attach(ccp);
-+	}
-+
-+	if (bt_uuid16_cmp(&uuid, BEARER_TECH_CHRC_UUID)) {
-+		DBG(ccp, "Found Bearer Technology, handle 0x%04x", value_handle);
-+
-+		ccs->bearer_technology = attr;
-+		bt_ccp_technology_attach(ccp);
-+	}
-+
-+	if (bt_uuid16_cmp(&uuid, BEARER_SIGNAL_STR_CHRC_UUID)) {
-+		DBG(ccp, "Found Signal Strength, handle 0x%04x", value_handle);
-+
-+		ccs->signal_strength = attr;
-+		bt_ccp_strength_attach(ccp);
-+	}
-+
-+	if (bt_uuid16_cmp(&uuid, BEARER_SIGNAL_INTRVL_CHRC_UUID)) {
-+		DBG(ccp, "Found Signal Interval, handle 0x%04x", value_handle);
-+
-+		ccs->signal_reporting_intrvl = attr;
-+		bt_ccp_signal_intrvl_attach(ccp);
-+	}
-+
-+	if (bt_uuid16_cmp(&uuid, CALL_STATUS_FLAG_CHRC_UUID)) {
-+		DBG(ccp, "Found Status Flag, handle 0x%04x", value_handle);
-+
-+		ccs->status_flag = attr;
-+		bt_ccp_status_attach(ccp);
-+	}
-+
-+	if (bt_uuid16_cmp(&uuid, BEARER_URI_SCHEME_CHRC_UUID)) {
-+		DBG(ccp, "Found URI Scheme, handle 0x%04x", value_handle);
-+
-+		ccs->bearer_uri_schemes_list = attr;
-+		bt_ccp_uri_list_attach(ccp);
-+	}
-+
-+	if (bt_uuid16_cmp(&uuid, CURR_CALL_LIST_CHRC_UUID)) {
-+		DBG(ccp, "Found Call List, handle 0x%04x", value_handle);
-+
-+		ccs->current_call_list = attr;
-+		bt_ccp_call_list_attach(ccp);
-+	}
-+
-+	if (bt_uuid16_cmp(&uuid, BEARER_CCID_CHRC_UUID)) {
-+		DBG(ccp, "Found CCID, handle 0x%04x", value_handle);
-+
-+		ccs->ccid = attr;
-+		bt_ccp_ccid_attach(ccp);
-+	}
-+
-+	if (bt_uuid16_cmp(&uuid, INCOM_CALL_TARGET_URI_CHRC_UUID)) {
-+		DBG(ccp, "Found Bearer Uri, handle 0x%04x", value_handle);
-+
-+		ccs->target_bearer_uri = attr;
-+		bt_ccp_tar_uri_attach(ccp);
-+	}
-+
-+	if (bt_uuid16_cmp(&uuid, CALL_CTRL_POINT_CHRC_UUID)) {
-+		DBG(ccp, "Found Control Point, handle 0x%04x", value_handle);
-+
-+		ccs->call_ctrl_point = attr;
-+		bt_ccp_ctrl_point_attach(ccp);
-+	}
-+
-+	if (bt_uuid16_cmp(&uuid, CALL_CTRL_POINT_OPT_OPCODE_CHRC_UUID)) {
-+		DBG(ccp, "Found Control opcode, handle 0x%04x", value_handle);
-+
-+		ccs->call_ctrl_opt_opcode = attr;
-+		bt_ccp_ctrl_opcode_attach(ccp);
-+	}
-+
-+	if (bt_uuid16_cmp(&uuid, TERMINATION_REASON_CHRC_UUID)) {
-+		DBG(ccp, "Found Termination Reason, handle 0x%04x", value_handle);
-+
-+		ccs->termination_reason = attr;
-+		bt_ccp_term_reason_attach(ccp);
-+	}
-+
-+	if (bt_uuid16_cmp(&uuid, INCOMING_CALL_CHRC_UUID)) {
-+		DBG(ccp, "Found Incoming call, handle 0x%04x", value_handle);
-+
-+		ccs->incoming_call = attr;
-+		bt_ccp_incom_call_attach(ccp);
-+	}
-+
-+	if (bt_uuid16_cmp(&uuid, CALL_FRIENDLY_NAME_CHRC_UUID)) {
-+		DBG(ccp, "Found Friendly name, handle 0x%04x", value_handle);
-+
-+		ccs->friendly_name = attr;
-+		bt_ccp_friendly_name_attach(ccp);
-+	}
-+}
-+
-+void bt_ccp_set_event_callbacks(struct bt_ccp *ccp,
-+				const struct bt_ccp_event_callback *cbs,
-+				void *user_data)
-+{
-+	struct event_callback *cb;
-+
-+	if (ccp->cb)
-+		free(ccp->cb);
-+
-+	cb = new0(struct event_callback, 1);
-+	cb->cbs = cbs;
-+	cb->user_data = user_data;
-+
-+	ccp->cb = cb;
-+}
-+
-+static void foreach_ccs_service(struct gatt_db_attribute *attr,
-+						void *user_data)
-+{
-+	struct bt_ccp *ccp = user_data;
-+	struct bt_ccs *ccs = ccp_get_ccs(ccp);
-+
-+	ccs->service = attr;
-+
-+	gatt_db_service_foreach_char(attr, foreach_ccs_char, ccp);
-+}
-+
-+static struct bt_ccp_db *ccp_db_new(struct gatt_db *db)
-+{
-+	struct bt_ccp_db *mdb;
-+
-+	if (!db)
-+		return NULL;
-+
-+	mdb = new0(struct bt_ccp_db, 1);
-+	mdb->db = gatt_db_ref(db);
-+
-+	if (!ccp_db)
-+		ccp_db = queue_new();
-+
-+	queue_push_tail(ccp_db, mdb);
-+
-+	mdb->ccs = ccs_new(db);
-+	return mdb;
-+}
-+
-+static struct bt_ccp_db *ccp_get_db(struct gatt_db *db)
-+{
-+	struct bt_ccp_db *mdb;
-+
-+	mdb = queue_find(ccp_db, ccp_db_match, db);
-+	if (mdb)
-+		return mdb;
-+
-+	return ccp_db_new(db);
-+}
-+
-+struct bt_ccp *bt_ccp_new(struct gatt_db *ldb, struct gatt_db *rdb)
-+{
-+	struct bt_ccp *ccp;
-+	struct bt_ccp_db *mdb;
-+
-+	if (!ldb)
-+		return NULL;
-+
-+	mdb = ccp_get_db(ldb);
-+	if (!mdb)
-+		return NULL;
-+
-+	ccp = new0(struct bt_ccp, 1);
-+	ccp->ldb = mdb;
-+	ccp->pending = queue_new();
-+
-+	if (!rdb)
++	int8_t tech_id;
++	const char *str;
++
++	if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&tech_id)) {
++		print_text(COLOR_ERROR, "  Technology id:: invalid size");
 +		goto done;
++	}
 +
-+	mdb = new0(struct bt_ccp_db, 1);
-+	mdb->db = gatt_db_ref(rdb);
++	switch (tech_id) {
++	case 0x01:
++		str = "3G";
++		break;
++	case 0x02:
++		str = "4G";
++		break;
++	case 0x03:
++		str = "LTE";
++		break;
++	case 0x04:
++		str = "WiFi";
++		break;
++	case 0x05:
++		str = "5G";
++		break;
++	case 0x06:
++		str = "GSM";
++		break;
++	case 0x07:
++		str = "CDMA";
++		break;
++	case 0x08:
++		str = "2G";
++		break;
++	case 0x09:
++		str = "WCDMA";
++		break;
++	default:
++		str = "Reserved";
++		break;
++	}
 +
-+	ccp->rdb = mdb;
++	print_field("Technology: %s  (0x%2.2x)", str, tech_id);
 +
 +done:
-+	bt_ccp_ref(ccp);
-+
-+	return ccp;
++	if (frame->size)
++		print_hex_field("  Data", frame->data, frame->size);
 +}
 +
-+void bt_ccp_register(struct gatt_db *db)
++static void bearer_technology_read(const struct l2cap_frame *frame)
 +{
-+	ccp_db_new(db);
++	print_technology_name(frame);
 +}
 +
-+bool bt_ccp_attach(struct bt_ccp *ccp, struct bt_gatt_client *client)
++static void bearer_technology_notify(const struct l2cap_frame *frame)
 +{
-+	bt_uuid_t uuid;
++	print_technology_name(frame);
++}
 +
-+	DBG(ccp, "ccp %p", ccp);
++static void print_uri_scheme_list(const struct l2cap_frame *frame)
++{
++	char *name;
 +
-+	ccp->client = bt_gatt_client_clone(client);
-+	if (!ccp->client)
-+		return false;
++	name = name2utf8((uint8_t *)frame->data, frame->size);
 +
-+	if (ccp->rdb->ccs) {
-+		bt_ccp_call_state_attach(ccp);
-+		return true;
++	print_field("  Uri scheme Name: %s", name);
++}
++
++static void bearer_uri_schemes_list_read(const struct l2cap_frame *frame)
++{
++	print_uri_scheme_list(frame);
++}
++
++static void print_signal_strength(const struct l2cap_frame *frame)
++{
++	uint8_t signal_strength;
++
++	if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&signal_strength)) {
++		print_text(COLOR_ERROR, " signal_strength:: invalid size");
++		goto done;
 +	}
 +
-+	bt_uuid16_create(&uuid, GTBS_UUID);
-+	gatt_db_foreach_service(ccp->rdb->db, &uuid, foreach_ccs_service, ccp);
++	print_field("  signal_strength: %x", signal_strength);
 +
-+	return true;
++	if (signal_strength == 0)
++		print_field("  No Service");
++	else if (signal_strength == 0x64)
++		print_field("  Maximum signal strength");
++	else if ((signal_strength > 0) && (signal_strength < 0x64))
++		print_field("  Implementation specific");
++	else if (signal_strength == 0xFF)
++		print_field("  Signal strength is unavailable");
++	else
++		print_field("  RFU");
++
++done:
++	if (frame->size)
++		print_hex_field("  Data", frame->data, frame->size);
 +}
 +
-+void bt_ccp_detach(struct bt_ccp *ccp)
++static void bearer_signal_strength_read(const struct l2cap_frame *frame)
 +{
-+	DBG(ccp, "%p", ccp);
-+
-+	bt_gatt_client_unref(ccp->client);
-+	ccp->client = NULL;
++	print_signal_strength(frame);
 +}
-diff --git a/src/shared/ccp.h b/src/shared/ccp.h
-new file mode 100644
-index 000000000000..809986c2601a
---- /dev/null
-+++ b/src/shared/ccp.h
-@@ -0,0 +1,45 @@
-+/* SPDX-License-Identifier: LGPL-2.1-or-later */
-+/*
-+ *
-+ *  BlueZ - Bluetooth protocol stack for Linux
-+ *
-+ *  Copyright (C) 2020  Intel Corporation. All rights reserved.
-+ *
-+ */
 +
-+#include <stdbool.h>
-+#include <inttypes.h>
++static void bearer_signal_strength_notify(const struct l2cap_frame *frame)
++{
++	print_signal_strength(frame);
++}
 +
-+#ifndef __packed
-+#define __packed __attribute__((packed))
-+#endif
++static void
++print_signal_strength_rep_intrvl(const struct l2cap_frame *frame)
++{
++	int8_t reporting_intrvl;
 +
-+struct bt_ccp;
-+struct bt_ccp_db;
-+struct bt_ccp_session_info;
++	if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&reporting_intrvl)) {
++		print_text(COLOR_ERROR, "Reporting_interval:: invalid size");
++		goto done;
++	}
 +
-+typedef void (*bt_ccp_debug_func_t)(const char *str, void *user_data);
-+typedef void (*bt_ccp_destroy_func_t)(void *user_data);
++	print_field("  Reporting_interval: 0x%x", reporting_intrvl);
 +
-+struct bt_ccp_event_callback {
-+	void (*call_state)(struct bt_ccp *ccp,  const uint8_t *value,
-+					uint16_t length);
-+};
++done:
++	if (frame->size)
++		print_hex_field("  Data", frame->data, frame->size);
++}
 +
-+void bt_ccp_set_event_callbacks(struct bt_ccp *ccp,
-+				const struct bt_ccp_event_callback *cbs,
-+				void *user_data);
++static void
++bearer_signal_strength_rep_intrvl_read(const struct l2cap_frame *frame)
++{
++	print_signal_strength_rep_intrvl(frame);
++}
 +
-+bool bt_ccp_set_debug(struct bt_ccp *ccp, bt_ccp_debug_func_t cb,
-+			void *user_data, bt_ccp_destroy_func_t destroy);
++static void
++bearer_signal_strength_rep_intrvl_write(const struct l2cap_frame *frame)
++{
++	print_signal_strength_rep_intrvl(frame);
++}
 +
-+void bt_ccp_register(struct gatt_db *db);
-+bool bt_ccp_attach(struct bt_ccp *ccp, struct bt_gatt_client *client);
-+void bt_ccp_detach(struct bt_ccp *ccp);
++static void print_call_list(const struct l2cap_frame *frame)
++{
++	uint8_t list_item_length;
++	uint8_t call_index;
++	uint8_t call_state;
++	uint8_t call_flag;
++	char *call_uri;
 +
-+struct bt_ccp *bt_ccp_new(struct gatt_db *ldb, struct gatt_db *rdb);
-+struct bt_ccp *bt_ccp_ref(struct bt_ccp *ccp);
-+void bt_ccp_unref(struct bt_ccp *ccp);
++	if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&list_item_length)) {
++		print_text(COLOR_ERROR, "    list_item_length:: invalid size");
++		goto done;
++	}
 +
-+bool bt_ccp_set_user_data(struct bt_ccp *ccp, void *user_data);
-+void *bt_ccp_get_user_data(struct bt_ccp *ccp);
++	print_field("  list_item_length: 0x%x", list_item_length);
++
++	if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&call_index)) {
++		print_text(COLOR_ERROR, "  call_index:: invalid size");
++		goto done;
++	}
++
++	print_field("  call_index: 0x%x", call_index);
++
++	if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&call_state)) {
++		print_text(COLOR_ERROR, "  call_state:: invalid size");
++		goto done;
++	}
++
++	print_field("  call_state: 0x%x", call_state);
++
++	if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&call_flag)) {
++		print_text(COLOR_ERROR, "  call_flag:: invalid size");
++		goto done;
++	}
++
++	print_field("  call_flag: 0x%x", call_flag);
++
++	call_uri = name2utf8((uint8_t *)frame->data, frame->size);
++
++	print_field("  call_uri: %s", call_uri);
++
++done:
++	if (frame->size)
++		print_hex_field("  call_list Data", frame->data, frame->size);
++}
++
++static void bearer_current_call_list_read(const struct l2cap_frame *frame)
++{
++	print_call_list(frame);
++}
++
++static void bearer_current_call_list_notify(const struct l2cap_frame *frame)
++{
++	print_call_list(frame);
++}
++
++static void print_ccid(const struct l2cap_frame *frame)
++{
++	int8_t ccid;
++
++	if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&ccid)) {
++		print_text(COLOR_ERROR, "  ccid:: invalid size");
++		goto done;
++	}
++
++	print_field("  ccid: %x", ccid);
++
++done:
++	if (frame->size)
++		print_hex_field("  Data", frame->data, frame->size);
++}
++
++static void call_content_control_id_read(const struct l2cap_frame *frame)
++{
++	print_ccid(frame);
++}
++
++static void print_status_flag(const struct l2cap_frame *frame)
++{
++	int16_t flag;
++
++	if (!l2cap_frame_get_le16((void *)frame, (uint16_t *)&flag)) {
++		print_text(COLOR_ERROR, "  status flag:: invalid size");
++		goto done;
++	}
++
++	print_field("  status flag:");
++
++	if (flag & 0x1)
++		print_field("  Inband Ringtone Enabled:");
++	else
++		print_field("  Inband Ringtone Disabled:");
++
++	if (flag & 0x2)
++		print_field("  Server in silent Mode");
++	else
++		print_field("  Server Not in silent Mode");
++
++done:
++	if (frame->size)
++		print_hex_field("  Data", frame->data, frame->size);
++}
++
++static void status_flag_read(const struct l2cap_frame *frame)
++{
++	print_status_flag(frame);
++}
++
++static void status_flag_notify(const struct l2cap_frame *frame)
++{
++	print_status_flag(frame);
++}
++
++static void print_target_uri(const struct l2cap_frame *frame)
++{
++	char *name;
++	uint8_t call_idx;
++
++	if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&call_idx)) {
++		print_text(COLOR_ERROR, "  call_idx:: invalid size");
++		goto done;
++	}
++
++	print_field("  call_idx: %x", call_idx);
++
++	name = name2utf8((uint8_t *)frame->data, frame->size);
++
++	print_field("  Uri: %s", name);
++
++done:
++	if (frame->size)
++		print_hex_field("  Data", frame->data, frame->size);
++}
++
++static void incom_target_bearer_uri_read(const struct l2cap_frame *frame)
++{
++	print_target_uri(frame);
++}
++
++static void incom_target_bearer_uri_notify(const struct l2cap_frame *frame)
++{
++	print_target_uri(frame);
++}
++
++static void print_call_state(const struct l2cap_frame *frame)
++{
++	uint8_t call_Index;
++	uint8_t call_state;
++	uint8_t call_flag;
++
++	if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&call_Index)) {
++		print_text(COLOR_ERROR, "  call_Index:: invalid index");
++		goto done;
++	}
++
++	print_field("  call_Index: 0x%2.2x", call_Index);
++
++	if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&call_state)) {
++		print_text(COLOR_ERROR, "  call_state:: invalid state");
++		goto done;
++	}
++
++	print_field("  call_state: 0x%2.2x", call_state);
++
++	if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&call_flag)) {
++		print_text(COLOR_ERROR, "  call_flag:: invalid flag");
++		goto done;
++	}
++
++	print_field("  call_flag: 0x%2.2x", call_flag);
++
++done:
++	if (frame->size)
++		print_hex_field("   call_state Data", frame->data, frame->size);
++}
++
++static void call_state_read(const struct l2cap_frame *frame)
++{
++	print_call_state(frame);
++}
++
++static void call_state_notify(const struct l2cap_frame *frame)
++{
++	print_call_state(frame);
++}
++
++static void print_call_cp(const struct l2cap_frame *frame)
++{
++	uint8_t opcode;
++	uint8_t parameter;
++	const char *str;
++	char *name;
++
++	if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&opcode)) {
++		print_text(COLOR_ERROR, "  opcode:: invalid size");
++		goto done;
++	}
++
++	print_field("  opcode: 0x%2.2x", opcode);
++
++	switch (opcode) {
++	case 0x00:
++		str = "Accept";
++		if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&parameter)) {
++			print_text(COLOR_ERROR, "  parameter:: invalid size");
++			goto done;
++		}
++		print_field("  Operation: %s  (0x%2.2x)", str, parameter);
++		break;
++	case 0x01:
++		str = "Terminate";
++		if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&parameter)) {
++			print_text(COLOR_ERROR, "  parameter:: invalid size");
++			goto done;
++		}
++		print_field("  Operation: %s  (0x%2.2x)", str, parameter);
++		break;
++	case 0x02:
++		str = "Local Hold";
++		if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&parameter)) {
++			print_text(COLOR_ERROR, "  parameter:: invalid size");
++			goto done;
++		}
++		print_field("  Operation: %s  (0x%2.2x)", str, parameter);
++		break;
++	case 0x03:
++		str = "Local Retrieve";
++		if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&parameter)) {
++			print_text(COLOR_ERROR, "  parameter:: invalid size");
++			goto done;
++		}
++		print_field("  Operation: %s  (0x%2.2x)", str, parameter);
++		break;
++	case 0x04:
++		str = "Originate";
++		name = name2utf8((uint8_t *)frame->data, frame->size);
++		print_field("  Operation: %s  Uri: %s", str, name);
++		break;
++	case 0x05:
++		str = "Join";
++		if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&parameter)) {
++			print_text(COLOR_ERROR, "  parameter:: invalid size");
++			goto done;
++		}
++		print_field("  Operation: %s  (0x%2.2x)", str, parameter);
++		break;
++	default:
++		str = "RFU";
++		print_field("  Operation: %s", str);
++		break;
++	}
++
++done:
++	if (frame->size)
++		print_hex_field("call_cp Data", frame->data, frame->size);
++}
++
++static void print_call_cp_notification(const struct l2cap_frame *frame)
++{
++	uint8_t opcode;
++	uint8_t result_code;
++	const char *str;
++
++	if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&opcode)) {
++		print_text(COLOR_ERROR, "  result_code:: invalid opcode");
++		goto done;
++	}
++
++	print_field("  opcode: 0x%2.2x", opcode);
++
++	if (!l2cap_frame_get_u8((void *)frame, (uint8_t *)&result_code)) {
++		print_text(COLOR_ERROR, "  result_code:: invalid result_code");
++		goto done;
++	}
++
++	print_field("  result_code: 0x%2.2x", result_code);
++
++	switch (result_code) {
++	case 0x00:
++		str = "SUCCESS";
++		break;
++	case 0x01:
++		str = "OPCODE NOT SUPPORTED";
++		break;
++	case 0x02:
++		str = "OPERATION NOT POSSIBLE";
++		break;
++	case 0x03:
++		str = "INVALID CALL INDEX";
++		break;
++	case 0x04:
++		str = "STATE MISMATCH";
++		break;
++	case 0x05:
++		str = "LACK OF RESOURCES";
++		break;
++	case 0x06:
++		str = "INVALID OUTGOING URI";
++		break;
++	default:
++		str = "RFU";
++		break;
++	}
++
++	print_field("  Status: %s", str);
++
++done:
++	if (frame->size)
++		print_hex_field("  call_cp Data", frame->data, frame->size);
++}
++
++static void call_cp_write(const struct l2cap_frame *frame)
++{
++	print_call_cp(frame);
++}
++
++static void call_cp_notify(const struct l2cap_frame *frame)
++{
++	print_call_cp_notification(frame);
++}
++
++static void print_call_cp_opt(const struct l2cap_frame *frame)
++{
++	uint16_t operation;
++
++	if (!l2cap_frame_get_le16((void *)frame, (uint16_t *)&operation)) {
++		print_text(COLOR_ERROR, "  status operation:: invalid size");
++		goto done;
++	}
++
++	print_field("  operation: 0x%2x", operation);
++
++	if (operation & 0x1) {
++		print_field("  Local Hold and Local Retrieve "
++								"Call Control Point Opcodes supported");
++	} else {
++		print_field("  Local Hold and Local Retrieve "
++								"Call Control Point Opcodes not supported");
++	}
++
++	if (operation & 0x2)
++		print_field("  Join Call Control Point Opcode supported");
++	else
++		print_field("  Join Call Control Point Opcode not supported");
++
++done:
++	if (frame->size)
++		print_hex_field("  Data", frame->data, frame->size);
++}
++
++static void call_cp_oipt_opcodes_read(const struct l2cap_frame *frame)
++{
++	print_call_cp_opt(frame);
++}
++
++static void print_term_reason(const struct l2cap_frame *frame)
++{
++	uint8_t call_id, reason;
++
++	if (!l2cap_frame_get_u8((void *)frame, &call_id)) {
++		print_text(COLOR_ERROR, "Call Index: invalid size");
++		goto done;
++	}
++	print_field("  call Index: %u", call_id);
++
++	if (!l2cap_frame_get_u8((void *)frame, &reason)) {
++		print_text(COLOR_ERROR, "Reason: invalid size");
++		goto done;
++	}
++
++	print_field("  Reason:");
++
++	switch (reason) {
++	case 0x00:
++		print_field("  Improper URI");
++		break;
++	case 0x01:
++		print_field("  Call Failed");
++		break;
++	case 0x02:
++		print_field("  Remote party ended the call");
++		break;
++	case 0x03:
++		print_field("  Server  ended the call");
++		break;
++	case 0x04:
++		print_field("  Line was Busy");
++		break;
++	case 0x05:
++		print_field("  Network Congestion");
++		break;
++	case 0x06:
++		print_field("  Client terminated the call");
++		break;
++	case 0x07:
++		print_field("  No service");
++		break;
++	case 0x08:
++		print_field("  No answer");
++		break;
++	case 0x09:
++		print_field("  Unspecified");
++		break;
++	default:
++		print_field("  RFU");
++		break;
++	}
++
++done:
++	if (frame->size)
++		print_hex_field("  Data", frame->data, frame->size);
++}
++
++static void call_termination_reason_notify(const struct l2cap_frame *frame)
++{
++	print_term_reason(frame);
++}
++
++static void print_incom_call(const struct l2cap_frame *frame)
++{
++	char *name;
++	uint8_t call_id;
++
++	if (!l2cap_frame_get_u8((void *)frame, &call_id)) {
++		print_text(COLOR_ERROR, "Call Index: invalid size");
++		goto done;
++	}
++
++	print_field("  Call Index: %u", call_id);
++
++	name = name2utf8((uint8_t *)frame->data, frame->size);
++
++	print_field("  call_string: %s", name);
++
++done:
++	if (frame->size)
++		print_hex_field(" Data", frame->data, frame->size);
++}
++
++static void incoming_call_read(const struct l2cap_frame *frame)
++{
++	print_incom_call(frame);
++}
++
++static void incoming_call_notify(const struct l2cap_frame *frame)
++{
++	print_incom_call(frame);
++}
++
++static void print_call_friendly_name(const struct l2cap_frame *frame)
++{
++	char *name;
++	uint8_t call_id;
++
++	if (!l2cap_frame_get_u8((void *)frame, &call_id)) {
++		print_text(COLOR_ERROR, "Call Index: invalid size");
++		goto done;
++	}
++
++		print_hex_field(" Data", frame->data, frame->size);
++}
++
++static void call_friendly_name_read(const struct l2cap_frame *frame)
++{
++	print_call_friendly_name(frame);
++}
++
++static void call_friendly_name_notify(const struct l2cap_frame *frame)
++{
++	print_call_friendly_name(frame);
++}
++
+ static const char *play_order_str(uint8_t order)
+ {
+ 	switch (order) {
+@@ -3392,6 +4031,28 @@ static const struct gatt_handler {
+ 	GATT_HANDLER(0x2bc7, NULL, bcast_audio_scan_cp_write, NULL),
+ 	GATT_HANDLER(0x2bc8, bcast_recv_state_read, NULL,
+ 					bcast_recv_state_notify),
++	GATT_HANDLER(0x2bb3, bearer_name_read, NULL, bearer_name_notify),
++	GATT_HANDLER(0x2bb4, bearer_uci_read, NULL, NULL),
++	GATT_HANDLER(0x2bb5, bearer_technology_read, NULL,
++					bearer_technology_notify),
++	GATT_HANDLER(0x2bb6, bearer_uri_schemes_list_read, NULL, NULL),
++	GATT_HANDLER(0x2bb7, bearer_signal_strength_read, NULL,
++					bearer_signal_strength_notify),
++	GATT_HANDLER(0x2bb8, bearer_signal_strength_rep_intrvl_read,
++			bearer_signal_strength_rep_intrvl_write, NULL),
++	GATT_HANDLER(0x2bb9, bearer_current_call_list_read, NULL,
++					bearer_current_call_list_notify),
++	GATT_HANDLER(0x2bba, call_content_control_id_read, NULL, NULL),
++	GATT_HANDLER(0x2bbb, status_flag_read, NULL, status_flag_notify),
++	GATT_HANDLER(0x2bbc, incom_target_bearer_uri_read, NULL,
++					incom_target_bearer_uri_notify),
++	GATT_HANDLER(0x2bbd, call_state_read, NULL, call_state_notify),
++	GATT_HANDLER(0x2bbe, NULL, call_cp_write, call_cp_notify),
++	GATT_HANDLER(0x2bbf, call_cp_opt_opcodes_read, NULL, NULL),
++	GATT_HANDLER(0x2bc0, NULL, NULL, call_termination_reason_notify),
++	GATT_HANDLER(0x2bc1, incoming_call_read, NULL, incoming_call_notify),
++	GATT_HANDLER(0x2bc2, call_friendly_name_read, NULL,
++					call_friendly_name_notify),
+ 	GMAS
+ };
+ 
 -- 
 2.34.1
 
