@@ -1,148 +1,148 @@
-Return-Path: <linux-bluetooth+bounces-1827-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1834-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88EEF8535CE
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 Feb 2024 17:18:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A2B2853628
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 Feb 2024 17:36:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3F0B92827A8
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 Feb 2024 16:18:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BA99F28CB93
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 Feb 2024 16:36:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 806125F840;
-	Tue, 13 Feb 2024 16:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 424161DFD1;
+	Tue, 13 Feb 2024 16:36:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="FpqH/Sjf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j4LmUVEC"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-io1-f42.google.com (mail-io1-f42.google.com [209.85.166.42])
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53C0A5F846
-	for <linux-bluetooth@vger.kernel.org>; Tue, 13 Feb 2024 16:18:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 472F12919
+	for <linux-bluetooth@vger.kernel.org>; Tue, 13 Feb 2024 16:35:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707841093; cv=none; b=c1pUCn/FELTWO5ItQrX0D99y7Mm8pXw41QYzvInx3LrudTkq5tP2eOtXHPpEil2o0Aqv5i8OM/YA1qtW/pZk7L/kf/iUDbzvjaknYIkiIWk854E1ij6CO6apZJo/CR51Dxd1t9f4ljBLH5lmq/2j2snjjWdNgPnwXRqS/TXxPEs=
+	t=1707842160; cv=none; b=gb0wddfU2eqKIdUxnhPyJ3W+3rsih31VJGMgtCJa3aDi+1+H8I7nkApkAreY23Gs3evv3A3wPyh3Ha1/y6ENg7K1TPudQD603S44RfhwuiDwCXSN2e2KITtT21JUAO0poi0cCwzbNajOqJ7O10pUGvNvEETmLekvHIs/R9UwHtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707841093; c=relaxed/simple;
-	bh=2KcI4FrqWW+CE3taGQPv55SZsbQRxd4d/ksvlG124dw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p8D8FBgnLpV1hnEBs+n38Z/fVPmx7rWolGMGi+QGbpFdjOK2WieDo9LZd+eWk+iazwnfHRC+z5/IgmhdvlptaF15se1EiPb/X1Gp7OTo0DfjmAepOKvewfPzcOG1aXhiR4XvUzIz4BBHBj6RifqZssMmkmYqZs6GMxrYEPbHfo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=FpqH/Sjf; arc=none smtp.client-ip=209.85.166.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-io1-f42.google.com with SMTP id ca18e2360f4ac-7c47f06863bso6283539f.3
-        for <linux-bluetooth@vger.kernel.org>; Tue, 13 Feb 2024 08:18:12 -0800 (PST)
+	s=arc-20240116; t=1707842160; c=relaxed/simple;
+	bh=Ik27gaX7hpcrgSSOKJCqeAo+bUo+Hb0Xy6Gnu+Y25iI=;
+	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
+	 In-Reply-To:References; b=eqp1ZoAZJZb6G8Ulz9S2BaNaHMZ7R6XaDCBoTpMfodAbSQJK74vZc1/qPZlxQsC6Lrn0rOUJObxj8MrC4EITkn2a6qZv9BMXT3v1g1wc/SWRUpsrrShyWetGlG8azJRxw9vaNbYFkjezmfIbat7bK+ZZ4qMukwqSHT3FE4Gidyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j4LmUVEC; arc=none smtp.client-ip=209.85.222.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-7810827e54eso280954785a.2
+        for <linux-bluetooth@vger.kernel.org>; Tue, 13 Feb 2024 08:35:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1707841091; x=1708445891; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=FlgJF35WGDHbKHgYXjs8y1mAvdUenBmv+lFnZes+sKc=;
-        b=FpqH/SjfLTQOhNbppyXemHAfStWs67TFI3G/6FeshxbC/17jQ2/Ohiw5sxNfiRELFK
-         6C4LaFHNis+aU18MFY4BlMy2D7hSZruDT+w4RZC/QPRWD4idpk4Yj1Yh4rMw+gMRJGy/
-         gTWho6ehAyFnB9O1QAXGCEbaDV/ppAmuJNfRM=
+        d=gmail.com; s=20230601; t=1707842158; x=1708446958; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=8WBGgFx9oW2+hkYq5JTmIAoT04LRGh8ZP8IZXmHYL1Y=;
+        b=j4LmUVECuxOiOvzx8P+BnWlSzELqccisTz5y3p0Hysyq6X+6b5VhQvdw28tqS8YuLv
+         Kdd2QWCROh3F8F+BY2u8G+tIoFSB0wtwzgpRhuZc/kh0/139A2eGJQdoGrwKY0Dgh4O9
+         VW6FPmRht5tjDqTfWcIxiJwbqeExXs2jw/+JmZMtAAlQcB+2VpuH+/BnXunrx9HXpAty
+         SbpKgVj6fRHig1raJ1JnNPVZ28efvFcJG2BNcEuumal/Jf8RRz2K3Tgg3O46xSIBjW+U
+         ZAQwotXLt4ZTer/Bit/uhU6cGBUPcdhzyb2QQv+bfOihNF9UdX2tBmxseTdJuYXk0CBP
+         mTGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707841091; x=1708445891;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FlgJF35WGDHbKHgYXjs8y1mAvdUenBmv+lFnZes+sKc=;
-        b=urLpkmK5fbQ0gaqLdP7hEyEDbPBv4aEs19ef3Eakxx/GeuIT0aWrEE9xJcita5cbFg
-         LXYVNwGh83WPwbxE2yUvghMlPnW6xStTpXcK8bohsfZqeFz+oZKkykpONmD4Ot/q3clt
-         PO8TFaOwf4Pzr1+8djY89NAg0wHW2SBRFPb7Dh66dq5Kt3WFYtk51K558efeOeqldiFc
-         oDP/v/UreeOIf3FzU+DJPbdaqZnfhC9y/BudStmeGyAnDnpT+qR/KZZLK3ejvvOZG4RY
-         qbiiMyhUo4h9aMEVkD6Agzi+r2EsFxGL/wmcvePgPXlF3KIDSAkeCPKf3uea4vUawDwy
-         V7rg==
-X-Gm-Message-State: AOJu0YyjsVdBD0zoJVvjdP8zwvKMbpHe+MW7okkuIcRP2bEjEqt3+cWS
-	NRmlckH385Y2Olgln8dVHfYwtgaRX16TC/ec4Juapq+b6FSAoea93Si4nmM0JQ==
-X-Google-Smtp-Source: AGHT+IGgP4YJEUx4LiIwxbcZKfX6Ee6cR7v/AkcHs4xcEqM8VhOcD6Skozg7JRJ5N29tglyKyitryg==
-X-Received: by 2002:a6b:7515:0:b0:7c4:5e08:f265 with SMTP id l21-20020a6b7515000000b007c45e08f265mr125289ioh.13.1707841091396;
-        Tue, 13 Feb 2024 08:18:11 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCXiwgCA4mecHx4KE5dEq/TSP0Bxd3qlRWtDMUGg+EfGw7CyyT1YC8SSI7YvVxApPQemo6zI49wIsV+VeDX6naVJNvBnD5+enqNqtnwtVMrQf7mq8x+lsEA+yskH6ne9hi+zZiRKPT5Sycs3wHf+UPoLzwOTqqG0tSeFAsHJzmartE8XIs5l71yirgpSmyk0t8OBOGk33na345zbpCHvL8rt6KppuqiwrozHn31CDAs8DSwSIYi5VGZc9x/wYaMdVCVfbmxWFn3BNHnDVxZsi5ZG+ZGCPL5ouFmvS1eevS2WZQUF37OHlhVICnhNMv4hBbLflCxd8JWxhCbbyfHoJrdln8YyWEs34+GUlKWrMas8J0ssUcZ6i6bRzZx56ucCKTLhhDnogFnjpxbLQHdTDsoObiqXh+dYuCpuqqyXmxvVD76ZDDeF9b9va1Pksx1Ov+0EStnZiSsjnixI9wFG4g==
-Received: from localhost (147.220.222.35.bc.googleusercontent.com. [35.222.220.147])
-        by smtp.gmail.com with UTF8SMTPSA id f26-20020a02cada000000b00471346c4225sm1922415jap.7.2024.02.13.08.18.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Feb 2024 08:18:10 -0800 (PST)
-Date: Tue, 13 Feb 2024 16:18:10 +0000
-From: Matthias Kaehlcke <mka@chromium.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Johan Hedberg <johan.hedberg@gmail.com>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Doug Anderson <dianders@chromium.org>,
-	Stephen Boyd <swboyd@chromium.org>
-Subject: Re: [PATCH] Bluetooth: qca: fix device-address endianness
-Message-ID: <ZcuWQkmYK4Ax9kam@google.com>
-References: <20231227180306.6319-1-johan+linaro@kernel.org>
- <Zct_tB-y7HbZU1dp@hovoldconsulting.com>
- <ZcuQ2qRX0zsLSVRL@google.com>
- <ZcuSwy0quwKoZkkm@hovoldconsulting.com>
+        d=1e100.net; s=20230601; t=1707842158; x=1708446958;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8WBGgFx9oW2+hkYq5JTmIAoT04LRGh8ZP8IZXmHYL1Y=;
+        b=Gyv5ZRBa/CqllT5xZF6oimW8pyyGr9wwHJ4QHRHSzTPhK0kd6rCiWFzL22elQZXDO3
+         K38dH/R/e4BCtn4xXvavGR4l6CaOJw1whlfrBQlspXf4V0uwXEdL/NOG3kiehBmqX3eb
+         HhCfppzuSFvjC4946kHhdOIPYrKFaYAnXJMeg+s9ChFRrjOr5wOjA3pY3FyIcmbQAie9
+         G8LH3TPX6WUsRAmxjfREMZWKEPMaCpQAtd0r9Q9tpvW+Iz67pF94H8gVEF18fTkIwYqB
+         4vbuxiRqYfJOePFhT4KxRFGPbz+vvl5BuUe7HADBWv0LlIoK2d2+CZl8H6RILstysiGv
+         TXng==
+X-Gm-Message-State: AOJu0YxyZInuFBmCC4c30aW133olEoAzOVDtyJG97f2KvSRIzaCBmEOT
+	k6fS+xZN4FSOflnnU+e+dULFczyk5i0TWSjfGioz4XVDEZhaVI/ZK8e5emyx
+X-Google-Smtp-Source: AGHT+IFpRwyMp0YLv/Od5JdVEGo2aNqyxo8anjaH/rqvQXBhJvWDp6mzCb/3VEiCbVEZHa6/EQIhbA==
+X-Received: by 2002:a05:6214:2aa2:b0:68d:1859:b1c7 with SMTP id js2-20020a0562142aa200b0068d1859b1c7mr4961238qvb.3.1707842157976;
+        Tue, 13 Feb 2024 08:35:57 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUOsO7+bml3UzXNbCfB7kh+FgzSG2ep9aAnoCs2ZslOPtP5DOyiyKDaOWfQA7O5kCHjrpN/pSyqv4BIVRCdPjNwew==
+Received: from [172.17.0.2] ([172.183.131.98])
+        by smtp.gmail.com with ESMTPSA id pj10-20020a0562144b0a00b0068ef930fbffsm214281qvb.140.2024.02.13.08.35.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Feb 2024 08:35:57 -0800 (PST)
+Message-ID: <65cb9a6d.050a0220.a6838.29b1@mx.google.com>
+Date: Tue, 13 Feb 2024 08:35:57 -0800 (PST)
+Content-Type: multipart/mixed; boundary="===============2490982571844891292=="
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZcuSwy0quwKoZkkm@hovoldconsulting.com>
+From: bluez.test.bot@gmail.com
+To: linux-bluetooth@vger.kernel.org, kiran.k@intel.com
+Subject: RE: [v1] Bluetooth: btintel: Print Firmware Sequencer information
+In-Reply-To: <20240213160152.2836131-1-kiran.k@intel.com>
+References: <20240213160152.2836131-1-kiran.k@intel.com>
+Reply-To: linux-bluetooth@vger.kernel.org
 
-On Tue, Feb 13, 2024 at 05:03:15PM +0100, Johan Hovold wrote:
-> On Tue, Feb 13, 2024 at 03:55:06PM +0000, Matthias Kaehlcke wrote:
-> > On Tue, Feb 13, 2024 at 03:41:56PM +0100, Johan Hovold wrote:
-> > > On Wed, Dec 27, 2023 at 07:03:06PM +0100, Johan Hovold wrote:
-> > > > The WCN6855 firmware on the Lenovo ThinkPad X13s expects the Bluetooth
-> > > > device address in MSB order when setting it using the
-> > > > EDL_WRITE_BD_ADDR_OPCODE command.
-> 
-> > > > Reverse the little-endian address before setting it to make sure that
-> > > > the address can be configured using tools like btmgmt or using the
-> > > > 'local-bd-address' devicetree property.
-> > > > 
-> > > > Note that this can potentially break systems with boot firmware which
-> > > > has started relying on the broken behaviour and is incorrectly passing
-> > > > the address via devicetree in MSB order.
-> > > > 
-> > > > Fixes: 5c0a1001c8be ("Bluetooth: hci_qca: Add helper to set device address")
-> > > > Cc: stable@vger.kernel.org      # 5.1
-> > > > Cc: Balakrishna Godavarthi <quic_bgodavar@quicinc.com>
-> > > > Cc: Matthias Kaehlcke <mka@chromium.org>
-> > > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > > 
-> > > Can we go ahead and merge this one to get this fixed in 6.8?
-> > > 
-> > > I've spoken to Bjorn Andersson at Qualcomm about this and he is in
-> > > favour of doing so. The only people actually using the devicetree
-> > > property should be the Chromium team and they control their own boot
-> > > firmware and should be able to update it in lockstep (and Android uses
-> > > some custom hacks to set the address that are not in mainline).
-> > 
-> > Unfortunately it's not as trivial as it sounds for Chrome OS. The boot
-> > firmware is controlled by Chrome OS, however for any baseboard (e.g.
-> > 'trogdor') there is a larger number binary firmware packages, one
-> > for every model derived from that baseboard. There can be dozens of
-> > models. Chrome OS Firmware releases are qualified and rolled out per
-> > model. FW qual may involve the ODM, usually there are multiple ODMs
-> > per board. In an absolute emergency it would be possible to coordinate
-> > a qual and synced rollout for all models, but it's definitely
-> > non-trivial in terms of operations.
-> 
-> Ok, fair enough.
-> 
-> Could you please provide a list of the compatible strings that you guys
-> currently use and I can add new compatible strings for those, while
-> keeping the current ones for backwards compatibility with older boot
-> firmware?
+--===============2490982571844891292==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-'qcom,wcn3991-bt' should be the only impacted compatible string for
-released devices.
+This is automated email and please do not reply to this email!
 
-Thanks for maintaining backwards compatibility, and sorry for the
-inconvenience.
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=825702
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      0.67 seconds
+GitLint                       PASS      0.29 seconds
+SubjectPrefix                 PASS      0.11 seconds
+BuildKernel                   PASS      27.91 seconds
+CheckAllWarning               PASS      30.37 seconds
+CheckSparse                   PASS      35.88 seconds
+CheckSmatch                   PASS      98.23 seconds
+BuildKernel32                 PASS      26.85 seconds
+TestRunnerSetup               PASS      497.72 seconds
+TestRunner_l2cap-tester       FAIL      12.19 seconds
+TestRunner_iso-tester         PASS      28.46 seconds
+TestRunner_bnep-tester        PASS      4.84 seconds
+TestRunner_mgmt-tester        FAIL      171.45 seconds
+TestRunner_rfcomm-tester      PASS      7.39 seconds
+TestRunner_sco-tester         PASS      14.97 seconds
+TestRunner_ioctl-tester       PASS      7.80 seconds
+TestRunner_mesh-tester        PASS      5.92 seconds
+TestRunner_smp-tester         PASS      6.84 seconds
+TestRunner_userchan-tester    PASS      4.96 seconds
+IncrementalBuild              PASS      25.81 seconds
+
+Details
+##############################
+Test: TestRunner_l2cap-tester - FAIL
+Desc: Run l2cap-tester with test-runner
+Output:
+No test result found
+##############################
+Test: TestRunner_mgmt-tester - FAIL
+Desc: Run mgmt-tester with test-runner
+Output:
+Total: 492, Passed: 486 (98.8%), Failed: 5, Not Run: 1
+
+Failed Test Cases
+LL Privacy - Add Device 4 (2 Devices to AL)          Failed       0.115 seconds
+LL Privacy - Add Device 5 (2 Devices to RL)          Failed       0.119 seconds
+LL Privacy - Add Device 6 (RL is full)               Failed       0.144 seconds
+LL Privacy - Remove Device 2 (Remove from RL)        Timed out    2.510 seconds
+LL Privacy - Remove Device 4 (Disable Adv)           Timed out    1.843 seconds
+
+
+---
+Regards,
+Linux Bluetooth
+
+
+--===============2490982571844891292==--
 
