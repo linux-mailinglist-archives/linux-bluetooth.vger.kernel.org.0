@@ -1,110 +1,91 @@
-Return-Path: <linux-bluetooth+bounces-1840-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1841-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D413853B37
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 Feb 2024 20:37:53 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CEE4853C6B
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 Feb 2024 21:50:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 60AB51C214A4
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 Feb 2024 19:37:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E153A1F282F5
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 Feb 2024 20:50:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EAA960B92;
-	Tue, 13 Feb 2024 19:36:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CBF361676;
+	Tue, 13 Feb 2024 20:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kemnade.info header.i=@kemnade.info header.b="n2tBm63M"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VYf+nNWB"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail.andi.de1.cc (mail.andi.de1.cc [178.238.236.174])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E01F860263;
-	Tue, 13 Feb 2024 19:36:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.238.236.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61D15612F4
+	for <linux-bluetooth@vger.kernel.org>; Tue, 13 Feb 2024 20:50:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707852978; cv=none; b=bg7Ip6XIdYRo7dfou0uOrZM5KIA5k/vnKjSa7NgEsRR/a6CXkK6QbRgMswkvgFVFuHVHKWw3adwFTy06zEHoxqYlwqaV3yI0R63ezpqSCXkEVvitH0okex/21bwipIQLKBJyNoKRPSVfceLAsf1Ex+zxFfyX0w+wG9lNuGnzIyk=
+	t=1707857429; cv=none; b=jbbQZLbwhzt9KI7spSFXGDOZtZ+oE6Gq941faoaZC2NEJolQb8tFcDymgxBO1GOtFoOQDvJY+2cGIn7gh1JH1ST1NdrewpluHX/3hghGIu5l6/xXk4PLR3kvCuKgKbVIcRVz7RqQtg4uMRvx24gLD8eaiZFhZ9Um8ME3cznZvgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707852978; c=relaxed/simple;
-	bh=d7K2JQulCuhpnm56OWHlm77lVRR8659PaC63yui03SU=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=umfTJCdi7n9OFUsAStcxCCGVK0emlNqTv2pvBFHbmGu4AsjI+m2iqnKEivDxna9WiGaNcmy5CM3UAwlJgUEltPZ6UNbP8x/Zxn0tad/OWc9hBbkeBeSGi6bD07iPG1wX/XpN4mBbyzatt3NyWH5HT7X4EUZ/WrH3eQ47UvvnqKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kemnade.info; spf=pass smtp.mailfrom=kemnade.info; dkim=pass (2048-bit key) header.d=kemnade.info header.i=@kemnade.info header.b=n2tBm63M; arc=none smtp.client-ip=178.238.236.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kemnade.info
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kemnade.info
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=kemnade.info; s=20220719; h=Content-Transfer-Encoding:Content-Type:
-	MIME-Version:References:In-Reply-To:Message-ID:Subject:Cc:To:From:Date:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=eT8/BFgimu3HSsjaK7aAfhbdMsoZx19Yyb187hpoUJ8=; b=n2tBm63M5QFHlcpMTWOGDXk9Cp
-	fDFJHXpK8edY+o4kBSSuO00IculrrCK2RwfVcWoSzvmkgEimLrIwP6Q8oq3lC6QRLVVYtors1gdaS
-	hRcbGxPOp1SfSwebpbbPp07UHm8XCUyKezklGKguD0P+WKY+btE7BCDcf+N4+FoP8jNb3IGV7cf0u
-	5r9nlv+Dhlf0e0x8d9iXyh3NsA8ySt2VO4GEG+oN6hy4k6JBTzqNCocuz/Re7PGs9/3Ex2MKAHmYK
-	6OTMOVANrOeakpoEc1QyHFet1ZyOf3IggRDAJZZ8QCMvdeg/njmVTEJVkvkrVn7edBGirjb0UXw9V
-	4MolsIQA==;
-Received: from p2003010777002c001a3da2fffebfd33a.dip0.t-ipconnect.de ([2003:107:7700:2c00:1a3d:a2ff:febf:d33a] helo=aktux)
-	by mail.andi.de1.cc with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <andreas@kemnade.info>)
-	id 1rZyKH-009PSB-H1; Tue, 13 Feb 2024 20:20:17 +0100
-Date: Tue, 13 Feb 2024 20:20:15 +0100
-From: Andreas Kemnade <andreas@kemnade.info>
-To: Adam Ford <aford173@gmail.com>
-Cc: marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
- johan@kernel.org, jirislaby@kernel.org, gregkh@linuxfoundation.org,
- linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org, Tony
- Lindgren <tony@atomide.com>, tomi.valkeinen@ideasonboard.com,
- =?UTF-8?B?UMOpdGVy?= Ujfalusi <peter.ujfalusi@gmail.com>, robh@kernel.org,
- hns@goldelico.com
-Subject: Re: [RFC PATCH v2 3/3] gnss: Add driver for AI2 protocol
-Message-ID: <20240213202015.08a0a3ad@aktux>
-In-Reply-To: <CAHCN7x+rfwNeb+xOnLmQR78MQVDwGOOEHqnEceJcDkMrRJtE5Q@mail.gmail.com>
-References: <20240128173352.2714442-1-andreas@kemnade.info>
-	<20240128173352.2714442-4-andreas@kemnade.info>
-	<CAHCN7x+rfwNeb+xOnLmQR78MQVDwGOOEHqnEceJcDkMrRJtE5Q@mail.gmail.com>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1707857429; c=relaxed/simple;
+	bh=6J9fQpWXB4d9nKa8n5Yv00yWrmQ2O9RrTXJj90bIGvk=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=USq3lUPlHOS0Odn8bZORMPDN6zIG9+kzKMLfpRatsQr7/izJyMglYc15o4+/lXneqybsEEOJWLXuCFBEM8sgn2tyL8X9H18vRaQX+2qK1aLEae/0cCW62Ey4FX7e0RUCq+tD5OWlPkcbjfWr+FzuiI4jG9pf1kClSgCj6Ya4h5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VYf+nNWB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 0AB70C43390;
+	Tue, 13 Feb 2024 20:50:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1707857429;
+	bh=6J9fQpWXB4d9nKa8n5Yv00yWrmQ2O9RrTXJj90bIGvk=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=VYf+nNWByDi37CCkKiPYMW/YCql1cp8Tj/YOPbENkbQ+8KADM76dXWcglHOEsHHJ/
+	 qVfVXubTDb/GtOuIylfBf6NJdmMtymSNfP1MiVoWCGFtGUKFnsazrQDneVF4ZeNUyf
+	 oEPfN/8adl2b+PSB9ohNTfNspmSgehJa15if+QUnqFURpF37+OvAHn6lf+6OU+erwM
+	 wJQCkxm/KmOXvb7A5Yqk6gEHguoe6m/g6zBsNhRQap1k7g2C0yt4202hxKcoBU1FoT
+	 CB2rOCNhsKob1j3tR0UIMH63uMbIrwpNrXTxIq3ao+qYAN0ZBo3Kc1aSxzgvVpi4n8
+	 vy2Apoc5J2aXQ==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id E8A76DC99FD;
+	Tue, 13 Feb 2024 20:50:28 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH BlueZ 1/3] lib/uuid: Add support to compare 16bit uuids
+From: patchwork-bot+bluetooth@kernel.org
+Message-Id: 
+ <170785742894.22526.11138711747518901620.git-patchwork-notify@kernel.org>
+Date: Tue, 13 Feb 2024 20:50:28 +0000
+References: <20240212161726.3097145-1-ajay.k.v@intel.com>
+In-Reply-To: <20240212161726.3097145-1-ajay.k.v@intel.com>
+To: Ajay KV <ajay.k.v@intel.com>
+Cc: linux-bluetooth@vger.kernel.org, ravishankar.sriv@intel.com,
+ kiran.k@intel.com
 
-On Tue, 13 Feb 2024 07:57:10 -0600
-Adam Ford <aford173@gmail.com> wrote:
+Hello:
 
-> On Sun, Jan 28, 2024 at 11:34=E2=80=AFAM Andreas Kemnade <andreas@kemnade=
-.info> wrote:
-> >
-> > Add a driver for the Air Independent Interface protocol used by some TI
-> > Wilink combo chips. Per default, send out just NMEA to userspace and tu=
-rn
-> > on/off things at open()/close() but keep the door open for any
-> > sophisticated development regarding the AI2 protocol by having a kernel
-> > parameter to turn it into raw mode resembling /dev/tigps provided by so=
-me
-> > TI vendor kernels.
-> >
-> > Signed-off-by: Andreas Kemnade <andreas@kemnade.info> =20
->=20
-> I am still trying to find a GPS antenna for the Logic PD board I have,
-> but it occurred to me that the kit that I have used may require
-> special GPS firmware.  Are you using any special firmware in the radio
-> in conjunction with these driver patches or are you using the standard
-> bts files?
->=20
-Just
-https://github.com/TI-ECS/bt-firmware/raw/master/TIInit_10.6.15.bts
+This series was applied to bluetooth/bluez.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-I removed one command (by setting type to commment) regarding some clock
-configuration.
+On Mon, 12 Feb 2024 18:17:24 +0200 you wrote:
+> ---
+>  lib/uuid.c | 9 +++++++++
+>  lib/uuid.h | 1 +
+>  2 files changed, 10 insertions(+)
 
-Well, maybe you see NMEA without antenna, maybe you get an error message
-because the module "feels" the absence of an antenna...
+Here is the summary with links:
+  - [BlueZ,1/3] lib/uuid: Add support to compare 16bit uuids
+    (no matching commit)
+  - [BlueZ,2/3] lib/uuid: Add GTBS UUIDS for Call Control Profile.
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=24d97e35fcde
+  - [BlueZ,3/3] shared/ccp: Add initial code for Call Control Profile for Client Role.
+    (no matching commit)
 
-Regards,
-Andreas
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
 
