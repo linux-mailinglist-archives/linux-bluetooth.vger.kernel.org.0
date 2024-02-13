@@ -1,49 +1,49 @@
-Return-Path: <linux-bluetooth+bounces-1844-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1847-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40C8B853C6C
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 Feb 2024 21:50:47 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B579853D2A
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 Feb 2024 22:30:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E85D11F2832C
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 Feb 2024 20:50:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BCE7628DDD5
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 Feb 2024 21:30:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CABF61672;
-	Tue, 13 Feb 2024 20:50:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC9386166F;
+	Tue, 13 Feb 2024 21:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gud5nGCF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sqq233rx"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61D7E612F7
-	for <linux-bluetooth@vger.kernel.org>; Tue, 13 Feb 2024 20:50:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF9D4501B
+	for <linux-bluetooth@vger.kernel.org>; Tue, 13 Feb 2024 21:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707857429; cv=none; b=mrbamIybK02tomlPfoOB6881Xh5StJ1hNvKUURj+CGaR3QeankEpwX3252S1/KoO8TxqT2dcfb4CZfxR3WMD9h8RWlvjbWYAo4TUV5gNxpbPBCGfsQHhfgEJtX4EJav9360EIggenD4rLThouk9P7LfuXBRXXlLgZDeaC0x1shY=
+	t=1707859830; cv=none; b=mxLTppFrER3O7k/DZtbE6jHCsMHSVwgzwItX684A+b2xa/sIkO7nQyHXfrklkz0bLFcv7iUzZvq7B/6PWAQjNdUNM4FImWUwIgOsimm0FPgTk5FO+UaFNQnC83KwrEFmWlpy4bAHCoHIp+dpnAm/kcGRNOM/MYQEGrZtXtd3DgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707857429; c=relaxed/simple;
-	bh=WbomFWQLKs2JFX5nQNkrAGeznMrDOdyN8lJjaG/hR3g=;
+	s=arc-20240116; t=1707859830; c=relaxed/simple;
+	bh=4nZXIbP/Xp9zqm76i4PvDtN+49tHCGOqgndya7j8rQE=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=TQ/GVVLjHfycKJZ7bypKV0xjHn5c68vUiQyuhY1FIgYYDESI8zhrdOdF/IfuFbW9VJaz8eT7ELDTCmrtya1wGIXADwrylQv5NsCGjgGGn31A2bcM1MlQPRFPr4/whpvn+zk7jp2aDx7fzkET3SLOFbQ3XPH5oVhCEUlZlwmPPg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gud5nGCF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 22C70C433B2;
-	Tue, 13 Feb 2024 20:50:29 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=to0HiSwjhk2Irhj22/vMbLAtKsX77V1r5Tdl03/XJO/XECwJOpChDs1fcZpLJXm5VKDQvV2E9XtqS6bvibPdD97bUXNWNosndbmkIBr9vAbIpRr+6Zq0MfBUKwLS5ULopXOQGkeeWY50Jf/ceu++Gf8SxZRu7ARPda+A2V7b1Nc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sqq233rx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id D5607C433F1;
+	Tue, 13 Feb 2024 21:30:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1707857429;
-	bh=WbomFWQLKs2JFX5nQNkrAGeznMrDOdyN8lJjaG/hR3g=;
+	s=k20201202; t=1707859829;
+	bh=4nZXIbP/Xp9zqm76i4PvDtN+49tHCGOqgndya7j8rQE=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=gud5nGCFiWVi9Bia16d7z9SdR66JIlGjKcv8l0w573vdHjUpn4FekC3whMfk0TDL6
-	 WGju0olw3z1XA4qo+FHlYzUt4fzLZ9FB37MHtFjmnuuotGcGZuyT1tzN4+4NoKtt+n
-	 QkTXFiaX+yZZ360DUJL3WUmhPuogP0jTqGkBSxZCJqU8pOJM2CJWQZqrE9gRVbX4Vi
-	 LI3rKwUB+CtM1yn/S/+2LWrjndiRfE8tViOmYlXyzMC3ovpoV0xJ7HED5HxC+A426x
-	 Bs5F/WoxGvazDKHOKp1PXfK9DwrhCxWSFokY7G6lRsdIqZZWEDEG1CCuX2bWKg6HDo
-	 jDg8gTerqzKVA==
+	b=Sqq233rx5jImykqe6JXPjCBFm0gc2YOKbeCujXok4NpvZc6/U047h/9Fw8Oy0+2lh
+	 ze8Kog8k01LFWeuxgVFpOJcz1igOouPeLiTvZo01wuSCpoiQLHMBuY4KRuY876qxIW
+	 WBKGqybZXIRSEt7YFhsT9fXpdOyYAoLqfyIup+9VG7q17IhNW0C/M+wpfT2dh9gEsW
+	 M3Td1zkGU61siweAFqjT8wmZKG5KO7vR8VRBqiZF3v1MO4VkSd1De421WWguSipWvb
+	 TXmssyrbehtXHmdGSqAOcuRNLqFCZPEI5w2CPX/GoseNbKfAJbs0WXbk5FW/lMzoDl
+	 f7ZN0wn8mrJNA==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 055CCDC99FF;
-	Tue, 13 Feb 2024 20:50:29 +0000 (UTC)
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id C3B63D84BCD;
+	Tue, 13 Feb 2024 21:30:29 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
@@ -52,29 +52,30 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 2/3] lib/uuid: Add GTBS UUIDs for Call Control Profile
+Subject: Re: [PATCH BlueZ v6] monitor/att: Enable the notification logging support
+ for the CCP
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <170785742901.22526.3965587945275155347.git-patchwork-notify@kernel.org>
-Date: Tue, 13 Feb 2024 20:50:29 +0000
-References: <20240213215703.21507-5-ajay.k.v@intel.com>
-In-Reply-To: <20240213215703.21507-5-ajay.k.v@intel.com>
-To: Ajay KV <ajay.k.v@intel.com>
-Cc: linux-bluetooth@vger.kernel.org, kiran.k@intel.com
+ <170785982979.10780.15160156427132415024.git-patchwork-notify@kernel.org>
+Date: Tue, 13 Feb 2024 21:30:29 +0000
+References: <20240213045304.1558991-1-shahid.bashir.vichhi@intel.com>
+In-Reply-To: <20240213045304.1558991-1-shahid.bashir.vichhi@intel.com>
+To: Shahid Vichhi <shahid.bashir.vichhi@intel.com>
+Cc: linux-bluetooth@vger.kernel.org
 
 Hello:
 
 This patch was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Tue, 13 Feb 2024 23:57:02 +0200 you wrote:
+On Tue, 13 Feb 2024 06:53:04 +0200 you wrote:
 > ---
->  lib/uuid.h | 21 +++++++++++++++++++++
->  1 file changed, 21 insertions(+)
+>  monitor/att.c | 669 ++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 669 insertions(+)
 
 Here is the summary with links:
-  - [v2,2/3] lib/uuid: Add GTBS UUIDs for Call Control Profile
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=24d97e35fcde
+  - [BlueZ,v6] monitor/att: Enable the notification logging support for the CCP
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=b097bf6d302e
 
 You are awesome, thank you!
 -- 
