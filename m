@@ -1,66 +1,66 @@
-Return-Path: <linux-bluetooth+bounces-1915-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1916-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E81AA8570C6
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 15 Feb 2024 23:54:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B53688570C7
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 15 Feb 2024 23:54:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 14BF81C21F20
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 15 Feb 2024 22:54:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D75531C21ED8
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 15 Feb 2024 22:54:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 917B3145B11;
-	Thu, 15 Feb 2024 22:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4D05145B12;
+	Thu, 15 Feb 2024 22:54:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tjernlund.se header.i=@tjernlund.se header.b="NSVEOvD7";
-	dkim=permerror (0-bit key) header.d=tjernlund.se header.i=@tjernlund.se header.b="lof1sdH2"
+	dkim=pass (2048-bit key) header.d=tjernlund.se header.i=@tjernlund.se header.b="bSTWUdlA";
+	dkim=permerror (0-bit key) header.d=tjernlund.se header.i=@tjernlund.se header.b="41Paexex"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mailrelay1-3.pub.mailoutpod3-cph3.one.com (mailrelay1-3.pub.mailoutpod3-cph3.one.com [46.30.212.0])
+Received: from mailrelay5-3.pub.mailoutpod2-cph3.one.com (mailrelay5-3.pub.mailoutpod2-cph3.one.com [46.30.212.36])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6E4145356
-	for <linux-bluetooth@vger.kernel.org>; Thu, 15 Feb 2024 22:54:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.30.212.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCA9145B0B
+	for <linux-bluetooth@vger.kernel.org>; Thu, 15 Feb 2024 22:54:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.30.212.36
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708037650; cv=none; b=SLQky90OjC3WlUB3U8qjNtFJSVKBQ8BB/pm637f4wyBiPV6ILucXoAd4SdGP9rHp2cpuvQ7l/qp7DDGnezgiH0DDly3bfRVpHB0CYQGxQwSF0SCenthRBvEXFl+g1woUJCWGbsb3QpuxJCC/xjzwW4jjuFSvIQMyWlXFhNEIl1Y=
+	t=1708037652; cv=none; b=ZbXqZRJJMI6oUNZDG7PecQZElDcejMhbMwYwxGI3spdT9hvZTWbrofubNZF96Py8+OWP23sKp1mcdO9BJAjartfNCoGUzvqFbaoSR/xXbWlz6bYiX35a3Hhcm+0/VPjSKlM+Y61TmI1QLT3DtH72Ubh1mJrng9hAHo/EBC1p6bg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708037650; c=relaxed/simple;
-	bh=nRwbsX8ad7/YHlw+k842ffQoIcjMg8TrsN792KJwu2c=;
+	s=arc-20240116; t=1708037652; c=relaxed/simple;
+	bh=hXvuhQCg+pal0PEfT/KJvBc6uTd/UHGdoA2Yw6jXbo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gCmCOMSFkFAH9NZt1l+EccQOsrfkLIkP1amco0F991iLpI2MppWPmHJvVEy+5cMs1yW5WkU65dm0i0NVvic5jQ9PaeYFC4xEpeMovctBgMud7huNNq2+znkw41zRDxT8qds7jQEBu+NkAdWumO5G/ugzmdQO8i0pRWr2CRyLmRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tjernlund.se; spf=none smtp.mailfrom=tjernlund.se; dkim=pass (2048-bit key) header.d=tjernlund.se header.i=@tjernlund.se header.b=NSVEOvD7; dkim=permerror (0-bit key) header.d=tjernlund.se header.i=@tjernlund.se header.b=lof1sdH2; arc=none smtp.client-ip=46.30.212.0
+	 MIME-Version; b=QmLVpISKMbDn6sQmOhhZYRRciFsnjz24UsLK2XuGENjcgFKVbeZKA2ZqgKO2NtCrYYH1ffj+tZjmS21VME1DA92mhxdV06WxuYqDjpxoMyopjpuvsS1grcoYl/HnXcuCviMaXz1eOFXVgIW+wzyfFJvIOwhN72UeYRYOGUkffxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tjernlund.se; spf=none smtp.mailfrom=tjernlund.se; dkim=pass (2048-bit key) header.d=tjernlund.se header.i=@tjernlund.se header.b=bSTWUdlA; dkim=permerror (0-bit key) header.d=tjernlund.se header.i=@tjernlund.se header.b=41Paexex; arc=none smtp.client-ip=46.30.212.36
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tjernlund.se
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=tjernlund.se
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
 	d=tjernlund.se; s=rsa2;
 	h=content-transfer-encoding:mime-version:references:in-reply-to:message-id:date:
 	 subject:cc:to:from:from;
-	bh=YRufhuuPZqGdvnEf/+WL6WTlVQGEVG75R1mJGzs+n2s=;
-	b=NSVEOvD7IjlBJrzk+Q+Q2v6dcyFAMjpeMRFqZXSoCFthjvvxPVleMNFdCI256oXZUDu1pMyvZrWvX
-	 xmUyzJIVZdGAmOXB2VTewlen417PhjTVaDscBkBvuc0yS1OKo1MGSAA9LGovH337fBiHIH+OH7qaNN
-	 YWQGl4s7t1aKD/UPfRyfFz6bhjb/qSkdu2UUoRASj4BHecosnAZAvx4GPrCxcs3LR657N+fMdx9eqe
-	 5guV7nl9IJEIPQrkXTi0qXYBtQa2NIAhA/6qrsVMGnyBd2exsMWQpv5YQsYGKjjfohcro0oohyHPwG
-	 ggzPjXAi96kDPvWkga8CiUJauru9h2w==
+	bh=mCTdpSzOvGDrUmn68PrPpeE2TSGF4mtxsZVOm7PmRxA=;
+	b=bSTWUdlA8k33Dm3hzZHR24b5PYhXC5pL2iKhZeMPzjnDlpctsndfRlTCXqOWXpDTdsrpI4XURBmj8
+	 u2EAShG0uNVjTT0TDqPE6mE5He2Den0rz2vSGErlBohQsPL8yZ8l5QZleSS6EfX6yq9iHtWgQSKDP1
+	 B9Ih8A1SYAUjcsaAoD7lE5WLxp77wqSVWx3EyAUnuukTOI9VxEeo3B6CoVa+rtwukq1E8X6YWdCwZX
+	 cqvMxGmELAgT9ViBtUTKYD8dSaUUl7j0jrJYe4gt3gzZxHQD5c20GZo4igN4J7wAwgGFm9mQx0iEhp
+	 NLuqAtynG7WzqRKIBXS7d/4ihY6HXhQ==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed;
 	d=tjernlund.se; s=ed2;
 	h=content-transfer-encoding:mime-version:references:in-reply-to:message-id:date:
 	 subject:cc:to:from:from;
-	bh=YRufhuuPZqGdvnEf/+WL6WTlVQGEVG75R1mJGzs+n2s=;
-	b=lof1sdH2f9hiANcOwagJQqD20kvMza32XQbpNTP6yruftru8coHu2tvILiLZfYYPBmimBtXZIebuy
-	 n4rC3AGBg==
-X-HalOne-ID: f5f43d2a-cc54-11ee-996d-1ff1563c5748
+	bh=mCTdpSzOvGDrUmn68PrPpeE2TSGF4mtxsZVOm7PmRxA=;
+	b=41PaexexB3zYcPml9z4gNNMHuZX2EJ1/TvbLRWBDM0pGIa+eIEzMN1cdcGqf76GtNFZis1l9m+STH
+	 qo4wIknAQ==
+X-HalOne-ID: f72e3f57-cc54-11ee-92fd-657a30c718c6
 Received: from jocke (c188-149-162-176.bredband.tele2.se [188.149.162.176])
-	by mailrelay1.pub.mailoutpod3-cph3.one.com (Halon) with ESMTPSA
-	id f5f43d2a-cc54-11ee-996d-1ff1563c5748;
-	Thu, 15 Feb 2024 22:52:57 +0000 (UTC)
-Received: by jocke (sSMTP sendmail emulation); Thu, 15 Feb 2024 23:52:57 +0100
+	by mailrelay5.pub.mailoutpod2-cph3.one.com (Halon) with ESMTPSA
+	id f72e3f57-cc54-11ee-92fd-657a30c718c6;
+	Thu, 15 Feb 2024 22:52:59 +0000 (UTC)
+Received: by jocke (sSMTP sendmail emulation); Thu, 15 Feb 2024 23:52:59 +0100
 From: tjernlund@tjernlund.se
 To: linux-bluetooth@vger.kernel.org
 Cc: Joakim Tjernlund <Joakim.Tjernlund@infinera.com>
-Subject: [PATCH 3/4] bootstrap-configure: specfiy exec-prefix and libexecdir
-Date: Thu, 15 Feb 2024 23:52:14 +0100
-Message-ID: <20240215225249.16242-3-Joakim.Tjernlund@infinera.com>
+Subject: [PATCH 4/4] CUPS lives in libexecdir
+Date: Thu, 15 Feb 2024 23:52:15 +0100
+Message-ID: <20240215225249.16242-4-Joakim.Tjernlund@infinera.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240215225249.16242-1-Joakim.Tjernlund@infinera.com>
 References: <20240215225249.16242-1-Joakim.Tjernlund@infinera.com>
@@ -74,22 +74,22 @@ Content-Transfer-Encoding: 8bit
 
 Signed-off-by: Joakim Tjernlund <Joakim.Tjernlund@infinera.com>
 ---
- bootstrap-configure | 2 ++
- 1 file changed, 2 insertions(+)
+ Makefile.tools | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/bootstrap-configure b/bootstrap-configure
-index 1c26909b9..d927ff9c6 100755
---- a/bootstrap-configure
-+++ b/bootstrap-configure
-@@ -8,6 +8,8 @@ fi
-     ./configure --enable-maintainer-mode \
- 		--enable-debug \
- 		--prefix=/usr \
-+		--exec-prefix=/usr \
-+		--libexecdir=/usr/libexec \
- 		--mandir=/usr/share/man \
- 		--sysconfdir=/etc \
- 		--localstatedir=/var \
+diff --git a/Makefile.tools b/Makefile.tools
+index 044342e29..b785ebea8 100644
+--- a/Makefile.tools
++++ b/Makefile.tools
+@@ -538,7 +538,7 @@ endif
+ endif
+ 
+ if CUPS
+-cupsdir = $(libdir)/cups/backend
++cupsdir = $(libexecdir)/cups/backend
+ 
+ cups_PROGRAMS = profiles/cups/bluetooth
+ 
 -- 
 2.43.0
 
