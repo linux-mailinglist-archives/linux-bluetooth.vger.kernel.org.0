@@ -1,52 +1,52 @@
-Return-Path: <linux-bluetooth+bounces-1964-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1955-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1ADC4858A04
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 17 Feb 2024 00:14:05 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 632578589FA
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 17 Feb 2024 00:13:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C75292898E8
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Feb 2024 23:14:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 20F31288AB5
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Feb 2024 23:13:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1302615099E;
-	Fri, 16 Feb 2024 23:11:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0CF0148FE1;
+	Fri, 16 Feb 2024 23:11:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pwlKbTTr"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OuXO+hT8"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76641148FEE
-	for <linux-bluetooth@vger.kernel.org>; Fri, 16 Feb 2024 23:11:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409E21487F6
+	for <linux-bluetooth@vger.kernel.org>; Fri, 16 Feb 2024 23:11:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708125072; cv=none; b=nMDoikjT8ZvrB4gW/KUuFsYcVHhbopYbw5oHeOfAWfKbhBVZf8ZCPUnDwSkVfnX87MMOzv/djZVfg6f2nGaDULYfq2qavCRnGYA5hjLDuSjRXEe0lN/ABIwqLq5tu+XI8JHl8R12CFiAddoEmZVqVnpQ5/iqWwGlHqOQheeEVqc=
+	t=1708125071; cv=none; b=aBYnIJZTNFrJUoZqoZ6J3p+N/zX/hatOljS0p7Va3U1fe3l70M1Wh3EYxH4PLlC5Z0XzOP95jJXP3msFFE4T7XaYGrW9cGdN87uPh8GYHH8ZSi2n54+Z8WRqU7VsuHDjeeUyV7yqkdtkRF2REFT/p7bTpNqvEHIUj97y5CunFMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708125072; c=relaxed/simple;
-	bh=jdj6RR9Uvz2uVZSWh1htG2RbftairBkhz1T3XNTPISs=;
+	s=arc-20240116; t=1708125071; c=relaxed/simple;
+	bh=wTeEOGljoPPj7bt8lABFwyXE4QmvoGZuG1M0zlwMhsI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=LMPxxuX5TAsqmTYHDPCSkrtC2zXgqdezv+Wiai/Wzfbpf2ZY9Lx+WrY5Ax6BJUhMn5gIiCfqJYBFz2qzp1ErfSazuiTQZ2+XDP3qm1IDL4zBHLAOdOMwHzQfyFK5KRaA+AK4BVP/2gfPjnFnu/ydOO5Wwf4Ie3C73lues0lAKMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pwlKbTTr; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 0CAB1C433F1;
-	Fri, 16 Feb 2024 23:11:11 +0000 (UTC)
+	 In-Reply-To:To; b=hYdwqVHOmArM3nF9LiiOY6nX3yAf11IwVbAtpP9ue7+q/xQQ21XAj+ctb3gDvxMRSjC/i/le68bkaTxDdt+OflNA9z7ByVugj1W/oE9MD4kgQqWp5xJj6/+CCGOlwCDMLwB2z6wXwPOgTkCWruBAlBk1nWNANaLVhmOQlA92NuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OuXO+hT8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 13D18C43399
+	for <linux-bluetooth@vger.kernel.org>; Fri, 16 Feb 2024 23:11:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708125072;
-	bh=jdj6RR9Uvz2uVZSWh1htG2RbftairBkhz1T3XNTPISs=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=pwlKbTTru4klE28Zqq+OdlqoK+Rk1F7VfwgksOl0yz2scug1JtsA4DY47oWL/6VfH
-	 OMgdG4BWzFNoYaB1KfAyaaCmLRTrKe02DCHXUjBq+miTuA496GJKzIwxmZYKUXI0DT
-	 zDN2KRrdFQnYPWybC/CxHpEI0MuNRG5+6elK37JUOmpOgaoYXkXN0eLpNeJ1LyE//9
-	 mcJBwmZx10qvhE3W8m0jdYPiI7sFVkyj1Qrz77eJloTcfRtxHUHiNs3LTfG3QYWwKw
-	 auvA726+y3OAyn+fGDXOmaPl6YTxG+IkO677M+sf0RyliiZgl5pBxp/BrsFJS8ualP
-	 OBXQhUkd2zSWg==
+	s=k20201202; t=1708125071;
+	bh=wTeEOGljoPPj7bt8lABFwyXE4QmvoGZuG1M0zlwMhsI=;
+	h=From:Date:Subject:References:In-Reply-To:To:Reply-To:From;
+	b=OuXO+hT8iRHyJYJTfyzUZTbeeJbFjK3w5U+xb/8ZfMT2aOjJCWNXWZGs04opH9jtr
+	 mFMM3OYNHbKNRKLY8m8AliIe8T6zvzLwMa9DRrIyKkC8e9J7cRQz38kM7Gt3SgFj7v
+	 h9jhndMA3H6zCITQGWU8yo5ZaraoZidH5iD0UM5sliRE+addrZx6uHwUcKWqMDBoBn
+	 PYAw6bEFncW3hC7Fu0PV0nyD/Kd7Q4NeATR1ZrYXC6i3cmxVz+gyt/dHKrWpNkF4JO
+	 mapz6By2KM076hSRqoWKBjsnsZJcebfKL+R/OPY7jUtF+PCobb9hLmQ3xfHn+dLNm1
+	 G8EKqtRXEYD0Q==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB390C48BF5;
-	Fri, 16 Feb 2024 23:11:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02B2CC5475B
+	for <linux-bluetooth@vger.kernel.org>; Fri, 16 Feb 2024 23:11:11 +0000 (UTC)
 From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
-Date: Fri, 16 Feb 2024 23:11:07 +0000
-Subject: [PATCH BlueZ v2 03/10] build: handle relative libexecdir instances
+Date: Fri, 16 Feb 2024 23:11:08 +0000
+Subject: [PATCH BlueZ v2 04/10] build: drop %.rules make rule
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -55,17 +55,16 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240216-hook-fixup-v2-3-a6b192d1a6ad@gmail.com>
+Message-Id: <20240216-hook-fixup-v2-4-a6b192d1a6ad@gmail.com>
 References: <20240216-hook-fixup-v2-0-a6b192d1a6ad@gmail.com>
 In-Reply-To: <20240216-hook-fixup-v2-0-a6b192d1a6ad@gmail.com>
 To: linux-bluetooth@vger.kernel.org
-Cc: Joakim Tjernlund <Joakim.Tjernlund@infinera.com>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1708125068; l=4431;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1708125068; l=1456;
  i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
- bh=M8dG4WGwTBNelZE0mmaYpaCLIgmjwOaf+H9CrwRCVeU=;
- b=er6GhItoXdewKjX5ra76BjYrOVcMIZpQlFab+00XXpLZ2Fau3G1tbGSL0xR8VpAQS/nDNuY0R
- 9IZMri32XI/D2CApwdGwWoJPmIYNVi1TaGuRnvpNp8NthgbS2CPl/69
+ bh=UEsIY+CXqI3XPUWceLYP33aIBNlVaH7L0YL+lTKbmps=;
+ b=frTCv+KyKE2uUC+/vkrALuwfcbAYu6WVyB01rUlxWmdIvbryX+PkdSFNkCOwij/XiffbmSXWf
+ ++ssiyBQkY0AI+L7VPcNmz51LXJtOURVA+rbTJUpElgxstT8AGsumVw
 X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
  pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
 X-Endpoint-Received:
@@ -75,136 +74,59 @@ Reply-To: <emil.l.velikov@gmail.com>
 
 From: Emil Velikov <emil.l.velikov@gmail.com>
 
-With earlier commit, we've used exec_dir to reference the path of obexd
-and bluetoothd within the service files.
-
-At the same time, in my testing I was providing the complete path on the
-configure command line. As result, things just worked.
-
-In the default case, the variable contains relative references to ${}
-variables, which as result end up literal in the services. Ultimately
-the service files were broken.
-
-Document are reuse the existing pattern of manually expanding the
-variables.
-
-Closes: https://github.com/bluez/bluez/issues/736
-
-Cc: Joakim Tjernlund <Joakim.Tjernlund@infinera.com>
+There's a single file, so we can drop the makefile rule and rename it
+accordingly.
 ---
- Makefile.am                         |  2 +-
- configure.ac                        | 18 ++++++++++++++++++
- mesh/bluetooth-mesh.service.in      |  2 +-
- obexd/src/obex.service.in           |  2 +-
- obexd/src/org.bluez.obex.service.in |  2 +-
- src/bluetooth.service.in            |  2 +-
- tools/bluetooth-logger.service.in   |  2 +-
- 7 files changed, 24 insertions(+), 6 deletions(-)
+ .gitignore                                | 2 +-
+ Makefile.am                               | 8 +-------
+ tools/{hid2hci.rules => 97-hid2hci.rules} | 0
+ 3 files changed, 2 insertions(+), 8 deletions(-)
 
+diff --git a/.gitignore b/.gitignore
+index c5d7f90ab..a5954658a 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -37,7 +37,7 @@ lib/bluez.pc
+ lib/bluetooth
+ src/builtin.h
+ src/bluetoothd
+-tools/97-hid2hci.rules
++tools/hid2hci.rules
+ 
+ profiles/cups/bluetooth
+ profiles/iap/iapd
 diff --git a/Makefile.am b/Makefile.am
-index 450e931c6..5717c3dac 100644
+index 5717c3dac..2d43493aa 100644
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -16,7 +16,7 @@ CLEANFILES =
+@@ -429,11 +429,9 @@ if HID2HCI
+ rulesdir = $(UDEV_DIR)/rules.d
  
- EXTRA_DIST =
+ rules_DATA = tools/97-hid2hci.rules
+-
+-CLEANFILES += $(rules_DATA)
+ endif
  
--pkglibexecdir = $(libexecdir)/bluetooth
-+pkglibexecdir = @PKGLIBEXECDIR@
+-EXTRA_DIST += tools/hid2hci.rules
++EXTRA_DIST += tools/97-hid2hci.rules
  
- pkglibexec_PROGRAMS =
+ if TEST
+ testdir = $(pkglibdir)/test
+@@ -758,10 +756,6 @@ endif
+ src/builtin.h: src/genbuiltin $(builtin_sources)
+ 	$(AM_V_GEN)$(srcdir)/src/genbuiltin $(builtin_modules) > $@
  
-diff --git a/configure.ac b/configure.ac
-index 70e9d4be8..bb6380f2f 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -401,6 +401,24 @@ if (test "${prefix}" = "NONE"); then
- 	prefix="${ac_default_prefix}"
- fi
+-tools/%.rules:
+-	$(AM_V_at)$(MKDIR_P) tools
+-	$(AM_V_GEN)cp $(srcdir)/$(subst 97-,,$@) $@
+-
+ $(lib_libbluetooth_la_OBJECTS): $(local_headers)
  
-+if (test "${exec_prefix}" = "NONE"); then
-+	# exec_prefix defaults to prefix, although our manual handling of the
-+	# latter (above) confuses autoconf. Manually set the exec_prefix.
-+	exec_prefix="${prefix}"
-+fi
-+
-+# Expand any variables containing relative references like ${prefix} and co.
-+#
-+# Otherwise we'll end up with literal references in the final binaries or
-+# manuals, which is not something we really want.
-+
-+if (test "$libexecdir" = '${exec_prefix}/libexec'); then
-+	pkglibexecdir="${exec_prefix}/libexec/bluetooth"
-+else
-+	pkglibexecdir="${libexecdir}/bluetooth"
-+fi
-+AC_SUBST(PKGLIBEXECDIR, "${pkglibexecdir}")
-+
- if (test "$localstatedir" = '${prefix}/var'); then
- 	storagedir="${prefix}/var/lib/bluetooth"
- else
-diff --git a/mesh/bluetooth-mesh.service.in b/mesh/bluetooth-mesh.service.in
-index 9c3ff01a3..899ef107b 100644
---- a/mesh/bluetooth-mesh.service.in
-+++ b/mesh/bluetooth-mesh.service.in
-@@ -5,7 +5,7 @@ ConditionPathIsDirectory=/sys/class/bluetooth
- [Service]
- Type=dbus
- BusName=org.bluez.mesh
--ExecStart=@exec_prefix@/bluetooth/bluetooth-meshd
-+ExecStart=@PKGLIBEXECDIR@/bluetooth-meshd
- NotifyAccess=main
- LimitNPROC=1
- ProtectHome=true
-diff --git a/obexd/src/obex.service.in b/obexd/src/obex.service.in
-index 03d09a679..cf4d8c985 100644
---- a/obexd/src/obex.service.in
-+++ b/obexd/src/obex.service.in
-@@ -4,7 +4,7 @@ Description=Bluetooth OBEX service
- [Service]
- Type=dbus
- BusName=org.bluez.obex
--ExecStart=@exec_prefix@/bluetooth/obexd
-+ExecStart=@PKGLIBEXECDIR@/obexd
- 
- [Install]
- Alias=dbus-org.bluez.obex.service
-diff --git a/obexd/src/org.bluez.obex.service.in b/obexd/src/org.bluez.obex.service.in
-index 14c16d3e3..873b9d1fd 100644
---- a/obexd/src/org.bluez.obex.service.in
-+++ b/obexd/src/org.bluez.obex.service.in
-@@ -1,4 +1,4 @@
- [D-BUS Service]
- Name=org.bluez.obex
--Exec=@exec_prefix@/bluetooth/obexd
-+Exec=@PKGLIBEXECDIR@/obexd
- SystemdService=dbus-org.bluez.obex.service
-diff --git a/src/bluetooth.service.in b/src/bluetooth.service.in
-index 63e157587..8ebe89bec 100644
---- a/src/bluetooth.service.in
-+++ b/src/bluetooth.service.in
-@@ -6,7 +6,7 @@ ConditionPathIsDirectory=/sys/class/bluetooth
- [Service]
- Type=dbus
- BusName=org.bluez
--ExecStart=@exec_prefix@/bluetooth/bluetoothd
-+ExecStart=@PKGLIBEXECDIR@/bluetoothd
- NotifyAccess=main
- #WatchdogSec=10
- #Restart=on-failure
-diff --git a/tools/bluetooth-logger.service.in b/tools/bluetooth-logger.service.in
-index 5657c8d84..d6df676b8 100644
---- a/tools/bluetooth-logger.service.in
-+++ b/tools/bluetooth-logger.service.in
-@@ -4,7 +4,7 @@ ConditionPathIsDirectory=/sys/class/bluetooth
- 
- [Service]
- Type=simple
--ExecStart=@exec_prefix@/bluetooth/btmon-logger -p -b /var/log/bluetooth/hci.log
-+ExecStart=@PKGLIBEXECDIR@/btmon-logger -p -b /var/log/bluetooth/hci.log
- NotifyAccess=main
- CapabilityBoundingSet=CAP_NET_RAW
- LimitNPROC=1
+ lib/bluetooth/%.h: lib/%.h
+diff --git a/tools/hid2hci.rules b/tools/97-hid2hci.rules
+similarity index 100%
+rename from tools/hid2hci.rules
+rename to tools/97-hid2hci.rules
 
 -- 
 2.43.1
