@@ -1,52 +1,53 @@
-Return-Path: <linux-bluetooth+bounces-1962-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1960-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA8A9858A01
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 17 Feb 2024 00:13:59 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1983D8589FE
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 17 Feb 2024 00:13:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 808D41F211D5
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Feb 2024 23:13:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4D0DF1C20BE2
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Feb 2024 23:13:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D65515099C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82239150992;
 	Fri, 16 Feb 2024 23:11:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ScsbB53j"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Doh9niGu"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC6114E2EC
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D5F148FE9
 	for <linux-bluetooth@vger.kernel.org>; Fri, 16 Feb 2024 23:11:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708125071; cv=none; b=p3qTnaD3UUt1l+6iaa9v89C8fpP7g7lZe/DeH2NUHSv6ajZzqC7vVoUcsXpOu31Xj57mm8iABm8/P9IWpyf02wmiAUU3Xky8bO7ZCqSHT8K/B5aZLUoBTAsLqKHGBomYqF/IknCmhCnkQpuKbPy6Rgezm+VJbAXTkiF42/j9QYI=
+	t=1708125071; cv=none; b=ZFk2r6kjq9eVoFx32SnpG/Ot3Ljy4OghKMTJmmhli3cBTFIXlRHKGqCfUgZAT8h7Z2C5zGOcyCYAfyKUDy8hk7IoMP7AGgF++qb37NXbl23FFHmTNJuNbqItoHMb3oA2k/CqN7Lwc8SvDlOP60Pu3X2GXFk4tcoM2eRukYELuT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1708125071; c=relaxed/simple;
-	bh=75tt4amu75ekwISqU1kmUcocTLdfhU5k/4bfjvIZgQE=;
+	bh=YBFZWOMPNTnFzWYlSB9+DBEXXEhdj2IL5RZYHTbpTkc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To; b=u+Hg+0tBe4jLC8Q0LVi9OQw9FNs2EyjfHAnzyco0FYsGrWTk6aykFJtl+3v06XmwwmNRVrAa7GerqitbVVPiFe290gOO90k2r9znnrxfoCCy7X1VZ49acUeYz0+i+NzB0+Aa1tcG7m6a8GBLBjBE3Olbvb+hVJ6cuAQ/6hge83I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ScsbB53j; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 38926C433B2
-	for <linux-bluetooth@vger.kernel.org>; Fri, 16 Feb 2024 23:11:11 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=c9wfyNU1kNWb1gMbyIB3OxAB1DocShxHPIN4yihGdeoEQ5OuGeRLt+SnH+N+fPxFh/QLK11U/KChn/QsLAPFomPS/6mP4E2Qbk+IKXkGwjc49goi7kbcG5+keNIirNZ2d2j0KMvbN3+1JlkKdVm8JdBrdf/0hniogCYwh72dVgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Doh9niGu; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 3DA06C43394;
+	Fri, 16 Feb 2024 23:11:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1708125071;
-	bh=75tt4amu75ekwISqU1kmUcocTLdfhU5k/4bfjvIZgQE=;
-	h=From:Date:Subject:References:In-Reply-To:To:Reply-To:From;
-	b=ScsbB53jK1ZmXqd9NUx/UdphdvlT0P0eQaCmwE3umn7NXHA+U2IHjYIuHQnUm0DRq
-	 2kJOGyfVY9SYguablKiiSSOMnfiR8IJppBnucnLeJksvskVrmPuUHKkVvx2Ex5OUg3
-	 QkKoZi8G4PLT27LB3rLvxawxrVBNXDUT5hkyiD2HzGAVKNBN+ZXY1BEw1L9apubpGA
-	 v0BkAIoizRN1gAhxjfEwB/lOQv1XQZw0obJWlnGB4vYewavhBBL3YrVerrlq0Vr2Qy
-	 uzoDh9LAczJaCMsB3Z0jDpEqA+7WJ+h+543h52uyFn6Kul2fzmjzHygFm4i4XtBV+D
-	 hijUL2mT4/2qQ==
+	bh=YBFZWOMPNTnFzWYlSB9+DBEXXEhdj2IL5RZYHTbpTkc=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=Doh9niGum8mGqUV+vMzDfELrysH/9DemtSJUrFF2Lag+oi4zXZwammJigDHR2K/zA
+	 dSwab9nD2yQlAiH5dkq0C2Z8EOUTG+IIvE+xt0WxHhJgMCgvMH6E6liGO18SafH2qv
+	 IO2ni4SAqc8gLKIa46WylYQc7FmT9rHgIwMU6dS1ju1C64hqfBht9artMPhw+rshUG
+	 oi8qswL1Em52L9LXAFt7hRzQmNwUmmcv/5ZfOqggWB1DXRR/IS48Ei2Pj5QeqqagEg
+	 sVYYGtZhEOjNfIdG0ddx4l8hja/wuCtdNO2I28kJ05MRlbjobXTCnTALdh9PE9INNH
+	 KyZTwT+tg2H9w==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 231D1C48BF8
-	for <linux-bluetooth@vger.kernel.org>; Fri, 16 Feb 2024 23:11:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DE12C48BF6;
+	Fri, 16 Feb 2024 23:11:11 +0000 (UTC)
 From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
-Date: Fri, 16 Feb 2024 23:11:11 +0000
-Subject: [PATCH BlueZ v2 07/10] gitignore: add org.bluez.obex.service
+Date: Fri, 16 Feb 2024 23:11:12 +0000
+Subject: [PATCH BlueZ v2 08/10] build: obexd: remove duplicate include
+ -I$(builddir)/lib
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -55,16 +56,17 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240216-hook-fixup-v2-7-a6b192d1a6ad@gmail.com>
+Message-Id: <20240216-hook-fixup-v2-8-a6b192d1a6ad@gmail.com>
 References: <20240216-hook-fixup-v2-0-a6b192d1a6ad@gmail.com>
 In-Reply-To: <20240216-hook-fixup-v2-0-a6b192d1a6ad@gmail.com>
 To: linux-bluetooth@vger.kernel.org
+Cc: Emil Velikov <emil.l.velikov@gmail.com>
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1708125069; l=400;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1708125069; l=710;
  i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
- bh=g0lVHzuaBBARwiB2Yc0yacc+yEkZDozfWorUyKbfBdc=;
- b=47KhO18sgWeZ/I1/LFS6zTxvR6jhbRbsZD2WmhnX/STaOIEd0XIoOKTW3efxdw/eM2fp/VsP3
- cSlnrqFEzYmANSAhlSuZwdK+KFFLvNQMDWOnxxlAaBuDoU9/A75o6Wz
+ bh=OZRKsu59444Zoitt96/ZqOD/W5o3DtQdHZSS7Mt3Auw=;
+ b=QQ1PG6y7ObZvheXibgk3YuKIGNRxjiKJxTOdlax43C0JPqbilmVBEzBhk/wS1PnFr4cddze0S
+ m4gKvTKmUIoDyMphPCHlDNCd+AhDGrK4AjlVe20OM+VPnd5iK/5pHUw
 X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
  pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
 X-Endpoint-Received:
@@ -74,22 +76,27 @@ Reply-To: <emil.l.velikov@gmail.com>
 
 From: Emil Velikov <emil.l.velikov@gmail.com>
 
----
- .gitignore | 1 +
- 1 file changed, 1 insertion(+)
+The -I$(builddir)/lib include is already in the AM_CPPFLAGS. Drop the
+duplicate instance in obexd.
 
-diff --git a/.gitignore b/.gitignore
-index a5954658a..4da95f275 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -168,6 +168,7 @@ mesh/bluetooth-mesh.service
- obexd/src/builtin.h
- obexd/src/obexd
- obexd/src/obex.service
-+obexd/src/org.bluez.obex.service
- tools/obex-client-tool
- tools/obex-server-tool
- unit/test-gobex
+Signed-off-by: Emil Velikov <emil.l.velikov@gmail.com>
+---
+ Makefile.obexd | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile.obexd b/Makefile.obexd
+index 01aa3a9c7..385e5618d 100644
+--- a/Makefile.obexd
++++ b/Makefile.obexd
+@@ -102,7 +102,7 @@ obexd_src_obexd_CPPFLAGS = $(AM_CPPFLAGS) $(GLIB_CFLAGS) $(DBUS_CFLAGS) \
+ 				$(ICAL_CFLAGS) -DOBEX_PLUGIN_BUILTIN \
+ 				-DPLUGINDIR=\""$(obex_plugindir)"\" \
+ 				-D_FILE_OFFSET_BITS=64 \
+-				-I$(builddir)/lib -I$(builddir)/obexd/src
++				-I$(builddir)/obexd/src
+ 
+ else
+ obexd-add-service-symlink:
 
 -- 
 2.43.1
