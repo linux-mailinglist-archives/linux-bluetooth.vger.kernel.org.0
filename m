@@ -1,200 +1,381 @@
-Return-Path: <linux-bluetooth+bounces-1953-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1958-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A038E8589CF
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 17 Feb 2024 00:10:35 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C4BD8589FC
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 17 Feb 2024 00:13:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 17335B25793
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Feb 2024 23:10:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B83572889E5
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Feb 2024 23:13:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EB851487D5;
-	Fri, 16 Feb 2024 23:10:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09C9714F9FD;
+	Fri, 16 Feb 2024 23:11:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AOXSXFWr"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pnZOWXKh"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9899B14831E
-	for <linux-bluetooth@vger.kernel.org>; Fri, 16 Feb 2024 23:10:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C327148FE3
+	for <linux-bluetooth@vger.kernel.org>; Fri, 16 Feb 2024 23:11:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708125013; cv=none; b=SSu5TU5jQIUHIsafV+Gy0NeELamP84KfVChVyUAigKA4PFDh/P2zikSArlOTuFeLCGZOpCbnzBpD06plHOONb4uGfX3An2+yho8BP9OTJYZs8BiFBgdjH8QkW+MabCrfBtHz1CJMiY7+5hip/hSgypTGaLf6g6hLVS0bKrdRc04=
+	t=1708125071; cv=none; b=B1AHWWjKe2Ys1PFEV8RxnWtIByg7KDz+adXAv5hRFzTahRnyyOEMwEnrreR2LZ4tgcetcxKazSAe1hLJedcsbqBdIEcKD2Lix6Ez3WMz4EKoYfHFIM4crsYlvPLJ4icDbYwyhR+2ZPE0KBE9nlM4EFuaWcHvOnNQdMQIMSWXq7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708125013; c=relaxed/simple;
-	bh=mfmEA6zSa+OORWqKlFgSku5kK5nwRZdQXnKi8D/SPd8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Y/Fwk23B/7cnwhSCXtErtOroFRgFtYc4Dy0XiuylCmYgRLylktLvL3EeVtHMSSO8ALWxdqkh4VojpiVsizT5LlLsvRb3ID4/taM/hNr8U1w4Fa4i0ki1KJ/tlZ1Pz0wV0aPVAI8pGLmcwkWXZmBZi4kLuOJikYLXcDulr+kpkHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AOXSXFWr; arc=none smtp.client-ip=209.85.128.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-607fe8cc6d8so9763797b3.1
-        for <linux-bluetooth@vger.kernel.org>; Fri, 16 Feb 2024 15:10:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1708125010; x=1708729810; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=EpftqacOdWcIxz3VUpc3zI1U/E0RwbiBZdYsX7Kb7J4=;
-        b=AOXSXFWrpecqGsj3FvbdDQIjHjP887SkBI4Bl4qgqmEyp6wk619/ClmzdoNIeOtz1j
-         tDFBRTTZ4BXijtr5HVAG7cqu0BwWijfc2LxgvgRliDfPlGHPIGKzJIhHQjwHJelHjVyQ
-         rp/dpDg/lvX62bGEdspeYlpgcqI7rCHt98CpiYsWMLSCTyHysVsLgsH/Mi9PXkv8IZPW
-         RnrDP9WUVm04kHfQ67x4VehA87dgAMMC2vEyqSy2YCDH6nUvxKMvEaFL93I/+w8AsTPZ
-         1hRoKNSn/OHxCPYYv+J9IC1EJfc+1aBHZQcbLbRU6Wlr1XeozRteflUVXWLLrhaypy2B
-         //xA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708125010; x=1708729810;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EpftqacOdWcIxz3VUpc3zI1U/E0RwbiBZdYsX7Kb7J4=;
-        b=RUOmxlSBW+GAwUbzsbRerbI02M72eat7+M/yz1ruTRf7tixxUGGs0HR0fM8T/URj3B
-         lzrqrDirF6Vn5Ly309Wfkz7Ce06EQB+kA2kqNjIsnIkJKnVXiGSzhnAzaY9ohqmpADJd
-         83oMFwEUD6UHVWBLxxeT+19zToXVcRS5uHrSnIvOiu2xAY+EkOxjOlrspX4iAx/OXu4r
-         +gr1lpyzCFs9tdIhjSvxT2Uxka7WqCJ+NcuRZzUDqj5BHiOcyjrt75Y6eyORwJ/EyD12
-         mw3hHuDjIE1NQQzMzbXbyWawWd9hWxAwg6sccxTG4CbgKYeyWFc/ey+KZam1RX29OXJ9
-         O9sw==
-X-Forwarded-Encrypted: i=1; AJvYcCUCCaFymYE4rJIpL+GigtoDyKCvN4nc1YRu1yFWBlri4739WHKo/JbaA2kWGuqRAaG34jgPVaniByClGoJrCGTOopV+pUphrIgh2oib0Rul
-X-Gm-Message-State: AOJu0Yzfpz1iszIVmb/r0SLEuEUtkZy0DsV/CWqjjfcazKCFGG4K6+U0
-	uHdFFOPbNIWSGO+OiCLdOLqJsj1Z7bJgTA+cj96RtDxGKu8eJNNr5u5gpT1S5hX9dj2eF16K3Fp
-	772/jwaRzq/td5CDqCB0/p6y8Ow2Tu8Kr3kmqIA==
-X-Google-Smtp-Source: AGHT+IH7vS67BhaJmZ0qKWVe6no0q/4H1vlJ1cE1CsXNcFt1Pp6VcJPBg/0mptzu0uQFXbGKADhe7nfa9TyYWhC6deg=
-X-Received: by 2002:a0d:ebc6:0:b0:607:ec66:36b3 with SMTP id
- u189-20020a0debc6000000b00607ec6636b3mr5019006ywe.19.1708125010589; Fri, 16
- Feb 2024 15:10:10 -0800 (PST)
+	s=arc-20240116; t=1708125071; c=relaxed/simple;
+	bh=+inixSoJIlsm/AfXavYZY5O2m+mkG8Tff3fFVNoC3ak=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Mlpj8v0yX2ohjVcVlgY0UEJOAvdsed5lBCvG0/A9QZjevFjzr1XDeDNWXRhCsT8iiU6M+lSji9JOdrkL7nlbEaTWgj5ZQiHClAHW21orr+hpaBbwErsPiikwdgnJYKTnHxfAUm/Rg4kPh2QrrHeyZuQ7o2VpQYhM5B6PTRu7XoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pnZOWXKh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id E1AE2C433F1;
+	Fri, 16 Feb 2024 23:11:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1708125070;
+	bh=+inixSoJIlsm/AfXavYZY5O2m+mkG8Tff3fFVNoC3ak=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=pnZOWXKhZppjSmEJB68Vral5cQTQ28N4d5stnGubaZ5wJcbbkYPaet+YnRHYXcfuV
+	 ewxMkC9jRUqveEc3HQNwT1DWV1aa15UQ/zNnWhgD8TNyMd0KSbvaKFeTlzU3gfPDdV
+	 Gqm6KDbTEZ5b1jM/YPOJGPyqEN6Jlwc3dtULxmzZHoy7wcyAfbai3EOaoHnbruv5sI
+	 hbyRE98o6Jg87/owRgIkmMq40E7rnTIw76JVlbWeh7Sp3GI7tUedKYLuC/Bl+6/BpD
+	 w5HiX1PLaUQNxGowLY8cJpzfDQ0Ldh5Z5gibvqDfvev/jgDEBGk4FrsnfEKN5JZfC2
+	 7RHJBmyGq7Sug==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C911EC48260;
+	Fri, 16 Feb 2024 23:11:10 +0000 (UTC)
+From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
+Subject: [PATCH BlueZ v2 00/10] Handful of build fixes and cleanups
+Date: Fri, 16 Feb 2024 23:11:04 +0000
+Message-Id: <20240216-hook-fixup-v2-0-a6b192d1a6ad@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240216203215.40870-1-brgl@bgdev.pl> <20240216203215.40870-9-brgl@bgdev.pl>
-In-Reply-To: <20240216203215.40870-9-brgl@bgdev.pl>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 17 Feb 2024 01:09:59 +0200
-Message-ID: <CAA8EJpry2yiGXrtPqZ6RXnoTqQZr_hxA_gCPsUbmyFtEBuD4VA@mail.gmail.com>
-Subject: Re: [PATCH v5 08/18] arm64: dts: qcom: sm8650-qrd: add the Wifi node
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	"David S . Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Kalle Valo <kvalo@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Liam Girdwood <lgirdwood@gmail.com>, 
-	Mark Brown <broonie@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
-	Will Deacon <will@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Saravana Kannan <saravanak@google.com>, Geert Uytterhoeven <geert+renesas@glider.be>, 
-	Arnd Bergmann <arnd@arndb.de>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Marek Szyprowski <m.szyprowski@samsung.com>, Alex Elder <elder@linaro.org>, 
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Abel Vesa <abel.vesa@linaro.org>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Lukas Wunner <lukas@wunner.de>, linux-bluetooth@vger.kernel.org, 
-	netdev@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-pci@vger.kernel.org, linux-pm@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAInrz2UC/22MQQ7CIBBFr9LM2jFAEY2r3sN0gXUoE21pQImm4
+ e5i1y7f/3lvhUSRKcG5WSFS5sRhrqB2DQzeziMh3yqDEkoLJTX6EO7o+P1a0CnTCn09ytYYqMI
+ SqR5b7NJX9pyeIX62dpa/9W8mSxQoSB5OzpGVWnTjZPmxH8IEfSnlCzCBGjukAAAA
+To: linux-bluetooth@vger.kernel.org
+Cc: Joakim Tjernlund <Joakim.Tjernlund@infinera.com>, 
+ Emil Velikov <emil.l.velikov@gmail.com>
+X-Mailer: b4 0.12.4
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1708125068; l=15367;
+ i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
+ bh=+inixSoJIlsm/AfXavYZY5O2m+mkG8Tff3fFVNoC3ak=;
+ b=0SklF0jwgiX9e1E+YbgWo38N9ZnRCWAdsIqUwJtFFthrXRAP+TcPKzw2XcbpI2YejUx+NqNDi
+ LS255e6OZSGC9ve6jBkuf5/hWMV7v7zj6oN6ivyGF7a254cG/tl3aHH
+X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
+ pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
+X-Endpoint-Received:
+ by B4 Relay for emil.l.velikov@gmail.com/20230301 with auth_id=35
+X-Original-From: Emil Velikov <emil.l.velikov@gmail.com>
+Reply-To: <emil.l.velikov@gmail.com>
 
-On Fri, 16 Feb 2024 at 22:33, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
->
-> From: Neil Armstrong <neil.armstrong@linaro.org>
->
-> Describe the ath12k WLAN on-board the WCN7850 module present on the
-> board.
+Hello list,
 
-WCN7850 is the same combo WiFi + BT chip. Is there any reason for
-describing its parts separately rather than using the same PMU
-approach?
+Here are bunch of regression fixes caused by yours truly - mea culpa.
 
->
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> [Bartosz:
->   - move the pcieport0 node into the .dtsi
->   - make regulator naming consistent with existing DT code
->   - add commit message]
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8650-qrd.dts | 29 +++++++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/sm8650.dtsi    | 10 +++++++++
->  2 files changed, 39 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-> index b07cac2e5bc8..4623c358f634 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-> @@ -845,6 +845,28 @@ &pcie0 {
->         status = "okay";
->  };
->
-> +&pcieport0 {
-> +       wifi@0 {
-> +               compatible = "pci17cb,1107";
-> +               reg = <0x10000 0x0 0x0 0x0 0x0>;
-> +
-> +               pinctrl-names = "default";
-> +               pinctrl-0 = <&wlan_en>;
-> +
-> +               enable-gpios = <&tlmm 16 GPIO_ACTIVE_HIGH>;
-> +
-> +               vdd-supply = <&vreg_s4i_0p85>;
-> +               vddio-supply = <&vreg_l15b_1p8>;
-> +               vddio1p2-supply = <&vreg_l3c_1p2>;
-> +               vddaon-supply = <&vreg_s2c_0p8>;
-> +               vdddig-supply = <&vreg_s3c_0p9>;
-> +               vddrfa1p2-supply = <&vreg_s1c_1p2>;
-> +               vddrfa1p8-supply = <&vreg_s6c_1p8>;
-> +
-> +               clocks = <&rpmhcc RPMH_RF_CLK1>;
-> +       };
-> +};
-> +
->  &pcie0_phy {
->         vdda-phy-supply = <&vreg_l1i_0p88>;
->         vdda-pll-supply = <&vreg_l3i_1p2>;
-> @@ -1139,6 +1161,13 @@ wcd_default: wcd-reset-n-active-state {
->                 bias-disable;
->                 output-low;
->         };
-> +
-> +       wlan_en: wlan-en-state {
-> +               pins = "gpio16";
-> +               function = "gpio";
-> +               drive-strength = <8>;
-> +               bias-pull-down;
-> +       };
->  };
->
->  &uart14 {
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> index d488b3b3265e..baf4932e460c 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> @@ -2293,6 +2293,16 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
->                         dma-coherent;
->
->                         status = "disabled";
-> +
-> +                       pcieport0: pcie@0 {
-> +                               device_type = "pci";
-> +                               reg = <0x0 0x0 0x0 0x0 0x0>;
-> +                               #address-cells = <3>;
-> +                               #size-cells = <2>;
-> +                               ranges;
-> +
-> +                               bus-range = <0x01 0xff>;
-> +                       };
->                 };
->
->                 pcie0_phy: phy@1c06000 {
-> --
-> 2.40.1
->
+Changes in v2:
+ - rework first (install-data-hooks) to per-target hooks
+ - add renamed files to gitignore (rules patch)
+ - introduced six extra patches
+   - fix the @@ substitution in the service.in files
+   - drop erroneous -fPIC
+   - add org.bluez.obex.service to gitignore
+   - drop duplicate -I include in obexd
+   - adds all manpages to gitignore
+   - moves libbluetooth public header to sub-folder
 
+You can see the original v1 below.
 
+- Link to v1: https://lore.kernel.org/r/20240214-hook-fixup-v1-0-0e158ffea140@gmail.com
+
+---
+Emil Velikov (10):
+      build: rework {install-data,uninstall}-hook
+      build: install obexd (dbus,systemd} services as needed
+      build: handle relative libexecdir instances
+      build: drop %.rules make rule
+      build: simplify coverage handling
+      build: drop explicit -fPIC from obexd CFLAGS
+      gitignore: add org.bluez.obex.service
+      build: obexd: remove duplicate include -I$(builddir)/lib
+      gitignore: ignore all manual pages
+      build: move public headers to sub-folder
+
+ .gitignore                                | 26 +++------------
+ Makefile.am                               | 53 +++++++++++++------------------
+ Makefile.mesh                             |  2 +-
+ Makefile.obexd                            | 17 ++++++----
+ android/a2dp-sink.c                       |  2 +-
+ android/a2dp.c                            |  6 ++--
+ android/avctp.c                           |  2 +-
+ android/avdtp.c                           |  2 +-
+ android/avdtptest.c                       |  6 ++--
+ android/avrcp-lib.c                       |  2 +-
+ android/avrcp.c                           |  6 ++--
+ android/bluetooth.c                       |  8 ++---
+ android/bluetoothd-snoop.c                |  4 +--
+ android/gatt.c                            |  4 +--
+ android/handsfree-client.c                |  6 ++--
+ android/handsfree.c                       |  6 ++--
+ android/health.c                          |  8 ++---
+ android/hidhost.c                         |  6 ++--
+ android/ipc-tester.c                      |  2 +-
+ android/main.c                            |  4 +--
+ android/map-client.c                      |  6 ++--
+ android/pan.c                             |  8 ++---
+ android/sco.c                             |  2 +-
+ android/socket.c                          |  6 ++--
+ android/tester-a2dp.c                     |  2 +-
+ android/tester-avrcp.c                    |  2 +-
+ android/tester-gatt.c                     |  2 +-
+ android/tester-hdp.c                      |  2 +-
+ android/tester-hidhost.c                  |  2 +-
+ android/tester-main.c                     |  2 +-
+ android/tester-pan.c                      |  2 +-
+ attrib/att.c                              |  2 +-
+ attrib/gatt.c                             |  4 +--
+ attrib/gattrib.c                          |  2 +-
+ attrib/gatttool.c                         |  8 ++---
+ attrib/interactive.c                      |  4 +--
+ attrib/utils.c                            |  8 ++---
+ btio/btio.c                               |  8 ++---
+ client/mgmt.c                             | 10 +++---
+ client/player.c                           |  2 +-
+ configure.ac                              | 18 +++++++++++
+ emulator/amp.c                            |  4 +--
+ emulator/b1ee.c                           |  4 +--
+ emulator/btdev.c                          |  4 +--
+ emulator/bthost.c                         |  2 +-
+ emulator/bthost.h                         |  2 +-
+ emulator/hciemu.c                         |  4 +--
+ emulator/le.c                             |  4 +--
+ emulator/serial.c                         |  4 +--
+ emulator/server.c                         |  4 +--
+ emulator/smp.c                            |  4 +--
+ emulator/vhci.c                           |  4 +--
+ lib/bluetooth.c                           |  4 +--
+ lib/{ => bluetooth}/bluetooth.h           |  0
+ lib/{ => bluetooth}/bnep.h                |  0
+ lib/{ => bluetooth}/cmtp.h                |  0
+ lib/{ => bluetooth}/hci.h                 |  0
+ lib/{ => bluetooth}/hci_lib.h             |  0
+ lib/{ => bluetooth}/hidp.h                |  0
+ lib/{ => bluetooth}/l2cap.h               |  0
+ lib/{ => bluetooth}/rfcomm.h              |  0
+ lib/{ => bluetooth}/sco.h                 |  0
+ lib/{ => bluetooth}/sdp.h                 |  0
+ lib/{ => bluetooth}/sdp_lib.h             |  0
+ lib/hci.c                                 |  6 ++--
+ lib/sdp.c                                 | 12 +++----
+ lib/uuid.c                                |  2 +-
+ mesh/bluetooth-mesh.service.in            |  2 +-
+ mesh/main.c                               |  2 +-
+ mesh/mesh-io-generic.c                    |  2 +-
+ mesh/mesh-io-mgmt.c                       |  4 +--
+ mesh/mesh-io.c                            |  2 +-
+ mesh/mesh-mgmt.c                          |  2 +-
+ monitor/a2dp.c                            |  2 +-
+ monitor/analyze.c                         |  2 +-
+ monitor/att.c                             |  6 ++--
+ monitor/avctp.c                           |  2 +-
+ monitor/avdtp.c                           |  2 +-
+ monitor/bnep.c                            |  2 +-
+ monitor/control.c                         |  4 +--
+ monitor/hcidump.c                         |  6 ++--
+ monitor/intel.c                           |  4 +--
+ monitor/l2cap.c                           |  2 +-
+ monitor/msft.c                            |  2 +-
+ monitor/packet.c                          |  6 ++--
+ monitor/rfcomm.c                          |  2 +-
+ monitor/sdp.c                             |  2 +-
+ obexd/client/bluetooth.c                  |  8 ++---
+ obexd/client/map.c                        |  2 +-
+ obexd/client/pbap.c                       |  4 +--
+ obexd/plugins/bluetooth.c                 |  2 +-
+ obexd/plugins/syncevolution.c             |  2 +-
+ obexd/src/obex.service.in                 |  2 +-
+ obexd/src/org.bluez.obex.service.in       |  2 +-
+ peripheral/attach.c                       |  6 ++--
+ peripheral/gap.c                          |  2 +-
+ peripheral/gatt.c                         |  4 +--
+ plugins/admin.c                           |  2 +-
+ plugins/autopair.c                        |  4 +--
+ plugins/hostname.c                        |  4 +--
+ plugins/neard.c                           |  6 ++--
+ plugins/policy.c                          |  4 +--
+ plugins/sixaxis.c                         |  4 +--
+ profiles/audio/a2dp.c                     |  6 ++--
+ profiles/audio/avctp.c                    |  6 ++--
+ profiles/audio/avdtp.c                    |  6 ++--
+ profiles/audio/bap.c                      |  6 ++--
+ profiles/audio/bass.c                     |  2 +-
+ profiles/audio/control.c                  |  6 ++--
+ profiles/audio/csip.c                     |  6 ++--
+ profiles/audio/mcp.c                      |  6 ++--
+ profiles/audio/media.c                    |  4 +--
+ profiles/audio/micp.c                     |  6 ++--
+ profiles/audio/sink.c                     |  4 +--
+ profiles/audio/source.c                   |  4 +--
+ profiles/audio/transport.c                |  4 +--
+ profiles/audio/vcp.c                      |  6 ++--
+ profiles/battery/bas.c                    |  4 +--
+ profiles/battery/battery.c                |  6 ++--
+ profiles/cups/hcrp.c                      |  8 ++---
+ profiles/cups/main.c                      |  6 ++--
+ profiles/cups/sdp.c                       |  6 ++--
+ profiles/cups/spp.c                       |  8 ++---
+ profiles/deviceinfo/deviceinfo.c          |  4 +--
+ profiles/deviceinfo/dis.c                 |  4 +--
+ profiles/gap/gas.c                        |  6 ++--
+ profiles/health/hdp.c                     |  6 ++--
+ profiles/health/hdp_manager.c             |  4 +--
+ profiles/health/hdp_util.c                |  6 ++--
+ profiles/health/mcap.c                    |  2 +-
+ profiles/input/device.c                   |  8 ++---
+ profiles/input/hog-lib.c                  |  4 +--
+ profiles/input/hog.c                      |  4 +--
+ profiles/input/manager.c                  |  6 ++--
+ profiles/input/server.c                   |  4 +--
+ profiles/midi/midi.c                      |  4 +--
+ profiles/network/bnep.c                   |  6 ++--
+ profiles/network/connection.c             |  6 ++--
+ profiles/network/manager.c                |  6 ++--
+ profiles/network/server.c                 |  8 ++---
+ profiles/sap/manager.c                    |  4 +--
+ profiles/sap/server.c                     |  4 +--
+ profiles/scanparam/scan.c                 |  4 +--
+ profiles/scanparam/scpp.c                 |  4 +--
+ src/adapter.h                             |  4 +--
+ src/adv_monitor.c                         |  2 +-
+ src/advertising.c                         |  4 +--
+ src/agent.c                               |  4 +--
+ src/battery.c                             |  2 +-
+ src/bluetooth.service.in                  |  2 +-
+ src/device.c                              |  6 ++--
+ src/eir.c                                 |  6 ++--
+ src/eir.h                                 |  2 +-
+ src/gatt-client.c                         |  4 +--
+ src/gatt-database.c                       |  6 ++--
+ src/log.c                                 |  4 +--
+ src/main.c                                |  4 +--
+ src/oui.c                                 |  2 +-
+ src/plugin.c                              |  2 +-
+ src/profile.c                             |  6 ++--
+ src/rfkill.c                              |  4 +--
+ src/sdp-client.c                          |  6 ++--
+ src/sdp-xml.c                             |  4 +--
+ src/sdpd-database.c                       |  6 ++--
+ src/sdpd-request.c                        |  8 ++---
+ src/sdpd-server.c                         |  8 ++---
+ src/sdpd-service.c                        |  6 ++--
+ src/service.c                             |  4 +--
+ src/settings.c                            |  2 +-
+ src/shared/ad.c                           |  4 +--
+ src/shared/ad.h                           |  2 +-
+ src/shared/att.c                          |  4 +--
+ src/shared/bap.c                          |  2 +-
+ src/shared/bass.c                         |  2 +-
+ src/shared/btp.c                          |  2 +-
+ src/shared/ccp.c                          |  4 +--
+ src/shared/csip.c                         |  2 +-
+ src/shared/gap.c                          |  2 +-
+ src/shared/gatt-client.c                  |  2 +-
+ src/shared/gatt-db.c                      |  2 +-
+ src/shared/gatt-helpers.c                 |  2 +-
+ src/shared/gatt-server.c                  |  2 +-
+ src/shared/log.c                          |  4 +--
+ src/shared/mcp.c                          |  4 +--
+ src/shared/mgmt.c                         |  4 +--
+ src/shared/micp.c                         |  2 +-
+ src/shared/tester.c                       |  4 +--
+ src/shared/util.c                         |  2 +-
+ src/shared/vcp.c                          |  2 +-
+ src/storage.c                             |  6 ++--
+ src/uuid-helper.c                         |  6 ++--
+ tools/{hid2hci.rules => 97-hid2hci.rules} |  0
+ tools/advtest.c                           |  2 +-
+ tools/amptest.c                           |  6 ++--
+ tools/avinfo.c                            |  8 ++---
+ tools/avtest.c                            | 10 +++---
+ tools/bdaddr.c                            |  6 ++--
+ tools/bluetooth-logger.service.in         |  2 +-
+ tools/bluetooth-player.c                  |  2 +-
+ tools/bnep-tester.c                       |  4 +--
+ tools/bneptest.c                          |  8 ++---
+ tools/btattach.c                          |  6 ++--
+ tools/btgatt-client.c                     |  8 ++---
+ tools/btgatt-server.c                     |  8 ++---
+ tools/btiotest.c                          |  2 +-
+ tools/btmon-logger.c                      |  4 +--
+ tools/btpclient.c                         |  2 +-
+ tools/btpclientctl.c                      |  2 +-
+ tools/ciptool.c                           | 14 ++++----
+ tools/cltest.c                            |  8 ++---
+ tools/hciattach.c                         |  6 ++--
+ tools/hciattach_ath3k.c                   |  6 ++--
+ tools/hciattach_bcm43xx.c                 |  6 ++--
+ tools/hciattach_intel.c                   |  6 ++--
+ tools/hciattach_qualcomm.c                |  6 ++--
+ tools/hciattach_st.c                      |  2 +-
+ tools/hciattach_ti.c                      |  6 ++--
+ tools/hciattach_tialt.c                   |  6 ++--
+ tools/hciconfig.c                         |  6 ++--
+ tools/hcidump.c                           |  4 +--
+ tools/hcieventmask.c                      |  6 ++--
+ tools/hcisecfilter.c                      |  6 ++--
+ tools/hcitool.c                           |  6 ++--
+ tools/hwdb.c                              |  2 +-
+ tools/ioctl-tester.c                      |  6 ++--
+ tools/iso-tester.c                        |  2 +-
+ tools/isotest.c                           |  6 ++--
+ tools/l2cap-tester.c                      |  4 +--
+ tools/l2ping.c                            |  8 ++---
+ tools/l2test.c                            |  8 ++---
+ tools/mcaptest.c                          |  8 ++---
+ tools/mesh-gatt/gatt.c                    |  2 +-
+ tools/mesh-tester.c                       |  8 ++---
+ tools/mesh/agent.c                        |  2 +-
+ tools/meshctl.c                           |  2 +-
+ tools/mgmt-tester.c                       |  8 ++---
+ tools/oobtest.c                           |  2 +-
+ tools/parser/hci.c                        |  4 +--
+ tools/parser/l2cap.c                      |  2 +-
+ tools/parser/lmp.c                        |  4 +--
+ tools/parser/parser.h                     |  2 +-
+ tools/rctest.c                            | 12 +++----
+ tools/rfcomm-tester.c                     |  4 +--
+ tools/rfcomm.c                            |  8 ++---
+ tools/sco-tester.c                        |  4 +--
+ tools/scotest.c                           |  4 +--
+ tools/sdptool.c                           | 10 +++---
+ tools/smp-tester.c                        |  4 +--
+ tools/test-runner.c                       |  6 ++--
+ tools/userchan-tester.c                   |  4 +--
+ unit/test-avrcp.c                         |  2 +-
+ unit/test-bap.c                           |  2 +-
+ unit/test-bass.c                          |  2 +-
+ unit/test-eir.c                           |  6 ++--
+ unit/test-gatt.c                          |  2 +-
+ unit/test-gattrib.c                       |  2 +-
+ unit/test-hog.c                           |  2 +-
+ unit/test-lib.c                           |  4 +--
+ unit/test-mgmt.c                          |  2 +-
+ unit/test-micp.c                          |  2 +-
+ unit/test-sdp.c                           |  6 ++--
+ unit/test-uuid.c                          |  2 +-
+ unit/test-vcp.c                           |  2 +-
+ 263 files changed, 593 insertions(+), 595 deletions(-)
+---
+base-commit: b55d98e5cc97e4ff8c3980b84f46c84f3b1c1ee3
+change-id: 20240214-hook-fixup-f26304b71366
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Emil Velikov <emil.l.velikov@gmail.com>
+
 
