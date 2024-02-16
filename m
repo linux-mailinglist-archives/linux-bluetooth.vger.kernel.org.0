@@ -1,52 +1,53 @@
-Return-Path: <linux-bluetooth+bounces-1957-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-1954-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3CD978589FD
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 17 Feb 2024 00:13:45 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EED358589F9
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 17 Feb 2024 00:13:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6F94E1C20821
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Feb 2024 23:13:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ABE552876B7
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Feb 2024 23:13:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09CFF14F9FE;
-	Fri, 16 Feb 2024 23:11:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF49414F9F0;
+	Fri, 16 Feb 2024 23:11:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ImRxeZVS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QNt7DmlD"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2EA148FE0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7451487F4
 	for <linux-bluetooth@vger.kernel.org>; Fri, 16 Feb 2024 23:11:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708125071; cv=none; b=PeVlrtBCNxWYhESoyiCId83mq/7po2+fon0H40XrJVYcGmZcTiq/G7Sj2Qrgh8yNgdrNw44D8JhMvZskuTPaw4gCk1nDe1pvBgJJf96GfjOGz85FUrRB5RKfjlIjWjBMi0OJOimv5qXhqUO1T2iRmEhMPkUSd86FMYqnBIYVses=
+	t=1708125071; cv=none; b=QDe6XY/g6WRyCHxb8Jho90semLvmraPmygQWb0GTVXnDEvblVudSC+aAPPvM/oIHRJf44r0/I2YXeqiZ1sHynp2vflrkfLZW0utkvs++7N6Byu0r8HMABFcGOlQ+xZ6pCLIQpANq1TyWxg/0Sa4ceNtfk/R4+ZGc+UPA0Io/RQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1708125071; c=relaxed/simple;
-	bh=GXYb/LVnfI3PNEx4Dbvd7HSpNf4VFI0ZKACWyrBxcqc=;
+	bh=pn4oXOiprsJ9P+/w7VthZ06gnonlcvDwigv5H1AczbU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To; b=jf7CBoU/Y/JvIR+AT5WapiC1FWLHlr6xDH9jrxCCQDvx7Tgto9RcjGRFjfQ+kr5WP7fD6HkAmJtlEw60hWz/WHPrQgQiwGVTBHP885zfPI0MtK1nCmpS3VQHHXabsiv+vDaPAQnrMn6j9lbRQoe+e/RWhKfbPDJSmFLAMpBmstI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ImRxeZVS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id EFC40C433C7
-	for <linux-bluetooth@vger.kernel.org>; Fri, 16 Feb 2024 23:11:10 +0000 (UTC)
+	 In-Reply-To:To; b=iNKDuRu/vYMOpCarooiXblLR6lf4y5aihHDBBkcDMmaPwHhWgO0sHo9fWcFtCEf8etb4lzTZ7idA0/2NWa5XtDcNXjSksvfpEt7s9zusSINFjvwY+BG32Acw11k/8XuZJ3RJ6YJNr+r0q+6rX9do+BSonorQJSZVoWzsN+JPjew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QNt7DmlD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 03BFDC43390
+	for <linux-bluetooth@vger.kernel.org>; Fri, 16 Feb 2024 23:11:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1708125071;
-	bh=GXYb/LVnfI3PNEx4Dbvd7HSpNf4VFI0ZKACWyrBxcqc=;
+	bh=pn4oXOiprsJ9P+/w7VthZ06gnonlcvDwigv5H1AczbU=;
 	h=From:Date:Subject:References:In-Reply-To:To:Reply-To:From;
-	b=ImRxeZVSNqfpRCzpYf+Y1KwhJ5NchLgZZpFFbYj6HutzdD1qQAzMhNB79QDM65Djh
-	 o7hA6vdLAj3VJvHNOV+5yHAzRVx+U+HXFXt1dZhattkLUQPp9aUf3ubywmZXvWAfks
-	 9f/Lrxpn8HcOUM851ZJubbAAXwVymtRDMBijrrUrbkaGTlXtef5ArvNDj6rg9Jup7t
-	 tZSnttBWOqpkEStfbpsADIx5phwnRENMxQO/Bvh7+GMNSQn4ecIyV1lvqDz+44uWa0
-	 oyR5JTCnCR2ySe8iHzMReHh/Rufv/z5jm4pmAyrWnfWM9TYXEiED6bkLra/0YoSmcu
-	 eKknQYmvjYQLg==
+	b=QNt7DmlDvdgltjZzwKSN39HQ46JaTlT/VgZpLtVlBz1kE4ulwwWFOi2x3t4FqiUyd
+	 rubZ83CH5ouSe0dyidyEBTxyLMdJfoODTFK9JCXCEssvQ7VvayTz8DBDz+4RzdD4Tc
+	 N71FEWWP/Z/RfSuZU4kpn+aZPmEvUOQRGvGnRF1q6KbQnnBG7eIGRVNi7sAkMUim3Y
+	 mdn3+4MtQYvt0TejiDrymS83qym0iz9UgAW8fiiXfWPwnrF45CwCpsJF+PTKH1btIN
+	 9F/xD+R8MkculwfK1fn+MuB7WNgilobGkfGpqYvg1l2b1lCtBkJJPb0+dg4nsGWjoe
+	 N0/E17hERIMYQ==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D47DDC48BF6
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF694C48BF8
 	for <linux-bluetooth@vger.kernel.org>; Fri, 16 Feb 2024 23:11:10 +0000 (UTC)
 From: Emil Velikov via B4 Relay <devnull+emil.l.velikov.gmail.com@kernel.org>
-Date: Fri, 16 Feb 2024 23:11:05 +0000
-Subject: [PATCH BlueZ v2 01/10] build: rework {install-data,uninstall}-hook
+Date: Fri, 16 Feb 2024 23:11:06 +0000
+Subject: [PATCH BlueZ v2 02/10] build: install obexd (dbus,systemd}
+ services as needed
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -55,16 +56,16 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240216-hook-fixup-v2-1-a6b192d1a6ad@gmail.com>
+Message-Id: <20240216-hook-fixup-v2-2-a6b192d1a6ad@gmail.com>
 References: <20240216-hook-fixup-v2-0-a6b192d1a6ad@gmail.com>
 In-Reply-To: <20240216-hook-fixup-v2-0-a6b192d1a6ad@gmail.com>
 To: linux-bluetooth@vger.kernel.org
 X-Mailer: b4 0.12.4
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1708125068; l=1944;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1708125068; l=708;
  i=emil.l.velikov@gmail.com; s=20230301; h=from:subject:message-id;
- bh=2q2yJxfalsDM6IrAcp4cLj0XyQOzx84+xaZIWSPUpFo=;
- b=KIs0MYGpSZVZxqgp91M5Co68Xw66l/7yynsCkaB+9ik+QIZ6FafSLMQODc9deDgDUxvFX8XH2
- WOU3MgISlLZBIVLbg1FTDd12pjI47lCdi2wRWKFurEoPgAJ8s3767Gs
+ bh=ydMrW4KQq1RxtsNE5Z3GD8gOdVpX/eInfAQOzvCNhPM=;
+ b=IrYvb1KVOghrustydreRo3bmyf2og6elMhJBTvp+Y0TbzI7qTGuQPiB0b1hSXzDQHXXSxnBXQ
+ K2QeywgpuavAtAGEmgRUGM7CedeeoFoKeaQl+LP4GwYSBJfYVcujLMP
 X-Developer-Key: i=emil.l.velikov@gmail.com; a=ed25519;
  pk=qeUTVTNyI3rcR2CfNNWsloTihgzmtbZo98GdxwZKCkY=
 X-Endpoint-Received:
@@ -74,73 +75,33 @@ Reply-To: <emil.l.velikov@gmail.com>
 
 From: Emil Velikov <emil.l.velikov@gmail.com>
 
-Currently autoconfigure throws a useful error, about a duplicate
-install-data-hook.
+Currently we ship the service files, even when built with
+--disable-obex.
 
-Address that by making the two target specific and pulling them as
-dependencies.
-
-We have to create empty ones otherwise dependency tracking and
-resolution will fail.
+Move the "if OBEX" guard few lines further up.
 ---
- Makefile.am    |  5 ++++-
- Makefile.obexd | 10 ++++++++--
- 2 files changed, 12 insertions(+), 3 deletions(-)
+ Makefile.obexd | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/Makefile.am b/Makefile.am
-index 5207c172b..450e931c6 100644
---- a/Makefile.am
-+++ b/Makefile.am
-@@ -31,7 +31,7 @@ AM_LDFLAGS = $(MISC_LDFLAGS)
- confdir = $(sysconfdir)/bluetooth
- statedir = $(localstatedir)/lib/bluetooth
- 
--install-data-hook:
-+bluetoothd-fix-permissions:
- 	install -dm555 $(DESTDIR)$(confdir)
- 	install -dm700 $(DESTDIR)$(statedir)
- 
-@@ -422,6 +422,9 @@ include Makefile.obexd
- include android/Makefile.am
- include Makefile.mesh
- 
-+install-data-hook: bluetoothd-fix-permissions obexd-add-service-symlink
-+uninstall-hook: obexd-remove-service-symlink
-+
- if HID2HCI
- rulesdir = $(UDEV_DIR)/rules.d
- 
 diff --git a/Makefile.obexd b/Makefile.obexd
-index 81456544d..0e8bc6de7 100644
+index 0e8bc6de7..e8e4a6144 100644
 --- a/Makefile.obexd
 +++ b/Makefile.obexd
-@@ -3,11 +3,14 @@ if SYSTEMD
+@@ -1,4 +1,6 @@
+ # SPDX-License-Identifier: GPL-2.0
++if OBEX
++
+ if SYSTEMD
  systemduserunitdir = $(SYSTEMD_USERUNITDIR)
  systemduserunit_DATA = obexd/src/obex.service
- 
--install-data-hook:
-+obexd-add-service-symlink:
- 	$(LN_S) -f obex.service $(DESTDIR)$(SYSTEMD_USERUNITDIR)/dbus-org.bluez.obex.service
- 
--uninstall-hook:
-+obexd-remove-service-symlink:
- 	rm -f $(DESTDIR)$(SYSTEMD_USERUNITDIR)/dbus-org.bluez.obex.service
-+else
-+obexd-add-service-symlink:
-+obexd-remove-service-symlink:
- endif
- 
+@@ -16,7 +18,6 @@ endif
  dbussessionbusdir = $(DBUS_SESSIONBUSDIR)
-@@ -102,6 +105,9 @@ obexd_src_obexd_CPPFLAGS = $(AM_CPPFLAGS) $(GLIB_CFLAGS) $(DBUS_CFLAGS) \
+ dbussessionbus_DATA = obexd/src/org.bluez.obex.service
  
- obexd_src_obexd_CFLAGS = $(AM_CFLAGS) -fPIC
+-if OBEX
  
-+else
-+obexd-add-service-symlink:
-+obexd-remove-service-symlink:
- endif
+ obex_plugindir = $(libdir)/obex/plugins
  
- obexd_src_obexd_SHORTNAME = obexd
 
 -- 
 2.43.1
