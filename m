@@ -1,196 +1,94 @@
-Return-Path: <linux-bluetooth+bounces-2037-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-2039-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4FB3385C454
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Feb 2024 20:10:36 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EEFA585C456
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Feb 2024 20:10:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A7A51B23BD6
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Feb 2024 19:10:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 22FD11C2369F
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Feb 2024 19:10:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8715713341C;
-	Tue, 20 Feb 2024 19:10:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 668E214A0A6;
+	Tue, 20 Feb 2024 19:10:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KQV6hwjo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KVP6t+dA"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3859E76C9C
-	for <linux-bluetooth@vger.kernel.org>; Tue, 20 Feb 2024 19:10:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC28D134CC0;
+	Tue, 20 Feb 2024 19:10:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708456227; cv=none; b=lBetnnvLgxM5vc44LohtSMgk3jI9bs3j426YGCXTLPouoia7JpMP/jQsuufW0ywQL4zKuuQIM8SH/O/+4urogz3eiDSP7zlnazFdEYalGn+CbCitonOT+4w2BSI73ipVXwYweNaA7hHDmdRVkKy92NyGpPzySgfIDhiRP9Je6Pk=
+	t=1708456229; cv=none; b=Xji5FOE5YC7TzK5rrs8qTsBiFsslqKGgxCdHkfzaC/tKjdxUeIFw+K1K+RVajzGtxuHCsTxnggBuN8Or5GWLQ5OEFqMOGlZuXhCNCyBU7YPgnBoY7NTkldHCcGIglSQsdgnJMHEpAfzyXGxWpdkWFSLyMrAyUFf6c5LzpRv6oY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708456227; c=relaxed/simple;
-	bh=iEHYIou+4+i7VY0TcX+FbGPWw2PKLo/A5wQEkrIexAk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=a+oHSM5nHLUZpxs517/NnzcS+MuuhN1LT47NQFcGO7gmNIBDmMBPZjA0UhDQk/jTu6dbMTUdxhXlOFa/0qhv/2TZmfO2ACcUFqCg84Lv8LL4cRxn2P7L0P/0ynPCpoBQIg0UYYgDc2PdrU0aGBzZlyHJ4FltqFxZmRmJnKvnMGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KQV6hwjo; arc=none smtp.client-ip=209.85.208.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2d1094b5568so77315011fa.1
-        for <linux-bluetooth@vger.kernel.org>; Tue, 20 Feb 2024 11:10:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708456223; x=1709061023; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=u6vzG72NaYuZDX3ICQRal7rxTpULVtCmDxBdOjw42tw=;
-        b=KQV6hwjoWGG6usx+3o01F4f1gcnZNpunYp0V7877KMBizMMosYk5nZA7QrWyfRM41Y
-         6iZ/yL4MS2kEFYkGIQgT/oOf4z9pE+9iuMVxd0dHduosoXnOYMRBprZW5SpEzlrv8uSD
-         qfPtNtT4ZKdb/ddmLU8nEMY2apQARdpPR1vklMwtZjllE+nQqx1Ef3P/JB1S0R/YNW/l
-         pLgoRk9wCf/ijljNBAEm8g4iHXUlUpQYW2ycaXpAeyyxg5heGrK5hEfkoyqPN4oIjpsU
-         c8qMiltUi3dpkl3GlrFbFFMERTS0B//bHqV+843YzlAzUsOcmqW4WL/i47X55QkklaQw
-         kMbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708456223; x=1709061023;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=u6vzG72NaYuZDX3ICQRal7rxTpULVtCmDxBdOjw42tw=;
-        b=jZPSZHXvlNPQa91RBgYllWKCWuz8QhLmjLtgbTQwUyvxBXPnHpVSkPhYrgDKbNsOJf
-         SjeincbV/GyAfK0jbB0LfWfyCbHFHDz0YGaUagXTR8U5wfvjvI2SaK3Zua0Z7iddkC9A
-         ImqH7lMBMaojWxpzYSBo1IR4tPXWEMlx605zuKbQ0GonQOcR0Swtv9d3vDhjW8VKVCIR
-         gRnKTGLyOYwbW4eXVhovBl8DOI4N3B3K22USsqaKf4SYQwNjR+CtmyrvZS74gE/0iMTY
-         H7gKnl8SK6Sd6PScgABZIkKiPuk4BmOq1XqMjtU3gZAWdPiwPBZH1vNd7WNR1wsi0f7U
-         BPoA==
-X-Gm-Message-State: AOJu0YyTtdVAx9BiJQ7+gA0bKENAHoS87JaELiDQaIRGdPZ8BzE5dAbX
-	fwahiDlpu0mF5KFL3j6OUQsQfJV3tub5AUSFtEBBdUFmJDZ4c5abMOWqrAqAlrUPwtG1yPQSazk
-	FFVU2HmbMRy1BQjqH1efdEpnyK/Mi2KkQ
-X-Google-Smtp-Source: AGHT+IHFfVDXAzSCU/3q3kfalscsMeqIRv2IfzLq9n9BusOK9mlxaR+e00AWzfBxA3PH8P2vrdZjkzbkqIFokbTi00A=
-X-Received: by 2002:a2e:b4a2:0:b0:2d2:4703:1ac3 with SMTP id
- q2-20020a2eb4a2000000b002d247031ac3mr1804490ljm.5.1708456222953; Tue, 20 Feb
- 2024 11:10:22 -0800 (PST)
+	s=arc-20240116; t=1708456229; c=relaxed/simple;
+	bh=27nB2IlG0oC8pl+ybaf2Om7tssbnEIBfziDJLNGJSok=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=jE6zNk17/LkRzOQJre6XOjZy1dSuzBCJgIX2s1T3+46QVzEJ/+oe4xhgknlASUedcu4++hT/mh4qWk1gANq/VO1iZHnTWcmylmCGQ1h+1gAVNoQ+UosDQ3vpMLpXYu0gsgQ21CGEDImzfavcrc2dfqOhXf+hpcZDISMEFbghYmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KVP6t+dA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 5B451C43390;
+	Tue, 20 Feb 2024 19:10:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1708456229;
+	bh=27nB2IlG0oC8pl+ybaf2Om7tssbnEIBfziDJLNGJSok=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=KVP6t+dAtJQokj8FfTq6+AnOPOR+LMbEANCMVHPKcWUwwc+DX74J7NVK4Rr3+EVA/
+	 XKOruX5SBzACWyfMVFi4ilGr0ybprB5YKXa1QKHQ8+0gKci0r7fVXGwbg4W3/JM2Rv
+	 jSYp6eFF4dHC6iLLDrHOzZIUHhwAnvcjL3Oepd3szUM+5H245YIJSeUXFEoojYOIZR
+	 b9hBuAkNbxo2udYpiRUV0CBAMR0GKR0QJA4aXEUfVWj27dDrKxs3gTOcPJHxnefZ1y
+	 IFN2hNyQOV/ub+r/SFlscya7Yv/Ya5LNGnEtEt9W/Ad+1+bMkTfAIwz8qj2kSXxltZ
+	 RKeL8ylOkO9Sg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 40C31D990CD;
+	Tue, 20 Feb 2024 19:10:29 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240215212356.310301-1-silviu.barbulescu@nxp.com> <20240215212356.310301-5-silviu.barbulescu@nxp.com>
-In-Reply-To: <20240215212356.310301-5-silviu.barbulescu@nxp.com>
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Tue, 20 Feb 2024 14:10:10 -0500
-Message-ID: <CABBYNZJ=yn6O8TEJ0p3Q-JF0UpHTKxHy8tEd_Qv+JQ4vuYm6XA@mail.gmail.com>
-Subject: Re: [PATCH BlueZ v3 4/7] shared/bap: Add state in stream struct for
- bcast source
-To: Silviu Florian Barbulescu <silviu.barbulescu@nxp.com>
-Cc: linux-bluetooth@vger.kernel.org, mihai-octavian.urzica@nxp.com, 
-	vlad.pruteanu@nxp.com, andrei.istodorescu@nxp.com, iulia.tanasescu@nxp.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH] Bluetooth: constify the struct device_type usage
+From: patchwork-bot+bluetooth@kernel.org
+Message-Id: 
+ <170845622926.2554.17835222559444960671.git-patchwork-notify@kernel.org>
+Date: Tue, 20 Feb 2024 19:10:29 +0000
+References: <20240219-device_cleanup-bluetooth-v1-1-dd81ba00c95e@marliere.net>
+In-Reply-To: <20240219-device_cleanup-bluetooth-v1-1-dd81ba00c95e@marliere.net>
+To: Ricardo B. Marliere <ricardo@marliere.net>
+Cc: marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+ davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+ linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org, gregkh@linuxfoundation.org
 
-Hi Silviu,
+Hello:
 
-On Thu, Feb 15, 2024 at 4:24=E2=80=AFPM Silviu Florian Barbulescu
-<silviu.barbulescu@nxp.com> wrote:
->
-> Add state support in the stream struct for broadcast source.
-> ---
->  src/shared/bap.c | 32 ++++++++++++++++++--------------
->  1 file changed, 18 insertions(+), 14 deletions(-)
->
-> diff --git a/src/shared/bap.c b/src/shared/bap.c
-> index a39b95407..524bfa058 100644
-> --- a/src/shared/bap.c
-> +++ b/src/shared/bap.c
-> @@ -251,6 +251,8 @@ struct bt_bap_stream {
->         struct bt_bap_stream *link;
->         struct bt_bap_stream_io *io;
->         const struct bt_bap_stream_ops *ops;
-> +       uint8_t bcast_old_state;
-> +       uint8_t bcast_state;
+This patch was applied to bluetooth/bluetooth-next.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-Lets have it as generic one, old_state and state.
+On Mon, 19 Feb 2024 16:46:57 -0300 you wrote:
+> Since commit aed65af1cc2f ("drivers: make device_type const"), the driver
+> core can properly handle constant struct device_type. Move the bt_type and
+> bnep_type variables to be constant structures as well, placing it into
+> read-only memory which can not be modified at runtime.
+> 
+> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Signed-off-by: Ricardo B. Marliere <ricardo@marliere.net>
+> 
+> [...]
 
->         bool client;
->         void *user_data;
->  };
-> @@ -1271,7 +1273,6 @@ static void bap_stream_state_changed(struct bt_bap_=
-stream *stream)
->
->  static void stream_set_state(struct bt_bap_stream *stream, uint8_t state=
-)
->  {
-> -       struct bt_bap_endpoint *ep =3D stream->ep;
->         struct bt_bap *bap =3D stream->bap;
->
->         /* Check if ref_count is already 0 which means detaching is in
-> @@ -1283,14 +1284,6 @@ static void stream_set_state(struct bt_bap_stream =
-*stream, uint8_t state)
->                 return;
->         }
->
-> -       ep->old_state =3D ep->state;
-> -       ep->state =3D state;
-> -
-> -       DBG(bap, "stream %p dir 0x%02x: %s -> %s", stream,
-> -                       bt_bap_stream_get_dir(stream),
-> -                       bt_bap_stream_statestr(stream->ep->old_state),
-> -                       bt_bap_stream_statestr(stream->ep->state));
-> -
->         if (stream->ops && stream->ops->set_state)
->                 stream->ops->set_state(stream, state);
->
-> @@ -1527,6 +1520,14 @@ static void bap_ucast_set_state(struct bt_bap_stre=
-am *stream, uint8_t state)
->  {
->         struct bt_bap_endpoint *ep =3D stream->ep;
->
-> +       ep->old_state =3D ep->state;
-> +       ep->state =3D state;
-> +
-> +       DBG(stream->bap, "stream %p dir 0x%02x: %s -> %s", stream,
-> +                       bt_bap_stream_get_dir(stream),
-> +                       bt_bap_stream_statestr(stream->ep->old_state),
-> +                       bt_bap_stream_statestr(stream->ep->state));
-> +
->         if (stream->lpac->type =3D=3D BT_BAP_BCAST_SINK || stream->client=
-)
->                 goto done;
->
-> @@ -1942,22 +1943,25 @@ static void bap_bcast_set_state(struct bt_bap_str=
-eam *stream, uint8_t state)
->         struct bt_bap *bap =3D stream->bap;
->         const struct queue_entry *entry;
->
-> +       stream->bcast_old_state =3D stream->bcast_state;
-> +       stream->bcast_state =3D state;
-> +
->         DBG(bap, "stream %p dir 0x%02x: %s -> %s", stream,
->                         bt_bap_stream_get_dir(stream),
-> -                       bt_bap_stream_statestr(stream->ep->old_state),
-> -                       bt_bap_stream_statestr(stream->ep->state));
-> +                       bt_bap_stream_statestr(stream->bcast_old_state),
-> +                       bt_bap_stream_statestr(stream->bcast_state));
->
->         for (entry =3D queue_get_entries(bap->state_cbs); entry;
->                                                         entry =3D entry->=
-next) {
->                 struct bt_bap_state *state =3D entry->data;
->
->                 if (state->func)
-> -                       state->func(stream, stream->ep->old_state,
-> -                                       stream->ep->state, state->data);
-> +                       state->func(stream, stream->bcast_old_state,
-> +                                       stream->bcast_state, state->data)=
-;
->         }
->
->         /* Post notification updates */
-> -       switch (stream->ep->state) {
-> +       switch (stream->bcast_state) {
->         case BT_ASCS_ASE_STATE_IDLE:
->                 bap_stream_detach(stream);
->                 break;
-> --
-> 2.39.2
->
+Here is the summary with links:
+  - Bluetooth: constify the struct device_type usage
+    https://git.kernel.org/bluetooth/bluetooth-next/c/8a496378559f
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
---=20
-Luiz Augusto von Dentz
 
