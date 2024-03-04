@@ -1,48 +1,48 @@
-Return-Path: <linux-bluetooth+bounces-2302-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-2299-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C623F870D10
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  4 Mar 2024 22:31:16 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 750EB870D0B
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  4 Mar 2024 22:31:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7BC891F211E3
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  4 Mar 2024 21:31:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A5A821C24711
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  4 Mar 2024 21:31:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A2747D095;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DC8C7C0B5;
 	Mon,  4 Mar 2024 21:30:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GKg6MDaw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eJsRK9Rf"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27C47C086;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E997BB12;
 	Mon,  4 Mar 2024 21:30:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587827; cv=none; b=t6Kh+IPwpNCdJS8C3+sZhsn6BK3WiYbgBBO4fLamsnPAFHwyDmpc07lxieHnXdeyxMzdWVKeoslmoq7fZ3U+A2cIBn2qoD3rbDmlL4X1kiY7RNXm681J1Rt4MKHG0wn7Gwob9dLonz9r0ZNDmOA+nfV5T8rCnC32MfleQoAIxu4=
+	t=1709587827; cv=none; b=UszZGb8eo2W3mErxDgOlTFh3RRelYHBZXItcaNV3zq3uS+T/ll1d4NaEZk39YuBhZc+nBlCarJwTUOD70KopmyfQ9EYnK3efTyRNAU7uiEKxSK9jS5XuErWgc3dbTbR2hbKDK+uMAw+E5a+RQuMKb2ssxP/tdbIV5h+79mXq6wM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1709587827; c=relaxed/simple;
-	bh=W27zYtNAsaurBFbAYeVJtWJ3xNO1se3Yby7vpbfIx2g=;
+	bh=OUfeK5e6niTAqbSVycAFu/p0/23JImxIBKyCA9rtu7M=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=V7y3BN61Lhi2QcRzjd8GBoH5F3xbIHMPmSZUoRg3cZTMjmX1mBjhXPc0RQt90XLWjKDEgsYNax8TqjxHuVuDXnCff8S2VP400JBmovxp1K9DQdC51+Zy+dC2GDO6KsUXeqKLiGMWX350oonEG0ACcKF+ef+p1RW7p2XYjewL9hY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GKg6MDaw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 7155CC43330;
+	 In-Reply-To:To:Cc; b=vBFsJ/aFXNGGEPjzuZhAi1F/YkhOLaqEhRijMs+8b8YWWgy9yCkQZRaICG0ipBlDZ3d9QaqHwoHAGxaUeelcdKQIKiQUJXqJ2kUG3PIdeT4sq4P2/BsMukNOJZotNziBRKtr86ydNKl6qqKv0o8V/Jy7NwHGpddT28Y1Y+XPbXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eJsRK9Rf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 53B70C433C7;
 	Mon,  4 Mar 2024 21:30:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1709587827;
-	bh=W27zYtNAsaurBFbAYeVJtWJ3xNO1se3Yby7vpbfIx2g=;
+	bh=OUfeK5e6niTAqbSVycAFu/p0/23JImxIBKyCA9rtu7M=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=GKg6MDaw9KQctlTOAoYPW0xR33Wh575vjxUKNmIWsFhx1XVxU+wJFaUwzjcA2XwyE
-	 aqBeIWpeOYsUoagOetbysEWODn0JkZKaKfJbdKy9SJL2oa7kpN8rX1+IinMijUI1Q7
-	 dlfibqPUP/IjYBH0yfqT8986zMlBjWYlSYroYg/MtvpOV6wb5Kk7zUaTQBzAZ9ZIu4
-	 CRo9tqUSDAPLBSG++k/McODuy5qROJm4L33MTgk2fOJFvv5TezVMlzFEgj3yMW7Hws
-	 plzCUH+9/MjpGSfFO48kAgLWFeQF8oDssavLAkunTvje1VjMFBvgiNatWjA0Yqn6WT
-	 3gk8vCuVEC0dA==
+	b=eJsRK9RfjoaYsP8A5eWv+50Hg7D7XHWoyLmXtVIllY+UPhHp5d9dabzz034gt6f9F
+	 39tGo40mH0zqdffzmyT2HnpWqegsYH1poWRccMCeQCM/zoDfS9ev2DlaeT7vY5ZKW4
+	 Efuap+AM6DXhJb+GebOZkkSLe8jz3KbNZMoZXC/AZTvMc6ey4egeRvrqfZZ4Fehgrz
+	 dtEMZ80tjA5ng1lR+khrNd32R6I+bmS+Snm74odG5asFQyKL6D/I2jVU+yjgUTyDP3
+	 EqTQM2vx1mHDi1u66rAWwEmfzyf9m2nXmS3l8jWQkO1dPcfbELmCI7vTWUDxFSVPio
+	 purT7Z8Nil1+w==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 54421D9A4BB;
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 3C4FEC3274B;
 	Mon,  4 Mar 2024 21:30:27 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
@@ -52,38 +52,38 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] [PATCH] Bluetooth: btusb: Add support Mediatek MT7920
+Subject: Re: [PATCH v2 0/2] Bluetooth: mgmt: remove useless NULL checks
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <170958782734.29902.13888163732970633114.git-patchwork-notify@kernel.org>
+ <170958782724.29902.18161431292915050332.git-patchwork-notify@kernel.org>
 Date: Mon, 04 Mar 2024 21:30:27 +0000
-References: <20240304144844.2042-1-peter.tsao@mediatek.com>
-In-Reply-To: <20240304144844.2042-1-peter.tsao@mediatek.com>
-To: Peter Tsao <peter.tsao@mediatek.com>
+References: <20240301133916.1268403-1-r.smirnov@omp.ru>
+In-Reply-To: <20240301133916.1268403-1-r.smirnov@omp.ru>
+To: Roman Smirnov <r.smirnov@omp.ru>
 Cc: marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
- sean.wang@mediatek.com, deren.Wu@mediatek.com, chris.lu@mediatek.com,
- aaron.hou@mediatek.com, steve.lee@mediatek.com,
- linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-mediatek@lists.infradead.org
+ s.shtylyov@omp.ru, linux-bluetooth@vger.kernel.org,
+ linux-kernel@vger.kernel.org, lvc-project@linuxtesting.org
 
 Hello:
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
+This series was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Mon, 4 Mar 2024 22:48:44 +0800 you wrote:
-> This patch is added support Mediatek MT7920
-> The firmware location of MT7920 will set to
-> /lib/firmware/mediatek/
+On Fri, 1 Mar 2024 13:39:14 +0000 you wrote:
+> Svace reports NULL check after dereference in
+> mgmt_set_connectable_complete() and add_ext_adv_params_complete().
+> The following patches remove these checks.
 > 
-> The information in /sys/kernel/debug/usb/devices about MT7920U
-> Bluetooth device is listed as the below
+> The second version has a more compact subjects compared to the
+> first version.
 > 
 > [...]
 
 Here is the summary with links:
-  - Bluetooth: btusb: Add support Mediatek MT7920
-    https://git.kernel.org/bluetooth/bluetooth-next/c/2ea671b17896
+  - [v2,1/2] Bluetooth: mgmt: remove NULL check in mgmt_set_connectable_complete()
+    https://git.kernel.org/bluetooth/bluetooth-next/c/9f67e5ba6f6c
+  - [v2,2/2] Bluetooth: mgmt: remove NULL check in add_ext_adv_params_complete()
+    https://git.kernel.org/bluetooth/bluetooth-next/c/3da5589ad808
 
 You are awesome, thank you!
 -- 
