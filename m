@@ -1,49 +1,49 @@
-Return-Path: <linux-bluetooth+bounces-2300-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-2303-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8DF47870D0C
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  4 Mar 2024 22:31:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C8BFE870E11
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  4 Mar 2024 22:40:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 44EE71F21646
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  4 Mar 2024 21:31:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7C6A61F21BD9
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  4 Mar 2024 21:40:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E3607C6C0;
-	Mon,  4 Mar 2024 21:30:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B77D7BB01;
+	Mon,  4 Mar 2024 21:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cPczbBJH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cv43hwON"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E607A70D;
-	Mon,  4 Mar 2024 21:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E84CD1F92C;
+	Mon,  4 Mar 2024 21:40:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709587827; cv=none; b=oF+qtRhnsX9N9X/SZUDNq5UrPnoZT1e//iabJmoXIgQSCkOrDedS8HJDH7+0NW58Fn9yP1QJ4I3Vf4wP/sCBXrapZLrPQzXroaiZiKbvyyAlF7d1oDYvEWQAuuuZ997i4juzw/SuDUfIXdb5yiGvZaof2QG2Lemw6ZjerW58Gts=
+	t=1709588429; cv=none; b=uin3kMH5UARJ6njdLAHiyib5EIqgObqkGvILcFpFhOzsqoGRI5dwB8Nm1+JbFw49zMnCYg55KF+46ZcybVmCTcZaM2w6rzNNw9g7YuG9D7oPisYC7Bf15jjlBY4fc3JC8tD7SPaZ7c39LNGbxVECBGmdW19g1VKbJpQ+z8nJMSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709587827; c=relaxed/simple;
-	bh=O5yUEyAsxwbc4QeVxv+falkYGWSwkd6xqczAATdlKJg=;
+	s=arc-20240116; t=1709588429; c=relaxed/simple;
+	bh=0yqtvKb6euEXfWCJ5BupuWOTgDwHxNA52Wph41RVxls=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=cZjpaLWWMVfupNfH37UZtQ0R7RKFEgqHga5om38iSuCgTWX6ccevvXBR5u9LvEauq+zvWVhTYyIp1JkGf5kmFL7xP0KOPoMB2uxVvAE2sVeimk+4MzoVo+aiKXwcoKZ8f6KWOSV+vzZZrqjsasYok6gCka/Fozc7dXPATUKc7d4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cPczbBJH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 6B017C433B1;
-	Mon,  4 Mar 2024 21:30:27 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=odUiJ3iuJmtTXhK8NsQhQzbWtBL4SN69aRD/CFnZMgLaiSP9TzkrvIREECws2SJyhgnfMubbmFF5sZJ3+mI9XcF3jE8iRhmCqykg7ZsIccObme2xhX5tnMzshYneDlqrDeZIeTZ15jhPR5XqlppYwTne+mVD5aCNr2BJKCtOgpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cv43hwON; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 760E9C43390;
+	Mon,  4 Mar 2024 21:40:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709587827;
-	bh=O5yUEyAsxwbc4QeVxv+falkYGWSwkd6xqczAATdlKJg=;
+	s=k20201202; t=1709588427;
+	bh=0yqtvKb6euEXfWCJ5BupuWOTgDwHxNA52Wph41RVxls=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=cPczbBJHb+yrMK/lyQ+UtlmGPDJf+ftV5Sq/1dvdCCejNURk6HTbrjeJ9DGHdb5ca
-	 xChheXwXsSvqL4yVha0SVTJxR5FvgILbXIx2Am2gt7ge4uhsNigyomQ3ssGeobBkSe
-	 jRtzjL6/wj+egMQImwW/1d4MMWGfruo3iB3HSDPhh9xG9W05ORTOqrgP6Y+jfDvR6W
-	 RRj8uEVTythAAHGQiHthPD8+HwD6BzROMjDM8V5xCTP2gEM9/Du7dFAVaBIwTotmXi
-	 YlNYjNQEKERSt09LCQdl/63QvEaQ49qgzbNDNxoFX6c4dMv9gWmapsMPbzKf0lTXCm
-	 SI1jD2NMeBBnA==
+	b=Cv43hwONEsIKBQ2wAnPHyKgBXY3Qz4Yq5mTh4jqxkMmXkuHWyQxYPXmCcHakE9vlh
+	 AK5n9xvDKKoYcGxVaRypsGBGZcTttntFuHhJe5V6wdf6MnArXFdqJ5yIgeX6xJ25bt
+	 DjlyKmzZcGanJf/42sZmdzwgzZJGBOSr/zJNmm/Pf1XC+szC/LNoSvdlcOf2pNl6zG
+	 ZpAueehZgD4/M0O/c1hrDeeQKe8Gn5eDNOYhDoTv9X3oW5P9a/3HZUZid5HbjOPaUg
+	 W6j8lVtPdOtNRJ9bGeInbcOJPR/lKZks8MkcIXH7YYJBEMuYq3Yc8177bTw5wbngZ0
+	 uYhJVfQArBJlw==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 4C23BC595C4;
-	Mon,  4 Mar 2024 21:30:27 +0000 (UTC)
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 55F16C3274B;
+	Mon,  4 Mar 2024 21:40:27 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
@@ -52,37 +52,39 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] Bluetooth: btmtk: Add MODULE_FIRMWARE() for MT7922
+Subject: Re: [PATCH] Bluetooth: Add new quirk for broken read key length on
+ ATS2851
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <170958782730.29902.5440375216953533108.git-patchwork-notify@kernel.org>
-Date: Mon, 04 Mar 2024 21:30:27 +0000
-References: <20240227102914.8341-1-tiwai@suse.de>
-In-Reply-To: <20240227102914.8341-1-tiwai@suse.de>
-To: Takashi Iwai <tiwai@suse.de>
-Cc: marcel@holtmann.org, luiz.dentz@gmail.com, matthias.bgg@gmail.com,
- angelogioacchino.delregno@collabora.com, linux-bluetooth@vger.kernel.org,
- linux-kernel@vger.kernel.org
+ <170958842734.5292.12544056625468291768.git-patchwork-notify@kernel.org>
+Date: Mon, 04 Mar 2024 21:40:27 +0000
+References: <20240227014328.1052386-1-nukelet64@gmail.com>
+In-Reply-To: <20240227014328.1052386-1-nukelet64@gmail.com>
+To: Vinicius Peixoto <nukelet64@gmail.com>
+Cc: marcel@holtmann.org, luiz.dentz@gmail.com, johan.hedberg@gmail.com,
+ davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+ linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+ netdev@vger.kernel.org
 
 Hello:
 
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Tue, 27 Feb 2024 11:29:14 +0100 you wrote:
-> Since dracut refers to the module info for defining the required
-> firmware files and btmtk driver doesn't provide the firmware info for
-> MT7922, the generate initrd misses the firmware, resulting in the
-> broken Bluetooth.
+On Mon, 26 Feb 2024 22:43:26 -0300 you wrote:
+> The ATS2851 controller erroneously reports support for the "Read
+> Encryption Key Length" HCI command. This makes it unable to connect
+> to any devices, since this command is issued by the kernel during the
+> connection process in response to an "Encryption Change" HCI event.
 > 
-> This patch simply adds the MODULE_FIRMWARE() for the missing entry
-> for covering that.
+> Add a new quirk (HCI_QUIRK_BROKEN_ENC_KEY_SIZE) to hint that the command
+> is unsupported, preventing it from interrupting the connection process.
 > 
 > [...]
 
 Here is the summary with links:
-  - Bluetooth: btmtk: Add MODULE_FIRMWARE() for MT7922
-    https://git.kernel.org/bluetooth/bluetooth-next/c/aa1767a3fcd7
+  - Bluetooth: Add new quirk for broken read key length on ATS2851
+    https://git.kernel.org/bluetooth/bluetooth-next/c/88f741deaa76
 
 You are awesome, thank you!
 -- 
