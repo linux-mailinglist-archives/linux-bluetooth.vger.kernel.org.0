@@ -1,49 +1,49 @@
-Return-Path: <linux-bluetooth+bounces-2296-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-2298-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 93D7F870B35
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  4 Mar 2024 21:10:43 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 98BCC870C05
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  4 Mar 2024 22:00:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3611728714E
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  4 Mar 2024 20:10:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4EEF01F2650B
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  4 Mar 2024 21:00:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFA9D7AE66;
-	Mon,  4 Mar 2024 20:10:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED357134BE;
+	Mon,  4 Mar 2024 21:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f5qkLVKz"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="REVnTeMq"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A36D7A738
-	for <linux-bluetooth@vger.kernel.org>; Mon,  4 Mar 2024 20:10:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B20910A35
+	for <linux-bluetooth@vger.kernel.org>; Mon,  4 Mar 2024 21:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709583027; cv=none; b=jN/w/tB1tdNmdxfJGNFOMRYifg/IoqNH9+G+ItDh18yfQk4DRZ28EbSjoqNGpiRuarG2+mObFlMTMiHZ0DZufloa1PXwBF4rPbqhURLNGq0NEXwHC0tb3inJtaeyo6IT4Ln537unkmYGumQZjivURMYMNtz0i8mVZ6EndW/UYjw=
+	t=1709586029; cv=none; b=DAwzAJEqkUhuQwWaZwkldNZU8VM2n5WLgLh5Yroq8qz6wFFvubvEkFhxvDVv2hScapMCbeFLMkUFohfKivsCvi9G7N2DlHWt98iz206F1WtCQrwxu6b6fbiBdVtDoEhLNQKYZsfX2NzHICDoKS/xVBVAuhF4gJkxLOh364BzUfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709583027; c=relaxed/simple;
-	bh=Tl0F8vnYZlZHfGNjUQKZjcY1vcbvHE55MXI2e68Bmtk=;
+	s=arc-20240116; t=1709586029; c=relaxed/simple;
+	bh=wCnQSDBI5MZ2qv2TWiab4MrbkXGAmdP/Nzxcj7L+SH0=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=NAgEPSTl8SSmH5PGmgCd1olgUCs5DUeV3wALodRhLvxlfEuEU5ZQ5V9za/WrHCMikij4V7AlSvzbaAtOS6kjuPGyY4PDWJno3SupPhvqyLDINjpTspEhgkVCJItkPt7nKb5Wpnp9WGX8kfPvppL1FflZzpPGtV4WXARNt8gMZjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f5qkLVKz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id A605AC433B1;
-	Mon,  4 Mar 2024 20:10:26 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=e1VjctqTjiJGVNKqFBWSa7J5Rm4tGTpG/MOomZMvz+0tjAxDp/0MVrhvy4XA6wZQsElvZAiA/qH9LBn9LTpgxzJcTZd4evrJEqv0mlEOYlPgtDFTgQfgIUJFDNBM+iKt+rBjHUT+NN2AjJsSsFYtsE2a/ckLYGYFtXX69AcI3jg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=REVnTeMq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id DE8BEC43394;
+	Mon,  4 Mar 2024 21:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1709583026;
-	bh=Tl0F8vnYZlZHfGNjUQKZjcY1vcbvHE55MXI2e68Bmtk=;
+	s=k20201202; t=1709586028;
+	bh=wCnQSDBI5MZ2qv2TWiab4MrbkXGAmdP/Nzxcj7L+SH0=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=f5qkLVKztFdwoy+6QlglHH7pq15FTQFEQ1jhF78iKOF/yu0cM3CLluGOyYO4/WGtm
-	 fGQUF8LhtAA+nS/64pS7xHSDUZ2EVqVcoTr8lXuHtU5R2dwb0UYsyc0fu5HCYsAS5l
-	 HJ4bfh8SyxlTx3uSQ6yWwdkDGpiBojfuN/9GO8lo5Wxaet44lb8R4EvXfRsMCCRgEk
-	 XPQyJuN1p0TRf+/Crt7/R2JBbgbFMN1oA9aKueaEqTFNdNlV+5uhWBipUbCCbTB1aZ
-	 tQ7vAY0wXhMoFClY44p7alJF9jCMwZTw49A4kpZY7OXkwJ+mUz3WE6eXg+qcWQ0rC4
-	 AKvTX4/fBcwyQ==
+	b=REVnTeMqk/FubTSp5hhvkgIncsKIUzGGeZvXQAZ7AKEe4Hn9i1IR5d6aD58Ux8jxq
+	 4J6q0AjHE6JJG2PuD0Oa6LnnbmZU4ko0RKPTHxMlMrk+BgIaBxSN05WOPX03avG+4q
+	 eGhAZR8/ZdvCqzleFrrbBpjtUBzy0o/Fc1Hc4m5jUYWbFod/gKMjok30zz5oucBE8b
+	 LuLbdDwDwKm7ZlfUO55jnCYSNf5JON9kIaGHZiLDOiil+S82tM57xgEQb2UQFN1atu
+	 tqXtD8bzuikx9DI+UcjDyT7WHGYFIp2h4aGXYmndUgNFn30PCtishC9VzU1HdwqTKX
+	 Tml5NjWZQuQNQ==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 88AFAD88F87;
-	Mon,  4 Mar 2024 20:10:26 +0000 (UTC)
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id C2100D88F87;
+	Mon,  4 Mar 2024 21:00:28 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
@@ -52,35 +52,37 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ v2] build: Fix distcheck
+Subject: Re: [RESEND PATCH BlueZ v2 0/2] Add support for signed write command
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <170958302655.15452.18312812563036978488.git-patchwork-notify@kernel.org>
-Date: Mon, 04 Mar 2024 20:10:26 +0000
-References: <20240304181157.3170287-1-luiz.dentz@gmail.com>
-In-Reply-To: <20240304181157.3170287-1-luiz.dentz@gmail.com>
-To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+ <170958602879.11728.9496552961788201433.git-patchwork-notify@kernel.org>
+Date: Mon, 04 Mar 2024 21:00:28 +0000
+References: <20240304155839.48888-1-frederic.danis@collabora.com>
+In-Reply-To: <20240304155839.48888-1-frederic.danis@collabora.com>
+To: =?utf-8?b?RnLDqWTDqXJpYyBEYW5pcyA8ZnJlZGVyaWMuZGFuaXNAY29sbGFib3JhLmNvbT4=?=@codeaurora.org
 Cc: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This patch was applied to bluetooth/bluez.git (master)
+This series was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Mon,  4 Mar 2024 13:11:57 -0500 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+On Mon,  4 Mar 2024 16:58:37 +0100 you wrote:
+> GAP/SEC/CSIGN/BV-02-C request the ability to check that signed write has
+> been performed successfully.
 > 
-> This fixes the following errors:
+> Move the storage of local and remote CSRK keys to the device object.
+> This allow to pass GAP/SEC/CSIGN/BV-01-C and GAP/SEC/CSIGN/BV-02-C tests.
 > 
-> /usr/bin/mkdir -p '/backend'
-> /usr/bin/mkdir: cannot create directory ‘/backend’: Permission denied
-> make[3]: *** [Makefile:4768: install-cupsPROGRAMS] Error 1
+> v1 -> v2: Move CSRK keys storage to device object only
 > 
 > [...]
 
 Here is the summary with links:
-  - [BlueZ,v2] build: Fix distcheck
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=d5a9195a6269
+  - [RESEND,BlueZ,v2,1/2] gatt-server: Add support for signed write command
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=71f0a1e88d9a
+  - [RESEND,BlueZ,v2,2/2] device: Update local and remote CSRK on management event
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=3eba64ba2c85
 
 You are awesome, thank you!
 -- 
