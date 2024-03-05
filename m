@@ -1,147 +1,156 @@
-Return-Path: <linux-bluetooth+bounces-2314-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-2312-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53B7087217F
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  5 Mar 2024 15:32:42 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D098F872178
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  5 Mar 2024 15:31:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 85F3F1C22080
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  5 Mar 2024 14:32:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 08A4B2877DD
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  5 Mar 2024 14:31:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E57CB86630;
-	Tue,  5 Mar 2024 14:32:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87F015676A;
+	Tue,  5 Mar 2024 14:31:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EZdI0+eb"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Rm/fxQuu"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA365EC2
-	for <linux-bluetooth@vger.kernel.org>; Tue,  5 Mar 2024 14:32:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA20EC2
+	for <linux-bluetooth@vger.kernel.org>; Tue,  5 Mar 2024 14:31:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709649156; cv=none; b=i3bemghAILUMojhbqLrKBJbs+oMqGYUYZKOMavCF2srsnQ66AbJYSHDzYVJbm0qxbLKGkSTtmZ2UEZUnD/yDOBpyZVjSqXMCxqA+FhQfhwl0RHRCWR5cujFYNB2EXvRC0Ux7Qq6tAzsjpdx6aICoswOgWQLtOC1A9H8tlCNH0aI=
+	t=1709649092; cv=none; b=mIABNYXB/9fTZTsAA7+ewRwiw1M+fbmZxQawYS9uulUnWw0vfjNyLl9FwUmhvfHCjX/q8cMznGMOKZDt3mjN7cmHyh39LaboEPDqMWVCRPsH4Tz1PZcp9xZuc3qCRBgzILKhKEtmaAU2gIqel3Gda1AxRlekzXxSH3risfNXWX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709649156; c=relaxed/simple;
-	bh=WMWzela+QS0NUtUvJrZg1JSdssvrWS45DwxY0OVSC4Y=;
-	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
-	 In-Reply-To:References; b=BjrEdn8tnsSxXx9ZEliuweBLphz0x8awfd3NWpWXoCe+5ewte/IXe2/DxnEpI/V5aGoHTf3csQUto2gflxq0dREWSDfmoU0l0+ytCWA0+yfl6Eze/8a54Onl031837wv6HN4iWFrlLHSoU6ZQIKWbxNeg05Tu6si9E0iyVJj//Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EZdI0+eb; arc=none smtp.client-ip=209.85.160.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-42e323a2e39so48218091cf.1
-        for <linux-bluetooth@vger.kernel.org>; Tue, 05 Mar 2024 06:32:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709649153; x=1710253953; darn=vger.kernel.org;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=MUqKStn1Y54bP5L84iyxa0E5Y/1Vr4x9HURDDQ68Z54=;
-        b=EZdI0+ebqGLoA0zjVJnBILYvw8ntXbcXXvGmwlZlSYww+vGM0bN3M17RUcz+IsRzan
-         Dvi/hdmXf2XBOSummGqbOODsJ+jSSTN4PgMMTJz6JzxeQOHRhTDUxwtgdlWJKrW7LIay
-         tEqoAtSEsG/ecjICZxNjgmRLcNnj9hkBCdLWMQfDF938K65Qa0lxVpKbFIWnJxk2MEqA
-         h4isTOgC/IccJwOF4Yk5i193TUhfKZ2asyrWlL++OcuXQLJk7kkTO0sskFGXKztRksKy
-         r0atk0bzayOuk0xFs35gxLJ/u1StnxOSKbsBxT64R6JT1aiJSHorVx3KsTMXm2MY1pUQ
-         mQHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709649153; x=1710253953;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MUqKStn1Y54bP5L84iyxa0E5Y/1Vr4x9HURDDQ68Z54=;
-        b=FxhuC9NI0XWChprZmL6JEneSWfPKTmhqYvBudViLJFEgvsbrGZx4UiT/rCCrDeQ0UQ
-         MMiM3y1MJt8Du2bApV7L8xL9jL03KO4VLURVKbOYLf/ZAQaxm7JhGtsqLnjTEXCVigho
-         Te4uBtoNA9EIJAjlspobagRNm8i4Mc+HCRNUO32j/KdtZKyeDSy9ONs7oKVxekpiJZsw
-         MJmrN8Qv07cpeP0BSCfYYsX4EfnOYrJrQntc14mAtEGgsmPyREr14lDRdXeOCprIfcX9
-         XqlVYFfkIoxbT3kEnfrAV+bd6618kBY+Wt6QPiDfa2elkfrwpyegJLRvTPcUW2aRV1PE
-         UMdw==
-X-Gm-Message-State: AOJu0YzapbzAV3rqLEK+VhqzhOtsD6r1PPz/IK5j6u4DnLVxPbHF8XCG
-	u4F/kPpuoIQ4Zevm2uCi2K/HP+uDDAbkUyd2yHRKHNWpAxnEhN+Q7jV4RfH+
-X-Google-Smtp-Source: AGHT+IEcHVGqA+Og5qNGrXVDxiuTEjWQk5LKp8z2/g70je/jVtj8CofDpEJgZrRd8JqU1BqPDnNEGQ==
-X-Received: by 2002:ac8:5f46:0:b0:42e:6b2f:e7 with SMTP id y6-20020ac85f46000000b0042e6b2f00e7mr3217019qta.26.1709649153635;
-        Tue, 05 Mar 2024 06:32:33 -0800 (PST)
-Received: from [172.17.0.2] ([20.55.126.41])
-        by smtp.gmail.com with ESMTPSA id e12-20020ac8598c000000b0042ee2bda028sm2860435qte.54.2024.03.05.06.32.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Mar 2024 06:32:33 -0800 (PST)
-Message-ID: <65e72d01.c80a0220.42f4e.a76c@mx.google.com>
-Date: Tue, 05 Mar 2024 06:32:33 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============8622509846246408331=="
+	s=arc-20240116; t=1709649092; c=relaxed/simple;
+	bh=jekZIpLj45/hKf2Ja13i6zhfqktp0jCtzRcKlnG2jUw=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=j6vL8JRxNMjUV/HvaLfQlMjC6dLUFZNeGPC242xQZTkYuREeoA7R450ZjfibeOPJMINU2GQNvrt9l/Scof7+XRDIGbvtYcXC85Bx9vfobe7R3mRC4G+jJ6G6yz8VHkg3D3kYL9qylmCoB4jH1obevwt858F6mzOou6Vgt0FnTZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Rm/fxQuu; arc=none smtp.client-ip=192.198.163.8
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1709649090; x=1741185090;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=jekZIpLj45/hKf2Ja13i6zhfqktp0jCtzRcKlnG2jUw=;
+  b=Rm/fxQuudDJBFhcGQlsR/Zj2lMCwKn+1MO2uLpSO4DhqzNKufx+E1hOl
+   7UZoqToBB31gTwxqX6MlPkTsJYY3RUByCYmMQEeJy5mr7Kubnn7V3W6vk
+   fILmaSD4RLjZlYKCJ5ja+3NaEP1i+CfOzSBvcUFDRPAhNfK4umNYsE1A+
+   ZYSWtx3sQO2v24W/vnFKy88NQ4CljXbtyP3uYY9Ls/5OL/ixa2Ot1tmvx
+   1jTu8FlfIaA3ofXftMHhTTQ4KuBSCWor+qf5dqy8RZZKzsqGcEovCvMzc
+   X7TJ75E8JHTXiEoxIrnes4NT68tBgLPjZV8rEqXuL+zs9rjeVeGMObRK5
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11003"; a="21727604"
+X-IronPort-AV: E=Sophos;i="6.06,205,1705392000"; 
+   d="scan'208";a="21727604"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Mar 2024 06:31:19 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.06,205,1705392000"; 
+   d="scan'208";a="9555662"
+Received: from intel-lenovo-legion-y540-15irh-pg0.iind.intel.com ([10.224.186.95])
+  by fmviesa006.fm.intel.com with ESMTP; 05 Mar 2024 06:31:17 -0800
+From: Kiran K <kiran.k@intel.com>
+To: linux-bluetooth@vger.kernel.org
+Cc: ravishankar.srivatsa@intel.com,
+	chethan.tumkur.narayan@intel.com,
+	Kiran K <kiran.k@intel.com>
+Subject: [PATCH v3 1/2] Bluetooth: btintel: Define macros for image types
+Date: Tue,  5 Mar 2024 20:14:58 +0530
+Message-Id: <20240305144459.119564-1-kiran.k@intel.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: bluez.test.bot@gmail.com
-To: linux-bluetooth@vger.kernel.org, iulia.tanasescu@nxp.com
-Subject: RE: Bluetooth: ISO: iso_listen_bis fixes
-In-Reply-To: <20240305140939.5090-2-iulia.tanasescu@nxp.com>
-References: <20240305140939.5090-2-iulia.tanasescu@nxp.com>
-Reply-To: linux-bluetooth@vger.kernel.org
+Content-Transfer-Encoding: 8bit
 
---===============8622509846246408331==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Use macro for image type instead of using hard code number.
 
-This is automated email and please do not reply to this email!
-
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=832552
-
----Test result---
-
-Test Summary:
-CheckPatch                    PASS      1.29 seconds
-GitLint                       PASS      0.62 seconds
-SubjectPrefix                 PASS      0.24 seconds
-BuildKernel                   PASS      28.06 seconds
-CheckAllWarning               PASS      30.78 seconds
-CheckSparse                   PASS      36.42 seconds
-CheckSmatch                   PASS      99.56 seconds
-BuildKernel32                 PASS      27.63 seconds
-TestRunnerSetup               PASS      504.40 seconds
-TestRunner_l2cap-tester       PASS      20.25 seconds
-TestRunner_iso-tester         FAIL      37.26 seconds
-TestRunner_bnep-tester        PASS      4.87 seconds
-TestRunner_mgmt-tester        FAIL      110.92 seconds
-TestRunner_rfcomm-tester      PASS      7.43 seconds
-TestRunner_sco-tester         PASS      17.06 seconds
-TestRunner_ioctl-tester       PASS      7.97 seconds
-TestRunner_mesh-tester        PASS      5.97 seconds
-TestRunner_smp-tester         PASS      7.04 seconds
-TestRunner_userchan-tester    PASS      5.22 seconds
-IncrementalBuild              PASS      31.97 seconds
-
-Details
-##############################
-Test: TestRunner_iso-tester - FAIL
-Desc: Run iso-tester with test-runner
-Output:
-Total: 117, Passed: 115 (98.3%), Failed: 2, Not Run: 0
-
-Failed Test Cases
-ISO Connect Suspend - Success                        Failed       4.186 seconds
-ISO Connect2 Suspend - Success                       Failed       4.211 seconds
-##############################
-Test: TestRunner_mgmt-tester - FAIL
-Desc: Run mgmt-tester with test-runner
-Output:
-Total: 492, Passed: 489 (99.4%), Failed: 1, Not Run: 2
-
-Failed Test Cases
-LL Privacy - Add Device 7 (AL is full)               Failed       0.198 seconds
-
-
+Signed-off-by: Kiran K <kiran.k@intel.com>
 ---
-Regards,
-Linux Bluetooth
+ drivers/bluetooth/btintel.c | 12 ++++++------
+ drivers/bluetooth/btintel.h |  3 +++
+ 2 files changed, 9 insertions(+), 6 deletions(-)
 
+diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
+index 6ba7f5d1b837..ed98bb867cff 100644
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -489,7 +489,7 @@ static int btintel_version_info_tlv(struct hci_dev *hdev,
+ 	}
+ 
+ 	switch (version->img_type) {
+-	case 0x01:
++	case IMG_BOOTLOADER:
+ 		variant = "Bootloader";
+ 		/* It is required that every single firmware fragment is acknowledged
+ 		 * with a command complete event. If the boot parameters indicate
+@@ -521,7 +521,7 @@ static int btintel_version_info_tlv(struct hci_dev *hdev,
+ 			    version->min_fw_build_nn, version->min_fw_build_cw,
+ 			    2000 + version->min_fw_build_yy);
+ 		break;
+-	case 0x03:
++	case IMG_OP:
+ 		variant = "Firmware";
+ 		break;
+ 	default:
+@@ -535,7 +535,7 @@ static int btintel_version_info_tlv(struct hci_dev *hdev,
+ 	bt_dev_info(hdev, "%s timestamp %u.%u buildtype %u build %u", variant,
+ 		    2000 + (version->timestamp >> 8), version->timestamp & 0xff,
+ 		    version->build_type, version->build_num);
+-	if (version->img_type == 0x03)
++	if (version->img_type == IMG_OP)
+ 		bt_dev_info(hdev, "Firmware SHA1: 0x%8.8x", version->git_sha1);
+ 
+ 	return 0;
+@@ -1172,7 +1172,7 @@ static int btintel_download_fw_tlv(struct hci_dev *hdev,
+ 	 * If the firmware version has changed that means it needs to be reset
+ 	 * to bootloader when operational so the new firmware can be loaded.
+ 	 */
+-	if (ver->img_type == 0x03)
++	if (ver->img_type == IMG_OP)
+ 		return -EINVAL;
+ 
+ 	/* iBT hardware variants 0x0b, 0x0c, 0x11, 0x12, 0x13, 0x14 support
+@@ -2230,7 +2230,7 @@ static int btintel_prepare_fw_download_tlv(struct hci_dev *hdev,
+ 	 * It is not possible to use the Secure Boot Parameters in this
+ 	 * case since that command is only available in bootloader mode.
+ 	 */
+-	if (ver->img_type == 0x03) {
++	if (ver->img_type == IMG_OP) {
+ 		btintel_clear_flag(hdev, INTEL_BOOTLOADER);
+ 		btintel_check_bdaddr(hdev);
+ 	} else {
+@@ -2600,7 +2600,7 @@ static int btintel_bootloader_setup_tlv(struct hci_dev *hdev,
+ 		return err;
+ 
+ 	/* check if controller is already having an operational firmware */
+-	if (ver->img_type == 0x03)
++	if (ver->img_type == IMG_OP)
+ 		goto finish;
+ 
+ 	err = btintel_boot(hdev, boot_param);
+diff --git a/drivers/bluetooth/btintel.h b/drivers/bluetooth/btintel.h
+index d19fcdb9ff0b..52b2f1986f85 100644
+--- a/drivers/bluetooth/btintel.h
++++ b/drivers/bluetooth/btintel.h
+@@ -51,6 +51,9 @@ struct intel_tlv {
+ 	u8 val[];
+ } __packed;
+ 
++#define IMG_BOOTLOADER		0x01	/* Bootloader image */
++#define IMG_OP			0x03	/* Operational image */
++
+ struct intel_version_tlv {
+ 	u32	cnvi_top;
+ 	u32	cnvr_top;
+-- 
+2.34.1
 
---===============8622509846246408331==--
 
