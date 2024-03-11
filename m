@@ -1,93 +1,99 @@
-Return-Path: <linux-bluetooth+bounces-2434-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-2436-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DAEBC87887E
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Mar 2024 20:05:39 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 17BC0878904
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Mar 2024 20:40:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 706E5284E2E
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Mar 2024 19:05:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 515F9B21102
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Mar 2024 19:40:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F19D54BFE;
-	Mon, 11 Mar 2024 19:05:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 622BD55C35;
+	Mon, 11 Mar 2024 19:39:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="avzHBWDA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pcEytSWh"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-27.smtp.github.com (out-27.smtp.github.com [192.30.252.210])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F0754BDB
-	for <linux-bluetooth@vger.kernel.org>; Mon, 11 Mar 2024 19:05:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.210
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C382454FB7
+	for <linux-bluetooth@vger.kernel.org>; Mon, 11 Mar 2024 19:39:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710183929; cv=none; b=lidVkPKzNBOR1qE1r4kpyOmfRuSfZNDYpNoG3DegtwK4BfT1v85Dr6+n+vOfQNTg164jWrTcYnGx1XK7UElXP13rdUHuoIXpj6zs4rZIVWcD0jcHt3pkcbGodvsEOQBijbJFIHA0BDvm94Kuimw08oqiL0UVAWK3n5ERMMYkt5Y=
+	t=1710185964; cv=none; b=k2pmqulKBeSmGkR2hJzelwRIL5aeKFJ+YnRPeb9LPeBK1VDx4B0sVsQDgGMnloCikZlVPvbE50FYGCmXWACEOwUzvU459qeLTj9rYNqXaJ3Llf4QM1g6/n+cZRjnfdOwqHt3DvsoVxQyrJ9uazoiRDmhNf440CjGOjy93CXUOZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710183929; c=relaxed/simple;
-	bh=oZ0nj5sfiv04jveDZVyBl3lsU1hC6StrwMRfIf/Sc1M=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=AGo8we/kbV1BFhgrmusA1YOubeBcSmDf5BZQq8uZpLxeUliG4AcAvIZnMRJjTn6Pyeid6L2F/3SyuEnIlB106UL/nlIyjpJLbVv2a3Rpru24UH6gq1BXNEJQTwG/Phk1BOwbD4PI1d7ey5LeMw29dzeJZeeg7HMVCLIgqCdh8uM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=avzHBWDA; arc=none smtp.client-ip=192.30.252.210
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-c8f8bbb.ash1-iad.github.net [10.56.206.89])
-	by smtp.github.com (Postfix) with ESMTPA id ECC1F6005EB
-	for <linux-bluetooth@vger.kernel.org>; Mon, 11 Mar 2024 12:05:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1710183926;
-	bh=CV/Mibulrm3877XgTQkah8CGk/SD9w1gLRUvyTGlOBA=;
-	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=avzHBWDA6uN/7ZxmreEOuikWTEx8RKUhTC7GkGuQNs9Yaiyd1G9QBb8c2wyMn27WZ
-	 1jyRfrAtnY0oaRH76YS+Wp9t/OQYMWc8CYb+TkAcVtZl8PobfRn7Dr3C1sU8XcGqIm
-	 w5KA5zvKCjwT02jqV1xbO113GNWfz7UOy2WdmLZg=
-Date: Mon, 11 Mar 2024 12:05:26 -0700
-From: Pauli Virtanen <noreply@github.com>
-To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/master/a23239-c9dddb@github.com>
-Subject: [bluez/bluez] c9dddb: shared/bap: fix setting io on linked stream
+	s=arc-20240116; t=1710185964; c=relaxed/simple;
+	bh=8zurnbsBrKeYuLw03aT4mEoKW4tDjZ0HZCC093FPcGc=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=A0u1n3E3za4RHemVrI7Bp1BXod67CmQsngVb3H51s8Penqenf6VDuk5dTiaG5tuYtCjlrzhR5FJXsPuQgiVgS/SBhoJTIyRoLxJu/BANbg+Ku+1qpDYIe8zSOg7n+WryeOFDBdTRqzhldmccFWG0CnKWGoiXzDAHrLuyrDp8UEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pcEytSWh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id A1754C433F1;
+	Mon, 11 Mar 2024 19:39:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1710185964;
+	bh=8zurnbsBrKeYuLw03aT4mEoKW4tDjZ0HZCC093FPcGc=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=pcEytSWhTjp8/D325gjYo8MzChrrIybavYg9qNsettVivqT9YYXWw23NG8G4BkH9l
+	 2Bc18LvXIX6pd8jLBEPoyhP/tSFRCjhsXeZDBM4kVe2DrJnV9cXhhLSkMpAgDprUg0
+	 52JRwBBOB6Bht+p+5INBbxW+MzPktAfJpQkCx4Q1CyxvmIfWlNmBxFdIHcw+ggvvJB
+	 NIxpSHkFEcp00wItS1MHyiBaE+nWEGoGNfKK5wB+IGlIPbB0eTsOREMDMMqN2Gl8K2
+	 qcistl617gF5G455jOLIOGFdrh5bI/72KtrNz95EFu9MwGcyimMkKNQDrdbXjZV6iJ
+	 053nsYKwus81Q==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 8F5FEC39563;
+	Mon, 11 Mar 2024 19:39:24 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH BlueZ] shared/bap: fix setting io on linked stream
+From: patchwork-bot+bluetooth@kernel.org
+Message-Id: 
+ <171018596458.1144.2556648186900706094.git-patchwork-notify@kernel.org>
+Date: Mon, 11 Mar 2024 19:39:24 +0000
+References: <09755693e7900757286d3dc9fd181f8591c21a19.1710099560.git.pav@iki.fi>
+In-Reply-To: <09755693e7900757286d3dc9fd181f8591c21a19.1710099560.git.pav@iki.fi>
+To: Pauli Virtanen <pav@iki.fi>
+Cc: linux-bluetooth@vger.kernel.org
 
-  Branch: refs/heads/master
-  Home:   https://github.com/bluez/bluez
-  Commit: c9dddb642663b8bafe8998fef6132a2bb36d609d
-      https://github.com/bluez/bluez/commit/c9dddb642663b8bafe8998fef6132a2bb36d609d
-  Author: Pauli Virtanen <pav@iki.fi>
-  Date:   2024-03-11 (Mon, 11 Mar 2024)
+Hello:
 
-  Changed paths:
-    M src/shared/bap.c
+This patch was applied to bluetooth/bluez.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-  Log Message:
-  -----------
-  shared/bap: fix setting io on linked stream
+On Sun, 10 Mar 2024 21:40:33 +0200 you wrote:
+> Fix the second bap_stream_set_io call to set the io on the linked
+> transport, as it's clearly meant to.
+> 
+> Fixes sending duplicate stream stop/start requests.
+> 
+> bluetoothd[588207]: < ACL Data TX: Handle 2048 flags 0x00 dlen 11   #492 [hci1]
+>       ATT: Write Command (0x52) len 6
+>         Handle: 0x0098 Type: ASE Control Point (0x2bc6)
+>           Data: 04020505
+>             Opcode: Receiver Start Ready (0x04)
+>             Number of ASE(s): 2
+>             ASE: #0
+>             ASE ID: 0x05
+>             ASE: #1
+>             ASE ID: 0x05
+> 
+> [...]
 
-Fix the second bap_stream_set_io call to set the io on the linked
-transport, as it's clearly meant to.
+Here is the summary with links:
+  - [BlueZ] shared/bap: fix setting io on linked stream
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=c9dddb642663
 
-Fixes sending duplicate stream stop/start requests.
-
-bluetoothd[588207]: < ACL Data TX: Handle 2048 flags 0x00 dlen 11   #492 [hci1]
-      ATT: Write Command (0x52) len 6
-        Handle: 0x0098 Type: ASE Control Point (0x2bc6)
-          Data: 04020505
-            Opcode: Receiver Start Ready (0x04)
-            Number of ASE(s): 2
-            ASE: #0
-            ASE ID: 0x05
-            ASE: #1
-            ASE ID: 0x05
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
-
-To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
