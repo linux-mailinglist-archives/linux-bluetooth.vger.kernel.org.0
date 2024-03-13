@@ -1,77 +1,77 @@
-Return-Path: <linux-bluetooth+bounces-2500-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-2502-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B86E87B220
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 13 Mar 2024 20:44:21 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F0EE87B2B0
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 13 Mar 2024 21:14:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 85A981F240EA
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 13 Mar 2024 19:44:20 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5218DB29C56
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 13 Mar 2024 19:44:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 484BD4AEFD;
-	Wed, 13 Mar 2024 19:44:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79EE246537;
+	Wed, 13 Mar 2024 19:44:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BzXuJmDe"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d0J7RUr+"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
+Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5480546426
-	for <linux-bluetooth@vger.kernel.org>; Wed, 13 Mar 2024 19:44:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9335C210E9
+	for <linux-bluetooth@vger.kernel.org>; Wed, 13 Mar 2024 19:44:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710359053; cv=none; b=rvdSX9FD7zmxmqw+g38ED/fEHKLCRd4emIhhP+OR6/XG5NJuatUglCgw7KhJnAJ1jpKnm7jxzx013aWrOorIR2ptAfPBHqI996r2lUgRDIUnCbHtr8/TCnirECUbskDrW2jxrLXJ1CFOCZJF2tbgVAcvTHKDS2xe0WHvFhK9Zu4=
+	t=1710359054; cv=none; b=pTflF4tCjn3Ee7gw5EuMaKGan+9cNHElp7yuIs6fRIu8kRXDAgadjG1OKkq11ejmd+/EPGufwEoULcUbqNFQgY6nqJW7F2pRNE8aOuZay7m1yZAA3VMTt00CyfM6+LEYKi1ynv0hqiU29XTX2n4CLPDIhZi/wXQg4eV3RfXCf/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710359053; c=relaxed/simple;
-	bh=n5ZRuxq+mrHO2vZrIkAFHnhCP9PXZ4om0K1L6v3SJrM=;
+	s=arc-20240116; t=1710359054; c=relaxed/simple;
+	bh=j710wOZNf7KTzExFslKWSqoTk4lqWboYfZoTrcgyVgI=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HNh+6cpdqrqSYt7K0GsToI50CtfhOnPIoyHQHCp6klLQWECpmRApx7RauyLBsL1pSmeD2/yMGeao1yr27tLKh5CUTT+v6nG0gcEIsvSXDor+30Z6SwgRAdT37+mgtap0lu7Gem0Ki/KUXDxTk9LLJabicPu1OHuuctoLNa4YkBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BzXuJmDe; arc=none smtp.client-ip=209.85.217.52
+	 MIME-Version; b=M23Wg2kZO2xluG2YDaWjHqO5NCp2W0EWIES3P7KsxaFwwOzpoAu7ZAA9CEe6wTmkI+8DTZt7AnbV21bevQnQ1faT5nHXxdrS7g0wXDUBF0U1sWdppk7oxcB9H2CM0fszKqCeGmwqMC6EZzatokQVkmOMiYGpMBcy8R9NJ213rO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d0J7RUr+; arc=none smtp.client-ip=209.85.217.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vs1-f52.google.com with SMTP id ada2fe7eead31-4727e38ec10so56633137.1
-        for <linux-bluetooth@vger.kernel.org>; Wed, 13 Mar 2024 12:44:11 -0700 (PDT)
+Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-474c802022fso160834137.0
+        for <linux-bluetooth@vger.kernel.org>; Wed, 13 Mar 2024 12:44:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1710359049; x=1710963849; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1710359050; x=1710963850; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=25OGvpsp6THQWKK3GYGhEVbIQHg3IxpvYP6eWlw3O94=;
-        b=BzXuJmDeIBZe6l8rwIteNZHcN+kWJCC9Hao/K9YzKSfXUvYi7D1uXa8S+QGkV7rk3B
-         zvXBlRj8RY9T3gyUZIvVR0upybCyHgT3mRpqlxVFV5flj6nvNFfpGCm0pAgrz4dt0YNi
-         1aTR7etBmmqObcS+8kagwF7wKuib7Y2GMqzRGHYo6Ntm8TGPt6LWzTv4s+8lE70ij8K2
-         HV5vynxp42ILQoH3nRj4KrE31tiMOGVsDanEtOKpTzbToMlRqLONQ6cQBrkjMjTnLuLu
-         PXqN1QwLsqUkNVCgIMEikH473WS8Tv0V5mViE+ajEX/pPd37zCGEq6J2qyc07xJAvVpM
-         FvPw==
+        bh=wWt7gHL/JGzoqW2iuwH4qx4vSGfHkpJ9BsKj6XmOeRk=;
+        b=d0J7RUr+DxmlVrkbcRFEtKwyaTOc02U4YZYitJGFyZt4Ly91lhZQYmw7wvy1VTxWZH
+         XXmLGsScrFSUFi1lIQlTENwksRQFmUFRyOK/74X94aMsylBdxF2z/5Ycy3pJwFn2Rl9c
+         VxEQkY4DsQHQ81R25R2/4ZF+q1Spu/POGwz+YPTlgtLak903Zynr7jAOSq6dtXI3dmV8
+         TRm4XB0/a+W+/GWOlqZi1b8P2rziyzg5Yt4Ad9WAqi2SqoUdZb6QjNhGFyiSPdLsUkG/
+         fjYPanP8Z4WmkHGRZxuvvgAvAJLQBTHFxZp9jE6PEI4cXMn6+QoD70kija7n5Qx3v83d
+         HhOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1710359049; x=1710963849;
+        d=1e100.net; s=20230601; t=1710359050; x=1710963850;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=25OGvpsp6THQWKK3GYGhEVbIQHg3IxpvYP6eWlw3O94=;
-        b=AiLL5od0obK4TzkPHAWyKuGOzUh5Bce/wsXkdli97dsgPLNbgGmh3ry9+XQwemLlDX
-         bX4VJ69JB6+FqLi6x16KxswUpodG0d5AansY7OkN4iP0rOsYGiXxopYOHEUSeJTEyC1L
-         YK83hh6evGBghvx7sgDB8MfLPDFPyrO1EbTisJN8woJQljj3GyyehMkQmDbzXGcJ/rVC
-         cIk4lf8MU+LQ6/hvrGxPfoGurDEQ/JOdL+NTaLKlSxyYfObJZ46zAWUf54vtzYtHtBhq
-         +BuwROPOG0/38gNnv5kUAQ2ozqcSso+ijyRGvQM16HPUoKp5XrtcV0M9NRYbmEojHut0
-         Jtyg==
-X-Gm-Message-State: AOJu0YxkEUtgfX/DE1p/ZpAZkc4TUSzAXBwP6iNb/Qa551bHFHHYgoAA
-	vLN9/R5jWJMXkdhiHgvcq2ZU4sI9n4apkxBvx7PcUYDNQym/3qbcu0Hdx3Ue
-X-Google-Smtp-Source: AGHT+IGIVU9kEfpXmmOE2HS25z0KcAhFs6e6tgvSCzx7YxXcWRFCMPNIa4QLRCHNaMNe2vBpTzNuBQ==
-X-Received: by 2002:a05:6102:2405:b0:475:d24b:91b9 with SMTP id j5-20020a056102240500b00475d24b91b9mr728234vsi.35.1710359048807;
-        Wed, 13 Mar 2024 12:44:08 -0700 (PDT)
+        bh=wWt7gHL/JGzoqW2iuwH4qx4vSGfHkpJ9BsKj6XmOeRk=;
+        b=Ym0zT+vNIqkN52LBBHTr/HC2x4wcEm/rnqa+PMMmVz71uMiRchkEKxTnUzJ8FJaJk5
+         jwWlTevTN0k94ArK67MUfXmxTp4PDK2I8bLFApMTtaDTfx5q1/Rts0gT1hQdx60FDs71
+         MqMnX/ZTfZe+6xLoODrLdyt0sEx397N/0IwuITxLIlcmgB5cmxwsmqcrwhajlCivGSgm
+         CaMYgFJjKJY+PG0HINWP5pV3W489TkZTdJU6C40V1A/25cRMtXAvhteI16nfr4GSevUc
+         UQmx8zN5KQBmRNZXG6AtIAeDL3cOcVxcvhYqTBBSPT1pRdLJqIs9laBz5OWOenQT/H+J
+         V3DQ==
+X-Gm-Message-State: AOJu0YwcTOBOkGwgqT4e3DhT/8+MmTI67/KzN2siQi+8jLqMLhFXxfh0
+	2wCKMkuH8Bny0ejCj09q6edJGSpBWoqVjPhucsEj5DUJN0sxvRpRfifLhe1o
+X-Google-Smtp-Source: AGHT+IG79ODzDiOmSeUF6XD61iJJos694LPbghShX/XmzigHpWErYw8mbTS8KsPhfLITlA1e1r83KQ==
+X-Received: by 2002:a67:ea14:0:b0:473:799:9764 with SMTP id g20-20020a67ea14000000b0047307999764mr918091vso.14.1710359049989;
+        Wed, 13 Mar 2024 12:44:09 -0700 (PDT)
 Received: from lvondent-mobl4.. (107-146-107-067.biz.spectrum.com. [107.146.107.67])
-        by smtp.gmail.com with ESMTPSA id gd6-20020a056102624600b004730db4e873sm1800259vsb.10.2024.03.13.12.44.04
+        by smtp.gmail.com with ESMTPSA id gd6-20020a056102624600b004730db4e873sm1800259vsb.10.2024.03.13.12.44.08
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Mar 2024 12:44:05 -0700 (PDT)
+        Wed, 13 Mar 2024 12:44:09 -0700 (PDT)
 From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v4 3/6] shared/lc3: Add definition for broadcast configurations
-Date: Wed, 13 Mar 2024 15:43:57 -0400
-Message-ID: <20240313194400.1397477-3-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ v4 4/6] client/player: Use QOS macros from lc3.h to define presets
+Date: Wed, 13 Mar 2024 15:43:58 -0400
+Message-ID: <20240313194400.1397477-4-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240313194400.1397477-1-luiz.dentz@gmail.com>
 References: <20240313194400.1397477-1-luiz.dentz@gmail.com>
@@ -85,910 +85,632 @@ Content-Transfer-Encoding: 8bit
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This adds defines for broadcast settings as they don't really match
-unicast when it comes to RTN and Latency.
+This makes use of QOS macros for for lc3.h to define preset
+configuration and remove existing macros since they were just
+duplicates.
 ---
- src/shared/bap-defs.h |  97 ++++++++++
- src/shared/bap.h      |  84 +-------
- src/shared/lc3.h      | 434 ++++++++++++++++++++++++++++++++++++++----
- 3 files changed, 500 insertions(+), 115 deletions(-)
- create mode 100644 src/shared/bap-defs.h
+ client/player.c | 424 +++++++++++++++++++-----------------------------
+ 1 file changed, 169 insertions(+), 255 deletions(-)
 
-diff --git a/src/shared/bap-defs.h b/src/shared/bap-defs.h
-new file mode 100644
-index 000000000000..2467e816ffa9
---- /dev/null
-+++ b/src/shared/bap-defs.h
-@@ -0,0 +1,97 @@
-+/* SPDX-License-Identifier: LGPL-2.1-or-later */
-+/*
-+ *
-+ *  BlueZ - Bluetooth protocol stack for Linux
-+ *
-+ *  Copyright (C) 2022  Intel Corporation. All rights reserved.
-+ *  Copyright 2023-2024 NXP
-+ *
-+ */
-+
-+#ifndef SRC_SHARED_BAP_DEFS_H_
-+#define SRC_SHARED_BAP_DEFS_H_
-+
-+#ifndef __packed
-+#define __packed __attribute__((packed))
-+#endif
-+
-+#define BT_BAP_SINK			0x01
-+#define	BT_BAP_SOURCE			0x02
-+#define	BT_BAP_BCAST_SOURCE		0x03
-+#define	BT_BAP_BCAST_SINK		0x04
-+
-+#define BT_BAP_STREAM_TYPE_UCAST	0x01
-+#define	BT_BAP_STREAM_TYPE_BCAST	0x02
-+
-+#define BT_BAP_STREAM_STATE_IDLE	0x00
-+#define BT_BAP_STREAM_STATE_CONFIG	0x01
-+#define BT_BAP_STREAM_STATE_QOS		0x02
-+#define BT_BAP_STREAM_STATE_ENABLING	0x03
-+#define BT_BAP_STREAM_STATE_STREAMING	0x04
-+#define BT_BAP_STREAM_STATE_DISABLING	0x05
-+#define BT_BAP_STREAM_STATE_RELEASING	0x06
-+
-+#define BT_BAP_CONFIG_LATENCY_LOW	0x01
-+#define BT_BAP_CONFIG_LATENCY_BALANCED	0x02
-+#define BT_BAP_CONFIG_LATENCY_HIGH	0x03
-+
-+#define BT_BAP_CONFIG_PHY_1M		0x01
-+#define BT_BAP_CONFIG_PHY_2M		0x02
-+#define BT_BAP_CONFIG_PHY_CODEC		0x03
-+
-+struct bt_bap_codec {
-+	uint8_t  id;
-+	uint16_t cid;
-+	uint16_t vid;
-+} __packed;
-+
-+struct bt_ltv {
-+	uint8_t  len;
-+	uint8_t  type;
-+	uint8_t  value[];
-+} __packed;
-+
-+struct bt_bap_io_qos {
-+	uint32_t interval;	/* Frame interval */
-+	uint16_t latency;	/* Transport Latency */
-+	uint16_t sdu;		/* Maximum SDU Size */
-+	uint8_t  phy;		/* PHY */
-+	uint8_t  rtn;		/* Retransmission Effort */
-+};
-+
-+struct bt_bap_ucast_qos {
-+	uint8_t  cig_id;
-+	uint8_t  cis_id;
-+	uint8_t  framing;		/* Frame framing */
-+	uint32_t delay;			/* Presentation Delay */
-+	uint8_t  target_latency;	/* Target Latency */
-+	struct bt_bap_io_qos io_qos;
-+};
-+
-+struct bt_bap_bcast_qos {
-+	uint8_t  big;
-+	uint8_t  bis;
-+	uint8_t  sync_factor;
-+	uint8_t  packing;
-+	uint8_t  framing;
-+	uint8_t  encryption;
-+	struct iovec *bcode;
-+	uint8_t  options;
-+	uint16_t skip;
-+	uint16_t sync_timeout;
-+	uint8_t  sync_cte_type;
-+	uint8_t  mse;
-+	uint16_t timeout;
-+	uint8_t  pa_sync;
-+	struct bt_bap_io_qos io_qos;
-+	uint32_t delay;			/* Presentation Delay */
-+};
-+
-+struct bt_bap_qos {
-+	union {
-+		struct bt_bap_ucast_qos ucast;
-+		struct bt_bap_bcast_qos bcast;
-+	};
-+};
-+
-+#endif /* SRC_SHARED_BAP_DEFS_H_ */
-diff --git a/src/shared/bap.h b/src/shared/bap.h
-index b2826719f84f..9839e324905a 100644
---- a/src/shared/bap.h
-+++ b/src/shared/bap.h
-@@ -10,94 +10,12 @@
+diff --git a/client/player.c b/client/player.c
+index ab8cb7434cdc..381c5d568103 100644
+--- a/client/player.c
++++ b/client/player.c
+@@ -1232,20 +1232,10 @@ static const struct capabilities {
+ 				UTIL_IOV_INIT()),
+ };
  
- #include <stdbool.h>
- #include <inttypes.h>
--
--#ifndef __packed
--#define __packed __attribute__((packed))
--#endif
--
--#define BT_BAP_SINK			0x01
--#define	BT_BAP_SOURCE			0x02
--#define	BT_BAP_BCAST_SOURCE		0x03
--#define	BT_BAP_BCAST_SINK		0x04
--
--#define BT_BAP_STREAM_TYPE_UCAST	0x01
--#define	BT_BAP_STREAM_TYPE_BCAST	0x02
--
--#define BT_BAP_STREAM_STATE_IDLE	0x00
--#define BT_BAP_STREAM_STATE_CONFIG	0x01
--#define BT_BAP_STREAM_STATE_QOS		0x02
--#define BT_BAP_STREAM_STATE_ENABLING	0x03
--#define BT_BAP_STREAM_STATE_STREAMING	0x04
--#define BT_BAP_STREAM_STATE_DISABLING	0x05
--#define BT_BAP_STREAM_STATE_RELEASING	0x06
--
--#define BT_BAP_CONFIG_LATENCY_LOW	0x01
--#define BT_BAP_CONFIG_LATENCY_BALANCED	0x02
--#define BT_BAP_CONFIG_LATENCY_HIGH	0x03
--
--#define BT_BAP_CONFIG_PHY_1M		0x01
--#define BT_BAP_CONFIG_PHY_2M		0x02
--#define BT_BAP_CONFIG_PHY_CODEC		0x03
-+#include "src/shared/bap-defs.h"
- 
- struct bt_bap;
- struct bt_bap_pac;
- struct bt_bap_stream;
- 
--struct bt_bap_codec {
--	uint8_t  id;
--	uint16_t cid;
--	uint16_t vid;
--} __packed;
--
--struct bt_ltv {
--	uint8_t  len;
--	uint8_t  type;
--	uint8_t  value[0];
--} __packed;
--
--struct bt_bap_io_qos {
--	uint32_t interval;	/* Frame interval */
--	uint16_t latency;	/* Transport Latency */
--	uint16_t sdu;		/* Maximum SDU Size */
--	uint8_t  phy;		/* PHY */
--	uint8_t  rtn;		/* Retransmission Effort */
--};
--
--struct bt_bap_ucast_qos {
--	uint8_t  cig_id;
--	uint8_t  cis_id;
--	uint8_t  framing;		/* Frame framing */
--	uint32_t delay;			/* Presentation Delay */
--	uint8_t  target_latency;	/* Target Latency */
--	struct bt_bap_io_qos io_qos;
--};
--
--struct bt_bap_bcast_qos {
--	uint8_t  big;
--	uint8_t  bis;
--	uint8_t  sync_factor;
--	uint8_t  packing;
+-struct codec_qos {
+-	uint32_t interval;
 -	uint8_t  framing;
--	uint8_t  encryption;
--	struct iovec *bcode;
--	uint8_t  options;
--	uint16_t skip;
--	uint16_t sync_timeout;
--	uint8_t  sync_cte_type;
--	uint8_t  mse;
--	uint16_t timeout;
--	uint8_t  pa_sync;
--	struct bt_bap_io_qos io_qos;
--	uint32_t delay;			/* Presentation Delay */
+-	uint8_t  phy;
+-	uint16_t sdu;
+-	uint8_t  rtn;
+-	uint16_t latency;
+-	uint32_t delay;
 -};
 -
--struct bt_bap_qos {
--	union {
--		struct bt_bap_ucast_qos ucast;
--		struct bt_bap_bcast_qos bcast;
--	};
--};
+ struct codec_preset {
+ 	char *name;
+ 	const struct iovec data;
+-	const struct codec_qos qos;
++	struct bt_bap_qos qos;
+ 	uint8_t target_latency;
+ };
+ 
+@@ -1296,47 +1286,6 @@ static struct codec_preset sbc_presets[] = {
+ 	SBC_PRESET("UQ_STEREO_48", UTIL_IOV_INIT(0x11, 0x15, 2, 58)),
+ };
+ 
+-#define QOS_CONFIG(_interval, _framing, _phy, _sdu, _rtn, _latency, _delay) \
+-	{ \
+-		.interval = _interval, \
+-		.framing = _framing, \
+-		.phy = _phy, \
+-		.sdu = _sdu, \
+-		.rtn = _rtn, \
+-		.latency = _latency, \
+-		.delay = _delay, \
+-	}
 -
- typedef void (*bt_bap_ready_func_t)(struct bt_bap *bap, void *user_data);
- typedef void (*bt_bap_destroy_func_t)(void *user_data);
- typedef void (*bt_bap_debug_func_t)(const char *str, void *user_data);
-diff --git a/src/shared/lc3.h b/src/shared/lc3.h
-index 1db46217b76e..d74412719306 100644
---- a/src/shared/lc3.h
-+++ b/src/shared/lc3.h
-@@ -8,6 +8,8 @@
-  *
-  */
+-#define QOS_UNFRAMED(_interval, _phy, _sdu, _rtn, _latency, _delay) \
+-	QOS_CONFIG(_interval, 0x00, _phy, _sdu, _rtn, _latency, _delay)
+-
+-#define QOS_FRAMED(_interval, _phy, _sdu, _rtn, _latency, _delay) \
+-	QOS_CONFIG(_interval, 0x01, _phy, _sdu, _rtn, _latency, _delay)
+-
+-#define QOS_UNFRAMED_1M(_interval, _sdu, _rtn, _latency, _delay) \
+-	QOS_UNFRAMED(_interval, 0x01, _sdu, _rtn, _latency, _delay) \
+-
+-#define QOS_FRAMED_1M(_interval, _sdu, _rtn, _latency, _delay) \
+-	QOS_FRAMED(_interval, 0x01, _sdu, _rtn, _latency, _delay) \
+-
+-#define QOS_UNFRAMED_2M(_interval, _sdu, _rtn, _latency, _delay) \
+-	QOS_UNFRAMED(_interval, 0x02, _sdu, _rtn, _latency, _delay) \
+-
+-#define QOS_FRAMED_2M(_interval, _sdu, _rtn, _latency, _delay) \
+-	QOS_FRAMED(_interval, 0x02, _sdu, _rtn, _latency, _delay) \
+-
+-#define LC3_7_5_UNFRAMED(_sdu, _rtn, _latency, _delay) \
+-	QOS_UNFRAMED(7500u, 0x02, _sdu, _rtn, _latency, _delay)
+-
+-#define LC3_7_5_FRAMED(_sdu, _rtn, _latency, _delay) \
+-	QOS_FRAMED(7500u, 0x02, _sdu, _rtn, _latency, _delay)
+-
+-#define LC3_10_UNFRAMED(_sdu, _rtn, _latency, _delay) \
+-	QOS_UNFRAMED_2M(10000u, _sdu, _rtn, _latency, _delay)
+-
+-#define LC3_10_FRAMED(_sdu, _rtn, _latency, _delay) \
+-	QOS_FRAMED_2M(10000u, _sdu, _rtn, _latency, _delay)
+-
+ #define LC3_PRESET_LL(_name, _data, _qos) \
+ 	{ \
+ 		.name = _name, \
+@@ -1361,183 +1310,115 @@ static struct codec_preset sbc_presets[] = {
+ 		.target_latency = 0x03, \
+ 	}
  
-+#include "src/shared/bap-defs.h"
++#define LC3_PRESET_B(_name, _data, _qos) \
++	{ \
++		.name = _name, \
++		.data = _data, \
++		.qos = _qos, \
++		.target_latency = 0x00, \
++	}
 +
- #define LC3_ID			0x06
+ static struct codec_preset lc3_ucast_presets[] = {
+ 	/* Table 4.43: QoS configuration support setting requirements */
+-	LC3_PRESET("8_1_1", LC3_CONFIG_8_1,
+-			LC3_7_5_UNFRAMED(26u, 2u, 8u, 40000u)),
+-	LC3_PRESET("8_2_1", LC3_CONFIG_8_2,
+-			LC3_10_UNFRAMED(30u, 2u, 10u, 40000u)),
+-	LC3_PRESET("16_1_1", LC3_CONFIG_16_1,
+-			LC3_7_5_UNFRAMED(30u, 2u, 8u, 40000u)),
+-	LC3_PRESET("16_2_1", LC3_CONFIG_16_2,
+-			LC3_10_UNFRAMED(40u, 2u, 10u, 40000u)),
+-	LC3_PRESET("24_1_1", LC3_CONFIG_24_1,
+-			LC3_7_5_UNFRAMED(45u, 2u, 8u, 40000u)),
+-	LC3_PRESET("24_2_1", LC3_CONFIG_24_2,
+-			LC3_10_UNFRAMED(60u, 2u, 10u, 40000u)),
+-	LC3_PRESET("32_1_1", LC3_CONFIG_32_1,
+-			LC3_7_5_UNFRAMED(60u, 2u, 8u, 40000u)),
+-	LC3_PRESET("32_2_1", LC3_CONFIG_32_2,
+-			LC3_10_UNFRAMED(80u, 2u, 10u, 40000u)),
+-	LC3_PRESET("44_1_1", LC3_CONFIG_44_1,
+-			QOS_FRAMED_2M(8163u, 98u, 5u, 24u, 40000u)),
+-	LC3_PRESET("44_2_1", LC3_CONFIG_44_2,
+-			QOS_FRAMED_2M(10884u, 130u, 5u, 31u, 40000u)),
+-	LC3_PRESET("48_1_1", LC3_CONFIG_48_1,
+-			LC3_7_5_UNFRAMED(75u, 5u, 15u, 40000u)),
+-	LC3_PRESET("48_2_1", LC3_CONFIG_48_2,
+-			LC3_10_UNFRAMED(100u, 5u, 20u, 40000u)),
+-	LC3_PRESET("48_3_1", LC3_CONFIG_48_3,
+-			LC3_7_5_UNFRAMED(90u, 5u, 15u, 40000u)),
+-	LC3_PRESET("48_4_1", LC3_CONFIG_48_4,
+-			LC3_10_UNFRAMED(120u, 5u, 20u, 40000u)),
+-	LC3_PRESET("48_5_1", LC3_CONFIG_48_5,
+-			LC3_7_5_UNFRAMED(117u, 5u, 15u, 40000u)),
+-	LC3_PRESET("48_6_1", LC3_CONFIG_48_6,
+-			LC3_10_UNFRAMED(155u, 5u, 20u, 40000u)),
++	LC3_PRESET("8_1_1", LC3_CONFIG_8_1, LC3_QOS_8_1_1),
++	LC3_PRESET("8_2_1", LC3_CONFIG_8_2, LC3_QOS_8_2_1),
++	LC3_PRESET("16_1_1", LC3_CONFIG_16_1, LC3_QOS_16_1_1),
++	LC3_PRESET("16_2_1", LC3_CONFIG_16_2, LC3_QOS_16_2_1),
++	LC3_PRESET("24_1_1", LC3_CONFIG_24_1, LC3_QOS_24_1_1),
++	LC3_PRESET("24_2_1", LC3_CONFIG_24_2, LC3_QOS_24_2_1),
++	LC3_PRESET("32_1_1", LC3_CONFIG_32_1, LC3_QOS_32_1_1),
++	LC3_PRESET("32_2_1", LC3_CONFIG_32_2, LC3_QOS_32_1_1),
++	LC3_PRESET("44_1_1", LC3_CONFIG_44_1, LC3_QOS_44_1_1),
++	LC3_PRESET("44_2_1", LC3_CONFIG_44_2, LC3_QOS_44_2_1),
++	LC3_PRESET("48_1_1", LC3_CONFIG_48_1, LC3_QOS_48_1_1),
++	LC3_PRESET("48_2_1", LC3_CONFIG_48_2, LC3_QOS_48_2_1),
++	LC3_PRESET("48_3_1", LC3_CONFIG_48_3, LC3_QOS_48_3_1),
++	LC3_PRESET("48_4_1", LC3_CONFIG_48_4, LC3_QOS_48_4_1),
++	LC3_PRESET("48_5_1", LC3_CONFIG_48_5, LC3_QOS_48_5_1),
++	LC3_PRESET("48_6_1", LC3_CONFIG_48_6, LC3_QOS_48_6_1),
+ 	/* QoS Configuration settings for high reliability audio data */
+-	LC3_PRESET_HR("8_1_2", LC3_CONFIG_8_1,
+-			LC3_7_5_UNFRAMED(26u, 13u, 75u, 40000u)),
+-	LC3_PRESET_HR("8_2_2", LC3_CONFIG_8_2,
+-			LC3_10_UNFRAMED(30u, 13u, 95u, 40000u)),
+-	LC3_PRESET_HR("16_1_2", LC3_CONFIG_16_1,
+-			LC3_7_5_UNFRAMED(30u, 13u, 75u, 40000u)),
+-	LC3_PRESET_HR("16_2_2", LC3_CONFIG_16_2,
+-			LC3_10_UNFRAMED(40u, 13u, 95u, 40000u)),
+-	LC3_PRESET_HR("24_1_2", LC3_CONFIG_24_1,
+-			LC3_7_5_UNFRAMED(45u, 13u, 75u, 40000u)),
+-	LC3_PRESET_HR("24_2_2", LC3_CONFIG_24_2,
+-			LC3_10_UNFRAMED(60u, 13u, 95u, 40000u)),
+-	LC3_PRESET_HR("32_1_2", LC3_CONFIG_32_1,
+-			LC3_7_5_UNFRAMED(60u, 13u, 75u, 40000u)),
+-	LC3_PRESET_HR("32_2_2", LC3_CONFIG_32_2,
+-			LC3_10_UNFRAMED(80u, 13u, 95u, 40000u)),
+-	LC3_PRESET_HR("44_1_2", LC3_CONFIG_44_1,
+-			QOS_FRAMED_2M(8163u, 98u, 13u, 80u, 40000u)),
+-	LC3_PRESET_HR("44_2_2", LC3_CONFIG_44_2,
+-			QOS_FRAMED_2M(10884u, 130u, 13u, 85u, 40000u)),
+-	LC3_PRESET_HR("48_1_2", LC3_CONFIG_48_1,
+-			LC3_7_5_UNFRAMED(75u, 13u, 75u, 40000u)),
+-	LC3_PRESET_HR("48_2_2", LC3_CONFIG_48_2,
+-			LC3_10_UNFRAMED(100u, 13u, 95u, 40000u)),
+-	LC3_PRESET_HR("48_3_2", LC3_CONFIG_48_3,
+-			LC3_7_5_UNFRAMED(90u, 13u, 75u, 40000u)),
+-	LC3_PRESET_HR("48_4_2", LC3_CONFIG_48_4,
+-			LC3_10_UNFRAMED(120u, 13u, 100u, 40000u)),
+-	LC3_PRESET_HR("48_5_2", LC3_CONFIG_48_5,
+-			LC3_7_5_UNFRAMED(117u, 13u, 75u, 40000u)),
+-	LC3_PRESET_HR("48_6_2", LC3_CONFIG_48_6,
+-			LC3_10_UNFRAMED(155u, 13u, 100u, 40000u)),
++	LC3_PRESET_HR("8_1_2", LC3_CONFIG_8_1, LC3_QOS_8_1_2),
++	LC3_PRESET_HR("8_2_2", LC3_CONFIG_8_2, LC3_QOS_8_2_2),
++	LC3_PRESET_HR("16_1_2", LC3_CONFIG_16_1, LC3_QOS_16_1_2),
++	LC3_PRESET_HR("16_2_2", LC3_CONFIG_16_2, LC3_QOS_16_2_2),
++	LC3_PRESET_HR("24_1_2", LC3_CONFIG_24_1, LC3_QOS_24_1_2),
++	LC3_PRESET_HR("24_2_2", LC3_CONFIG_24_2, LC3_QOS_24_2_2),
++	LC3_PRESET_HR("32_1_2", LC3_CONFIG_32_1, LC3_QOS_32_1_2),
++	LC3_PRESET_HR("32_2_2", LC3_CONFIG_32_2, LC3_QOS_32_2_2),
++	LC3_PRESET_HR("44_1_2", LC3_CONFIG_44_1, LC3_QOS_44_1_2),
++	LC3_PRESET_HR("44_2_2", LC3_CONFIG_44_2, LC3_QOS_44_2_2),
++	LC3_PRESET_HR("48_1_2", LC3_CONFIG_48_1, LC3_QOS_48_1_2),
++	LC3_PRESET_HR("48_2_2", LC3_CONFIG_48_2, LC3_QOS_48_2_2),
++	LC3_PRESET_HR("48_3_2", LC3_CONFIG_48_3, LC3_QOS_48_3_2),
++	LC3_PRESET_HR("48_4_2", LC3_CONFIG_48_4, LC3_QOS_48_4_2),
++	LC3_PRESET_HR("48_5_2", LC3_CONFIG_48_5, LC3_QOS_48_5_2),
++	LC3_PRESET_HR("48_6_2", LC3_CONFIG_48_6, LC3_QOS_48_6_2),
+ 	/* QoS configuration support setting requirements for the UGG and UGT */
+-	LC3_PRESET_LL("16_1_gs", LC3_CONFIG_16_1,
+-			LC3_7_5_UNFRAMED(30u, 1u, 15u, 60000u)),
+-	LC3_PRESET_LL("16_2_gs", LC3_CONFIG_16_2,
+-			LC3_10_UNFRAMED(40u, 1u, 20u, 60000u)),
+-	LC3_PRESET_LL("32_1_gs", LC3_CONFIG_32_1,
+-			LC3_7_5_UNFRAMED(60u, 1u, 15u, 60000u)),
+-	LC3_PRESET_LL("32_2_gs", LC3_CONFIG_32_2,
+-			LC3_10_UNFRAMED(80u, 1u, 20u, 60000u)),
+-	LC3_PRESET_LL("48_1_gs", LC3_CONFIG_48_1,
+-			LC3_7_5_UNFRAMED(75u, 1u, 15u, 60000u)),
+-	LC3_PRESET_LL("48_2_gs", LC3_CONFIG_48_2,
+-			LC3_10_UNFRAMED(100u, 1u, 20u, 60000u)),
+-	LC3_PRESET_LL("32_1_gr", LC3_CONFIG_32_1,
+-			LC3_7_5_UNFRAMED(60u, 1u, 15u, 10000u)),
+-	LC3_PRESET_LL("32_2_gr", LC3_CONFIG_32_2,
+-			LC3_10_UNFRAMED(80u, 1u, 20u, 10000u)),
+-	LC3_PRESET_LL("48_1_gr", LC3_CONFIG_48_1,
+-			LC3_7_5_UNFRAMED(75u, 1u, 15u, 10000u)),
+-	LC3_PRESET_LL("48_2_gr", LC3_CONFIG_48_2,
+-			LC3_10_UNFRAMED(100u, 1u, 20u, 10000u)),
+-	LC3_PRESET_LL("48_3_gr", LC3_CONFIG_48_3,
+-			LC3_7_5_UNFRAMED(90u, 1u, 15u, 10000u)),
+-	LC3_PRESET_LL("48_4_gr", LC3_CONFIG_48_4,
+-			LC3_10_UNFRAMED(120u, 1u, 20u, 10000u)),
++	LC3_PRESET_LL("16_1_gs", LC3_CONFIG_16_1, LC3_QOS_16_1_GS),
++	LC3_PRESET_LL("16_2_gs", LC3_CONFIG_16_2, LC3_QOS_16_2_GS),
++	LC3_PRESET_LL("32_1_gs", LC3_CONFIG_32_1, LC3_QOS_32_1_GS),
++	LC3_PRESET_LL("32_2_gs", LC3_CONFIG_32_2, LC3_QOS_32_2_GS),
++	LC3_PRESET_LL("48_1_gs", LC3_CONFIG_48_1, LC3_QOS_48_1_GS),
++	LC3_PRESET_LL("48_2_gs", LC3_CONFIG_48_2, LC3_QOS_48_2_GS),
++	LC3_PRESET_LL("32_1_gr", LC3_CONFIG_32_1, LC3_QOS_32_1_GR),
++	LC3_PRESET_LL("32_2_gr", LC3_CONFIG_32_2, LC3_QOS_32_2_GR),
++	LC3_PRESET_LL("48_1_gr", LC3_CONFIG_48_1, LC3_QOS_48_1_GR),
++	LC3_PRESET_LL("48_2_gr", LC3_CONFIG_48_2, LC3_QOS_48_2_GR),
++	LC3_PRESET_LL("48_3_gr", LC3_CONFIG_48_3, LC3_QOS_48_3_GR),
++	LC3_PRESET_LL("48_4_gr", LC3_CONFIG_48_4, LC3_QOS_48_4_GR),
+ 	LC3_PRESET_LL("32_1_gr_l+r", LC3_CONFIG_32_1_AC(2),
+-			LC3_7_5_UNFRAMED(2 * 60u, 1u, 15u, 10000u)),
++				LC3_QOS_32_1_GR_AC(2)),
+ 	LC3_PRESET_LL("32_2_gr_l+r", LC3_CONFIG_32_2_AC(2),
+-			LC3_10_UNFRAMED(2 * 80u, 1u, 20u, 10000u)),
++				LC3_QOS_32_2_GR_AC(2)),
+ 	LC3_PRESET_LL("48_1_gr_l+r", LC3_CONFIG_48_1_AC(2),
+-			LC3_7_5_UNFRAMED(2 * 75u, 1u, 15u, 10000u)),
++				LC3_QOS_48_1_GR_AC(2)),
+ 	LC3_PRESET_LL("48_2_gr_l+r", LC3_CONFIG_48_2_AC(2),
+-			LC3_10_UNFRAMED(2 * 100u, 1u, 20u, 10000u)),
++				LC3_QOS_48_2_GR_AC(2)),
+ 	LC3_PRESET_LL("48_3_gr_l+r", LC3_CONFIG_48_3_AC(2),
+-			LC3_7_5_UNFRAMED(2 * 90u, 1u, 15u, 10000u)),
++				LC3_QOS_48_3_GR_AC(2)),
+ 	LC3_PRESET_LL("48_4_gr_l+r", LC3_CONFIG_48_4_AC(2),
+-			LC3_10_UNFRAMED(2 * 120u, 1u, 20u, 10000u)),
++				LC3_QOS_48_4_GR_AC(2)),
+ };
  
- #define LC3_BASE		0x01
-@@ -280,6 +282,7 @@
- { \
- 	.ucast.cig_id = 0x00, \
- 	.ucast.cis_id = 0x00, \
-+	.ucast.framing = _frame, \
- 	.ucast.delay = _pd, \
- 	.ucast.target_latency = _t_lat, \
- 	.ucast.io_qos.interval = _interval, \
-@@ -304,7 +307,7 @@
- #define LC3_QOS_8_1_1_AC(_ac) \
- 	LC3_QOS_UCAST_7_5_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_8_1_1_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_8_1, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_8_1, \
- 					LC3_QOS_8_1_1_RTN)
- #define LC3_QOS_8_1_1 LC3_QOS_8_1_1_AC(1)
+ static struct codec_preset lc3_bcast_presets[] = {
+ 	/* Table 6.4: Broadcast Audio Stream configuration support requirements
+ 	 * for the Broadcast Source and Broadcast Sink
+ 	 */
+-	LC3_PRESET("8_1_1", LC3_CONFIG_8_1,
+-			LC3_7_5_UNFRAMED(26u, 2u, 8u, 40000u)),
+-	LC3_PRESET("8_2_1", LC3_CONFIG_8_2,
+-			LC3_10_UNFRAMED(30u, 2u, 10u, 40000u)),
+-	LC3_PRESET("16_1_1", LC3_CONFIG_16_1,
+-			LC3_7_5_UNFRAMED(30u, 2u, 8u, 40000u)),
+-	LC3_PRESET("16_2_1", LC3_CONFIG_16_2,
+-			LC3_10_UNFRAMED(40u, 2u, 10u, 40000u)),
+-	LC3_PRESET("24_1_1", LC3_CONFIG_24_1,
+-			LC3_7_5_UNFRAMED(45u, 2u, 8u, 40000u)),
+-	LC3_PRESET("24_2_1", LC3_CONFIG_24_2,
+-			LC3_10_UNFRAMED(60u, 2u, 10u, 40000u)),
+-	LC3_PRESET("32_1_1", LC3_CONFIG_32_1,
+-			LC3_7_5_UNFRAMED(60u, 2u, 8u, 40000u)),
+-	LC3_PRESET("32_2_1", LC3_CONFIG_32_2,
+-			LC3_10_UNFRAMED(80u, 2u, 10u, 40000u)),
+-	LC3_PRESET("44_1_1", LC3_CONFIG_44_1,
+-			QOS_FRAMED_2M(8163u, 98u, 4u, 24u, 40000u)),
+-	LC3_PRESET("44_2_1", LC3_CONFIG_44_2,
+-			QOS_FRAMED_2M(10884u, 130u, 4u, 31u, 40000u)),
+-	LC3_PRESET("48_1_1", LC3_CONFIG_48_1,
+-			LC3_7_5_UNFRAMED(75u, 4u, 15u, 40000u)),
+-	LC3_PRESET("48_2_1", LC3_CONFIG_48_2,
+-			LC3_10_UNFRAMED(100u, 4u, 20u, 40000u)),
+-	LC3_PRESET("48_3_1", LC3_CONFIG_48_3,
+-			LC3_7_5_UNFRAMED(90u, 4u, 15u, 40000u)),
+-	LC3_PRESET("48_4_1", LC3_CONFIG_48_4,
+-			LC3_10_UNFRAMED(120u, 4u, 20u, 40000u)),
+-	LC3_PRESET("48_5_1", LC3_CONFIG_48_5,
+-			LC3_7_5_UNFRAMED(117u, 4u, 15u, 40000u)),
+-	LC3_PRESET("48_6_1", LC3_CONFIG_48_6,
+-			LC3_10_UNFRAMED(155u, 4u, 20u, 40000u)),
++	LC3_PRESET_B("8_1_1", LC3_CONFIG_8_1, LC3_QOS_8_1_1_B),
++	LC3_PRESET_B("8_2_1", LC3_CONFIG_8_2, LC3_QOS_8_2_1_B),
++	LC3_PRESET_B("16_1_1", LC3_CONFIG_16_1, LC3_QOS_16_1_1_B),
++	LC3_PRESET_B("16_2_1", LC3_CONFIG_16_2, LC3_QOS_16_2_1_B),
++	LC3_PRESET_B("24_1_1", LC3_CONFIG_24_1, LC3_QOS_24_1_1_B),
++	LC3_PRESET_B("24_2_1", LC3_CONFIG_24_2, LC3_QOS_24_2_1_B),
++	LC3_PRESET_B("32_1_1", LC3_CONFIG_32_1, LC3_QOS_32_1_1_B),
++	LC3_PRESET_B("32_2_1", LC3_CONFIG_32_2, LC3_QOS_32_2_1_B),
++	LC3_PRESET_B("44_1_1", LC3_CONFIG_44_1, LC3_QOS_44_1_1_B),
++	LC3_PRESET_B("44_2_1", LC3_CONFIG_44_2, LC3_QOS_44_2_1_B),
++	LC3_PRESET_B("48_1_1", LC3_CONFIG_48_1, LC3_QOS_48_1_1_B),
++	LC3_PRESET_B("48_2_1", LC3_CONFIG_48_2, LC3_QOS_48_2_1_B),
++	LC3_PRESET_B("48_3_1", LC3_CONFIG_48_3, LC3_QOS_48_3_1_B),
++	LC3_PRESET_B("48_4_1", LC3_CONFIG_48_4, LC3_QOS_48_4_1_B),
++	LC3_PRESET_B("48_5_1", LC3_CONFIG_48_5, LC3_QOS_48_5_1_B),
++	LC3_PRESET_B("48_6_1", LC3_CONFIG_48_6, LC3_QOS_48_6_1_B),
+ 	/* Broadcast Audio Stream configuration settings for high-reliability
+ 	 * audio data.
+ 	 */
+-	LC3_PRESET_HR("8_1_2", LC3_CONFIG_8_1,
+-			LC3_7_5_UNFRAMED(26u, 4u, 45u, 40000u)),
+-	LC3_PRESET_HR("8_2_2", LC3_CONFIG_8_2,
+-			LC3_10_UNFRAMED(30u, 4u, 60u, 40000u)),
+-	LC3_PRESET_HR("16_1_2", LC3_CONFIG_16_1,
+-			LC3_7_5_UNFRAMED(30u, 4u, 45u, 40000u)),
+-	LC3_PRESET_HR("16_2_2", LC3_CONFIG_16_2,
+-			LC3_10_UNFRAMED(40u, 4u, 60u, 40000u)),
+-	LC3_PRESET_HR("24_1_2", LC3_CONFIG_24_1,
+-			LC3_7_5_UNFRAMED(45u, 4u, 45u, 40000u)),
+-	LC3_PRESET_HR("24_2_2", LC3_CONFIG_24_2,
+-			LC3_10_UNFRAMED(60u, 4u, 60u, 40000u)),
+-	LC3_PRESET_HR("32_1_2", LC3_CONFIG_32_1,
+-			LC3_7_5_UNFRAMED(60u, 4u, 45u, 40000u)),
+-	LC3_PRESET_HR("32_2_2", LC3_CONFIG_32_2,
+-			LC3_10_UNFRAMED(80u, 4u, 60u, 40000u)),
+-	LC3_PRESET_HR("44_1_2", LC3_CONFIG_44_1,
+-			QOS_FRAMED_2M(8163u, 4u, 13u, 54u, 40000u)),
+-	LC3_PRESET_HR("44_2_2", LC3_CONFIG_44_2,
+-			QOS_FRAMED_2M(10884u, 130u, 4u, 60u, 40000u)),
+-	LC3_PRESET_HR("48_1_2", LC3_CONFIG_48_1,
+-			LC3_7_5_UNFRAMED(75u, 4u, 50u, 40000u)),
+-	LC3_PRESET_HR("48_2_2", LC3_CONFIG_48_2,
+-			LC3_10_UNFRAMED(100u, 4u, 65u, 40000u)),
+-	LC3_PRESET_HR("48_3_2", LC3_CONFIG_48_3,
+-			LC3_7_5_UNFRAMED(90u, 4u, 50u, 40000u)),
+-	LC3_PRESET_HR("48_4_2", LC3_CONFIG_48_4,
+-			LC3_10_UNFRAMED(120u, 4u, 65u, 40000u)),
+-	LC3_PRESET_HR("48_5_2", LC3_CONFIG_48_5,
+-			LC3_7_5_UNFRAMED(117u, 4u, 50u, 40000u)),
+-	LC3_PRESET_HR("48_6_2", LC3_CONFIG_48_6,
+-			LC3_10_UNFRAMED(155u, 4u, 65u, 40000u)),
++	LC3_PRESET_B("8_1_2", LC3_CONFIG_8_1, LC3_QOS_8_1_1_B),
++	LC3_PRESET_B("8_2_2", LC3_CONFIG_8_2, LC3_QOS_8_2_2_B),
++	LC3_PRESET_B("16_1_2", LC3_CONFIG_16_1, LC3_QOS_16_1_2_B),
++	LC3_PRESET_B("16_2_2", LC3_CONFIG_16_2, LC3_QOS_16_2_2_B),
++	LC3_PRESET_B("24_1_2", LC3_CONFIG_24_1, LC3_QOS_24_1_2_B),
++	LC3_PRESET_B("24_2_2", LC3_CONFIG_24_2, LC3_QOS_24_2_2_B),
++	LC3_PRESET_B("32_1_2", LC3_CONFIG_32_1, LC3_QOS_32_1_2_B),
++	LC3_PRESET_B("32_2_2", LC3_CONFIG_32_2, LC3_QOS_32_2_2_B),
++	LC3_PRESET_B("44_1_2", LC3_CONFIG_44_1, LC3_QOS_44_1_2_B),
++	LC3_PRESET_B("44_2_2", LC3_CONFIG_44_2, LC3_QOS_44_2_2_B),
++	LC3_PRESET_B("48_1_2", LC3_CONFIG_48_1, LC3_QOS_48_1_2_B),
++	LC3_PRESET_B("48_2_2", LC3_CONFIG_48_2, LC3_QOS_48_2_2_B),
++	LC3_PRESET_B("48_3_2", LC3_CONFIG_48_3, LC3_QOS_48_3_2_B),
++	LC3_PRESET_B("48_4_2", LC3_CONFIG_48_4, LC3_QOS_48_4_2_B),
++	LC3_PRESET_B("48_5_2", LC3_CONFIG_48_5, LC3_QOS_48_5_2_B),
++	LC3_PRESET_B("48_6_2", LC3_CONFIG_48_6, LC3_QOS_48_6_2_B),
+ };
  
-@@ -314,7 +317,7 @@
- #define LC3_QOS_8_1_2_AC(_ac) \
- 	LC3_QOS_UCAST_7_5_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_8_1_2_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_8_1, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_8_1, \
- 					LC3_QOS_8_1_2_RTN)
- #define LC3_QOS_8_1_2 LC3_QOS_8_1_2_AC(1)
+ static void print_ltv(const char *str, void *user_data)
+@@ -1863,7 +1744,7 @@ struct endpoint_config {
+ 	struct iovec *caps;		/* Codec Specific Configuration LTVs */
+ 	struct iovec *meta;		/* Metadata LTVs*/
+ 	uint8_t target_latency;
+-	struct codec_qos qos;	/* BAP QOS configuration parameters */
++	struct bt_bap_qos qos;		/* BAP QOS configuration parameters */
+ 	uint8_t  sync_factor;		/* PA parameter */
+ 	uint8_t  options;		/* PA create sync parameter */
+ 	uint16_t skip;			/* PA create sync parameter */
+@@ -1873,20 +1754,8 @@ struct endpoint_config {
+ 	uint16_t timeout;		/* BIG create sync parameter */
+ };
  
-@@ -324,7 +327,7 @@
- #define LC3_QOS_8_2_1_AC(_ac) \
- 	LC3_QOS_UCAST_10_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_8_2_1_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_8_2, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_8_2, \
- 					LC3_QOS_8_2_1_RTN)
- #define LC3_QOS_8_2_1 LC3_QOS_8_2_1_AC(1)
+-static void append_io_qos(DBusMessageIter *iter, struct endpoint_config *cfg)
++static void append_io_qos(DBusMessageIter *iter, struct bt_bap_io_qos *qos)
+ {
+-	struct codec_qos *qos = &cfg->qos;
+-
+-	bt_shell_printf("Framing 0x%02x\n", qos->framing);
+-
+-	g_dbus_dict_append_entry(iter, "Framing", DBUS_TYPE_BYTE,
+-							&qos->framing);
+-
+-	bt_shell_printf("PresentationDelay %u\n", qos->delay);
+-
+-	g_dbus_dict_append_entry(iter, "PresentationDelay",
+-			DBUS_TYPE_UINT32, &qos->delay);
+-
+ 	bt_shell_printf("Interval %u\n", qos->interval);
  
-@@ -334,7 +337,7 @@
- #define LC3_QOS_8_2_2_AC(_ac) \
- 	LC3_QOS_UCAST_10_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_8_2_2_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_8_2, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_8_2, \
- 					LC3_QOS_8_2_2_RTN)
- #define LC3_QOS_8_2_2 LC3_QOS_8_2_2_AC(1)
+ 	g_dbus_dict_append_entry(iter, "Interval", DBUS_TYPE_UINT32,
+@@ -1902,18 +1771,18 @@ static void append_io_qos(DBusMessageIter *iter, struct endpoint_config *cfg)
  
-@@ -344,7 +347,7 @@
- #define LC3_QOS_16_1_1_AC(_ac) \
- 	LC3_QOS_UCAST_7_5_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_16_1_1_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_16_1, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_16_1, \
- 					LC3_QOS_16_1_1_RTN)
- #define LC3_QOS_16_1_1 LC3_QOS_16_1_1_AC(1)
+ 	bt_shell_printf("Retransmissions %u\n", qos->rtn);
  
-@@ -354,17 +357,25 @@
- #define LC3_QOS_16_1_2_AC(_ac) \
- 	LC3_QOS_UCAST_7_5_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_16_1_2_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_16_1, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_16_1, \
- 					LC3_QOS_16_1_2_RTN)
- #define LC3_QOS_16_1_2 LC3_QOS_16_1_2_AC(1)
+-	g_dbus_dict_append_entry(iter, "Retransmissions",
+-					DBUS_TYPE_BYTE, &qos->rtn);
++	g_dbus_dict_append_entry(iter, "Retransmissions", DBUS_TYPE_BYTE,
++						&qos->rtn);
  
-+#define LC3_QOS_16_1_GS_LATENCY 15u
-+#define LC3_QOS_16_1_GS_RTN 1u
-+#define LC3_QOS_16_1_GS \
-+	LC3_QOS_UCAST_7_5_UNFRAMED(60000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
-+					LC3_QOS_16_1_GS_LATENCY, \
-+					LC3_CONFIG_FRAME_LEN_16_1, \
-+					LC3_QOS_16_1_GS_RTN)
-+
- #define LC3_QOS_16_2_1_LATENCY 10u
- #define LC3_QOS_16_2_1_RTN 2u
+ 	bt_shell_printf("Latency %u\n", qos->latency);
  
- #define LC3_QOS_16_2_1_AC(_ac) \
- 	LC3_QOS_UCAST_10_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_16_2_1_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_16_2, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_16_2, \
- 					LC3_QOS_16_2_1_RTN)
- #define LC3_QOS_16_2_1 LC3_QOS_16_2_1_AC(1)
+-	g_dbus_dict_append_entry(iter, "Latency",
+-					DBUS_TYPE_UINT16, &qos->latency);
++	g_dbus_dict_append_entry(iter, "Latency", DBUS_TYPE_UINT16,
++						&qos->latency);
+ }
  
-@@ -374,17 +385,26 @@
- #define LC3_QOS_16_2_2_AC(_ac) \
- 	LC3_QOS_UCAST_10_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_16_2_2_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_16_2, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_16_2, \
- 					LC3_QOS_16_2_2_RTN)
- #define LC3_QOS_16_2_2 LC3_QOS_16_2_2_AC(1)
+ static void append_ucast_qos(DBusMessageIter *iter, struct endpoint_config *cfg)
+ {
+-	struct codec_qos *qos = &cfg->qos;
++	struct bt_bap_ucast_qos *qos = &cfg->qos.ucast;
  
-+#define LC3_QOS_16_2_GS_LATENCY 20u
-+#define LC3_QOS_16_2_GS_RTN 1u
-+#define LC3_QOS_16_2_GS \
-+	LC3_QOS_UCAST_10_UNFRAMED(60000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
-+					LC3_QOS_16_2_GS_LATENCY, \
-+					LC3_CONFIG_FRAME_LEN_16_2, \
-+					LC3_QOS_16_2_GS_RTN)
-+
- #define LC3_QOS_24_1_1_LATENCY 8u
- #define LC3_QOS_24_1_1_RTN 2u
+ 	if (cfg->ep->iso_group != BT_ISO_QOS_GROUP_UNSET) {
+ 		bt_shell_printf("CIG 0x%2.2x\n", cfg->ep->iso_group);
+@@ -1930,7 +1799,7 @@ static void append_ucast_qos(DBusMessageIter *iter, struct endpoint_config *cfg)
+ 	bt_shell_printf("Framing 0x%02x\n", qos->framing);
  
- #define LC3_QOS_24_1_1_AC(_ac) \
- 	LC3_QOS_UCAST_7_5_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_24_1_1_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_24_1, 2u)
-+					(_ac) * LC3_CONFIG_FRAME_LEN_24_1, \
-+					LC3_QOS_24_1_1_RTN)
- #define LC3_QOS_24_1_1 LC3_QOS_24_1_1_AC(1)
+ 	g_dbus_dict_append_entry(iter, "Framing", DBUS_TYPE_BYTE,
+-							&qos->framing);
++					&qos->framing);
  
- #define LC3_QOS_24_1_2_LATENCY 75u
-@@ -393,7 +413,7 @@
- #define LC3_QOS_24_1_2_AC(_ac) \
- 	LC3_QOS_UCAST_7_5_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_24_1_2_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_24_1, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_24_1, \
- 					LC3_QOS_24_1_2_RTN)
- #define LC3_QOS_24_1_2 LC3_QOS_24_1_2_AC(1)
+ 	bt_shell_printf("PresentationDelay %u\n", qos->delay);
  
-@@ -403,7 +423,7 @@
- #define LC3_QOS_24_2_1_AC(_ac) \
- 	LC3_QOS_UCAST_10_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_24_2_1_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_24_2, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_24_2, \
- 					LC3_QOS_24_2_1_RTN)
- #define LC3_QOS_24_2_1 LC3_QOS_24_2_1_AC(1)
+@@ -1938,16 +1807,18 @@ static void append_ucast_qos(DBusMessageIter *iter, struct endpoint_config *cfg)
+ 					DBUS_TYPE_UINT32, &qos->delay);
  
-@@ -413,7 +433,7 @@
- #define LC3_QOS_24_2_2_AC(_ac) \
- 	LC3_QOS_UCAST_10_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_24_2_2_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_24_2, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_24_2, \
- 					LC3_QOS_24_2_2_RTN)
- #define LC3_QOS_24_2_2 LC3_QOS_24_2_2_AC(1)
+ 	if (cfg->target_latency) {
+-		bt_shell_printf("TargetLatency 0x%02x\n", cfg->target_latency);
+-		g_dbus_dict_append_entry(iter, "TargetLatency",
+-					DBUS_TYPE_BYTE, &cfg->target_latency);
++		bt_shell_printf("TargetLatency 0x%02x\n", qos->target_latency);
++		g_dbus_dict_append_entry(iter, "TargetLatency", DBUS_TYPE_BYTE,
++					&qos->target_latency);
+ 	}
  
-@@ -423,7 +443,7 @@
- #define LC3_QOS_32_1_1_AC(_ac) \
- 	LC3_QOS_UCAST_7_5_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_32_1_1_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_32_1, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_32_1, \
- 					LC3_QOS_32_1_1_RTN)
- #define LC3_QOS_32_1_1 LC3_QOS_32_1_1_AC(1)
+-	append_io_qos(iter, cfg);
++	append_io_qos(iter, &qos->io_qos);
+ }
  
-@@ -433,17 +453,34 @@
- #define LC3_QOS_32_1_2_AC(_ac) \
- 	LC3_QOS_UCAST_7_5_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_32_1_2_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_32_1, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_32_1, \
- 					LC3_QOS_32_1_2_RTN)
- #define LC3_QOS_32_1_2 LC3_QOS_32_1_2_AC(1)
+ static void append_bcast_qos(DBusMessageIter *iter, struct endpoint_config *cfg)
+ {
++	struct bt_bap_bcast_qos *qos = &cfg->qos.bcast;
++
+ 	if (cfg->ep->iso_group != BT_ISO_QOS_BIG_UNSET) {
+ 		bt_shell_printf("BIG 0x%2.2x\n", cfg->ep->iso_group);
+ 		g_dbus_dict_append_entry(iter, "BIG", DBUS_TYPE_BYTE,
+@@ -2008,19 +1879,25 @@ static void append_bcast_qos(DBusMessageIter *iter, struct endpoint_config *cfg)
+ 						cfg->ep->bcode->iov_len);
+ 	}
  
-+#define LC3_QOS_32_1_GS_LATENCY 15u
-+#define LC3_QOS_32_1_GS_RTN 1u
-+#define LC3_QOS_32_1_GS \
-+	LC3_QOS_UCAST_7_5_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
-+					LC3_QOS_32_1_GS_LATENCY, \
-+					LC3_CONFIG_FRAME_LEN_32_1, \
-+					LC3_QOS_32_1_GS_RTN)
++	bt_shell_printf("Framing 0x%02x\n", qos->framing);
 +
-+#define LC3_QOS_32_1_GR_LATENCY 15u
-+#define LC3_QOS_32_1_GR_RTN 1u
-+#define LC3_QOS_32_1_GR_AC(_ac) \
-+	LC3_QOS_UCAST_7_5_UNFRAMED(10000u, BT_BAP_CONFIG_LATENCY_LOW, \
-+					LC3_QOS_32_1_GS_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_32_1, \
-+					LC3_QOS_32_1_GS_RTN)
-+#define LC3_QOS_32_1_GR LC3_QOS_32_1_GR_AC(1)
++	g_dbus_dict_append_entry(iter, "Framing", DBUS_TYPE_BYTE,
++					&qos->framing);
 +
- #define LC3_QOS_32_2_1_LATENCY 10u
- #define LC3_QOS_32_2_1_RTN 2u
++	bt_shell_printf("PresentationDelay %u\n", qos->delay);
++
++	g_dbus_dict_append_entry(iter, "PresentationDelay",
++					DBUS_TYPE_UINT32, &qos->delay);
++
+ 	/* Add BAP codec QOS configuration */
+-	append_io_qos(iter, cfg);
++	append_io_qos(iter, &qos->io_qos);
+ }
  
- #define LC3_QOS_32_2_1_AC(_ac) \
- 	LC3_QOS_UCAST_10_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_32_2_1_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_32_2, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_32_2, \
- 					LC3_QOS_32_2_1_RTN)
- #define LC3_QOS_32_2_1 LC3_QOS_32_2_1_AC(1)
+ static void append_qos(DBusMessageIter *iter, struct endpoint_config *cfg)
+ {
+ 	DBusMessageIter entry, var, dict;
+-	struct codec_qos *qos = &cfg->qos;
+ 	const char *key = "QoS";
  
-@@ -453,10 +490,27 @@
- #define LC3_QOS_32_2_2_AC(_ac) \
- 	LC3_QOS_UCAST_10_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_32_2_2_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_32_2, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_32_2, \
- 					LC3_QOS_32_2_2_RTN)
- #define LC3_QOS_32_2_2 LC3_QOS_32_2_2_AC(1)
+-	if (!qos)
+-		return;
+-
+ 	dbus_message_iter_open_container(iter, DBUS_TYPE_DICT_ENTRY,
+ 						NULL, &entry);
  
-+#define LC3_QOS_32_2_GS_LATENCY 20u
-+#define LC3_QOS_32_2_GS_RTN 1u
-+#define LC3_QOS_32_2_GS \
-+	LC3_QOS_UCAST_10_UNFRAMED(60000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
-+					LC3_QOS_32_2_GS_LATENCY, \
-+					LC3_CONFIG_FRAME_LEN_32_2, \
-+					LC3_QOS_32_2_GS_RTN)
-+
-+#define LC3_QOS_32_2_GR_LATENCY 20u
-+#define LC3_QOS_32_2_GR_RTN 1u
-+#define LC3_QOS_32_2_GR_AC(_ac) \
-+	LC3_QOS_UCAST_10_UNFRAMED(10000u, BT_BAP_CONFIG_LATENCY_LOW, \
-+					LC3_QOS_32_2_GR_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_32_2, \
-+					LC3_QOS_32_2_GR_RTN)
-+#define LC3_QOS_32_2_GR LC3_QOS_32_2_GR_AC(1)
-+
- #define LC3_QOS_44_1_INTERVAL 8163u
- #define LC3_QOS_44_1_1_LATENCY 24u
- #define LC3_QOS_44_1_1_RTN 5u
-@@ -465,7 +519,7 @@
- 	LC3_QOS_UCAST_FRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_44_1_INTERVAL, \
- 					LC3_QOS_44_1_1_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_44_1, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_44_1, \
- 					LC3_QOS_44_1_1_RTN)
- #define LC3_QOS_44_1_1 LC3_QOS_44_1_1_AC(1)
+@@ -2137,6 +2014,7 @@ static DBusMessage *endpoint_select_properties_reply(struct endpoint *ep,
+ 	DBusMessage *reply;
+ 	DBusMessageIter iter, props;
+ 	struct endpoint_config *cfg;
++	struct bt_bap_io_qos *qos;
+ 	uint32_t location = 0;
+ 	uint8_t channels = 1;
  
-@@ -476,7 +530,7 @@
- 	LC3_QOS_UCAST_FRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_44_1_INTERVAL, \
- 					LC3_QOS_44_1_2_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_44_1, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_44_1, \
- 					LC3_QOS_44_1_2_RTN)
- #define LC3_QOS_44_1_2 LC3_QOS_44_1_2_AC(1)
+@@ -2169,14 +2047,19 @@ static DBusMessage *endpoint_select_properties_reply(struct endpoint *ep,
+ 	/* Copy metadata */
+ 	cfg->meta = util_iov_dup(ep->meta, 1);
  
-@@ -488,7 +542,7 @@
- 	LC3_QOS_UCAST_FRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_44_2_INTERVAL, \
- 					LC3_QOS_44_2_1_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_44_2, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_44_2, \
- 					LC3_QOS_44_2_1_RTN)
- #define LC3_QOS_44_2_1 LC3_QOS_44_2_1_AC(1)
+-	if (preset->qos.phy) {
++	if (ep->broadcast)
++		qos = &preset->qos.bcast.io_qos;
++	else
++		qos = &preset->qos.ucast.io_qos;
++
++	if (qos->phy) {
+ 		/* Set QoS parameters */
+ 		cfg->qos = preset->qos;
+ 		/* Adjust the SDU size based on the number of
+ 		 * locations/channels that is being requested.
+ 		 */
+ 		if (channels > 1)
+-			cfg->qos.sdu *= channels;
++			qos->sdu *= channels;
+ 	}
  
-@@ -499,7 +553,7 @@
- 	LC3_QOS_UCAST_FRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_44_2_INTERVAL, \
- 					LC3_QOS_44_2_2_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_44_2, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_44_2, \
- 					LC3_QOS_44_2_2_RTN)
- #define LC3_QOS_44_2_2 LC3_QOS_44_2_2_AC(1)
+ 	dbus_message_iter_init_append(reply, &iter);
+@@ -3871,10 +3754,14 @@ fail:
+ static void custom_delay(const char *input, void *user_data)
+ {
+ 	struct codec_preset *p = user_data;
+-	struct codec_qos *qos = (void *)&p->qos;
++	struct bt_bap_qos *qos = (void *)&p->qos;
+ 	char *endptr = NULL;
  
-@@ -509,7 +563,7 @@
- #define LC3_QOS_48_1_1_AC(_ac) \
- 	LC3_QOS_UCAST_7_5_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_48_1_1_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_48_1,\
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_1,\
- 					LC3_QOS_48_1_1_RTN)
- #define LC3_QOS_48_1_1 LC3_QOS_48_1_1_AC(1)
+-	qos->delay = strtol(input, &endptr, 0);
++	if (!p->target_latency)
++		qos->bcast.delay = strtol(input, &endptr, 0);
++	else
++		qos->ucast.delay = strtol(input, &endptr, 0);
++
+ 	if (!endptr || *endptr != '\0') {
+ 		bt_shell_printf("Invalid argument: %s\n", input);
+ 		return bt_shell_noninteractive_quit(EXIT_FAILURE);
+@@ -3886,10 +3773,14 @@ static void custom_delay(const char *input, void *user_data)
+ static void custom_latency(const char *input, void *user_data)
+ {
+ 	struct codec_preset *p = user_data;
+-	struct codec_qos *qos = (void *)&p->qos;
++	struct bt_bap_qos *qos = (void *)&p->qos;
+ 	char *endptr = NULL;
  
-@@ -519,17 +573,36 @@
- #define LC3_QOS_48_1_2_AC(_ac) \
- 	LC3_QOS_UCAST_7_5_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_48_1_2_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_48_1, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_1, \
- 					LC3_QOS_48_1_2_RTN)
- #define LC3_QOS_48_1_2 LC3_QOS_48_1_2_AC(1)
+-	qos->latency = strtol(input, &endptr, 0);
++	if (!p->target_latency)
++		qos->bcast.io_qos.latency = strtol(input, &endptr, 0);
++	else
++		qos->ucast.io_qos.latency = strtol(input, &endptr, 0);
++
+ 	if (!endptr || *endptr != '\0') {
+ 		bt_shell_printf("Invalid argument: %s\n", input);
+ 		return bt_shell_noninteractive_quit(EXIT_FAILURE);
+@@ -3902,10 +3793,14 @@ static void custom_latency(const char *input, void *user_data)
+ static void custom_rtn(const char *input, void *user_data)
+ {
+ 	struct codec_preset *p = user_data;
+-	struct codec_qos *qos = (void *)&p->qos;
++	struct bt_bap_qos *qos = (void *)&p->qos;
+ 	char *endptr = NULL;
  
-+#define LC3_QOS_48_1_GS_LATENCY 15u
-+#define LC3_QOS_48_1_GS_RTN 1u
+-	qos->rtn = strtol(input, &endptr, 0);
++	if (!p->target_latency)
++		qos->bcast.io_qos.rtn = strtol(input, &endptr, 0);
++	else
++		qos->ucast.io_qos.rtn = strtol(input, &endptr, 0);
 +
-+#define LC3_QOS_48_1_GS \
-+	LC3_QOS_UCAST_7_5_UNFRAMED(60000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
-+					LC3_QOS_48_1_GS_LATENCY, \
-+					LC3_CONFIG_FRAME_LEN_48_1, \
-+					LC3_QOS_48_1_GS_RTN)
-+
-+#define LC3_QOS_48_1_GR_LATENCY 15u
-+#define LC3_QOS_48_1_GR_RTN 1u
-+
-+#define LC3_QOS_48_1_GR_AC(_ac) \
-+	LC3_QOS_UCAST_7_5_UNFRAMED(10000u, BT_BAP_CONFIG_LATENCY_LOW, \
-+					LC3_QOS_48_1_GR_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_1, \
-+					LC3_QOS_48_1_GR_RTN)
-+#define LC3_QOS_48_1_GR LC3_QOS_48_1_GR_AC(1)
-+
- #define LC3_QOS_48_2_1_LATENCY 20u
- #define LC3_QOS_48_2_1_RTN 5u
+ 	if (!endptr || *endptr != '\0') {
+ 		bt_shell_printf("Invalid argument: %s\n", input);
+ 		return bt_shell_noninteractive_quit(EXIT_FAILURE);
+@@ -3918,10 +3813,14 @@ static void custom_rtn(const char *input, void *user_data)
+ static void custom_sdu(const char *input, void *user_data)
+ {
+ 	struct codec_preset *p = user_data;
+-	struct codec_qos *qos = (void *)&p->qos;
++	struct bt_bap_qos *qos = (void *)&p->qos;
+ 	char *endptr = NULL;
  
- #define LC3_QOS_48_2_1_AC(_ac) \
- 	LC3_QOS_UCAST_10_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_48_2_1_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_48_2, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_2, \
- 					LC3_QOS_48_2_1_RTN)
- #define LC3_QOS_48_2_1 LC3_QOS_48_2_1_AC(1)
+-	qos->sdu = strtol(input, &endptr, 0);
++	if (!p->target_latency)
++		qos->bcast.io_qos.sdu = strtol(input, &endptr, 0);
++	else
++		qos->ucast.io_qos.sdu = strtol(input, &endptr, 0);
++
+ 	if (!endptr || *endptr != '\0') {
+ 		bt_shell_printf("Invalid argument: %s\n", input);
+ 		return bt_shell_noninteractive_quit(EXIT_FAILURE);
+@@ -3933,7 +3832,12 @@ static void custom_sdu(const char *input, void *user_data)
+ static void custom_phy(const char *input, void *user_data)
+ {
+ 	struct codec_preset *p = user_data;
+-	struct codec_qos *qos = (void *)&p->qos;
++	struct bt_bap_io_qos *qos;
++
++	if (!p->target_latency)
++		qos = &p->qos.bcast.io_qos;
++	else
++		qos = &p->qos.ucast.io_qos;
  
-@@ -539,17 +612,36 @@
- #define LC3_QOS_48_2_2_AC(_ac) \
- 	LC3_QOS_UCAST_10_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_48_2_2_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_48_2, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_2, \
- 					LC3_QOS_48_2_2_RTN)
- #define LC3_QOS_48_2_2 LC3_QOS_48_2_2_AC(1)
+ 	if (!strcmp(input, "1M"))
+ 		qos->phy = 0x01;
+@@ -3965,16 +3869,21 @@ static void custom_phy(const char *input, void *user_data)
+ static void custom_framing(const char *input, void *user_data)
+ {
+ 	struct codec_preset *p = user_data;
+-	struct codec_qos *qos = (void *)&p->qos;
++	uint8_t *framing;
++
++	if (!p->target_latency)
++		framing = &p->qos.bcast.framing;
++	else
++		framing = &p->qos.ucast.framing;
  
-+#define LC3_QOS_48_2_GS_LATENCY 20u
-+#define LC3_QOS_48_2_GS_RTN 1u
-+
-+#define LC3_QOS_48_2_GS \
-+	LC3_QOS_UCAST_10_UNFRAMED(60000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
-+					LC3_QOS_48_2_GS_LATENCY, \
-+					LC3_CONFIG_FRAME_LEN_48_2, \
-+					LC3_QOS_48_2_GS_RTN)
-+
-+#define LC3_QOS_48_2_GR_LATENCY 20u
-+#define LC3_QOS_48_2_GR_RTN 1u
-+
-+#define LC3_QOS_48_2_GR_AC(_ac) \
-+	LC3_QOS_UCAST_10_UNFRAMED(10000u, BT_BAP_CONFIG_LATENCY_LOW, \
-+					LC3_QOS_48_2_GR_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_2, \
-+					LC3_QOS_48_2_GR_RTN)
-+#define LC3_QOS_48_2_GR LC3_QOS_48_2_GR_AC(1)
-+
- #define LC3_QOS_48_3_1_LATENCY 15u
- #define LC3_QOS_48_3_1_RTN 5u
+ 	if (!strcasecmp(input, "Unframed"))
+-		qos->framing = 0x00;
++		*framing = 0x00;
+ 	else if (!strcasecmp(input, "Framed"))
+-		qos->framing = 0x01;
++		*framing = 0x01;
+ 	else {
+ 		char *endptr = NULL;
  
- #define LC3_QOS_48_3_1_AC(_ac) \
- 	LC3_QOS_UCAST_7_5_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_48_3_1_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_48_3, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_3, \
- 					LC3_QOS_48_3_1_RTN)
- #define LC3_QOS_48_3_1 LC3_QOS_48_3_1_AC(1)
+-		qos->framing = strtol(input, &endptr, 0);
++		*framing = strtol(input, &endptr, 0);
+ 		if (!endptr || *endptr != '\0') {
+ 			bt_shell_printf("Invalid argument: %s\n", input);
+ 			return bt_shell_noninteractive_quit(EXIT_FAILURE);
+@@ -3988,8 +3897,13 @@ static void custom_framing(const char *input, void *user_data)
+ static void custom_interval(const char *input, void *user_data)
+ {
+ 	struct codec_preset *p = user_data;
+-	struct codec_qos *qos = (void *)&p->qos;
+ 	char *endptr = NULL;
++	struct bt_bap_io_qos *qos;
++
++	if (!p->target_latency)
++		qos = &p->qos.bcast.io_qos;
++	else
++		qos = &p->qos.ucast.io_qos;
  
-@@ -559,17 +651,27 @@
- #define LC3_QOS_48_3_2_AC(_ac) \
- 	LC3_QOS_UCAST_7_5_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_48_3_2_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_48_3, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_3, \
- 					LC3_QOS_48_3_2_RTN)
- #define LC3_QOS_48_3_2 LC3_QOS_48_3_2_AC(1)
- 
-+#define LC3_QOS_48_3_GR_LATENCY 15u
-+#define LC3_QOS_48_3_GR_RTN 1u
-+
-+#define LC3_QOS_48_3_GR_AC(_ac) \
-+	LC3_QOS_UCAST_7_5_UNFRAMED(10000u, BT_BAP_CONFIG_LATENCY_LOW, \
-+					LC3_QOS_48_3_GR_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_3, \
-+					LC3_QOS_48_3_GR_RTN)
-+#define LC3_QOS_48_3_GR LC3_QOS_48_3_GR_AC(1)
-+
- #define LC3_QOS_48_4_1_LATENCY 20u
- #define LC3_QOS_48_4_1_RTN 5u
- 
- #define LC3_QOS_48_4_1_AC(_ac) \
- 	LC3_QOS_UCAST_10_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_48_4_1_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_48_4, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_4, \
- 					LC3_QOS_48_4_1_RTN)
- #define LC3_QOS_48_4_1 LC3_QOS_48_4_1_AC(1)
- 
-@@ -579,17 +681,27 @@
- #define LC3_QOS_48_4_2_AC(_ac) \
- 	LC3_QOS_UCAST_10_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_48_4_2_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_48_4, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_4, \
- 					LC3_QOS_48_4_2_RTN)
- #define LC3_QOS_48_4_2 LC3_QOS_48_4_2_AC(1)
- 
-+#define LC3_QOS_48_4_GR_LATENCY 20u
-+#define LC3_QOS_48_4_GR_RTN 1u
-+
-+#define LC3_QOS_48_4_GR_AC(_ac) \
-+	LC3_QOS_UCAST_10_UNFRAMED(10000u, BT_BAP_CONFIG_LATENCY_LOW, \
-+					LC3_QOS_48_4_GR_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_4, \
-+					LC3_QOS_48_4_GR_RTN)
-+#define LC3_QOS_48_4_GR LC3_QOS_48_4_GR_AC(1)
-+
- #define LC3_QOS_48_5_1_LATENCY 15u
- #define LC3_QOS_48_5_1_RTN 5u
- 
- #define LC3_QOS_48_5_1_AC(_ac) \
- 	LC3_QOS_UCAST_7_5_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_48_5_1_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_48_5, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_5, \
- 					LC3_QOS_48_5_1_RTN)
- #define LC3_QOS_48_5_1 LC3_QOS_48_5_1_AC(1)
- 
-@@ -599,7 +711,7 @@
- #define LC3_QOS_48_5_2_AC(_ac) \
- 	LC3_QOS_UCAST_7_5_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_48_5_2_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_48_5, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_5, \
- 					LC3_QOS_48_5_2_RTN)
- #define LC3_QOS_48_5_2 LC3_QOS_48_5_2_AC(1)
- 
-@@ -609,7 +721,7 @@
- #define LC3_QOS_48_6_1_AC(_ac) \
- 	LC3_QOS_UCAST_10_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_48_6_1_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_48_6, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_6, \
- 					LC3_QOS_48_6_1_RTN)
- #define LC3_QOS_48_6_1 LC3_QOS_48_6_1_AC(1)
- 
-@@ -619,6 +731,264 @@
- #define LC3_QOS_48_6_2_AC(_ac) \
- 	LC3_QOS_UCAST_10_UNFRAMED(40000u, BT_BAP_CONFIG_LATENCY_BALANCED, \
- 					LC3_QOS_48_6_2_LATENCY, \
--					_ac * LC3_CONFIG_FRAME_LEN_48_6, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_6, \
- 					LC3_QOS_48_6_2_RTN)
- #define LC3_QOS_48_6_2 LC3_QOS_48_6_2_AC(1)
-+
-+#define LC3_QOS_BCAST(_frame, _pd, _interval, _lat, _sdu, _rtn) \
-+{ \
-+	.bcast.big = 0x00, \
-+	.bcast.bis = 0x00, \
-+	.bcast.framing = _frame, \
-+	.bcast.delay = _pd, \
-+	.bcast.io_qos.interval = _interval, \
-+	.bcast.io_qos.latency = _lat, \
-+	.bcast.io_qos.sdu = _sdu, \
-+	.bcast.io_qos.phy = BT_BAP_CONFIG_PHY_2M, \
-+	.bcast.io_qos.rtn = _rtn, \
-+}
-+
-+#define LC3_QOS_BCAST_7_5_UNFRAMED(_pd, _lat, _sdu, _rtn) \
-+	LC3_QOS_BCAST(LC3_QOS_UNFRAMED, _pd, 7500u, _lat, _sdu, _rtn)
-+
-+#define LC3_QOS_BCAST_10_UNFRAMED(_pd, _lat, _sdu, _rtn) \
-+	LC3_QOS_BCAST(LC3_QOS_UNFRAMED, _pd, 10000u, _lat, _sdu, _rtn)
-+
-+#define LC3_QOS_BCAST_FRAMED(_pd, _interval, _lat, _sdu, _rtn) \
-+	LC3_QOS_BCAST(LC3_QOS_FRAMED, _pd, _interval, _lat, _sdu, _rtn)
-+
-+#define LC3_QOS_8_1_1_B_AC(_ac) \
-+	LC3_QOS_BCAST_7_5_UNFRAMED(40000u, LC3_QOS_8_1_1_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_8_1, \
-+					LC3_QOS_8_1_1_RTN)
-+#define LC3_QOS_8_1_1_B LC3_QOS_8_1_1_B_AC(1)
-+
-+#define LC3_QOS_8_1_2_B_LATENCY 75u
-+#define LC3_QOS_8_1_2_B_RTN 4u
-+#define LC3_QOS_8_1_2_B_AC(_ac) \
-+	LC3_QOS_BCAST_7_5_UNFRAMED(40000u, LC3_QOS_8_1_2_B_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_8_1, \
-+					LC3_QOS_8_1_2_B_RTN)
-+#define LC3_QOS_48_1_2_B LC3_QOS_48_1_2_B_AC(1)
-+
-+#define LC3_QOS_8_2_1_B_AC(_ac) \
-+	LC3_QOS_BCAST_10_UNFRAMED(40000u, LC3_QOS_8_2_1_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_8_2, \
-+					LC3_QOS_8_2_1_RTN)
-+#define LC3_QOS_8_2_1_B LC3_QOS_8_2_1_B_AC(1)
-+
-+#define LC3_QOS_8_2_2_B_LATENCY 60u
-+#define LC3_QOS_8_2_2_B_RTN 4u
-+#define LC3_QOS_8_2_2_B_AC(_ac) \
-+	LC3_QOS_BCAST_10_UNFRAMED(40000u, LC3_QOS_8_2_2_B_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_8_2, \
-+					LC3_QOS_8_2_2_B_RTN)
-+#define LC3_QOS_8_2_2_B LC3_QOS_8_2_2_B_AC(1)
-+
-+#define LC3_QOS_16_1_1_B_AC(_ac) \
-+	LC3_QOS_BCAST_7_5_UNFRAMED(40000u, LC3_QOS_16_1_1_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_16_1, \
-+					LC3_QOS_16_1_1_RTN)
-+#define LC3_QOS_16_1_1_B LC3_QOS_16_1_1_B_AC(1)
-+
-+#define LC3_QOS_16_1_2_B_LATENCY 45u
-+#define LC3_QOS_16_1_2_B_RTN 4u
-+#define LC3_QOS_16_1_2_B_AC(_ac) \
-+	LC3_QOS_BCAST_7_5_UNFRAMED(40000u, LC3_QOS_16_1_2_B_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_16_1, \
-+					LC3_QOS_16_1_2_B_RTN)
-+#define LC3_QOS_16_1_2_B LC3_QOS_16_1_2_B_AC(1)
-+
-+#define LC3_QOS_16_2_1_B_AC(_ac) \
-+	LC3_QOS_BCAST_10_UNFRAMED(40000u, LC3_QOS_16_2_1_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_16_2, \
-+					LC3_QOS_16_2_1_RTN)
-+#define LC3_QOS_16_2_1_B LC3_QOS_16_2_1_B_AC(1)
-+
-+#define LC3_QOS_16_2_2_B_LATENCY 60u
-+#define LC3_QOS_16_2_2_B_RTN 4u
-+#define LC3_QOS_16_2_2_B_AC(_ac) \
-+	LC3_QOS_BCAST_10_UNFRAMED(40000u, LC3_QOS_16_2_2_B_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_16_2, \
-+					LC3_QOS_16_2_2_B_RTN)
-+#define LC3_QOS_16_2_2_B LC3_QOS_16_2_2_B_AC(1)
-+
-+#define LC3_QOS_24_1_1_B_AC(_ac) \
-+	LC3_QOS_BCAST_7_5_UNFRAMED(40000u, LC3_QOS_24_1_1_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_24_1, \
-+					LC3_QOS_24_1_1_RTN)
-+#define LC3_QOS_24_1_1_B LC3_QOS_24_1_1_B_AC(1)
-+
-+#define LC3_QOS_24_1_2_B_LATENCY 45u
-+#define LC3_QOS_24_1_2_B_RTN 4u
-+#define LC3_QOS_24_1_2_B_AC(_ac) \
-+	LC3_QOS_BCAST_7_5_UNFRAMED(40000u, LC3_QOS_24_1_2_B_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_24_1, \
-+					LC3_QOS_24_1_2_B_RTN)
-+#define LC3_QOS_24_1_2_B LC3_QOS_24_1_2_B_AC(1)
-+
-+#define LC3_QOS_24_2_1_B_AC(_ac) \
-+	LC3_QOS_BCAST_10_UNFRAMED(40000u, LC3_QOS_24_2_1_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_24_2, \
-+					LC3_QOS_24_2_1_RTN)
-+#define LC3_QOS_24_2_1_B LC3_QOS_24_2_1_B_AC(1)
-+
-+#define LC3_QOS_24_2_2_B_LATENCY 60u
-+#define LC3_QOS_24_2_2_B_RTN 4u
-+#define LC3_QOS_24_2_2_B_AC(_ac) \
-+	LC3_QOS_BCAST_10_UNFRAMED(40000u, LC3_QOS_24_2_2_B_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_24_2, \
-+					LC3_QOS_24_2_2_B_RTN)
-+#define LC3_QOS_24_2_2_B LC3_QOS_24_2_2_B_AC(1)
-+
-+#define LC3_QOS_32_1_1_B_AC(_ac) \
-+	LC3_QOS_BCAST_7_5_UNFRAMED(40000u, LC3_QOS_32_1_1_LATENCY, \
-+					LC3_CONFIG_FRAME_LEN_32_1, \
-+					LC3_QOS_32_1_1_RTN)
-+#define LC3_QOS_32_1_1_B LC3_QOS_32_1_1_B_AC(1)
-+
-+#define LC3_QOS_32_1_2_B_LATENCY 45u
-+#define LC3_QOS_32_1_2_B_RTN 4u
-+#define LC3_QOS_32_1_2_B_AC(_ac) \
-+	LC3_QOS_BCAST_7_5_UNFRAMED(40000u, LC3_QOS_32_1_2_B_LATENCY, \
-+					LC3_CONFIG_FRAME_LEN_32_1, \
-+					LC3_QOS_32_1_2_B_RTN)
-+#define LC3_QOS_32_1_2_B LC3_QOS_32_1_2_B_AC(1)
-+
-+#define LC3_QOS_32_2_1_B_AC(_ac) \
-+	LC3_QOS_BCAST_10_UNFRAMED(40000u, LC3_QOS_32_2_1_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_32_2, \
-+					LC3_QOS_32_2_1_RTN)
-+#define LC3_QOS_32_2_1_B LC3_QOS_32_2_1_B_AC(1)
-+
-+#define LC3_QOS_32_2_2_B_LATENCY 60u
-+#define LC3_QOS_32_2_2_B_RTN 4u
-+#define LC3_QOS_32_2_2_B_AC(_ac) \
-+	LC3_QOS_BCAST_10_UNFRAMED(40000u, LC3_QOS_32_2_2_B_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_32_2, \
-+					LC3_QOS_32_2_2_B_RTN)
-+#define LC3_QOS_32_2_2_B LC3_QOS_32_2_2_B_AC(1)
-+
-+#define LC3_QOS_44_1_1_B_RTN 4u
-+#define LC3_QOS_44_1_1_B_AC(_ac) \
-+	LC3_QOS_BCAST_FRAMED(40000u, LC3_QOS_44_1_INTERVAL, \
-+					LC3_QOS_44_1_1_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_44_1, \
-+					LC3_QOS_44_1_1_B_RTN)
-+#define LC3_QOS_44_1_1_B LC3_QOS_44_1_1_B_AC(1)
-+
-+#define LC3_QOS_44_1_2_B_LATENCY 54u
-+#define LC3_QOS_44_1_2_B_RTN 4u
-+#define LC3_QOS_44_1_2_B_AC(_ac) \
-+	LC3_QOS_BCAST_FRAMED(40000u, LC3_QOS_44_1_INTERVAL, \
-+					LC3_QOS_44_1_2_B_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_44_1, \
-+					LC3_QOS_44_1_2_B_RTN)
-+#define LC3_QOS_44_1_2_B LC3_QOS_44_1_2_B_AC(1)
-+
-+#define LC3_QOS_44_2_1_B_RTN 4u
-+#define LC3_QOS_44_2_1_B_AC(_ac) \
-+	LC3_QOS_BCAST_FRAMED(40000u, LC3_QOS_44_2_INTERVAL, \
-+					LC3_QOS_44_2_1_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_44_2, \
-+					LC3_QOS_44_2_1_B_RTN)
-+#define LC3_QOS_44_2_1_B LC3_QOS_44_2_1_B_AC(1)
-+
-+#define LC3_QOS_44_2_2_B_LATENCY 60u
-+#define LC3_QOS_44_2_2_B_RTN 4u
-+#define LC3_QOS_44_2_2_B_AC(_ac) \
-+	LC3_QOS_BCAST_FRAMED(40000u, LC3_QOS_44_2_INTERVAL, \
-+					LC3_QOS_44_2_2_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_44_2, \
-+					LC3_QOS_44_2_2_RTN)
-+#define LC3_QOS_44_2_2_B LC3_QOS_44_2_2_B_AC(1)
-+
-+#define LC3_QOS_48_1_1_B_RTN 4u
-+#define LC3_QOS_48_1_1_B_AC(_ac) \
-+	LC3_QOS_BCAST_7_5_UNFRAMED(40000u, LC3_QOS_48_1_1_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_1,\
-+					LC3_QOS_48_1_1_B_RTN)
-+#define LC3_QOS_48_1_1_B LC3_QOS_48_1_1_B_AC(1)
-+
-+#define LC3_QOS_48_1_2_B_LATENCY 50u
-+#define LC3_QOS_48_1_2_B_RTN 4u
-+#define LC3_QOS_48_1_2_B_AC(_ac) \
-+	LC3_QOS_BCAST_7_5_UNFRAMED(40000u, LC3_QOS_48_1_2_B_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_1, \
-+					LC3_QOS_48_1_2_B_RTN)
-+#define LC3_QOS_48_1_2_B LC3_QOS_48_1_2_B_AC(1)
-+
-+#define LC3_QOS_48_2_1_B_RTN 4u
-+#define LC3_QOS_48_2_1_B_AC(_ac) \
-+	LC3_QOS_BCAST_10_UNFRAMED(40000u, LC3_QOS_48_2_1_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_2, \
-+					LC3_QOS_48_2_1_B_RTN)
-+#define LC3_QOS_48_2_1_B LC3_QOS_48_2_1_B_AC(1)
-+
-+#define LC3_QOS_48_2_2_B_LATENCY 65u
-+#define LC3_QOS_48_2_2_B_RTN 4u
-+#define LC3_QOS_48_2_2_B_AC(_ac) \
-+	LC3_QOS_BCAST_10_UNFRAMED(40000u, LC3_QOS_48_2_2_B_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_2, \
-+					LC3_QOS_48_2_2_B_RTN)
-+#define LC3_QOS_48_2_2_B LC3_QOS_48_2_2_B_AC(1)
-+
-+#define LC3_QOS_48_3_1_B_RTN 4u
-+#define LC3_QOS_48_3_1_B_AC(_ac) \
-+	LC3_QOS_BCAST_7_5_UNFRAMED(40000u, LC3_QOS_48_3_1_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_3, \
-+					LC3_QOS_48_3_1_B_RTN)
-+#define LC3_QOS_48_3_1_B LC3_QOS_48_3_1_B_AC(1)
-+
-+#define LC3_QOS_48_3_2_B_LATENCY 50u
-+#define LC3_QOS_48_3_2_B_RTN 4u
-+#define LC3_QOS_48_3_2_B_AC(_ac) \
-+	LC3_QOS_BCAST_7_5_UNFRAMED(40000u, LC3_QOS_48_3_2_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_3, \
-+					LC3_QOS_48_3_2_RTN)
-+#define LC3_QOS_48_3_2_B LC3_QOS_48_3_2_B_AC(1)
-+
-+#define LC3_QOS_48_4_1_B_RTN 4u
-+#define LC3_QOS_48_4_1_B_AC(_ac) \
-+	LC3_QOS_BCAST_10_UNFRAMED(40000u, LC3_QOS_48_4_1_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_4, \
-+					LC3_QOS_48_4_1_B_RTN)
-+#define LC3_QOS_48_4_1_B LC3_QOS_48_4_1_B_AC(1)
-+
-+#define LC3_QOS_48_4_2_B_LATENCY 65u
-+#define LC3_QOS_48_4_2_B_RTN 4u
-+#define LC3_QOS_48_4_2_B_AC(_ac) \
-+	LC3_QOS_BCAST_10_UNFRAMED(40000u, LC3_QOS_48_4_2_B_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_4, \
-+					LC3_QOS_48_4_2_B_RTN)
-+#define LC3_QOS_48_4_2_B LC3_QOS_48_4_2_B_AC(1)
-+
-+#define LC3_QOS_48_5_1_B_RTN 4u
-+#define LC3_QOS_48_5_1_B_AC(_ac) \
-+	LC3_QOS_BCAST_7_5_UNFRAMED(40000u, LC3_QOS_48_5_1_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_5, \
-+					LC3_QOS_48_5_1_B_RTN)
-+#define LC3_QOS_48_5_1_B LC3_QOS_48_5_1_B_AC(1)
-+
-+#define LC3_QOS_48_5_2_B_LATENCY 50u
-+#define LC3_QOS_48_5_2_B_RTN 4u
-+#define LC3_QOS_48_5_2_B_AC(_ac) \
-+	LC3_QOS_BCAST_7_5_UNFRAMED(40000u, LC3_QOS_48_5_2_B_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_5, \
-+					LC3_QOS_48_5_2_B_RTN)
-+#define LC3_QOS_48_5_2_B LC3_QOS_48_5_2_B_AC(1)
-+
-+#define LC3_QOS_48_6_1_B_RTN 5u
-+#define LC3_QOS_48_6_1_B_AC(_ac) \
-+	LC3_QOS_BCAST_10_UNFRAMED(40000u, LC3_QOS_48_6_1_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_6, \
-+					LC3_QOS_48_6_1_B_RTN)
-+#define LC3_QOS_48_6_1_B LC3_QOS_48_6_1_B_AC(1)
-+
-+#define LC3_QOS_48_6_2_B_LATENCY 65u
-+#define LC3_QOS_48_6_2_B_RTN 4u
-+#define LC3_QOS_48_6_2_B_AC(_ac) \
-+	LC3_QOS_BCAST_10_UNFRAMED(40000u, LC3_QOS_48_6_2_B_LATENCY, \
-+					(_ac) * LC3_CONFIG_FRAME_LEN_48_6, \
-+					LC3_QOS_48_6_2_B_RTN)
-+#define LC3_QOS_48_6_2_B LC3_QOS_48_6_2_B_AC(1)
+ 	qos->interval = strtol(input, &endptr, 0);
+ 	if (!endptr || *endptr != '\0') {
 -- 
 2.43.0
 
