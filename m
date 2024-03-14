@@ -1,34 +1,34 @@
-Return-Path: <linux-bluetooth+bounces-2537-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-2535-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ABED587C297
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 14 Mar 2024 19:24:35 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C53387C295
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 14 Mar 2024 19:24:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6222628231A
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 14 Mar 2024 18:24:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ACED51C21DB7
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 14 Mar 2024 18:24:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C489A77652;
-	Thu, 14 Mar 2024 18:21:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9D5777644;
+	Thu, 14 Mar 2024 18:21:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="GgjbwI0H"
+	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="KaXRu9QT"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [185.185.170.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B2A7762B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86ACE77626
 	for <linux-bluetooth@vger.kernel.org>; Thu, 14 Mar 2024 18:21:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=185.185.170.37
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710440501; cv=pass; b=PedLht+LSdMpaKgC7RdnPYab6BxDmeyXayXhGMrtI7DH6w5g/DablrqyMu1Qvg/Xr+syzv1UHdgcwAv35vbz2i7r/fnKr+zPrN0LcSPDSLN3b48f21+gM5XUGupCYu9vhKBtCDeHLVHgLvymhwlfJZ8VtCqiuttqO+WU7d0D58w=
+	t=1710440500; cv=pass; b=lyyGuqiLQjMjc3ZBUgBwsX9wspIrKs9LW4np8VruAHlfa9wxz9J9br1Dfvfs8G0Z7WEG0xBgiXfEDAxOJBpCnt3bZvE5zejyFOA0iSUFKPdVkElU0SpgWD9vaYXiGCPYtVNCuw3fP8BRVrq36XhGqjyEU2BuzdzLgkha2IZr4/c=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710440501; c=relaxed/simple;
-	bh=1Ux7vU2EN6XfhF2iHSUa7m1yjbwoXsqdQj+LuIZ5DzQ=;
+	s=arc-20240116; t=1710440500; c=relaxed/simple;
+	bh=SI2L/BY/+xja5cZSti2rAP6ySA6EPIsm3IH0CbzMyCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XJ3cB/0m/oSt7yfLIlrPKuwcTUaL9J6JlQrKUDbV3yB7vw3xymOuWde05HlXebnKpc+/+woMaXlnLlld1SCPp27LfBJ0O4SG2fT0ac3VBT1N9M9p4jpf+jM/MDso1zdHAgVLUXC9FcB5c2cNNyxIssUfMul93m/onMv1z8TtoXE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=GgjbwI0H; arc=pass smtp.client-ip=185.185.170.37
+	 MIME-Version; b=VTXtuUUVNjnyf/1kpSjW11goK7XbJHxJpI/qnX49N+IGHSph8/bA+JoE4EmzjQCkea5o4I9f+rBJwF3mZsQ7SkiaOxxB5TwXSMETupb1nHMnlG0MZdfCSeCZEqQsLU0DWIobm+hFlT5ATgIMr6UuVo3ZLTjY9191Eb8oESwOdWs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=KaXRu9QT; arc=pass smtp.client-ip=185.185.170.37
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [193.138.7.198])
@@ -36,48 +36,48 @@ Received: from monolith.lan (unknown [193.138.7.198])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4TwbLM02frz49PyZ;
-	Thu, 14 Mar 2024 20:21:30 +0200 (EET)
+	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4TwbLN01yrz49Pyp;
+	Thu, 14 Mar 2024 20:21:31 +0200 (EET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
-	t=1710440491;
+	t=1710440492;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=DwyCCRgw3xaKuhE1uxZhmGMrtIEPd+B5gXuytRvdC/E=;
-	b=GgjbwI0HrLFDszInDQdGkdkLn+6FqYuGmDMFbvcQAhhM6nyzWwJd8FdOpXcetdCMGSZw9N
-	E2cIjQU1h04VrQ3NMqYYAOHqL8z1LBQmJh+FmwPo1H1JURBRDnQv1INEMX/DA0+Xa2s4zZ
-	w3a78O8/r67FZrcI2+Fid0v3f3rrZb+z0mtLiXXloFKDWealcx3XFOVP5eZ+89Wl/6k2dd
-	l4+Jtz9dfhmRGu3WiR/YP3+GQtm1ZnQ62agObCRE4578eN5Kp7oECcph/N9Cx46oWC+0ov
-	vrfWOMCrjS2SMQ5LnByWI2Rzn9VzTVXMCYn+E1dH+0Kz251mnNm8OrPC/OYSDg==
+	bh=ZLFhzfdhZUwusV8AXnmOoKbPCZ//+DwsOZ8N6ZZvG00=;
+	b=KaXRu9QTBPykDF9UJzOXiFTRKUUAC0KlvE28YGt67LvEZnIoW6zmI4ze/k3MpO1s6ILmvo
+	v8WrevqzVPfaQMgZivwo8QjpXNd1jJXbGTs9XS1OEMSeeiEYYaUC4HYHKwRYbFjT3xBT/U
+	zCp0VH2IyKnG7Euk5Tc7PKLmM6wNgUO3Epghmr6hJ+Xdp0ecXgoYAeU8OUKrshGwQ+/I5T
+	eigmUC+jSAmOT/HMzXgXM5LTp6fPQBIB176c/wZMIs4kjl5fa1IRiOvwnU75vmL85VXHQd
+	/a6L+3ta3FNC0I2fmngUPNv++3gt9RKmyDx4fXgwlmiSPm8DVzZO9Yp7WfCSGg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=lahtoruutu; t=1710440491;
+	s=lahtoruutu; t=1710440492;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=DwyCCRgw3xaKuhE1uxZhmGMrtIEPd+B5gXuytRvdC/E=;
-	b=SbGEcxg5Y4tJmak01VMZd5u2BoeYkPzTSAOpngAhaiwa0LUUUhV9GfrKzZnPRyyeZIq0xD
-	qWAEElfjPv5ffKfPr6UBCU34k66fE+CS8hcXuBcF+u4fN+GhGIRzDZW/UO2atOYr1v3iE1
-	r0teZT4WHIrCOuXAyQq2t617k0KAB0HWTBb1+0GoYs1yF+XsHWIIFlhgrzYGhIWU6IQSl3
-	VIxwmJX+o+jEj4DJyHCyVEeJ+eZ8Dx49sBrKrSeySgec9wEqADqBUm/6xt/AciSDumN7fO
-	M9+tAC3t63ZVSRezh+8dpQh/mZZ3u/sYsUhPWhBiNBm6Slw4DcnawSusg/UCKA==
+	bh=ZLFhzfdhZUwusV8AXnmOoKbPCZ//+DwsOZ8N6ZZvG00=;
+	b=DkHQYb3VSIBwHb+1mZIZt2eBEjw8vIpDgYJ1WCvjnLgarGGBZ1LAdFJNa/MZpp9i6E+7fE
+	kEgSvAaxuakVrZuu98osMdn2WbJcA6Y58vp3doLRqX6+Fe4xyV338c4fYeqqfeSKK3Cm3W
+	8XLqilBhe/jX7WVjrnEYF00UHGM8Css6D4wawihDUGtANGIDuPsKb/Lj5tSdJkMYP8ef3/
+	u1ERbP+VsPx/UwtMrxr6SDRC9vakuB+VdcLiPLXmefCyTH8+tvy4FJVU4gJ2KzaGSBx5+d
+	Cg1ktmRr6XWd0StZLUN4MAz8cJGEaTPqyKnTtTU91Xfcqg2Zo7L5z35QjVW2xA==
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
-ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1710440491; a=rsa-sha256;
+ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1710440492; a=rsa-sha256;
 	cv=none;
-	b=qcEgjWLD6U90XAeXv8ytgIk3CMkbHcFc9m4xIHxzoTMZ0zXbNM1Nsp2bCdZDX+Hlq0Qt7L
-	V0947HuwyVQWA52nOOLUQ4hGaP9AMSKutv2h2Rh8lACufI7LEnW4wNWimNVtaLVfreAJ8K
-	SakfS/NE8xGXS9jfR29VlPz9BQptrM9iVNCYvQsZqXdOph46gfrvMplAEsAhjuuJTCtbbf
-	E9kHQD29FmztmKmGXNx3VAfkLHZC8M2RxSGV2pu3a4cCRqGr3/YXzle6n/h7x8UAAMLsyF
-	HMEJBEj/R+VEX9jBppjF1ocRPuQ53qGhg3rpYskTH1olcoVB2d2awXVxmYPNZQ==
+	b=XFUHNRqlGcGbmmbrPBRk3fAnF8Mc6wQWMwZGjWoGvR2wq/geks3xNufTyuBa1ufft9VRKi
+	OusRhn/cmIV+zOe4uOan+NP/COZv+Ao3274CvvuoucFs+kxpH6xhbLlzg7VCa26Au5A5yp
+	CerhJELkr9ZFTkjWZnH8iWu/y3KLMwBo7lhEin4dJcBw5x+q/lmeTqJxI0GBm7iNdVyhNj
+	2QwmqDdpg2juoIxljMiBIGT4M/zWoKjBL7PeLMIVBZG+UhfXcpRUQJEVGMGna63LN6sp2w
+	rnQhFiTCnd/9F+8qYR7feGKPQBFTzrdqPWBEb+xL0BdAgs4K2iWRTCSK/BDfVw==
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ v2 5/9] sco-tester: add TX timestamping test
-Date: Thu, 14 Mar 2024 20:21:14 +0200
-Message-ID: <87e454b997d2211e1bea4b017a5f5ca22734550f.1710440408.git.pav@iki.fi>
+Subject: [PATCH BlueZ v2 6/9] shared/tester: run test with given name
+Date: Thu, 14 Mar 2024 20:21:15 +0200
+Message-ID: <c49b98ccde558527a7ff2ade4c84b37f2c4d9b3a.1710440408.git.pav@iki.fi>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <cover.1710440408.git.pav@iki.fi>
 References: <cover.1710440408.git.pav@iki.fi>
@@ -89,180 +89,47 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add test:
-
-SCO CVSD Send - TX Timestamping
+Add option for running a single test with given name.  Useful when some
+test names have a common prefix, so that neither -s or -p can
+distinguish them.
 ---
- tools/sco-tester.c | 94 ++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 91 insertions(+), 3 deletions(-)
+ src/shared/tester.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/tools/sco-tester.c b/tools/sco-tester.c
-index ecc65e092..8997e86f7 100644
---- a/tools/sco-tester.c
-+++ b/tools/sco-tester.c
-@@ -31,6 +31,8 @@
- #include "src/shared/mgmt.h"
- #include "src/shared/util.h"
+diff --git a/src/shared/tester.c b/src/shared/tester.c
+index a1ee5b687..280f509b9 100644
+--- a/src/shared/tester.c
++++ b/src/shared/tester.c
+@@ -112,6 +112,7 @@ static gboolean option_monitor = FALSE;
+ static gboolean option_list = FALSE;
+ static const char *option_prefix = NULL;
+ static const char *option_string = NULL;
++static const char *option_name = NULL;
  
-+#include "tester-utils.h"
-+
- struct test_data {
- 	const void *test_data;
- 	struct mgmt *mgmt;
-@@ -38,15 +40,20 @@ struct test_data {
- 	struct hciemu *hciemu;
- 	enum hciemu_type hciemu_type;
- 	unsigned int io_id;
-+	unsigned int err_io_id;
- 	int sk;
- 	bool disable_esco;
- 	bool enable_codecs;
-+	int step;
-+	struct tx_tstamp_data tx_ts;
- };
+ struct monitor_hdr {
+ 	uint16_t opcode;
+@@ -285,6 +286,12 @@ void tester_add_full(const char *name, const void *test_data,
+ 	if (!test_func)
+ 		return;
  
- struct sco_client_data {
- 	int expect_err;
- 	const uint8_t *send_data;
- 	uint16_t data_len;
-+	uint32_t so_timestamping;
-+	unsigned int send_extra;
- };
- 
- static void print_debug(const char *str, void *user_data)
-@@ -227,8 +234,10 @@ static void test_data_free(void *test_data)
- 			break; \
- 		user->hciemu_type = HCIEMU_TYPE_BREDRLE; \
- 		user->io_id = 0; \
-+		user->err_io_id = 0; \
- 		user->sk = -1; \
- 		user->test_data = data; \
-+		user->step = 0; \
- 		user->disable_esco = _disable_esco; \
- 		user->enable_codecs = _enable_codecs; \
- 		tester_add_full(name, data, \
-@@ -265,6 +274,16 @@ static const struct sco_client_data connect_send_success = {
- 	.send_data = data
- };
- 
-+static const struct sco_client_data connect_send_tx_timestamping = {
-+	.expect_err = 0,
-+	.data_len = sizeof(data),
-+	.send_data = data,
-+	.so_timestamping = (SOF_TIMESTAMPING_SOFTWARE |
-+					SOF_TIMESTAMPING_OPT_ID |
-+					SOF_TIMESTAMPING_TX_SOFTWARE),
-+	.send_extra = 2,
-+};
-+
- static void client_connectable_complete(uint16_t opcode, uint8_t status,
- 					const void *param, uint8_t len,
- 					void *user_data)
-@@ -595,6 +614,61 @@ static int connect_sco_sock(struct test_data *data, int sk)
- 	return 0;
- }
- 
-+static gboolean recv_errqueue(GIOChannel *io, GIOCondition cond,
-+							gpointer user_data)
-+{
-+	struct test_data *data = user_data;
-+	const struct sco_client_data *scodata = data->test_data;
-+	int sk = g_io_channel_unix_get_fd(io);
-+	int err;
-+
-+	data->step--;
-+
-+	err = tx_tstamp_recv(&data->tx_ts, sk, scodata->data_len);
-+	if (err > 0)
-+		return TRUE;
-+	else if (!err && !data->step)
-+		tester_test_passed();
-+	else
-+		tester_test_failed();
-+
-+	data->err_io_id = 0;
-+	return FALSE;
-+}
-+
-+static void sco_tx_timestamping(struct test_data *data, GIOChannel *io)
-+{
-+	const struct sco_client_data *scodata = data->test_data;
-+	struct so_timestamping so = {
-+		.flags = scodata->so_timestamping,
-+	};
-+	int sk;
-+	int err;
-+	unsigned int count;
-+
-+	if (!(scodata->so_timestamping & SOF_TIMESTAMPING_TX_RECORD_MASK))
-+		return;
-+
-+	sk = g_io_channel_unix_get_fd(io);
-+
-+	tester_print("Enabling TX timestamping");
-+
-+	tx_tstamp_init(&data->tx_ts, scodata->so_timestamping);
-+
-+	for (count = 0; count < scodata->send_extra + 1; ++count)
-+		data->step += tx_tstamp_expect(&data->tx_ts);
-+
-+	err = setsockopt(sk, SOL_SOCKET, SO_TIMESTAMPING, &so, sizeof(so));
-+	if (err < 0) {
-+		tester_warn("setsockopt SO_TIMESTAMPING: %s (%d)",
-+						strerror(errno), errno);
-+		tester_test_failed();
++	if (option_name && strcmp(name, option_name)) {
++		if (destroy)
++			destroy(user_data);
 +		return;
 +	}
 +
-+	data->err_io_id = g_io_add_watch(io, G_IO_ERR, recv_errqueue, data);
-+}
-+
- static gboolean sco_connect_cb(GIOChannel *io, GIOCondition cond,
- 							gpointer user_data)
- {
-@@ -619,10 +693,20 @@ static gboolean sco_connect_cb(GIOChannel *io, GIOCondition cond,
- 
- 	if (scodata->send_data) {
- 		ssize_t ret;
-+		unsigned int count;
-+
-+		data->step = 0;
- 
--		tester_print("Writing %u bytes of data", scodata->data_len);
-+		sco_tx_timestamping(data, io);
- 
--		ret = write(sk, scodata->send_data, scodata->data_len);
-+		tester_print("Writing %u*%u bytes of data",
-+				scodata->send_extra + 1, scodata->data_len);
-+
-+		for (count = 0; count < scodata->send_extra + 1; ++count) {
-+			ret = write(sk, scodata->send_data, scodata->data_len);
-+			if (scodata->data_len != ret)
-+				break;
-+		}
- 		if (scodata->data_len != ret) {
- 			tester_warn("Failed to write %u bytes: %zu %s (%d)",
- 					scodata->data_len, ret, strerror(errno),
-@@ -633,7 +717,7 @@ static gboolean sco_connect_cb(GIOChannel *io, GIOCondition cond,
- 
- 	if (-err != scodata->expect_err)
- 		tester_test_failed();
--	else
-+	else if (!data->step)
- 		tester_test_passed();
- 
- 	return FALSE;
-@@ -869,6 +953,10 @@ int main(int argc, char *argv[])
- 	test_sco("SCO CVSD Send - Success", &connect_send_success,
- 					setup_powered, test_connect);
- 
-+	test_sco("SCO CVSD Send - TX Timestamping",
-+					&connect_send_tx_timestamping,
-+					setup_powered, test_connect);
-+
- 	test_offload_sco("Basic SCO Get Socket Option - Offload - Success",
- 				NULL, setup_powered, test_codecs_getsockopt);
- 
+ 	if (option_prefix && !g_str_has_prefix(name, option_prefix)) {
+ 		if (destroy)
+ 			destroy(user_data);
+@@ -829,6 +836,8 @@ static GOptionEntry options[] = {
+ 				"Enable monitor output" },
+ 	{ "list", 'l', 0, G_OPTION_ARG_NONE, &option_list,
+ 				"Only list the tests to be run" },
++	{ "name", 'n', 0, G_OPTION_ARG_STRING, &option_name,
++				"Run test with given name" },
+ 	{ "prefix", 'p', 0, G_OPTION_ARG_STRING, &option_prefix,
+ 				"Run tests matching provided prefix" },
+ 	{ "string", 's', 0, G_OPTION_ARG_STRING, &option_string,
 -- 
 2.44.0
 
