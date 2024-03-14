@@ -1,97 +1,136 @@
-Return-Path: <linux-bluetooth+bounces-2523-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-2525-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0145687C1BF
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 14 Mar 2024 18:01:40 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D82DA87C28B
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 14 Mar 2024 19:23:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B0646283C59
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 14 Mar 2024 17:01:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 943B7282485
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 14 Mar 2024 18:23:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2A1A745EE;
-	Thu, 14 Mar 2024 17:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9CCF757E2;
+	Thu, 14 Mar 2024 18:20:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=craftyguy.net header.i=@craftyguy.net header.b="UjPeQDh0"
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="qO/BaIMs"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-187.mta0.migadu.com (out-187.mta0.migadu.com [91.218.175.187])
+Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5339A74BE1;
-	Thu, 14 Mar 2024 17:01:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.187
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710435673; cv=none; b=k9PRmUoaqbYLfhLdcW6hItM2R6AooWoZj00uOKUmCdvWeIiDxbwn7OszTDgplbjFUtDwR8OCWc6pZ8qDfF+h43X1S9GPYq81eoSPM9Y8O5+cp5mU75hCf2nDN+3BcHn7Vx8N7LK++ZDsDE7emqy73gSXDVHYaEBgj9JXf+kwcUw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710435673; c=relaxed/simple;
-	bh=kx/65Q2aEyNOq/9aSjIYHA7KOud5g13mAoAdscg6Sa8=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type:Content-Disposition; b=ca2Bk3UyLZ6s5GQcDI1i75mmrYOooCbixKoBWRcPC8OvaO7qCAUIj390LW1R1+ey+ICF2KuJkZC0oaLarjDHBsDwbU4K0UeM35IkmPB1mBoffbz4BhX8yDRG1wWSTICIvZSgF+scSBoKWDaL+yLRbyniUEp0gmW12NrNAvMlJEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=craftyguy.net; spf=pass smtp.mailfrom=craftyguy.net; dkim=pass (2048-bit key) header.d=craftyguy.net header.i=@craftyguy.net header.b=UjPeQDh0; arc=none smtp.client-ip=91.218.175.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=craftyguy.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=craftyguy.net
-Date: Thu, 14 Mar 2024 10:01:03 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=craftyguy.net;
-	s=key1; t=1710435669;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849D17443A
+	for <linux-bluetooth@vger.kernel.org>; Thu, 14 Mar 2024 18:20:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1710440459; cv=pass; b=VXk1r2pjbyMwLKLADr5ssIKy80UniieI40EcyrSNHTr+II4X3cDxP8IJOHceSp2zQm/RQHiPQc+wMbrJNn7EKlVM69HB6kmfFqxsmDp4fpvaX+ioZ0X53UWIH4ujhJOH3mteeckqa88IT3t0xnLSrHOK+7VqtEqHImrmeEhFqts=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1710440459; c=relaxed/simple;
+	bh=rzlDmUURTppy7EEU64um4wKSZ2omHZ3vmQYHQGcw3f8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ui4bjzd59tiWbXYuqhDa9De+a6u0zg+9LB9OwE2oWKnKDklQxt+H9GSm6uzbmKrunHBwgZeI8rx53B/glDq4PUwMCrgbyV27OJ0OpEuUf4+vrVFspzqtE4nvlUQcsQD7EK2y37MDivWt8J48AgtUAoZA/oMBXzemels7XQDIpYU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=qO/BaIMs; arc=pass smtp.client-ip=195.140.195.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
+Received: from monolith.lan (unknown [193.138.7.198])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: pav)
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4TwbKW5VyKzyPB;
+	Thu, 14 Mar 2024 20:20:47 +0200 (EET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
+	t=1710440448;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=7VZ6BU3j+IT52okbFNFdHPBh3OIM0PFIwRzd4ocYRAA=;
-	b=UjPeQDh0MqOYej8uHFOtfmcU7bWp8F5yq6dnVy5dBwyopL6cI4OB95jui2Io045Hv5SkiS
-	oE3Wts4SLO8JxUSm/YcD4AS4KzgTDtv6cpusjdH8yR11G6xgaClhWiuV+EoEwTbNaUgfuC
-	9LrZdNcK64GKzhH9gjS4i5qYfcjOYBSXea+UG8czGdcCLbl4FSYStSK3P21Q5cRIw2GXpc
-	Pk2QSk/Z5KDTlNpFw5eEAdpOm+D9u85TQCfXUO9yhgEWQrZO53aN4N3+Sm/YoJeUf3JGet
-	RkbTrjTU1oYW8j6ytut5tvGUfnBYDP9v9aMEnWd0ezTmUWsLpJOsq1WmwG4teg==
-Message-ID: <20240314100103.GC6100@craftyguy.net>
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Clayton Craft <clayton@craftyguy.net>
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
- Marcel Holtmann <marcel@holtmann.org>, linux-bluetooth@vger.kernel.org,
- linux-kernel@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>,
- stable@vger.kernel.org, Janaki Ramaiah Thota <quic_janathot@quicinc.com>
-Subject: Re: [PATCH] Revert "Bluetooth: hci_qca: Set BDA quirk bit if fwnode
- exists in DT"
-In-Reply-To: <20240314084412.1127-1-johan+linaro@kernel.org>
-References: <20240314084412.1127-1-johan+linaro@kernel.org>
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=6MkMVi9fVFQq+BaG05PwIckJ+EuTlCsvPtUcgq0Sx0U=;
+	b=qO/BaIMstCc8KQfQsxITBto/k9OzemPpWXWo787q5LGnRtqqxlXyqWkVb5Pj06BydUEleZ
+	W0zAD8RRwLlg6ATUSW5ChYhSUy/ucKcDKBj7/xyu2xRHPQh9MA/kMyMjrT3N5JAT3o7b33
+	pQ7N8XQwftoyCXUCmLJb2GBwV8d53UY=
+ARC-Seal: i=1; s=meesny; d=iki.fi; t=1710440448; a=rsa-sha256; cv=none;
+	b=yFRHk3SH5OFYcHX8cGfTqPbdxMTDqgsQt8CuEjyXT+7Xf8dfhIdrfwzaR3Y4kufAeY8aFD
+	K1ES5+OOVHn6UvYFJJZYtOu5VLnyObs0v4iY15xfzzLv+gd5357R2/GlStOSjREEnVSGBT
+	S8WAqGRTTq4/8bLjvGAYZ9DSru4eKOI=
+ARC-Authentication-Results: i=1;
+	ORIGINATING;
+	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
+	s=meesny; t=1710440448;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=6MkMVi9fVFQq+BaG05PwIckJ+EuTlCsvPtUcgq0Sx0U=;
+	b=qWEmhQHCBuUAe/ugHQoRht+aBAFlkNMYLKTWVIPPQiJaBZr0vmwVvi7mSHc6n5Gaw0/Jcn
+	hvC3rwazJfUi+pmpPNmerDTKiiOVzKqzyTLKVpw9OXeYTUjzC4nNG0J+PnKTET437j6TNZ
+	LgBVE0whKHgHzQfETy/PrqZjNX81tyQ=
+From: Pauli Virtanen <pav@iki.fi>
+To: linux-bluetooth@vger.kernel.org
+Cc: Pauli Virtanen <pav@iki.fi>
+Subject: [PATCH v2 0/5] Bluetooth: add TX timestamping for ISO/SCO/L2CAP
+Date: Thu, 14 Mar 2024 20:20:16 +0200
+Message-ID: <cover.1710440392.git.pav@iki.fi>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
 
-On Thu, 14 Mar 2024 09:44:12 +0100 Johan Hovold <johan+linaro@kernel.org> wrote:
-> This reverts commit 7dcd3e014aa7faeeaf4047190b22d8a19a0db696.
-> 
-> Qualcomm Bluetooth controllers like WCN6855 do not have persistent
-> storage for the Bluetooth address and must therefore start as
-> unconfigured to allow the user to set a valid address unless one has
-> been provided by the boot firmware in the devicetree.
-> 
-> A recent change snuck into v6.8-rc7 and incorrectly started marking the
-> default (non-unique) address as valid. This specifically also breaks the
-> Bluetooth setup for some user of the Lenovo ThinkPad X13s.
-> 
-> Note that this is the second time Qualcomm breaks the driver this way
-> and that this was fixed last year by commit 6945795bc81a ("Bluetooth:
-> fix use-bdaddr-property quirk"), which also has some further details.
-> 
-> Fixes: 7dcd3e014aa7 ("Bluetooth: hci_qca: Set BDA quirk bit if fwnode exists in DT")
-> Cc: stable@vger.kernel.org      # 6.8
-> Cc: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Add support for TX timestamping in ISO/SCO/L2CAP sockets.
 
-Thanks Johan, this revert does indeed fix Bluetooth for me on the X13s.
+These patches allow fixing / working around controller(?) issue where
+two ISO streams in same group get desynchronized. It also gives user
+applications the best latency information as available to kernel.
 
-Reported-by: Clayton Craft <clayton@craftyguy.net>
-Tested-by: Clayton Craft <clayton@craftyguy.net>
+Also add sockopt BT_NO_ERRQUEUE_POLL to optionally disable POLLERR
+wakeup on TX timestamp arrival, which is mainly a nuisance in the use
+case here.  The alternative to this seems be to deal with the POLLERR
+wakeups in BlueZ side, but this seems hard as it's always enabled in
+poll() flags so not clear if anything else than polling at regular
+intervals can be done there.
 
--Clayton
+Pipewire side:
+https://gitlab.freedesktop.org/pvir/pipewire/-/commits/iso-ts-test2
+
+With this change, https://github.com/bluez/bluez/issues/515 is more or
+less fixed, and the sound server can figure out the total latency to
+audio rendering (tx latency + transport latency + presentation delay).
+
+For ISO, we can later use LE Read ISO TX Sync to provide hardware
+timestamps, but this requires figuring out the sequence number
+synchronization first.
+
+v2:
+- Rename *tx_comp* -> *tx*
+- Add hci_send_conn_frame() and handle all link types
+- Add SCO timestamping. Deal with no flow control -> no Num_Comp_* events
+- Handle HCI_FLOW_CTL_MODE_BLOCK_BASED
+- Add BT_NO_ERRQUEUE_POLL
+
+Pauli Virtanen (5):
+  Bluetooth: add support for skb TX timestamping
+  Bluetooth: ISO: add TX timestamping
+  Bluetooth: L2CAP: add TX timestamping
+  Bluetooth: SCO: add TX timestamping
+  Bluetooth: add BT_NO_ERRQUEUE_POLL socket option
+
+ include/net/bluetooth/bluetooth.h |  10 ++-
+ include/net/bluetooth/hci_core.h  |  12 ++++
+ include/net/bluetooth/l2cap.h     |   3 +-
+ net/bluetooth/6lowpan.c           |   2 +-
+ net/bluetooth/af_bluetooth.c      |  72 ++++++++++++++++++-
+ net/bluetooth/hci_conn.c          | 111 ++++++++++++++++++++++++++++++
+ net/bluetooth/hci_core.c          |  19 +++--
+ net/bluetooth/hci_event.c         |  11 ++-
+ net/bluetooth/iso.c               |  32 ++++++---
+ net/bluetooth/l2cap_core.c        |  11 ++-
+ net/bluetooth/l2cap_sock.c        |  23 +++++--
+ net/bluetooth/sco.c               |  27 ++++++--
+ net/bluetooth/smp.c               |   2 +-
+ 13 files changed, 303 insertions(+), 32 deletions(-)
+
+-- 
+2.44.0
+
 
