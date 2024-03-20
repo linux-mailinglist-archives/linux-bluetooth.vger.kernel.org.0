@@ -1,189 +1,111 @@
-Return-Path: <linux-bluetooth+bounces-2648-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-2653-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87D01880C8B
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 20 Mar 2024 08:58:51 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8E77880CDA
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 20 Mar 2024 09:15:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3D81A283CA1
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 20 Mar 2024 07:58:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 04C1F1C20C2C
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 20 Mar 2024 08:15:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2137D39863;
-	Wed, 20 Mar 2024 07:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04BAC383A1;
+	Wed, 20 Mar 2024 08:15:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BxRfRrdS"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ATzBhuix"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451D329424;
-	Wed, 20 Mar 2024 07:58:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6342E407
+	for <linux-bluetooth@vger.kernel.org>; Wed, 20 Mar 2024 08:15:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1710921499; cv=none; b=nIAoThuvOKpErKUUC5zcJlYAuNZk1Cti6joU5OgLhDFNYyt+Yn0VgXJPg3775aGkwdPv2FoQOvwuIdU6XiFBT2ijEEJ/Qpe1kI0fsFqwtfqeoi4q48SigQBIiSqgGxVIjj8we2BBUOuWNFzJxH0elqsOJXyJ5HM0KdX8qKd5daM=
+	t=1710922512; cv=none; b=AtpWAZ48b4SWz9o+r21ceyLcQCGhO9s7HA+ZNsmc5GLUwdkQAsIbXZZJebIRASVt6WF7VSLgbP96ZYmTwaot5zUEmf5IbFWF4rFqGCxALHEJnkBnrBeu4Wl/8aB59Vtt25Yr3gev0GSygC9L3YoDCiMMgjgYMfwt2QUZpa6ROlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1710921499; c=relaxed/simple;
-	bh=C1RG275fn9xQtQpOn0JJPb4biy/sTALIc/k31KMVrzc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AU+RHrTnDO7mJ/W68wEgCjZFEPUMbcO+wh+VhMbYbf2UNcdV/DVpOXtMv8hqHZZ/BgRl9KPSabR15nBIsnLSMEUyAhgoo5sYhxaZBexPQ0RN8HxymNwWOgI/jNdVEWUBTR+RKCGufERutEkeumIfO4hS86vUbMzNYi3V+jnrJSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BxRfRrdS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 123CAC43399;
-	Wed, 20 Mar 2024 07:58:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1710921499;
-	bh=C1RG275fn9xQtQpOn0JJPb4biy/sTALIc/k31KMVrzc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BxRfRrdSNN8lK3/F2XPyGySwbkYlfkf+PlhwU9xAdxtkJFdsgzBOWEimFvecJfH6l
-	 2KKJBGlWd8ceHC6xjgsSBXtYwNrz3jBVsCI2SBuCdQjtibqsBSv6LriLGJpnX8SMAt
-	 ha+wLtvTJvqCgtqRP4zCrsV8nUO/IBrSvv5OkvbU1yZquSZoOCokd52l5K+Qg+J8dw
-	 JyMk72W5k2SGyb3gdj1mELPPJy+/QrqnWPopTszQhqJzZ/yvukY5WGjwJpUsrVNjbp
-	 CcM2orjiNDk6Xx5chtHCIXKDc9KLEzANvpXC1I4ZknrSCx59yz6f4TscZLbcXxCCcs
-	 jwMs2nmdROgeA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan+linaro@kernel.org>)
-	id 1rmqq9-0000000029S-2OzU;
-	Wed, 20 Mar 2024 08:58:25 +0100
-From: Johan Hovold <johan+linaro@kernel.org>
-To: Marcel Holtmann <marcel@holtmann.org>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Cc: Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hedberg <johan.hedberg@gmail.com>,
-	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
-	Matthias Kaehlcke <mka@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Rocky Liao <quic_rjliao@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	linux-bluetooth@vger.kernel.org,
-	netdev@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>,
-	stable@vger.kernel.org,
-	Nikita Travkin <nikita@trvn.ru>
-Subject: [PATCH v4 4/4] Bluetooth: qca: fix device-address endianness
-Date: Wed, 20 Mar 2024 08:55:54 +0100
-Message-ID: <20240320075554.8178-5-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240320075554.8178-1-johan+linaro@kernel.org>
-References: <20240320075554.8178-1-johan+linaro@kernel.org>
+	s=arc-20240116; t=1710922512; c=relaxed/simple;
+	bh=/XP1LYrWUHaJZLFUInEHKQ/VRrvxK4MzsPGPNMGEUHU=;
+	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
+	 In-Reply-To:References; b=WLGmzkI3VTs9CannRVL7ttMWQiBSzdL4TdJLO2JMf1YSfnz5EpHib88ZafjAor7X3mMtG6JiL3R71WxyrmUc2qxrGlCM7phC4QyzZNaFb+h5N+UeM3w7e16bcC68wbjSNdBmIgLalBxaSaVOokTuWBtFF+bL/CpWTgqSsUnkccA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ATzBhuix; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-1def3340682so42167935ad.1
+        for <linux-bluetooth@vger.kernel.org>; Wed, 20 Mar 2024 01:15:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1710922510; x=1711527310; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=/XP1LYrWUHaJZLFUInEHKQ/VRrvxK4MzsPGPNMGEUHU=;
+        b=ATzBhuixnQJ50552QRqgBI9RlLIm91R0wcj9BC2lZEd5fnXIsItTkJpGSyVAW2m4sr
+         qD+UtfzJmmt6bV3pxwyOay26AC5Dw3CKNBayLJeYgXlqso7JlnBEoCE0jRvQRCHMHast
+         U4Ewd4SoUR20mZBoR6703zna3VGJhgQIGGSnOnGQtHxOzN71W4D0XaL8VDriUyVweDsD
+         nFNsJdiCpZp0AJRpjOCnxNrRr5dE4dK+bqhKtFIswAq7UqSMIeGpGz1QT4XTdlLRwd/S
+         1tltqSlRfpylmTB9DXlKpeJ9U2pVCHGBLtXNbuLkTs+Ztpwso4IPWv0IVeuKaqQBbKe3
+         gWpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1710922510; x=1711527310;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/XP1LYrWUHaJZLFUInEHKQ/VRrvxK4MzsPGPNMGEUHU=;
+        b=UMrHwiCPqT7N07DWMoeSlT9XYYtckD62NjOMyGFoCFKYVfkqwdhtqbFLu1tHXIxHat
+         N2i+IfrFq/cavEdytWl5zuM23rbaBFcTnrc788tTGKJWcSILeLme7fIgI5QYwllGjljr
+         XwkYD9D7qWuzTOS+3PPoAsFK94DVjPuKrhgv3EQQww7w1yIouyVTYuPupokaN+Wh34UF
+         tUVbEJZckKWWKykcELml73qWdNmAAjdfclW255ua8gAtw8iZ4IMRlbdGsUE9HHs21exQ
+         S2Y2rw5v9UjotlqdYaEJBufw5RsemyCmxr1puvUVEUigwL0N0n8D12MSfAaE/L6M1OC1
+         JiOw==
+X-Gm-Message-State: AOJu0YzwYW1KLN2eQcGIpGO8B26SURH9eA5vic11F0OLkCneCqQivzHR
+	hxPXv0tAsq/Y6OeegrAD0c72ndUTeR7e5qWtTooK3frb6F5ZKZBTrh5CTzsu
+X-Google-Smtp-Source: AGHT+IElLdAWZ2zs12RlsRwPSa7Nv/FFX7AksjIzzoUU41PpQSq585PTtwa8O7tyfE17hMtCX3FcUw==
+X-Received: by 2002:a17:903:11cd:b0:1dc:fc84:edaa with SMTP id q13-20020a17090311cd00b001dcfc84edaamr6334468plh.29.1710922510119;
+        Wed, 20 Mar 2024 01:15:10 -0700 (PDT)
+Received: from [172.17.0.2] ([4.227.115.109])
+        by smtp.gmail.com with ESMTPSA id c8-20020a170903234800b001dc30f148f7sm12879691plh.243.2024.03.20.01.15.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Mar 2024 01:15:09 -0700 (PDT)
+Message-ID: <65fa9b0d.170a0220.52f12.50d5@mx.google.com>
+Date: Wed, 20 Mar 2024 01:15:09 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============4144235659141208775=="
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: bluez.test.bot@gmail.com
+To: linux-bluetooth@vger.kernel.org, johan+linaro@kernel.org
+Subject: RE: Bluetooth: qca: fix device-address endianness
+In-Reply-To: <20240320075554.8178-2-johan+linaro@kernel.org>
+References: <20240320075554.8178-2-johan+linaro@kernel.org>
+Reply-To: linux-bluetooth@vger.kernel.org
 
-The WCN6855 firmware on the Lenovo ThinkPad X13s expects the Bluetooth
-device address in big-endian order when setting it using the
-EDL_WRITE_BD_ADDR_OPCODE command.
+--===============4144235659141208775==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-Presumably, this is the case for all non-ROME devices which all use the
-EDL_WRITE_BD_ADDR_OPCODE command for this (unlike the ROME devices which
-use a different command and expect the address in little-endian order).
+This is an automated email and please do not reply to this email.
 
-Reverse the little-endian address before setting it to make sure that
-the address can be configured using tools like btmgmt or using the
-'local-bd-address' devicetree property.
+Dear Submitter,
 
-Note that this can potentially break systems with boot firmware which
-has started relying on the broken behaviour and is incorrectly passing
-the address via devicetree in big-endian order.
+Thank you for submitting the patches to the linux bluetooth mailing list.
+While preparing the CI tests, the patches you submitted couldn't be applied to the current HEAD of the repository.
 
-The only device affected by this should be the WCN3991 used in some
-Chromebooks. As ChromeOS updates the kernel and devicetree in lockstep,
-the new 'qcom,local-bd-address-broken' property can be used to determine
-if the firmware is buggy so that the underlying driver bug can be fixed
-without breaking backwards compatibility.
+----- Output -----
 
-Set the HCI_QUIRK_BDADDR_PROPERTY_BROKEN quirk for such platforms so
-that the address is reversed when parsing the address property.
+error: patch failed: drivers/bluetooth/hci_qca.c:1904
+error: drivers/bluetooth/hci_qca.c: patch does not apply
+hint: Use 'git am --show-current-patch' to see the failed patch
 
-Fixes: 5c0a1001c8be ("Bluetooth: hci_qca: Add helper to set device address")
-Cc: stable@vger.kernel.org      # 5.1
-Cc: Balakrishna Godavarthi <quic_bgodavar@quicinc.com>
-Cc: Matthias Kaehlcke <mka@chromium.org>
-Tested-by: Nikita Travkin <nikita@trvn.ru> # sc7180
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Please resolve the issue and submit the patches again.
+
+
 ---
- drivers/bluetooth/btqca.c   |  8 ++++++--
- drivers/bluetooth/hci_qca.c | 10 ++++++++++
- 2 files changed, 16 insertions(+), 2 deletions(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index b40b32fa7f1c..19cfc342fc7b 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -826,11 +826,15 @@ EXPORT_SYMBOL_GPL(qca_uart_setup);
- 
- int qca_set_bdaddr(struct hci_dev *hdev, const bdaddr_t *bdaddr)
- {
-+	bdaddr_t bdaddr_swapped;
- 	struct sk_buff *skb;
- 	int err;
- 
--	skb = __hci_cmd_sync_ev(hdev, EDL_WRITE_BD_ADDR_OPCODE, 6, bdaddr,
--				HCI_EV_VENDOR, HCI_INIT_TIMEOUT);
-+	baswap(&bdaddr_swapped, bdaddr);
-+
-+	skb = __hci_cmd_sync_ev(hdev, EDL_WRITE_BD_ADDR_OPCODE, 6,
-+				&bdaddr_swapped, HCI_EV_VENDOR,
-+				HCI_INIT_TIMEOUT);
- 	if (IS_ERR(skb)) {
- 		err = PTR_ERR(skb);
- 		bt_dev_err(hdev, "QCA Change address cmd failed (%d)", err);
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index f989c05f8177..c73481c57741 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -225,6 +225,7 @@ struct qca_serdev {
- 	struct qca_power *bt_power;
- 	u32 init_speed;
- 	u32 oper_speed;
-+	bool bdaddr_property_broken;
- 	const char *firmware_name;
- };
- 
-@@ -1842,6 +1843,7 @@ static int qca_setup(struct hci_uart *hu)
- 	const char *firmware_name = qca_get_firmware_name(hu);
- 	int ret;
- 	struct qca_btsoc_version ver;
-+	struct qca_serdev *qcadev;
- 	const char *soc_name;
- 
- 	ret = qca_check_speeds(hu);
-@@ -1904,6 +1906,11 @@ static int qca_setup(struct hci_uart *hu)
- 	case QCA_WCN6855:
- 	case QCA_WCN7850:
- 		set_bit(HCI_QUIRK_USE_BDADDR_PROPERTY, &hdev->quirks);
-+
-+		qcadev = serdev_device_get_drvdata(hu->serdev);
-+		if (qcadev->bdaddr_property_broken)
-+			set_bit(HCI_QUIRK_BDADDR_PROPERTY_BROKEN, &hdev->quirks);
-+
- 		hci_set_aosp_capable(hdev);
- 
- 		ret = qca_read_soc_version(hdev, &ver, soc_type);
-@@ -2284,6 +2291,9 @@ static int qca_serdev_probe(struct serdev_device *serdev)
- 	if (!qcadev->oper_speed)
- 		BT_DBG("UART will pick default operating speed");
- 
-+	qcadev->bdaddr_property_broken = device_property_read_bool(&serdev->dev,
-+			"qcom,local-bd-address-broken");
-+
- 	if (data)
- 		qcadev->btsoc_type = data->soc_type;
- 	else
--- 
-2.43.2
 
+--===============4144235659141208775==--
 
