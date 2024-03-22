@@ -1,48 +1,48 @@
-Return-Path: <linux-bluetooth+bounces-2692-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-2691-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A17888869FA
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Mar 2024 11:10:47 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3011B8869F8
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Mar 2024 11:10:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 41F59B22719
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Mar 2024 10:10:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DF3FA28339A
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Mar 2024 10:10:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CDAA374F6;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37F1F36B00;
 	Fri, 22 Mar 2024 10:10:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aIvD/XLC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lfPL7Sia"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5F12E822
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5882E3EB
 	for <linux-bluetooth@vger.kernel.org>; Fri, 22 Mar 2024 10:10:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711102232; cv=none; b=ZhXvkkwiPkK0DJUe8t3aq/UXk9p02L0gcDJ55xmCai4wK4f/LZ0MJz2imMR+Jsfq6xf/dlz3wfH5nHRs+iLw6IklFIXxlq33YGNAJRIuAf6xMHWBwKnmF569lBKZG2Nrz31SJCMV8iWpjritcNEwDHGuDM8Z/CaODIHjQmhGVNM=
+	t=1711102232; cv=none; b=p8sAKDezpUYrliLGMB37sA3Gk4IbkbHpwcs7GBkUxSYPpM/eN63JkUOKglnrYceaKfjnCEq650WVwWCw+gLsImLhAz7rZuDP4N9QFW4Mr6Jp8CjjjFj6ecB9jol6GZkFyYU1XKyC00OVT3RrGJBa9JhlZ4qwPzgPKJas90E8fkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1711102232; c=relaxed/simple;
-	bh=eEJxT9zi3pb/qDtrbgkFeHm3/hUAWYT+WgvVryfPPv0=;
+	bh=U83cE4G3o7a9IqDZvhQBhOJWBHrsZPaPI1zI5Hjk2tA=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=OOEmJUK2GiIBZu+4tlqZShzsg9Sx6amZx3FmMnasl7PspzGgfBTtjzChhmjEdhwLgqQEviDU324OULU9IY5usSxSkSCPjCuTRncQNaiQWoqngNvEKN/EEsNULa7rudXGo+hyj4TCebhm5x3v+CeHWFMHojhP8rydpUvw1RKRXBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aIvD/XLC; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 34370C433C7;
+	 In-Reply-To:To:Cc; b=Wxsjrxxlo2dnyuTeqqoxydijFVXl88MFiRIgnJoBb+5NhfRd2+ytpPMhvfqAwZrC+xrLgQrJYIwUSQyPa2g829kEVaGjPeF718I8xoufq6YvvsheD9iWykY9HIabJiKuJ+KrjzZBMF99YFn8K/48niZLhe8ccOGh5lCi3d4dZMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lfPL7Sia; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 3FE1BC43390;
 	Fri, 22 Mar 2024 10:10:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1711102232;
-	bh=eEJxT9zi3pb/qDtrbgkFeHm3/hUAWYT+WgvVryfPPv0=;
+	bh=U83cE4G3o7a9IqDZvhQBhOJWBHrsZPaPI1zI5Hjk2tA=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=aIvD/XLCqKPfeKg20BHA09brzTQY6DIkSHbeAXx3bATX65fnzQNlwZCaOGJJkHVjG
-	 9qdyr+h0F7fimG7e54a9WFfH2Fyjo8WaGrIjOcdP8zV0lxlFZAqzC4bs+cVJVJ++lM
-	 CmuvfMXBEkabYWrK7If5POkLUSvko6cbudlJGFPkJ/xjFxNgLqJq2tMa4Sx9NMcC2o
-	 YOcgtmeqK446ALwJWhXdIpW5jIiUVIj1KDR/zUAaQ1wSIYZikURGFjjV7M0UUnY1WD
-	 ZjvFx3HQmccV5B/NWLo6WuzNhBw7wTbFzCGafdKsoIKS401bXFuywbW6iZ/00jPb3y
-	 pE4NVlpf6Gxvw==
+	b=lfPL7Siad+CTc30Tb5Jts7DhUq6pA6wJf6IcgkaNLsKsNl2gEJ+1Ih0Qwi9rSZx6U
+	 r1N6f/zD8/qgudf0QEDZSAS5xXl+SYFblq5D0LIuuXC+XVc2E1Lop1V8rg3vMN2PRt
+	 jlX/fZyqIVMZdxz5PrcaO/AqwfGc5w0wT1CliPvfEmsUn6BY+B47TGkkfXqPtUXdyC
+	 Z77hVeyTpTpwcANIWdjIk+sUySkoL+rWadNJiVxI3cOrYq9ZD5fvVW0IqfgjzfV11n
+	 hWrs91jLPQmu6qkLEF4TtjWGegPq1X0gHoA69xoIF1azVS5vLyobmeG3Cvghyy9sdS
+	 1VuV2MkmTMCzA==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 2270DD982E2;
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 2CA10D982F8;
 	Fri, 22 Mar 2024 10:10:32 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
@@ -52,47 +52,30 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ 0/1] Fix crash in iov_append_ltv function
+Subject: Re: [BlueZ] obexd: Remove redundant judgments and fix code style
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <171110223213.5004.5133673168895047268.git-patchwork-notify@kernel.org>
+ <171110223217.5004.10195724040717201859.git-patchwork-notify@kernel.org>
 Date: Fri, 22 Mar 2024 10:10:32 +0000
-References: <20240320210350.101941-1-silviu.barbulescu@nxp.com>
-In-Reply-To: <20240320210350.101941-1-silviu.barbulescu@nxp.com>
-To: Silviu Florian Barbulescu <silviu.barbulescu@nxp.com>
-Cc: linux-bluetooth@vger.kernel.org, mihai-octavian.urzica@nxp.com,
- vlad.pruteanu@nxp.com, andrei.istodorescu@nxp.com, luiz.dentz@gmail.com,
- iulia.tanasescu@nxp.com
+References: <20240321021925.513182-1-youwan@nfschina.com>
+In-Reply-To: <20240321021925.513182-1-youwan@nfschina.com>
+To: Youwan Wang <youwan@nfschina.com>
+Cc: linux-bluetooth@vger.kernel.org
 
 Hello:
 
 This patch was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Wed, 20 Mar 2024 23:03:49 +0200 you wrote:
-> Fix function iov_append_ltv crashes because is not reallocating memory
-> Use util_ltv_push from util.c
-> 
-> [bluetooth]# [NEW] Endpoint /org/bluez/hci0/pac_bcast0
-> [bluetooth]# Endpoint /local/endpoint/ep0 registered
-> endpoint.config /org/bluez/hci0/pac_bcast0 /local/endpoint/ep0 48_4_1
-> [/local/endpoint/ep0] BIG (auto/value): 0
-> [/local/endpoint/ep0] Enter channel location (value/no): 3
-> ==80806==ERROR: AddressSanitizer: heap-buffer-overflow on
-> address 0x60200000a8ba at pc 0x561971611e0e bp 0x7ffd45ab1f00
-> sp 0x7ffd45ab1ef0 WRITE of size 1 at 0x60200000a8ba thread T0
-> 0x561971611e0d in put_u8 src/shared/util.h:254
-> 0x561971611e0d in util_iov_push_u8 src/shared/util.c:534
-> 0x5619715c28f0 in iov_append_ltv client/player.c:3565
-> 0x5619715c28f0 in config_endpoint_channel_location client/player.c:3593
-> 0x5619716226ce in bt_shell_release_prompt src/shared/shell.c:744
-> 0x561971623087 in rl_handler src/shared/shell.c:769
-> 
-> [...]
+On Thu, 21 Mar 2024 10:19:25 +0800 you wrote:
+> Signed-off-by: Youwan Wang <youwan@nfschina.com>
+> ---
+>  obexd/src/manager.c | 5 +----
+>  1 file changed, 1 insertion(+), 4 deletions(-)
 
 Here is the summary with links:
-  - [BlueZ,1/1] Fix crash in iov_append_ltv function
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=bbf198280e70
+  - [BlueZ] obexd: Remove redundant judgments and fix code style
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=97fa2525fb10
 
 You are awesome, thank you!
 -- 
