@@ -1,133 +1,124 @@
-Return-Path: <linux-bluetooth+bounces-2694-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-2696-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6CE27886EC3
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Mar 2024 15:38:43 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 63DF1886EE1
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Mar 2024 15:45:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8221B1C21BF0
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Mar 2024 14:38:42 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D79A3B232F5
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Mar 2024 14:45:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9C76481D1;
-	Fri, 22 Mar 2024 14:38:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 117D44AED1;
+	Fri, 22 Mar 2024 14:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="my2z7k52"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WjPVXYXO"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA08433B3
-	for <linux-bluetooth@vger.kernel.org>; Fri, 22 Mar 2024 14:38:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C6FD47F7F;
+	Fri, 22 Mar 2024 14:45:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711118317; cv=none; b=QCBYe1ZGqKgtUAMZtBKxUySI8ZgyvBnksE/48CtdffMAtd+Vsxf2m3XgUXH7Ot3nw0XmB9zu7Lkhe8YFSejmti9Bns13ZibDgisI0oQ4dFEUQoG5hyD4LTR1tBYbr0p3ktcpWONTb3fz+7PFv7MNdUabMGGqp80lA5qzRPKSiKA=
+	t=1711118701; cv=none; b=G5LLB4QlW7KtNWIth73QMYwXHA9lQ6OvvUMxlhISLlOX9iPTLXPlYheCHePYJ2JtrtXa+jIeH8XEESwkwtGYt4HsoQN2rDCh1QlxC9DtEEpZJCFRsoXOpAxRY3qxEueTEVr4IWuc79LtsFLUlgQGITDy82lKK1qUr09KMdeU2pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711118317; c=relaxed/simple;
-	bh=EtAQoYnEWW3ytYqq76Kk4TDMRkQ6yMj4Ivt8b7UAA4w=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version; b=ZXMlZBe3HZ4+tVFFsreK4Bbb+M2f8qnsExeevNiMgG1vNUD77/KWzl/TZc5x6EtbrWQwBXLF/R/Osol1LESZo/txq2TySK3+HiH0bElAfFoGoAB63uJTVkhezC17EsTz+V4V1L/2hqyyrVrln9oYCkGhfBq0US1vWK69ItSClAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=my2z7k52; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-341808b6217so1241010f8f.3
-        for <linux-bluetooth@vger.kernel.org>; Fri, 22 Mar 2024 07:38:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711118313; x=1711723113; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=AoaCaRPWAWJZIl4xmEn5wYUiWJwcpd5LRlPbtBNNi6k=;
-        b=my2z7k52gGBdvAzzJyfvfD+U/oL9w3Mw2Kmwy+sK0FB4k/C1V0POaW8a0a5a+ViQd/
-         Ks/BXE+SbPBlILQRNLjEFCGcYUQ0niyiKDJ5Dd592nzrnQne3/DobUNN26UyH7IZ/Zpn
-         KjPooSaq2zHLDdUZicJU71HPog3eR4d1dap3nH0qKjxTWSzj3R//P0up4WPiZjVcelgX
-         /BGTl+EbEWle6pe9pH+vmpxpLCPDpA4+kk+BnQmus0wmSklMVlLaqdW6gq4Mq5LAKNbV
-         baGYLBzNrIOrd4tvuFxEFmjvRtcMLIrRqGNSIU0j3+y7TbyPZaPC76HguJODY6H972QY
-         BKag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711118313; x=1711723113;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AoaCaRPWAWJZIl4xmEn5wYUiWJwcpd5LRlPbtBNNi6k=;
-        b=XO8QC3+HeyvxSjkkGsc0kNvdjz8tEP+AqMdb6a0F27UycgPE4ZaRBiEYUL9/5Q7DYN
-         Udjefm55L0PxyQkIlHwmGS6fTooITi3qeVauynVcHhv9lFs4oboZwRwjDlBGh0yu9CRl
-         2irvP2bTCUax+Dv2RhJdufjAYrWntOcO0FczBbVhIfFL+w4eMtp7ivkogf6WhaV6Ps6G
-         usdd+ou4Ymlgpfpi4b8SisjoyEEuTh2i0M23HT6omKbvZtrZR2xDjpjNLc+nCmJziU07
-         f6OeaKrg/ofS4USmDCsxU0lS8o8FZxlssyOCHTiIUlr5luAtZ/djd7FDfSX+62/yAR1F
-         kwhw==
-X-Gm-Message-State: AOJu0Yw5NUbfUX/a5kvqTJFpGxDxcirVdcM0XBpNK15kzOlH5UZ9y98b
-	Y5HczriZK01JlDkLn6E0Agf6a4sqFPbNG9t8Bj8SAKAQBJ+JrAMIAme54rqd0gALl6jq
-X-Google-Smtp-Source: AGHT+IFkSKdxfx/p9ibM/NQDdVy2MdEUIoM9PM9EXnVWM2WszlrCNw5+vWdLPkRBXsHoQkHIFz+kWw==
-X-Received: by 2002:a05:6000:36e:b0:33e:c8a9:e0e2 with SMTP id f14-20020a056000036e00b0033ec8a9e0e2mr1416325wrf.58.1711118313013;
-        Fri, 22 Mar 2024 07:38:33 -0700 (PDT)
-Received: from lvondent-mobl3.. (ftip004290803.acc4.faraday.21cn-nte.bt.net. [109.144.76.63])
-        by smtp.gmail.com with ESMTPSA id n14-20020a5d51ce000000b0033e9fca1e49sm2195261wrv.60.2024.03.22.07.38.32
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Mar 2024 07:38:32 -0700 (PDT)
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v2] bap: Fix not setting adapter address type
-Date: Fri, 22 Mar 2024 14:38:31 +0000
-Message-ID: <20240322143831.198777-1-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.44.0
+	s=arc-20240116; t=1711118701; c=relaxed/simple;
+	bh=oJOb22wO4m+N/5n0eP9Z0CpvUQn2sWpgpr9DVZAQk+o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Cx+bC34pmDYMH+GkAfGfkubPZkQ5xk1oQOuCDpbMaNiDJ6oJWCk+VzHwUj7M7V7W5urC8durhMpVTkgQC9sPK6M7JW9HWaSYFuzlQBT9z784EnfrZsVJyeOkhv3VP5j4XtP0u60N7PCcip5KBUXDK/95K/HxynRATEcEHX+5swA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WjPVXYXO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42E37C433F1;
+	Fri, 22 Mar 2024 14:44:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1711118700;
+	bh=oJOb22wO4m+N/5n0eP9Z0CpvUQn2sWpgpr9DVZAQk+o=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=WjPVXYXOBygNVlQYfGKlpPu601j+i0avVfAeryoYW6+156u+jIoWgruPO6EFERoAj
+	 x79IJUs2tykeelwIHNxl3+pIoO0/O2eumqYSvFpQhlisKihvn8pWO+e/12vYMhqO4k
+	 zye4r+l1JMOda7Iss6U8lxDSuTyyUP6lh97RD61hzndqIQfZNYy9++yYbSoVIu6jDA
+	 yGdlGYx5oOPMEZQ1EpjNdu8H4s7/8L98HLD1kY6fRfw0+k4AANax1HNpGaTi811UTE
+	 /ynR2igcSH3qdIU4zhwR/j+DXh5/Y6J0/WrsYYCBn6ueJe2UAaHjLJ7nf2AVQn2B+x
+	 QFvu/CgFTINkw==
+Date: Fri, 22 Mar 2024 09:44:57 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Marcel Holtmann <marcel@holtmann.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Rob Herring <robh+dt@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
+	cros-qcom-dts-watchers@chromium.org, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Johan Hedberg <johan.hedberg@gmail.com>, Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, 
+	Matthias Kaehlcke <mka@chromium.org>, Douglas Anderson <dianders@chromium.org>, 
+	Rocky Liao <quic_rjliao@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org, 
+	Rob Clark <robdclark@chromium.org>
+Subject: Re: [PATCH v4 2/4] arm64: dts: qcom: sc7180-trogdor: mark bluetooth
+ address as broken
+Message-ID: <hcpgho3xrkxas55c5isxi7mwusdjbxkyxlt74r72gfxuunzikx@jxiyumioezb6>
+References: <20240320075554.8178-1-johan+linaro@kernel.org>
+ <20240320075554.8178-3-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240320075554.8178-3-johan+linaro@kernel.org>
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+On Wed, Mar 20, 2024 at 08:55:52AM +0100, Johan Hovold wrote:
+> Several Qualcomm Bluetooth controllers lack persistent storage for the
+> device address and instead one can be provided by the boot firmware
+> using the 'local-bd-address' devicetree property.
+> 
+> The Bluetooth bindings clearly states that the address should be
+> specified in little-endian order, but due to a long-standing bug in the
+> Qualcomm driver which reversed the address some boot firmware has been
+> providing the address in big-endian order instead.
+> 
+> The boot firmware in SC7180 Trogdor Chromebooks is known to be affected
+> so mark the 'local-bd-address' property as broken to maintain backwards
+> compatibility with older firmware when fixing the underlying driver bug.
+> 
+> Note that ChromeOS always updates the kernel and devicetree in lockstep
+> so that there is no need to handle backwards compatibility with older
+> devicetrees.
+> 
+> Fixes: 7ec3e67307f8 ("arm64: dts: qcom: sc7180-trogdor: add initial trogdor and lazor dt")
+> Cc: stable@vger.kernel.org      # 5.10
+> Cc: Rob Clark <robdclark@chromium.org>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 
-This fixes not setting adapter address type when listening/connecting
-ISO sockets which prevents them working when adapter comes unconfigured
-which then gets assigned a random address.
----
- profiles/audio/bap.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Acked-by: Bjorn Andersson <andersson@kernel.org>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
-diff --git a/profiles/audio/bap.c b/profiles/audio/bap.c
-index 964ba9c21..315eff729 100644
---- a/profiles/audio/bap.c
-+++ b/profiles/audio/bap.c
-@@ -1856,6 +1856,8 @@ static void setup_connect_io(struct bap_data *data, struct bap_setup *setup,
- 	io = bt_io_connect(bap_connect_io_cb, setup, NULL, &err,
- 				BT_IO_OPT_SOURCE_BDADDR,
- 				btd_adapter_get_address(adapter),
-+				BT_IO_OPT_SOURCE_TYPE,
-+				btd_adapter_get_address_type(data->adapter),
- 				BT_IO_OPT_DEST_BDADDR,
- 				device_get_address(data->device),
- 				BT_IO_OPT_DEST_TYPE,
-@@ -1912,6 +1914,8 @@ static void setup_connect_io_broadcast(struct bap_data *data,
- 	io = bt_io_connect(bap_connect_bcast_io_cb, setup, NULL, &err,
- 			BT_IO_OPT_SOURCE_BDADDR,
- 			btd_adapter_get_address(adapter),
-+			BT_IO_OPT_SOURCE_TYPE,
-+			btd_adapter_get_address_type(adapter),
- 			BT_IO_OPT_DEST_BDADDR,
- 			&dst_addr,
- 			BT_IO_OPT_DEST_TYPE,
-@@ -1952,6 +1956,8 @@ static void setup_listen_io(struct bap_data *data, struct bt_bap_stream *stream,
- 	io = bt_io_listen(NULL, iso_confirm_cb, data, NULL, &err,
- 				BT_IO_OPT_SOURCE_BDADDR,
- 				btd_adapter_get_address(adapter),
-+				BT_IO_OPT_SOURCE_TYPE,
-+				btd_adapter_get_address_type(adapter),
- 				BT_IO_OPT_DEST_BDADDR,
- 				BDADDR_ANY,
- 				BT_IO_OPT_DEST_TYPE,
-@@ -2734,6 +2740,8 @@ static int short_lived_pa_sync(struct bap_bcast_pa_req *req)
- 			NULL, &err,
- 			BT_IO_OPT_SOURCE_BDADDR,
- 			btd_adapter_get_address(data->adapter),
-+			BT_IO_OPT_SOURCE_TYPE,
-+			btd_adapter_get_address_type(data->adapter),
- 			BT_IO_OPT_DEST_BDADDR,
- 			device_get_address(data->device),
- 			BT_IO_OPT_DEST_TYPE,
--- 
-2.44.0
+Please merge this through the BT tree, together with the other patches.
 
+Regards,
+Bjorn
+
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> index 46aaeba28604..ebe37678102f 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> @@ -943,6 +943,8 @@ bluetooth: bluetooth {
+>  		vddrf-supply = <&pp1300_l2c>;
+>  		vddch0-supply = <&pp3300_l10c>;
+>  		max-speed = <3200000>;
+> +
+> +		qcom,local-bd-address-broken;
+>  	};
+>  };
+>  
+> -- 
+> 2.43.2
+> 
 
