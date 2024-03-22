@@ -1,75 +1,50 @@
-Return-Path: <linux-bluetooth+bounces-2693-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-2695-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88B2F886D97
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Mar 2024 14:43:42 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A87DD886EC6
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Mar 2024 15:39:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 18A3A281123
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Mar 2024 13:43:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5F1311F213CB
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Mar 2024 14:39:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7C9F5D8EB;
-	Fri, 22 Mar 2024 13:36:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1BE2481C2;
+	Fri, 22 Mar 2024 14:38:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jKNqPKyi"
+	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="XMvuyVuH"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70AE45D72B
-	for <linux-bluetooth@vger.kernel.org>; Fri, 22 Mar 2024 13:36:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+Received: from m16.mail.126.com (m16.mail.126.com [117.135.210.9])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B46E47F5D
+	for <linux-bluetooth@vger.kernel.org>; Fri, 22 Mar 2024 14:38:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711114569; cv=none; b=cSTLjYQCsJUOWIWVJikpjRrJKShatzEo7nu1qNIT6eaRdOUKbahoQWg0qW7p1ulNhaoxetVKZcf7SUOVu15NHNW+Yfl+bxkIaMVybnVOtdY8S/LL24O3vFn+S2RPjmsZCsWKjB67HIgF1hgt/47wnRahc6WUj9gHGcn9Z6KyV7Y=
+	t=1711118330; cv=none; b=KqjaLzU5V7z+6nz7ijkNYGmtCD7m/+3MUTHQ6wGlPoEL48RV97miv4ISxJ2WdN6VYZHRquAgKOfSQ0Ldw8y9y5Y/NPb4syA/UDVFmEgoGxYdYYOytbEjFWsVG99mGbOdE7CVTrqUVPcQRflRlIjI+462ABJcHmMvNL95xK61jg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711114569; c=relaxed/simple;
-	bh=vIT8LwGVG91TxeYOCcfqhfXzJmU+7cIIcnWzlZNPc3A=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version; b=gCOYmU0qKE0gjMb4t5ci95gXFtPRJClr1JhyXhChMCMUisMLS+JdtmE6+w7GCu2no4dvRWIsXKl0CiIsTfz8Yqa2yJ7hkrDX66WVgMxnQMq/U7hZDXys7Rhl24YIHuirI9S8Of0CgOXtRvJ+YNvwuNx6ANee9pA3VgLAo2Tu1tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jKNqPKyi; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-414776775d3so9999455e9.3
-        for <linux-bluetooth@vger.kernel.org>; Fri, 22 Mar 2024 06:36:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711114565; x=1711719365; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=87r4rh9xnhwTfyQ8xucHULUHP9DRNgLZBZsgxdFQ3AM=;
-        b=jKNqPKyiz/UnR2Ptx6b93USOVJLTDblk/wA2kaDkN3c81BVcv672jSX0+qoHmTEp2r
-         SDXDu8j5o7Db9GTru9e5vKBt8+XTiLk0XLAN8ZKs9zCHMSqAc2scfy3oDc606VUrow8x
-         sVBUG6nxWdhxXkUf0WlJUJe2gA+QAH3+Y5DJYqH2jc2CKWc1DWO28olB433d7lO3/SaW
-         498NtvRnk1aCBDwXa8jA+6BHQp18qYUGEIQzaeGAW2eRrZVJHmerT62fpZsk+sfRSH63
-         Eima9hp5K9/4YJL0ZL7KIkBxZXxLu7pk+OFm85V+0lokZBuYWXuka5KsEUmz3BybqUcy
-         tzJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711114565; x=1711719365;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=87r4rh9xnhwTfyQ8xucHULUHP9DRNgLZBZsgxdFQ3AM=;
-        b=R8rs8piDcYu3v4Xj44wPj4kQXLLZ33mdXfoTKK07+BffBDMah9BDhX/fw0V0he9GB3
-         /eCHWQao7ND5gjfYnxGfTXDPgqFpUqW3YGZ5UF1KX8rzGUy/a/kVt8R25KyTKv5rC34+
-         TAK1pnHNRJ30mhkyYAsgh/7TycmtFbriB7PO0iF8hsSdaekqG2fKFTsYkjxscpdhTsRy
-         WYAGdWpp9eW0QeJ64yDCR7RTbFs2NKBVBzVaWJ1x3zlX1f/xEkgbjvw6JkvnLStgjEYe
-         dT1K88M9MSXqsaMMhyQ45qPjloFG/jJy8N3y1GBwyyddN12B4kPOPLqVAsiHnWoYRn/M
-         RkFw==
-X-Gm-Message-State: AOJu0Yw0yeLYTUFFNxiPa601Aqm+M+gUv48W18pdKDsiLnrmDny04Zof
-	X/Nsf8WybNNH2gmVDV2S3HfHcLCi+A9bQIYvGcX5jqGfhFsTroalIIN/Gb2rhT/YFjKR
-X-Google-Smtp-Source: AGHT+IGw7qXptLujr9DdrpYHgSdV6cIIPazw21qZ2WWf5S83mTAazvlRGbXn2hRVZ83gNRocKfvXvg==
-X-Received: by 2002:a5d:4645:0:b0:33e:7029:96bf with SMTP id j5-20020a5d4645000000b0033e702996bfmr1377685wrs.58.1711114564925;
-        Fri, 22 Mar 2024 06:36:04 -0700 (PDT)
-Received: from lvondent-mobl3.. (ftip004290803.acc4.faraday.21cn-nte.bt.net. [109.144.76.63])
-        by smtp.gmail.com with ESMTPSA id b7-20020a056000054700b0033e7b05edf3sm2107915wrf.44.2024.03.22.06.36.03
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Mar 2024 06:36:03 -0700 (PDT)
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v1] bap: Fix not setting adapter address type
-Date: Fri, 22 Mar 2024 13:36:03 +0000
-Message-ID: <20240322133603.43620-1-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.44.0
+	s=arc-20240116; t=1711118330; c=relaxed/simple;
+	bh=src+WaGSgLX7scvyppQr1O8bWgruike09lAr2xHi9r0=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=LY3l4I98wkMsXMyL8qhFNiuLN7mtgNTBh9iEysO2IlWeerXu6om8UFheaX6adRF69qlr7MdX2lGVXMVZ6JedYG98EFv6MwaLYz/YhzZouTd199tkMYSlob2Hqv7AQSIEOnZY50GkNd9MxUzUa+LUFKFKqC75j8gb/TRZTtUEaH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com; spf=pass smtp.mailfrom=126.com; dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b=XMvuyVuH; arc=none smtp.client-ip=117.135.210.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=126.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
+	s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=X1loo
+	rMf+QvlOFhsm1qxJ7wrN3yiqLfmZe22Cq60aZc=; b=XMvuyVuHMeulso/qfR3or
+	FZTUlSP2E6wjk6SXhvpF/NmGZvkKnmAP6v5kq7kXB+WadKLnXUr6y17+WbNgPcJD
+	v5D/Xxv7wDaCFYiEfsrUoPSAacc7fJMTVoNuTDEbJllHKUuHqDiDKvP8+TjllUBL
+	0sBB6ygccvRayIS04kzSvg=
+Received: from localhost.localdomain (unknown [58.22.7.114])
+	by gzga-smtp-mta-g0-2 (Coremail) with SMTP id _____wD3n5_pl_1lmkIWAQ--.55737S2;
+	Fri, 22 Mar 2024 22:38:35 +0800 (CST)
+From: Xiao Yao <xiaokeqinhealth@126.com>
+To: linux-bluetooth@vger.kernel.org,
+	luiz.dentz@gmail.com
+Cc: Xiao Yao <xiaoyao@rock-chips.com>
+Subject: [PATCH BlueZ] avctp: Remove redundant UUID checks and additions
+Date: Fri, 22 Mar 2024 22:38:30 +0800
+Message-Id: <20240322143830.1476938-1-xiaokeqinhealth@126.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -77,29 +52,37 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:_____wD3n5_pl_1lmkIWAQ--.55737S2
+X-Coremail-Antispam: 1Uf129KBjvdXoWrKFW7Xw4rGr4kury3AF4Dtwb_yoW3WFc_Z3
+	s5ZryUWa18t34vvF43Xw4UXr9aqr4Sq395uas3trn7KF4UXrWYgw17ZFWYvrn3u3Z3Cry3
+	ZFy8ZF45KrnxWjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUvcSsGvfC2KfnxnUUI43ZEXa7xRReOJ7UUUUU==
+X-CM-SenderInfo: 50ld0yhhtl0xhhdo3xa6rslhhfrp/1tbiEBap1WVLafNveQABsZ
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Xiao Yao <xiaoyao@rock-chips.com>
 
-This fixes not setting adapter address type when listening for
-broadcasters (aka Broadcast Sink).
 ---
- profiles/audio/bap.c | 2 ++
- 1 file changed, 2 insertions(+)
+ profiles/audio/avctp.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/profiles/audio/bap.c b/profiles/audio/bap.c
-index 38900771a..ec55614ca 100644
---- a/profiles/audio/bap.c
-+++ b/profiles/audio/bap.c
-@@ -2737,6 +2737,8 @@ static int short_lived_pa_sync(struct bap_bcast_pa_req *req)
- 			NULL, &err,
- 			BT_IO_OPT_SOURCE_BDADDR,
- 			btd_adapter_get_address(data->adapter),
-+			BT_IO_OPT_SOURCE_TYPE,
-+			btd_adapter_get_address_type(data->adapter),
- 			BT_IO_OPT_DEST_BDADDR,
- 			device_get_address(data->device),
- 			BT_IO_OPT_DEST_TYPE,
+diff --git a/profiles/audio/avctp.c b/profiles/audio/avctp.c
+index 8ad146df1..6199ee951 100644
+--- a/profiles/audio/avctp.c
++++ b/profiles/audio/avctp.c
+@@ -1597,12 +1597,6 @@ static void avctp_confirm_cb(GIOChannel *chan, gpointer data)
+ 	if (session == NULL)
+ 		return;
+ 
+-	if (btd_device_get_service(device, AVRCP_REMOTE_UUID) == NULL)
+-		btd_device_add_uuid(device, AVRCP_REMOTE_UUID);
+-
+-	if (btd_device_get_service(device, AVRCP_TARGET_UUID) == NULL)
+-		btd_device_add_uuid(device, AVRCP_TARGET_UUID);
+-
+ 	switch (psm) {
+ 	case AVCTP_CONTROL_PSM:
+ 		avctp_control_confirm(session, chan, device);
 -- 
-2.44.0
+2.34.1
 
 
