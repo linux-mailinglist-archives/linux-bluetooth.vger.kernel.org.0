@@ -1,91 +1,74 @@
-Return-Path: <linux-bluetooth+bounces-2711-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-2715-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9C8D887C62
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 24 Mar 2024 11:59:51 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 22820889D8E
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 25 Mar 2024 12:47:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 47C901F21287
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 24 Mar 2024 10:59:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 62F1BB353B4
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 25 Mar 2024 11:03:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81E8B175A6;
-	Sun, 24 Mar 2024 10:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB9E7153837;
+	Mon, 25 Mar 2024 06:16:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dAefxG3w"
+	dkim=pass (2048-bit key) header.d=quicklyemailsend77.com header.i=@quicklyemailsend77.com header.b="CVIo+kSQ"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from quicklyemailsend77.com (quicklyemailsend77.com [198.244.234.81])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16C26FB5
-	for <linux-bluetooth@vger.kernel.org>; Sun, 24 Mar 2024 10:59:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7529A209E82
+	for <linux-bluetooth@vger.kernel.org>; Mon, 25 Mar 2024 02:53:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.244.234.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711277985; cv=none; b=ggE77SFP0UMZCl0Oi/f82wISeyUGapYqcm5NC0uPT5YGOlnOC7LWYl4Ip1JTK9SSESJ37P8tK5W/+yn+oep7Ukly6y09aTB3YsOx71WThzaQQj6UZbL0W7ERvX3sZzmQ74d3FOFRT4FxVdRUtFrsRnEMs/kerj6dZo539YGl1QI=
+	t=1711335197; cv=none; b=dQDRylkhJK6Tt4M2vtdiFGs3Wl92S0lhh1ioeQNMRwSNwGY2oFOjTCsGW6kDMVzjHa+02+Su6eD9Z2+ZDAYh6XAVbFsFgX5UmrVF/oULX74ThIsD/2EfdAERrB5JZAbOJxl9OuWQjsD5JsnplzhBhoW71SHoJ8PSmZ4w5VSo58E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711277985; c=relaxed/simple;
-	bh=NCdd+OsCamgKuB87jnCFv2kiGeazaxLsUVusHskHU+4=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=KO/YjdBu2blFyQGznnqpJMQOvCqOa1zBeaZd0wqqvJWb6FJOv9XklzhRDAQUHANlzYnVPxDtaWd+F335jyoKpGHLMB52kU4MlpnZTKVu88+DRK2P5/QreMyMZoEJdKkNG3BuSYU2aAyVQY5BKXEpJPCV9K3X63y1HtYLLryu0+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dAefxG3w; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B5289C433C7
-	for <linux-bluetooth@vger.kernel.org>; Sun, 24 Mar 2024 10:59:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711277984;
-	bh=NCdd+OsCamgKuB87jnCFv2kiGeazaxLsUVusHskHU+4=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=dAefxG3wvLscX8sAGNfQXEOMAZpQEC8WJA16T4uy6XksuEYNIpuDOoQFXjBs6Z7B+
-	 d7YndT5MSflA2/eZY08/2hRfRE/PqSR24RnVd9bApZOClyDu5aTR7r7z30Oc9bImCk
-	 VyxvGH6YCZuPRngz0rfgCqBTszXncRN5IJZBVPJ1sQwzZGmnmx6DcLs+hZy5SzAUI+
-	 VL+5HppskDhL2sLVbYPn0DVe9LSEYtg5K+7rIW5+NyEk1UXY/MxTh8qvH4rfJJF6ON
-	 qmFpWW+pTWzO7CI6KPjYK/OQ+EvEB7NH6gssvyHyGpn54tahD6ggTdjnpLjH+MxsKx
-	 1LG5/rxnhxrSQ==
-Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-	id B004EC53BC6; Sun, 24 Mar 2024 10:59:44 +0000 (UTC)
-From: bugzilla-daemon@kernel.org
+	s=arc-20240116; t=1711335197; c=relaxed/simple;
+	bh=Q15fz6lzzNe4EYwFl5FQjiNsdVb8Y8Mc2ihtRAeMMGA=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=XgD44lhXaiwMoZL+JkNGktBqEYBD46B9iFRtb3tRqvCcVh2AzcmqGV+Nk7gtgGSJFivgsbO/W9PbQ5etquoA0wlNJFiJZQzYEZmoRLGP/Jl0RpcSJYpAfeafSWe2Y8zBfuwaSXgxYSzuSdDLhXELrJJ3m9iY3CLMuwKKjcQZZhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=quicklyemailsend77.com; spf=pass smtp.mailfrom=quicklyemailsend77.com; dkim=pass (2048-bit key) header.d=quicklyemailsend77.com header.i=@quicklyemailsend77.com header.b=CVIo+kSQ; arc=none smtp.client-ip=198.244.234.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=quicklyemailsend77.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicklyemailsend77.com
+Received: from 198-12-114-80-host.colocrossing.com (unknown [198.12.114.80])
+	by quicklyemailsend77.com (Postfix) with ESMTPA id 3EACC1B5C8
+	for <linux-bluetooth@vger.kernel.org>; Sun, 24 Mar 2024 23:56:24 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 quicklyemailsend77.com 3EACC1B5C8
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=quicklyemailsend77.com; s=default; t=1711324585;
+	bh=Q15fz6lzzNe4EYwFl5FQjiNsdVb8Y8Mc2ihtRAeMMGA=;
+	h=Reply-To:From:To:Subject:Date:From;
+	b=CVIo+kSQRV7oKDjEqH4Hfrvoi/USqsjMTuH2KUe5iMghZFzXew42lC2oW/TWaDI48
+	 mpVy6ZKypajhkCel6tmQGPt5/+1JyCqkpl9CghNR7fHOQc6fBsvaORY7B7l6cOXGQK
+	 5NXgmWcEVoGrrYuuun/nNGsG6zsqbCGmASAQRH8RJKOmnJlkPYQTGO6SdzMFem3OsG
+	 SUXqkMyWfg6Z94kRjdQOLJ4QcZAEITXNzn9+E3cqOpQskFdEQ4Xlyjl05zPW/v8pGz
+	 TitBBITpkD1p6V661emE/S/DAju1x3Bi7O19jm9noXlskjQKNrELB0xyRA9woUxFX9
+	 hiXXQMYSICnMQ==
+Reply-To: info@gscommoditytradng.com
+From: Aminda Sebastian <smtp@quicklyemailsend77.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [Bug 218472] mt7921e bluetooth not working
-Date: Sun, 24 Mar 2024 10:59:44 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: jeremy53561@gmail.com
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P3
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-218472-62941-b0xb5o1Hpy@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-218472-62941@https.bugzilla.kernel.org/>
-References: <bug-218472-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+Subject: New Order.
+Date: 24 Mar 2024 19:56:23 -0400
+Message-ID: <20240324195623.1376CE88DBD9A26B@quicklyemailsend77.com>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D218472
+Good day .
 
---- Comment #8 from jeremy (jeremy53561@gmail.com) ---
-Fixed with
-https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.gi=
-t/commit/?id=3Df4a0fc6780c7c1583133a9b8f10d76f769e41d34
+Please email us your company's most recent catalog. We would like=20
+to make a purchase from you.
+Looking forward to hearing from you.
 
---=20
-You may reply to this email to add a comment.
-
-You are receiving this mail because:
-You are the assignee for the bug.=
+Aminda Sebastian
+Purchasing and Quality Manager
+GSCOMMODITYTRADNG S.R.L
+Parque Empresarial V=C3=ADa Norte, C. Quintanavides,=20
+21, Building 5, 28050 Madrid, Spain.
 
