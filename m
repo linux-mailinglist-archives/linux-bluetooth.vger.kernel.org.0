@@ -1,50 +1,60 @@
-Return-Path: <linux-bluetooth+bounces-2714-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-2716-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E289889AB4
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 25 Mar 2024 11:34:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1503088A0D4
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 25 Mar 2024 14:04:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3845D29DA25
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 25 Mar 2024 10:34:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 95A7C2C5E88
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 25 Mar 2024 13:04:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3817143C61;
-	Mon, 25 Mar 2024 05:46:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 840EF1552FD;
+	Mon, 25 Mar 2024 08:34:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bf4PA4AJ"
+	dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b="DwD6j643"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtp-relay-canonical-0.canonical.com (smtp-relay-canonical-0.canonical.com [185.125.188.120])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FC21448C5;
-	Mon, 25 Mar 2024 02:13:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C086155397
+	for <linux-bluetooth@vger.kernel.org>; Mon, 25 Mar 2024 06:19:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.125.188.120
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711332790; cv=none; b=t6GriCTwVChT//VbpLOuyjwDLji0uRD7+A2zT+2+RH1T1Y2UMmUgs/ZP2l0Mwp4e2xeuFbOdKrsFvZJN73iLtFD4ZgpzXDUJLfSxxE/AkqZDUziN409ca1r/OdL9hzYDdBRXPdPq7jeEucl66Cf1368FxalqI4RGZai+/qNj/ng=
+	t=1711347568; cv=none; b=ktfTBpyhmdNoGVgGOGUQWUM2FgCQDrYzASE5E+VD5DdZL4+ikXGjbsiX4J50X3p5ENm9Bl9SjCJgOm18PvzgP5lmWdI630vAqescw95eRhuUDCI8jlUu8WB7Ww/y++xVhxpYe17qmjP1ODmS84hVgyjJ8p/QXapAv+xMJ2nKlbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711332790; c=relaxed/simple;
-	bh=5wz/G6BX39xadTRq0vFfWqYZDZhSRjYlx0kuuawdnUY=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=RTqZ+N+YfszdbYr0Jv7vsSMJscmQa5uQ6l8VSSkHhwAP0S2Jy/sPwgt4qMFczCXEpzeZwDa7joQg/lTLhLgGIcQK37hWSuH2Kh7R5Uy9MCP2ZCx9XmukLEaoTImoCqJikbHMAmOrqO8MXyU4yVkcIcCb/z8bA0QzF0azKKrVMy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bf4PA4AJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C2673C3278B;
-	Mon, 25 Mar 2024 02:13:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711332787;
-	bh=5wz/G6BX39xadTRq0vFfWqYZDZhSRjYlx0kuuawdnUY=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=bf4PA4AJ6lFivhLpGcubQoBLV61qpUeFb5CEvCqEnG+WnZVpdTtq1TuutfbOOTnK8
-	 KUbnm61riFCmr43khH6NJi+4O1d75Ldpm05eeetUHo1B1Wi5vnJupujdw46EbtGMoy
-	 guqa2zX2JJk5Oa+qv/Oa+zEqgpaecqGNAMw04MelD+IQ2unKuY71gotTmBa86UnRwW
-	 nytA2WM5NsQWo/cY8jD0IUH2Bh9n9HuqLCO+m9hyxg0EyTrdg7l7WlHXTeT9aqwg9v
-	 uuNMse2kFdLrJV17V0aMiyoJc+5+ucfT+2/0JNrcXygvVB5vKNmDS3mjGr2f763QO+
-	 WAOcXVm6tj7Rw==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id B4277D2D0E4;
-	Mon, 25 Mar 2024 02:13:07 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1711347568; c=relaxed/simple;
+	bh=8aJAQTQbIyKL/euP/RmNjqmDZxOeB+RtT3g2oXBTYS8=;
+	h=From:To:Subject:Date:Message-Id:MIME-Version; b=lxfJ36ceYxs37eGAOZ6WIHCKGwBqFKY+WXRyd3EaCP7Lu49LQpQln5ttnJ+d8ZiZlt7qyet7M2v25egDwuXwpDZtYvA0zi/hecDeUXXT2xAETdeZTi8DBoqRkLRKJ7IlNPWqzO6kTUEVJshA192cJYsPxFyClZSIzn3oaC+dXaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com; spf=pass smtp.mailfrom=canonical.com; dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b=DwD6j643; arc=none smtp.client-ip=185.125.188.120
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
+Received: from hwang4-ThinkPad-T14s-Gen-2a.conference (unknown [123.112.66.108])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-relay-canonical-0.canonical.com (Postfix) with ESMTPSA id 69E013F2AE;
+	Mon, 25 Mar 2024 06:19:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1711347557;
+	bh=/XfgtjibyARS5nJRafQ1ktx5gaZeNUQBlANLlHqMT28=;
+	h=From:To:Subject:Date:Message-Id:MIME-Version;
+	b=DwD6j6437+iGl0eBWdWsSEvS8soHKgU7/P4n2tIlua8DQaw81p2YYvIZ6OjicC7wi
+	 0TTWNaRdEHetFMOqZahuqUkhCEakHjVO7P8x5685VibMmGOQZFzliY337QPIXOGg53
+	 jeXnTDpJ6QwkrWJwdod3TcPGOX1zFCJD6YAx2pl2gAtNC1HCuo8SdEtXcXdEJYlsCD
+	 JH3eLX1VtpsBW5B2OalNyavTGIadw3X+48F9InurBQnc0uNk2zjOj5Dz9MMsoKjGaP
+	 p8iS4hiRYuCXETnthnVFihvisp0K9xBQKBTsV7s7ngFT6sVk80JiLfbELIfImSkxWo
+	 kjxWJQcrnO0WA==
+From: Hui Wang <hui.wang@canonical.com>
+To: linux-bluetooth@vger.kernel.org,
+	luiz.dentz@gmail.com,
+	marcel@holtmann.org,
+	johan.hedberg@gmail.com
+Subject: [PATCH] Bluetooth: hci_event: conn is already encryped before conn establishes
+Date: Mon, 25 Mar 2024 14:18:41 +0800
+Message-Id: <20240325061841.22387-1-hui.wang@canonical.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -52,55 +62,78 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2] treewide,
- serdev: change receive_buf() return type to size_t
-From: patchwork-bot+chrome-platform@kernel.org
-Message-Id: 
- <171133278773.9916.16472744560807510288.git-patchwork-notify@kernel.org>
-Date: Mon, 25 Mar 2024 02:13:07 +0000
-References: <20240122180551.34429-1-francesco@dolcini.it>
-In-Reply-To: <20240122180551.34429-1-francesco@dolcini.it>
-To: Francesco Dolcini <francesco@dolcini.it>
-Cc: gregkh@linuxfoundation.org, jirislaby@kernel.org,
- linux-bluetooth@vger.kernel.org, linux-mediatek@lists.infradead.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- greybus-dev@lists.linaro.org, linux-iio@vger.kernel.org,
- netdev@vger.kernel.org, chrome-platform@lists.linux.dev,
- platform-driver-x86@vger.kernel.org, linux-serial@vger.kernel.org,
- linux-sound@vger.kernel.org, francesco.dolcini@toradex.com,
- luiz.dentz@gmail.com, johan@kernel.org, elder@kernel.org, jic23@kernel.org,
- lee@kernel.org, kuba@kernel.org, pabeni@redhat.com, edumazet@google.com,
- davem@davemloft.net, krzysztof.kozlowski@linaro.org, hdegoede@redhat.com,
- ilpo.jarvinen@linux.intel.com, bleung@chromium.org, tzungbi@kernel.org,
- robh@kernel.org, Jonathan.Cameron@huawei.com
 
-Hello:
+We have a BT headset (Lenovo Thinkplus XT99), the pairing and
+connecting has no problem, once this headset is paired, bluez will
+remember this device and will auto re-connect it whenever the device
+is power on. The auto re-connecting works well with Windows and
+Android, but with Linux, it always fails. Through debugging, we found
+at the rfcomm connection stage, the bluetooth stack reports
+"Connection refused - security block (0x0003)".
 
-This patch was applied to chrome-platform/linux.git (for-next)
-by Greg Kroah-Hartman <gregkh@linuxfoundation.org>:
+For this device, the re-connecting negotiation process is different
+from other BT headsets, it sends the Link_KEY_REQUEST command before
+the CONNECT_REQUEST completes, and it doesn't send ENCRYPT_CHANGE
+command during the negotiation. When the device sends the "connect
+complete" to hci, the ev->encr_mode is 1.
 
-On Mon, 22 Jan 2024 19:05:51 +0100 you wrote:
-> From: Francesco Dolcini <francesco.dolcini@toradex.com>
-> 
-> receive_buf() is called from ttyport_receive_buf() that expects values
-> ">= 0" from serdev_controller_receive_buf(), change its return type from
-> ssize_t to size_t.
-> 
-> The need for this clean-up was noticed while fixing a warning, see
-> commit 94d053942544 ("Bluetooth: btnxpuart: fix recv_buf() return value").
-> Changing the callback prototype to return an unsigned seems the best way
-> to document the API and ensure that is properly used.
-> 
-> [...]
+So here in the conn_complete_evt(), if ev->encr_mode is 1, link type
+is ACL and HCI_CONN_ENCRYPT is not set, we set HCI_CONN_ENCRYPT to
+this conn, and update conn->enc_key_size accordingly.
 
-Here is the summary with links:
-  - [v2] treewide, serdev: change receive_buf() return type to size_t
-    https://git.kernel.org/chrome-platform/c/fed99212acae
+After this change, this BT headset could re-connect with Linux
+successfully.
 
-You are awesome, thank you!
+Signed-off-by: Hui Wang <hui.wang@canonical.com>
+---
+This is the btmon log for auto re-connecting negotiation:
+Before applying this patch:
+https://pastebin.com/NUa9RJv8
+
+After applying the patch:
+https://pastebin.com/GqviChTC
+
+net/bluetooth/hci_event.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
+
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 4ae224824012..0c45beb08cb2 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -3208,6 +3208,32 @@ static void hci_conn_complete_evt(struct hci_dev *hdev, void *data,
+ 		if (test_bit(HCI_ENCRYPT, &hdev->flags))
+ 			set_bit(HCI_CONN_ENCRYPT, &conn->flags);
+ 
++		/* "Link key request" completed ahead of "connect request" completes */
++		if (ev->encr_mode == 1 && !test_bit(HCI_CONN_ENCRYPT, &conn->flags) &&
++		    ev->link_type == ACL_LINK) {
++			struct link_key *key;
++			struct hci_cp_read_enc_key_size cp;
++
++			key = hci_find_link_key(hdev, &ev->bdaddr);
++			if (key) {
++				set_bit(HCI_CONN_ENCRYPT, &conn->flags);
++
++				if (!(hdev->commands[20] & 0x10)) {
++					conn->enc_key_size = HCI_LINK_KEY_SIZE;
++					goto notify;
++				}
++
++				cp.handle = cpu_to_le16(conn->handle);
++				if (hci_send_cmd(hdev, HCI_OP_READ_ENC_KEY_SIZE,
++						 sizeof(cp), &cp)) {
++					bt_dev_err(hdev, "sending read key size failed");
++					conn->enc_key_size = HCI_LINK_KEY_SIZE;
++				}
++notify:
++				hci_encrypt_cfm(conn, ev->status);
++			}
++		}
++
+ 		/* Get remote features */
+ 		if (conn->type == ACL_LINK) {
+ 			struct hci_cp_read_remote_features cp;
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.34.1
 
 
