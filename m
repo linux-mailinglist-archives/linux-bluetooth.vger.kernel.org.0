@@ -1,48 +1,48 @@
-Return-Path: <linux-bluetooth+bounces-2914-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-2911-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52830890217
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 28 Mar 2024 15:40:47 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C03D890213
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 28 Mar 2024 15:40:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0BE97293426
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 28 Mar 2024 14:40:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DB5B5291C46
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 28 Mar 2024 14:40:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 140EB81AB1;
-	Thu, 28 Mar 2024 14:40:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FC2B12BEA0;
+	Thu, 28 Mar 2024 14:40:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sfPd0TmP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W05YCGxo"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7CC4127B66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD16C81726
 	for <linux-bluetooth@vger.kernel.org>; Thu, 28 Mar 2024 14:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711636830; cv=none; b=guguBGhkyDDBDdX204+jsBSpajZrzGkn7itI/5Hl9JMfAOTqnmhY3YgyJ/RQHJFJxi8LUtPGrVk+9fPLovkhpRqJMUnKA16CZNcH97mL/yNgQ+4XmNmDPY2DhVESC8JPXkUj0jGPTUGo+DLQlYdRah5NxzTyHZ5v5OCA9xsxCSY=
+	t=1711636829; cv=none; b=JE1tkl9UspEfU2VQSF/MTYUrNLkiC3v9lUdYQWCezlLyJadSYq0z2a/u+dWeNqiD70MC3yFZ6hi7MEbKuq2DAdeBbcg4XC56csjQzcUvMKwU+aPAUShAe7uu/w5z0DDQ8NftQpYPcYs7BjC42VGM/5ZPXrzNxstu2N+1ucqStcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711636830; c=relaxed/simple;
-	bh=ETp2kUCngV/gRPebf/MNlnQuW3cWGkCuzBvRvH3k+Ls=;
+	s=arc-20240116; t=1711636829; c=relaxed/simple;
+	bh=TyG2f76uPB+rlM8+i5PgJ2D7ncTAmievDILcr3yxD+g=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=No06PkmjPw2z/kTyqakNpG9YwNrM6jwDxPA7kVGL+jyqsiC7ya07m2zkk+x3ApdOB4vG3VOsKNwh2wFl2EIveFH14jAoxLik1e5SBqqwhUPGfOF8Al1YaI2oVsKHQAthjC9htkCJLwLxIWktiX4EGZb4uJbqpwGHw9joxqN7iqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sfPd0TmP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 8F8DBC433B2;
+	 In-Reply-To:To:Cc; b=e6EmfscMHX9W3MHhzUL9AtbLxBXePdsnIUXymeQPncJnhwipjp9P9eOV+fiYDqUhafS+wjK3pKNzdyZBBfXapGWbYHz2gvxRhNDD9UfaSWJTKpUrjs5yffFu1DI3lKZXtIlhiDfYC1wlm8QLtjG5xKnk7bhwHUR5PxdnqCCiCDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W05YCGxo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 809F1C43394;
 	Thu, 28 Mar 2024 14:40:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1711636829;
-	bh=ETp2kUCngV/gRPebf/MNlnQuW3cWGkCuzBvRvH3k+Ls=;
+	bh=TyG2f76uPB+rlM8+i5PgJ2D7ncTAmievDILcr3yxD+g=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=sfPd0TmPF9nDCzN7GOJ3H4J2k3sTc9Fi+OTjfSOfwJJqh/UZUQ63V09VTP1Ywjm+o
-	 WR4+04P6aBG7c8LcKMzvWtjh3fG9prv/y21fQJAImGIEuKhccvoRker70fMFLn0kzF
-	 vUB4Hv5JB6+rhHv7Meu4vLfyIpeNs+FpRADAS4XV/ZsLBSadmaiT1McRls1dd/H0GN
-	 bxyMJopiRfWCvC3WhXOSVTzjWJaKRuelc/TXRe4vPc+913FxuviArje1PgON6us6q5
-	 aZs1QLnA4LKt9iDuW35s8NM9nMXHT386L3YmCXjg+9vYUx1jeP4ZCsxbS/7BtmMjWG
-	 TGYsH+bjUKdKQ==
+	b=W05YCGxoBNAYwYfQrMXcAWjzTpuKDoYMQFzYJiojyaN/XbCGcqYfxeQRI5hv4nYRk
+	 r88vMFL99wZyKPMixgsfhttf+djt6YJcq1PND2qOxPF0amabMI26D3C1In8HAG7+Ug
+	 ztFiHzvfscE7PfBZcJxf29OFEIIKNMQc7JrQbFJogq4xmzjB4iHls/5wxBzWw18+px
+	 AodZKNp8iagOxqkRFeTyAEwG1tWImJ+REDqXV9EHEVguL+nUptnmp2nn9sLg8rqhxL
+	 owi0S9Rqrp3Ium0GQ7rEPNFfZmMsLN6BPAYZF/LzxO6rpFA631yQ/j4hT1dhFJ2uDw
+	 VE7oM/fhTwKXg==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 84F71D8BCE9;
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 72B06D8BD1D;
 	Thu, 28 Mar 2024 14:40:29 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
@@ -52,83 +52,108 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ v1] monitor/att: Add support for decoding GATT Long
- Reads
+Subject: Re: [PATCH BlueZ 0/2] Allow endpoint config without local endpoint
+ argument
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <171163682954.3770.1408580707285106467.git-patchwork-notify@kernel.org>
+ <171163682946.3770.7994830314688719570.git-patchwork-notify@kernel.org>
 Date: Thu, 28 Mar 2024 14:40:29 +0000
-References: <20240327150727.1584607-1-luiz.dentz@gmail.com>
-In-Reply-To: <20240327150727.1584607-1-luiz.dentz@gmail.com>
-To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: linux-bluetooth@vger.kernel.org
+References: <20240320144153.46408-1-silviu.barbulescu@nxp.com>
+In-Reply-To: <20240320144153.46408-1-silviu.barbulescu@nxp.com>
+To: Silviu Florian Barbulescu <silviu.barbulescu@nxp.com>
+Cc: linux-bluetooth@vger.kernel.org, mihai-octavian.urzica@nxp.com,
+ vlad.pruteanu@nxp.com, andrei.istodorescu@nxp.com, luiz.dentz@gmail.com,
+ iulia.tanasescu@nxp.com
 
 Hello:
 
-This patch was applied to bluetooth/bluez.git (master)
+This series was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Wed, 27 Mar 2024 11:07:27 -0400 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+On Wed, 20 Mar 2024 16:41:51 +0200 you wrote:
+> Update endpoint config command to create a local endpoint for broadcast
+> endpoint.
+> This will be used to configure a broadcast source/sink if
+> register endpoint is done from another application like PipeWire
 > 
-> This adds support for decoding GATT Long Reads:
-> 
-> < ACL Data TX: Handle 3585 flags 0x00 dlen 7
->       ATT: Read Request (0x0a) len 2
->         Handle: 0x0028 Type: Report Map (0x2a4b)
-> > ACL Data RX: Handle 3585 flags 0x02 dlen 27
->       ATT: Read Response (0x0b) len 22
->         Value[22]: 05010902a10185020901a10095107501150025010509
->         Long Value[22]: 05010902a10185020901a10095107501150025010509
-> < ACL Data TX: Handle 3585 flags 0x00 dlen 9
->       ATT: Read Blob Request (0x0c) len 4
->         Handle: 0x0028 Type: Report Map (0x2a4b)
->         Offset: 0x0016
-> > ACL Data RX: Handle 3585 flags 0x02 dlen 27
->       ATT: Read Blob Response (0x0d) len 22
->         Value[22]: 19012910810205011601f826ff07750c950209300931
->         Long Value[44]: 05010902a10185020901a1009510750115002501050919
->                         012910810205011601f826ff07750c950209300931
-> < ACL Data TX: Handle 3585 flags 0x00 dlen 9
->       ATT: Read Blob Request (0x0c) len 4
->         Handle: 0x0028 Type: Report Map (0x2a4b)
->         Offset: 0x002c
-> > ACL Data RX: Handle 3585 flags 0x02 dlen 27
->       ATT: Read Blob Response (0x0d) len 22
->         Value[22]: 81061581257f75089501093881069501050c0a380281
->         Long Value[66]: 05010902a10185020901a1009510750115002501050919
->                         012910810205011601f826ff07750c9502093009318106
->                         1581257f75089501
-> < ACL Data TX: Handle 3585 flags 0x00 dlen 9
->       ATT: Read Blob Request (0x0c) len 4
->         Handle: 0x0028 Type: Report Map (0x2a4b)
->         Offset: 0x0042
-> > ACL Data RX: Handle 3585 flags 0x02 dlen 27
->       ATT: Read Blob Response (0x0d) len 22
->         Value[22]: 06c0c00643ff0a0202a101851175089513150026ff00
->         Long Value[88]: 05010902a10185020901a1009510750115002501050919
->                         012910810205011601f826ff07750c9502093009318106
->                         1581257f75089501093881069501050c0a38028106c0c0
->                         0643ff0a0202a101851175089513150026ff00
-> < ACL Data TX: Handle 3585 flags 0x00 dlen 9
->       ATT: Read Blob Request (0x0c) len 4
->         Handle: 0x0028 Type: Report Map (0x2a4b)
->         Offset: 0x0058
-> > ACL Data RX: Handle 3585 flags 0x02 dlen 14
->       ATT: Read Blob Response (0x0d) len 9
->         Value[9]: 0902810009029100c0
->         Handle: 0x0028 Type: Report Map (0x2a4b)
->         Value[97]: 05010902a10185020901a1009510750115002501050919
->                    012910810205011601f826ff07750c9502093009318106
->                    1581257f75089501093881069501050c0a38028106c0c0
->                    0643ff0a0202a101851175089513150026ff0009028100
->                    09029100c0
+> Sample output from using the endpoint.config with endpoint and preset
+> to configure a broadcast sink to connect to a BIS.
+> The register endpoint for the broadcast sink has been done with PipeWire.
+> [Waiting to connect to bluetoothd...
+> [bluetooth]Agent registered
+> [bluetooth]hci0 new_settings: powered bondable le secure-conn
+> cis-central cis-peripheral iso-broadcaster sync-receiver
+> [bluetooth][CHG[0m] Controller C0:07:E8:CE:94:CD Pairable: yes
+> [bluetooth]AdvertisementMonitor path registered
+> [bluetooth]scan on
+> [?2004h[bluetooth]SetDiscoveryFilter success
+> [bluetooth]Discovery started
+> [bluetooth][CHG Controller C0:07:E8:CE:94:CD Discovering: yes
+> [bluetooth][NEW [Device 18:41:1D:57:63:C6 18-41-1D-57-63-C6
+> [bluetooth][NEW Endpoint /org/bluez/hci0/dev_18_41_1D_57_63_C6/pac_bcast0
+> mendpoint.config /org/bluez/hci0/dev_18_41_1D_57_63_C6/pac_bcast0 48_4_1
+> endpoint.config /org/bluez/hci0/dev_18_41_1D_57_63_C6/pac_bcast0 48_4_1
+> Configuration.#0: len 0x02 type 0x01
+> Configuration.Sampling Frequency: 48 Khz (0x08)
+> Configuration.#1: len 0x02 type 0x02
+> Configuration.Frame Duration: 10 ms (0x01)
+> Configuration.#2: len 0x03 type 0x04
+> Configuration.Frame Length: 120 (0x0078)
+> BCode:
+> 01 02 68 05 53 f1 41 5a a2 65 bb af c6 ea 03 b8 ..h.S.AZ.e......
+> Framing 0x00
+> PresentationDelay 40000
+> Interval 10000
+> PHY 0x02
+> SDU 120
+> Retransmissions 4
+> Latency 20
+> [NEW Transport /org/bluez/hci0/dev_18_41_1D_57_63_C6/pac_bcast0/fd0
+> [bluetooth]Endpoint /local/endpoint/baa/lc3 configured
+> Sample output from using the endpoint.config with endpoint and preset
+> to configure a broadcast source BIS.
+> The register endpoint has been done with PipeWire.
+> [Waiting to connect to bluetoothd...
+> [[bluetooth][0m# Agent registered
+> [[bluetooth][0m# hci0 new_settings: powered bondable le secure-conn
+> cis-central cis-peripheral iso-broadcaster sync-receiver
+> [[bluetooth][0m# [[CHG[0m] Controller C0:07:E8:CE:94:CD Pairable: yes
+> [[bluetooth][0m# AdvertisementMonitor path registered
+> [[bluetooth][0m# [[NEW[0m] Endpoint /org/bluez/hci0/pac_bcast0
+> [[bluetooth][0m# [7mendpoint.config /org/bluez/hci0/pac_bcast0 48_4_1
+> endpoint.config /org/bluez/hci0/pac_bcast0 48_4_1
+> [[1;39m[/local/endpoint/bcaa/lc3] BIG (auto/value): [0m0
+> [[1;39m[/local/endpoint/bcaa/lc3] Enter channel location (value/no): [0m1
+> [[1;39m[/local/endpoint/bcaa/lc3] Enter Metadata (value/no): [0mn
+> Configuration.#0: len 0x02 type 0x01
+> Configuration.Sampling Frequency: 48 Khz (0x08)
+> Configuration.#1: len 0x02 type 0x02
+> Configuration.Frame Duration: 10 ms (0x01)
+> Configuration.#2: len 0x03 type 0x04
+> Configuration.Frame Length: 120 (0x0078)
+> Configuration.#3: len 0x05 type 0x03
+> Configuration.Location: 0x00000001
+> Configuration.Location: Front Left (0x00000001)
+> BIG 0x00
+> BCode:
+> 01 02 68 05 53 f1 41 5a a2 65 bb af c6 ea 03 b8 ..h.S.AZ.e......
+> Framing 0x00
+> PresentationDelay 40000
+> Interval 10000
+> PHY 0x02
+> SDU 120
+> Retransmissions 4
+> Latency 20
+> [[[bluetooth][0m# [[NEW[0m] Transport /org/bluez/hci0/pac_bcast0/fd0
+> [[bluetooth][0m# Endpoint /local/endpoint/bcaa/lc3 configured
 > 
 > [...]
 
 Here is the summary with links:
-  - [BlueZ,v1] monitor/att: Add support for decoding GATT Long Reads
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=cd22ff6a1fef
+  - [BlueZ,1/2] bap: Add bcast source support for MediaEndpoint Codec
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=0ff7392af164
+  - [BlueZ,2/2] player: Allow endpoint config without local endpoint argument
+    (no matching commit)
 
 You are awesome, thank you!
 -- 
