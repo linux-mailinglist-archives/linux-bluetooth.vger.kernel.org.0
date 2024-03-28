@@ -1,48 +1,48 @@
-Return-Path: <linux-bluetooth+bounces-2913-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-2912-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E334890216
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 28 Mar 2024 15:40:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BF25D890212
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 28 Mar 2024 15:40:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 093D62936D7
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 28 Mar 2024 14:40:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 77C0E292A78
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 28 Mar 2024 14:40:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62A2912CDBF;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FBF412B176;
 	Thu, 28 Mar 2024 14:40:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sibVY/c1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JcaKlYpE"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD11A80C13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD1BE81AB1
 	for <linux-bluetooth@vger.kernel.org>; Thu, 28 Mar 2024 14:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711636829; cv=none; b=rDmfKLsaXUByv18lrfDM9NhPiixZZBqRzN3AEN5BR1aeihU/h/ZUJK/4zXvmfTW0vj48CHb/dxCNyPhndV1Q/wu+0Ug13VpYMVDjpoFrIbzwwHUbANJculKZlW1+8UxBA3zJbqryrscXcc9GoGtvnHrRb5Ive3wn9N/bTGHzltY=
+	t=1711636829; cv=none; b=d7rcGHy8OVjug1Z7MxoCr1YUNyGs0/aqhiy01cIWJ3y7PgBFyKuJOPc+fKOFakeFNWWPnRq/l6FsKDRfj8Lc25re/IgxOYAXdd0QjRkv7phtt38eOQlGMmpUdrxF2bZYWkYxxl32MR2dM9i0DEYouHSDHGI/YLUMktEDtPxzd+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1711636829; c=relaxed/simple;
-	bh=L9+FF0vZzP7YNcslsSH/D8k/kgynFsk5bBemF6MG55Y=;
+	bh=tAnG4VGamvL4JOji3Fefk4yRNtzVoBk5Z4P5ChgViJE=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=OSX8eJ9DIo2+7AUu4H2yAcTpPIy0qexJarz4aCUNZckT4U/dIhb/WaO05xEcKIFvk7QZVvTMptYRA/jaGWc1Lz0vQjvXXASgyeNgCvPkL4ZHfQyENAcZA+LpWL9lP/9kVb15aeSMS+RvMVJ/O2IKSGfmASgn1wWCKKBQIxxpymc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sibVY/c1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 74D4BC433C7;
+	 In-Reply-To:To:Cc; b=MJuRZiNsXMLa1EfQ3Sq6CmwtnMAuOiLa5yj/WzDmsA8tLwMq3BJcFlUnYdHal0NcAtiL/OGyMdBSjFT6lgM+e9XpcqZxuGDDk9Fum4UB+rfFWxZJmUznDKNnUsxp8KSEzpqnfyR6urh1Ctz9flqDL4ut7Df0dy7ehpYC0IXhCbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JcaKlYpE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 84BDEC433A6;
 	Thu, 28 Mar 2024 14:40:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1711636829;
-	bh=L9+FF0vZzP7YNcslsSH/D8k/kgynFsk5bBemF6MG55Y=;
+	bh=tAnG4VGamvL4JOji3Fefk4yRNtzVoBk5Z4P5ChgViJE=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=sibVY/c11uSpgB6DkbuXd/2+D1nCTjum0DDkt0CPS21hZB0HNrOsvaecelLEs6SD3
-	 7YOBBUeXJ8NhxdgrDAO7QH5WoVszJ3OkkiFojZXGb4bB7W65BrEPJnD/jS3P1/AvkF
-	 dsF32vzAqWHQA3fsGE5z9emFP+wJRClbe+cqEQMtlX2eznSHdJshGXChsBHlgO/erb
-	 M1f+e2LiZFRu+ThxKfZmXWCYhLlv4nfaRrcBRtARna3t3KznIl+KJdbDgo3FLJuftF
-	 8ftBVwyW6U22i4YtgaHsS5uAREJqQ0EZwJLyuqgRGQwGvKVFJmj/voN79FJptaXVaZ
-	 dw+/5xS70uWjA==
+	b=JcaKlYpEXgjL4DWyiSJzyKkEUIhKspzH17hg/tqyx1jrUVJABKS4itHtpPuPTJry5
+	 /R3OD+NbbX1h1RvPWez8/Fn9a7E1rJWm6EhR8QCcRHO9pT8UWSVXzmHM/NmD/wQiNd
+	 NPIq88W5TEHW278mQuCSj0aEE7oaDrIVfwLiA90xmzKTupBARHgoMCMjs5vVkxN0yh
+	 z9TsjdaZK1YhB69IdaKMV3gTQFMtiAqDEzPGim/dCjY3Am9/L+1Sc7CIVGQpZy+xD3
+	 YpWjQe6ZepgeD0vglBg2aD4ryyRW5PgdJG8qmRRqaR8eUR1EeMiL+25WdacMfkv8Xl
+	 QcfvZ8V+BBuig==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 5E87CD2D0EB;
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 7B260C43168;
 	Thu, 28 Mar 2024 14:40:29 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
@@ -52,40 +52,46 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ 0/2] Remove POLLOUT check before bcast defer accept
+Subject: Re: [PATCH BlueZ 0/1] Fix MediaEndpoint prop codec for bcast src endpoint
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <171163682938.3770.16731484454847220972.git-patchwork-notify@kernel.org>
+ <171163682950.3770.14333599076600005921.git-patchwork-notify@kernel.org>
 Date: Thu, 28 Mar 2024 14:40:29 +0000
-References: <20240327161019.3078-1-iulia.tanasescu@nxp.com>
-In-Reply-To: <20240327161019.3078-1-iulia.tanasescu@nxp.com>
-To: Iulia Tanasescu <iulia.tanasescu@nxp.com>
-Cc: linux-bluetooth@vger.kernel.org, claudia.rosu@nxp.com,
- mihai-octavian.urzica@nxp.com, silviu.barbulescu@nxp.com,
- vlad.pruteanu@nxp.com, andrei.istodorescu@nxp.com, luiz.dentz@gmail.com
+References: <20240327134947.40229-1-silviu.barbulescu@nxp.com>
+In-Reply-To: <20240327134947.40229-1-silviu.barbulescu@nxp.com>
+To: Silviu Florian Barbulescu <silviu.barbulescu@nxp.com>
+Cc: linux-bluetooth@vger.kernel.org, mihai-octavian.urzica@nxp.com,
+ vlad.pruteanu@nxp.com, andrei.istodorescu@nxp.com, luiz.dentz@gmail.com,
+ iulia.tanasescu@nxp.com
 
 Hello:
 
-This series was applied to bluetooth/bluez.git (master)
+This patch was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Wed, 27 Mar 2024 18:10:17 +0200 you wrote:
-> This patch removes the POLLOUT check on a broadcast child socket before
-> calling "read" to accept defer setup. The check was inherited from
-> unicast, but it is unnecessary for broadcast, since the POLLOUT event
-> is never generated on a broadcast child socket.
+On Wed, 27 Mar 2024 15:49:46 +0200 you wrote:
+> Fix MediaEndpoint prop codec returns 0 for bcast src endpoint
 > 
-> Iulia Tanasescu (2):
->   btio: Remove POLLOUT check from bt_io_bcast_accept
->   iso-tester: Separate iso_defer_accept into dedicated functions
+> before:
+> gdbus introspect --system --dest org.bluez --object-path
+>  /org/bluez/hci0/pac_bcast0
+> node /org/bluez/hci0/pac_bcast0 {
+>   ......
+>   interface org.bluez.MediaEndpoint1 {
+>   ......
+>     properties:
+>       readonly s UUID = '00001851-0000-1000-8000-00805f9b34fb';
+>       readonly y Codec = 0x00;
+>   .......
+>   };
+>   .......
+> };
 > 
 > [...]
 
 Here is the summary with links:
-  - [BlueZ,1/2] btio: Remove POLLOUT check from bt_io_bcast_accept
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=f4c40dc4107e
-  - [BlueZ,2/2] iso-tester: Separate iso_defer_accept into dedicated functions
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=3403f65e266a
+  - [BlueZ,1/1] bap: Fix MediaEndpoint prop codec for bcast src endpoint
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=0ff7392af164
 
 You are awesome, thank you!
 -- 
