@@ -1,52 +1,52 @@
-Return-Path: <linux-bluetooth+bounces-2898-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-2899-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6E0188FF8C
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 28 Mar 2024 13:49:49 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8CE9088FF90
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 28 Mar 2024 13:50:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 866DB1F261BD
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 28 Mar 2024 12:49:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 20139285F24
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 28 Mar 2024 12:50:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF8C37F7C7;
-	Thu, 28 Mar 2024 12:49:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BC7A7D3F5;
+	Thu, 28 Mar 2024 12:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EVJcjY++"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IgP6ICDX"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F05865BAD
-	for <linux-bluetooth@vger.kernel.org>; Thu, 28 Mar 2024 12:49:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FED13A1AB
+	for <linux-bluetooth@vger.kernel.org>; Thu, 28 Mar 2024 12:50:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711630175; cv=none; b=CB262dp07gjsEuGepvlt1InvHDlc8IZCTtexyqqGXlcgL2Zatq7j8PJ9rpo9U4rfp3gcmu/63dh1837MivadxAU3aoLegQHGTc1YZPgP38oZKrQfd0azw6VBbmTAQ0LXbzAgBjmhE7A1zTDxpXvrjbLcxMfHu/dZWXjf9QTDEU4=
+	t=1711630229; cv=none; b=mtJtxk0u26Kj1VjNKhhWvocfXCBhjSvZAz3SAJ/tIpDp0wGbKgTXlaMEtPUn2G+jG/LI9WrEibPbIUpHwosVJXRieoGajX8WAwp9nLF/tf05/Y4jkpZw0rnz0aoVAH3J+hw4eV0xnZ5UZHbuYoJl4kcJVJ2a3+ydodbJY9NsinQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711630175; c=relaxed/simple;
-	bh=QXaylMD/sNcY4IPan5/wWyx8CuslyIWR29ETPtFnoGU=;
+	s=arc-20240116; t=1711630229; c=relaxed/simple;
+	bh=Iiseb/QqfKQdPP3ul6Enptt2XyilgxokowEySHQc51Y=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=OQ0m3T+GhevhU84fR/4YVe2feciW6Wng1jYfR/VRV/U7Tqhw69r2h16wOGwDN7YRESZHimDjiYpC8IMiCVTLpFZaMzjL5VWogfXE43q5VnFi5CFRNMZg4iU5h4OeKgoolRA+2cCcqOrF47b632BCDzTYoEatRnPNg11zNA9g1FY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EVJcjY++; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id DDD4CC43390
-	for <linux-bluetooth@vger.kernel.org>; Thu, 28 Mar 2024 12:49:34 +0000 (UTC)
+	 Content-Type:MIME-Version; b=PwGoWaG42IatuRhtRtYkQqdP/7b7ZBC8kXVeyVaNbJ6LbAieT5AGYHXn8nk1/2SsgRQPAg3lN7lA/VO+PZKl0IR/vai1+YSIjWEelMHxGTEkaJuL0tNf+pjOvlqbl7jVj/Uhf881XJVuXftdQVeE7Qq+e63skMPK3ZqctAjP1S0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IgP6ICDX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 22A9AC433F1
+	for <linux-bluetooth@vger.kernel.org>; Thu, 28 Mar 2024 12:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711630174;
-	bh=QXaylMD/sNcY4IPan5/wWyx8CuslyIWR29ETPtFnoGU=;
+	s=k20201202; t=1711630229;
+	bh=Iiseb/QqfKQdPP3ul6Enptt2XyilgxokowEySHQc51Y=;
 	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=EVJcjY++fIWIII9WHQbgW22P+jWX+3FrPCPpBJ7p8UJhR6F9WfSQZY/14guSPAesR
-	 7+kIz4/rzShO+qnBWJZI4HwXfgLIvjO8gQwhc7p5hBXoyn/mz6vqAsNmzO6B+rKXzh
-	 GavW4cGhds0QBLhZZAviOtbuJisq+vv/3BAXnoRvjR6rCpwGnUHj/tLRh+6NyHczHw
-	 EANY3t33wbUxkIpPJ5KMq9sCfn6Yocjyf4Z3CqRtbsPH5POeQKQr+oW0FbBhYk4/kP
-	 W+a+dfJQeeBjs983FKPr+YsR7VWqNGT00aMPRU180RedgH1B4+pBB4pqpI8kLxOWef
-	 KrR5k17g/bipg==
+	b=IgP6ICDXYtJRt3rBsE10NDTsa+4H4DbOcmk/Wh5JBlbRCoIWUHcIZffsBG9OgqDHD
+	 CM4EhNhh7DvFPxq3uci9LBb+SMKa9jtjNo8WU/34YcfxRXlSVqx6PoYB8aYFnPN7AG
+	 dyk/PYxk9vKyz1kN0qVEAr905TZpHWjdBGN9CSSiqbIO3XW3Pt8lfhuUf0TBWObI+i
+	 qf+ZYhnZ7tZPmJSas+9AnjrUct0iVrFrmXmKTTEvmPntW4TJ5ivXQXtv9qiDE6bIxA
+	 K8ApMGtWPYKs2EDMrLyQcdynD97EDm9+Zceiz4CNsd58Yr8klReUNULUma6qJTRsK9
+	 8P0eo2xO8TbmQ==
 Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-	id D00AAC53BD2; Thu, 28 Mar 2024 12:49:34 +0000 (UTC)
+	id 1DA61C53BD0; Thu, 28 Mar 2024 12:50:29 +0000 (UTC)
 From: bugzilla-daemon@kernel.org
 To: linux-bluetooth@vger.kernel.org
 Subject: [Bug 218651] kernel 6.8.2 - Bluetooth bug/dump at boot
-Date: Thu, 28 Mar 2024 12:49:34 +0000
+Date: Thu, 28 Mar 2024 12:50:28 +0000
 X-Bugzilla-Reason: AssignedTo
 X-Bugzilla-Type: changed
 X-Bugzilla-Watch-Reason: None
@@ -61,8 +61,8 @@ X-Bugzilla-Resolution:
 X-Bugzilla-Priority: P3
 X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
 X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: cc
-Message-ID: <bug-218651-62941-E455Q5QeD9@https.bugzilla.kernel.org/>
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-218651-62941-c2cexodmKw@https.bugzilla.kernel.org/>
 In-Reply-To: <bug-218651-62941@https.bugzilla.kernel.org/>
 References: <bug-218651-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
@@ -78,18 +78,8 @@ MIME-Version: 1.0
 
 https://bugzilla.kernel.org/show_bug.cgi?id=3D218651
 
-Peter Weber (peter.weber@mailbox.org) changed:
-
-           What    |Removed                     |Added
-----------------------------------------------------------------------------
-                 CC|                            |peter.weber@mailbox.org
-
---- Comment #7 from Peter Weber (peter.weber@mailbox.org) ---
-I've cross-checked with a ThinkPad X13 Gen 3 (AMD + Qualcomm WiFi/Bluetooth=
-),
-and it works properly with Linux "6.8.2". This issue is limited to devices =
-with
-Intel WiFi/Bluetooth.
+--- Comment #8 from Peter Weber (peter.weber@mailbox.org) ---
+I'm too slow :)
 
 --=20
 You may reply to this email to add a comment.
