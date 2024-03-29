@@ -1,93 +1,122 @@
-Return-Path: <linux-bluetooth+bounces-3023-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-3022-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 62ED98933A8
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 31 Mar 2024 18:45:54 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EDD5F8932CA
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 31 Mar 2024 18:27:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 19169289510
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 31 Mar 2024 16:45:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1E0301C216D3
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 31 Mar 2024 16:27:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0100014D44E;
-	Sun, 31 Mar 2024 16:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E602146591;
+	Sun, 31 Mar 2024 16:26:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QPl6KWXQ"
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="TluNSGyt"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from a.mx.secunet.com (a.mx.secunet.com [62.96.220.36])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA7B14D2BA;
-	Sun, 31 Mar 2024 16:38:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=62.96.220.36
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98DC146002;
+	Sun, 31 Mar 2024 16:26:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=62.96.220.36
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711903109; cv=fail; b=oRq1cmNcZooe6PVFVdQQK8y7rgqKyJ3TMrHAkb9zN7E750Tq6uk7hdYnd91KEqlrTuvwhApSokcEx5PvmjKwytboAURRC2+FgnlIMYe2TSlb99p+6ztwanjiqnV2fM4u30Tyd6nUOwsDa5id9RMZPCiUvIR5PoP/dwCr+AzK4gw=
+	t=1711902379; cv=pass; b=sVKjIQGB/J61LvH96lacQw3BGVRrABOffsy0yxOFW69kGShsrwZgrDILoDXJbKinRFEYRIFtS3+3cd781D7tWucchP769NQQQArnvRSCPFYUjutS2fecNPYV/JVwGF+CJ8b+OfmHNXULv/gcXqmc3UQaXo2alPMdunr6n+6KzRA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711903109; c=relaxed/simple;
-	bh=ZK80YF2MwXB/lf6liIrm/cY5iH4dmEpHB/UVBgabddA=;
-	h=Content-Type:MIME-Version:Subject:From:Message-ID:Date:References:
-	 In-Reply-To:To:Cc; b=Kz6aCNuMk1elcVEqeVwJjG2vdBM5HWXRVU1fzAy3bTeD99J2DO53YWgDJEbXkQk7KjeZwPi03oVIAouzNjXvOjNS/KuE78cgO/WH3toHSb8spPf0uoV0hW20cI/n2GH62FOGA8LODQ1HrTsUwZMKE7b8VvgVMLq4HoPw2GiRaKk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=fail smtp.mailfrom=kernel.org; dkim=fail (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QPl6KWXQ reason="signature verification failed"; arc=none smtp.client-ip=10.30.226.201; arc=fail smtp.client-ip=62.96.220.36
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=kernel.org
+	s=arc-20240116; t=1711902379; c=relaxed/simple;
+	bh=/DssU8MC65A2RpD4iNKexMal8Rlum/svgghigcvg640=;
+	h=From:To:CC:Date:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=qrIzJ3yg3tLGMmRtK+ceXs+7Astdl2lt7D88VO6Bx26Bb3Xa/SPe/dwBZjjek0apaZEkNzZulJ+idaQ049R0QyJD7lfn3ODthBnTN4OQFrXCfVlpparqdAUREQtUhuiZlZuhLQRM9p8e8qMHEOc/D8rZIeNlMFK3o7cDc37skOc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=TluNSGyt; arc=none smtp.client-ip=209.85.208.48; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; arc=pass smtp.client-ip=62.96.220.36
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Received: from localhost (localhost [127.0.0.1])
-	by a.mx.secunet.com (Postfix) with ESMTP id A075820844;
-	Sun, 31 Mar 2024 18:38:25 +0200 (CEST)
+	by a.mx.secunet.com (Postfix) with ESMTP id 6B7C6207C6;
+	Sun, 31 Mar 2024 18:26:16 +0200 (CEST)
 X-Virus-Scanned: by secunet
 Received: from a.mx.secunet.com ([127.0.0.1])
 	by localhost (a.mx.secunet.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ldEZmv-kkqqs; Sun, 31 Mar 2024 18:38:24 +0200 (CEST)
-Received: from mailout1.secunet.com (mailout1.secunet.com [62.96.220.44])
+	with ESMTP id pJ761GHsqKkJ; Sun, 31 Mar 2024 18:26:14 +0200 (CEST)
+Received: from mailout2.secunet.com (mailout2.secunet.com [62.96.220.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by a.mx.secunet.com (Postfix) with ESMTPS id 52B202083E;
-	Sun, 31 Mar 2024 18:38:24 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 a.mx.secunet.com 52B202083E
+	by a.mx.secunet.com (Postfix) with ESMTPS id A9D7F20847;
+	Sun, 31 Mar 2024 18:26:14 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 a.mx.secunet.com A9D7F20847
 Received: from cas-essen-01.secunet.de (unknown [10.53.40.201])
-	by mailout1.secunet.com (Postfix) with ESMTP id 461EC80004A;
-	Sun, 31 Mar 2024 18:38:24 +0200 (CEST)
+	by mailout2.secunet.com (Postfix) with ESMTP id 9CB9080004A;
+	Sun, 31 Mar 2024 18:26:14 +0200 (CEST)
 Received: from mbx-essen-01.secunet.de (10.53.40.197) by
  cas-essen-01.secunet.de (10.53.40.201) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Sun, 31 Mar 2024 18:38:24 +0200
+ 15.1.2507.35; Sun, 31 Mar 2024 18:26:14 +0200
 Received: from Pickup by mbx-essen-01.secunet.de with Microsoft SMTP Server id
- 15.1.2507.17; Sun, 31 Mar 2024 16:36:17 +0000
-X-sender: <netdev+bounces-83480-peter.schumann=secunet.com@vger.kernel.org>
+ 15.1.2507.17; Sun, 31 Mar 2024 16:23:37 +0000
+X-sender: <linux-wireless+bounces-5634-peter.schumann=secunet.com@vger.kernel.org>
 X-Receiver: <peter.schumann@secunet.com>
  ORCPT=rfc822;peter.schumann@secunet.com NOTIFY=NEVER;
  X-ExtendedProps=BQAVABYAAgAAAAUAFAARAJ05ab4WgQhHsqdZ7WUjHykPADUAAABNaWNyb3NvZnQuRXhjaGFuZ2UuVHJhbnNwb3J0LkRpcmVjdG9yeURhdGEuSXNSZXNvdXJjZQIAAAUAagAJAAEAAAAAAAAABQAWAAIAAAUAQwACAAAFAEYABwADAAAABQBHAAIAAAUAEgAPAGAAAAAvbz1zZWN1bmV0L291PUV4Y2hhbmdlIEFkbWluaXN0cmF0aXZlIEdyb3VwIChGWURJQk9IRjIzU1BETFQpL2NuPVJlY2lwaWVudHMvY249UGV0ZXIgU2NodW1hbm41ZTcFAAsAFwC+AAAAQ5IZ35DtBUiRVnd98bETxENOPURCNCxDTj1EYXRhYmFzZXMsQ049RXhjaGFuZ2UgQWRtaW5pc3RyYXRpdmUgR3JvdXAgKEZZRElCT0hGMjNTUERMVCksQ049QWRtaW5pc3RyYXRpdmUgR3JvdXBzLENOPXNlY3VuZXQsQ049TWljcm9zb2Z0IEV4Y2hhbmdlLENOPVNlcnZpY2VzLENOPUNvbmZpZ3VyYXRpb24sREM9c2VjdW5ldCxEQz1kZQUADgARAC7JU/le071Fhs0mWv1VtVsFAB0ADwAMAAAAbWJ4LWVzc2VuLTAxBQA8AAIAAA8ANgAAAE1pY3Jvc29mdC5FeGNoYW5nZS5UcmFuc3BvcnQuTWFpbFJlY2lwaWVudC5EaXNwbGF5TmFtZQ8ADwAAAFNjaHVtYW5uLCBQZXRlcgUADAACAAAFAGwAAgAABQBYABcASAAAAJ05ab4WgQhHsqdZ7WUjHylDTj1TY2h1bWFubiBQZXRlcixPVT1Vc2VycyxPVT1NaWdyYXRpb24sREM9c2VjdW5ldCxEQz1kZQUAJgACAAEFACIADwAxAAAAQXV0b1Jlc3BvbnNlU3VwcHJlc3M6IDANClRyYW5zbWl0SGlzdG9yeTogRmFsc
 	2UNCg8ALwAAAE1pY3Jvc29mdC5FeGNoYW5nZS5UcmFuc3BvcnQuRXhwYW5zaW9uR3JvdXBUeXBlDwAVAAAATWVtYmVyc0dyb3VwRXhwYW5zaW9uBQAjAAIAAQ==
 X-CreatedBy: MSExchange15
-X-HeloDomain: a.mx.secunet.com
-X-ExtendedProps: BQBjAAoAWUmmlidQ3AgFAGEACAABAAAABQA3AAIAAA8APAAAAE1pY3Jvc29mdC5FeGNoYW5nZS5UcmFuc3BvcnQuTWFpbFJlY2lwaWVudC5Pcmdhbml6YXRpb25TY29wZREAAAAAAAAAAAAAAAAAAAAAAAUASQACAAEFAAQAFCABAAAAGgAAAHBldGVyLnNjaHVtYW5uQHNlY3VuZXQuY29tBQAGAAIAAQUAKQACAAEPAAkAAABDSUF1ZGl0ZWQCAAEFAAIABwABAAAABQADAAcAAAAAAAUABQACAAEFAGIACgBhAAAAzYoAAAUAZAAPAAMAAABIdWI=
-X-Source: SMTP:Default MBX-ESSEN-02
-X-SourceIPAddress: 62.96.220.36
-X-EndOfInjectedXHeaders: 11362
+X-HeloDomain: b.mx.secunet.com
+X-ExtendedProps: BQBjAAoALJXp8x1Q3AgFAGEACAABAAAABQA3AAIAAA8APAAAAE1pY3Jvc29mdC5FeGNoYW5nZS5UcmFuc3BvcnQuTWFpbFJlY2lwaWVudC5Pcmdhbml6YXRpb25TY29wZREAAAAAAAAAAAAAAAAAAAAAAAUASQACAAEFAGIACgCeAAAAjYoAAAUABAAUIAEAAAAaAAAAcGV0ZXIuc2NodW1hbm5Ac2VjdW5ldC5jb20FAAYAAgABBQApAAIAAQ8ACQAAAENJQXVkaXRlZAIAAQUAAgAHAAEAAAAFAAMABwAAAAAABQAFAAIAAQUAZAAPAAMAAABIdWI=
+X-Source: SMTP:Default MBX-DRESDEN-01
+X-SourceIPAddress: 62.96.220.37
+X-EndOfInjectedXHeaders: 21878
 X-Virus-Scanned: by secunet
-Received-SPF: Pass (sender SPF authorized) identity=mailfrom; client-ip=147.75.199.223; helo=ny.mirrors.kernel.org; envelope-from=netdev+bounces-83480-peter.schumann=secunet.com@vger.kernel.org; receiver=peter.schumann@secunet.com 
-DKIM-Filter: OpenDKIM Filter v2.11.0 a.mx.secunet.com C852520883
-X-Original-To: netdev@vger.kernel.org
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received-SPF: Pass (sender SPF authorized) identity=mailfrom; client-ip=139.178.88.99; helo=sv.mirrors.kernel.org; envelope-from=linux-wireless+bounces-5634-peter.schumann=secunet.com@vger.kernel.org; receiver=peter.schumann@secunet.com 
+DKIM-Filter: OpenDKIM Filter v2.11.0 b.mx.secunet.com 119D9200BB
+Authentication-Results: b.mx.secunet.com;
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="TluNSGyt"
+X-Original-To: linux-wireless@vger.kernel.org
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal: i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1711752630; cv=none; b=biBVEMUQ0pD3FmSkiJ9sxBbHb4wsOhsdC/IdJPvSVut/O5ab4dGWb/JB4h7/kIEea7Isbp+0JWXbQcGvdHqbf32MGnBZgKI7LTgHmREL4Pk2n46xU4OUudeIhI1EVYcsawHRF/XjZfg9gyAd5m3VwiZcrlemZWbTe6IRaYs1fSs=
+	t=1711756371; cv=none; b=o0WhiN2gZuWU2Os3NZ94lcW9TU34o0+02S/QsxZdV4BfVrVYYp6/RHWQTabBzqWOjNHPaOiMKxezZW+pX9RauPpSXDM1gYSpisw4KJyQ+Uyefk6d4TYljJYwlwrVJ4VujdjzjLUyDwVRsonnjRBdsDWzJ/eIxB5ac0HdZ+0GAyA=
 ARC-Message-Signature: i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1711752630; c=relaxed/simple;
-	bh=d6GYHZj1nwm/xAWq38KgFLCAjeu3oj6MG7PKrVN2dik=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=epB2fowdHfquABx1fTbw/pWYcb7zELL1S85TXQhbSuZrEdOy/Iw4/M0mheG84kZyq9ge+0D74lr7YAuOo4SHQnxknXl0v6xGY3rGARafXBaZC+G0Jox/R9OWJYbvCTSHCwEFwQljA768dYbO0avYQLgSYa/IHcgODQ4U7H9VZMo=
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QPl6KWXQ; arc=none smtp.client-ip=10.30.226.201
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1711752630;
-	bh=d6GYHZj1nwm/xAWq38KgFLCAjeu3oj6MG7PKrVN2dik=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=QPl6KWXQvu8etNRRr+r8OMKyD6R97QbdR9BUKsTPtOE7Kqjbj0Wzwr2xkLyiUBOCj
-	 EhPM3BDLS7sB3nqz8OwL4C5r4EVrvhikxo71yksyhl6g8RZix/5BP7LjrYPeBKOfUp
-	 wBDjGqQX99DbyBqqEiSjvjL/oqo3Zl0up2BrkC0QCEcbAAzoAyb4Ht/h7gmsISUFFH
-	 bFa5SbbqTmqpeirrBBBF0jFPoiF2SQIFEgVHTAO0enqA8UJgc7iNjAzyhoGYr0Io7u
-	 qqFGr/qSOegSrVvqT6lM2WA3H4zZrrLtdkBIK1J6oKBNL/j7HGWNFywkVMJdW0nwTT
-	 vR5M4jXKxAarQ==
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1711756371; c=relaxed/simple;
+	bh=/DssU8MC65A2RpD4iNKexMal8Rlum/svgghigcvg640=;
+	h=From:To:CC:Date:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=Qx0zqIH66fwE7eJkhUnh80yazidM0iBTIOvXwPv061RLq8Fc0lVd8AxbUBNo4IJKVqIRMc+GeRRVj40YeOtEstHF5IqTn4bM7VYv+YXa0m1+EIkHZH1GWsidbebDc2tqQV9KuuaFiG+kCQmmcUB+iB5bKDvhgovTktsxi7thSdw=
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=TluNSGyt; arc=none smtp.client-ip=209.85.208.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1711756368; x=1712361168; darn=vger.kernel.org;
+        h=mime-version:subject:user-agent:references:in-reply-to:message-id
+         :date:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=03RZ/CG5yIikfVZbcTYpNoXJYSXutxMyJ3oQ3TY4G1A=;
+        b=TluNSGytK0iFNCaW7o5eB1sphl6bu4fttqo6x49DqMOhZ1ZBauiztJKxA1zk3nWa2/
+         lhmAxEZuK8T/M6wIxqLwGuKTGWCra03UvbQDwd9avU/Mn6/9fjjlWSqryaA3hYZtlntr
+         84aUU7xr6w+praQC80hxQ/OlguQApLV7wJ/1k=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1711756368; x=1712361168;
+        h=mime-version:subject:user-agent:references:in-reply-to:message-id
+         :date:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=03RZ/CG5yIikfVZbcTYpNoXJYSXutxMyJ3oQ3TY4G1A=;
+        b=e2xNNN1T7J1DmC3SUqbr0uapTyXb9vSKVr81yY+1GZmQ05lg43lYM1y8KzMbWjdR2x
+         0VrJDDKdhMA0O2chUTKxiuUvK8HsISnNwK33McLttNoYBg8LvX4P8pzlKvqxgJz4ex5q
+         fv6/2SeaHLYZnU4fTBNcKNjf7y6QfTtUNUYTHQqidoj/Ye8KQNO28oFgr9zQsJ5wLv37
+         DoWGkeC/DRyZ07SwMS9tt/whqnx3TB6wV2/yhWhCjRlcMKX7/zg15fuz/JbGXh5L6UEN
+         jDk5wBzL7H40az/xDF+aMnlO1CZq9nNjc7yaVI0l3xrDCg/JOhPBE0byBIsFyvaea7pF
+         3+wQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUR6RUgQHRU6J4kHroncjBswHWjynmy3sa9pAZb836UCBMclv8LHWudh7wx52EnhCT0/wDy/PGCIx1fWrzgqoZjacxLoNQRRcpBWyIpsN4=
+X-Gm-Message-State: AOJu0YwmVYFF1joqEovcCun4L+xy0UJifJzdhu5hA5ZknR/MYxW/vRWm
+	deSMawtVnviPDqBXx3HRIHYWL8EgoBU6mN5EYX3/ya4m43gYYyJCC8E9tyswvg==
+X-Google-Smtp-Source: AGHT+IFlVP4t6RIxSv9LCeKxetcZ0i37Xax/rZfBrQX524SbaGIPRH/aDdJRAvbPea2yviZoN6JCaA==
+X-Received: by 2002:a17:906:595a:b0:a4e:1966:1874 with SMTP id g26-20020a170906595a00b00a4e19661874mr2344347ejr.37.1711756368046;
+        Fri, 29 Mar 2024 16:52:48 -0700 (PDT)
+From: Arend Van Spriel <arend.vanspriel@broadcom.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Ulf Hansson <ulf.hansson@linaro.org>, Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Matthias Brugger <matthias.bgg@gmail.com>, AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Kalle Valo <kvalo@kernel.org>, Jeff Johnson <jjohnson@kernel.org>, Brian Norris <briannorris@chromium.org>, =?UTF-8?B?SsOpcsO0bWUgUG91aWxsZXI=?= <jerome.pouiller@silabs.com>
+CC: <linux-mmc@vger.kernel.org>, <linux-kernel@vger.kernel.org>, <linux-bluetooth@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>, <linux-mediatek@lists.infradead.org>, <linux-wireless@vger.kernel.org>, <ath10k@lists.infradead.org>, <brcm80211@lists.linux.dev>, <brcm80211-dev-list.pdl@broadcom.com>
+Date: Sat, 30 Mar 2024 00:52:45 +0100
+Message-ID: <18e8ca14cc8.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
+In-Reply-To: <20240329-module-owner-sdio-v1-5-e4010b11ccaa@linaro.org>
+References: <20240329-module-owner-sdio-v1-0-e4010b11ccaa@linaro.org>
+ <20240329-module-owner-sdio-v1-5-e4010b11ccaa@linaro.org>
+User-Agent: AquaMail/1.50.0 (build: 105000429)
+Subject: Re: [PATCH 5/7] wifi: brcm80211: drop driver owner initialization
 Precedence: bulk
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
@@ -95,307 +124,130 @@ List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: pull request: bluetooth 2024-03-29
-From: patchwork-bot+netdevbpf@kernel.org
-Message-ID: <171175263013.1693.13688049482640225166.git-patchwork-notify@kernel.org>
-Date: Fri, 29 Mar 2024 22:50:30 +0000
-References: <20240329140453.2016486-1-luiz.dentz@gmail.com>
-In-Reply-To: <20240329140453.2016486-1-luiz.dentz@gmail.com>
-To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: davem@davemloft.net, kuba@kernel.org, linux-bluetooth@vger.kernel.org,
- netdev@vger.kernel.org
+Content-Type: multipart/signed; protocol="application/pkcs7-signature";
+	micalg=sha-256; boundary="000000000000489f3e0614d556de"
 X-EXCLAIMER-MD-CONFIG: 2c86f778-e09b-4440-8b15-867914633a10
 
-Hello:
-
-This pull request was applied to netdev/net.git (main)
-by Jakub Kicinski <kuba@kernel.org>:
-
-On Fri, 29 Mar 2024 10:04:53 -0400 you wrote:
-> The following changes since commit 0ba80d96585662299d4ea4624043759ce90154=
-21:
->=20
->   octeontx2-af: Fix issue with loading coalesced KPU profiles (2024-03-29=
- 11:45:42 +0000)
->=20
-> are available in the Git repository at:
->=20
->   git://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth.git t=
-ags/for-net-2024-03-29
->=20
-> [...]
-
-Here is the summary with links:
-  - pull request: bluetooth 2024-03-29
-    https://git.kernel.org/netdev/net/c/365af7ace014
-
-You are awesome, thank you!
---=20
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
-
-X-sender: <netdev+bounces-83480-steffen.klassert=3Dsecunet.com@vger.kernel.=
-org>
-X-Receiver: <steffen.klassert@secunet.com> ORCPT=3Drfc822;steffen.klassert@=
-secunet.com NOTIFY=3DNEVER; X-ExtendedProps=3DBQAVABYAAgAAAAUAFAARAPDFCS25B=
-AlDktII2g02frgPADUAAABNaWNyb3NvZnQuRXhjaGFuZ2UuVHJhbnNwb3J0LkRpcmVjdG9yeURh=
-dGEuSXNSZXNvdXJjZQIAAAUAagAJAAEAAAAAAAAABQAWAAIAAAUAQwACAAAFAEYABwADAAAABQB=
-HAAIAAAUAEgAPAGIAAAAvbz1zZWN1bmV0L291PUV4Y2hhbmdlIEFkbWluaXN0cmF0aXZlIEdyb3=
-VwIChGWURJQk9IRjIzU1BETFQpL2NuPVJlY2lwaWVudHMvY249U3RlZmZlbiBLbGFzc2VydDY4Y=
-wUACwAXAL4AAACheZxkHSGBRqAcAp3ukbifQ049REI2LENOPURhdGFiYXNlcyxDTj1FeGNoYW5n=
-ZSBBZG1pbmlzdHJhdGl2ZSBHcm91cCAoRllESUJPSEYyM1NQRExUKSxDTj1BZG1pbmlzdHJhdGl=
-2ZSBHcm91cHMsQ049c2VjdW5ldCxDTj1NaWNyb3NvZnQgRXhjaGFuZ2UsQ049U2VydmljZXMsQ0=
-49Q29uZmlndXJhdGlvbixEQz1zZWN1bmV0LERDPWRlBQAOABEABiAS9uuMOkqzwmEZDvWNNQUAH=
-QAPAAwAAABtYngtZXNzZW4tMDIFADwAAgAADwA2AAAATWljcm9zb2Z0LkV4Y2hhbmdlLlRyYW5z=
-cG9ydC5NYWlsUmVjaXBpZW50LkRpc3BsYXlOYW1lDwARAAAAS2xhc3NlcnQsIFN0ZWZmZW4FAAw=
-AAgAABQBsAAIAAAUAWAAXAEoAAADwxQktuQQJQ5LSCNoNNn64Q049S2xhc3NlcnQgU3RlZmZlbi=
-xPVT1Vc2VycyxPVT1NaWdyYXRpb24sREM9c2VjdW5ldCxEQz1kZQUAJgACAAEFACIADwAxAAAAQ=
-XV0b1Jlc3BvbnNlU3VwcHJlc3M6IDANClRyYW5zbWl0SGlzdG9yeTogRmFsc2UNCg8ALwAAAE1p=
-Y3Jvc29mdC5FeGNoYW5nZS5UcmFuc3BvcnQuRXhwYW5zaW9uR3JvdXBUeXBlDwAVAAAATWVtYmV=
-yc0dyb3VwRXhwYW5zaW9uBQAjAAIAAQ=3D=3D
-X-CreatedBy: MSExchange15
-X-HeloDomain: b.mx.secunet.com
-X-ExtendedProps: BQBjAAoAWUmmlidQ3AgFAGEACAABAAAABQA3AAIAAA8APAAAAE1pY3Jvc2=
-9mdC5FeGNoYW5nZS5UcmFuc3BvcnQuTWFpbFJlY2lwaWVudC5Pcmdhbml6YXRpb25TY29wZREAA=
-AAAAAAAAAAAAAAAAAAAAAUASQACAAEFAAQAFCABAAAAHAAAAHN0ZWZmZW4ua2xhc3NlcnRAc2Vj=
-dW5ldC5jb20FAAYAAgABBQApAAIAAQ8ACQAAAENJQXVkaXRlZAIAAQUAAgAHAAEAAAAFAAMABwA=
-AAAAABQAFAAIAAQUAYgAKAGMAAADNigAABQBkAA8AAwAAAEh1Yg=3D=3D
-X-Source: SMTP:Default MBX-ESSEN-02
-X-SourceIPAddress: 62.96.220.37
-X-EndOfInjectedXHeaders: 11513
-Received: from cas-essen-01.secunet.de (10.53.40.201) by
- mbx-essen-02.secunet.de (10.53.40.198) with Microsoft SMTP Server
- (version=3DTLS1_2, cipher=3DTLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.37; Fri, 29 Mar 2024 23:50:41 +0100
-Received: from b.mx.secunet.com (62.96.220.37) by cas-essen-01.secunet.de
- (10.53.40.201) with Microsoft SMTP Server (version=3DTLS1_2,
- cipher=3DTLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35 via Fronte=
-nd
- Transport; Fri, 29 Mar 2024 23:50:41 +0100
-Received: from localhost (localhost [127.0.0.1])
-	by b.mx.secunet.com (Postfix) with ESMTP id CF6E5200BB
-	for <steffen.klassert@secunet.com>; Fri, 29 Mar 2024 23:50:41 +0100 (CET)
-X-Virus-Scanned: by secunet
-X-Spam-Flag: NO
-X-Spam-Score: -5.399
-X-Spam-Level:
-X-Spam-Status: No, score=3D-5.399 tagged_above=3D-999 required=3D2.1
-	tests=3D[BAYES_00=3D-1.9, DKIMWL_WL_HIGH=3D-0.099, DKIM_SIGNED=3D0.1,
-	DKIM_VALID=3D-0.1, DKIM_VALID_AU=3D-0.1, MAILING_LIST_MULTI=3D-1,
-	RCVD_IN_DNSWL_MED=3D-2.3, SPF_HELO_NONE=3D0.001, SPF_PASS=3D-0.001]
-	autolearn=3Dham autolearn_force=3Dno
-Authentication-Results: a.mx.secunet.com (amavisd-new);
-	dkim=3Dpass (2048-bit key) header.d=3Dkernel.org
-Received: from b.mx.secunet.com ([127.0.0.1])
-	by localhost (a.mx.secunet.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id FcKgo2F85RVu for <steffen.klassert@secunet.com>;
-	Fri, 29 Mar 2024 23:50:41 +0100 (CET)
-Received-SPF: Pass (sender SPF authorized) identity=3Dmailfrom; client-ip=
-=3D139.178.88.99; helo=3Dsv.mirrors.kernel.org; envelope-from=3Dnetdev+boun=
-ces-83480-steffen.klassert=3Dsecunet.com@vger.kernel.org; receiver=3Dsteffe=
-n.klassert@secunet.com=20
-DKIM-Filter: OpenDKIM Filter v2.11.0 b.mx.secunet.com B8CFA2032C
-Authentication-Results: b.mx.secunet.com;
-	dkim=3Dpass (2048-bit key) header.d=3Dkernel.org header.i=3D@kernel.org he=
-ader.b=3D"QPl6KWXQ"
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99]=
-)
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by b.mx.secunet.com (Postfix) with ESMTPS id B8CFA2032C
-	for <steffen.klassert@secunet.com>; Fri, 29 Mar 2024 23:50:40 +0100 (CET)
-Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.2=
-5.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B40612844F2
-	for <steffen.klassert@secunet.com>; Fri, 29 Mar 2024 22:50:38 +0000 (UTC)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D0E813D248;
-	Fri, 29 Mar 2024 22:50:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=3Dpass (2048-bit key) header.d=3Dkernel.org header.i=3D@kernel.org he=
-ader.b=3D"QPl6KWXQ"
-X-Original-To: netdev@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.or=
-g [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB0D849C;
-	Fri, 29 Mar 2024 22:50:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=3Dnone smtp.client-ip=
-=3D10.30.226.201
-ARC-Seal: i=3D1; a=3Drsa-sha256; d=3Dsubspace.kernel.org; s=3Darc-20240116;
-	t=3D1711752630; cv=3Dnone; b=3DbiBVEMUQ0pD3FmSkiJ9sxBbHb4wsOhsdC/IdJPvSVut=
-/O5ab4dGWb/JB4h7/kIEea7Isbp+0JWXbQcGvdHqbf32MGnBZgKI7LTgHmREL4Pk2n46xU4OUud=
-eIhI1EVYcsawHRF/XjZfg9gyAd5m3VwiZcrlemZWbTe6IRaYs1fSs=3D
-ARC-Message-Signature: i=3D1; a=3Drsa-sha256; d=3Dsubspace.kernel.org;
-	s=3Darc-20240116; t=3D1711752630; c=3Drelaxed/simple;
-	bh=3Dd6GYHZj1nwm/xAWq38KgFLCAjeu3oj6MG7PKrVN2dik=3D;
-	h=3DContent-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=3DepB2fowdHfquABx1fTbw/pWYcb7zELL1S85TXQhbSuZrEdOy/I=
-w4/M0mheG84kZyq9ge+0D74lr7YAuOo4SHQnxknXl0v6xGY3rGARafXBaZC+G0Jox/R9OWJYbvC=
-TSHCwEFwQljA768dYbO0avYQLgSYa/IHcgODQ4U7H9VZMo=3D
-ARC-Authentication-Results: i=3D1; smtp.subspace.kernel.org; dkim=3Dpass (2=
-048-bit key) header.d=3Dkernel.org header.i=3D@kernel.org header.b=3DQPl6KW=
-XQ; arc=3Dnone smtp.client-ip=3D10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 3013CC43394;
-	Fri, 29 Mar 2024 22:50:30 +0000 (UTC)
-DKIM-Signature: v=3D1; a=3Drsa-sha256; c=3Drelaxed/simple; d=3Dkernel.org;
-	s=3Dk20201202; t=3D1711752630;
-	bh=3Dd6GYHZj1nwm/xAWq38KgFLCAjeu3oj6MG7PKrVN2dik=3D;
-	h=3DSubject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=3DQPl6KWXQvu8etNRRr+r8OMKyD6R97QbdR9BUKsTPtOE7Kqjbj0Wzwr2xkLyiUBOCj
-	 EhPM3BDLS7sB3nqz8OwL4C5r4EVrvhikxo71yksyhl6g8RZix/5BP7LjrYPeBKOfUp
-	 wBDjGqQX99DbyBqqEiSjvjL/oqo3Zl0up2BrkC0QCEcbAAzoAyb4Ht/h7gmsISUFFH
-	 bFa5SbbqTmqpeirrBBBF0jFPoiF2SQIFEgVHTAO0enqA8UJgc7iNjAzyhoGYr0Io7u
-	 qqFGr/qSOegSrVvqT6lM2WA3H4zZrrLtdkBIK1J6oKBNL/j7HGWNFywkVMJdW0nwTT
-	 vR5M4jXKxAarQ=3D=3D
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.loc=
-aldomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 2=
-2B38D2D0EB;
-	Fri, 29 Mar 2024 22:50:30 +0000 (UTC)
-Content-Type: text/plain; charset=3D"utf-8"
-Precedence: bulk
-X-Mailing-List: netdev@vger.kernel.org
-List-Id: <netdev.vger.kernel.org>
-List-Subscribe: <mailto:netdev+subscribe@vger.kernel.org>
-List-Unsubscribe: <mailto:netdev+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
+--000000000000489f3e0614d556de
+Content-Type: text/plain; format=flowed; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: pull request: bluetooth 2024-03-29
-From: patchwork-bot+netdevbpf@kernel.org
-Message-ID: <171175263013.1693.13688049482640225166.git-patchwork-notify@ke=
-rnel.org>
-Date: Fri, 29 Mar 2024 22:50:30 +0000
-References: <20240329140453.2016486-1-luiz.dentz@gmail.com>
-In-Reply-To: <20240329140453.2016486-1-luiz.dentz@gmail.com>
-To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: davem@davemloft.net, kuba@kernel.org, linux-bluetooth@vger.kernel.org,
- netdev@vger.kernel.org
-Return-Path: netdev+bounces-83480-steffen.klassert=3Dsecunet.com@vger.kerne=
-l.org
-X-MS-Exchange-Organization-OriginalArrivalTime: 29 Mar 2024 22:50:41.9112
- (UTC)
-X-MS-Exchange-Organization-Network-Message-Id: ef744b4b-f054-4f0b-f6c5-08dc=
-5042a95a
-X-MS-Exchange-Organization-OriginalClientIPAddress: 62.96.220.37
-X-MS-Exchange-Organization-OriginalServerIPAddress: 10.53.40.201
-X-MS-Exchange-Organization-Cross-Premises-Headers-Processed: cas-essen-01.s=
-ecunet.de
-X-MS-Exchange-Organization-OrderedPrecisionLatencyInProgress: LSRV=3Dmbx-es=
-sen-02.secunet.de:TOTAL-HUB=3D0.401|SMR=3D0.323(SMRDE=3D0.004|SMRC=3D0.318(=
-SMRCL=3D0.013|X-SMRCR=3D0.317))|CAT=3D0.076(CATOS=3D0.001
- |CATRESL=3D0.032(CATRESLP2R=3D0.018)|CATORES=3D0.035(CATRS=3D0.035(CATRS-T=
-ransport
- Rule Agent=3D0.001 (X-ETREX=3D0.001)|CATRS-Index Routing
- Agent=3D0.032))|CATORT=3D0.005(CATRT=3D0.005(CATRT-Journal Agent=3D0.004
- )));2024-03-29T22:50:42.328Z
-X-MS-Exchange-Forest-ArrivalHubServer: mbx-essen-02.secunet.de
-X-MS-Exchange-Organization-AuthSource: cas-essen-01.secunet.de
-X-MS-Exchange-Organization-AuthAs: Anonymous
-X-MS-Exchange-Organization-FromEntityHeader: Internet
-X-MS-Exchange-Organization-OriginalSize: 7100
-X-MS-Exchange-Organization-HygienePolicy: Standard
-X-MS-Exchange-Organization-MessageLatency: SRV=3Dcas-essen-01.secunet.de:TO=
-TAL-FE=3D0.015|SMR=3D0.007(SMRPI=3D0.003(SMRPI-FrontendProxyAgent=3D0.003))=
-|SMS=3D0.009
-X-MS-Exchange-Organization-Recipient-Limit-Verified: True
-X-MS-Exchange-Organization-TotalRecipientCount: 1
-X-MS-Exchange-Organization-Rules-Execution-History: 0b0cf904-14ac-4724-8bdf=
--482ee6223cf2%%%fd34672d-751c-45ae-a963-ed177fcabe23%%%d8080257-b0c3-47b4-b=
-0db-23bc0c8ddb3c%%%95e591a2-5d7d-4afa-b1d0-7573d6c0a5d9%%%f7d0f6bc-4dcc-487=
-6-8c5d-b3d6ddbb3d55%%%16355082-c50b-4214-9c7d-d39575f9f79b
-X-MS-Exchange-Forest-RulesExecuted: mbx-essen-02
-X-MS-Exchange-Organization-RulesExecuted: mbx-essen-02
-X-MS-Exchange-Forest-IndexAgent-0: AQ0CZW4AAckCAAAPAAADH4sIAAAAAAAEAGVS23LT=
-MBBd59bEjYHpFy
- xv7VBf4jhp42E6PEC5dBh4KA8Mw4PiKLEmtmUsuWl/ly9hZQdCwdas
- Je3uOWd3/bP/jmeZjB3bsW9TobCsswwr/qPmSuOOKWRlmQm+Qi2x4H
- rF73z6eBuh8TRnojhz7OUDfmDbeok3IhGF2gp8SSf2asurgmeerDZX
- Df6nAq8rcY7hAj+yCsMgjHASxEEUz6boBlEQ4IOscVdJzSnhCm9Tjm
- tJ8nai2GCSsmLDFSpRJBwTmeekIViyy2C1mM8uZ/N5GC4Wq4izaB5G
- QTS9mC0SvggmsyicGDwDiSgTzWWh70OXrWO8FvcolKo57oROMZNs1X
- BJlnGVUNk3n79gWcm1oDOeGs1uMHWphMkkjmZxFOKLgJ6zPT6rOLI7
- JjK2zDiKAjXV8JaEVryUSmhZPSDTBzXUx9j3yXqHbvllvfRVkvuZKO
- p7v3WYGH+Z1VxLqdPDrpmEZhvlr2Xl0mjcg8Y9yzfP876bAbzjpI5m
- bDSpOs8ZiWnLFsVWkShE99EPEOMfHvwbloRjqnWp/td++Ef8xJ/OZ2
- x9wRIeTCIj4CuNt+nQjiuZ83NSwoqtmfpzx3Zdx37NqYAV8ZHR5/ge
- WY4Ml1J7jv2bcEs03kom6lHLmE7Snay2frkz4anOM8NoXoA+2D3o0z
- qCYRd6ZDvQHVjwBI7o2DWuI7rpw2BIkRY8hf7AuEZ0Sd6OBce0zL7X
- s/pDC4YAQ2vUN8gDuiR8siOwCZluKPcUwpEFY7A7Bp8CBi37qIlsWW
- xaBA7djtV9jOm0aA27SbfhuAPjrgVvGrrBXvYeuT1SfAtORBR5Ql6L
- 9kCCOwBEYSyc9BrGtgm078O4ETYa/SOJCrEgaNrV4rfWgs4YnrXUlN
- WUbxKdpr3UKwqgdLJdGNBh0rD09v00Ik0rfgHXvbdCdgQAAAEK1QE8
- P3htbCB2ZXJzaW9uPSIxLjAiIGVuY29kaW5nPSJ1dGYtMTYiPz4NCj
- xFbWFpbFNldD4NCiAgPFZlcnNpb24+MTUuMC4wLjA8L1ZlcnNpb24+
- DQogIDxFbWFpbHM+DQogICAgPEVtYWlsIFN0YXJ0SW5kZXg9Ijg1Ij
- 4NCiAgICAgIDxFbWFpbFN0cmluZz5rdWJhQGtlcm5lbC5vcmc8L0Vt
- YWlsU3RyaW5nPg0KICAgIDwvRW1haWw+DQogIDwvRW1haWxzPg0KPC
- 9FbWFpbFNldD4BC/UCPD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGlu
- Zz0idXRmLTE2Ij8+DQo8VXJsU2V0Pg0KICA8VmVyc2lvbj4xNS4wLj
- AuMDwvVmVyc2lvbj4NCiAgPFVybHM+DQogICAgPFVybCBTdGFydElu
- ZGV4PSI1NjgiIFR5cGU9IlVybCI+DQogICAgICA8VXJsU3RyaW5nPm
- h0dHBzOi8vZ2l0Lmtlcm5lbC5vcmcvbmV0ZGV2L25ldC9jLzM2NWFm
- N2FjZTAxNDwvVXJsU3RyaW5nPg0KICAgIDwvVXJsPg0KICAgIDxVcm
- wgU3RhcnRJbmRleD0iNjgxIiBUeXBlPSJVcmwiPg0KICAgICAgPFVy
- bFN0cmluZz5odHRwczovL2tvcmcuZG9jcy5rZXJuZWwub3JnL3BhdG
- Nod29yay9wd2JvdC5odG1sPC9VcmxTdHJpbmc+DQogICAgPC9Vcmw+
- DQogIDwvVXJscz4NCjwvVXJsU2V0PgEM6AM8P3htbCB2ZXJzaW9uPS
- IxLjAiIGVuY29kaW5nPSJ1dGYtMTYiPz4NCjxDb250YWN0U2V0Pg0K
- ICA8VmVyc2lvbj4xNS4wLjAuMDwvVmVyc2lvbj4NCiAgPENvbnRhY3
- RzPg0KICAgIDxDb250YWN0IFN0YXJ0SW5kZXg9IjY5Ij4NCiAgICAg
- IDxQZXJzb24gU3RhcnRJbmRleD0iNjkiPg0KICAgICAgICA8UGVyc2
- 9uU3RyaW5nPkpha3ViIEtpY2luc2tpPC9QZXJzb25TdHJpbmc+DQog
- ICAgICA8L1BlcnNvbj4NCiAgICAgIDxFbWFpbHM+DQogICAgICAgID
- xFbWFpbCBTdGFydEluZGV4PSI4NSI+DQogICAgICAgICAgPEVtYWls
- U3RyaW5nPmt1YmFAa2VybmVsLm9yZzwvRW1haWxTdHJpbmc+DQogIC
- AgICAgIDwvRW1haWw+DQogICAgICA8L0VtYWlscz4NCiAgICAgIDxD
- b250YWN0U3RyaW5nPkpha3ViIEtpY2luc2tpICZsdDtrdWJhQGtlcm
- 5lbC5vcmc8L0NvbnRhY3RTdHJpbmc+DQogICAgPC9Db250YWN0Pg0K
- ICA8L0NvbnRhY3RzPg0KPC9Db250YWN0U2V0PgEOzwFSZXRyaWV2ZX
- JPcGVyYXRvciwxMCwxO1JldHJpZXZlck9wZXJhdG9yLDExLDI7UG9z
- dERvY1BhcnNlck9wZXJhdG9yLDEwLDE7UG9zdERvY1BhcnNlck9wZX
- JhdG9yLDExLDA7UG9zdFdvcmRCcmVha2VyRGlhZ25vc3RpY09wZXJh
- dG9yLDEwLDE7UG9zdFdvcmRCcmVha2VyRGlhZ25vc3RpY09wZXJhdG
- 9yLDExLDA7VHJhbnNwb3J0V3JpdGVyUHJvZHVjZXIsMjAsMTI=3D
-X-MS-Exchange-Forest-IndexAgent: 1 2021
-X-MS-Exchange-Forest-EmailMessageHash: 02E9B2CA
-X-MS-Exchange-Forest-Language: en
-X-MS-Exchange-Organization-Processed-By-Journaling: Journal Agent
 
-Hello:
+On March 29, 2024 6:24:57 PM Krzysztof Kozlowski 
+<krzysztof.kozlowski@linaro.org> wrote:
 
-This pull request was applied to netdev/net.git (main)
-by Jakub Kicinski <kuba@kernel.org>:
+> Core in sdio_register_driver() already sets the .owner, so driver does
+> not need to.
 
-On Fri, 29 Mar 2024 10:04:53 -0400 you wrote:
-> The following changes since commit 0ba80d96585662299d4ea4624043759ce90154=
-21:
->=20
->   octeontx2-af: Fix issue with loading coalesced KPU profiles (2024-03-29=
- 11:45:42 +0000)
->=20
-> are available in the Git repository at:
->=20
->   git://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth.git t=
-ags/for-net-2024-03-29
->=20
-> [...]
-
-Here is the summary with links:
-  - pull request: bluetooth 2024-03-29
-    https://git.kernel.org/netdev/net/c/365af7ace014
-
-You are awesome, thank you!
---=20
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>
+> ---
+>
+> Depends on the first patch.
+> ---
+> drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c | 1 -
+> 1 file changed, 1 deletion(-)
+>
+> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c 
+> b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+> index 00679a990e3d..13391c2d82aa 100644
+> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+> @@ -1238,7 +1238,6 @@ static struct sdio_driver brcmf_sdmmc_driver = {
+>  .name = KBUILD_MODNAME,
+>  .id_table = brcmf_sdmmc_ids,
+>  .drv = {
+> - .owner = THIS_MODULE,
+>  .pm = pm_sleep_ptr(&brcmf_sdio_pm_ops),
+>  .coredump = brcmf_dev_coredump,
+>  },
+>
+> --
+> 2.34.1
 
 
 
+
+--000000000000489f3e0614d556de
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
+
+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
+2Gzj3QNJRLsZu1TLyOyBBIr/BE7UiY3RabgRzknBGAPmzhS+fmyM8OtM5BYBsFBrSUFtZZO2p/tf
+Nbc24J2zf2peoZ8MK+7WQqummYlOnz+FyDkA9EybeNMcS5C+xi/PAgMBAAGjggHdMIIB2TAOBgNV
+HQ8BAf8EBAMCBaAwgaMGCCsGAQUFBwEBBIGWMIGTME4GCCsGAQUFBzAChkJodHRwOi8vc2VjdXJl
+Lmdsb2JhbHNpZ24uY29tL2NhY2VydC9nc2djY3IzcGVyc29uYWxzaWduMmNhMjAyMC5jcnQwQQYI
+KwYBBQUHMAGGNWh0dHA6Ly9vY3NwLmdsb2JhbHNpZ24uY29tL2dzZ2NjcjNwZXJzb25hbHNpZ24y
+Y2EyMDIwME0GA1UdIARGMEQwQgYKKwYBBAGgMgEoCjA0MDIGCCsGAQUFBwIBFiZodHRwczovL3d3
+dy5nbG9iYWxzaWduLmNvbS9yZXBvc2l0b3J5LzAJBgNVHRMEAjAAMEkGA1UdHwRCMEAwPqA8oDqG
+OGh0dHA6Ly9jcmwuZ2xvYmFsc2lnbi5jb20vZ3NnY2NyM3BlcnNvbmFsc2lnbjJjYTIwMjAuY3Js
+MCcGA1UdEQQgMB6BHGFyZW5kLnZhbnNwcmllbEBicm9hZGNvbS5jb20wEwYDVR0lBAwwCgYIKwYB
+BQUHAwQwHwYDVR0jBBgwFoAUljPR5lgXWzR1ioFWZNW+SN6hj88wHQYDVR0OBBYEFIikAXd8CEtv
+ZbDflDRnf3tuStPuMA0GCSqGSIb3DQEBCwUAA4IBAQCdS5XCYx6k2GGZui9DlFsFm75khkqAU7rT
+zBX04sJU1+B1wtgmWTVIzW7ugdtDZ4gzaV0S9xRhpDErjJaltxPbCylb1DEsLj+AIvBR34caW6ZG
+sQk444t0HPb29HnWYj+OllIGMbdJWr0/P95ZrKk2bP24ub3ZP/8SyzrohfIba9WZKMq6g2nTLZE3
+BtkeSGJx/8dy0h8YmRn+adOrxKXHxhSL8BNn8wsmIZyYWe6fRcBtO3Ks2DOLyHCdkoFlN8x9VUQF
+N2ulEgqCbRKkx+qNirW86eF138lr1gRxzclu/38ko//MmkAYR/+hP3WnBll7zbpIt0jc9wyFkSqH
+p8a1MYICbTCCAmkCAQEwazBbMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1z
+YTExMC8GA1UEAxMoR2xvYmFsU2lnbiBHQ0MgUjMgUGVyc29uYWxTaWduIDIgQ0EgMjAyMAIMTv1t
+bpIzNUky46LXMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCCCchQGzAPp/0Jw9tQc
+c52U5t93n+qW3Ktzl4pCvUij5TAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
+BTEPFw0yNDAzMjkyMzUyNDhaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUDBAEqMAsGCWCGSAFl
+AwQBFjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwCwYJKoZIhvcNAQEKMAsGCSqGSIb3DQEBBzAL
+BglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEA3AXEIKWOWGEPOcLU/gjQsHR6ARbjM77GLg1T
+nfndpzPeFAawDdJGBX2tV0H3BJxgGfbV2GuOMheYutw+l8IpubpQDsvOsxgaExufohW2gcolae29
+JFqEDjLUnhdbJqJBmleRSTMy6ErXZQGHKYsgXAq9uoD/hYcQBrhvT93d/prM2IhsqYCG5fGE1SJ+
+7pt4m6FWERjYzcI2zzJtWnv7nBSVz8ce2sCy8ZEILGrecer3YzIiymoP9mzgoSQ3+7KF9tERH48H
+DjT/qagylnNDhCSyqNmkgnEpwx2KGJdrzmnJZ65YjNHTSI8x4k9r5m6hy6xKf6bd02iPlhXwDB/E
+xQ==
+--000000000000489f3e0614d556de--
 
