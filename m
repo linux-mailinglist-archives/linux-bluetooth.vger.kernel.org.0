@@ -1,34 +1,34 @@
-Return-Path: <linux-bluetooth+bounces-3172-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-3171-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6404E897834
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Apr 2024 20:27:13 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 77CE1897835
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Apr 2024 20:27:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8791A1C21051
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Apr 2024 18:27:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 043EC1F211A7
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Apr 2024 18:27:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F493153BD6;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F6D4153BE0;
 	Wed,  3 Apr 2024 18:26:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="hLCKPJkr"
+	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="ZM+rTHoA"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [185.185.170.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2158152DEE
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C35CB153574
 	for <linux-bluetooth@vger.kernel.org>; Wed,  3 Apr 2024 18:26:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=185.185.170.37
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712168817; cv=pass; b=YtWQGTL+I/PasocyzFIu8IoN3OiRopYPQgKSCo1O7tGPwwxPSeVr7zXzl8+RffVuuaPDdXyYQz5PsHJDoiD7+HfJQIxon6WEPDKWkoKmLIPK6x+RQ1S1IgWYK6sZfGIpMDfbxGk9zdkMNmeIA4lT++WzdjkfIcSgDflFkADtE74=
+	t=1712168817; cv=pass; b=k0OzSdiyqbeU2HiopzbeKC1XCftM88Rgk2V7uRsibeKevOLBvKkYUZ5GmsRqVm6Dzrgsr9ShM+6a7W953cNv1m7Kax24MsAnYwM+sw4DCzhHUbIYQc01877LgWoJZ2F4o2PTD4jMHjdv0kIkMVUO1+TCLmG+mCiivNoEZQ/maLM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1712168817; c=relaxed/simple;
-	bh=KdZR8fprgVZaHL6NVwwQ6MmfpNH11G/he1qW06M+1HE=;
+	bh=TBTq1/pgDhwcGI4CajQNhPEXompuuII3oKojAvLbc/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=arY9NlNd6pyMRPipSYinyiokmI57OMCBIN0S6Z9cBi6fralpp7oZnupzaA5s7FsSDg0o/jeMY12w2s6cgYMip5XoYo9Hcr3fxkw01sFWgi8XY8lX0NTdYUmMlR64gFyFb7OxcHnaIPC7SUDfCylovysqM1odv9wPOChAhOFUbhQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=hLCKPJkr; arc=pass smtp.client-ip=185.185.170.37
+	 MIME-Version; b=HvTH/RXg4IZ7Qn0zC5o48gggXELLXKNgo3wqLSnQP9FNc8ll9RNFDUShr6hWDuAUlJpJYxrrYyXmVDpIZXgrKbOrV7hxde/j5Q1niXeyudGj70+q5MXYXozNrFvxMAIIEoi7AB9FZHrfModqpfXp40Z4stXa7FArTWEloOuL8Hw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=ZM+rTHoA; arc=pass smtp.client-ip=185.185.170.37
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [193.138.7.138])
@@ -36,48 +36,48 @@ Received: from monolith.lan (unknown [193.138.7.138])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4V8tWC4zbWz49Q4P;
+	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4V8tWC6sVnz49Q5D;
 	Wed,  3 Apr 2024 21:26:47 +0300 (EEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
-	t=1712168807;
+	t=1712168808;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=oObUS7wFjpI6avGtIjHH20gACkTq58yl3nFzOnz5ZTo=;
-	b=hLCKPJkrMATs4z5qkj9lur8BdRWHe1nd7FBdLtPm9wv+eYKQs/yTgwZoSt4h4ILisKHmVJ
-	F+g1AS63og4L1y7/Nc3MsQnhYOitu0rF411TBvDKwKG9Rn2Q0LxSz66dG0W71MSp8hrYlC
-	nmoxUtd4BJAx29iLmWDDKeCfYecUmd5RtH6lj/OOC2HlAAp5XjdQgveNAWP80AXQnMZIQg
-	sR076kFWH0ES8o1hL2TuIsKJ339FXFjjNGpr8Bjuw+WdGvqsLjF7zumpuKM7C+rt5lvQjk
-	O+b/7q1qcyTEO0wFERQ4M5DmON46GFnjncVdQqH8aUcJOkBOqW1n624Zm4ZLmw==
+	bh=v7TQLnR6F+9sRt9uphya0SMZPbennG+mfKO57PtPSb8=;
+	b=ZM+rTHoAzH2rS/fr75itWbaoRE097t/359bxCq6Tl8M5SS6X/u1ZsxRPce6RDDthZd9LKM
+	ETqH4HYyAYNaJ2wNnzsUz5Io1pPwN2PhK3E0NqFfPuM5et9zR5fHnO+Gunc/ack8n+WRYQ
+	CwoB+ei4FODIrhh8Sv0HWMHtX8zTMAyf5byWYu6BkQCy0saNqq8uqlzwyJKENGT44iO2bz
+	g/Pn6hsj7smmOIWtovc5REcU4WzFZM6tzRryf/pb4rMsP79Pq3vAF8xaCMRYrwfU4Au2Wy
+	sFk2I1I8HEtWQySZYE/pBpdYKJXBZjle7QNnfVe5jIaJmj8RkfPTV46CGN03yw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=lahtoruutu; t=1712168807;
+	s=lahtoruutu; t=1712168808;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=oObUS7wFjpI6avGtIjHH20gACkTq58yl3nFzOnz5ZTo=;
-	b=TI8bNPr+sy3no6zJ7rZC6opZTb15Ex+ZVNXSiUic3jg/QxVwslUhe6AzCpNrmEDTPeZ4CV
-	IU83vexQYb6mrduR9BGlMAkhf9mMDf67Y//3r0ntiCNQrp2J25hT0/gyAtiwUR7vXKLpp/
-	FAL2lMwjsDYul4rgq0OfhkHMzCgHgGZawPLNffqMtffdSRLotiELocL6SGzAs7uEumeie+
-	85m2LPyZjTp+TQrVvlwKH1ObLpm1m7Ed9BCTyO2gTxHTd5xZXARbhEvwVbBhcpt6pN4eRi
-	Ti1mnUiWFUUpYljaYRGcx4OmyfpW4RpCC+7c7FaEZDW1vE5w/OWnVL1rQcmtxw==
+	bh=v7TQLnR6F+9sRt9uphya0SMZPbennG+mfKO57PtPSb8=;
+	b=jYoRR1M67oejl3Tc/cWfQ3lu8MfLFdRQwgM+46nZJs1fnEJLD3x4sUNunnhuSVD0zeHx/O
+	5ThaeMn0vYRwl9X6NI/Neb4ohTJD5NZXAd1ZianYjCwtaIhsjDV/s+SiXaNVBmIn/WPLJW
+	WrxErWJ5AWb0HX9wlbXWa3tynPJbIdOQM3fyJNcT26Ly9a+cye1sEDFiNYX+0Cmw66/9gM
+	HJFgIydDuE4GSaHUEwJrrB+0USOLiuwsob4/MGxv1csEMN/bcRSg8Lhb+PDoy3cWNHWrrq
+	4oDl3nYNe4MbCquKudSnMEa5pLGyWZO9VRft97cx/EZbuVoVwXrWBXcQ8SrAjA==
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
-ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1712168807; a=rsa-sha256;
+ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1712168808; a=rsa-sha256;
 	cv=none;
-	b=IvNiksfZ08dJTHKcrETq8QYSuEjPtErefc0/usqjP0Urhq9MptVp8T0YM/wxZ42MJm/edX
-	N/IGc+eQ3l5HuxFLVbf7YU9FnqGo8JoT/Ib0cg9mzFfQh5UUvNk97HaqWWWnTsS3Yo0QWe
-	e2r1FaJRT5zAHNRtFlTZfxfWpEU9JLgYmeQy48vFLWOgVW7Wc7K/YWsdu/T8cF4aKcZvv6
-	/0cnHnpUY5nu2yYmpIWmHwJRHk811HCS8WOPxHgY2vmzVTseLE+JcZbwaUjvYT88728N0I
-	ABiFyOc7Z6hz4omeFCS4HaMVdTk2Pb8iOFNbbj+PgwZopuLVDB6tYWZIzv9eqg==
+	b=PpTTLnqaliaqy7FmKzPwxXyoo4gWFx3IT831L2RjYPrLuszY2iWcdKUskfkdztLIAHYJ8Y
+	UYJKd0XgAVirPrpSMFxBg98PK3QBvG6gaRjCzmRSADDpn2vsmmLqAgyYQ9Ka5jGFp8Na/g
+	+0zg/aCaHM4K1sIGK+but+msYKzPsQXv/Swf7QBPGnejW0V6+x9DtzqezFRY3WJlhtvgY3
+	xc3TeCs0WsIWByLYff+Ct6qRGib+WtbNMnkHGJlag5xEjMKuPjA5ga322tM/l/+GKTTaZ5
+	kSpoY9Aq5Xg0u3U9cvAVLhmH/gKPHEbxjDQ5Jc0HP3cbl5LMXQ1Sn3sVGx90Pg==
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ v6 2/7] iso-tester: Add tests for TX timestamping
-Date: Wed,  3 Apr 2024 21:26:32 +0300
-Message-ID: <efa09332e14acb41a5fb05405c59a4656ef4b477.1712168788.git.pav@iki.fi>
+Subject: [PATCH BlueZ v6 3/7] l2cap-tester: Add test for TX timestamping
+Date: Wed,  3 Apr 2024 21:26:33 +0300
+Message-ID: <458e7f16c66e9988d625cb0dd083e1219b849dcf.1712168788.git.pav@iki.fi>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <cover.1712168788.git.pav@iki.fi>
 References: <cover.1712168788.git.pav@iki.fi>
@@ -89,175 +89,135 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add TX timestamping test utilities in new tools/tester.h, so that they
-can be shared between testers.
+Add test
 
-Add tests:
-
-ISO Send - TX Timestamping
-ISO Send - TX Sched Timestamping
-ISO Send - TX Msg Timestamping
+L2CAP BR/EDR Client - TX Timestamping
 ---
- tools/iso-tester.c | 182 ++++++++++++++++++++++++++++++++++++++++++---
- tools/tester.h     | 163 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 335 insertions(+), 10 deletions(-)
- create mode 100644 tools/tester.h
+ tools/l2cap-tester.c | 107 +++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 102 insertions(+), 5 deletions(-)
 
-diff --git a/tools/iso-tester.c b/tools/iso-tester.c
-index 560c19769..c29fedd1d 100644
---- a/tools/iso-tester.c
-+++ b/tools/iso-tester.c
-@@ -18,6 +18,9 @@
- #include <poll.h>
- #include <stdbool.h>
+diff --git a/tools/l2cap-tester.c b/tools/l2cap-tester.c
+index 461f2c27c..375ff767b 100644
+--- a/tools/l2cap-tester.c
++++ b/tools/l2cap-tester.c
+@@ -30,6 +30,9 @@
  
-+#include <linux/errqueue.h>
-+#include <linux/net_tstamp.h>
+ #include "src/shared/tester.h"
+ #include "src/shared/mgmt.h"
++#include "src/shared/util.h"
 +
- #include <glib.h>
- 
- #include "lib/bluetooth.h"
-@@ -35,6 +38,8 @@
- #include "src/shared/util.h"
- #include "src/shared/queue.h"
- 
 +#include "tester.h"
-+
- #define EIR_SERVICE_DATA_16	0x16
  
- #define QOS_IO(_interval, _latency, _sdu, _phy, _rtn) \
-@@ -465,11 +470,12 @@ struct test_data {
+ struct test_data {
+ 	const void *test_data;
+@@ -38,12 +41,15 @@ struct test_data {
+ 	struct hciemu *hciemu;
+ 	enum hciemu_type hciemu_type;
+ 	unsigned int io_id;
++	unsigned int err_io_id;
  	uint16_t handle;
- 	uint16_t acl_handle;
- 	struct queue *io_queue;
--	unsigned int io_id[2];
-+	unsigned int io_id[3];
- 	uint8_t client_num;
- 	int step;
- 	bool reconnect;
- 	bool suspending;
+ 	uint16_t scid;
+ 	uint16_t dcid;
+ 	int sk;
+ 	int sk2;
+ 	bool host_disconnected;
++	int step;
 +	struct tx_tstamp_data tx_ts;
  };
  
- struct iso_client_data {
-@@ -491,6 +497,22 @@ struct iso_client_data {
- 	bool listen_bind;
- 	bool pa_bind;
- 	bool big;
+ struct l2cap_data {
+@@ -86,6 +92,12 @@ struct l2cap_data {
+ 	bool defer;
+ 
+ 	bool shut_sock_wr;
 +
 +	/* Enable SO_TIMESTAMPING with these flags */
 +	uint32_t so_timestamping;
 +
-+	/* Enable SO_TIMESTAMPING using CMSG instead of setsockopt() */
-+	bool cmsg_timestamping;
-+
-+	/* Number of additional packets to send, before SO_TIMESTAMPING.
-+	 * Used to test kernel timestamp TX queue logic.
-+	 */
-+	unsigned int repeat_send_pre_ts;
-+
-+	/* Number of additional packets to send, after SO_TIMESTAMPING.
-+	 * Used for testing TX timestamping OPT_ID.
-+	 */
++	/* Number of additional packets to send. */
 +	unsigned int repeat_send;
  };
  
- typedef bool (*iso_defer_accept_t)(struct test_data *data, GIOChannel *io);
-@@ -681,15 +703,14 @@ static void io_free(void *data)
- static void test_data_free(void *test_data)
- {
- 	struct test_data *data = test_data;
-+	unsigned int i;
+ static void print_debug(const char *str, void *user_data)
+@@ -226,6 +238,11 @@ static void test_post_teardown(const void *test_data)
+ 		data->io_id = 0;
+ 	}
  
- 	if (data->io_queue)
- 		queue_destroy(data->io_queue, io_free);
- 
--	if (data->io_id[0] > 0)
--		g_source_remove(data->io_id[0]);
--
--	if (data->io_id[1] > 0)
--		g_source_remove(data->io_id[1]);
-+	for (i = 0; i < ARRAY_SIZE(data->io_id); ++i)
-+		if (data->io_id[i] > 0)
-+			g_source_remove(data->io_id[i]);
- 
- 	free(data);
++	if (data->err_io_id > 0) {
++		g_source_remove(data->err_io_id);
++		data->err_io_id = 0;
++	}
++
+ 	hciemu_unref(data->hciemu);
+ 	data->hciemu = NULL;
  }
-@@ -991,6 +1012,38 @@ static const struct iso_client_data connect_16_2_1_send = {
- 	.send = &send_16_2_1,
+@@ -245,6 +262,7 @@ static void test_data_free(void *test_data)
+ 			break; \
+ 		user->hciemu_type = HCIEMU_TYPE_BREDR; \
+ 		user->io_id = 0; \
++		user->err_io_id = 0; \
+ 		user->test_data = data; \
+ 		tester_add_full(name, data, \
+ 				test_pre_setup, setup, func, NULL, \
+@@ -259,6 +277,7 @@ static void test_data_free(void *test_data)
+ 			break; \
+ 		user->hciemu_type = HCIEMU_TYPE_LE; \
+ 		user->io_id = 0; \
++		user->err_io_id = 0; \
+ 		user->test_data = data; \
+ 		tester_add_full(name, data, \
+ 				test_pre_setup, setup, func, NULL, \
+@@ -321,6 +340,17 @@ static const struct l2cap_data client_connect_write_success_test = {
+ 	.data_len = sizeof(l2_data),
  };
  
-+static const struct iso_client_data connect_send_tx_timestamping = {
-+	.qos = QOS_16_2_1,
-+	.expect_err = 0,
-+	.send = &send_16_2_1,
++static const struct l2cap_data client_connect_tx_timestamping_test = {
++	.client_psm = 0x1001,
++	.server_psm = 0x1001,
++	.write_data = l2_data,
++	.data_len = sizeof(l2_data),
 +	.so_timestamping = (SOF_TIMESTAMPING_SOFTWARE |
 +					SOF_TIMESTAMPING_OPT_ID |
 +					SOF_TIMESTAMPING_TX_SOFTWARE),
-+	.repeat_send = 1,
-+	.repeat_send_pre_ts = 2,
++	.repeat_send = 2,
 +};
 +
-+static const struct iso_client_data connect_send_tx_sched_timestamping = {
-+	.qos = QOS_16_2_1,
-+	.expect_err = 0,
-+	.send = &send_16_2_1,
-+	.so_timestamping = (SOF_TIMESTAMPING_SOFTWARE |
-+					SOF_TIMESTAMPING_TX_SOFTWARE |
-+					SOF_TIMESTAMPING_OPT_TSONLY |
-+					SOF_TIMESTAMPING_TX_SCHED),
-+	.repeat_send = 1,
-+};
-+
-+static const struct iso_client_data connect_send_tx_cmsg_timestamping = {
-+	.qos = QOS_16_2_1,
-+	.expect_err = 0,
-+	.send = &send_16_2_1,
-+	.so_timestamping = (SOF_TIMESTAMPING_SOFTWARE |
-+					SOF_TIMESTAMPING_TX_SOFTWARE),
-+	.repeat_send = 1,
-+	.cmsg_timestamping = true,
-+};
-+
- static const struct iso_client_data listen_16_2_1_recv = {
- 	.qos = QOS_16_2_1,
- 	.expect_err = 0,
-@@ -1429,14 +1482,17 @@ static void bthost_recv_data(const void *buf, uint16_t len, void *user_data)
- 	struct test_data *data = user_data;
- 	const struct iso_client_data *isodata = data->test_data;
+ static const struct l2cap_data client_connect_shut_wr_success_test = {
+ 	.client_psm = 0x1001,
+ 	.server_psm = 0x1001,
+@@ -1096,6 +1126,8 @@ static void bthost_received_data(const void *buf, uint16_t len,
+ 	struct test_data *data = tester_get_data();
+ 	const struct l2cap_data *l2data = data->test_data;
  
 +	--data->step;
 +
- 	tester_print("Client received %u bytes of data", len);
+ 	if (len != l2data->data_len) {
+ 		tester_test_failed();
+ 		return;
+@@ -1103,7 +1135,7 @@ static void bthost_received_data(const void *buf, uint16_t len,
  
- 	if (isodata->send && (isodata->send->iov_len != len ||
- 			memcmp(isodata->send->iov_base, buf, len))) {
- 		if (!isodata->recv->iov_base)
- 			tester_test_failed();
--	} else
-+	} else if (!data->step) {
+ 	if (memcmp(buf, l2data->write_data, l2data->data_len))
+ 		tester_test_failed();
+-	else
++	else if (!data->step)
  		tester_test_passed();
-+	}
  }
  
- static void bthost_iso_disconnected(void *user_data)
-@@ -2084,17 +2140,93 @@ static void iso_recv(struct test_data *data, GIOChannel *io)
- 	data->io_id[0] = g_io_add_watch(io, G_IO_IN, iso_recv_data, data);
+@@ -1207,6 +1239,59 @@ static bool check_mtu(struct test_data *data, int sk)
+ 	return true;
  }
  
--static void iso_send(struct test_data *data, GIOChannel *io)
-+static gboolean iso_recv_errqueue(GIOChannel *io, GIOCondition cond,
++static gboolean recv_errqueue(GIOChannel *io, GIOCondition cond,
 +							gpointer user_data)
- {
++{
 +	struct test_data *data = user_data;
- 	const struct iso_client_data *isodata = data->test_data;
--	ssize_t ret;
++	const struct l2cap_data *l2data = data->test_data;
 +	int sk = g_io_channel_unix_get_fd(io);
 +	int err;
 +
 +	data->step--;
 +
-+	err = tx_tstamp_recv(&data->tx_ts, sk, isodata->send->iov_len);
++	err = tx_tstamp_recv(&data->tx_ts, sk, l2data->data_len);
 +	if (err > 0)
 +		return TRUE;
 +	else if (!err && !data->step)
@@ -265,34 +225,29 @@ index 560c19769..c29fedd1d 100644
 +	else
 +		tester_test_failed();
 +
-+	data->io_id[2] = 0;
++	data->err_io_id = 0;
 +	return FALSE;
 +}
 +
-+static void iso_tx_timestamping(struct test_data *data, GIOChannel *io)
++static void l2cap_tx_timestamping(struct test_data *data, GIOChannel *io)
 +{
-+	const struct iso_client_data *isodata = data->test_data;
-+	int so = isodata->so_timestamping;
- 	int sk;
++	const struct l2cap_data *l2data = data->test_data;
++	int so = l2data->so_timestamping;
++	int sk;
 +	int err;
 +	unsigned int count;
 +
-+	if (!(isodata->so_timestamping & SOF_TIMESTAMPING_TX_RECORD_MASK))
++	if (!(l2data->so_timestamping & SOF_TIMESTAMPING_TX_RECORD_MASK))
 +		return;
++
++	sk = g_io_channel_unix_get_fd(io);
 +
 +	tester_print("Enabling TX timestamping");
 +
-+	tx_tstamp_init(&data->tx_ts, isodata->so_timestamping);
++	tx_tstamp_init(&data->tx_ts, l2data->so_timestamping);
 +
-+	for (count = 0; count < isodata->repeat_send + 1; ++count)
++	for (count = 0; count < l2data->repeat_send + 1; ++count)
 +		data->step += tx_tstamp_expect(&data->tx_ts);
- 
- 	sk = g_io_channel_unix_get_fd(io);
- 
-+	data->io_id[2] = g_io_add_watch(io, G_IO_ERR, iso_recv_errqueue, data);
-+
-+	if (isodata->cmsg_timestamping)
-+		so &= ~SOF_TIMESTAMPING_TX_RECORD_MASK;
 +
 +	err = setsockopt(sk, SOL_SOCKET, SO_TIMESTAMPING, &so, sizeof(so));
 +	if (err < 0) {
@@ -301,256 +256,52 @@ index 560c19769..c29fedd1d 100644
 +		tester_test_failed();
 +		return;
 +	}
++
++	data->err_io_id = g_io_add_watch(io, G_IO_ERR, recv_errqueue, data);
 +}
 +
-+static void iso_send_data(struct test_data *data, GIOChannel *io)
-+{
-+	const struct iso_client_data *isodata = data->test_data;
-+	char control[CMSG_SPACE(sizeof(uint32_t))];
-+	struct msghdr msg = {
-+		.msg_iov = (struct iovec *)isodata->send,
-+		.msg_iovlen = 1,
-+	};
-+	struct cmsghdr *cmsg;
-+	ssize_t ret;
-+	int sk;
+ static gboolean l2cap_connect_cb(GIOChannel *io, GIOCondition cond,
+ 							gpointer user_data)
+ {
+@@ -1249,15 +1334,23 @@ static gboolean l2cap_connect_cb(GIOChannel *io, GIOCondition cond,
+ 	} else if (l2data->write_data) {
+ 		struct bthost *bthost;
+ 		ssize_t ret;
++		unsigned int count;
 +
- 	tester_print("Writing %zu bytes of data", isodata->send->iov_len);
++		data->step = 0;
  
--	ret = writev(sk, isodata->send, 1);
-+	sk = g_io_channel_unix_get_fd(io);
-+
-+	if (isodata->cmsg_timestamping) {
-+		memset(control, 0, sizeof(control));
-+		msg.msg_control = control;
-+		msg.msg_controllen = sizeof(control);
-+
-+		cmsg = CMSG_FIRSTHDR(&msg);
-+		cmsg->cmsg_level = SOL_SOCKET;
-+		cmsg->cmsg_type = SO_TIMESTAMPING;
-+		cmsg->cmsg_len = CMSG_LEN(sizeof(uint32_t));
-+
-+		*((uint32_t *)CMSG_DATA(cmsg)) = (isodata->so_timestamping &
-+					SOF_TIMESTAMPING_TX_RECORD_MASK);
-+	}
-+
-+	ret = sendmsg(sk, &msg, 0);
- 	if (ret < 0 || isodata->send->iov_len != (size_t) ret) {
- 		tester_warn("Failed to write %zu bytes: %s (%d)",
- 				isodata->send->iov_len, strerror(errno), errno);
-@@ -2102,6 +2234,22 @@ static void iso_send(struct test_data *data, GIOChannel *io)
- 		return;
- 	}
+ 		bthost = hciemu_client_get_host(data->hciemu);
+ 		bthost_add_cid_hook(bthost, data->handle, data->dcid,
+ 					bthost_received_data, NULL);
  
-+	data->step++;
-+}
+-		ret = write(sk, l2data->write_data, l2data->data_len);
+-		if (ret != l2data->data_len) {
+-			tester_warn("Unable to write all data");
+-			tester_test_failed();
++		l2cap_tx_timestamping(data, io);
 +
-+static void iso_send(struct test_data *data, GIOChannel *io)
-+{
-+	const struct iso_client_data *isodata = data->test_data;
-+	unsigned int count;
-+
-+	for (count = 0; count < isodata->repeat_send_pre_ts; ++count)
-+		iso_send_data(data, io);
-+
-+	iso_tx_timestamping(data, io);
-+
-+	for (count = 0; count < isodata->repeat_send + 1; ++count)
-+		iso_send_data(data, io);
-+
- 	if (isodata->bcast) {
- 		tester_test_passed();
- 		return;
-@@ -3245,6 +3393,20 @@ int main(int argc, char *argv[])
- 	test_iso("ISO Send - Success", &connect_16_2_1_send, setup_powered,
- 							test_connect);
++		for (count = 0; count < l2data->repeat_send + 1; ++count) {
++			ret = write(sk, l2data->write_data, l2data->data_len);
++			if (ret != l2data->data_len) {
++				tester_warn("Unable to write all data");
++				tester_test_failed();
++			}
++			++data->step;
+ 		}
  
-+	/* Test basic TX timestamping */
-+	test_iso("ISO Send - TX Timestamping", &connect_send_tx_timestamping,
-+						setup_powered, test_connect);
-+
-+	/* Test schedule-time TX timestamps are emitted */
-+	test_iso("ISO Send - TX Sched Timestamping",
-+			&connect_send_tx_sched_timestamping, setup_powered,
-+			test_connect);
-+
-+	/* Test TX timestamping with flags set via per-packet CMSG */
-+	test_iso("ISO Send - TX CMSG Timestamping",
-+			&connect_send_tx_cmsg_timestamping, setup_powered,
-+			test_connect);
-+
- 	test_iso("ISO Receive - Success", &listen_16_2_1_recv, setup_powered,
- 							test_listen);
+ 		return FALSE;
+@@ -2280,6 +2373,10 @@ int main(int argc, char *argv[])
+ 					&client_connect_write_success_test,
+ 					setup_powered_client, test_connect);
  
-diff --git a/tools/tester.h b/tools/tester.h
-new file mode 100644
-index 000000000..617de842e
---- /dev/null
-+++ b/tools/tester.h
-@@ -0,0 +1,163 @@
-+// SPDX-License-Identifier: LGPL-2.1-or-later
-+/*
-+ *
-+ *  BlueZ - Bluetooth protocol stack for Linux
-+ *
-+ *  Copyright (C) 2022  Intel Corporation.
-+ *
-+ */
++	test_l2cap_bredr("L2CAP BR/EDR Client - TX Timestamping",
++					&client_connect_tx_timestamping_test,
++					setup_powered_client, test_connect);
 +
-+#include <stdbool.h>
-+#include <stdlib.h>
-+#include <stdint.h>
-+#include <time.h>
-+#include <sys/socket.h>
-+#include <linux/errqueue.h>
-+#include <linux/net_tstamp.h>
-+
-+#include <glib.h>
-+
-+#define SEC_NSEC(_t)  ((_t) * 1000000000LL)
-+#define TS_NSEC(_ts)  (SEC_NSEC((_ts)->tv_sec) + (_ts)->tv_nsec)
-+
-+struct tx_tstamp_data {
-+	struct {
-+		uint32_t id;
-+		uint32_t type;
-+	} expect[16];
-+	unsigned int pos;
-+	unsigned int count;
-+	unsigned int sent;
-+	uint32_t so_timestamping;
-+};
-+
-+static inline void tx_tstamp_init(struct tx_tstamp_data *data,
-+				uint32_t so_timestamping)
-+{
-+	memset(data, 0, sizeof(*data));
-+	memset(data->expect, 0xff, sizeof(data->expect));
-+
-+	data->so_timestamping = so_timestamping;
-+}
-+
-+static inline int tx_tstamp_expect(struct tx_tstamp_data *data)
-+{
-+	unsigned int pos = data->count;
-+	int steps;
-+
-+	if (data->so_timestamping & SOF_TIMESTAMPING_TX_SCHED) {
-+		g_assert(pos < ARRAY_SIZE(data->expect));
-+		data->expect[pos].type = SCM_TSTAMP_SCHED;
-+		data->expect[pos].id = data->sent;
-+		pos++;
-+	}
-+
-+	if (data->so_timestamping & SOF_TIMESTAMPING_TX_SOFTWARE) {
-+		g_assert(pos < ARRAY_SIZE(data->expect));
-+		data->expect[pos].type = SCM_TSTAMP_SND;
-+		data->expect[pos].id = data->sent;
-+		pos++;
-+	}
-+
-+	data->sent++;
-+
-+	steps = pos - data->count;
-+	data->count = pos;
-+	return steps;
-+}
-+
-+static inline int tx_tstamp_recv(struct tx_tstamp_data *data, int sk, int len)
-+{
-+	unsigned char control[512];
-+	ssize_t ret;
-+	char buf[1024];
-+	struct msghdr msg;
-+	struct iovec iov;
-+	struct cmsghdr *cmsg;
-+	struct scm_timestamping *tss = NULL;
-+	struct sock_extended_err *serr = NULL;
-+	struct timespec now;
-+
-+	iov.iov_base = buf;
-+	iov.iov_len = sizeof(buf);
-+
-+	memset(&msg, 0, sizeof(msg));
-+	msg.msg_iov = &iov;
-+	msg.msg_iovlen = 1;
-+	msg.msg_control = control;
-+	msg.msg_controllen = sizeof(control);
-+
-+	ret = recvmsg(sk, &msg, MSG_ERRQUEUE);
-+	if (ret < 0) {
-+		tester_warn("Failed to read from errqueue: %s (%d)",
-+							strerror(errno), errno);
-+		return -EINVAL;
-+	}
-+
-+	if (data->so_timestamping & SOF_TIMESTAMPING_OPT_TSONLY) {
-+		if (ret != 0) {
-+			tester_warn("Packet copied back to errqueue");
-+			return -EINVAL;
-+		}
-+	} else if (len > ret) {
-+		tester_warn("Packet not copied back to errqueue: %zd", ret);
-+		return -EINVAL;
-+	}
-+
-+	for (cmsg = CMSG_FIRSTHDR(&msg); cmsg != NULL;
-+					cmsg = CMSG_NXTHDR(&msg, cmsg)) {
-+		if (cmsg->cmsg_level == SOL_SOCKET &&
-+					cmsg->cmsg_type == SCM_TIMESTAMPING) {
-+			tss = (void *)CMSG_DATA(cmsg);
-+		} else if (cmsg->cmsg_level == SOL_BLUETOOTH &&
-+					cmsg->cmsg_type == BT_SCM_ERROR) {
-+			serr = (void *)CMSG_DATA(cmsg);
-+		}
-+	}
-+
-+	if (!tss) {
-+		tester_warn("SCM_TIMESTAMPING not found");
-+		return -EINVAL;
-+	}
-+
-+	if (!serr) {
-+		tester_warn("BT_SCM_ERROR not found");
-+		return -EINVAL;
-+	}
-+
-+	if (serr->ee_errno != ENOMSG ||
-+				serr->ee_origin != SO_EE_ORIGIN_TIMESTAMPING) {
-+		tester_warn("BT_SCM_ERROR wrong for timestamping");
-+		return -EINVAL;
-+	}
-+
-+	clock_gettime(CLOCK_REALTIME, &now);
-+
-+	if (TS_NSEC(&now) < TS_NSEC(tss->ts) ||
-+			TS_NSEC(&now) > TS_NSEC(tss->ts) + SEC_NSEC(10)) {
-+		tester_warn("nonsense in timestamp");
-+		return -EINVAL;
-+	}
-+
-+	if (data->pos >= data->count) {
-+		tester_warn("Too many timestamps");
-+		return -EINVAL;
-+	}
-+
-+	if ((data->so_timestamping & SOF_TIMESTAMPING_OPT_ID) &&
-+				serr->ee_data != data->expect[data->pos].id) {
-+		tester_warn("Bad timestamp id %u", serr->ee_data);
-+		return -EINVAL;
-+	}
-+
-+	if (serr->ee_info != data->expect[data->pos].type) {
-+		tester_warn("Bad timestamp type %u", serr->ee_info);
-+		return -EINVAL;
-+	}
-+
-+	tester_print("Got valid TX timestamp %u", data->pos);
-+
-+	++data->pos;
-+
-+	return data->count - data->pos;
-+}
+ 	test_l2cap_bredr("L2CAP BR/EDR Client - Invalid PSM 1",
+ 					&client_connect_nval_psm_test_1,
+ 					setup_powered_client, test_connect);
 -- 
 2.44.0
 
