@@ -1,125 +1,135 @@
-Return-Path: <linux-bluetooth+bounces-3168-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-3173-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2DFB18977C0
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Apr 2024 20:05:39 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D7CC897836
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Apr 2024 20:27:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2C728B25F0A
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Apr 2024 17:51:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 37686284AC3
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Apr 2024 18:27:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CAE0B157489;
-	Wed,  3 Apr 2024 17:32:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B91C0153BEC;
+	Wed,  3 Apr 2024 18:26:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=tuxedocomputers.com header.i=@tuxedocomputers.com header.b="TgA0gmhU"
+	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="AaJknlD4"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail.tuxedocomputers.com (mail.tuxedocomputers.com [157.90.84.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [185.185.170.37])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16D71152187
-	for <linux-bluetooth@vger.kernel.org>; Wed,  3 Apr 2024 17:32:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=157.90.84.7
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712165569; cv=none; b=ozaf5/b6Js7bvD1YEhlB8OcfJQErv6p1T+IF3hmMSTDjb1NebMVrAojdShMP8h76qceCbliforicvRcNLa28m7qXk8kOFNwyoJCji0zkd4X9U+IHZr3RWJo7vf9zVFtxPhKeZBorYl2kZFEHgpZRmmvssbp7cRjFWiOeUV5eJRE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712165569; c=relaxed/simple;
-	bh=p2MY0oYE0BdehlhQIU11n7CS8rT0srtYbxj/rlbgyFQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nRjiqYEHleE5chL6TM2fve1W8u42zijyWwXM6ahazkaHrFWWjog/uRDuP/Y/hqGvAwaajlDPkjvZwoB9fVuSqSU3Pn7M0jQzimj4IZM02a61HKx3b/CwPi8353RJK3Kt4ZgTVO8jQOEWQ47godt+ePXIcFCS+AHlQqDWFUmuawY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tuxedocomputers.com; spf=pass smtp.mailfrom=tuxedocomputers.com; dkim=pass (1024-bit key) header.d=tuxedocomputers.com header.i=@tuxedocomputers.com header.b=TgA0gmhU; arc=none smtp.client-ip=157.90.84.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=tuxedocomputers.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tuxedocomputers.com
-Received: from [192.168.42.20] (p5b164b56.dip0.t-ipconnect.de [91.22.75.86])
-	(Authenticated sender: wse@tuxedocomputers.com)
-	by mail.tuxedocomputers.com (Postfix) with ESMTPSA id 97EF12FC0064;
-	Wed,  3 Apr 2024 19:32:43 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tuxedocomputers.com;
-	s=default; t=1712165563;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE14915099C
+	for <linux-bluetooth@vger.kernel.org>; Wed,  3 Apr 2024 18:26:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=185.185.170.37
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1712168818; cv=pass; b=n6J2UpeQEqbil6QRArPfO4SYxc7hGHef6xYPb44cQv7r96YeZ5KQcEJSBMH3HoG135rhboZL4GUF+5vrOZmIJELi+xbuSP6MFUNJPvyUJ1vAG7TnAADTvS9chu3SV8c7QhNNYWiFMDj/vQH510wqIYqnc/mMYK9c5uV7PNJ/ev0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1712168818; c=relaxed/simple;
+	bh=jB5V9eAWljdX3T6Dr8ODhqKOUwKUO6Sx4zvgxPVC6W8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DgfkMc8igwFNe8BA6Yf8kNCtP1Ipp9Itfd5kPgNQ/uISCayfqak6YHWc533wg0+zYi7C+R2zTAoD4/hSqEkhPFOvGayo1dfpo+11eYBQfhQkiabMV3Hy5gVlsCADFHb3AfBqUz4sd7Vx8GiEfADpzr2ZvJoJd4MwCnBpBjpbTZQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=AaJknlD4; arc=pass smtp.client-ip=185.185.170.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
+Received: from monolith.lan (unknown [193.138.7.138])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: pav)
+	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4V8tWC05PVz49Q10;
+	Wed,  3 Apr 2024 21:26:46 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
+	t=1712168807;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=tsYtlgX4H8Lnf7nDA9d4DGU/VUChSBTFLvN8JaBLeRw=;
-	b=TgA0gmhUevA0S4Kxdm9gW+flq6i83Xn12Lcb68d4XaukfIQlqNsmw9ytVeMEAlc9xLvfcI
-	WYUD8MqOlP16kScWTIorr3Gml4vYlRrDHLMWbLWKu6JYf/ykZYfcWnV9nuPDv7SLOCN73t
-	cjZBl22VM6rcVrW1J/bdQbio6dwfpVA=
-Authentication-Results: mail.tuxedocomputers.com;
-	auth=pass smtp.auth=wse@tuxedocomputers.com smtp.mailfrom=wse@tuxedocomputers.com
-Message-ID: <d32c669a-3782-49ef-9ece-e654bbb82123@tuxedocomputers.com>
-Date: Wed, 3 Apr 2024 19:32:43 +0200
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=nk4Za9qGbkhNRNSSrlVFAsnYwwagKzqIsRwy/IOmD0I=;
+	b=AaJknlD4v0p02WdyPya5sirkE145OfndPt0XpwqbU6R1ACaf54aJC0fjcI9vW8RbwBuSaP
+	Zs+aQ4ONkrgJfz5IQFifR6ifS60MVcyVWQU5GYGMshZyVF+Zx5BI32eZ6B1vWpIWY3NfBG
+	lUv6YFCEVzVHZ6yCnwz26cG00MM1qSqECHHvz2bwLrxeb29gXXZzfmtu7wxrXlCwH+8R2Y
+	bUFW+Es3CohGY115eb90/BTMdx6M3ibkIPnBpvF0upL6QGBTAMTY04r9Kubt4pnZbHVS8R
+	ZlrIO5Z6/4xsrFiPtCjm5/Sthz+C6gpqPO9WL3aV3yPUH/CNpZNp4JHaVTDVYg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
+	s=lahtoruutu; t=1712168807;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=nk4Za9qGbkhNRNSSrlVFAsnYwwagKzqIsRwy/IOmD0I=;
+	b=dJ0YNeVQS307O9WLh+W0j7JfmhMNepOKnVibEdwFRyCjSdUyPuykHOu3i/L+cwAkbdf/2m
+	lkXlbYY+G4YIiCM1sBis0LOlOsKPZxARE1lSwL843JAKe2VpqZ2ev+o2/oBR+q72nCiG8J
+	l1GdYeGREdh2zM0I23Tksu/oQzclZpFcioA+qAc4ncJku5BxkXG64CE9SgKeqCYldQ0iNG
+	mztdJZmIpreJ8ZmE0PPboLE358VRNrTiOrtW9A13Aiojg8FcOsE4pZVgwvSGKpe5PoAMgc
+	dT4srDkDBCS6j3Do9MlooQtdsXbBXc3/UQxHfXXGmy9oP9Tm5ogv2wlZ/4MxAg==
+ARC-Authentication-Results: i=1;
+	ORIGINATING;
+	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
+ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1712168807; a=rsa-sha256;
+	cv=none;
+	b=kicqRS7WuYJdDfaiq9zbSUit4r4P4oxrALbXRD+y7ix9Zgar1w3ptQlMNBuHCSG/plzD1o
+	xOCLtDvuHPPLFseZq+F9mbHoILU91NYSt3p430GMbj/KXEjAtPJuWgg9iTzhtIQ/41jhz/
+	sHVYiWHKrcmtXoOJ11rRbVlVf4hdqzo0sHRs0fsAvuF5h6QZtyHshVWvh0pvmOzii00Hfl
+	Z6pk4BbtGGJXRyEcxZ2CUA+/4iSj1JPXZYz5Pb16dcCQjqO+bYYAc842VR+M4cw13P7L9V
+	oqzz0ytmHiSA+qJNZe+0pLRN1jWoApIZCoZ+MT399ZD7fnHOlmjcsKTfU3mnOQ==
+From: Pauli Virtanen <pav@iki.fi>
+To: linux-bluetooth@vger.kernel.org
+Cc: Pauli Virtanen <pav@iki.fi>
+Subject: [PATCH BlueZ v6 0/7] tests: add TX timestamping tests
+Date: Wed,  3 Apr 2024 21:26:30 +0300
+Message-ID: <cover.1712168788.git.pav@iki.fi>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Bluetooth: btintel: Add devices to
- HCI_QUIRK_BROKEN_LE_CODED
-To: Pauli Virtanen <pav@iki.fi>
-Cc: linux-bluetooth@vger.kernel.org
-References: <20240328131800.63328-1-wse@tuxedocomputers.com>
- <CABBYNZ+OaJ9QVE_KmBNL8QbBv4r5erL57u3BzFv0AnmUzY=PTA@mail.gmail.com>
- <29d54137-f3b9-4556-b99e-61a0f681f164@tuxedocomputers.com>
- <0fd88d1ed7704938f54460e0e42a2f934690bf01.camel@iki.fi>
-Content-Language: en-US
-From: Werner Sembach <wse@tuxedocomputers.com>
-In-Reply-To: <0fd88d1ed7704938f54460e0e42a2f934690bf01.camel@iki.fi>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
+Add tests for TX timestamping
 
-Am 02.04.24 um 19:16 schrieb Pauli Virtanen:
-> pe, 2024-03-29 kello 00:20 +0100, Werner Sembach kirjoitti:
->> Hi Luiz,
->>
->> Am 28.03.24 um 15:17 schrieb Luiz Augusto von Dentz:
->>> Hi Werner,
->>>
->>> On Thu, Mar 28, 2024 at 9:18 AM Werner Sembach <wse@tuxedocomputers.com> wrote:
->>>> From: Christoffer Sandberg <cs@tuxedo.de>
->>>>
->>>> For HW variants 0x17, 0x18 and 0x19 LE Coded PHY causes scan and
->>>> connection issues when enabled. This patch disables it through
->>>> the existing quirk.
->>>>
->>>> Signed-off-by: Christoffer Sandberg <cs@tuxedo.de>
->>>> Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
->>>> Cc: <stable@vger.kernel.org>
->>>> ---
->>>>    drivers/bluetooth/btintel.c | 2 ++
->>>>    1 file changed, 2 insertions(+)
->>>>
->>>> diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
->>>> index cdc5c08824a0a..6dbfb74d0adf9 100644
->>>> --- a/drivers/bluetooth/btintel.c
->>>> +++ b/drivers/bluetooth/btintel.c
->>>> @@ -2881,6 +2881,8 @@ static int btintel_setup_combined(struct hci_dev *hdev)
->>>>           case 0x17:
->>>>           case 0x18:
->>>>           case 0x19:
->>>> +               /* 0x17, 0x18 and 0x19 have issues when LE Coded PHY is enabled */
->>>> +               set_bit(HCI_QUIRK_BROKEN_LE_CODED, &hdev->quirks);
->>> If it is just these 3 then we are missing a break here.
->> The cases are not added by the patch, the fallthrough was here before. This
->> patch just adds this quirk for these 3 cases on top to the other things done
->> below, aka the fallthrough is intentional.
-> See
->
-> https://docs.kernel.org/next/process/deprecated.html#implicit-switch-case-fall-through
-Thanks for the link, will add the explicit fallthrough in a v2.
->
->
->> Best regards,
->>
->> Werner
->>
->>>>           case 0x1b:
->>>>           case 0x1c:
->>>>                   /* Display version information of TLV type */
->>>> --
->>>> 2.34.1
->>>>
+v6:
+- Rebase.
+
+v5:
+- Add comments & rename send_extra* test data fields
+- Rename tester-utils.h -> tester.h
+- Use int, not struct so_timestamping for setting SO_TIMESTAMPING,
+  as CI seems to be running old environment without the struct.
+
+v4:
+- Drop BT_NO_ERRQUEUE_POLL test and lib #define
+
+v3:
+- BT_NO_ERRQUEUE_POLL experimental flag enable in tests
+- Drop tester cmdline patch as it's unrelated
+
+v2:
+- L2CAP LE Client tests
+- SCO TX timestamping test
+- Fix emulator bthost L2CAP LE credits send/recv
+- Fix emulator SCO send pkts
+- BT_NO_ERRQUEUE_POLL test
+- Tester command-line option -n
+
+Pauli Virtanen (7):
+  lib: add BT_SCM_ERROR
+  iso-tester: Add tests for TX timestamping
+  l2cap-tester: Add test for TX timestamping
+  btdev: set nonzero SCO mtu & max pkt
+  sco-tester: add TX timestamping test
+  bthost: handle client L2CAP conn in LE credit based mode
+  l2cap-tester: add tests for LE Client read/write/tx-timestamping
+
+ emulator/btdev.c     |  11 ++-
+ emulator/bthost.c    | 205 +++++++++++++++++++++++++++++++++++++------
+ lib/bluetooth.h      |   1 +
+ tools/iso-tester.c   | 182 +++++++++++++++++++++++++++++++++++---
+ tools/l2cap-tester.c | 148 +++++++++++++++++++++++++++++--
+ tools/sco-tester.c   |  96 +++++++++++++++++++-
+ tools/tester.h       | 163 ++++++++++++++++++++++++++++++++++
+ 7 files changed, 760 insertions(+), 46 deletions(-)
+ create mode 100644 tools/tester.h
+
+-- 
+2.44.0
+
 
