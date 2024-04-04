@@ -1,128 +1,138 @@
-Return-Path: <linux-bluetooth+bounces-3211-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-3213-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6DE88898BF0
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Apr 2024 18:16:44 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE586898C03
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Apr 2024 18:21:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 23283283D03
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Apr 2024 16:16:43 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9EFA2B21F99
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Apr 2024 16:21:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C860B83CA5;
-	Thu,  4 Apr 2024 16:16:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C59A812BEBF;
+	Thu,  4 Apr 2024 16:21:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KXFbcIxH"
+	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="tA4+vNx2"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [185.185.170.37])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9149632C8E
-	for <linux-bluetooth@vger.kernel.org>; Thu,  4 Apr 2024 16:16:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712247397; cv=none; b=CT26vMO+2LqhXheh4zkYXTYrmaHNE241IIgTahi7KTFAYwjfkgpTZMizcRY5okaWAEWNPbkQQNHkZ2J+12pN1gA2k6489Vw78qBWO4SeMWJZQOzhUtA7g2GlxjWUY0OP2B6eYfSEMUnmhjGzFsoLzX3xLl1eSME4XPW/nzSVDkM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712247397; c=relaxed/simple;
-	bh=ywTF/bRvJikN4R7LsiKyrpubVud3pBaGydWM/IDCMyE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=leoqsOYTGRvDitqVZOtGCDbeO+8XBA77F1aE1BfGiVDn3g8/CLacww7q81Ovgt8frRU0A26WPs4DUw0KKoow9KfcBR3RyltY+JVTFJxXl7PHxTPY2MGaYzz0jY/FfPCt2i/l3Z8QNGWbh4yiy+NpObAP/KMBt12PhwYC7nGUxZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KXFbcIxH; arc=none smtp.client-ip=209.85.208.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2d6eedf3e99so21824871fa.1
-        for <linux-bluetooth@vger.kernel.org>; Thu, 04 Apr 2024 09:16:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712247394; x=1712852194; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wxHRlAzWXKXOux9JRiv3nn2Vy83la2ZitJfVw9v0cZY=;
-        b=KXFbcIxH7U6CalCLmu7ZItbkSPDQx0uuzAnNI/zhlqwXmiICRlVbtYZlYVha90ieWN
-         /DBfPNLB8o/7LpgFFmW7p8CEzgMLn4ZvoQxMe+3nby7/9l+weANaW0ozXniyN0i7aqGV
-         2Cextf3rTHw09HqRFYeX61aUc58BS7JiwiZINzaVKwXXbvOZszf5uSDUGiZL/3AuhElT
-         7dEcW8CKQr88QqLHUtUrcAV44w8A1z/+7Ha4OJscXiniLs73JdQoMTYihn6M1y81h2gF
-         QSHV0GORxGuFq2wU9LvrwSZZCQkaKTajadxvb8TccXUYImZTetB2kVcpv4NGcwaV7qUi
-         gUTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712247394; x=1712852194;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wxHRlAzWXKXOux9JRiv3nn2Vy83la2ZitJfVw9v0cZY=;
-        b=FQew/uSWXmVZ7/ehTcCrjOpT7KG0fTjy8VXr1GYp2+1tLHB5Hp2tx4fziu4BJ3lcEd
-         ScIpx9rHF1oa6INtvIJ9mrsHme89YrLZim74WfxnQ+l3/j3SS/dWp3ahMq9SfVpvMFpE
-         L3Gu1g5wXYgODaWWIQo3JmEpgZFpj5ZwGOJZzNy9e+giInqu/nFjAjiPtYcwPIXp5hgi
-         SqVneHL5ErnqjCmcXrdKZlNzAIfAerbfV/5FmWtGtUmWfJO1nyrhexPbfhOMlNVYwn3g
-         KyJGVnBYu8Qy6PreCaHkf7VyjWKRMTrLjvMhcOStF8xzezCYoEjKal/LAJaR+pOODpqP
-         mjSQ==
-X-Gm-Message-State: AOJu0YyvqxYka1pLJWRByAlkjILZTd+yKLbuZcXSezrBCk29l/jQH2C1
-	lg7f39kAD3ldEPkUv5gqIcPlLCSXbxMGd5Q24SK8oZj0jyaDJ7dImUmcsSYVnBuP35TMrp1Xyv7
-	XNRBG/6ZihDOjHH9EOuZ4g/CGvM1su3Y0
-X-Google-Smtp-Source: AGHT+IHnh+7v6xRHdXW+XdI4ijT0WuAcoSlF+QW1a+A4w6o+GBZOtw/JJ/43yWbFVYgsunQPF1bw1Din76ptU0v7Ouk=
-X-Received: by 2002:a2e:9b48:0:b0:2d8:60ae:f37d with SMTP id
- o8-20020a2e9b48000000b002d860aef37dmr355600ljj.12.1712247393360; Thu, 04 Apr
- 2024 09:16:33 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721DE76044
+	for <linux-bluetooth@vger.kernel.org>; Thu,  4 Apr 2024 16:21:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=185.185.170.37
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1712247695; cv=pass; b=a4+9B8F3p9tEjjlIrVI1GxR3sk93PSXbIY9nAT9cKazuyrM4bYPuNwjfEo79TOTD8ikkG5DF//URe7kLnbLuswqf4JJ5sply5ouXwgEepqTTDDRcKAnclKYrM4WLP2U5nh2a/TNZPpCw0n5oIkAJLLbsgbvdglLAAtOwkHBY5m0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1712247695; c=relaxed/simple;
+	bh=mdJoZW1SknHfooohRUiR4UNHTLRK8mJbqqyvZ96KwRo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=SlSvZrU61Uwfrj364qX6BaxNw+hyncw9BZUwRAnCir/CFOYpM7LNx49j6492ShK6/JdDP4FN4LS7tZOa7lWVjWnr51+OWOkm9tU09wj18wBWXYAbczkbmIa7EnhrnmTGF5FL0Sm9cNP/tyT4/bCge8jHzwhqN5QlGYXQpju978k=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=tA4+vNx2; arc=pass smtp.client-ip=185.185.170.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
+Received: from monolith.lan (unknown [193.138.7.178])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: pav)
+	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4V9Rh82lZBz49Q20;
+	Thu,  4 Apr 2024 19:21:28 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
+	t=1712247688;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=3WpY6qo+95LyKy/WeT14j/sEkkRJAapCuQUeb0p5jdM=;
+	b=tA4+vNx2IZ4M9StggUD+dd6mLvrSD05ecvSKDoGOXhEeiMn6Fu3F/wZZa5CxRIb2hYFuIH
+	mGUvEbaNzSLVyJ8qug7VvgRsh8rtCs/uABCPhEUpE10IAvDoeXl8hf4b/4AlTa97b6ykVg
+	+97h/wOv1tEC/In0uFeetaWCRzQiug2aBVWQ+IxMI061y208du8Vyu9okhLnFRN1m+0hWr
+	/UGG9jZ5HNxS35FzdlMoI7SKTqPdUlBdxd6keKjSBN6mDJieDJeBsF+l8ivipK5Fc2ZRrk
+	KBurkWRHDLcKCTqPrHTgVnJnNA/FcaRMxuFUGBTGKqg+mfkWtnFXdUVR2ChFvA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
+	s=lahtoruutu; t=1712247688;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=3WpY6qo+95LyKy/WeT14j/sEkkRJAapCuQUeb0p5jdM=;
+	b=TFwIPssF+X+bcn5Hf8oeMbt1QWpbk65jxcb5cwzt+Ic+GWgiX0oHlWJU4vrTHzZLr2nWZk
+	h1OkOfzXQoInhqiHpPP60iN+Xpoo0yU9yg0lZbaWkKoEbqMhf9taUD8tQPCeNk4qiorc0h
+	NRb4mrw4XVwNK5b8L6r4hjPuIn3MG+PYPQ7uUKzT/KEzziYP4QE48zro7gFHf0LFGIytvK
+	FfW6R8FvtjOLYKjG4OsP1KNURKVqRiXmztFL3bGUKRKQ0G5s5vrdsx3WQ3qWrfwhJKh00s
+	3TXOvTw3AhOIxZmfgnUgCzu75+eRj12mjFySiu73XwXsbJElPwlHB6jgqd5j3g==
+ARC-Authentication-Results: i=1;
+	ORIGINATING;
+	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
+ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1712247689; a=rsa-sha256;
+	cv=none;
+	b=FqeAfOPoJjhoqHlOjft7FaXJII+NnsDNYRDFBM7nyfBi91i0qOc1Gc8+NIf3C9ZFeaxGV2
+	NLuRsTJ01nz5ux4X2bd7mRdZXpDR1dt0lIKfGlUyIV/tei1UgYtRmYOQURMmKbmzOBzA/j
+	82QD2aU0hiuLPSIFX/9e9aMHMi/yG8rL38uXLi71BkFOXwJ9EBYXK8ZZ67kNimOwLjjBkN
+	j+Woj0I9H1hqPBjIAEL4xkT3mknUd6HNx8ODFAfqXLwbsUmaVz4x4VbwuVJkiPqDBtQIxQ
+	d7cmZNuX/KrKaU3dWGSzjcfmVcIfYBwtqTHTCv2YOWnGsRzRWoZNMY/7svzKDA==
+From: Pauli Virtanen <pav@iki.fi>
+To: linux-bluetooth@vger.kernel.org
+Cc: Pauli Virtanen <pav@iki.fi>
+Subject: [PATCH BlueZ v7 0/7] tests: add TX timestamping tests
+Date: Thu,  4 Apr 2024 19:21:16 +0300
+Message-ID: <cover.1712243675.git.pav@iki.fi>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240403205252.71978-1-dimitris.on.linux@gmail.com>
- <20240404024521.120349-1-dimitris.on.linux@gmail.com> <20240404024521.120349-2-dimitris.on.linux@gmail.com>
- <CABBYNZJjSp74CoJU2RYCft_nQi85EWnk9JOvyxMH8YmAtON+8w@mail.gmail.com> <0f681858-fe53-4964-82f9-5f3c3ee903e3@gmail.com>
-In-Reply-To: <0f681858-fe53-4964-82f9-5f3c3ee903e3@gmail.com>
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Thu, 4 Apr 2024 12:16:20 -0400
-Message-ID: <CABBYNZLmff+NWTp3=5S5g8nx=KxJ0=PgxT7v9viO_hS=U15=1g@mail.gmail.com>
-Subject: Re: [PATCH BlueZ 1/1] Refactor btd_device_is_connected
-To: Dimitris <dimitris.on.linux@gmail.com>
-Cc: linux-bluetooth@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Dimitris,
+Add tests for TX timestamping
 
-On Thu, Apr 4, 2024 at 11:52=E2=80=AFAM Dimitris <dimitris.on.linux@gmail.c=
-om> wrote:
->
-> On 4/4/24 07:59, Luiz Augusto von Dentz wrote:
->
-> >> diff --git a/src/adapter.c b/src/adapter.c
-> >> index 4bcc464de..0b7aab4b5 100644
-> >> --- a/src/adapter.c
-> >> +++ b/src/adapter.c
-> >> @@ -7486,7 +7486,7 @@ static void adapter_remove_connection(struct btd=
-_adapter *adapter,
-> >>                  device_cancel_authentication(device, TRUE);
-> >>
-> >>          /* If another bearer is still connected */
-> >> -       if (btd_device_is_connected(device))
-> >> +       if (btd_device_state_is_connected(device))
-> >
-> > Perhaps btd_device_bearer_is_connected would be a better name.
->
-> Thanks, I'll rename.
->
-> > I guess the problem is that some service is indicating it is still
-> > connected though?
->
-> Newbie question for sure, but: As this is happening in the code path for
-> "disabling bluetooth", shouldn't services already be disconnected here?
+v7:
+- Fix CI (false positive) compiler warning in sco-tester.c
 
-That is exactly what I would like to know, why is there a service
-still indicating it is connected if the controller is rfkilled, so
-while this should break it back to the old behavior we still need to
-fix the service that is causing the problem so perhaps we need to
-print its profile/drive name and figure out what is the driver that is
-causing it.
+v6:
+- Rebase.
 
-> D.
+v5:
+- Add comments & rename send_extra* test data fields
+- Rename tester-utils.h -> tester.h
+- Use int, not struct so_timestamping for setting SO_TIMESTAMPING,
+  as CI seems to be running old environment without the struct.
 
+v4:
+- Drop BT_NO_ERRQUEUE_POLL test and lib #define
 
+v3:
+- BT_NO_ERRQUEUE_POLL experimental flag enable in tests
+- Drop tester cmdline patch as it's unrelated
 
---=20
-Luiz Augusto von Dentz
+v2:
+- L2CAP LE Client tests
+- SCO TX timestamping test
+- Fix emulator bthost L2CAP LE credits send/recv
+- Fix emulator SCO send pkts
+- BT_NO_ERRQUEUE_POLL test
+- Tester command-line option -n
+
+Pauli Virtanen (7):
+  lib: add BT_SCM_ERROR
+  iso-tester: Add tests for TX timestamping
+  l2cap-tester: Add test for TX timestamping
+  btdev: set nonzero SCO mtu & max pkt
+  sco-tester: add TX timestamping test
+  bthost: handle client L2CAP conn in LE credit based mode
+  l2cap-tester: add tests for LE Client read/write/tx-timestamping
+
+ emulator/btdev.c     |  11 ++-
+ emulator/bthost.c    | 205 +++++++++++++++++++++++++++++++++++++------
+ lib/bluetooth.h      |   1 +
+ tools/iso-tester.c   | 182 +++++++++++++++++++++++++++++++++++---
+ tools/l2cap-tester.c | 148 +++++++++++++++++++++++++++++--
+ tools/sco-tester.c   |  98 ++++++++++++++++++++-
+ tools/tester.h       | 163 ++++++++++++++++++++++++++++++++++
+ 7 files changed, 761 insertions(+), 47 deletions(-)
+ create mode 100644 tools/tester.h
+
+-- 
+2.44.0
+
 
