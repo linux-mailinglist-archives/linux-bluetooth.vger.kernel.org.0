@@ -1,137 +1,117 @@
-Return-Path: <linux-bluetooth+bounces-3199-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-3201-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 068C1898631
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Apr 2024 13:42:06 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E13958986BC
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Apr 2024 14:03:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AFAF6287CA4
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Apr 2024 11:42:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EE3F5B25E83
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Apr 2024 12:03:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25EA485634;
-	Thu,  4 Apr 2024 11:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B44D784FD8;
+	Thu,  4 Apr 2024 12:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BzpYfce4"
+	dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b="Oil/KrEt"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from forward200a.mail.yandex.net (forward200a.mail.yandex.net [178.154.239.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F25D83CDA
-	for <linux-bluetooth@vger.kernel.org>; Thu,  4 Apr 2024 11:41:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0536B83A09
+	for <linux-bluetooth@vger.kernel.org>; Thu,  4 Apr 2024 12:02:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.154.239.93
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712230893; cv=none; b=p7nlslfLefSFLC6MLT7tk4qiEmOvLoVM3uK92HLpRF29q9pzuMElay4nqA4K6iv54lxvPcnUO1Xii1QLvnza+8Su0HWDPgFns+twJCNI2Zpicz8X9R0dThXgG6rrtDbXUZv8ZilrH0SMMGwHwCBzFccjd9jx+xhUecSzj2kAPls=
+	t=1712232183; cv=none; b=Q76SwEyHqKNxUJzcckd4CE8BB/F1sy7maQJnwbQqPN8SOOXP77qDqdU5hOT9GgbbxAthHKVzdPeJ/GEFg4IpNWoKNKBoPMP+EJTEVOTnibv7sZVyDwQ+txRHko9sJyY24V9ixbuvlxyMI6BicjoBVXhV7MUmOXv5WgrR63k/l4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712230893; c=relaxed/simple;
-	bh=xTu/IdCn/048THaVHddyM991QlKheudeHaOzDUEba/4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CbnfdACCpKM7Uc4gFzSIuRFwmKigKjPc5Isqa3rKxlnO63rflNgyWp4oa0Igwxjgy2oh4JUrhAaah0aW3A+CPVh9rXkfOvXd7DPrtRkicJR4IW2sgEQ52w1orcJR64JjxayzrJEsSVFNY9/+GTeLqwau8Gxc92lTxEoXyw1GGzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BzpYfce4; arc=none smtp.client-ip=209.85.219.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-dc6d8bd612dso977867276.1
-        for <linux-bluetooth@vger.kernel.org>; Thu, 04 Apr 2024 04:41:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1712230889; x=1712835689; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xTu/IdCn/048THaVHddyM991QlKheudeHaOzDUEba/4=;
-        b=BzpYfce4q/zv0gCorIvWLSXuzW4HjLtqKmXuLtELMIG7pv5Gw5rD2es8aCVqQFqD//
-         8JggHBzNznjWgNLq2nD9WBWW0NsYaidmHqnL2ihAYJpv7o5gc1VJY6DJ0clWC7aekflL
-         okxkVaJGNSO0qVH2yOxsFJLCq+7hYpnwhkr7HgXgiRTKZmRNaOv51pSZ+2EvNJ7l32Ax
-         3rV1o60Rwqf7/3WoHSX+9OLMYTDALVEnxQwPAvQSTwkL+2+b5q+pMv+fOiTCP+zwNcc+
-         ViJk4rxb2Vw07nE8VHUP+XT2krjKR9JIgTGsriDdaif1hRFImGjHsjVSH1La3PcFbNJH
-         hkUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712230889; x=1712835689;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xTu/IdCn/048THaVHddyM991QlKheudeHaOzDUEba/4=;
-        b=kQ5FDuMEBOJrDiXMOuvmclZSV5UfxIKvYEPpIsFUfeT4n5vVucOnEXAj+P9OLwM6e3
-         60ubGQ/iRWSDAcgikkqgmbYg8L5Il1N1mcJvEduKgXZQwDQRX4u2P7Xsa2quDWMQv3cw
-         z2JT6MTd/rXtzph2vMpgMaJmyXKpXd7C4umUvuTXDR+CgQkHz2BWCb0oasUBn0XRpAja
-         YScyNSIrVxcOScdVbr7HQFcLpF15RIv4XWJGV4PAXujY7kRlckzZ1b/ysVQ3RBS5MSBR
-         qcHiKTt6WGWqi/8ihlaXCwpOJoAx/R2yZCVBdrDOB/KOVtw6cwRzQKD4d001XBGRPBPr
-         ul7g==
-X-Forwarded-Encrypted: i=1; AJvYcCWIcIzM1cYETMJGlXuuyqCjaRCpHda631usl7jJ1sGjZ4WVMURjGnH1nHlFL7i8BfHonfkTVbIXQkXCrEg7Q5yeLpcYc/EK/ohjeCUSO8gK
-X-Gm-Message-State: AOJu0YyoE/T7EfXAvxzfVSGwI2UtglRlDHg/LjKL6zqfFGtBjz14dV65
-	xqReBzzHdIjh60yTqRYfXJWv1Ci5Bc6Dghgq11+aTvj0Cu7NzcqnK6+xhbgUA2xQa0fDDV2cDna
-	MxIANh2Hl1zbtWR+IES1Bh6lRnpiNXqNJui7NqA==
-X-Google-Smtp-Source: AGHT+IEhL+O4bSIOCRsSy+Vdywn61xtrVBJ3li47sHwN1FOt8H7g9W+tj2/Or7rao9/9euGeRsXbtXq4vPMz7+GnZRc=
-X-Received: by 2002:a25:ba86:0:b0:dd1:6fab:81e4 with SMTP id
- s6-20020a25ba86000000b00dd16fab81e4mr2034373ybg.37.1712230889318; Thu, 04 Apr
- 2024 04:41:29 -0700 (PDT)
+	s=arc-20240116; t=1712232183; c=relaxed/simple;
+	bh=VPzVFvUfOroAkxKVkn05FAwf4T6cwbY0BWXxzmjzz0s=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:Content-Type; b=u5jKfm7ajrT7oTun/8xDhM+313SSFxEDv9khKnLbiUfjxkNqdajVkP/iZoypQOsjqdAJ/+b6GvI3psFGsQUQ8amLD1zFtZEBr42eaRRJyhVyyV0vxeG2Z184PaGTBNBtOE6SbnbeAuqJGznS8FlYgIgT9BqSl7aBupExsgS85eY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yandex.ru; spf=pass smtp.mailfrom=yandex.ru; dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b=Oil/KrEt; arc=none smtp.client-ip=178.154.239.93
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yandex.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yandex.ru
+Received: from forward102a.mail.yandex.net (forward102a.mail.yandex.net [IPv6:2a02:6b8:c0e:500:1:45:d181:d102])
+	by forward200a.mail.yandex.net (Yandex) with ESMTPS id B302867141
+	for <linux-bluetooth@vger.kernel.org>; Thu,  4 Apr 2024 14:56:26 +0300 (MSK)
+Received: from mail-nwsmtp-smtp-production-main-54.vla.yp-c.yandex.net (mail-nwsmtp-smtp-production-main-54.vla.yp-c.yandex.net [IPv6:2a02:6b8:c18:3d80:0:640:1395:0])
+	by forward102a.mail.yandex.net (Yandex) with ESMTPS id B99CC60C6D;
+	Thu,  4 Apr 2024 14:56:18 +0300 (MSK)
+Received: by mail-nwsmtp-smtp-production-main-54.vla.yp-c.yandex.net (smtp/Yandex) with ESMTPSA id GuSJ98AETeA0-WC39XwCo;
+	Thu, 04 Apr 2024 14:56:18 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
+	t=1712231778; bh=VPzVFvUfOroAkxKVkn05FAwf4T6cwbY0BWXxzmjzz0s=;
+	h=Cc:To:Subject:From:Date:Message-ID;
+	b=Oil/KrEtHhZaWHJCCgsQ5iDgO0Cc3LWIJnGL7gMeFyShtzd8SJIt7NQXbJP8Wwh+I
+	 lYV2liIsBtZP4MlP4YwbTUXP5xDxrKrGGYWQqr+Yl2BQmoOmcoiijuZrEK4mwm9rEQ
+	 xgBwIFt7pLDuv1a2fSV5wIOdKKtPteTVHsOxph2M=
+Authentication-Results: mail-nwsmtp-smtp-production-main-54.vla.yp-c.yandex.net; dkim=pass header.i=@yandex.ru
+Message-ID: <b8e08d30-1ac4-4b59-890a-a2ba8cce1d4f@yandex.ru>
+Date: Thu, 4 Apr 2024 14:56:16 +0300
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240331-module-owner-virtio-v2-0-98f04bfaf46a@linaro.org> <20240331-module-owner-virtio-v2-12-98f04bfaf46a@linaro.org>
-In-Reply-To: <20240331-module-owner-virtio-v2-12-98f04bfaf46a@linaro.org>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Thu, 4 Apr 2024 13:41:18 +0200
-Message-ID: <CACRpkdYpVUq1SgxnPVfRdTiNg3o8dcBePxoxu9GRYy6LdzUE5A@mail.gmail.com>
-Subject: Re: [PATCH v2 12/25] gpio: virtio: drop owner assignment
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>, 
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>, Jonathan Corbet <corbet@lwn.net>, 
-	David Hildenbrand <david@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
-	Richard Weinberger <richard@nod.at>, Anton Ivanov <anton.ivanov@cambridgegreys.com>, 
-	Johannes Berg <johannes@sipsolutions.net>, Paolo Bonzini <pbonzini@redhat.com>, 
-	Stefan Hajnoczi <stefanha@redhat.com>, Jens Axboe <axboe@kernel.dk>, 
-	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	Olivia Mackall <olivia@selenic.com>, Herbert Xu <herbert@gondor.apana.org.au>, 
-	Amit Shah <amit@kernel.org>, Arnd Bergmann <arnd@arndb.de>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Gonglei <arei.gonglei@huawei.com>, 
-	"David S. Miller" <davem@davemloft.net>, Sudeep Holla <sudeep.holla@arm.com>, 
-	Cristian Marussi <cristian.marussi@arm.com>, Viresh Kumar <vireshk@kernel.org>, 
-	Bartosz Golaszewski <brgl@bgdev.pl>, David Airlie <airlied@redhat.com>, 
-	Gurchetan Singh <gurchetansingh@chromium.org>, Chia-I Wu <olvaffe@gmail.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Daniel Vetter <daniel@ffwll.ch>, 
-	Jean-Philippe Brucker <jean-philippe@linaro.org>, Joerg Roedel <joro@8bytes.org>, 
-	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>, Alexander Graf <graf@amazon.com>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Eric Van Hensbergen <ericvh@kernel.org>, Latchesar Ionkov <lucho@ionkov.net>, 
-	Dominique Martinet <asmadeus@codewreck.org>, Christian Schoenebeck <linux_oss@crudebyte.com>, 
-	Stefano Garzarella <sgarzare@redhat.com>, Kalle Valo <kvalo@kernel.org>, 
-	Dan Williams <dan.j.williams@intel.com>, Vishal Verma <vishal.l.verma@intel.com>, 
-	Dave Jiang <dave.jiang@intel.com>, Ira Weiny <ira.weiny@intel.com>, 
-	Pankaj Gupta <pankaj.gupta.linux@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Mathieu Poirier <mathieu.poirier@linaro.org>, "James E.J. Bottomley" <jejb@linux.ibm.com>, 
-	"Martin K. Petersen" <martin.petersen@oracle.com>, Vivek Goyal <vgoyal@redhat.com>, 
-	Miklos Szeredi <miklos@szeredi.hu>, Anton Yakovlev <anton.yakovlev@opensynergy.com>, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, virtualization@lists.linux.dev, 
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-um@lists.infradead.org, linux-block@vger.kernel.org, 
-	linux-bluetooth@vger.kernel.org, linux-crypto@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, iommu@lists.linux.dev, 
-	netdev@vger.kernel.org, v9fs@lists.linux.dev, kvm@vger.kernel.org, 
-	linux-wireless@vger.kernel.org, nvdimm@lists.linux.dev, 
-	linux-remoteproc@vger.kernel.org, linux-scsi@vger.kernel.org, 
-	linux-fsdevel@vger.kernel.org, alsa-devel@alsa-project.org, 
-	linux-sound@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Viresh Kumar <viresh.kumar@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: Dmitry Antipov <dmantipov@yandex.ru>
+Subject: On https://syzkaller.appspot.com/bug?extid=4c0d0c4cde787116d465
+To: Hillf Danton <hdanton@sina.com>
+Cc: linux-bluetooth@vger.kernel.org,
+ Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Content-Language: en-US
+Autocrypt: addr=dmantipov@yandex.ru; keydata=
+ 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
+ A/UwwXBRuvydGV0=
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sun, Mar 31, 2024 at 10:45=E2=80=AFAM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
+Hillf,
 
-> virtio core already sets the .owner, so driver does not need to.
->
-> Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+first of all I should say that I'm new to bluetooth and may misunderstand something.
 
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
+IIUC your patch at https://syzkaller.appspot.com/text?tag=Patch&x=15faf610e80000
+assumes that an instances of 'struct sco_conn' can share the same 'struct sock'
+(that's why an extra calls to 'sock_hold()' was added). OTOH my patch at
+https://lore.kernel.org/linux-bluetooth/20240403142706.25748-1-dmantipov@yandex.ru/T/#t
+assumes that this is wrong because SCO (by definition) is a point-to-point
+link between the master device and a specific slave device, and prevents
+from creating such a sharing instead. So the question is: should we always
+assume 1:1 relationship between SCO connection and kernel socket?
 
-Yours,
-Linus Walleij
+Any comments are highly appreciated, thanks in advance.
+
+Dmitry
 
