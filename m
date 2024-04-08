@@ -1,110 +1,92 @@
-Return-Path: <linux-bluetooth+bounces-3363-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-3364-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37AFA89CBC0
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  8 Apr 2024 20:35:59 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E8A889CC6E
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  8 Apr 2024 21:30:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E94B0283640
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  8 Apr 2024 18:35:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B1F1F1C2227F
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  8 Apr 2024 19:30:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A31FE38DF1;
-	Mon,  8 Apr 2024 18:35:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0042E145B3C;
+	Mon,  8 Apr 2024 19:30:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=penguintechs.org header.i=@penguintechs.org header.b="fd3w8MP2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dG6KHfle"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5AC91119A
-	for <linux-bluetooth@vger.kernel.org>; Mon,  8 Apr 2024 18:35:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600B4847B
+	for <linux-bluetooth@vger.kernel.org>; Mon,  8 Apr 2024 19:30:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712601352; cv=none; b=sy7TvzOWmKtqNLVQv1XRIMep4zbFjRckNEI/AFyLE9zeiiuV45bUTJtjQmOoHiAkBSSXfww+0heNdv48CArauDlPfW53tb92i3hFwD2CbwQF5hXvXqgWX52GoeGiCT53wmpFluEK7O2xE9f2px6ZDf6YD8wcPKf+wGkVyYf39bw=
+	t=1712604628; cv=none; b=q8zaDH3HKq9xivcTUzaAuPsklnWtMTSbir/O6UzPfypxMjJ3g7Agj2W6zySp6Gj9rv2hb78Duup+YPQmznSEo/0bDILMtPMcNkRmSJ/5AJu6HNPqmEEcqrOq2SksVV/7f9gaTGm1em8rTEQxmnGWPzluMsBw5U4AVutdg09mCm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712601352; c=relaxed/simple;
-	bh=fsr82+X0HB4nrPlRbD7u+9xerOPWF4UuOixB9nbtbxw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mlfrGBA3y7cVEH2wE6XSGpjfXpu8E+wjJyz96BBOLnqi/8bcB+VA4Ncu3ShWVdbeKnvNVvCD7EjlRQphtFmc3XTjpAwQww/KSFrrh5ZL2hjKY38RkR+zPKpQSGC4poV+F7ozmu/G0ucIb94CfTGasW/5PifLVSYsGqewDKDJdDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=penguintechs.org; spf=pass smtp.mailfrom=penguintechs.org; dkim=pass (1024-bit key) header.d=penguintechs.org header.i=@penguintechs.org header.b=fd3w8MP2; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=penguintechs.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=penguintechs.org
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-1e3ca546d40so23102115ad.3
-        for <linux-bluetooth@vger.kernel.org>; Mon, 08 Apr 2024 11:35:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=penguintechs.org; s=google; t=1712601350; x=1713206150; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nm8t/x2uwmSp1PQu1GfRMMntuaVcapxgFKyhLMy4YmY=;
-        b=fd3w8MP2LXW5XQ2dYj4rk8JWQsTZGK1f30btAzsZplAIqY8Yz0pHjSyf8Rg8nwk8Ac
-         IVRAHxUrfASAqLsV0lM5ZYK4aIwTGrvSVIrXxFieZSHyrTv4VYCmJWRDvRikkMiIzhwC
-         qcNUVyh9as4ZWXG5OFspIWN+/w/dKKesapNrA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712601350; x=1713206150;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nm8t/x2uwmSp1PQu1GfRMMntuaVcapxgFKyhLMy4YmY=;
-        b=cL4ivAsBpLUxJ1ZzTdHG2S95I2GKRnoBIGqisnqze1uRU8Qy+fglyufmRJ0iuYARZh
-         pm7Ly+nesyXBby3iAn0zk8ws8wgrA7Dwbv+7LB57WhQhs3yKo9hweravc1zojQeHQ+it
-         HAAgfajjmfl5MbMixFwfxJSh/JHXp3YSwdcwcD/WkU8zXaRSWeShYMIx0f+C8Y2P7klQ
-         ugt/Qq/2Bk4amWGFUAiUh2VxZUtzWwQYwBIdIU8nfG8EOntZX4KBb4WbT5F5iDcxCg7C
-         kHy7hRbnlfaS2Z/atW4wi2H0kT91AAMBvyhoe+qD3AauUmw0vqyXxFROaR3tYARBS2Z5
-         Z1uA==
-X-Forwarded-Encrypted: i=1; AJvYcCUJpvSrS5xxJc/4HEAb+hKu1sr1YBZluuNEQF/xMLPRHcjDhHgOv0IrqiUemYf2tx/pv5ifufnoc5H17d9UX0V/C3eGlcgkhH7+emV7syib
-X-Gm-Message-State: AOJu0YwxslId0ucB0mi8vDdy8quLcnsrgeuBAf3NwFwii4htstolIMsa
-	/WWzwh+RwjWkOj6csHgblTybuzf7MI+QgNPWYm5MgxctitOGTAWvLgDmQ6fdDQ==
-X-Google-Smtp-Source: AGHT+IFfnkAR7C9SXUsEI1m9SG5HvTsx7iGg0BYwfHhXYsFcaNk5AN/AUuIyVkavDJsczeKsWxqukg==
-X-Received: by 2002:a17:902:a386:b0:1e3:dfdd:21c0 with SMTP id x6-20020a170902a38600b001e3dfdd21c0mr5723950pla.27.1712601349724;
-        Mon, 08 Apr 2024 11:35:49 -0700 (PDT)
-Received: from ?IPV6:2601:646:8700:dd30:5f3e:5ba7:e0ea:9a08? ([2601:646:8700:dd30:5f3e:5ba7:e0ea:9a08])
-        by smtp.gmail.com with ESMTPSA id kj8-20020a17090306c800b001dd69aca213sm7340841plb.270.2024.04.08.11.35.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Apr 2024 11:35:48 -0700 (PDT)
-Message-ID: <99e404ee-81ca-4dcc-811f-9c55fc52c551@penguintechs.org>
-Date: Mon, 8 Apr 2024 11:35:47 -0700
+	s=arc-20240116; t=1712604628; c=relaxed/simple;
+	bh=h5Jb8UYfqCbs1WRN1tOaNYWYaGzHrKHRX1L5LNs2LrE=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=k5mb+A239clsbyDuCQ+Br6CEUQi17lBnAyzhY2p/DKFo01TTux+KvCknaCMzXF/JMnOKHV6Gtq7haABNGjs2S4VshQj7MNsP4xbrvfdtzyvWX5+aTRiiUquKigcI0TV5qCM2Fo3LP/ltWvSsEJnmyraYyjwAozQRpWjicsN/N2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dG6KHfle; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 180D7C43390;
+	Mon,  8 Apr 2024 19:30:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712604628;
+	bh=h5Jb8UYfqCbs1WRN1tOaNYWYaGzHrKHRX1L5LNs2LrE=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=dG6KHfleEg457njt/mc/GgKEMRVUD8P3/tMf5vlj2tWuQ2bUvYAMuDGRGiSqmVu3P
+	 qWQeBju+mgD94fJHCzHf6gtKd+Lu+5+csB+pXOD4TQ91N/lNLlmm7U0ImbcDmgf7VK
+	 pKDHINskRHi1QdZtq6/Z2Qu4puEtacXzyIZimG2ThRY9/3+g2cwGNSiH09qL8mtjrb
+	 HY76Y4W2oTdokE3X4JnWsOFY7cQQz3tThPj7WMtIwuYIqRK7h75WZKp4hvjX34PNn1
+	 QCDeYHT1wrCSVzzzQST1HmmLJd+z3A5JvWwZFOl/sMRUHdc4k7QymQWmvmgOjkhaB7
+	 mT8X5ZuuWZPZA==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 0A34EC54BD4;
+	Mon,  8 Apr 2024 19:30:28 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: QCA6390 bluetooth doesn't work after warm boot or
- disable/reenable
-To: Kalle Valo <kvalo@kernel.org>
-Cc: ath11k@lists.infradead.org, linux-bluetooth@vger.kernel.org
-References: <a03dace1-ca0f-41d6-8e2c-636e3b053a3a@penguintechs.org>
- <31bb6e18-ecee-49b3-87d7-50ab53e07447@penguintechs.org>
- <1b3d3937-6679-491e-a5c6-818ae8ac639a@penguintechs.org>
- <87sezwjums.fsf@kernel.org>
-Content-Language: en-US
-From: Wren Turkal <wt@penguintechs.org>
-In-Reply-To: <87sezwjums.fsf@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH BlueZ v1] shared/gatt-db: Fix
+ gatt_db_service_insert_characteristic
+From: patchwork-bot+bluetooth@kernel.org
+Message-Id: 
+ <171260462803.8265.15629236234845441470.git-patchwork-notify@kernel.org>
+Date: Mon, 08 Apr 2024 19:30:28 +0000
+References: <20240408155949.3622429-1-luiz.dentz@gmail.com>
+In-Reply-To: <20240408155949.3622429-1-luiz.dentz@gmail.com>
+To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: linux-bluetooth@vger.kernel.org
 
-Thanks for letting me know. The wifi is working great. Thank you for 
-your work on that.
+Hello:
 
-I doubt you will have time, but if you do have a chance to test it, that 
-would be amazing. I would love to make sure that I am not the only 
-person having this issue, if possible.
+This patch was applied to bluetooth/bluez.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-Thanks,
-wt
-
-On 4/7/24 10:22 PM, Kalle Valo wrote:
-> Yes, I still have that laptop and I use it as my daily driver. But I
-> don't use Bluetooth and I don't even have the Bluetooth enabled in my
-> .config.
+On Mon,  8 Apr 2024 11:59:49 -0400 you wrote:
+> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 > 
-> BTW ath11k is a Wi-Fi driver so most likely it isn't affecting your
-> problem.
+> gatt_db_service_insert_characteristic shall not attempt to insert the
+> characteristic attribute handle on the next available index as there
+> could be descriptors in between so this changes the way
+> get_attribute_index calculates the index based on the given handle to
+> properly skip indexes used by descriptors.
+> 
+> [...]
 
+Here is the summary with links:
+  - [BlueZ,v1] shared/gatt-db: Fix gatt_db_service_insert_characteristic
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=7604a577c9d7
+
+You are awesome, thank you!
 -- 
-You're more amazing than you think!
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
 
