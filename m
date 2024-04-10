@@ -1,80 +1,50 @@
-Return-Path: <linux-bluetooth+bounces-3447-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-3450-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7060189F970
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 10 Apr 2024 16:08:35 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C604289FA18
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 10 Apr 2024 16:39:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2C0D228CBF7
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 10 Apr 2024 14:08:34 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DD635B2C252
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 10 Apr 2024 14:12:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23D9F17921F;
-	Wed, 10 Apr 2024 14:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 460A416D9CC;
+	Wed, 10 Apr 2024 14:10:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aifgxLIj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y9qKTuyq"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B6A179206
-	for <linux-bluetooth@vger.kernel.org>; Wed, 10 Apr 2024 14:02:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95DCA16C44C
+	for <linux-bluetooth@vger.kernel.org>; Wed, 10 Apr 2024 14:10:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712757737; cv=none; b=uskLQoaooXmqCkzgpDIKRlhuLkrRUSZU/AQCVUjKoWqQKzwdGvXsDu0VUnUfud+8gTSR27QobEKQ1yK14dmWYXaSeoBuXN96Wa2Ur8ubvX6zXa4t6eRxWOR3hL6q1r8Rv7Oh8D8yHlDVLDKu0o20sw6wmf4GJbfP391+RYFIr80=
+	t=1712758230; cv=none; b=HRP48iiaf9gSIjb7knpaBy9PPKcOviq7NK2d2fEdGeBIZAmsatAMA78dUcA4tVhQ5BTxEbjG+k9aMwZZbGoVHDNeaCMEfkZBMaof7s7aNBqwkUILGA3868YbyWTiT5wU/nX3ZLBl6MnHJFQNLfBJ8/up/l+VEXdhsrQ4CmqAwec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712757737; c=relaxed/simple;
-	bh=ODgoe/SbsjLJwPOVANXXfSxVfs9NajiC5bhbWaRZ5FY=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jbUHIqngC1p+J0QjodyU2NsaqObDTzGyJV1hhuPEHSt7COarDGMqH23+wGWdlsm4mvIl2+ixbaFrDeXsTFcEtkgxsKkx/IlDn0QNirxmi5+EhkTYjhEuZ8iTUvno/8PIwaaJ5Oi6tkV5Ko7P8FHEpyRsuuas7smyv2fTLF4fpiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aifgxLIj; arc=none smtp.client-ip=209.85.219.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-69b21b11173so19282796d6.1
-        for <linux-bluetooth@vger.kernel.org>; Wed, 10 Apr 2024 07:02:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1712757734; x=1713362534; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OlPPoFA4kIS8orhrFOQTgWYnFKgrAIT9g1HLOJOhjiM=;
-        b=aifgxLIj7ITiVM+VuVgTdH1nWxnWsiMgYAlNSYXxqbqzrHLVcIz0uUT6dZB+OY54ZB
-         UoK1mEjnrWWxru6WRltwoBtrnA1iVg3wOAni1pq1WtYFJAESiNyY/PLdCyHlgCPd3gat
-         bLqHvBPI35ewi/owHgr2g+1Wf7lZ17hfDB7NFy+sW+DZh93gW+c8wAXut51XC1T+Asqs
-         uh0mDQlnfyuUqIL3MZsw8fuUES2MtXq+ekypuA4QCY/qVlQUf9/W/2iNQgqEy5iiD6OP
-         XYgSYDnGGkIwVZ/3FfyjtaEHZCdQP85fDdKp+nzKBHPgh4rWu7IiVXQjD37RL8elXbga
-         UVGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1712757734; x=1713362534;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OlPPoFA4kIS8orhrFOQTgWYnFKgrAIT9g1HLOJOhjiM=;
-        b=stbma72cqdMuV9uD96aiIyKQvhaC1ZGs/b2WiCAsUcsnsEYJEdpHfIqCeGHIpXvED3
-         b3XtLJN33GqFyevL24uVEujwBJK1iT9MCXMmuUmLKwDxQTtL/mq2VGDQDuL6TltpcyNs
-         gGavLGD6+sCGQi3q3Y78UIuBlJn9BKUtHd/8SeOWqpqHmyuIMKLOPaeIECu0w/qG0hML
-         nMYVLzRTxC3Ya4zUtR9DbF9TQfGSrE/f8nIfXqtgaTdhAf0kTn6Fe9TyZw+1TmDfdFE3
-         /+V3E1Lxzq7JqETJ7nVE8OvyDXiF96SrqoydN8FPvJIGE1o2iFmbIchPfJHzmaF1q6n4
-         xkgg==
-X-Gm-Message-State: AOJu0YyugQxmUv9kKuUF57f7Jvn9LtqySCzl8SkscjQMBUp6hdzhry6h
-	+eMSf4Ge/ASuAEgs8Fur7M44NmV3SgXr/eCRLnZN/IJ2CSGgICleMv7Vw7eo
-X-Google-Smtp-Source: AGHT+IEdRxxsP3VhyPQU+9/UdxzrWNLGKtfLEdVW1YioWPKVCm0Vdxp7H0Sj6XLGghx1WT8rtPL5vA==
-X-Received: by 2002:a05:6214:108e:b0:69b:4341:6477 with SMTP id o14-20020a056214108e00b0069b43416477mr1099740qvr.26.1712757733896;
-        Wed, 10 Apr 2024 07:02:13 -0700 (PDT)
-Received: from lvondent-mobl4.. (107-146-107-067.biz.spectrum.com. [107.146.107.67])
-        by smtp.gmail.com with ESMTPSA id k21-20020ab07555000000b007e3199adc5dsm1382051uaq.0.2024.04.10.07.02.11
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Apr 2024 07:02:11 -0700 (PDT)
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v3 4/4] hog-lib: Destroy uHID device if there is traffic while disconnected
-Date: Wed, 10 Apr 2024 10:02:05 -0400
-Message-ID: <20240410140205.4056047-4-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240410140205.4056047-1-luiz.dentz@gmail.com>
-References: <20240410140205.4056047-1-luiz.dentz@gmail.com>
+	s=arc-20240116; t=1712758230; c=relaxed/simple;
+	bh=/D5eJHhHP6qQ4txFywgwwFN/Thrp0zLwBTpOXMW+U6Q=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=s8OLC/R48Ao6jtSgLpaL1HMz0pu9/Y+KwS7sY6fPpLVBvigB3kZTXcZhjeMFJal/kn9bk2WcQ0R0W/GWAc0Hf6p4FdFqna3Gja6Iw1rvIUtntYd6mdiwxCG17FSIVPwOR/HhMljgt9+NzCOR1PIS7cf4WYMFyVOFuMdcBFXTN2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y9qKTuyq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 38C52C43143;
+	Wed, 10 Apr 2024 14:10:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712758230;
+	bh=/D5eJHhHP6qQ4txFywgwwFN/Thrp0zLwBTpOXMW+U6Q=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=Y9qKTuyqife2bTTHa2FJQKs5SyoiqrYHezzt0ZjaYfE4NNP16B6gpsJqR8T5ghpNY
+	 Cg9g+Xu6d/BpedTXgqTddfCjUld4pE6yCzVDg3PwwsSYTADrF53eFF9jXUzajCfxGh
+	 CG4WzxNhn9rJB0L5uKLCHzDHfdHKYmNEt63lNRF8NwCr0Su8ygYgzPQvcLPPK4roJ8
+	 eStq5AUR7bKPPxtUL4QKFeqhJiQUzUnVFNu7fEW6zpy+BV9bKaEhSlb28Aw7+dDQ0Y
+	 KEQQea721QUHHwa64Qwd+I412QtvVmp1Iqu1fIQ99e8F3bTUUWSFp2fVpVbAXReMBG
+	 6agSFOcQ0DqGg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 2F7AEC395F8;
+	Wed, 10 Apr 2024 14:10:30 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -82,102 +52,41 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH resend] Bluetooth: hci_bcm: Limit bcm43455 baudrate to 2000000
+From: patchwork-bot+bluetooth@kernel.org
+Message-Id: 
+ <171275823019.12683.2247666157369550689.git-patchwork-notify@kernel.org>
+Date: Wed, 10 Apr 2024 14:10:30 +0000
+References: <20240406135106.16821-1-hdegoede@redhat.com>
+In-Reply-To: <20240406135106.16821-1-hdegoede@redhat.com>
+To: Hans de Goede <hdegoede@redhat.com>
+Cc: marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+ linux-bluetooth@vger.kernel.org
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Hello:
 
-This attempts to destroy input device if there is an attempt to
-communicate with it while disconnected.
----
- profiles/input/hog-lib.c | 47 +++++++++++++++++++++++++---------------
- 1 file changed, 29 insertions(+), 18 deletions(-)
+This patch was applied to bluetooth/bluetooth-next.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-diff --git a/profiles/input/hog-lib.c b/profiles/input/hog-lib.c
-index 0291adb6eb23..2d8d0f359e57 100644
---- a/profiles/input/hog-lib.c
-+++ b/profiles/input/hog-lib.c
-@@ -825,6 +825,19 @@ static void set_report_cb(guint8 status, const guint8 *pdu,
- 		error("bt_uhid_set_report_reply: %s", strerror(-err));
- }
- 
-+static void uhid_destroy(struct bt_hog *hog)
-+{
-+	int err;
-+
-+	bt_uhid_unregister_all(hog->uhid);
-+
-+	err = bt_uhid_destroy(hog->uhid);
-+	if (err < 0) {
-+		error("bt_uhid_destroy: %s", strerror(-err));
-+		return;
-+	}
-+}
-+
- static void set_report(struct uhid_event *ev, void *user_data)
- {
- 	struct bt_hog *hog = user_data;
-@@ -833,6 +846,14 @@ static void set_report(struct uhid_event *ev, void *user_data)
- 	int size;
- 	int err;
- 
-+	/* Destroy input device if there is an attempt to communicate with it
-+	 * while disconnected.
-+	 */
-+	if (hog->attrib == NULL) {
-+		uhid_destroy(hog);
-+		return;
-+	}
-+
- 	/* uhid never sends reqs in parallel; if there's a req, it timed out */
- 	if (hog->setrep_att) {
- 		g_attrib_cancel(hog->attrib, hog->setrep_att);
-@@ -856,11 +877,6 @@ static void set_report(struct uhid_event *ev, void *user_data)
- 		--size;
- 	}
- 
--	if (hog->attrib == NULL) {
--		err = -ENOTCONN;
--		goto fail;
--	}
--
- 	DBG("Sending report type %d ID %d to handle 0x%X", report->type,
- 				report->id, report->value_handle);
- 
-@@ -928,6 +944,14 @@ static void get_report(struct uhid_event *ev, void *user_data)
- 	struct report *report;
- 	guint8 err;
- 
-+	/* Destroy input device if there is an attempt to communicate with it
-+	 * while disconnected.
-+	 */
-+	if (hog->attrib == NULL) {
-+		uhid_destroy(hog);
-+		return;
-+	}
-+
- 	/* uhid never sends reqs in parallel; if there's a req, it timed out */
- 	if (hog->getrep_att) {
- 		g_attrib_cancel(hog->attrib, hog->getrep_att);
-@@ -1204,19 +1228,6 @@ static bool cancel_gatt_req(const void *data, const void *user_data)
- 	return g_attrib_cancel(hog->attrib, req->id);
- }
- 
--static void uhid_destroy(struct bt_hog *hog)
--{
--	int err;
--
--	bt_uhid_unregister_all(hog->uhid);
--
--	err = bt_uhid_destroy(hog->uhid);
--	if (err < 0) {
--		error("bt_uhid_destroy: %s", strerror(-err));
--		return;
--	}
--}
--
- static void hog_free(void *data)
- {
- 	struct bt_hog *hog = data;
+On Sat,  6 Apr 2024 15:51:06 +0200 you wrote:
+> Like the bcm43430a0 the bcm43455 BT does not support the 0xfc45 command
+> to set the UART clock to 48 MHz and because of this it does not work
+> at 4000000 baud.
+> 
+> These chips are found on ACPI/x86 devices where the operating baudrate
+> does not come from the firmware but is hardcoded at 4000000, which does
+> not work.
+> 
+> [...]
+
+Here is the summary with links:
+  - [resend] Bluetooth: hci_bcm: Limit bcm43455 baudrate to 2000000
+    https://git.kernel.org/bluetooth/bluetooth-next/c/fd6790ea67ee
+
+You are awesome, thank you!
 -- 
-2.44.0
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
 
