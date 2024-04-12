@@ -1,145 +1,98 @@
-Return-Path: <linux-bluetooth+bounces-3536-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-3538-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E58088A3699
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 12 Apr 2024 21:56:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E05748A369B
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 12 Apr 2024 21:56:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1EF1C1C21067
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 12 Apr 2024 19:56:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1CD761C22C22
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 12 Apr 2024 19:56:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC00C1509A5;
-	Fri, 12 Apr 2024 19:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D63C15099F;
+	Fri, 12 Apr 2024 19:56:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="FOg41G5c"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bPrCBPs8"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [185.185.170.37])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8F914F9E9
-	for <linux-bluetooth@vger.kernel.org>; Fri, 12 Apr 2024 19:56:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=185.185.170.37
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1712951773; cv=pass; b=H3hX+ziTNCMbYpdgHk9VVbeEz8T7e249uVEmVPlvuXCUpEiN3BBK9Q/kLBfl5KhsJI9AFmswtx3OyJRpFyj9+mHPFNwxmmm8kJnd20+hekUvQ4MjTYKlfStD5CjQeyfg3uDajVc/Ee1JE99YYPzmvzgrQyl06Nplo9l4c9Y81d4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1712951773; c=relaxed/simple;
-	bh=gE+UHnx0YPjUC0wvCFUT9AB8n9HVLyj972V05NZoFvw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p6LKz4wxAWCj0wEroET7qY2U/fl7Bu3i54zhYZeZ3Lrfm2pKW0bsQtNvjspSnLsw6bTFaHU08ynhpV1RSPgU6e7UN/cstKdSFj8HRVvoI6X49UY8gtVKKTjfCGU7RST9ZO9N/3Dv/jdj7f0ctVM5KFsWjNyAc/DuEML6rdvfajo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=FOg41G5c; arc=pass smtp.client-ip=185.185.170.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
-Received: from monolith.lan (unknown [193.138.7.178])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: pav)
-	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4VGS430GNyz49Q3T;
-	Fri, 12 Apr 2024 22:56:02 +0300 (EEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
-	t=1712951763;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=cKXYvvaT7qFbssRo2MwF2eEWFSmp2R2fhKw7/edvDZU=;
-	b=FOg41G5cdbiYu+rbLljeVxBFucC/ieGtfvjsVWYLzYOD46c5BW03M/6jwgpcAJukVfGL7i
-	5pS9xkfo/yvt1by665GSO9ptjEq5K4ANQvHmIKjdtButLPnALOV07cFhZZDdMqOyiaRbKN
-	JD8UPGSvYioA4d1ewIbC3cVyXNebBj4KopOA63aCXLuWmtfPM/Y1FflUPcPbnayE2/Zcwa
-	EEMuO+hxaURSxsChzcKxQ518h3ZUVeMjJvXXrkbKCfsztDE97peC/cgLI7FAUmdObSRbLH
-	HycUn4+pVQY2Oceuegq2iOtutx2th8AySHAx7iuU4Lnq024RZTKF4MiEiswyQA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=lahtoruutu; t=1712951763;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=cKXYvvaT7qFbssRo2MwF2eEWFSmp2R2fhKw7/edvDZU=;
-	b=u6dlI47sQtaNhzIePzRgdKzoLKtEKHCLb5VpXns0YsvRc1dWIzwutloD+wuL6WZxcY16n9
-	GhyYEL7dXvwn5ZBWSBQzwyS0505TozG+uwMGeNvlDIGq2rzy3p4GT3KUT4jTwqk0k3XPMH
-	gLOqZasViQqQ2JhDOVesiMm3mccvLFDfJQunPMcuUo/N0rYI5ISSNzMVIONeAEZyDZ2eB2
-	Grxkog2phVCw8OFHRR/jOXNjKB+O4m8OkH9QcGblSI4/ZQvazFaJbk1l3EFyu3Nl+y+mZQ
-	/SUfEG9gy6F2z+HYMXlurr2J9UJnQPWfbye0/XYGB591zEmIgE3rwcIdHDWPRA==
-ARC-Authentication-Results: i=1;
-	ORIGINATING;
-	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
-ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1712951763; a=rsa-sha256;
-	cv=none;
-	b=UphiOmUipsODgfNpUXn7bZcllVmZrqaEMj4yeCKQMMyX4NNoOyN/savlhWniidHvOLaRep
-	7ANdWESdVUwlll0Kc7r1i6ON9ecGQe0tNyGDV+2dPdfDtYnpSZv4n/wuLlMCQif08Hrijs
-	t8BA6waDH753xvlqCV0o5YEmIcxoKA53vlvmTdqcUv/SzrallDg76zGdl7ctxXDKXSofIV
-	rRAmGjQdV62twnX0Q3Lo3jgSuMWe+7vBnsM/r/+dV8ZSyv0BKNJ0YrB4uSybR4fIwM4Xzt
-	VLlstgt4w3pG4duURLFKhEOEQ2zFFb1/ioRfYUla+nfWRIG9ahN/erc7EJoTPA==
-From: Pauli Virtanen <pav@iki.fi>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C046614F9E9
+	for <linux-bluetooth@vger.kernel.org>; Fri, 12 Apr 2024 19:56:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1712951799; cv=none; b=JWTXFq8j/6n4HJ89W+FVfTYTlGVxVrRrPbrV0X4izlxZjzr6atU/Bc6T/GtRh01o+YQAtCD8i7sYOq8+y6LW92DSsCQSu1gkmJ7Ze09CcRKqkOqP69Cl+zBEOXOX3UYHM/unmM+yuUtlfx3d/vY9ww60EjyxxX58Vmeml2nz9Gk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1712951799; c=relaxed/simple;
+	bh=ojgws8V1QNgQZfwnOK0f6pEo5GMhBImR6/CvH8NaUFo=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=DHQX+iwLakMLdK3Mh7cbGrNQJTjgHJQrkUCpvuqPcKHqyZnbSG5wNSg936NkiwPk/XiyTELd9J+/QYJua1c0dECoj/pruQ6GygTYuOLW4q2mbyp+RshuvbJKh/VGs675wIMJQQusDb0MqRSQouTilfZCv8JWfzDls0KWYaOWCKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bPrCBPs8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 52CCDC113CD
+	for <linux-bluetooth@vger.kernel.org>; Fri, 12 Apr 2024 19:56:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1712951799;
+	bh=ojgws8V1QNgQZfwnOK0f6pEo5GMhBImR6/CvH8NaUFo=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=bPrCBPs80GvvbEPEssfToHdmgA3iUN8CqiMU0+/EGHX2Tmr77bLROG8jdIycv5F5T
+	 s4UZ2GZ5FEZnHbOpNPuvFoYS8Ajl+wlfgCDnVuv97HecD929S3CVXJrrsR2XB3ZNAL
+	 wEC5IiPYEo8HD3AuE3JtRb8AGRmT28iDG/zWHe/OzL2ZkhBbZplz2d8p8lfhILEqbE
+	 uNinknhSToJ8Kebh4GhV3Z2aHO+na+4hl5rqVOC2wLfQEKMIq7pgqf4idfJbkhItF2
+	 DnBs1H3IFseWsxmlE9N8GS7FVC6CQVMSK1N+qVgJNpoILdJ+iznB9QbXjji4M4k60M
+	 wJKMJWo/wTSOQ==
+Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
+	id 454C6C433DE; Fri, 12 Apr 2024 19:56:39 +0000 (UTC)
+From: bugzilla-daemon@kernel.org
 To: linux-bluetooth@vger.kernel.org
-Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ 2/2] bap: cancel stream operation before freeing setup
-Date: Fri, 12 Apr 2024 22:55:56 +0300
-Message-ID: <faff5310d5070cf3a64e364b3159672e696625b6.1712951445.git.pav@iki.fi>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <d52ddf4759720a2879677fca0129d3fd1a32dda0.1712951445.git.pav@iki.fi>
-References: <d52ddf4759720a2879677fca0129d3fd1a32dda0.1712951445.git.pav@iki.fi>
+Subject: [Bug 216936] First attempt to upload firmware for Intel Bluetooth
+ fails (a timing issue?)
+Date: Fri, 12 Apr 2024 19:56:38 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: wt@penguintechs.org
+X-Bugzilla-Status: RESOLVED
+X-Bugzilla-Resolution: CODE_FIX
+X-Bugzilla-Priority: P1
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: cc
+Message-ID: <bug-216936-62941-KUiTzgGSLU@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-216936-62941@https.bugzilla.kernel.org/>
+References: <bug-216936-62941@https.bugzilla.kernel.org/>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Before freeing setup, cancel any ongoing stream operations, and indicate
-failure for pending DBus replies.
+https://bugzilla.kernel.org/show_bug.cgi?id=3D216936
 
-Fixes:
-=======================================================================
-ERROR: AddressSanitizer: heap-use-after-free on address 0x60d000004758
-WRITE of size 4 at 0x60d000004758 thread T0
-    #0 0x557159 in qos_cb profiles/audio/bap.c:753
-    #1 0x89c38f in bap_req_complete src/shared/bap.c:1191
-    #2 0x8cb7fc in bap_req_detach src/shared/bap.c:4789
-    #3 0x8cb9bb in bt_bap_detach src/shared/bap.c:4801
-    #4 0x571e25 in bap_disconnect profiles/audio/bap.c:3011
-    ...
-freed by thread T0 here:
-    #1 0x558f2b in setup_free profiles/audio/bap.c:890
-    #2 0x7f34e8 in queue_remove_all src/shared/queue.c:341
-    #3 0x7f0105 in queue_destroy src/shared/queue.c:60
-    #4 0x55cdc8 in ep_free profiles/audio/bap.c:1167
-=======================================================================
----
- profiles/audio/bap.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+Warren Turkal (wt@penguintechs.org) changed:
 
-diff --git a/profiles/audio/bap.c b/profiles/audio/bap.c
-index 30049f0fb..ff6d6d881 100644
---- a/profiles/audio/bap.c
-+++ b/profiles/audio/bap.c
-@@ -879,9 +879,22 @@ static struct bap_setup *setup_new(struct bap_ep *ep)
- static void setup_free(void *data)
- {
- 	struct bap_setup *setup = data;
-+	DBusMessage *reply;
- 
- 	DBG("%p", setup);
- 
-+	if (setup->stream && setup->id) {
-+		bt_bap_stream_cancel(setup->stream, setup->id);
-+		setup->id = 0;
-+	}
-+
-+	if (setup->msg) {
-+		reply = btd_error_failed(setup->msg, "Canceled");
-+		g_dbus_send_message(btd_get_dbus_connection(), reply);
-+		dbus_message_unref(setup->msg);
-+		setup->msg = NULL;
-+	}
-+
- 	if (setup->ep)
- 		queue_remove(setup->ep->setups, setup);
- 
--- 
-2.44.0
+           What    |Removed                     |Added
+----------------------------------------------------------------------------
+                 CC|                            |wt@penguintechs.org
 
+--- Comment #21 from Warren Turkal (wt@penguintechs.org) ---
+I got a similar issue with btqca. I wonder if this is something bigger than=
+ a
+single module.
+
+--=20
+You may reply to this email to add a comment.
+
+You are receiving this mail because:
+You are the assignee for the bug.=
 
