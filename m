@@ -1,173 +1,100 @@
-Return-Path: <linux-bluetooth+bounces-3552-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-3554-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC1D98A41E8
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 14 Apr 2024 12:44:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4050A8A422A
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 14 Apr 2024 13:57:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 957E1281B34
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 14 Apr 2024 10:44:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D3DA6282278
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 14 Apr 2024 11:57:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55CB9364BF;
-	Sun, 14 Apr 2024 10:44:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA07C3DB97;
+	Sun, 14 Apr 2024 11:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YLSq0jO5"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jqbBjE9R"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95C9F1865;
-	Sun, 14 Apr 2024 10:44:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBDCF36B1C
+	for <linux-bluetooth@vger.kernel.org>; Sun, 14 Apr 2024 11:57:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713091465; cv=none; b=pIQ2eFj4GTisDFNS1P9jo7G1h8ZpfoqjsZByMOCK2PPzgQ6sYNuTYR727wvljc6R/rUkFiRmQA1+F6+XvnhHlN09mVN3RqN4oZlljHsGVwJ9I6fDZcSPy9Hrx11xhrQDL6Essa164L5O4UjjSKZedXlk3hEzlNHYSIzYjmrDSdw=
+	t=1713095843; cv=none; b=AMBo3v1CcuE83ABXVYebPybJP5kuG8i316SG8ieVcDSgNJBkmQ5CyUjlqvpTtrUalifdQqIDsOKwu+8zbiCUia8sZO5VnoP4pMoSPVqDdEQWSsVX/cSS9k6Z+pVu00zGt/3JVtQuM7JW6QT9Umbf58o9jAVe70/IuwatYAwsWxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713091465; c=relaxed/simple;
-	bh=jScTQYNuKSdQRN71THl1woAyTI/mIsL2raQkX/Y0bi0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nWLippfyOH72rHuyZPK44aii6cmLT7ApAAAFecYA+zvG+mTHPVPiSUih8pT4UUxM/conGxd8+FvCubp0JTV0qgPXel9nub0L4/yH8R5lIuZwpyhx02mim+lSKhSb49V4N3Iz7RBkjfvQYo4T+FckuB85ndVNdUi82Z2a6tgxM/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YLSq0jO5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CC6FC072AA;
-	Sun, 14 Apr 2024 10:44:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713091465;
-	bh=jScTQYNuKSdQRN71THl1woAyTI/mIsL2raQkX/Y0bi0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YLSq0jO5BrG1cv9zv6kr3rQyeJsfGcqSJLz+Q7xeorHaa5lcEYIxKgLs8BydAqvJP
-	 q00VFElDlEjTcopyOUK1waF3ME2oKgyJyJuhNQ8v/L8qH/uHwBUxhuIj2eGfyki+TS
-	 cLaDO8XBRUmtvlQO17LNXikT/+ciPNG1G1mOLE6MzEOdH1OptnO0yOhbRwnIdnsFhS
-	 4KWPi5WnG8WA941iN29H2UDTT3MDtEtM6u0lugw1xKbrjNJbZqgMCGeunfLGAPErlS
-	 AiJgH3QgEOBt5HNed+WHbbgABU7V7RXOdFVKKS3RjTj/GAM8+Uc4/AZvtIHjdNwcLA
-	 sV8f64OIiMB0Q==
-Date: Sun, 14 Apr 2024 11:44:14 +0100
-From: Simon Horman <horms@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Marcel Holtmann <marcel@holtmann.org>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	"David S . Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, Kalle Valo <kvalo@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Saravana Kannan <saravanak@google.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Alex Elder <elder@linaro.org>,
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Lukas Wunner <lukas@wunner.de>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Amit Pundir <amit.pundir@linaro.org>,
-	Xilin Wu <wuxilin123@gmail.com>, linux-bluetooth@vger.kernel.org,
-	netdev@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-pci@vger.kernel.org, linux-pm@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v7 14/16] power: pwrseq: add a driver for the PMU module
- on the QCom WCN chipsets
-Message-ID: <20240414104414.GC645060@kernel.org>
-References: <20240410124628.171783-1-brgl@bgdev.pl>
- <20240410124628.171783-15-brgl@bgdev.pl>
+	s=arc-20240116; t=1713095843; c=relaxed/simple;
+	bh=1IASOUPj3xfbecbguSmttzi/NSKDkvnGf5FlqSeHE+0=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=CkuWmjeeZfQri/RXMwsA+hSk05oXrC9AHvNFMngcIKA/ftDu6i6H+p+7nfaXqucexxXDV2L1TNNxtSvUYv558DAnpVc+982BY6WekHUEj97bmMj+lKJGMgEch9OGud21GetesbLBwfJtpm7n5H8tjRZwo9koBdWdOjgREKprpZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jqbBjE9R; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43EBhYHN016062;
+	Sun, 14 Apr 2024 11:57:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	from:to:cc:subject:date:message-id:mime-version:content-type; s=
+	qcppdkim1; bh=3n41Tt9gsgzfgtUHUk19LTgafprXe+uW2NbJm1i39zE=; b=jq
+	bBjE9R509t4SiTdjol9m+Ip0HLU9KEojyumOIIfK5EsZ0rmyzU2eU3BPYjU/GIAA
+	E4tum3PhUgT2hUShn32lDrQDv1xAXneALyuGQm4Vr9Rqf2CyIcBX55RcONYusFvU
+	Fq8Yqi3OqeQuegdTNTv1QWbVnyAtUKAtFS2oyBmkogtUgQYFYy8wFkVaOmUfcd4u
+	Y7RUrbZjRRXgPFmtCJQ4lsfiyd6KIaXgODu/oZ/tDYM1Wocif/FEC1EKPQ9iEUhv
+	sOHbZHuqpS9gEW6rrbCrdRmlaLRM7ifFUaRL/Dd6Fbx+n1saYfctAiPTF3MvwN5L
+	MyFAyv+NVquo2BVTdDJg==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xffrka1dg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 14 Apr 2024 11:57:12 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43EBvBFT002080
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 14 Apr 2024 11:57:11 GMT
+Received: from zijuhu-gv.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sun, 14 Apr 2024 04:57:10 -0700
+From: Zijun Hu <quic_zijuhu@quicinc.com>
+To: <luiz.dentz@gmail.com>, <wt@penguintechs.org>
+CC: <linux-bluetooth@vger.kernel.org>
+Subject: [PATCH v1 0/2] QCA6390 enable failure debugging changes
+Date: Sun, 14 Apr 2024 19:57:03 +0800
+Message-ID: <1713095825-4954-1-git-send-email-quic_zijuhu@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240410124628.171783-15-brgl@bgdev.pl>
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 6JLjdwInZgUW9cNhkK_maIOUQPiWNcMT
+X-Proofpoint-GUID: 6JLjdwInZgUW9cNhkK_maIOUQPiWNcMT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-04-14_02,2024-04-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
+ bulkscore=0 impostorscore=0 lowpriorityscore=0 priorityscore=1501
+ suspectscore=0 spamscore=0 malwarescore=0 mlxlogscore=891 adultscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2404010003 definitions=main-2404140086
 
-On Wed, Apr 10, 2024 at 02:46:26PM +0200, Bartosz Golaszewski wrote:
+This patch series are to debug below QCA6390 issue:
+QCA6390 bluetooth doesn't work after warm boot or disable/reenable
+https://lore.kernel.org/linux-bluetooth/31bb6e18-ecee-49b3-87d7-50ab53e07447@penguintechs.org
 
-...
+Zijun Hu (2):
+  Bluetooth: qca: Dump more config info for debugging
+  Bluetooth: qca: Fix QCA6390 enable failure after reboot or disable
 
-> +static int pwrseq_qcom_wcn_probe(struct platform_device *pdev)
-> +{
-> +	struct device *dev = &pdev->dev;
-> +	struct pwrseq_qcom_wcn_ctx *ctx;
-> +	struct pwrseq_config config;
-> +	int i, ret;
-> +
-> +	ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
-> +	if (!ctx)
-> +		return -ENOMEM;
-> +
-> +	ctx->of_node = dev->of_node;
-> +
-> +	ctx->pdata = of_device_get_match_data(dev);
-> +	if (!ctx->pdata)
-> +		return dev_err_probe(dev, -ENODEV,
-> +				     "Failed to obtain platform data\n");
-> +
-> +	ctx->regs = devm_kcalloc(dev, ctx->pdata->num_vregs,
-> +				 sizeof(*ctx->regs), GFP_KERNEL);
-> +	if (!ctx->regs)
-> +		return -ENOMEM;
-> +
-> +	for (i = 0; i < ctx->pdata->num_vregs; i++)
-> +		ctx->regs[i].supply = ctx->pdata->vregs[i];
-> +
-> +	ret = devm_regulator_bulk_get(dev, ctx->pdata->num_vregs, ctx->regs);
-> +	if (ret < 0)
-> +		return dev_err_probe(dev, PTR_ERR(ctx->regs),
-> +				     "Failed to get all regulators\n");
+ drivers/bluetooth/hci_qca.c | 78 +++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 72 insertions(+), 6 deletions(-)
 
-Hi Bartosz,
+-- 
+2.7.4
 
-It looks like ctx->regs is not an error pointer here,
-should this be:
-
-		return dev_err_probe(dev, ret, ...
-
-Flagged by Smatch.
-
-> +
-> +	ctx->bt_gpio = devm_gpiod_get_optional(dev, "bt-enable", GPIOD_OUT_LOW);
-> +	if (IS_ERR(ctx->bt_gpio))
-> +		return dev_err_probe(dev, PTR_ERR(ctx->bt_gpio),
-> +				     "Failed to get the Bluetooth enable GPIO\n");
-> +
-> +	ctx->wlan_gpio = devm_gpiod_get_optional(dev, "wlan-enable",
-> +						 GPIOD_OUT_LOW);
-> +	if (IS_ERR(ctx->wlan_gpio))
-> +		return dev_err_probe(dev, PTR_ERR(ctx->wlan_gpio),
-> +				     "Failed to get the WLAN enable GPIO\n");
-> +
-> +	ctx->clk = devm_clk_get_optional(dev, NULL);
-> +	if (IS_ERR(ctx->clk))
-> +		return dev_err_probe(dev, PTR_ERR(ctx->clk),
-> +				     "Failed to get the reference clock\n");
-> +
-> +	memset(&config, 0, sizeof(config));
-> +
-> +	config.parent = dev;
-> +	config.owner = THIS_MODULE;
-> +	config.drvdata = ctx;
-> +	config.match = pwrseq_qcom_wcn_match;
-> +	config.targets = pwrseq_qcom_wcn_targets;
-> +
-> +	ctx->pwrseq = devm_pwrseq_device_register(dev, &config);
-> +	if (IS_ERR(ctx->pwrseq))
-> +		return dev_err_probe(dev, PTR_ERR(ctx->pwrseq),
-> +				     "Failed to register the power sequencer\n");
-> +
-> +	return 0;
-> +}
-
-...
 
