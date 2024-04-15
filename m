@@ -1,50 +1,50 @@
-Return-Path: <linux-bluetooth+bounces-3593-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-3592-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 642F08A57CB
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 15 Apr 2024 18:32:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 88B6F8A57C8
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 15 Apr 2024 18:32:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C1DF1B23004
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 15 Apr 2024 16:32:23 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F07CBB22F8E
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 15 Apr 2024 16:32:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 430568174F;
-	Mon, 15 Apr 2024 16:32:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B01667E76F;
+	Mon, 15 Apr 2024 16:32:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="fMEo5vv5"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="UFrHZnBJ"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-21.smtp.github.com (out-21.smtp.github.com [192.30.252.204])
+Received: from out-26.smtp.github.com (out-26.smtp.github.com [192.30.252.209])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC3178C91
-	for <linux-bluetooth@vger.kernel.org>; Mon, 15 Apr 2024 16:32:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.204
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0757C36B
+	for <linux-bluetooth@vger.kernel.org>; Mon, 15 Apr 2024 16:32:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.209
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713198731; cv=none; b=oqcV+veRJWfNeldsfFiuTRxVnW3WQq+P92ymKfj+2aVV1rziAJSI2cv5jBpJ8nLr8QTgbUP5xKg6Edw916jx4Zou9NLBOcCE70/O8MWLS23JxnPbYEd6KvSvjzb1cAX0A0baf85og6sNspZ0cLOBjFIDzmwTfQPUKv0jZF5uUvc=
+	t=1713198730; cv=none; b=ZepgCZg2t7gSrSN6/poxiTMflFzPhn3BSE7iXVzgyN5xH2/a2/KyO7/odK8q/6xzyVTSGEaR3KbYYpn9loDDYP8vJpPgxPBP9t4+TQZ0kfZ1j+KGURu39l82XVEAUCaldeG8KG1u0oA5/mUSKOD7OEmjI1Y9Bm4NAOV5/BGbUP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713198731; c=relaxed/simple;
-	bh=DGxpXgQtjBFrGeR5qX1L6PTm4C2RN7LUDcUchE/cSj4=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=i0GNHr+8SgsZtEjD1TKPXOPhCjxxURr0FU57DBmh2iwn+lE5vgNz1bnAx35rFVbn3Rv/GSBIDCZrsz5mQQqkSGZdm2fYGIKs9Xf6zmY7zL5kGWc2J2dRLJRZZMg2ytY1H4jnwC82FI6wO00wPb5Z2mQRVnfo12pU2Q/CMwLOynY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=fMEo5vv5; arc=none smtp.client-ip=192.30.252.204
+	s=arc-20240116; t=1713198730; c=relaxed/simple;
+	bh=POBwSFK78SLZ80Tm8+IOAtAuV5q46RFnXA+wlOUby74=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=K7WpflOfDzn3ovinzzoZGejq7feuLIAEMtgH1bfy9aeqrsAtzB9djoaNbWP+syqH6btYdkLOa2NL3hsWbPiiUoPiIfu7Qx0HvNtoYlZb6i2qu4DNcni8VeyK8SIznfytrh+oWQJ03gGxI3MmmWBEqOJM4vX5RsxsVIUp18IKTBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=UFrHZnBJ; arc=none smtp.client-ip=192.30.252.209
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-cb5844f.ac4-iad.github.net [10.52.12.64])
-	by smtp.github.com (Postfix) with ESMTPA id 9270F700CC6
+Received: from github.com (hubbernetes-node-c61440c.ash1-iad.github.net [10.56.212.69])
+	by smtp.github.com (Postfix) with ESMTPA id 141FE6010CB
 	for <linux-bluetooth@vger.kernel.org>; Mon, 15 Apr 2024 09:32:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
 	s=pf2023; t=1713198728;
-	bh=v+Wn/ZXHnOYQMcKF2JadfXpAqmUMgyDEzem9DDH5ftY=;
+	bh=iC4hENnFRQU5EqBVWQi3MfbQ5cQlw5Ss7qO8ykKD52U=;
 	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=fMEo5vv5aAzBRUZS0ny23iAtJaJNNaoyt4CHyZJUS8H7X5FYc+pR7VxTXL22VtAOI
-	 XUiHLZB/KqtQ5VnGUKEd4+c3v7/6Z+SVMilVDI/Q4wULvss4kmXQDMdF28BwfWc+Ds
-	 lzM1mW70Wt0LGl5SVg+qSQI/PMJo1hrxxkYiZl5s=
+	b=UFrHZnBJ1p8VEfvnWfmuPQNmvKdF3IOZ1+Gw4CQbWIgaPBAE9xBXKAq7MSmY8g3iM
+	 Mwhmc5yU1L9JnE1yIjBTM2XLoH7eEbQesaVDcg5GlTc8CqeuEhqmip1SiBdXMDhAEo
+	 ElQm0LsseHrsykZmwqn85XpU1nH5q3rUeMWWCx0o=
 Date: Mon, 15 Apr 2024 09:32:08 -0700
-From: BluezTestBot <noreply@github.com>
+From: Marcel Holtmann <noreply@github.com>
 To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/tags/5.75/000000-79c02c@github.com>
-Subject: [bluez/bluez]
+Message-ID: <bluez/bluez/push/refs/heads/master/1955b8-249216@github.com>
+Subject: [bluez/bluez] 249216: Release 5.75
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -57,8 +57,22 @@ Content-Transfer-Encoding: 7bit
 X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
 X-Auto-Response-Suppress: All
 
-  Branch: refs/tags/5.75
+  Branch: refs/heads/master
   Home:   https://github.com/bluez/bluez
+  Commit: 249216dce21f97d92144f0f72cc8b97f25203184
+      https://github.com/bluez/bluez/commit/249216dce21f97d92144f0f72cc8b97f25203184
+  Author: Marcel Holtmann <marcel@holtmann.org>
+  Date:   2024-04-15 (Mon, 15 Apr 2024)
+
+  Changed paths:
+    M ChangeLog
+    M configure.ac
+
+  Log Message:
+  -----------
+  Release 5.75
+
+
 
 To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
