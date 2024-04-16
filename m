@@ -1,48 +1,48 @@
-Return-Path: <linux-bluetooth+bounces-3633-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-3634-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 965248A6F5B
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 Apr 2024 17:10:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CFCCB8A6F5D
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 Apr 2024 17:10:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C6D691C21362
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 Apr 2024 15:10:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8DE74282509
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 Apr 2024 15:10:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05F50130A47;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49F67130A64;
 	Tue, 16 Apr 2024 15:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EIleJosQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B5XETTx+"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67FF63B78D
-	for <linux-bluetooth@vger.kernel.org>; Tue, 16 Apr 2024 15:10:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27E0130492;
+	Tue, 16 Apr 2024 15:10:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713280234; cv=none; b=bpBY3wFeu0z1WfT/2vq3FNJraLXGUHq5rlvKCCxpZDypFScO7nIjzCX8dZJ++5QqpgXfVzzFjLRGzzh6eTLp1xlT3rTSb61w5J16qh+epg+HyWdLroHARoClb4o1wT/OVtr+ZS7dZlsWZ3jrD3TQk7khDtEqJbp7obGt+FPCXRc=
+	t=1713280234; cv=none; b=jVyz4qlA3mFOJRd6uzpzKqPiiLXdqDybdyIuJ4+xlcTebBmZsMxM8t39D064ALLLyVW8BDKetApvUlsJmzW27ywhwOrAQpeiVXoKRLjfTZksyHc1jw1GmC3SJuYwBwNqvubjRW5sZsoB9zGOnsBncsW4wrNS02WRoMNOlKJJA60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713280234; c=relaxed/simple;
-	bh=Vu9h8V2inM0Ryhf8Ehbd1CPsHFx3cfn7J/z5xzNqI0g=;
+	bh=nxyADXIj7ToWnQ3DESNbTFi4qaMN9HcWjTWckTpOI+8=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=uVgt4l89Pu++mxVIBZCt4G7hbLyDFcEUrbvT8B0GFtG8xg79XL/c2v/O2ExES+pxCyCBlleafZmOYPvaoiL1NbQL7IQGICMfTfQLzZKpwGTkrQ5zO1QIYWfH+LQ2H8UtIjkNYezgYPnpDfGfH7/AkHHgsiVtCZgT9xRtaDqgGbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EIleJosQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 3CB90C2BD10;
+	 In-Reply-To:To:Cc; b=j03fz8iy0U1ZS34Xwavrr2YafrA/XB/O9Vr4NrHEtii8wVfeQ7/Emp8YNMnlfFITl9AnZOPAbY4Qovn0m3JN1kFdbO9CpFwDsWw4gzk5MheyRCTyJDXXRPV9FjrH4Q/R/PVQML9IUiti1aiLCPFRl2CLiwt+r4Y2oaVUTpLEZfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B5XETTx+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 3678DC32783;
 	Tue, 16 Apr 2024 15:10:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1713280234;
-	bh=Vu9h8V2inM0Ryhf8Ehbd1CPsHFx3cfn7J/z5xzNqI0g=;
+	bh=nxyADXIj7ToWnQ3DESNbTFi4qaMN9HcWjTWckTpOI+8=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=EIleJosQO+zAVmGbWIuHjPeM9vLOCr+yOS6qsexYBwUwSnKx+qcDkMa1t6EES7eln
-	 QhQfMqRzUh2GqYXBMkfp6/QDBcAUJAIfD3s0+j5wnbq9v2b2Z1KNoMyu9pw35TU0U5
-	 npLIdD5hoZZIpCkMRcpoJbEh1oGshWiDotLuKd+U9hZ3CY9bzMEYg+D8vyaaVmXADt
-	 4tZcHxkNQLoQOQsHzb1ZSl6vam83psR4Zo3HQswaX8wTTAFBkwOIQmMscF4YqRmVuo
-	 7E+yVx3pgXGsvuD66yrAC71beTcWRIdiobg2rNgeLxv5IKVijjKK4SW6POslOdZihr
-	 gnMqxL5x80pEg==
+	b=B5XETTx+jZEk3gkreJ7pC22WS1SK698FAtRVMvhgxTEZyuXJjbbwv3CQ3jGTeblWC
+	 2EX364Mqt8xlzTw9Nt4QAj0Y8U1uA8HGVGmXYYk65xTZS7pDfSSIq5b69y528blmGw
+	 LKXyA0SL0QsjJrgWBTbaSPs9HlyRcwED63rwxmtNgxASVJBQHp2VegDJECUKJfmS3S
+	 7GGXBsBfGqyjJod3s3mklhQbyGjEV3ZolqBGsOY2D6Y4tl+LZNxxc37pH8E2ktyLSK
+	 dzV/KtQjFtbba3PlwOka1t41W0UEmQwZa7uNZE8nrnDJip8sOJeGuTc5tiqhePo8MA
+	 BIk62PIjJ5T+g==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 2D7DDD4F15F;
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 22ED5D4F15D;
 	Tue, 16 Apr 2024 15:10:34 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
@@ -52,35 +52,41 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v1] Bluetooth: hci_event: Fix sending HCI_OP_READ_ENC_KEY_SIZE
+Subject: Re: [PATCH] Bluetooth: btusb: Fix the patch for MT7920 the affected to
+ MT7921
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <171328023418.16225.6418530565465065583.git-patchwork-notify@kernel.org>
+ <171328023414.16225.12939333659144302573.git-patchwork-notify@kernel.org>
 Date: Tue, 16 Apr 2024 15:10:34 +0000
-References: <20240415174338.896084-1-luiz.dentz@gmail.com>
-In-Reply-To: <20240415174338.896084-1-luiz.dentz@gmail.com>
-To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: linux-bluetooth@vger.kernel.org
+References: <20240415141922.25055-1-peter.tsao@mediatek.com>
+In-Reply-To: <20240415141922.25055-1-peter.tsao@mediatek.com>
+To: Peter Tsao <peter.tsao@mediatek.com>
+Cc: marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+ sean.wang@mediatek.com, deren.Wu@mediatek.com, chris.lu@mediatek.com,
+ aaron.hou@mediatek.com, steve.lee@mediatek.com,
+ linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-mediatek@lists.infradead.org
 
 Hello:
 
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Mon, 15 Apr 2024 13:43:38 -0400 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+On Mon, 15 Apr 2024 22:19:22 +0800 you wrote:
+> Because both MT7920 and MT7921 use the same chip ID.
+> We use the 8th bit of fw_flavor to distingush MT7920.
+> The original patch made a mistake to check whole fw_flavor,
+> that makes the condition both true (dev_id == 0x7961 && fw_flavor),
+> and makes MT7921 flow wrong.
 > 
-> The code shall always check if HCI_QUIRK_BROKEN_READ_ENC_KEY_SIZE has
-> been set before attempting to use HCI_OP_READ_ENC_KEY_SIZE.
-> 
-> Fixes: c569242cd492 ("Bluetooth: hci_event: set the conn encrypted before conn establishes")
-> Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> In this patch, we correct the flow to get the 8th bit value for MT7920.
+> And the patch is verified pass with both MT7920 and MT7921.
 > 
 > [...]
 
 Here is the summary with links:
-  - [v1] Bluetooth: hci_event: Fix sending HCI_OP_READ_ENC_KEY_SIZE
-    https://git.kernel.org/bluetooth/bluetooth-next/c/54a3de664f08
+  - Bluetooth: btusb: Fix the patch for MT7920 the affected to MT7921
+    https://git.kernel.org/bluetooth/bluetooth-next/c/263296438807
 
 You are awesome, thank you!
 -- 
