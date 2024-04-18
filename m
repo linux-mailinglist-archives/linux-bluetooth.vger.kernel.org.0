@@ -1,53 +1,53 @@
-Return-Path: <linux-bluetooth+bounces-3720-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-3721-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 592208A9519
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 18 Apr 2024 10:35:26 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B6F78A9546
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 18 Apr 2024 10:47:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id ED37C1F221E9
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 18 Apr 2024 08:35:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 407731F21767
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 18 Apr 2024 08:47:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 580621581E1;
-	Thu, 18 Apr 2024 08:35:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9791158858;
+	Thu, 18 Apr 2024 08:46:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lMtVn9/H"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LMyzxMoG"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA12C1E489
-	for <linux-bluetooth@vger.kernel.org>; Thu, 18 Apr 2024 08:35:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 590EA7B3FD
+	for <linux-bluetooth@vger.kernel.org>; Thu, 18 Apr 2024 08:46:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713429319; cv=none; b=BOhJWP/NmvzcORXIDwEf6lvXkujcxgb49+EcX7rBj/pfcpR3Ymx6D1+6J1L8zyectVf8lqIrRBiUWoo6vy/UpE+dknxJsXUhn6OMSjE2dXdtbgPdnborCsTDsNDLEtKGHis4tFlHG39M5d195Prygev9ev4IK01eghoR3ldQlhU=
+	t=1713430015; cv=none; b=sPyHSwUEfbi5dWud/pAd6c25EPBk1W/iFCaESjmhAB+MnseROzbUn7UKMqWdqypXX9YxT7SKTdzu8uKYeMDYdfMVdj0abt1oF0c9/FAggC8CsR13i6UMz2CdMFlIKrtsyPAFCid6Al7j75P7Kb/OQCcEexwPKscI+i2NkpQOa5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713429319; c=relaxed/simple;
-	bh=kXhVWDJ9IA0fZxo2lghIOKSy3KdUA8Ns+ly+9F1PCeU=;
+	s=arc-20240116; t=1713430015; c=relaxed/simple;
+	bh=0pITwLoEhrS10PU1bp2frMN4CLJJKV3hQxrE/48LIeM=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=pPmoSVp+NufDpchc5sqADZdzcdyBCJp9n1U4AGkRrFnjLDD8M6UXufwE4orqxyqMaKmIz2vWgU5VZ02GI7a+/BPbIRHdrgldBHvjMIqTaJak/WllqyJLAYLCSRlJuNpaDxmCnLmiWUMv10J93oK6vpUEYHBFOy+3NpauHjFfsNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lMtVn9/H; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 95E16C116B1
-	for <linux-bluetooth@vger.kernel.org>; Thu, 18 Apr 2024 08:35:19 +0000 (UTC)
+	 Content-Type:MIME-Version; b=joO+rN7CqXv2dTbD48OgDlOS6OYtYginEMWQrW4Y4FnnHu9lpo+e8FddZdJjEhhtyPrqHTdmHWZqR4CLGmccRgHzD/9yfPJtAd+THPw3V0KEepFqPEi+ftG17T2mT1a+/RsEH4amGIxvx9Fr8hRt93J4ZyAUKKnssVFaKCrz2zI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LMyzxMoG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id D727AC3277B
+	for <linux-bluetooth@vger.kernel.org>; Thu, 18 Apr 2024 08:46:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713429319;
-	bh=kXhVWDJ9IA0fZxo2lghIOKSy3KdUA8Ns+ly+9F1PCeU=;
+	s=k20201202; t=1713430014;
+	bh=0pITwLoEhrS10PU1bp2frMN4CLJJKV3hQxrE/48LIeM=;
 	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=lMtVn9/HgEolOY1GXkTj2RgaiYCAT6dGzQcijmAnlQK5WobJ/tLufbRsWLc9HhBao
-	 0on3kG290AamsdK1umngrF3LqGzJv+BF4WSX6RZjnUV67WsZGzNkf8i53/0RrO+koH
-	 7st+wDTMs2mjKF6yzA+QmbS0AuK27mrA1pof3YaULMJxsKB+Z85XSQGhBvwYWqLIg0
-	 5E/tGO4o+dE8egIIq3uysw0C1wuOVr0lxB9NNECK5jXk7DB8QPpcI56w3+O4TVVz7D
-	 RY/ZnU14MqcGxjSRa/qC796w946cmaUigRB5K6cfZbfgwwr4ngs/cSG+I1hUS71lLZ
-	 RD1sSC2M5234g==
+	b=LMyzxMoGJQNzck+5iI3EHlV+kWKEVgzLtdX+NMghdOOeo7eOPGNRJmiJmAQg31cke
+	 peHQrfSgo4kdnXYNCNI2Pn4D3GLp9MiYsawldd5hM9+mFJNIXxaYWm/THDY/24EkHw
+	 CjW3y4DKA/tRD4sjc6+i69M/QXBHJn1UdJ+jgcHdeTw2JnCkdkzMLdFuziiiPunAtI
+	 5Nl7i8McZlPxMDP4QpGBMkMQsw4gdWNCaBH/azl5YYW5S9QhfkLoczCWdFPf0PbPxW
+	 R6A1qjoxszBCK5o6QfQuxp7SX5XtxKcas+8HP8s9uhpY4kIHAs7JLTRElKZouJkVHi
+	 a8Xf7HxWhRZ5Q==
 Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-	id 806F8C433DE; Thu, 18 Apr 2024 08:35:19 +0000 (UTC)
+	id C72B0C433E5; Thu, 18 Apr 2024 08:46:54 +0000 (UTC)
 From: bugzilla-daemon@kernel.org
 To: linux-bluetooth@vger.kernel.org
 Subject: [Bug 218726] qca6390 bluetooth fails after disabling/re-enabling
  bluetooth
-Date: Thu, 18 Apr 2024 08:35:19 +0000
+Date: Thu, 18 Apr 2024 08:46:54 +0000
 X-Bugzilla-Reason: AssignedTo
 X-Bugzilla-Type: changed
 X-Bugzilla-Watch-Reason: None
@@ -56,14 +56,14 @@ X-Bugzilla-Component: Bluetooth
 X-Bugzilla-Version: 2.5
 X-Bugzilla-Keywords: 
 X-Bugzilla-Severity: normal
-X-Bugzilla-Who: wt@penguintechs.org
+X-Bugzilla-Who: pmenzel+bugzilla.kernel.org@molgen.mpg.de
 X-Bugzilla-Status: NEW
 X-Bugzilla-Resolution: 
 X-Bugzilla-Priority: P3
 X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
 X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-218726-62941-ooOePDaXxW@https.bugzilla.kernel.org/>
+X-Bugzilla-Changed-Fields: cc
+Message-ID: <bug-218726-62941-pNCys9Eylx@https.bugzilla.kernel.org/>
 In-Reply-To: <bug-218726-62941@https.bugzilla.kernel.org/>
 References: <bug-218726-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
@@ -79,10 +79,25 @@ MIME-Version: 1.0
 
 https://bugzilla.kernel.org/show_bug.cgi?id=3D218726
 
---- Comment #42 from Wren Turkal (wt@penguintechs.org) ---
-Okay. Let me know if you end up needing anything from me. I really apprecia=
-te
-your work on getting this fixed...=E8=B0=A2=E8=B0=A2
+Paul Menzel (pmenzel+bugzilla.kernel.org@molgen.mpg.de) changed:
+
+           What    |Removed                     |Added
+----------------------------------------------------------------------------
+                 CC|                            |pmenzel+bugzilla.kernel.org
+                   |                            |@molgen.mpg.de
+
+--- Comment #43 from Paul Menzel (pmenzel+bugzilla.kernel.org@molgen.mpg.de=
+) ---
+> i also add your Signed-off-by for later updated patche serials [patch ser=
+ies]
+> for this issue.
+
+Shouldn=E2=80=99t
+
+> Tested-by: Wren Turkal <=E2=80=A6> # Dell XPS 13 9310 (QCA6390) with X BT=
+ mouse
+
+be the correct tag?
 
 --=20
 You may reply to this email to add a comment.
