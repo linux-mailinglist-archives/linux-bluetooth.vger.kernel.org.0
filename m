@@ -1,71 +1,72 @@
-Return-Path: <linux-bluetooth+bounces-3779-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-3781-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76E7B8AB6A4
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 19 Apr 2024 23:49:36 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 716D98AB6A6
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 19 Apr 2024 23:49:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A891B1C21515
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 19 Apr 2024 21:49:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 12B071F21B18
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 19 Apr 2024 21:49:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C16613D251;
-	Fri, 19 Apr 2024 21:49:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B52CF13D248;
+	Fri, 19 Apr 2024 21:49:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VZlAQiYo"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nF3kubi4"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7C2613D249
-	for <linux-bluetooth@vger.kernel.org>; Fri, 19 Apr 2024 21:49:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C741D7FBDA
+	for <linux-bluetooth@vger.kernel.org>; Fri, 19 Apr 2024 21:49:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713563368; cv=none; b=POYluZ2l/MFPqknXlfrRmObi/GKyBAQs9WHl0ag9mODGIktaLkSyophgOqQU7gkh4NOxKF8L1vLzalWW4jjos/TYswWcW9+K7k6TV7V3O9fF2g/i50oHjYtNy/7/4rzht8Ga1cFXA4CFfRYM+wnQRVRKBB08jrgHpuAHcZy5iPo=
+	t=1713563378; cv=none; b=oAsk9E5/EQLLhBtrRlSGpauqhEyzUVpPitpkMTxobxWnwdO5S19kmXC2nx9yzzInSEocOTOPkpX5ENaXek2hF4GQXKi9opSeRPIDYfhWVf3Iy0J0ZB8YQMDw+FhEh2qH4eHfgM2hXsehiD7SeI89L37hnuJcv6GFs5WCUpZniNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713563368; c=relaxed/simple;
-	bh=fFbhpSx4GR4P5ZLGzERvBMt53UUK8yRCw379KJCrQOI=;
+	s=arc-20240116; t=1713563378; c=relaxed/simple;
+	bh=jp6fCbYsQLMHFHDcSLprKtDEyfs6nA2M5l8PgzaI8Qs=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ANuGKVDQldDoqVIq8zxS9PEu+rWxHP7ZRn1q4mr89xj2BCVa1qfJYKSSGlDKgAYYuhg4+AjeUtRlYjApImPIfZ+3zePiUvrHUy/GD1TwJuJmadl6/boy3pHeyMP0DovEErcOnh5AAAaEN1rQ6yimUM+TaG1a1L4DbIYPqEU7x/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VZlAQiYo; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version:Content-Type; b=XUJ8yd+svfEDjc2TM3+NSSaQNHpHNdLBdyHBbSPt1GYNon2emh6vUkg/ZSTEnqIF42GQNzDYm7tHZOzyUGc6rFkGz48ZV6otD/H0W1B11dqSZoluNhoYlzQYU1vNRMZKlarPZ/S5TRZlVFfoZos2BE7g7+TKSjOL80x/+Rznlhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nF3kubi4; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43JLjEWh017750;
-	Fri, 19 Apr 2024 21:49:21 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id 43JGdTc9024699;
+	Fri, 19 Apr 2024 21:49:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	from:to:cc:subject:date:message-id:in-reply-to:references
-	:mime-version:content-type; s=qcppdkim1; bh=wgIG5sWd+zesmQD+EXRB
-	HBMeSI2VOK8xCskInPl4bg8=; b=VZlAQiYozjx5gweuhBezqEq0tTHb7OGXL0nj
-	PoAqKfp+080KMsDxY9WA4UQA9ZCcHfDMBOhAj92jIFjipBn359S47Pwqx4oKVx9k
-	fZdc65zEvZuoMFD0WmmsVS6dGGCj/hSPOHSwGf7l8A3UcduHHd6bMalp89iUtbk+
-	5b32GhtNSs9BLeLf46q/AsWa1eh0CEXpr98YBWbwcVk6R1/OZFUhpanm76/M5v4b
-	jh+/Elfdb+tN1mv62auIJQhbmE7sprQlMVVCGniHJ82LLVaYGbtCbYHYQRkeSOqI
-	YCOBgGr2hXm4jFKZ6yhbCqqtD1J9gbAx3slGFvnJnEXGwec61g==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xksuvrwxh-1
+	:mime-version:content-type; s=qcppdkim1; bh=Q71AAIMpmqFARbo5CZiU
+	RBFiamP0y4yfBDEyD/p/0K0=; b=nF3kubi4y9FRXOV9hvYUfN6F4AVqx93+W5vA
+	Rj+MSgV1+J7+FIqa6Y+zs43wMAjd//lyR7N6wF/lC4zFZmNX2xHffPFXq78qMffG
+	7qxsegkZ0P28Cp8md8gc7CNG7qUUuIjLfUibwV7HZrMJXBclG1J3V0upW4GlZvHs
+	UpWshiIAXF7IEqgw5xk/npTB0XE0irzqh2kB2iqqGB6r/f2TVBYntQx2gbeHJFo6
+	oTdazBxoq0Gln5+tf6L2PpRHojxLFhfoibVX3rEoO4rCwBg8saPFlmVZZgBjCOc1
+	zu6QiFiGN/Po5YZuDG4iLHACDkStlmSBAtbJSGxEBBzsflmfvg==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3xkgrea1hf-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 19 Apr 2024 21:49:20 +0000 (GMT)
+	Fri, 19 Apr 2024 21:49:30 +0000 (GMT)
 Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43JLmsfT031183
+	by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 43JLmuwB018493
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 19 Apr 2024 21:48:54 GMT
+	Fri, 19 Apr 2024 21:48:57 GMT
 Received: from zijuhu-gv.qualcomm.com (10.80.80.8) by
  nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 19 Apr 2024 14:48:52 -0700
+ 15.2.1544.9; Fri, 19 Apr 2024 14:48:55 -0700
 From: Zijun Hu <quic_zijuhu@quicinc.com>
 To: <luiz.dentz@gmail.com>, <luiz.von.dentz@intel.com>, <marcel@holtmann.org>
 CC: <quic_zijuhu@quicinc.com>, <linux-bluetooth@vger.kernel.org>,
         <bartosz.golaszewski@linaro.org>, <krzysztof.kozlowski@linaro.org>,
         <wt@penguintechs.org>
-Subject: [PATCH v1 0/2] Fix two regression issues for QCA controllers
-Date: Sat, 20 Apr 2024 05:48:45 +0800
-Message-ID: <1713563327-19694-1-git-send-email-quic_zijuhu@quicinc.com>
+Subject: [PATCH v2 1/2] Bluetooth: MGMT: Fix failing to MGMT_OP_ADD_UUID/MGMT_OP_REMOVE_UUID
+Date: Sat, 20 Apr 2024 05:48:46 +0800
+Message-ID: <1713563327-19694-2-git-send-email-quic_zijuhu@quicinc.com>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1713449192-25926-1-git-send-email-quic_zijuhu@quicinc.com>
+In-Reply-To: <1713563327-19694-1-git-send-email-quic_zijuhu@quicinc.com>
 References: <1713449192-25926-1-git-send-email-quic_zijuhu@quicinc.com>
+ <1713563327-19694-1-git-send-email-quic_zijuhu@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -77,32 +78,76 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: _yCpIQCRjwRN59QeYYjdqirA6DgjLY8-
-X-Proofpoint-ORIG-GUID: _yCpIQCRjwRN59QeYYjdqirA6DgjLY8-
+X-Proofpoint-ORIG-GUID: EMtjf2AVbpyYP6EAVFwjo4ouOxozFqun
+X-Proofpoint-GUID: EMtjf2AVbpyYP6EAVFwjo4ouOxozFqun
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-04-19_15,2024-04-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- clxscore=1015 impostorscore=0 lowpriorityscore=0 phishscore=0 mlxscore=0
- adultscore=0 malwarescore=0 priorityscore=1501 spamscore=0 mlxlogscore=937
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1015
+ bulkscore=0 adultscore=0 mlxscore=0 lowpriorityscore=0 priorityscore=1501
+ mlxlogscore=999 malwarescore=0 spamscore=0 suspectscore=0 impostorscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2404010003
  definitions=main-2404190170
 
-This patch series are to fix below 2 regression issues for QCA controllers
-1) BT can't be enabled once BT was ever enabled for QCA_QCA6390
-2) BT can't be enabled after disable then warm reboot for QCA_QCA6390
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-the links for these issues are shown below:
-https://bugzilla.kernel.org/show_bug.cgi?id=218726
-https://lore.kernel.org/linux-bluetooth/ea20bb9b-6b60-47fc-ae42-5eed918ad7b4@quicinc.com/T/#m73d6a71d2f454bb03588c66f3ef7912274d37c6f
+These commands don't require the adapter to be up and running so don't
+use hci_cmd_sync_queue which would check that flag, instead use
+hci_cmd_sync_submit which would ensure mgmt_class_complete is set
+properly regardless if any command was actually run or not.
 
-Zijun Hu (1):
-  Bluetooth: qca: Fix BT enable failure for QCA_QCA6390
+Link: https://github.com/bluez/bluez/issues/809
+Fixes: d883a4669a1d ("Bluetooth: hci_sync: Only allow hci_cmd_sync_queue if running")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+---
+ net/bluetooth/mgmt.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
- drivers/bluetooth/hci_qca.c |  3 ++-
- net/bluetooth/mgmt.c        | 20 +++++++++++++++-----
- 2 files changed, 17 insertions(+), 6 deletions(-)
-
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 7129e70a0253..68deec968405 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -2623,7 +2623,11 @@ static int add_uuid(struct sock *sk, struct hci_dev *hdev, void *data, u16 len)
+ 		goto failed;
+ 	}
+ 
+-	err = hci_cmd_sync_queue(hdev, add_uuid_sync, cmd, mgmt_class_complete);
++	/* MGMT_OP_ADD_UUID don't require adapter the UP/Running so use
++	 * hci_cmd_sync_submit instead of hci_cmd_sync_queue.
++	 */
++	err = hci_cmd_sync_submit(hdev, add_uuid_sync, cmd,
++				  mgmt_class_complete);
+ 	if (err < 0) {
+ 		mgmt_pending_free(cmd);
+ 		goto failed;
+@@ -2717,8 +2721,11 @@ static int remove_uuid(struct sock *sk, struct hci_dev *hdev, void *data,
+ 		goto unlock;
+ 	}
+ 
+-	err = hci_cmd_sync_queue(hdev, remove_uuid_sync, cmd,
+-				 mgmt_class_complete);
++	/* MGMT_OP_REMOVE_UUID don't require adapter the UP/Running so use
++	 * hci_cmd_sync_submit instead of hci_cmd_sync_queue.
++	 */
++	err = hci_cmd_sync_submit(hdev, remove_uuid_sync, cmd,
++				  mgmt_class_complete);
+ 	if (err < 0)
+ 		mgmt_pending_free(cmd);
+ 
+@@ -2784,8 +2791,11 @@ static int set_dev_class(struct sock *sk, struct hci_dev *hdev, void *data,
+ 		goto unlock;
+ 	}
+ 
+-	err = hci_cmd_sync_queue(hdev, set_class_sync, cmd,
+-				 mgmt_class_complete);
++	/* MGMT_OP_SET_DEV_CLASS don't require adapter the UP/Running so use
++	 * hci_cmd_sync_submit instead of hci_cmd_sync_queue.
++	 */
++	err = hci_cmd_sync_submit(hdev, set_class_sync, cmd,
++				  mgmt_class_complete);
+ 	if (err < 0)
+ 		mgmt_pending_free(cmd);
+ 
 -- 
 2.7.4
 
