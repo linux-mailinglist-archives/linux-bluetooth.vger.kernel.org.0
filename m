@@ -1,48 +1,48 @@
-Return-Path: <linux-bluetooth+bounces-3882-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-3883-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F28A8AD0D5
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 22 Apr 2024 17:31:19 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5EE958AD0D6
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 22 Apr 2024 17:31:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C121F1C211D2
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 22 Apr 2024 15:31:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F37921F2306A
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 22 Apr 2024 15:31:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBD2515357F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBD6D153580;
 	Mon, 22 Apr 2024 15:30:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ds7sZ26q"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m9hs8+7T"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5586D153514
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5580B153513
 	for <linux-bluetooth@vger.kernel.org>; Mon, 22 Apr 2024 15:30:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713799829; cv=none; b=KzZ4x4JABtVI0mBWbE9wR3d3AZCJPkHfwXKu3fhERgZ+0VXOchkWxM4/m1tWZvqVACCLbhPjm7BBBoWOV1viF9gZIecz8+x3RtVheNyEgU9QDG1ctWaKfe556GUAj4qNlwvUCNvThxF+6tQsekRB0zwocEbfWSiQYU0vBoNqtb8=
+	t=1713799829; cv=none; b=jng4IHmssOQhOiXFASyR0xY3M4HzGf5u5fkph1J7lBGyrlT0jA0njI0oTXiuVSRsB7b0lwYLImFpgazCsTIUy85w34wcRvQV64uh5up81Dhv/Xrfg3EoSymKfgYLskXLRuwWAD4TdzMx9t1PzrI61va9yYVZDsuA4GUAHxOcbgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1713799829; c=relaxed/simple;
-	bh=UdlBIdpn1+IWKVJcMA6w4VmX5cDN11W7O4bRcTM8Dpo=;
+	bh=smlU8gDCuBtp7jPPmCMeClCuCOErUb+LAgnra16IgTc=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=PJtJDHeAjQQyIOiZcVg5ZrYhcGEdqFOuiu7g8QJzV1uc1liRrc2MGfXwzTrlI1orArXoMcIaNvWc/o8h9I62bb2hTQZSxzFVD3ReuDf1pYjxNho3hoPinkxuh3Cj5Df4Gecok++zZf1xJh4b3shelBut/Ds+5XzeX4RvkfutoUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ds7sZ26q; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id F206BC32781;
+	 In-Reply-To:To:Cc; b=RDMT5yvRLEtR05tN5JNIwu9QnTgMsBKvInRRgcXpW+5T5u+aa5goBwD3LABhjXtq9AMZmHQbFte96YICtS0B35CGG1MhQhI6VswY9+4/FyIxd3e2P12D83m3Ly2Xn8LO4uFKQrGK96uotnbJe+QjTlvj2vckuS+aOivoUZs//Xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m9hs8+7T; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id E8A5FC4AF0B;
 	Mon, 22 Apr 2024 15:30:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713799829;
-	bh=UdlBIdpn1+IWKVJcMA6w4VmX5cDN11W7O4bRcTM8Dpo=;
+	s=k20201202; t=1713799828;
+	bh=smlU8gDCuBtp7jPPmCMeClCuCOErUb+LAgnra16IgTc=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=ds7sZ26qDLnE++Ggrnqcln9viY0QKw4xmZMdxzRfXK2WnYsQgKMZbdxbMdlZ7EEWU
-	 q023PSGo20yJA7kTsSZA7BDpVS2aSVNnNefnK3HibIT2V5mDk5elneSY9aJDkWayJY
-	 pDSXIrmu3Ihp6xSyMgjobMLMGE4vLeX+JYydoCn8f7+H65Fwx8Vd79MKcsG3Rbop3v
-	 rIOw6ZkhGyXDl1Ce4qgC36F6ceclWWUdjNgo/wuZVZwpOntLqIZH/ixuzB2A90HRqy
-	 yDbJdDNMoe3soa/vqqFh3TmMiBb4oOCIbfBf7bqYVJ6xt7kEvYG5AqXB1/hTx4AvmU
-	 i+uE18D1H8qcg==
+	b=m9hs8+7T68p6tJTew1p6cRuFQi48ZF1cPZ4pWn7ehHXNxcdNpco4wYDT4jD6lGxnL
+	 LX19hZDs6YOfqi7LozTFUyVGv7gDrizHv5XOXR2e6rmnceCaW60LvoeHU01t0lVu5e
+	 dKJJ7Y4C7qKRnzeKVOmhAaNYO5q/f6D7l02rmgFI+EhbMPC4R8NeurW4wPfdhpTv1d
+	 6bfLtd/0i5g37b6Jb7Ekt9vIEXI+xMoHFizNsqVjlQyVhY1xRkkqsjvrGCZ6jeUy51
+	 N+sm0MfrwlwdBGMED3HtwKdbUqcAr43I+caxZbMk6x0qsJ6qKK+AFkNQBFqHCcDqgY
+	 myiR/KH3Z6beQ==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id E542CC43440;
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id DF21FC43443;
 	Mon, 22 Apr 2024 15:30:28 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
@@ -52,14 +52,14 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v1 RESEND] Bluetooth: hci_conn: Remove a redundant check for
- HFP offload
+Subject: Re: [PATCH v1 RESEND] Bluetooth: btusb: Correct timeout macro argument
+ used to receive control message
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <171379982893.28518.13465274690527374187.git-patchwork-notify@kernel.org>
+ <171379982891.28518.15878891828308361794.git-patchwork-notify@kernel.org>
 Date: Mon, 22 Apr 2024 15:30:28 +0000
-References: <1713797194-22982-1-git-send-email-quic_zijuhu@quicinc.com>
-In-Reply-To: <1713797194-22982-1-git-send-email-quic_zijuhu@quicinc.com>
+References: <1713797830-24600-1-git-send-email-quic_zijuhu@quicinc.com>
+In-Reply-To: <1713797830-24600-1-git-send-email-quic_zijuhu@quicinc.com>
 To: quic_zijuhu <quic_zijuhu@quicinc.com>
 Cc: luiz.dentz@gmail.com, luiz.von.dentz@intel.com, marcel@holtmann.org,
  linux-bluetooth@vger.kernel.org
@@ -69,17 +69,19 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Mon, 22 Apr 2024 22:46:34 +0800 you wrote:
-> Remove a redundant check !hdev->get_codec_config_data.
+On Mon, 22 Apr 2024 22:57:10 +0800 you wrote:
+> USB driver defines macro @USB_CTRL_SET_TIMEOUT for sending control message
+> timeout and @USB_CTRL_GET_TIMEOUT for receiving, but usb_control_msg()
+> uses wrong macro @USB_CTRL_SET_TIMEOUT as argument to receive control
+> message, fixed by using @USB_CTRL_GET_TIMEOUT to receive message.
 > 
 > Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-> ---
->  net/bluetooth/hci_conn.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> [...]
 
 Here is the summary with links:
-  - [v1,RESEND] Bluetooth: hci_conn: Remove a redundant check for HFP offload
-    https://git.kernel.org/bluetooth/bluetooth-next/c/ebe00bbb01f3
+  - [v1,RESEND] Bluetooth: btusb: Correct timeout macro argument used to receive control message
+    https://git.kernel.org/bluetooth/bluetooth-next/c/927927f2471f
 
 You are awesome, thank you!
 -- 
