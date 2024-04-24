@@ -1,161 +1,115 @@
-Return-Path: <linux-bluetooth+bounces-4022-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4024-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3F958B0D09
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Apr 2024 16:47:28 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id EED768B0D46
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Apr 2024 16:54:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7CFF4284E55
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Apr 2024 14:47:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7B8471F26E4A
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Apr 2024 14:54:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51C5415ECF6;
-	Wed, 24 Apr 2024 14:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 730EA1635D2;
+	Wed, 24 Apr 2024 14:52:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kZ53top6"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pCASQPkm"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2561F15ECC9
-	for <linux-bluetooth@vger.kernel.org>; Wed, 24 Apr 2024 14:46:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1932615FA76
+	for <linux-bluetooth@vger.kernel.org>; Wed, 24 Apr 2024 14:52:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713969999; cv=none; b=luxzyxc2XHBX0vBl6bE0mfVHgVAGouF9neiu96jdD4z5Sxq4NS/2TvC920zXTF+L4mgVrQtCN23yTe0+rpLi2grxaRQiv3Q5ex0UMMlzFyKBMaHel6Fqtq91IM7UV5j+N+UpTGUGdYgJWojeA8k6mWQqYsv6Yga1Eo53u5mPA8Q=
+	t=1713970362; cv=none; b=j3WaqCsHRaxaa9P2cZMXeyZToEZ+Lfwzma5N1icrZlhmUWG9iFUuMC+wptcAwkig/sXXJhMX2FGrJ7S2bNkwMis2msPk6nuLGwCETCZaWPm9vxWwBR2pqqkA2BQUjOoHMX6L+tFbU/Gjlp6lxkbfqbGQRYUWdnajjHKa72wla7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713969999; c=relaxed/simple;
-	bh=F+yMiTBe5/hoxx2NJhqcvizqF27UFcCyQ+BG9ETc4IQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=khilMTXOJ+tTde+x9BXVzG3rtN1PwkpHFhMnUQ5Ul6zW23VV7GwSMsoGYDXlIg/CfZuLG9phAyRCIM0dwrF5G54KEAzPRLOPypQpMStSMnHZdnGZSblcC3OH+kEyXqOWf19Piib/fV6xtccfvzZvhYZyJ+9CD4jvK+5qfDa2k6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kZ53top6; arc=none smtp.client-ip=209.85.208.49
+	s=arc-20240116; t=1713970362; c=relaxed/simple;
+	bh=wk6urfGs/M3O3sb5eJszZmntrwsXFmVqzMNu2d4frow=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MhnjxGI/BiOqReO1bNQXQnYQQYX/EGgBdNaGn2mY9cmGXvNhhwc60Dr0YkgBPreJI+rNk9PEqeEXyoGyWuQDvc9q+w/RUtooODXpPGfy5PkITvuOKup4yI+SqJRq9mLG1LaqHV3tLCQ1soyHC20LAbOYpGXO3bC5Iv5oZEknqjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pCASQPkm; arc=none smtp.client-ip=209.85.128.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5723b4eab48so10703a12.0
-        for <linux-bluetooth@vger.kernel.org>; Wed, 24 Apr 2024 07:46:37 -0700 (PDT)
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-61acfd3fd3fso75405117b3.1
+        for <linux-bluetooth@vger.kernel.org>; Wed, 24 Apr 2024 07:52:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1713969996; x=1714574796; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=rmBHxU+K5+JFdDXXWYzqD2OyvFTC6VOaZA7L4t5ci3I=;
-        b=kZ53top66Zq27EgqxWEwQMaDQDRwMN1S3bPquFH+UeSuyh3d8TuKrpV1lxdvNDmAYN
-         cEfj+Ew2ZM+VT+Uznx7RadfgvDhnqTGrGVP9wQlmBgiTcsMWDa61cFMR8GIskc4EbnBc
-         48yaA9DfC7mpFaCOuZ4A6ZYKVNbO7HYLazC81IhXJ0NsJFC0L9Ra5MiI4llTKKxC6RFF
-         zm0EUGVH6J3jeQCi7aA4hEaTioaDNXyWUshW+MT3ImY3YXmddaS/5Aw2ExIWmn/xJujv
-         UJlZUsiV5yye4YwZiCby7hX6pU1Wt5rNMoaf1Ux7b3r1dw+UJ8zrY+tgJlToDm/AyMAI
-         09VA==
+        d=linaro.org; s=google; t=1713970359; x=1714575159; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=HLcB2GhY/+cPlasvhbE7nJ47bQSzEHeObUtBifAPvFU=;
+        b=pCASQPkm1bBYKvdWkYGwGZ9ti6KMfSZsLE0eNsON6NsrdMYXBF4Gdu/IrP+3FFfwOV
+         U6f6sT56bVig5Kyaa/COCsDX0xgBEKl3nK1yxI3yAgMMf8t1OM/y7lkx/o6PeYjRYbR+
+         OJmn9iyFNBEfeLfeFACiO9gORGvgCa1K2zjDnegT60kgQBSTsBZc58So4hrjttRoggz9
+         AO6YuI4sRXVem/0bAfapjjOsMfUI4BViZV2miRiapNLj6+LhwRGC/Jc9gejQphSy0f02
+         gIVwBowf8W8xRJMraBpRiPsumJ6o/oF17W8aMY/gPjAGy7ZO3vI+UDSZW2lDvXwpExwE
+         4gtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1713969996; x=1714574796;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1713970359; x=1714575159;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=rmBHxU+K5+JFdDXXWYzqD2OyvFTC6VOaZA7L4t5ci3I=;
-        b=Xjp5/vAEF+jWpjnKf1iBPLkMRWvxRoQ5jj3Sixf5ZCORs4GjfUmFVfuw6Y1vkMXW7l
-         sE/171jOciATichzJo/0kc5aI6skESW4J98migzLwyZK85tejlG8sbpGi7UVx88aRs9B
-         PS1r5pGRanw/uFH/iSQflUKPlzf55wWVRaijhLpDZkADyzLxtZP8gh6Xv4FwyyRlCk44
-         2nLtBWoZ4y/rLniDGf4w3R4cCNf37gK3BGRvdmd3MFJ9SAEUEra2OSgg00WWjQ5g1IbG
-         TVEu0XfIAjFcndwkaoZWpu19tFijB7Z4BDGjm9HVPcLF7ZWZWKVc6aSi2JOVqKlUUtkV
-         0hbg==
-X-Gm-Message-State: AOJu0Yywdk5ZlwWrsVkaByBvzv9uCSsdaASOdpWFc/trN007pMStEYfj
-	qdcxznXpWTCZiBnT3jel6KkDEqex0NcRtEQafDqf8TdybnV/Yi21lewLl0/D8gU=
-X-Google-Smtp-Source: AGHT+IHn78VhiqSOB7pwnrThAKv9zjattaN+a7GzLm9zrQ+WEJPEsTGOI3m9iM6/iprTZBhXzezPHw==
-X-Received: by 2002:a50:9b5b:0:b0:570:8d89:4c3f with SMTP id a27-20020a509b5b000000b005708d894c3fmr2047583edj.0.1713969996460;
-        Wed, 24 Apr 2024 07:46:36 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.223.16])
-        by smtp.gmail.com with ESMTPSA id k13-20020a508acd000000b0056ff510c327sm8224276edk.94.2024.04.24.07.46.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Apr 2024 07:46:35 -0700 (PDT)
-Message-ID: <0f8ba1b5-490e-4961-80e2-7942f66730ec@linaro.org>
-Date: Wed, 24 Apr 2024 16:46:34 +0200
+        bh=HLcB2GhY/+cPlasvhbE7nJ47bQSzEHeObUtBifAPvFU=;
+        b=F+NPxD5YOd7IxsQ80TeFR4Gxkh4nAU0qlnElh9OU/ZPA9ybUUhOKGJg7h0wye+MRQp
+         VxONFIZHtD/6bm5T39R9HsWWin62cSsE1JoFtOXkTPne7ipbmD8NqHnwlyCu9VeeJNDq
+         byH5ydrx4o3v5tGfvZEfUvs9rEeRZ1UUc2ZOkvaZa+OIyLUm71y16k85aUR7oJHXNwUo
+         1DUW9LmQVs0eeJQqzcMQwiIomMd8Kgv98UmKtaQcm7xA/n4fCqYZAUxpqpc4zFWJe/b8
+         QVTJqplKver+kxt//RhAz3a4l3S032pQi3rihooe8IScnHA+LYKnNo0uMUlKyvFHVNft
+         Fuaw==
+X-Forwarded-Encrypted: i=1; AJvYcCXygQU2PP/layf0yk/0SQQYU8ZjHGvlXskB17NPlpIUylhzxe0Ex7rlYzQEKmRbmu+oQx7B2x637bNCHizeWThpOWXLOXdE77204d3/kt6G
+X-Gm-Message-State: AOJu0YytchofvrOycFGAbuxcvAlapAx+vuEjUYTFhfezBCrp23x3NLBg
+	NXzNCFMWpyi99tqvJfBle7eviST+HUPYdI+Vow+R1SGG2sHqScxH0kq4ndaXISHpa0qGSmeScOM
+	yFrGnXqNC4ptu7Iviv20enoW417HEXnMzoNrG1g==
+X-Google-Smtp-Source: AGHT+IH54wRIUrZM6RC8JRJT0ltlwP+DKNmbmB5RqBiF5ARNVrbx7ouSNK2r3YIofnkI0L1dAtgGzNJSIgy36VVWSF4=
+X-Received: by 2002:a25:adc6:0:b0:de4:7831:919 with SMTP id
+ d6-20020a25adc6000000b00de478310919mr2699369ybe.38.1713970359182; Wed, 24 Apr
+ 2024 07:52:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+References: <20240424122932.79120-1-brgl@bgdev.pl> <0f8ba1b5-490e-4961-80e2-7942f66730ec@linaro.org>
+In-Reply-To: <0f8ba1b5-490e-4961-80e2-7942f66730ec@linaro.org>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Date: Wed, 24 Apr 2024 16:52:28 +0200
+Message-ID: <CACMJSeuBCkNyaD60qGVpAq91DqD_OA=tCVEY0t+JNK2vcWBc+Q@mail.gmail.com>
 Subject: Re: [PATCH v2] Bluetooth: qca: set power_ctrl_enabled on NULL
  returned by gpiod_get_optional()
-To: Bartosz Golaszewski <brgl@bgdev.pl>, Marcel Holtmann
- <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
- Wren Turkal <wt@penguintechs.org>, Zijun Hu <quic_zijuhu@quicinc.com>
-References: <20240424122932.79120-1-brgl@bgdev.pl>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- D2GYIS41Kv4Isx2dEFh+/Q==
-In-Reply-To: <20240424122932.79120-1-brgl@bgdev.pl>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Marcel Holtmann <marcel@holtmann.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, linux-bluetooth@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Wren Turkal <wt@penguintechs.org>, 
+	Zijun Hu <quic_zijuhu@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On 24/04/2024 14:29, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
+On Wed, 24 Apr 2024 at 16:46, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 24/04/2024 14:29, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+>
+> >               qcadev->susclk = devm_clk_get_optional(&serdev->dev, NULL);
+> >               if (IS_ERR(qcadev->susclk)) {
+> > @@ -2355,10 +2360,13 @@ static int qca_serdev_probe(struct serdev_device *serdev)
+> >               qcadev->bt_en = devm_gpiod_get_optional(&serdev->dev, "enable",
+> >                                              GPIOD_OUT_LOW);
+> >               if (IS_ERR(qcadev->bt_en)) {
+> > -                     dev_warn(&serdev->dev, "failed to acquire enable gpio\n");
+> > -                     power_ctrl_enabled = false;
+> > +                     dev_err(&serdev->dev, "failed to acquire enable gpio\n");
+> > +                     return PTR_ERR(qcadev->bt_en);
+> >               }
+> >
+> > +             if (!qcadev->bt_en)
+> > +                     power_ctrl_enabled = false;
+>
+> This looks duplicated - you already have such check earlier.
+>
 
->  		qcadev->susclk = devm_clk_get_optional(&serdev->dev, NULL);
->  		if (IS_ERR(qcadev->susclk)) {
-> @@ -2355,10 +2360,13 @@ static int qca_serdev_probe(struct serdev_device *serdev)
->  		qcadev->bt_en = devm_gpiod_get_optional(&serdev->dev, "enable",
->  					       GPIOD_OUT_LOW);
->  		if (IS_ERR(qcadev->bt_en)) {
-> -			dev_warn(&serdev->dev, "failed to acquire enable gpio\n");
-> -			power_ctrl_enabled = false;
-> +			dev_err(&serdev->dev, "failed to acquire enable gpio\n");
-> +			return PTR_ERR(qcadev->bt_en);
->  		}
->  
-> +		if (!qcadev->bt_en)
-> +			power_ctrl_enabled = false;
+It's under a different switch case!
 
-This looks duplicated - you already have such check earlier.
-
-Best regards,
-Krzysztof
-
+Bartosz
 
