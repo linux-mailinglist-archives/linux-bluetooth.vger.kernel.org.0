@@ -1,168 +1,128 @@
-Return-Path: <linux-bluetooth+bounces-4044-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4046-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0624D8B1351
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Apr 2024 21:13:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id F165E8B1394
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Apr 2024 21:32:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AA51F28890B
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Apr 2024 19:13:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 923E11F23C92
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Apr 2024 19:32:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6ED3B5C8FC;
-	Wed, 24 Apr 2024 19:13:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 154FE78C65;
+	Wed, 24 Apr 2024 19:32:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XqkM9jto"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LGBaJ5Lr"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF5C5D465
-	for <linux-bluetooth@vger.kernel.org>; Wed, 24 Apr 2024 19:13:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7E11BF37
+	for <linux-bluetooth@vger.kernel.org>; Wed, 24 Apr 2024 19:32:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1713985984; cv=none; b=HOfgBXA8D1FPJ/9eQWs5uRUI5nm8kHTniiauFnq03igJrbQAMloV55gJ8YveW66DyRVk0k0ftFgnCQ8PzTU6aaEYFBppXKkl5Elu12sED0BQCUnmqMhFFff6AujVNQxKXGymiRMtSVmbYuYj0iSfsZKhA7g5z+zdeydURJKDJqA=
+	t=1713987131; cv=none; b=htyt0vz9xXr3+T56S1nciz12B71IguNQFvH2kT5CRZjK8a3dW42wHBuDhVRCRRiQAbuLB9dXRVc+aghYvVNwVWl1qQayRYhKPFmYhi0SXMCnfUvagASeEqsscXiISxo+e1sG1BiSvlMZi/uvXe52qfJh9g6Qeh919tFek2jkOps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1713985984; c=relaxed/simple;
-	bh=ytTXcKoZzh7Kle30H6uTuJU300BKCL4ZW0etsYgF870=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jn+uqQAWUW0Y7QF6f7w5EY87WRv4ifZQZH7w44r/mmq2aSvSFNv9vGGySsOVnyCgnKEwbecLUNNHPaP2dFVx3OGcdfX3xv0Mgy9tfUdFN7urSvD8SMQN2aIi1d0SPhZSTocXRM3t9GQdeWfayA8KFsE72gbcPwp0nMRHNpzsIIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XqkM9jto; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90FFC113CD;
-	Wed, 24 Apr 2024 19:13:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1713985984;
-	bh=ytTXcKoZzh7Kle30H6uTuJU300BKCL4ZW0etsYgF870=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=XqkM9jtodhb4NbcQCb1/1+T1HM/Aqq46w+2pxVv4UqTFKsJun/pBpJW/j7PjIqtrE
-	 Doms9lGyqUG4td3zRc/d5wOlQjNo0e4zmfbCNcCJPLAiJBJfhJbe/b9viRkSoZLnNO
-	 3altY8eZ6XAtvoLFHYbIqpw+f0nNz8LArA6HlLKL2lURF6SALYoh9sDnu5W5IE3EP9
-	 nwuqZX/gfz3glmIx+2wdbfpnBV6mrfRySEuf9PlB1bcdHLe8jjWvnKd/DNQ8D1ZqBJ
-	 00E7rLb7q8Z1ToGA0rgCliQOYsRXeoV+qz15lXUK8Pt1IXJNOCJHbq7foODYSRLacX
-	 CG9xVqgmh+Dmg==
-Message-ID: <49cf0a3d-5f52-41a1-9858-692f48d06b88@kernel.org>
-Date: Wed, 24 Apr 2024 21:12:59 +0200
+	s=arc-20240116; t=1713987131; c=relaxed/simple;
+	bh=fMnhv3IU+2Wtlu4OHN2GvchrPnp0KdIKfwUb0q4otf4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=E0Lp68cD2lFIsrTZ+D7WXELWrzMwyXU4+PP32l0+5xOL+39yqKJSRxM8KcMrnauwfyTcqmVIwwJLE44uJQkhGjHOHTq2PEzFTbo1c1AMyUpW8DRqDhPt39qvwHVahFMJQbjOBegG3VpyUQrzDlMrosCF7VePlokFGPhBmtRpo6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LGBaJ5Lr; arc=none smtp.client-ip=209.85.208.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2dd041acff1so2316871fa.1
+        for <linux-bluetooth@vger.kernel.org>; Wed, 24 Apr 2024 12:32:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1713987128; x=1714591928; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=khd1bQinBfuAW2ReCtJh6qolj7/CuLf+EnvLDQLwZh4=;
+        b=LGBaJ5LrDdNxxDAK649m0jh4ag4y0SReZ1pSim8njY1jg/pXV0stsXRyt6qMSt5oNc
+         mljOKG2I0QcEHoRN9Z24QXowWHmLZiYJAwUxU7l51zK8xbNWmdtlflcg6T+uBgMarteD
+         koORDpP+bOtdPNyeySSgjzwRJ1CPgRwKYcIVNVz7+Je7SW6y+B03KaQxzlQ77VEYTSyH
+         cbj0vjPvKD6dYXR8phfWjJtZz3cQkTEpxAMyQLs957l9PFVDp7NbkvUVoTcfoITNMO4l
+         CnL85HEEA0EXvE+Gc5YZV/WSytz3ZolxuMtV8JvneGk97I+58y9bX1UIgTws81sT+iG2
+         BeTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1713987128; x=1714591928;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=khd1bQinBfuAW2ReCtJh6qolj7/CuLf+EnvLDQLwZh4=;
+        b=sPUCFmYmZeNptCcJP81a6e+6oObGhyYl55na+rXSeTVoAnqfT6xJWX57pQquWFuFg7
+         vUOFwjLaE+VWFIVF+MrHyb4oUY+lI2xQUqkyXtMgIq3IZHLJVdbcOjeX4cGzRaoNAPa6
+         yDGl4XqLGCsWn8jUQCrbuO2Taw9EAAvZP9Z/JzlOg3feFsK2C8A8KwPi2sP3tYEvmjz0
+         gNPYTngrZ7XMzuQCh5CWLpUQr8HnwpEiLvXESlHY4FS+oSVONEx6d/1mHR+wWntCAVMn
+         +aUyuvA8869oZwU73TExrnkrzvl6NIMZegevPOwQM0PLqR56X4fo0hTk5p81iU2MfTo+
+         DjYA==
+X-Gm-Message-State: AOJu0YxQbrCSrMVmSxX1JgmuArjrfc3VwMy9duIQhVpJ81ifZ+nXEKaI
+	K+Pet+Gd7H2oSRzAgBX3ZavtS2Fe/eA6O7bFxjTraApBuaiXWZ2ZGVKULL3b+9edrDz3IDSIAUm
+	MVRUOYxPJCV8c6/1EOa03AZadg+r3eJ+G
+X-Google-Smtp-Source: AGHT+IHd1D9MWqfu63f7cSvdI9W5DqkCLk5yQGNCUmpsbTFI/6iT5tLQOzSEjkSgHxkm/DtN08QXvCraGsr1yZP6/j4=
+X-Received: by 2002:a2e:a378:0:b0:2d8:3e60:b9c9 with SMTP id
+ i24-20020a2ea378000000b002d83e60b9c9mr1986222ljn.33.1713987127852; Wed, 24
+ Apr 2024 12:32:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] Bluetooth: qca: Correct property enable-gpios handling
- logic for WCN6750 and WCN6855
-To: quic_zijuhu <quic_zijuhu@quicinc.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, luiz.dentz@gmail.com,
- luiz.von.dentz@intel.com, marcel@holtmann.org
-Cc: linux-bluetooth@vger.kernel.org, bartosz.golaszewski@linaro.org,
- wt@penguintechs.org, kernel@quicinc.com
-References: <1713947712-4307-1-git-send-email-quic_zijuhu@quicinc.com>
- <af004bcd-0649-4a82-8f09-36d6addd0e1e@linaro.org>
- <0cba3838-917b-48af-ba8b-2ef60714943a@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
- QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
- gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
- /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
- iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
- VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
- 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
- xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
- eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
- AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
- MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
- Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
- ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
- vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
- oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
- lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
- t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
- uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
- 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
- 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <0cba3838-917b-48af-ba8b-2ef60714943a@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20240318123712.9729-1-mahesh.talewad@nxp.com> <20240318123712.9729-2-mahesh.talewad@nxp.com>
+ <CABBYNZKvAmb5JjfxkPADED6CQKD+GxsRqLajHX=w0GE+imhCMA@mail.gmail.com>
+ <AS5PR04MB975486834B434042CE2A693689332@AS5PR04MB9754.eurprd04.prod.outlook.com>
+ <CABBYNZK5YS6paOYbx4yL6R7Wt9o+oGrtmfiQNmOaTAUo2DBfdQ@mail.gmail.com>
+ <AS5PR04MB9754B55170413A2FD0A00F0A89122@AS5PR04MB9754.eurprd04.prod.outlook.com>
+ <AS5PR04MB9754210A13AD74FB8C3E361D89102@AS5PR04MB9754.eurprd04.prod.outlook.com>
+In-Reply-To: <AS5PR04MB9754210A13AD74FB8C3E361D89102@AS5PR04MB9754.eurprd04.prod.outlook.com>
+From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date: Wed, 24 Apr 2024 15:31:54 -0400
+Message-ID: <CABBYNZJJq9UTf467LXJ-7WvWbn8bcge0L6CprkGSnu4ZpopSpw@mail.gmail.com>
+Subject: Re: [EXT] Re: [PATCH BlueZ v1 1/1] LE Create Connection command
+ timeout increased to 20 secs from 4 secs
+To: Mahesh Talewad <mahesh.talewad@nxp.com>
+Cc: "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>, 
+	Devyani Godbole <devyani.godbole@nxp.com>, Sarveshwar Bajaj <sarveshwar.bajaj@nxp.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 24/04/2024 11:22, quic_zijuhu wrote:
-> On 4/24/2024 4:44 PM, Krzysztof Kozlowski wrote:
->> On 24/04/2024 10:35, Zijun Hu wrote:
->>> Commit 56d074d26c58 ("Bluetooth: hci_qca: don't use IS_ERR_OR_NULL()
->>> with gpiod_get_optional()") has wrong logic for below case:
->>>
->>> property enable-gpios is not configured for WCN6750 and WCN6855
->>
->> As I said before, bindings say this property is required. I already
->> asked you to provide rationale describing hardware and update the
->> bindings if they bindings are not correct.
->>
-> 1)
-> you ever given below reply at below link
-> https://lore.kernel.org/linux-bluetooth/52394d97-04c3-4f77-aaae-f1e152cd5632@linaro.org/
-> 
-> "The pin is required on 6750, 6855 and maybe others. You cannot not have
-> the GPIO"
-> 
-> 2) for property enable-gpios, they are required for WCN6750 and WCN6855
-> in my opinion,  i am a member of BT team.
+Hi Mahesh,
 
-If they are required, then your commit msg is not precise and code looks
-incorrect.
+On Wed, Apr 24, 2024 at 9:49=E2=80=AFAM Mahesh Talewad <mahesh.talewad@nxp.=
+com> wrote:
+>
+> Hi Luiz,
+>
+> We tried with - 6093f28402aa6342890fc3adb6be355f804b719d - with this as w=
+ell issue is observed.
 
-> 
-> 3) only care about the case property enable-gpios is not configured,
-> the original BT driver design logic indeed matches with binging spec's
-> requirements before bartosz's wrong change
+The lets do something like:
 
-What? There is no such case according to bindings. I told you already
-two times: Either change bindings or this is not valid.
+diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+index 5c12761cbc0e..fbf0a6263dae 100644
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -456,7 +456,6 @@ enum {
+ #define HCI_AUTO_OFF_TIMEOUT   msecs_to_jiffies(2000)  /* 2 seconds */
+ #define HCI_ACL_CONN_TIMEOUT   msecs_to_jiffies(20000) /* 20 seconds */
+ #define HCI_LE_CONN_TIMEOUT    msecs_to_jiffies(20000) /* 20 seconds */
+-#define HCI_LE_AUTOCONN_TIMEOUT        msecs_to_jiffies(4000)  /* 4 second=
+s */
 
-> 
-> 4) please ask dts owner for help if you suspect current bindings spec
-> has something wrong. it is not my responsibility for providing such
-> info, that maybe involve CCI.
-
-What?
-
-What or who is DTS owner?
-
-I do not suspect bindings are wrong. You are implying it. Anyway, if
-making driver correct according to bindings is not your responsibility,
-then this patch is just bogus.
-
-> 
-> 5) gentle reminder, please realize that there are many lunched products
-> already when you try to change some important logic, i don't suggest
-> change important logic or setting if there are no actual issue reported.
-
-What?
-
-Best regards,
-Krzysztof
-
+ /* HCI data types */
+ #define HCI_COMMAND_PKT                0x01
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 99b4e68075f4..651e5105fdd5 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -2556,7 +2556,7 @@ struct hci_dev *hci_alloc_dev_priv(int sizeof_priv)
+        hdev->le_rx_def_phys =3D HCI_LE_SET_PHY_1M;
+        hdev->le_num_of_adv_sets =3D HCI_MAX_ADV_INSTANCES;
+        hdev->def_multi_adv_rotation_duration =3D HCI_DEFAULT_ADV_DURATION;
+-       hdev->def_le_autoconnect_timeout =3D HCI_LE_AUTOCONN_TIMEOUT;
++       hdev->def_le_autoconnect_timeout =3D HCI_LE_CONN_TIMEOUT;
+        hdev->min_le_tx_power =3D HCI_TX_POWER_INVALID;
+        hdev->max_le_tx_power =3D HCI_TX_POWER_INVALID;
 
