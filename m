@@ -1,221 +1,152 @@
-Return-Path: <linux-bluetooth+bounces-4095-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4097-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3CA38B327E
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 26 Apr 2024 10:31:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 85EF18B3316
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 26 Apr 2024 10:39:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 77DDF1F21091
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 26 Apr 2024 08:31:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 270FA1F210DD
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 26 Apr 2024 08:39:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9510713F454;
-	Fri, 26 Apr 2024 08:30:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C5C812BEBF;
+	Fri, 26 Apr 2024 08:39:10 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AC0213D500;
-	Fri, 26 Apr 2024 08:30:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3370420317;
+	Fri, 26 Apr 2024 08:39:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714120209; cv=none; b=dGKxzRtE6Kv+DmROn2FFjS5/+HUwStqmLd7OyVqLPDl6L18h3PrAQ9/8PmExSP2Lj7a1vfkTiRZhaQn/8J7rGMxXXj5PMwcQrLoSQxOtwqtg3/PrN2h7kI2r4o4xQVM88AvwmZvmn/9uuDTJeyED6GX5k2zgkP6bsuVmAKVDgWs=
+	t=1714120750; cv=none; b=jhBejO/IlJcRI0pIUarNJ7knOR2e4sBckyRLg2hqODLGTizTQh2lGazPQL1C9v7vMDUD6j+7DjRJTMS4aiq0UHEhy9Q8PtB4OJrouCYvB8AiGBU36DpM46027fZxK0htR1rHdZXFH41w5OOmVcsuwuELCrIK7yj/pNYpKMiUDp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714120209; c=relaxed/simple;
-	bh=UT2Hldt1LuQTSgRr14exJitTjr6r/cfxQnA6xIPcQS8=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=MsT+fcFREzB5m+BNM/auXqD4pBIHWmmw+WEJFOLABMFrO6Sa+RKjOWtl3Rq9P76tTYuvRVNWqvA3pQJftc7OKETd1zHS3WKXS3N9Hg3Y+Q0qOky3wlkOCjh3Kk5FcsxKZ9PmQWVFR9xnu4Fxeec1G9picLGnwFp42aZG5kkivaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sung-woo.kim; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.169
+	s=arc-20240116; t=1714120750; c=relaxed/simple;
+	bh=mxHlfRZVmoVJnUAx5dxOnpcf0RH0ieiocgXdOdOeC9A=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QMKZ/WKZAUUQUetyX8alfGZCLi4ibHuMAgY17wuQTIVh0Cq5Y1Kzcv/XGWsfLYg54RCV6iAWoCbkcdjfrjFF/bS8iDliaYUsoPFIXreo85KYkQObaEmYnQ6dqdWaVETpc7o4xsoVSVD8LsgMmgLJUTE5ifg+FQneO47tDWp9kMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sung-woo.kim; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.208.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sung-woo.kim
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-78f031a4442so125183685a.2;
-        Fri, 26 Apr 2024 01:30:06 -0700 (PDT)
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2dd6c14d000so21597251fa.0;
+        Fri, 26 Apr 2024 01:39:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714120206; x=1714725006;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nlRgvTBOhR4xmp+o/7NX7NdeoYPh3aEgHRcyNE9xJSY=;
-        b=Hu759ZcPKVPePDzQehiTdOXjCi/NpY0OsHVRim8GYQiseIJrTKfzf3TCfp4vfmEx53
-         8qdpb5wptQunCXiwSo9huF3US9hNt0mIGV9zGpjNl6arsYhOkX/x8km9xib5hduVfjuT
-         CgMjX9i/BNf65BdPLgC9xFdPQC8SK19QupCuajFYEHrIE8RHW3UESgZTRBxhBC3r5eVT
-         45znkHGeMrtDJ57mn8AEXTxTJr+WfgjrS/PqsbSqhSIioK50JsEoUydJ3jN2fZbMORfv
-         0fV5xvYFRIjRdHWCX262iSmONkydAS4ITy9lD1FkukpJUbum8676HN/t5FoSGlp/nvxj
-         FpiA==
-X-Forwarded-Encrypted: i=1; AJvYcCV0jO0IIf6RpNcDKbV7/WDEwCATJ1lo2R8PeU2qdRsdfHfQzqDyFXUVYJ6eBF1KKUtCqqw/x4/f7b0DToHAmuIJs7ffcTLryZBVbPT779GLtN21pPhxK4fctxhuMWfUm0/ytKH2oDw/ymGagG1h
-X-Gm-Message-State: AOJu0YwovRgpXX81jJrvZG+XoY4Oqx2MaY5k5XF5v2mXotTTD5KC+4lO
-	14DEIo0HNiZqPpoGtIDelHfVDFVz2MP3eoYBCcAxDeVt6H9q2SDs
-X-Google-Smtp-Source: AGHT+IF1jFj9h1E497HKgSVRM6xZSRLf2x+0daqUz2S4ZE8fAKnVWvH5/lf7SWz4Yp1UUgBuzvFt4g==
-X-Received: by 2002:a05:620a:1097:b0:790:9484:2dfc with SMTP id g23-20020a05620a109700b0079094842dfcmr2155521qkk.1.1714120206018;
-        Fri, 26 Apr 2024 01:30:06 -0700 (PDT)
-Received: from tofu.cs.purdue.edu ([128.210.0.165])
-        by smtp.gmail.com with ESMTPSA id o27-20020a05620a111b00b0078ec3c4452dsm7737582qkk.9.2024.04.26.01.30.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Apr 2024 01:30:05 -0700 (PDT)
-From: Sungwoo Kim <iam@sung-woo.kim>
-To: 
-Cc: daveti@purdue.edu,
-	Sungwoo Kim <iam@sung-woo.kim>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Johan Hedberg <johan.hedberg@gmail.com>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	linux-bluetooth@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] Bluetooth: A2MP: fix slab-use-after-free in l2cap_chan_del
-Date: Fri, 26 Apr 2024 04:28:53 -0400
-Message-Id: <20240426082852.555905-1-iam@sung-woo.kim>
-X-Mailer: git-send-email 2.34.1
+        d=1e100.net; s=20230601; t=1714120746; x=1714725546;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mxHlfRZVmoVJnUAx5dxOnpcf0RH0ieiocgXdOdOeC9A=;
+        b=ur0IiqPKDmJt4xuRB31jVy60dfRZQMrEeQGmdRyNeDNS3chubWQQsdBikRh70q+f2S
+         sNsx1OW//jvh+eyKnYMxZsnb4gOUduqPyGdrvXGnu5+ILyX3LAgcdOrHLsEv6OZH2/me
+         DJConP1mxnP8kUV8Y3L4VS0QGNgl0IVhb/N7kYeON4AScTYt7ceDx+y2GbfikSO9yp26
+         Alw2/yCsHPrdujwi4LtPC9KnAn8EOp4o2rfYbtjJ/JOcWAPxUyZUuWmp1/7+N/1laHWJ
+         H+yU8UWR2byQ070JjAIVsYoZLyJwwOyjitO0bIcYCKKN0bku9QdjARtC70vWySBFUpfA
+         PgEw==
+X-Forwarded-Encrypted: i=1; AJvYcCXIuCvLRiYKu7erKfcImRHsWW0qXRWVx9VFDqWIXX8xQJhj/msTsnPIqmyEQ6PnUt6GO9c9dF210cn2PN3xpJS297rz9d2BGgySE1b1qNQAcC0e1FngELlycOfzELV3qjR/tXHew++zXZmIIWMi
+X-Gm-Message-State: AOJu0YwBE6qC2U0y+VLMtzJaEMALBrmbALkSAA2mFHLjE22+1fSy3FxN
+	v0NLvo3m1IO9/N8jMYGaX/9HOK+cbtCEJLzht7ToNx8PVx4m30fWHhCPZXvlnaM=
+X-Google-Smtp-Source: AGHT+IG+V9jxBMf/hVt6W9MO2l3EQQSxqIFZDsGtzSg9jvvlGMK/TYHFOJV50rpPKC7rhFvXrfvLRg==
+X-Received: by 2002:a05:651c:150b:b0:2d8:2761:a90f with SMTP id e11-20020a05651c150b00b002d82761a90fmr1429006ljf.33.1714120745853;
+        Fri, 26 Apr 2024 01:39:05 -0700 (PDT)
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com. [209.85.167.47])
+        by smtp.gmail.com with ESMTPSA id k4-20020a2e92c4000000b002d808b86073sm2604511ljh.78.2024.04.26.01.39.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 26 Apr 2024 01:39:05 -0700 (PDT)
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-51967f75763so2192924e87.2;
+        Fri, 26 Apr 2024 01:39:05 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCVaXMUiTXlm7iUJcCmGiwO3U9qH6j5oAdJTKKYaTU8Za4Mjyrvmfc2ftIxNPyi3Sl8ID8+oMwEuM1myozSb83mDsGhakG8klx6K8BWOJTw6Q10qc0LKdtJtFWtOOX9SSZMFPK6iUu/3EZolr5Mj
+X-Received: by 2002:ac2:5104:0:b0:51b:15b:d262 with SMTP id
+ q4-20020ac25104000000b0051b015bd262mr1192105lfb.33.1714120745348; Fri, 26 Apr
+ 2024 01:39:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240426072006.358802-1-iam@sung-woo.kim> <964b0005-3a9d-499b-91d3-171a3c917b4a@web.de>
+In-Reply-To: <964b0005-3a9d-499b-91d3-171a3c917b4a@web.de>
+From: Sungwoo Kim <iam@sung-woo.kim>
+Date: Fri, 26 Apr 2024 04:38:24 -0400
+X-Gmail-Original-Message-ID: <CAJNyHp+WFONaNbZVK3tPcT=9obEiuE3MvQzJK++HP-ffNdfX0w@mail.gmail.com>
+Message-ID: <CAJNyHp+WFONaNbZVK3tPcT=9obEiuE3MvQzJK++HP-ffNdfX0w@mail.gmail.com>
+Subject: Re: [PATCH] Bluetooth: L2CAP: Fix slab-use-after-free in l2cap_send_cmd
+To: Markus Elfring <Markus.Elfring@web.de>
+Cc: linux-bluetooth@vger.kernel.org, kernel-janitors@vger.kernel.org, 
+	LKML <linux-kernel@vger.kernel.org>, "Dave (Jing) Tian" <daveti@purdue.edu>, 
+	Johan Hedberg <johan.hedberg@gmail.com>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	Marcel Holtmann <marcel@holtmann.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-l2cap_set_timer() may potentially dereference chan->conn->hcon->amp_mgr.
-However, the timer does not hold amp_mgr, allowing uaf as follows:
+On Fri, Apr 26, 2024 at 4:26=E2=80=AFAM Markus Elfring <Markus.Elfring@web.=
+de> wrote:
+>
+> I prefer that you would put recipient specifications also into the messag=
+e field =E2=80=9CTo=E2=80=9D
+> (besides =E2=80=9CCc=E2=80=9D).
 
-l2cap_set_timer()
-l2cap_chan_timeout()
-  l2cap_chan_close()
-    l2cap_chan_del()
-      if (mgr && mgr->bredr_chan == chan)  // uaf at mgr->bredr_chan
+Okay.
 
-One patch could be calling amp_mgr_get(chan->conn->hcon->amp_mgr) in l2cap_set_timer().
-This will increase refcnt and make mgr alive at l2cap_chan_del().
+>
+>
+> > Hello, could you review a bug and its fix?
+>
+> I suggest to omit such a question from better change descriptions.
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/D=
+ocumentation/process/submitting-patches.rst?h=3Dv6.9-rc5#n45
 
-Unfortunately, amp_mgr_get() is in a2mp.h and l2cap_set_timer() is in l2cap.h.
-Including a2mp.h in l2cap.h makes circular (and dirty "../../net/bluetooth/a2mp.h")
-dependency because a2mp.h already includes l2cap.h.
+Thank you. I'll thoroughly read this.
 
-So.. as a temporary work, this patch assigns NULL to conn->amp_mgr.
-While this makes it less likely to trigger the bug, the bug still can
-happen because mgr && mgr->bredr is not atomic.
-Could we talk about a better idea?
+>
+>
+> =E2=80=A6
+> > To fix this, this patch holds and locks the l2cap channel.
+>
+> Please choose a corresponding imperative wording.
 
-Also, AMP is removed recently.
-The kernel with versions <= v6.8 might have this issue.
+Okay.
 
-==================================================================
-BUG: KASAN: slab-use-after-free in l2cap_chan_del+0x31d/0x6b0 net/bluetooth/l2cap_core.c:670
-Read of size 8 at addr ffff88810dab7220 by task kworker/0:1/10
+>
+>
+> You would probably like to improve your patch approach further
+> so that provided data will be kept consistent.
 
-CPU: 0 PID: 10 Comm: kworker/0:1 Not tainted 6.8.0+ #61
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-Workqueue: events l2cap_chan_timeout
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x85/0xb0 lib/dump_stack.c:106
- print_address_description mm/kasan/report.c:377 [inline]
- print_report+0x18f/0x560 mm/kasan/report.c:488
- kasan_report+0xd7/0x110 mm/kasan/report.c:601
- __asan_report_load8_noabort+0x18/0x20 mm/kasan/report_generic.c:381
- l2cap_chan_del+0x31d/0x6b0 net/bluetooth/l2cap_core.c:670
- l2cap_chan_close+0x53c/0x930
- l2cap_chan_timeout+0x10b/0x300 net/bluetooth/l2cap_core.c:452
- process_one_work kernel/workqueue.c:2633 [inline]
- process_scheduled_works+0x6b9/0xdc0 kernel/workqueue.c:2706
- worker_thread+0xb2b/0x13d0 kernel/workqueue.c:2787
- kthread+0x2a9/0x340 kernel/kthread.c:388
- ret_from_fork+0x5c/0x90 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1b/0x30 arch/x86/entry/entry_64.S:243
- </TASK>
+I will.
 
-Allocated by task 296:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x30/0x70 mm/kasan/common.c:68
- kasan_save_alloc_info+0x3c/0x50 mm/kasan/generic.c:575
- poison_kmalloc_redzone mm/kasan/common.c:370 [inline]
- __kasan_kmalloc+0xa2/0xc0 mm/kasan/common.c:387
- kasan_kmalloc include/linux/kasan.h:211 [inline]
- kmalloc_trace+0x1c9/0x390 mm/slub.c:4012
- kmalloc include/linux/slab.h:590 [inline]
- kzalloc include/linux/slab.h:711 [inline]
- amp_mgr_create+0x5d/0xd30 net/bluetooth/a2mp.c:854
- a2mp_channel_create+0x60/0x110 net/bluetooth/a2mp.c:894
- l2cap_data_channel net/bluetooth/l2cap_core.c:7676 [inline]
- l2cap_recv_frame+0xbd7/0x86a0 net/bluetooth/l2cap_core.c:7832
- l2cap_recv_acldata+0x379/0xbe0 net/bluetooth/l2cap_core.c:8536
- hci_acldata_packet net/bluetooth/hci_core.c:3876 [inline]
- hci_rx_work+0x64b/0xcb0 net/bluetooth/hci_core.c:4111
- process_one_work kernel/workqueue.c:2633 [inline]
- process_scheduled_works+0x6b9/0xdc0 kernel/workqueue.c:2706
- worker_thread+0xb2b/0x13d0 kernel/workqueue.c:2787
- kthread+0x2a9/0x340 kernel/kthread.c:388
- ret_from_fork+0x5c/0x90 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1b/0x30 arch/x86/entry/entry_64.S:243
+> https://lore.kernel.org/lkml/20240426073142.363876-1-iam@sung-woo.kim/
+>
+> Regards,
+> Markus
+>
 
-Freed by task 296:
- kasan_save_stack mm/kasan/common.c:47 [inline]
- kasan_save_track+0x30/0x70 mm/kasan/common.c:68
- kasan_save_free_info+0x44/0x50 mm/kasan/generic.c:589
- poison_slab_object+0x11a/0x190 mm/kasan/common.c:240
- __kasan_slab_free+0x3b/0x60 mm/kasan/common.c:256
- kasan_slab_free include/linux/kasan.h:184 [inline]
- slab_free_hook mm/slub.c:2121 [inline]
- slab_free mm/slub.c:4299 [inline]
- kfree+0x106/0x2e0 mm/slub.c:4409
- amp_mgr_destroy net/bluetooth/a2mp.c:839 [inline]
- kref_put include/linux/kref.h:65 [inline]
- amp_mgr_put+0x16b/0x230 net/bluetooth/a2mp.c:846
- hci_conn_del+0x39d/0xc30 net/bluetooth/hci_conn.c:1179
- hci_phy_link_complete_evt+0x135/0x3d0 net/bluetooth/hci_event.c:5713
- hci_event_func net/bluetooth/hci_event.c:7689 [inline]
- hci_event_packet+0x8e9/0x1290 net/bluetooth/hci_event.c:7741
- hci_rx_work+0x387/0xcb0 net/bluetooth/hci_core.c:4106
- process_one_work kernel/workqueue.c:2633 [inline]
- process_scheduled_works+0x6b9/0xdc0 kernel/workqueue.c:2706
- worker_thread+0xb2b/0x13d0 kernel/workqueue.c:2787
- kthread+0x2a9/0x340 kernel/kthread.c:388
- ret_from_fork+0x5c/0x90 arch/x86/kernel/process.c:147
- ret_from_fork_asm+0x1b/0x30 arch/x86/entry/entry_64.S:243
-
-The buggy address belongs to the object at ffff88810dab7200
- which belongs to the cache kmalloc-128 of size 128
-The buggy address is located 32 bytes inside of
- freed 128-byte region [ffff88810dab7200, ffff88810dab7280)
-
-The buggy address belongs to the physical page:
-page:00000000a802fdc8 refcount:1 mapcount:0 mapping:0000000000000000 index:0xffff88810dab7200 pfn:0x10dab7
-flags: 0x17ffffc0000a00(workingset|slab|node=0|zone=2|lastcpupid=0x1fffff)
-page_type: 0xffffffff()
-raw: 0017ffffc0000a00 ffff8881000418c0 ffffea000410d710 ffffea00041c6e90
-raw: ffff88810dab7200 000000000010000f 00000001ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
- ffff88810dab7100: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff88810dab7180: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
->ffff88810dab7200: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                               ^
- ffff88810dab7280: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
- ffff88810dab7300: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-==================================================================
-
-Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
----
- net/bluetooth/hci_conn.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index a41d2693f..f9b41add1 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1175,8 +1175,10 @@ void hci_conn_del(struct hci_conn *conn)
- 		}
- 	}
- 
--	if (conn->amp_mgr)
-+	if (conn->amp_mgr) {
- 		amp_mgr_put(conn->amp_mgr);
-+		conn->amp_mgr = NULL;
-+	}
- 
- 	skb_queue_purge(&conn->data_q);
- 
--- 
-2.34.1
-
+On Fri, Apr 26, 2024 at 4:26=E2=80=AFAM Markus Elfring <Markus.Elfring@web.=
+de> wrote:
+>
+> I prefer that you would put recipient specifications also into the messag=
+e field =E2=80=9CTo=E2=80=9D
+> (besides =E2=80=9CCc=E2=80=9D).
+>
+>
+> > Hello, could you review a bug and its fix?
+>
+> I suggest to omit such a question from better change descriptions.
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/D=
+ocumentation/process/submitting-patches.rst?h=3Dv6.9-rc5#n45
+>
+>
+> =E2=80=A6
+> > To fix this, this patch holds and locks the l2cap channel.
+>
+> Please choose a corresponding imperative wording.
+>
+>
+> You would probably like to improve your patch approach further
+> so that provided data will be kept consistent.
+> https://lore.kernel.org/lkml/20240426073142.363876-1-iam@sung-woo.kim/
+>
+> Regards,
+> Markus
+>
 
