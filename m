@@ -1,111 +1,186 @@
-Return-Path: <linux-bluetooth+bounces-4096-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4098-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE7868B3313
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 26 Apr 2024 10:38:56 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A7F18B3398
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 26 Apr 2024 11:09:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 32016B23CAA
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 26 Apr 2024 08:38:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7D2C41C220F2
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 26 Apr 2024 09:09:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CFE612BEBF;
-	Fri, 26 Apr 2024 08:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8D6713D525;
+	Fri, 26 Apr 2024 09:08:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lgduNMMO"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="4Wr1jHtE"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E14F7EF
-	for <linux-bluetooth@vger.kernel.org>; Fri, 26 Apr 2024 08:38:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795DF25605
+	for <linux-bluetooth@vger.kernel.org>; Fri, 26 Apr 2024 09:08:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714120709; cv=none; b=Mx5yvF+Kp/giEXKQ8CziCu7IWXJD17s+N23LP8XedhJhyt9hwgu41zcjNrAbA2bC97qePCJJlvwXqeHkCB/9EY6j840jWZTj3eLHAsz/oYGiYflrpCEXAUNc8Iprt+NJ28Et2UHMNFq8bu8ByEbNwf8UVIRBqOFkdzTKfMAx9X8=
+	t=1714122536; cv=none; b=KMikuWpKZhc97bKJQl60l50LWt4FyG2D6xyVqCfGQxfNvsP49hHkvpC2QUMwJZZ2tiU3OO9f/lEv3FurwJB1KAa62WoG3KVEhwkxtypHODJsDBuCBo02KAXhb8zuAetpYnGncyAqCbz/208gNHjtD6/4n8MuyR3D4AfCS916U2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714120709; c=relaxed/simple;
-	bh=JL8/SdncCW1OeZLyzlW04gJBD0EBQ8SPiAubj77Oq5E=;
-	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
-	 In-Reply-To:References; b=sMJTdeNqNtX0nlQqj+XIxjrNfOYon/Z5vt/h/T1btLHmlwpQ0e3q/sQlyuCRsHhXZ/WumxGJbYwsXOi+KLGgIGCVrUdLRiNQ1UPfuY+2L3Vz3o4dz9THtrhbfN4oHo/DJddZ84bXocX+B0yRrIq4KuXM5HmVJ5kjxKHDZxfwhEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lgduNMMO; arc=none smtp.client-ip=209.85.219.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-6a06b12027cso26939356d6.0
-        for <linux-bluetooth@vger.kernel.org>; Fri, 26 Apr 2024 01:38:27 -0700 (PDT)
+	s=arc-20240116; t=1714122536; c=relaxed/simple;
+	bh=PwJip2bI3d8w1d8xY7szIeXVyb2xY9y6x9ioLdBZf+E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=W42D6vPY4H/HcueEBg/KckOZx8rjPhzQEkYPx6ywtR2iNfXTELx6YLJLdbXACqB7Ea4sc6Li9wf1abj2jyNzGn/QJDvylYKKq5+BcakRcC0LmQICEWIhRIdZHgvCL35nNFpfXix6D/A4XwSDfJd3c76vfX/I7H5WZq+Mc6g2MDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=4Wr1jHtE; arc=none smtp.client-ip=209.85.208.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5724736770cso5821a12.1
+        for <linux-bluetooth@vger.kernel.org>; Fri, 26 Apr 2024 02:08:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714120707; x=1714725507; darn=vger.kernel.org;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=JL8/SdncCW1OeZLyzlW04gJBD0EBQ8SPiAubj77Oq5E=;
-        b=lgduNMMOd9cDrT2Z1O9rxQRGaycWsNIYpXhvXuNkChxFxe3UkZpalbaxgc9waZetsu
-         wN1m4ok+e6lEIvVqXhrUuohoQxc9Nisgv4obZmB2qok2IZOvvaRfR6cOswC109J9iiGd
-         TkwfpgcVWT+bKHedX0S5E2bxle3XOObHID7T2sv3vUVl//8DOFb9Cqvoui3VIMEQ+vnN
-         Olm/rMgxKBfpMYpmsWiZE/rmufl1E6etB6p1kP+vN/fK/d75ZE1vnej/DBBEDOzuhZUN
-         ZfxbjWgz7INM0VTSOJQHUQbl+4QExmNaT+1R7flto0JUI1DYRw01mmLZP8jVL5yBJgke
-         pbUw==
+        d=google.com; s=20230601; t=1714122533; x=1714727333; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ja2hNeJD5lpzreFTljFzef74K+wsxiiyhKIsFU5oS/c=;
+        b=4Wr1jHtE5ZUeI4hAwB/3/w+vHyhPBxN8zJK6cxhevx94lHoZbN0Qwna2OiAPhhaiAe
+         5v6c0X5toAedPZE+eF1GPggKgB0PDKgvWQjXOrOAR/TS9YsZbV3G9EtOLLMgS0g49W3T
+         SMFTfv4erAZC1JnuKZKCCfCcxAZlQctUxu81V3PLcIRqKiup1KiZMcwx45p3KAIaCmut
+         EXvi+fNLYFzbbfCVkAwQUF3T83OBY5WLBais42PosFl6OFgZD4z7MIYMQss0pB/aCjhg
+         mAhe9hza0D0CgwlZa9r++boN0y5VNpvoNkcDK+s15XmWsZ+nik+v7VN9jHLa9GfpyxML
+         ZC6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714120707; x=1714725507;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JL8/SdncCW1OeZLyzlW04gJBD0EBQ8SPiAubj77Oq5E=;
-        b=jynUD6UmDIf3YlnQmFtf+YEfqvYN/gYBTB+avOIm//CN57FYdI6sL6+mxqC+lUglMl
-         HpmT147+gs/neiX8u1ewmYbNoiZ00F2bJIaiFGTUyxbN5CTt0FZQN9nU/mIn68Bxe38C
-         ZotCf+TqLilv18mutg7+SXKUpwbE/h8VL6zs38XtFq4dG7vQQvKjqpW5o0FIUUcmjNe/
-         OO4pKJj9AOljrOD4ZYypW5E40OO9mHEUycunTZ8Dg0VUTWDTiAs6yo4QTy9QkOQP066H
-         prSKyRtlrtJ6F4E9q+GsvM7Glg9xDbrwddSHUWG97NHaUW+nhVT1Yu+YGBu6ScHrWrM9
-         DKPg==
-X-Gm-Message-State: AOJu0YzlDcWOy937qUJ9UPJkNXA+UfPh17LYZp2B+5i/+jpy466K845X
-	DbksCrmaO0rZxSSwj2DfC8oQ6HuUtssYuiIOzH6gp+c2QwvUqoZGE8GmGQ==
-X-Google-Smtp-Source: AGHT+IH9NuJjRclgUPyFquWFUvkz8XrhY1NIe6cisGRd8SuVkriEIeEsFJlS6chNQKEuDnQm0LYiXQ==
-X-Received: by 2002:a05:6214:300f:b0:6a0:4571:e0c8 with SMTP id ke15-20020a056214300f00b006a04571e0c8mr3484891qvb.18.1714120706818;
-        Fri, 26 Apr 2024 01:38:26 -0700 (PDT)
-Received: from [172.17.0.2] ([20.102.46.247])
-        by smtp.gmail.com with ESMTPSA id w16-20020a0cfc50000000b0069b69c5f077sm6806670qvp.102.2024.04.26.01.38.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Apr 2024 01:38:26 -0700 (PDT)
-Message-ID: <662b6802.0c0a0220.28329.2d32@mx.google.com>
-Date: Fri, 26 Apr 2024 01:38:26 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============3335916149019238172=="
+        d=1e100.net; s=20230601; t=1714122533; x=1714727333;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Ja2hNeJD5lpzreFTljFzef74K+wsxiiyhKIsFU5oS/c=;
+        b=qDzVWOb2jFUo/5Tg0c4nn1J1HCSdkJ0p+FegTOeaa2c+Xaj5U8kcRaaAhxQf7yPApu
+         mFOudRfTssFI5LlholCw3qvzs63oQrgPPpx8DBfnQk6KhkGgTa7PQtQ8Wy2kPC8X1pM1
+         ZOLby7THsjr4p8Y8xUl3lf+w46gGXKn3AmgHW5hYGIylbPKkgZpR+aU4iDXOs9KlA37p
+         m9qGcbWU/8GVVtIkmwzNyy7mznFlVwiA+9dSaHFUDrNzVnTaw1kkSdT55ovdu50xAUd/
+         XVLkqfxf1ch3TlAN41Cmi+mf1X9Ix/EknsGhNWF/7TIUSeQeWaP97ycuxNRoyTPk0weS
+         viYA==
+X-Gm-Message-State: AOJu0YxZMC+iLMhMVbOptiF7JLO8Na0mflSxBwOclWmhdBSKclwgav+B
+	9IpFTTFCy3RcHpkIO2kWWgTIhFkTDNieJIzvzbVvLLuciV0NPINVn8i32jvQlzuzcvcBaR+yeyA
+	I4edOcNpnKvRdx6rbRdyFWdfy7mNjwWlkMN31
+X-Google-Smtp-Source: AGHT+IHujQYAqx2B45GLqCBKPuCqaju6NcYLIyZHXLX5p+QiGBrNWGqmIC64DsOoSSioYGIh1X5ZSdiYL+9ZdcrEV/w=
+X-Received: by 2002:aa7:c512:0:b0:572:5d62:7971 with SMTP id
+ o18-20020aa7c512000000b005725d627971mr16853edq.0.1714122532540; Fri, 26 Apr
+ 2024 02:08:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: bluez.test.bot@gmail.com
-To: linux-bluetooth@vger.kernel.org, iam@sung-woo.kim
-Subject: RE: Bluetooth: A2MP: fix slab-use-after-free in l2cap_chan_del
-In-Reply-To: <20240426082852.555905-1-iam@sung-woo.kim>
-References: <20240426082852.555905-1-iam@sung-woo.kim>
-Reply-To: linux-bluetooth@vger.kernel.org
+References: <20240422152500.1.I8939e49084a6fef78496eb73edafdf3c2c4afbf4@changeid>
+ <CABBYNZLCjrJUiVzNf53XYM-ZHWL6TZD4yFNtNGOuYi=6s5Q+OA@mail.gmail.com>
+In-Reply-To: <CABBYNZLCjrJUiVzNf53XYM-ZHWL6TZD4yFNtNGOuYi=6s5Q+OA@mail.gmail.com>
+From: Archie Pusaka <apusaka@google.com>
+Date: Fri, 26 Apr 2024 17:08:40 +0800
+Message-ID: <CAJQfnxHUW+MdJUp9VCrF2Nq_-JZrd7mKBR9NdDoo0SOvgH5WUQ@mail.gmail.com>
+Subject: Re: [PATCH] Bluetooth: btusb: Add debugfs to force toggling remote wakeup
+To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: linux-bluetooth <linux-bluetooth@vger.kernel.org>, 
+	Johan Hedberg <johan.hedberg@gmail.com>, Marcel Holtmann <marcel@holtmann.org>, 
+	CrosBT Upstreaming <chromeos-bluetooth-upstreaming@chromium.org>, 
+	Archie Pusaka <apusaka@chromium.org>, Abhishek Pandit-Subedi <abhishekpandit@google.com>, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
---===============3335916149019238172==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Hi Luiz,
 
-This is an automated email and please do not reply to this email.
+On Thu, 25 Apr 2024 at 03:05, Luiz Augusto von Dentz
+<luiz.dentz@gmail.com> wrote:
+>
+> Hi Archie,
+>
+> On Mon, Apr 22, 2024 at 3:25=E2=80=AFAM Archie Pusaka <apusaka@google.com=
+> wrote:
+> >
+> > From: Archie Pusaka <apusaka@chromium.org>
+> >
+> > Sometimes we want the controller to not wake the host up, e.g. to
+> > save the battery. Add some debugfs knobs to force the wake by BT
+> > behavior.
+> >
+> > Signed-off-by: Archie Pusaka <apusaka@chromium.org>
+> > Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@google.com>
+> >
+> > ---
+> >
+> >  drivers/bluetooth/btusb.c | 19 +++++++++++++++++++
+> >  1 file changed, 19 insertions(+)
+> >
+> > diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+> > index 8bede0a335668..846b15fc3c04c 100644
+> > --- a/drivers/bluetooth/btusb.c
+> > +++ b/drivers/bluetooth/btusb.c
+> > @@ -873,6 +873,9 @@ struct btusb_data {
+> >         unsigned cmd_timeout_cnt;
+> >
+> >         struct qca_dump_info qca_dump;
+> > +
+> > +       bool force_enable_remote_wake;
+> > +       bool force_disable_remote_wake;
+> >  };
+> >
+> >  static void btusb_reset(struct hci_dev *hdev)
+> > @@ -4596,6 +4599,10 @@ static int btusb_probe(struct usb_interface *int=
+f,
+> >
+> >         debugfs_create_file("force_poll_sync", 0644, hdev->debugfs, dat=
+a,
+> >                             &force_poll_sync_fops);
+> > +       debugfs_create_bool("force_enable_remote_wake", 0644, hdev->deb=
+ugfs,
+> > +                           &data->force_enable_remote_wake);
+> > +       debugfs_create_bool("force_disable_remote_wake", 0644, hdev->de=
+bugfs,
+> > +                           &data->force_disable_remote_wake);
+> >
+> >         return 0;
+> >
+> > @@ -4702,6 +4709,18 @@ static int btusb_suspend(struct usb_interface *i=
+ntf, pm_message_t message)
+> >                 }
+> >         }
+> >
+> > +       if (!PMSG_IS_AUTO(message)) {
+> > +               if (data->force_enable_remote_wake) {
+> > +                       data->udev->do_remote_wakeup =3D 1;
+> > +                       if (test_bit(BTUSB_WAKEUP_AUTOSUSPEND, &data->f=
+lags))
+> > +                               data->udev->reset_resume =3D 0;
+> > +               } else if (data->force_disable_remote_wake) {
+> > +                       data->udev->do_remote_wakeup =3D 0;
+> > +                       if (test_bit(BTUSB_WAKEUP_AUTOSUSPEND, &data->f=
+lags))
+> > +                               data->udev->reset_resume =3D 1;
+> > +               }
+> > +       }
+> > +
+> >         return 0;
+> >  }
+> >
+> > --
+> > 2.44.0.769.g3c40516874-goog
+>
+> There is a D-Bus interface available to overwrite the wakeup setting:
+>
+> https://github.com/bluez/bluez/blob/master/doc/org.bluez.Device.rst#boole=
+an-wakeallowed-readwrite
+>
+> Or do you want a master switch for it? On the other hand aren't we
+> getting into the rfkill area if you really want to switch off radio
+> activity while suspended? That seems like a better idea then just
+> disable remote wakeup.
 
-Dear Submitter,
+Yes, the initial idea was a master switch.
+Thanks for your suggestions.
+Let me discuss it with Abhishek.
+>
+> --
+> Luiz Augusto von Dentz
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-While preparing the CI tests, the patches you submitted couldn't be applied to the current HEAD of the repository.
-
------ Output -----
-
-error: patch failed: net/bluetooth/hci_conn.c:1175
-error: net/bluetooth/hci_conn.c: patch does not apply
-hint: Use 'git am --show-current-patch' to see the failed patch
-
-Please resolve the issue and submit the patches again.
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============3335916149019238172==--
+Thanks,
+Archie
 
