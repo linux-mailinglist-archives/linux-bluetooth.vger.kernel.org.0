@@ -1,183 +1,160 @@
-Return-Path: <linux-bluetooth+bounces-4216-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4218-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A26E78B8791
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  1 May 2024 11:22:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 92E0C8B8849
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  1 May 2024 11:56:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2EFB51F22CB4
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  1 May 2024 09:22:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 45728284875
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  1 May 2024 09:56:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C79850A8F;
-	Wed,  1 May 2024 09:22:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E403D51C2A;
+	Wed,  1 May 2024 09:56:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="IddQyAdR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FUtEuwKv"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA93B502B1;
-	Wed,  1 May 2024 09:22:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E35A3F8D1
+	for <linux-bluetooth@vger.kernel.org>; Wed,  1 May 2024 09:56:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714555353; cv=none; b=RIOLgLtjoSyENDQAVqCSn6EO8Z+c5XPMR6xPoWrYo85Mll9bQ7YbzFytH/KB06wKqLlLk9JxFr9QR512ZL+m4Rfi648mBEYvde168NhzRggiF8aVpdmXKXZ9K3UWrtOc6W+hDAMipc2ldJO8MI+wzFPVlkCb1U16wJQHrQOMALQ=
+	t=1714557397; cv=none; b=BqEYfHWjMmXO1LWiaBOyksbBzAZn9BP34GiMzhNqQz7ewytXl44dIGZjpXvHtas9HWUc53VBX4DJNcLOy//OsrPWjhiZWAzqLNEn3Mln3lv2vytplmY4AdA1eZhrrdCGkdyijawOPccj075WAmKf15E/BIMmvGNk1eLJD/GyFtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714555353; c=relaxed/simple;
-	bh=xPIXDVY5gVPMDe5fMgyJ098UWrM9E71BMIAPj1D00UE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IJo6ag3H4KzsuRN3kP2HEhmb9X5AtcgBfE6bvbjjwQ4HOhgmixi8PeM7I8IyZIfSs0GsUAZCXwqWBoroMOglsFRShJTmOhBJ4Buux7QRU8uwGl5vzlO51aajQXrM+46fNgSrkmwzopMpbvAXmPvcnaETpOcNAjsIXMRZiXIfQOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=IddQyAdR; arc=none smtp.client-ip=192.198.163.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1714555350; x=1746091350;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=xPIXDVY5gVPMDe5fMgyJ098UWrM9E71BMIAPj1D00UE=;
-  b=IddQyAdRCr35BLErVXB49gdExU8eFlLsBAhpSLGASzdEdZB1VIa+iose
-   qcYv/Pygq2nE7RbCZqoFSOJFM5+AMT2GWP/PL/4pgbFtPaySNO+G0qh+c
-   kkB+3tnbrSylsq/qO/gqw948uK3nIipBGNoUBkxaP/UCo2tSnoyvwbSzz
-   rE9CFU/tWCsazsK5grIBeRdkXjQfpt2TKc8UXdooVT3AuMHZnGKAuCvvM
-   4LgovAg3vz3bM/hMwDNKXGYrhg+eI0lNOFuqFFkDE9eDp5ek7j6vAJVye
-   4yJUIAnbxauFBtOE6njDq5voMr3EmgKB/xkTNuzRx3DIZvM3QoJSaRatI
-   g==;
-X-CSE-ConnectionGUID: LuFTWI3uRcKD+1/HvWGDFw==
-X-CSE-MsgGUID: KPBORj1wSsyXXKyazibM0g==
-X-IronPort-AV: E=McAfee;i="6600,9927,11060"; a="10129448"
-X-IronPort-AV: E=Sophos;i="6.07,244,1708416000"; 
-   d="scan'208";a="10129448"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 May 2024 02:22:29 -0700
-X-CSE-ConnectionGUID: cyPWk+HwSSSI5x1uyYTQVQ==
-X-CSE-MsgGUID: payiuTkjS7uRMOU5KcG7tw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,244,1708416000"; 
-   d="scan'208";a="26816520"
-Received: from lkp-server01.sh.intel.com (HELO e434dd42e5a1) ([10.239.97.150])
-  by fmviesa010.fm.intel.com with ESMTP; 01 May 2024 02:22:28 -0700
-Received: from kbuild by e434dd42e5a1 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1s26AU-0009Jo-0b;
-	Wed, 01 May 2024 09:22:26 +0000
-Date: Wed, 1 May 2024 17:22:23 +0800
-From: kernel test robot <lkp@intel.com>
-To: Sebastian Urban <surban@surban.net>
-Cc: oe-kbuild-all@lists.linux.dev, Sebastian Urban <surban@surban.net>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Johan Hedberg <johan.hedberg@gmail.com>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v6] Bluetooth: compute LE flow credits based on recvbuf
- space
-Message-ID: <202405011748.NWhismdZ-lkp@intel.com>
-References: <20240430235122.37716-1-surban@surban.net>
+	s=arc-20240116; t=1714557397; c=relaxed/simple;
+	bh=dsPWx2eavqi0WMPLyqnWXfro1BSQBh1PhGhzmqhpo0o=;
+	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
+	 In-Reply-To:References; b=mYx30ovmtu7T5nzy7WXNI0OVfll2aUmYKAPzifL0Vk3qH0nZnGm8v8gydU8cmIxxZil+ysCHekDX2ekfpI6+qUHxdqO7QgRKua8nbNZrn7uh6hgRfffWT/XDZL35GXT6HN35HJ7VPasUa76EO7YKdvOJaX2MfdsuiettUCciFeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FUtEuwKv; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-1e65a1370b7so62092415ad.3
+        for <linux-bluetooth@vger.kernel.org>; Wed, 01 May 2024 02:56:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1714557395; x=1715162195; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=cHKa+PO5FYG/aT0WC95Jk1JlbztIflfkK1iUxMgTE8Q=;
+        b=FUtEuwKvyWGTA9cpUHJRdo3X04NkAhKutXFyBhM9BmGnfsvs31Fwi4V6U17rnBnA91
+         Pul5sRSliruF4yiGrTCwPZmSk46WsKhgJAmBrXuCjoLo0+BnW3C6xBx+zVIAJwrcHMuS
+         gVtLZ5fmyHVHA81UUqywBKMMAO2LjtVoUGvIJ1I0wRv62iIsp4x1uuJsLTVU3nIbPt4e
+         6p3P6RCZigkHhZ5xKpuEB1YhDKUOToMBOOmq8/ys5GlDp2or+im/L+xq559atSPrIK6Y
+         0ekJY5RNsW6zQ9iEBosO9+H0K19U2953EbX+fW4Cb3Mf1oFh9d+DLnhWw5cJIQQmfVbn
+         kenA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714557395; x=1715162195;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cHKa+PO5FYG/aT0WC95Jk1JlbztIflfkK1iUxMgTE8Q=;
+        b=qwvH5uWrRTkn1mzhTWhQUVxqOtK0vwIUynOQfw5IUEGB9hRnBPj/9r6s/UGrhTbHqs
+         yWySajLSB0LDQ2zEZCSbCvmsMcPBFVAcBbvBSr4aq3dPuePd1l3Q9T95YzHHrkEVTQ5X
+         k3K3n3JiiiuvAv3BZjaOVWc9oSRjN3ylX9TV2rSLWsPi85/W8qPhc7o40Yglt5C7NRMo
+         CVqDBKTIbWyBZGMHsWiJ5NIqwZP45abyTJR1fhjaoWufn3U3c24g1ys8pOvOT1XXzeTa
+         ZQK9YLUECNyRpqr9m3SdjLxa18qAgRdmpm9urN47Pd3c2R6NNrSBU4LFZlPB6tmgSNb5
+         aeXw==
+X-Gm-Message-State: AOJu0YyNv/L7R7b85/ei1B18CgRplHbIySUQpnl2yAXhQZYqHReyl2Ye
+	lxo+6iri8rMQRrQs4a+U7UzV8g0S0yELqS+I9sLz3mm+tY60wsTqroGXLA==
+X-Google-Smtp-Source: AGHT+IF4AEFDj5W2Or0FWb76uE6SxQMQvFnKeOYwWLqq5t3W+ieglsZoUDUCnZPpTY13CahrH0kX1A==
+X-Received: by 2002:a17:902:d2ce:b0:1eb:85d:8973 with SMTP id n14-20020a170902d2ce00b001eb085d8973mr2650920plc.58.1714557395085;
+        Wed, 01 May 2024 02:56:35 -0700 (PDT)
+Received: from [172.17.0.2] ([52.157.4.138])
+        by smtp.gmail.com with ESMTPSA id c6-20020a170903234600b001eb51a43562sm7944267plh.185.2024.05.01.02.56.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 May 2024 02:56:34 -0700 (PDT)
+Message-ID: <663211d2.170a0220.53812.c2ed@mx.google.com>
+Date: Wed, 01 May 2024 02:56:34 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============4981838568342658324=="
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240430235122.37716-1-surban@surban.net>
+From: bluez.test.bot@gmail.com
+To: linux-bluetooth@vger.kernel.org, surban@surban.net
+Subject: RE: [v7] Bluetooth: compute LE flow credits based on recvbuf space
+In-Reply-To: <20240501092053.72045-1-surban@surban.net>
+References: <20240501092053.72045-1-surban@surban.net>
+Reply-To: linux-bluetooth@vger.kernel.org
 
-Hi Sebastian,
+--===============4981838568342658324==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-kernel test robot noticed the following build warnings:
+This is automated email and please do not reply to this email!
 
-[auto build test WARNING on bluetooth-next/master]
-[also build test WARNING on linus/master v6.9-rc6 next-20240430]
-[cannot apply to bluetooth/master]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Dear submitter,
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Sebastian-Urban/Bluetooth-compute-LE-flow-credits-based-on-recvbuf-space/20240501-075548
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git master
-patch link:    https://lore.kernel.org/r/20240430235122.37716-1-surban%40surban.net
-patch subject: [PATCH v6] Bluetooth: compute LE flow credits based on recvbuf space
-config: openrisc-allmodconfig (https://download.01.org/0day-ci/archive/20240501/202405011748.NWhismdZ-lkp@intel.com/config)
-compiler: or1k-linux-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240501/202405011748.NWhismdZ-lkp@intel.com/reproduce)
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=849598
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202405011748.NWhismdZ-lkp@intel.com/
+---Test result---
 
-All warnings (new ones prefixed by >>):
+Test Summary:
+CheckPatch                    PASS      0.98 seconds
+GitLint                       PASS      0.21 seconds
+SubjectPrefix                 PASS      0.07 seconds
+BuildKernel                   PASS      30.07 seconds
+CheckAllWarning               PASS      32.72 seconds
+CheckSparse                   PASS      38.31 seconds
+CheckSmatch                   FAIL      36.46 seconds
+BuildKernel32                 PASS      28.97 seconds
+TestRunnerSetup               PASS      523.54 seconds
+TestRunner_l2cap-tester       PASS      18.40 seconds
+TestRunner_iso-tester         FAIL      35.39 seconds
+TestRunner_bnep-tester        PASS      4.76 seconds
+TestRunner_mgmt-tester        PASS      113.33 seconds
+TestRunner_rfcomm-tester      PASS      7.29 seconds
+TestRunner_sco-tester         PASS      14.97 seconds
+TestRunner_ioctl-tester       PASS      7.69 seconds
+TestRunner_mesh-tester        PASS      5.82 seconds
+TestRunner_smp-tester         PASS      6.78 seconds
+TestRunner_userchan-tester    PASS      4.95 seconds
+IncrementalBuild              PASS      27.86 seconds
 
-   In file included from include/asm-generic/bug.h:22,
-                    from arch/openrisc/include/asm/bug.h:5,
-                    from include/linux/bug.h:5,
-                    from include/linux/thread_info.h:13,
-                    from include/asm-generic/preempt.h:5,
-                    from ./arch/openrisc/include/generated/asm/preempt.h:1,
-                    from include/linux/preempt.h:79,
-                    from include/linux/spinlock.h:56,
-                    from include/linux/mmzone.h:8,
-                    from include/linux/gfp.h:7,
-                    from include/linux/umh.h:4,
-                    from include/linux/kmod.h:9,
-                    from include/linux/module.h:17,
-                    from net/bluetooth/l2cap_core.c:31:
-   net/bluetooth/l2cap_core.c: In function 'l2cap_chan_rx_avail':
->> net/bluetooth/l2cap_core.c:6570:16: warning: format '%ld' expects argument of type 'long int', but argument 4 has type 'ssize_t' {aka 'int'} [-Wformat=]
-    6570 |         BT_DBG("chan %p has %ld bytes avail for rx", chan, rx_avail);
-         |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   include/linux/printk.h:347:21: note: in definition of macro 'pr_fmt'
-     347 | #define pr_fmt(fmt) fmt
-         |                     ^~~
-   include/linux/dynamic_debug.h:248:9: note: in expansion of macro '__dynamic_func_call_cls'
-     248 |         __dynamic_func_call_cls(__UNIQUE_ID(ddebug), cls, fmt, func, ##__VA_ARGS__)
-         |         ^~~~~~~~~~~~~~~~~~~~~~~
-   include/linux/dynamic_debug.h:250:9: note: in expansion of macro '_dynamic_func_call_cls'
-     250 |         _dynamic_func_call_cls(_DPRINTK_CLASS_DFLT, fmt, func, ##__VA_ARGS__)
-         |         ^~~~~~~~~~~~~~~~~~~~~~
-   include/linux/dynamic_debug.h:269:9: note: in expansion of macro '_dynamic_func_call'
-     269 |         _dynamic_func_call(fmt, __dynamic_pr_debug,             \
-         |         ^~~~~~~~~~~~~~~~~~
-   include/linux/printk.h:581:9: note: in expansion of macro 'dynamic_pr_debug'
-     581 |         dynamic_pr_debug(fmt, ##__VA_ARGS__)
-         |         ^~~~~~~~~~~~~~~~
-   include/net/bluetooth/bluetooth.h:271:33: note: in expansion of macro 'pr_debug'
-     271 | #define BT_DBG(fmt, ...)        pr_debug(fmt "\n", ##__VA_ARGS__)
-         |                                 ^~~~~~~~
-   net/bluetooth/l2cap_core.c:6570:9: note: in expansion of macro 'BT_DBG'
-    6570 |         BT_DBG("chan %p has %ld bytes avail for rx", chan, rx_avail);
-         |         ^~~~~~
-   net/bluetooth/l2cap_core.c:6570:31: note: format string is defined here
-    6570 |         BT_DBG("chan %p has %ld bytes avail for rx", chan, rx_avail);
-         |                             ~~^
-         |                               |
-         |                               long int
-         |                             %d
+Details
+##############################
+Test: CheckSmatch - FAIL
+Desc: Run smatch tool with source
+Output:
+
+Segmentation fault (core dumped)
+make[4]: *** [scripts/Makefile.build:244: net/bluetooth/hci_core.o] Error 139
+make[4]: *** Deleting file 'net/bluetooth/hci_core.o'
+make[3]: *** [scripts/Makefile.build:485: net/bluetooth] Error 2
+make[2]: *** [scripts/Makefile.build:485: net] Error 2
+make[2]: *** Waiting for unfinished jobs....
+Segmentation fault (core dumped)
+make[4]: *** [scripts/Makefile.build:244: drivers/bluetooth/bcm203x.o] Error 139
+make[4]: *** Deleting file 'drivers/bluetooth/bcm203x.o'
+make[4]: *** Waiting for unfinished jobs....
+Segmentation fault (core dumped)
+make[4]: *** [scripts/Makefile.build:244: drivers/bluetooth/bpa10x.o] Error 139
+make[4]: *** Deleting file 'drivers/bluetooth/bpa10x.o'
+make[3]: *** [scripts/Makefile.build:485: drivers/bluetooth] Error 2
+make[2]: *** [scripts/Makefile.build:485: drivers] Error 2
+make[1]: *** [/github/workspace/src/src/Makefile:1919: .] Error 2
+make: *** [Makefile:240: __sub-make] Error 2
+##############################
+Test: TestRunner_iso-tester - FAIL
+Desc: Run iso-tester with test-runner
+Output:
+Total: 122, Passed: 121 (99.2%), Failed: 1, Not Run: 0
+
+Failed Test Cases
+ISO Connect Suspend - Success                        Failed       4.169 seconds
 
 
-vim +6570 net/bluetooth/l2cap_core.c
+---
+Regards,
+Linux Bluetooth
 
-  6564	
-  6565	void l2cap_chan_rx_avail(struct l2cap_chan *chan, ssize_t rx_avail)
-  6566	{
-  6567		if (chan->rx_avail == rx_avail)
-  6568			return;
-  6569	
-> 6570		BT_DBG("chan %p has %ld bytes avail for rx", chan, rx_avail);
-  6571	
-  6572		chan->rx_avail = rx_avail;
-  6573	
-  6574		if (chan->state == BT_CONNECTED)
-  6575			l2cap_chan_le_send_credits(chan);
-  6576	}
-  6577	
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+--===============4981838568342658324==--
 
