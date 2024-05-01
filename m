@@ -1,48 +1,48 @@
-Return-Path: <linux-bluetooth+bounces-4244-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4241-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E2518B9056
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  1 May 2024 22:01:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DC1F88B9053
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  1 May 2024 22:00:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4F8A11C22ADB
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  1 May 2024 20:00:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 913661F240AA
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  1 May 2024 20:00:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC94F1635DA;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB3011635C1;
 	Wed,  1 May 2024 20:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rOB6p/3E"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G97bP5Ma"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4354F161935;
-	Wed,  1 May 2024 20:00:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ACF0F9EB;
+	Wed,  1 May 2024 20:00:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714593633; cv=none; b=FODFdUMmRNadCTmsIYXL2zv+sqGRveJq+lkVObRgFrZQVGCgMn7jU3/krWDunNSefDFeNJsdMW9nDlwc80OHWG4UzQBzMjN1vXTUpbzOW7+vdmYDMkyWSr4ANFtAxcxt2BbW4y99d83kBNo9g8C/W5aUmT5Bz+1ozZ4Mj8tQFCs=
+	t=1714593633; cv=none; b=Jaw03rXGT9nz9OnDK84P9RR0n2EtIBG+Cfiokr9BN6G5mWc9c1emK7okUV1uuQXLgwEBlBvOfUqsmqq2WCaZvTx4xrisSY+CE7kS83YoSfS+wm3ukecdpXC9NEomQHMxOkvRSV6RP3SAXI7JWEzAbc3xtVUB6g09IaTFmghaR2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1714593633; c=relaxed/simple;
-	bh=YKtZHOVcfK5pZifTsmCfvuROX7xhfvNANJSNxpShWXU=;
+	bh=ih/GNLm1WfdtWekFHhQEBTY1Uux1rbHOHII15bWTT7w=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=EPBlZuAQnmWfTxXjra2rmwcoj+rRBrBLs7MOJ3FQ6Cs6YCp7zbhqVTjWtB89d0jryYkqJB8eKcPqINE0E49xA+cQSdT9MGF3XXG1lnziHqE5HkjsStE+ddcI0aykh1YLDdM8tKswCODWHGxWVvn4w5HTLVywhwXmjsqoQjbTFc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rOB6p/3E; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id DF878C4AF1A;
+	 In-Reply-To:To:Cc; b=lWnOeewhfixcaTLwXn1gsE29jL0/htW79+jJmSpMyMFRylB8EXY18NGmhqiqKH5kL4edxjXw6kFtE/ruJo0kZw5oGs7bg+fCHj7vAaUizBFeLiAmXD+V2dCdqN9rwW2/6vUpdxdgloBdfDyg3npKm+MIM9YiZ1vK3DKuwxhshSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G97bP5Ma; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 8CD74C32789;
 	Wed,  1 May 2024 20:00:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1714593632;
-	bh=YKtZHOVcfK5pZifTsmCfvuROX7xhfvNANJSNxpShWXU=;
+	bh=ih/GNLm1WfdtWekFHhQEBTY1Uux1rbHOHII15bWTT7w=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=rOB6p/3Elfv1x7wXeXd3ApGYwjld6NKQoaTsTJiBwD7skuvvcIT93h1/RuAU7SkW6
-	 TA0KcGHZhARxdtFYgpPawmQXy9mnxwE1PlqNLsIEs3I4fQf1tNcoDl6onX5m3l1ses
-	 9lNCtgeofn8JC76Owtue9mXrcTIUOfy9634GSL8ZfL2FtAh4I/fTuQaiYh0JDEC7ju
-	 monnyF/9FLnT55sKJ5HhTqt6UIPAbeNhwymkl5Tf+HnhMvC8niv0cL6f65yd1/FnTB
-	 01ax01OdiSSy1VZNxBt27+zWns5D2cjh5n228Ho/zdcjSO7MeiShYMMJyzi1ePsgtb
-	 0wW6xDXkwEjgA==
+	b=G97bP5Ma6O1GmaFHCiLS88qaUqCoJRxYZqRJTK1ogOmwN27MRVeBqJ3pGHsyob2uw
+	 609DOXu+g1hXMWHcNi/hclKtJrxKcVww/Mlj8Jgc+aoasqExS07GdjOCsdTsMdjo/m
+	 24MtdUaIGUjzrfcQAWqHtP9eB+ccQ1zA08xJYTyp9UgSiBuOCNPIEi0Whe0HBUsyzu
+	 TJyzuj9oeOTi49q9VVcm5Xmfql+eYMIOwdO7wv1Pw+QHlDEQvUg7N22W5mZ5qRJVwh
+	 isL/IMrY4U2Go/Oz1rhwLI1DSVtfThFFWmT31rINcUmZxxlg+XvMeMUYV2n6oZqSJZ
+	 eKNOeHhfECmDA==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id CF892C4339F;
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 79D44C4339F;
 	Wed,  1 May 2024 20:00:32 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
@@ -52,37 +52,43 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH][next] Bluetooth: hci_sync: Use cmd->num_cis instead of magic
- number
+Subject: Re: [PATCH 0/5] Bluetooth: qca: info leak fixes and cleanups
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <171459363284.6729.3328094972268043156.git-patchwork-notify@kernel.org>
+ <171459363249.6729.10986328345003471376.git-patchwork-notify@kernel.org>
 Date: Wed, 01 May 2024 20:00:32 +0000
-References: <ZjKAyg2bZNyTcT+C@neat>
-In-Reply-To: <ZjKAyg2bZNyTcT+C@neat>
-To: Gustavo A. R. Silva <gustavoars@kernel.org>
-Cc: marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
- linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-hardening@vger.kernel.org
+References: <20240501123456.6712-1-johan+linaro@kernel.org>
+In-Reply-To: <20240501123456.6712-1-johan+linaro@kernel.org>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: marcel@holtmann.org, luiz.dentz@gmail.com, quic_janathot@quicinc.com,
+ linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
 
 Hello:
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
+This series was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Wed, 1 May 2024 11:50:02 -0600 you wrote:
-> At the moment of the check, `cmd->num_cis` holds the value of 0x1f,
-> which is the max number of elements in the `cmd->cis[]` array at
-> declaration, which is 0x1f.
+On Wed,  1 May 2024 14:34:51 +0200 you wrote:
+> Here are two fixes for potential info leaks in the QCA driver and a few
+> cleanups.
 > 
-> So, avoid using 0x1f directly, and instead use `cmd->num_cis`. Similarly
-> to this other patch[1].
+> All of these can go into 6.10.
+> 
+> Johan
 > 
 > [...]
 
 Here is the summary with links:
-  - [next] Bluetooth: hci_sync: Use cmd->num_cis instead of magic number
-    https://git.kernel.org/bluetooth/bluetooth-next/c/39e4d6fb881d
+  - [1/5] Bluetooth: qca: fix info leak when fetching fw build id
+    https://git.kernel.org/bluetooth/bluetooth-next/c/cfc2a7747108
+  - [2/5] Bluetooth: qca: fix info leak when fetching board id
+    https://git.kernel.org/bluetooth/bluetooth-next/c/3e2faecb09fb
+  - [3/5] Bluetooth: qca: drop bogus edl header checks
+    https://git.kernel.org/bluetooth/bluetooth-next/c/ca8934466039
+  - [4/5] Bluetooth: qca: drop bogus module version
+    https://git.kernel.org/bluetooth/bluetooth-next/c/2684457bf2dd
+  - [5/5] Bluetooth: qca: clean up defines
+    https://git.kernel.org/bluetooth/bluetooth-next/c/f50efbe27afd
 
 You are awesome, thank you!
 -- 
