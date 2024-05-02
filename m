@@ -1,50 +1,70 @@
-Return-Path: <linux-bluetooth+bounces-4275-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4277-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 50F518B9CD8
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  2 May 2024 16:51:01 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 27D058B9E8C
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  2 May 2024 18:28:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0D1D8288830
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  2 May 2024 14:51:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 58E621C209E3
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  2 May 2024 16:28:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3588B15359C;
-	Thu,  2 May 2024 14:50:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VwDde+BR"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62F6515CD72;
+	Thu,  2 May 2024 16:28:09 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8240B153800;
-	Thu,  2 May 2024 14:50:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747D315E1EF;
+	Thu,  2 May 2024 16:28:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1714661433; cv=none; b=jpLkXoBs9qnPUGwJL7QNIidXg7kkX6RN/krguHK5P25DLMd3hb8QLJk7sZqtr+IfszimTqB8Bc0I+j4nLNkGWB6fcoMThi67dm3OjlyxlwfNq9oTv7EQCID/hNZ9OELizeyxJJzbiSFWg4hmc4OkRSek1bRZMrP/uRjjcT+idEU=
+	t=1714667289; cv=none; b=IyXxZ3agVpeLCP46Dz/tbUBUJHy8/DwHBHRw25MCGx/U8Xd+/rJ7ADeZxcyhr76J+6/ocvtsTsnrYaI8USY0AWs9mBZr+G7QGMmDS4lAkJnA23E4T4MGbNj5dNXn5y5oPj41tPM6LKA3vuL4AOsgVH9tYr3o1tgPVG/P957iZCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1714661433; c=relaxed/simple;
-	bh=VLCdT8S8RHn0J5m1d4S8joxMLvrBRQKRrINYgfmKubA=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=Yi4G9lIoQ2zJ/QTk5uJb4OGRKphSaFjlq/53bnf+YGZJ5PF5Du87ougX8Mmai4AP8LSepP13S8xjeaMYEoimuGp9Pwr/nObWPzz5///DiRaK2jks7vwegdCy6wCIYRjkSSQWoowrzbG1c16aiB3sCuJSmFfoHfLYAA0sOvJz+Vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VwDde+BR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 21E65C4AF14;
-	Thu,  2 May 2024 14:50:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1714661433;
-	bh=VLCdT8S8RHn0J5m1d4S8joxMLvrBRQKRrINYgfmKubA=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=VwDde+BRMnQvir5Tx8KN74Mo3z9lrZG+Q1cUDRAAdnxbR9bpwHEHWfP9YKhwnVE7e
-	 qKgp1hAwOKtleGVsUjiLAhIXRg6xSdXINvfnc7IVqYKEmhnLOVY5Ky8IG2buan2y7A
-	 chBN/rm527LAuKkPsNMJCP/lHEm0ZnMbvQI1Zn4ChPPv+86gmeDL7OWPvfzUR8g7Lm
-	 3Ja4oyTe6k4qndhm6ys0a8sQekapqPS+l/Wz5q9XqRFWa470pUrcotMN1xMidcG3SE
-	 KHpYlVuRcyI1AtjxZOErGrofdGv5HnbJfgM5JaC7AL4+uoiLKuXhG6khUBr7VNpsHX
-	 TC2k7QWM2yvNw==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 0916CC4333B;
-	Thu,  2 May 2024 14:50:33 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1714667289; c=relaxed/simple;
+	bh=8CN60vsDhsaBYBw8dNPoZqC4vHRsiqNxpPf+1mCw9fI=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Cxh08/JO/vSjmWGIS97KCos6V2U5WbfRjmPvcOssbLFCY056N37tRdnpTmpgzwwEYHhqXdlN/5QCMTxokUbFxfqQXAe6DXAboVhJiYzH2xa0aYna2j7lBYCR/Uf42oU+aKRoaZZ+M1QEre1wTVG4tIKStidQa+NvvehTQgo4CS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sung-woo.kim; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sung-woo.kim
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-79100a90868so335646185a.2;
+        Thu, 02 May 2024 09:28:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1714667286; x=1715272086;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=sLr63wSRKN1zYIcrCH+ZmDq9lvkzTwxbqszK/XM362s=;
+        b=StTiWlY1ifL8W0YXYqLBwXk8/elJJQdpP3f9tdRUAFu7742SFvmYkAkT5nKdQgmXR2
+         Tq590Djp2oNQ2RMsNY5UV0lHY1VVl+MX1EsScRErGQG7XND1kOJVErJiGVuo2zjzM4Iy
+         gZLSm8xeL2vz8mkQmet4Zo0Fvu7PMiKvKgbgZ2lEaSojWBhh93q9hHjCEyX+jJ9djFqR
+         nfWnbK4X528Q8Yejh6vqriwNy1zBpYxSWsmEpqCl4Y2UizznCxdHIlIHyUHE7ze5A+U+
+         QsjlmRu88PAYIIFcO4y6tNj/m9CECphgDnNm7IjFvNAVrBOT5PJxYMYnqOLfdz68+KOm
+         UUfw==
+X-Forwarded-Encrypted: i=1; AJvYcCWYmt4ZdYS11gRuwXBauSY1p1trBf7PMnInIDJDgd+AkfpVSk8J4XZ+UiOoeKQyP+TuMUArO1rXXundUN6CI2Fv0V/riG/kGHTanaMwZveuHihIC+cT1GjK3Pdz+o2lrEPY5N7fwb1X8KNpj7z5
+X-Gm-Message-State: AOJu0Yylv4+as6tV5A7h+tm0FHzmLdYWtVZCY/RTjwvneUfd7gPaCq0F
+	2bgSFCd8GinTknABBXRyidBMiXgpv4uAD48Nfl1ZDUgFXmaY0A6cJBJdiqtxSPs=
+X-Google-Smtp-Source: AGHT+IE8O/JMsKuYSwWcU2BZsRBaUrLuaKL/7Li1OU1jCXzWkSXo3VNANI02MVjKmhk+yuspNLJFvw==
+X-Received: by 2002:ae9:f510:0:b0:78d:5c65:f2a0 with SMTP id o16-20020ae9f510000000b0078d5c65f2a0mr91478qkg.21.1714667286493;
+        Thu, 02 May 2024 09:28:06 -0700 (PDT)
+Received: from tofu.cs.purdue.edu ([128.210.0.165])
+        by smtp.gmail.com with ESMTPSA id v12-20020a05620a0a8c00b0078f1ae252c6sm483349qkg.49.2024.05.02.09.28.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 May 2024 09:28:06 -0700 (PDT)
+From: Sungwoo Kim <iam@sung-woo.kim>
+To: luiz.dentz@gmail.com
+Cc: daveti@purdue.edu,
+	benquike@gmail.com,
+	Sungwoo Kim <iam@sung-woo.kim>,
+	Marcel Holtmann <marcel@holtmann.org>,
+	Johan Hedberg <johan.hedberg@gmail.com>,
+	linux-bluetooth@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v2] Bluetooth: HCI: Fix potential null-ptr-deref
+Date: Thu,  2 May 2024 12:09:31 -0400
+Message-Id: <20240502160931.1135175-1-iam@sung-woo.kim>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -52,52 +72,33 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3 0/2] bluetooth: mt7921s: Add binding and fixup existing dts
-From: patchwork-bot+bluetooth@kernel.org
-Message-Id: 
- <171466143303.15417.16267391359658685037.git-patchwork-notify@kernel.org>
-Date: Thu, 02 May 2024 14:50:33 +0000
-References: <20240412073046.1192744-1-wenst@chromium.org>
-In-Reply-To: <20240412073046.1192744-1-wenst@chromium.org>
-To: Chen-Yu Tsai <wenst@chromium.org>
-Cc: marcel@holtmann.org, luiz.dentz@gmail.com, robh+dt@kernel.org,
- krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
- matthias.bgg@gmail.com, angelogioacchino.delregno@collabora.com,
- sean.wang@mediatek.com, linux-bluetooth@vger.kernel.org,
- netdev@vger.kernel.org, linux-mediatek@lists.infradead.org,
- devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org
 
-Hello:
+Fix potential null-ptr-deref in hci_le_big_sync_established_evt().
 
-This series was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+Fixes: f777d8827817 (Bluetooth: ISO: Notify user space about failed bis connections)
+Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
+---
+v1 -> v2:
+- add a Fixes tag
+- make the commit message concise
 
-On Fri, 12 Apr 2024 15:30:41 +0800 you wrote:
-> Hi everyone,
-> 
-> This is v3 of my MT7921S Bluetooth binding series.
-> 
-> Changes since v2:
-> - Expand description and commit message to clearly state that WiFi and
->   Bluetooth are separate SDIO functions, and that each function should
->   be a separate device node, as specified by the MMC binding.
-> - Change 'additionalProperties' to 'unevaluatedProperties'
-> - Add missing separating new line
-> - s/ot/to/
-> 
-> [...]
+ net/bluetooth/hci_event.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Here is the summary with links:
-  - [v3,1/2] dt-bindings: net: bluetooth: Add MediaTek MT7921S SDIO Bluetooth
-    https://git.kernel.org/bluetooth/bluetooth-next/c/556511c33388
-  - [v3,2/2] arm64: dts: mediatek: mt8183-pico6: Fix bluetooth node
-    https://git.kernel.org/bluetooth/bluetooth-next/c/f90ac18d01cd
-
-You are awesome, thank you!
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 4a27e4a17..d72d238c1 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -7037,6 +7037,8 @@ static void hci_le_big_sync_established_evt(struct hci_dev *hdev, void *data,
+ 			u16 handle = le16_to_cpu(ev->bis[i]);
+ 
+ 			bis = hci_conn_hash_lookup_handle(hdev, handle);
++			if (!bis)
++				continue;
+ 
+ 			set_bit(HCI_CONN_BIG_SYNC_FAILED, &bis->flags);
+ 			hci_connect_cfm(bis, ev->status);
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.34.1
 
 
