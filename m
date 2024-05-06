@@ -1,177 +1,136 @@
-Return-Path: <linux-bluetooth+bounces-4332-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4334-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19B858BD3C9
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  6 May 2024 19:25:46 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36B468BD552
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  6 May 2024 21:21:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9415A1F221EC
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  6 May 2024 17:25:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E203A282D45
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  6 May 2024 19:21:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBAA515747E;
-	Mon,  6 May 2024 17:25:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EF17158DCB;
+	Mon,  6 May 2024 19:21:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jx9opyvl"
+	dkim=pass (1024-bit key) header.d=penguintechs.org header.i=@penguintechs.org header.b="EdTXT5gp"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4F413DDD2;
-	Mon,  6 May 2024 17:25:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03C613C69F
+	for <linux-bluetooth@vger.kernel.org>; Mon,  6 May 2024 19:21:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715016336; cv=none; b=Jg6wjLs5jO8xS/vPX0eWUN/24zAkbisJ8UX3SFNVgkXfUd+6bd3ApHWfMqBP3WFq8m95mKbUyLU+rHucUZePyN0YYhN8QnPp6mSpAKeNhZWp03Dpy651/4QuXtyR6QQ/K9cwxKiSX6QJpHHDJYaWNHiINDRXuYeLv7aaGqpW4M0=
+	t=1715023299; cv=none; b=eB32Wlx2hZQfBYKk20gIpBNnEs/wiBObpeOOM2tZ7+cG/J61FCsFfUe288QFtta0EwacjYnHdD5byebrfi7IS0OmnIEPveg0hLMGrm6kWdN2LNMDyOW+diNSmJjXnbppU9qIU0vuAXD6u1zmlhE05sp9LtZs555QUOp/60BsQ+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715016336; c=relaxed/simple;
-	bh=QbjlCOhO3X6SirjjksKEpwib8y+ESglXZO/TxYTLekk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sP2l+/pyfm5ipn2v0oK1HAb5/SlfNKW5bKRCaaFn3z/wwqRGvceTRjzfV24G+D24XzhTfqdvNpJa6UdJfDusE66yuORHI7Np/sGvxcIg6uag6IJkD7SLWMSsatCTmik3VQQ1GqFe/epDImX1786pJtjiO8xUPVdU79yN5mEPUMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jx9opyvl; arc=none smtp.client-ip=209.85.208.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2e3e18c240fso177441fa.0;
-        Mon, 06 May 2024 10:25:34 -0700 (PDT)
+	s=arc-20240116; t=1715023299; c=relaxed/simple;
+	bh=X3YwlbKHtlbgh5paaDoTp02wt/z8uJUHDrihFNIYwRk=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=TMHnOKFXn+QTH3meu58xaXKYqJx+/5JnUuIeRclcpzG9PdA+kzvMbn3Bsdy5t+vrFMoZHHYpp8a5s+EnRGNItU1a3bzCsjl+ON4A+ru+T44MgJZaolXhc0+BeAXxWb861H2I/+V++J/IIW3933IQCY22z9TTowmXTk4rqp08YeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=penguintechs.org; spf=pass smtp.mailfrom=penguintechs.org; dkim=pass (1024-bit key) header.d=penguintechs.org header.i=@penguintechs.org header.b=EdTXT5gp; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=penguintechs.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=penguintechs.org
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-1ecd3867556so15968415ad.0
+        for <linux-bluetooth@vger.kernel.org>; Mon, 06 May 2024 12:21:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715016333; x=1715621133; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=penguintechs.org; s=google; t=1715023295; x=1715628095; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KlSTRPnhOb9YugNVwB0fhclhKlg1U2+rfxRwVC8H+3o=;
-        b=jx9opyvlYv/OxTZztrIq+O8C7r2v6axlcOVKchfEInH1YGuNogGbXX0txJm4OXIOh/
-         a7cs89kIKTiItGldrnjN5jv65j/TwrlIPMsPDN3WdEO5VwwllCD5gv8TC5wzIpGropV4
-         G+X0Ju8c2EgiIB8yctlYFM1ztMCzbMvUf4pUtLeCnWfZl6a/02Z3E9F2tuWbe4P3W3Hj
-         xk9lHWNR83bD0rDdIZ7EAt5oxQEnu1ZbsD8b8KzQc6dSquo7b+9g9zRHTKb2+t7X/tul
-         WPNYVI8nWtwfLy94hlAb1bLhITd2Iqt4yRltDnRkn41zbraICQ9akuLzU7Abw2bV3lhx
-         eGDg==
+        bh=7WvaSssL8hW+happfuz7Ifo7zzuW3z2wrCHUtE0u0Mg=;
+        b=EdTXT5gpAnzuY13UQGZI3pNeQ2jR2ddV8FAFAgWsP8N49WTi4gEHLfM22Oih8gz00z
+         1olS4BsGlt7qXUrlz8lyxil6kdX0+NimloyARipDH5pAgt8ItY/2KH+tUlrRrsoxloJ1
+         3nUlP7aK97P/zeRc+Db1z/ygN8XVvMjDQWJMA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715016333; x=1715621133;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KlSTRPnhOb9YugNVwB0fhclhKlg1U2+rfxRwVC8H+3o=;
-        b=D/ebVVwLLQvLh8bkP6MUjCepgiR1iDaOrKjLD6mqIPMFQ2/KzeI4FMqIVqL0QtI70L
-         wd5Gpq91HCxip9El4e28tlhuUEBqRJ0q9XhUiTY7jWksJanLVGMgExNIYBEfi4aHirVc
-         aDLhVU2vyHa4zFjds4TBsPbb0cs8Jj2t0UtYv8+jxJsxH8SZiFxy/2AOY7fVHIK9vH8y
-         M8oavfN0fwIc2AahZhMc9jaDeY+o3oEeZZSTfcgsoLbKX9/KZmaougd0+g8Q0X0zSCYj
-         tnOCsQvw6Gmqq6LOdIfSrNn6gj4SoOcld9PZiUhJhyV6S2HAByt1R9Jx7ZLpFaYYeNy1
-         /1/w==
-X-Forwarded-Encrypted: i=1; AJvYcCVWmE6c4G2cT5pz/NWW0DJs92MUf/jhn7Z9WQBYjP9CWkGfXTgRi2hYN83/2614lyniSIvFqNWz2pvGaGXzMUgBAjpFvCabBnsV2TZ6uARnVHe/5ehtOBb1RWYe1/br/+Ugvu3C2krfDbq+dio8
-X-Gm-Message-State: AOJu0Yw+kN44zhFZBOhCwEEm45bRTZ4xDpkgKY5I9wVaELLJWwpPjq7p
-	0CgvKLctt4Gq0d8I86S42h2Ap1KGPXnKrj7OhaxZ6M0Vr1XlLbx9TiAgrsN2oyus2HGKRucYrbh
-	gPI7sFIdQE4/bZETj3dC83BE/Abw=
-X-Google-Smtp-Source: AGHT+IE5IAuXqwrHSF2S6NDVOy+UTtC7fVhprycyI+gVY/X+RAwA9koL/O02RD9Mv9Y4RKVYPeP7BwOxWaYZ249mWr8=
-X-Received: by 2002:a2e:b8d2:0:b0:2da:7944:9547 with SMTP id
- s18-20020a2eb8d2000000b002da79449547mr11484426ljp.5.1715016332375; Mon, 06
- May 2024 10:25:32 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1715023295; x=1715628095;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=7WvaSssL8hW+happfuz7Ifo7zzuW3z2wrCHUtE0u0Mg=;
+        b=dbA8qiBLBmDN/Y8gIO1UinAQQY+8f4RMjymG+JoOSHJGoAtxGRuMPL/JEMMz8ARUSg
+         3EY8Eph52QtwAI8LozUq42VTbYiQ8FrPkiUODYBH5Rpjaz/3e8KdYw/brVygr4O1H8xS
+         N9qZ8bhT4VWqAWKYgDffVthTVLV+m7zPceoKbMC53CyJhcr0VOWwzoG3tJcDJYNW8GdV
+         498/B6Z5ejUhC7JXBA+Vuj+b8d1OX5tEPQiGxOX0ruXTWS3RLwBuPYtNiIDE03HuCyAC
+         6cJ6rnoA3aA3V6cfBp0H8SfNgzOttabwuLfp4PES0PWj5GDM1R8inOp+hbvmoSW0SzMo
+         f7rQ==
+X-Gm-Message-State: AOJu0YyEMWthF4hcQa0VufyzlzlNZsKL3B3JQnkckmb/7i9i51Kv2Fwv
+	wnoj5MqYLkX0YnqheN8vsFIQ1PW681XstAhAVvSb9fiXvxfdh55yUsbC82cUV/3XZgamSQse8e3
+	shQ==
+X-Google-Smtp-Source: AGHT+IHxLrSKB0zjbYT5M6RFFiD+nN0ZpTsG9KGIzmJjrtbpNTzaCW5M1t7au4K6butZNGMjVWNrxQ==
+X-Received: by 2002:a17:903:298f:b0:1eb:5222:7c5f with SMTP id lm15-20020a170903298f00b001eb52227c5fmr14309294plb.10.1715023294423;
+        Mon, 06 May 2024 12:21:34 -0700 (PDT)
+Received: from ?IPV6:2601:646:8700:dd30:5f3e:5ba7:e0ea:9a08? ([2601:646:8700:dd30:5f3e:5ba7:e0ea:9a08])
+        by smtp.gmail.com with ESMTPSA id x13-20020a170902ec8d00b001ecf6d3edb5sm8656820plg.241.2024.05.06.12.21.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 May 2024 12:21:33 -0700 (PDT)
+Message-ID: <3475f0dd-6a0f-4319-9590-379eee33f504@penguintechs.org>
+Date: Mon, 6 May 2024 12:21:32 -0700
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240506022035.663102-1-iam@sung-woo.kim>
-In-Reply-To: <20240506022035.663102-1-iam@sung-woo.kim>
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Mon, 6 May 2024 13:25:19 -0400
-Message-ID: <CABBYNZJPA_a0LmAArNcV4pyskhyeXzSRpe98Ksf=BSZ56ZA0zA@mail.gmail.com>
-Subject: Re: [PATCH] Bluetooth: HCI: fix divide error in __get_blocks()
-To: Sungwoo Kim <iam@sung-woo.kim>
-Cc: daveti@purdue.edu, benquike@gmail.com, 
-	Marcel Holtmann <marcel@holtmann.org>, Johan Hedberg <johan.hedberg@gmail.com>, 
-	linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: linux-bluetooth@vger.kernel.org,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Zijun Hu <quic_zijuhu@quicinc.com>,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Wren Turkal <wt@penguintechs.org>
+Subject: path to landing patch to fix warm boot issue for qca6390
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi,
+Krzysztof,
 
-On Sun, May 5, 2024 at 10:21=E2=80=AFPM Sungwoo Kim <iam@sung-woo.kim> wrot=
-e:
->
-> hdev->block_len could be 0. Fix this by adding a check.
->
-> divide error: 0000 [#1] PREEMPT SMP KASAN NOPTI
-> CPU: 0 PID: 9622 Comm: kworker/u5:4 Tainted: G        W          6.9.0-rc=
-6-00001-g38e1170f515d-dirty #32
-> Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/0=
-1/2014
-> Workqueue: hci11 hci_tx_work
-> RIP: 0010:__get_blocks net/bluetooth/hci_core.c:3618 [inline]
-> RIP: 0010:hci_sched_acl_blk net/bluetooth/hci_core.c:3766 [inline]
-> RIP: 0010:hci_sched_acl net/bluetooth/hci_core.c:3806 [inline]
-> RIP: 0010:hci_tx_work+0x73e/0x1d10 net/bluetooth/hci_core.c:3901
->
-> Fixes: b71d385a18cd ("Bluetooth: Recalculate sched HCI blk/pkt flow ctrl"=
-)
-> Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
-> ---
->  net/bluetooth/hci_core.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-> index 0efd59760..20b1cd7f3 100644
-> --- a/net/bluetooth/hci_core.c
-> +++ b/net/bluetooth/hci_core.c
-> @@ -3762,7 +3762,7 @@ static void hci_sched_acl_blk(struct hci_dev *hdev)
->
->         __check_timeout(hdev, cnt, type);
->
-> -       while (hdev->block_cnt > 0 &&
-> +       while (hdev->block_len > 0 && hdev->block_cnt > 0 &&
->                (chan =3D hci_chan_sent(hdev, type, &quote))) {
->                 u32 priority =3D (skb_peek(&chan->data_q))->priority;
->                 while (quote > 0 && (skb =3D skb_peek(&chan->data_q))) {
-> --
-> 2.34.1
+I am reaching out to you as you had the most important objections to the 
+change to fix qca6390 for the warm boot/module reload bug that I am 
+experiencing.
 
-Hmm, this code shall probably be removed as well since
-HCI_FLOW_CTL_MODE_BLOCK_BASED was sort of tight to AMP support which
-we have removed support for, anyway this is failing late actually
-since we might have to check this during hci_conn_add with:
+For context, the problem is that the hci_uart module will send specific 
+vendor specfic commands during shutdown of the hardware under most 
+situations. These VSCs put the bluetooth device into a non-working state 
+on my Dell XPS 13 9310 with qca6390 bluetooth hardware.
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 171a667bc991..73b9d08438fe 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -907,8 +907,16 @@ struct hci_conn *hci_conn_add(struct hci_dev
-*hdev, int type, bdaddr_t *dst,
+Zijun's proposed fix is to not send these commands when it's not 
+appropriate for the hardware. The vendor commands should be avoided when 
+the hardware does not have persistent configuration or when the device 
+is in setup state (indicating that is has never been setup and should 
+not be sent the VSCs on the shutdown path). This is what Zijun's patch 
+implements.
 
-        switch (type) {
-        case ACL_LINK:
--               if (!hdev->acl_mtu)
--                       return ERR_PTR(-ECONNREFUSED);
-+               switch (hdev->flow_ctl_mode) {
-+               case HCI_FLOW_CTL_MODE_PACKET_BASED:
-+                       if (!hdev->acl_mtu)
-+                               return ERR_PTR(-ECONNREFUSED);
-+                       break;
-+               case HCI_FLOW_CTL_MODE_BLOCK_BASED:
-+                       if (!hdev->block_mtu)
-+                               return ERR_PTR(-ECONNREFUSED);
-+                       break;
-+               }
-                break;
-        case ISO_LINK:
-                if (hdev->iso_mtu)
-@@ -966,7 +974,14 @@ struct hci_conn *hci_conn_add(struct hci_dev
-*hdev, int type, bdaddr_t *dst,
-        switch (type) {
-        case ACL_LINK:
-                conn->pkt_type =3D hdev->pkt_type & ACL_PTYPE_MASK;
--               conn->mtu =3D hdev->acl_mtu;
-+               switch (hdev->flow_ctl_mode) {
-+               case HCI_FLOW_CTL_MODE_PACKET_BASED:
-+                       conn->mtu =3D hdev->acl_mtu;
-+                       break;
-+               case HCI_FLOW_CTL_MODE_BLOCK_BASED:
-+                       conn->mtu =3D hdev->block_mtu;
-+                       break;
-+               }
-                break;
-        case LE_LINK:
-                /* conn->src should reflect the local identity address */
+In addition, Zijun's change removes the influence of both
+the QCA_BT_OFF qca flag and and HCI_RUNNING hdev flag. Zijun asserts 
+that those flags should not influence the sending of the VSCs in the 
+shutdown path. If I understand KK's objections properly, this is where 
+his objection is stemming from. KK, is this correct?
 
---=20
-Luiz Augusto von Dentz
+Zijun's proposed fix can be seen here: 
+https://patchwork.kernel.org/project/bluetooth/patch/1713932807-19619-3-git-send-email-quic_zijuhu@quicinc.com/
+
+I'm wondering if we can resolve this impasse by splitting the change 
+into two changes, as follows:
+
+1. Change that removes the influence of the QCA_BT_OFF and HCI_RUNNING 
+flags in the shutdown path.
+2. Add the quirk from Zijun's patch that fixes my hardward configuration.
+
+I'm hoping that better clearer descriptions for #1 can help get that 
+landed since the logic current appears to be at odds with how the 
+hardware works.
+
+Also, I am happy to split the patches into the two patches, or (maybe 
+more ideally) just modify the commit message to better indicate the 
+reason the change. I just need guidance from maintainers so that 
+whatever work I do leads to something acceptable for y'all.
+
+So, please help me get this done. I am just a user with broken hardware 
+and a fondness for Linux. I would love to help do what's needed to get 
+this fix landed.
+
+Please help me get there,
+Wren T
+-- 
+You're more amazing than you think!
 
