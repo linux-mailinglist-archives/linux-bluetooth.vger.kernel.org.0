@@ -1,216 +1,154 @@
-Return-Path: <linux-bluetooth+bounces-4340-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4342-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B0338BD832
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  7 May 2024 01:32:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B5D158BD92D
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  7 May 2024 03:45:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0FCE41F222BE
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  6 May 2024 23:32:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2C6B21F23908
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  7 May 2024 01:45:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4301F15B54C;
-	Mon,  6 May 2024 23:31:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BEC914A12;
+	Tue,  7 May 2024 01:45:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FuC7hI2f"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="fmWvGx8k"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7B2142E77
-	for <linux-bluetooth@vger.kernel.org>; Mon,  6 May 2024 23:31:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5559023A6
+	for <linux-bluetooth@vger.kernel.org>; Tue,  7 May 2024 01:45:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715038317; cv=none; b=nvZJKScDIEVDTsZdQDvNLDK7CFax7Ou+m2xXQ67eWZTxinZv6Rh7YKhAtlXmkrE6d87aZMMtJmnS6MMDmyNnz46xwegd+0SxO+vTK2pFzuTi7LGMjx8+/gSSK115TCPHXnpaAXcurnp8W2mojS5GBeRaa7XQrRejr8pTa9LLk/0=
+	t=1715046319; cv=none; b=tiEhkIBEUF+P+hAjDgRNGqMdfS4Entl7pEUPZSOrcEIHhKtFqLDmUbOwYtrU3Kmve3RkoSVu8tgO/cX2Kv4zWKNeR7d5tNKTkDaFkf1FA060DtinY1pFQLB4Zl+Ri6NVPpPkg5GQJmlzerZK7udn1Nn8LJNUE87XWj4X4yFw+1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715038317; c=relaxed/simple;
-	bh=K/WRdqCookN9YNZKNwzCJrGYbvB6PbfByaJPCXKPopA=;
-	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
-	 In-Reply-To:References; b=Jf+n1IevfdM7WUTcPb3saMGDpbQfLlqS/nPoB2XwjIQngGk32GuxX2v6n7gfV4jlP9EAs03fcqw9xc/MIYJMhYMGCC/5vEWOBZ3wvcY9XRXpHa89t3RWZamp4thy7dk05Ae5aYq1semgMgqR7VtFuc2aMcpAlQUp7O3J0NoHS/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FuC7hI2f; arc=none smtp.client-ip=209.85.222.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-7928dae7befso228033985a.0
-        for <linux-bluetooth@vger.kernel.org>; Mon, 06 May 2024 16:31:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715038315; x=1715643115; darn=vger.kernel.org;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=K/WRdqCookN9YNZKNwzCJrGYbvB6PbfByaJPCXKPopA=;
-        b=FuC7hI2fZpmwrFbqq1xNIS1GUQyrj/QupKlCxN/2gGU3kZKAlL10M+Au1xBFUbjeEI
-         9Q93z297uOxPVyub92dSffMK6tbZQ3mI6FV0aV/OqDmkZHcaTRSOqquwNgaMu+dstO9+
-         5MIJ6cR6jgrttGxrbuGIzE6K6yU77IdHkOa3F8izQX5Nc3JqWnOAT6FHUKfoiY1BYMCS
-         tUXVEY6uw9HHRGo9oBI3B+YAiouH+bfuJIXm8ZESsLczppj91udHg/jaaD9dYvPE1Vwc
-         f3vlDQ2gEjJ/WkXwe8RRkO8CuYYmvWOIVwnttASn3jN2VL6skEtiMFggeVAxJh8k7rwM
-         Yb5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715038315; x=1715643115;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=K/WRdqCookN9YNZKNwzCJrGYbvB6PbfByaJPCXKPopA=;
-        b=sRuvSzsgEi3bSb6Sf3DEXjD5+Zag1Jy6bIKotANB70h3fcBp3AdIBA863Uu74cBhua
-         D4KVe2ozptL+xnWbVbNMMiYH2FuA7UEd5PvLom30C4XKjw8NsmsUDjbUwtnKfBaRB8Y9
-         os6ry5EgWBzoMZDGi7xuYJBTwIdEqvvRvlOYiPHqeLjVq7Mqu0CQtuYBYihMXXBjIFkO
-         LrPgDnzvJaJ8vP+7AQD0D5oPpn/QqL+HfMoEdrQM+8v3JtincCtYdQp8UzmcwCYkEwA6
-         hvVIyClDcIpmdGcQO81P0J3dFxPr8TMyVbs5IzEIteA+h5rnRpr/ZVa4nfbepwypJeYU
-         jT1g==
-X-Gm-Message-State: AOJu0YwhHbVwfHJ0dDtWXkZ0QCLomS4HoAoe06Y16eKutdxvEgk1Anr1
-	hM6IkjNxSU3Tu7lwYCQPsJTdEFm1DN1mZDH67LHptWvJs2QoOiHgUONFjQ==
-X-Google-Smtp-Source: AGHT+IExCR2XVb1GUTfASkwSZ5CglH1JDIFVMAvR3J3k0AgU8S5C+PNYDxX8nOjsb4Afk+wgzjT2gw==
-X-Received: by 2002:a05:620a:4307:b0:792:9202:15dc with SMTP id u7-20020a05620a430700b00792920215dcmr8320043qko.0.1715038314495;
-        Mon, 06 May 2024 16:31:54 -0700 (PDT)
-Received: from [172.17.0.2] ([172.183.107.252])
-        by smtp.gmail.com with ESMTPSA id az9-20020a05620a170900b0078efd872d3csm4311246qkb.14.2024.05.06.16.31.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 May 2024 16:31:54 -0700 (PDT)
-Message-ID: <6639686a.050a0220.57b9e.eb82@mx.google.com>
-Date: Mon, 06 May 2024 16:31:54 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============0867799900530758143=="
+	s=arc-20240116; t=1715046319; c=relaxed/simple;
+	bh=Pv1AQtJOYkxC1yQA8no3goFIzvaWgQo7xKQd+D4EqU8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EKvgnkdzzCbd7MjSfV4FJ1ls6e2n4JmndEph3oGRxfxV9jK19xfku2xBpB8UiQidZDwQe/4NYXls2gZ4CDwYIHSg/D9DYpyUAwdDn95b8PCLzft0R1ahSCjMYGfsSd7t1658C0nLqQzDSwtZZm0JyzGxRfBfpeuOm0GiJ026DVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=fmWvGx8k; arc=none smtp.client-ip=192.198.163.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1715046317; x=1746582317;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Pv1AQtJOYkxC1yQA8no3goFIzvaWgQo7xKQd+D4EqU8=;
+  b=fmWvGx8k7FVWHRdOuJE63jsJkfR/Nnqu+mo7XHY4u1uzA2/BFB0o1jMf
+   ESyNRgxZrb1My0E/+GJt2j4Zm/tkTotGtJtJRguHj9VuZNKsCXF9RTiYp
+   ZpbahbDWooej5H3Nobaa9+uzGuW7U5dX5q4DQDRA/P9UfIm9abgZJo4hW
+   BfHPg/5xRYTfQGAohqHxXpyjBLbIqkn97kxR0r2yU/ILVTTtRtdW52sIN
+   sqggbXrqpoOyIKGUiVXxgcqVuXj6JZbgS/CL3c1aGdF0wFXyyfaMXJVMD
+   hgdrq9CC2RMQ/+4tfhkczfprIoj9vbi87cApa1SLMC5e9onvTt2QPXZ/B
+   g==;
+X-CSE-ConnectionGUID: rWkci3PNQLyb0dpqk6K7pw==
+X-CSE-MsgGUID: 1PPCNi6vSxuby3+b+8CcJA==
+X-IronPort-AV: E=McAfee;i="6600,9927,11065"; a="10692310"
+X-IronPort-AV: E=Sophos;i="6.07,260,1708416000"; 
+   d="scan'208";a="10692310"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2024 18:45:15 -0700
+X-CSE-ConnectionGUID: mT/Q3UGcSUejYskr7pmnHg==
+X-CSE-MsgGUID: X5fdfTvqSXaULbUPjlhPUw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,260,1708416000"; 
+   d="scan'208";a="59207567"
+Received: from lkp-server01.sh.intel.com (HELO f8b243fe6e68) ([10.239.97.150])
+  by orviesa002.jf.intel.com with ESMTP; 06 May 2024 18:45:13 -0700
+Received: from kbuild by f8b243fe6e68 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1s49tG-0001D9-1e;
+	Tue, 07 May 2024 01:45:10 +0000
+Date: Tue, 7 May 2024 09:44:52 +0800
+From: kernel test robot <lkp@intel.com>
+To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	linux-bluetooth@vger.kernel.org
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev
+Subject: Re: [PATCH v1] Bluetooth: HCI: Remove HCI_AMP support
+Message-ID: <202405070914.iRNrUUQb-lkp@intel.com>
+References: <20240506223758.460710-1-luiz.dentz@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: bluez.test.bot@gmail.com
-To: linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
-Subject: RE: [v1] Bluetooth: HCI: Remove HCI_AMP support
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <20240506223758.460710-1-luiz.dentz@gmail.com>
-References: <20240506223758.460710-1-luiz.dentz@gmail.com>
-Reply-To: linux-bluetooth@vger.kernel.org
 
---===============0867799900530758143==
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: base64
+Hi Luiz,
 
-VGhpcyBpcyBhdXRvbWF0ZWQgZW1haWwgYW5kIHBsZWFzZSBkbyBub3QgcmVwbHkgdG8gdGhpcyBl
-bWFpbCEKCkRlYXIgc3VibWl0dGVyLAoKVGhhbmsgeW91IGZvciBzdWJtaXR0aW5nIHRoZSBwYXRj
-aGVzIHRvIHRoZSBsaW51eCBibHVldG9vdGggbWFpbGluZyBsaXN0LgpUaGlzIGlzIGEgQ0kgdGVz
-dCByZXN1bHRzIHdpdGggeW91ciBwYXRjaCBzZXJpZXM6ClBXIExpbms6aHR0cHM6Ly9wYXRjaHdv
-cmsua2VybmVsLm9yZy9wcm9qZWN0L2JsdWV0b290aC9saXN0Lz9zZXJpZXM9ODUwOTY3CgotLS1U
-ZXN0IHJlc3VsdC0tLQoKVGVzdCBTdW1tYXJ5OgpDaGVja1BhdGNoICAgICAgICAgICAgICAgICAg
-ICBQQVNTICAgICAgMy44NyBzZWNvbmRzCkdpdExpbnQgICAgICAgICAgICAgICAgICAgICAgIFBB
-U1MgICAgICAwLjI3IHNlY29uZHMKU3ViamVjdFByZWZpeCAgICAgICAgICAgICAgICAgUEFTUyAg
-ICAgIDAuMDkgc2Vjb25kcwpCdWlsZEtlcm5lbCAgICAgICAgICAgICAgICAgICBGQUlMICAgICAg
-MjYuOTMgc2Vjb25kcwpDaGVja0FsbFdhcm5pbmcgICAgICAgICAgICAgICBGQUlMICAgICAgMjku
-NTQgc2Vjb25kcwpDaGVja1NwYXJzZSAgICAgICAgICAgICAgICAgICBGQUlMICAgICAgMzMuODYg
-c2Vjb25kcwpDaGVja1NtYXRjaCAgICAgICAgICAgICAgICAgICBGQUlMICAgICAgMzQuNjAgc2Vj
-b25kcwpCdWlsZEtlcm5lbDMyICAgICAgICAgICAgICAgICBGQUlMICAgICAgMjUuOTcgc2Vjb25k
-cwpUZXN0UnVubmVyU2V0dXAgICAgICAgICAgICAgICBQQVNTICAgICAgNTE4LjkyIHNlY29uZHMK
-VGVzdFJ1bm5lcl9sMmNhcC10ZXN0ZXIgICAgICAgUEFTUyAgICAgIDIwLjQ1IHNlY29uZHMKVGVz
-dFJ1bm5lcl9pc28tdGVzdGVyICAgICAgICAgUEFTUyAgICAgIDMzLjQ2IHNlY29uZHMKVGVzdFJ1
-bm5lcl9ibmVwLXRlc3RlciAgICAgICAgUEFTUyAgICAgIDQuNjcgc2Vjb25kcwpUZXN0UnVubmVy
-X21nbXQtdGVzdGVyICAgICAgICBGQUlMICAgICAgMTE0LjUwIHNlY29uZHMKVGVzdFJ1bm5lcl9y
-ZmNvbW0tdGVzdGVyICAgICAgUEFTUyAgICAgIDcuNDUgc2Vjb25kcwpUZXN0UnVubmVyX3Njby10
-ZXN0ZXIgICAgICAgICBQQVNTICAgICAgMTUuMDggc2Vjb25kcwpUZXN0UnVubmVyX2lvY3RsLXRl
-c3RlciAgICAgICBQQVNTICAgICAgNy45MSBzZWNvbmRzClRlc3RSdW5uZXJfbWVzaC10ZXN0ZXIg
-ICAgICAgIFBBU1MgICAgICA1LjkwIHNlY29uZHMKVGVzdFJ1bm5lcl9zbXAtdGVzdGVyICAgICAg
-ICAgUEFTUyAgICAgIDYuOTcgc2Vjb25kcwpUZXN0UnVubmVyX3VzZXJjaGFuLXRlc3RlciAgICBQ
-QVNTICAgICAgNS4wMSBzZWNvbmRzCkluY3JlbWVudGFsQnVpbGQgICAgICAgICAgICAgIEZBSUwg
-ICAgICAyNS45OCBzZWNvbmRzCgpEZXRhaWxzCiMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
-IwpUZXN0OiBCdWlsZEtlcm5lbCAtIEZBSUwKRGVzYzogQnVpbGQgS2VybmVsIGZvciBCbHVldG9v
-dGgKT3V0cHV0OgoKZHJpdmVycy9ibHVldG9vdGgvYnRtcnZsX21haW4uYzogSW4gZnVuY3Rpb24g
-4oCYYnRtcnZsX3JlZ2lzdGVyX2hkZXbigJk6CmRyaXZlcnMvYmx1ZXRvb3RoL2J0bXJ2bF9tYWlu
-LmM6NjgyOjY6IGVycm9yOiDigJhzdHJ1Y3QgaGNpX2RlduKAmSBoYXMgbm8gbWVtYmVyIG5hbWVk
-IOKAmGRldl90eXBl4oCZCiAgNjgyIHwgIGhkZXYtPmRldl90eXBlID0gcHJpdi0+YnRtcnZsX2Rl
-di5kZXZfdHlwZTsKICAgICAgfCAgICAgIF5+Cm1ha2VbNF06ICoqKiBbc2NyaXB0cy9NYWtlZmls
-ZS5idWlsZDoyNDQ6IGRyaXZlcnMvYmx1ZXRvb3RoL2J0bXJ2bF9tYWluLm9dIEVycm9yIDEKbWFr
-ZVszXTogKioqIFtzY3JpcHRzL01ha2VmaWxlLmJ1aWxkOjQ4NTogZHJpdmVycy9ibHVldG9vdGhd
-IEVycm9yIDIKbWFrZVsyXTogKioqIFtzY3JpcHRzL01ha2VmaWxlLmJ1aWxkOjQ4NTogZHJpdmVy
-c10gRXJyb3IgMgptYWtlWzJdOiAqKiogV2FpdGluZyBmb3IgdW5maW5pc2hlZCBqb2JzLi4uLgpt
-YWtlWzFdOiAqKiogWy9naXRodWIvd29ya3NwYWNlL3NyYy9zcmMvTWFrZWZpbGU6MTkxOTogLl0g
-RXJyb3IgMgptYWtlOiAqKiogW01ha2VmaWxlOjI0MDogX19zdWItbWFrZV0gRXJyb3IgMgojIyMj
-IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMKVGVzdDogQ2hlY2tBbGxXYXJuaW5nIC0gRkFJTApE
-ZXNjOiBSdW4gbGludXgga2VybmVsIHdpdGggYWxsIHdhcm5pbmcgZW5hYmxlZApPdXRwdXQ6Cgpk
-cml2ZXJzL2JsdWV0b290aC9idG1ydmxfbWFpbi5jOiBJbiBmdW5jdGlvbiDigJhidG1ydmxfcmVn
-aXN0ZXJfaGRlduKAmToKZHJpdmVycy9ibHVldG9vdGgvYnRtcnZsX21haW4uYzo2ODI6NjogZXJy
-b3I6IOKAmHN0cnVjdCBoY2lfZGV24oCZIGhhcyBubyBtZW1iZXIgbmFtZWQg4oCYZGV2X3R5cGXi
-gJkKICA2ODIgfCAgaGRldi0+ZGV2X3R5cGUgPSBwcml2LT5idG1ydmxfZGV2LmRldl90eXBlOwog
-ICAgICB8ICAgICAgXn4KbWFrZVs0XTogKioqIFtzY3JpcHRzL01ha2VmaWxlLmJ1aWxkOjI0NDog
-ZHJpdmVycy9ibHVldG9vdGgvYnRtcnZsX21haW4ub10gRXJyb3IgMQptYWtlWzNdOiAqKiogW3Nj
-cmlwdHMvTWFrZWZpbGUuYnVpbGQ6NDg1OiBkcml2ZXJzL2JsdWV0b290aF0gRXJyb3IgMgptYWtl
-WzJdOiAqKiogW3NjcmlwdHMvTWFrZWZpbGUuYnVpbGQ6NDg1OiBkcml2ZXJzXSBFcnJvciAyCm1h
-a2VbMl06ICoqKiBXYWl0aW5nIGZvciB1bmZpbmlzaGVkIGpvYnMuLi4uCm1ha2VbMV06ICoqKiBb
-L2dpdGh1Yi93b3Jrc3BhY2Uvc3JjL3NyYy9NYWtlZmlsZToxOTE5OiAuXSBFcnJvciAyCm1ha2U6
-ICoqKiBbTWFrZWZpbGU6MjQwOiBfX3N1Yi1tYWtlXSBFcnJvciAyCiMjIyMjIyMjIyMjIyMjIyMj
-IyMjIyMjIyMjIyMjIwpUZXN0OiBDaGVja1NwYXJzZSAtIEZBSUwKRGVzYzogUnVuIHNwYXJzZSB0
-b29sIHdpdGggbGludXgga2VybmVsCk91dHB1dDoKCm5ldC9ibHVldG9vdGgvYWZfYmx1ZXRvb3Ro
-LmM6MjI2OjI1OiB3YXJuaW5nOiBjb250ZXh0IGltYmFsYW5jZSBpbiAnYnRfYWNjZXB0X2VucXVl
-dWUnIC0gZGlmZmVyZW50IGxvY2sgY29udGV4dHMgZm9yIGJhc2ljIGJsb2NrCmRyaXZlcnMvYmx1
-ZXRvb3RoL2hjaV9hZzZ4eC5jOjI1NzoyNDogd2FybmluZzogcmVzdHJpY3RlZCBfX2xlMzIgZGVn
-cmFkZXMgdG8gaW50ZWdlcgpkcml2ZXJzL2JsdWV0b290aC9oY2lfbXJ2bC5jOjE3MDoyMzogd2Fy
-bmluZzogcmVzdHJpY3RlZCBfX2xlMTYgZGVncmFkZXMgdG8gaW50ZWdlcgpkcml2ZXJzL2JsdWV0
-b290aC9oY2lfbXJ2bC5jOjIwMzoyMzogd2FybmluZzogcmVzdHJpY3RlZCBfX2xlMTYgZGVncmFk
-ZXMgdG8gaW50ZWdlcgpuZXQvYmx1ZXRvb3RoL2hjaV9ldmVudC5jOiBub3RlOiBpbiBpbmNsdWRl
-ZCBmaWxlICh0aHJvdWdoIGluY2x1ZGUvbmV0L2JsdWV0b290aC9oY2lfY29yZS5oKToKLi9pbmNs
-dWRlL25ldC9ibHVldG9vdGgvaGNpLmg6MjU4ODo0Nzogd2FybmluZzogYXJyYXkgb2YgZmxleGli
-bGUgc3RydWN0dXJlcwouL2luY2x1ZGUvbmV0L2JsdWV0b290aC9oY2kuaDoyNjc0OjQzOiB3YXJu
-aW5nOiBhcnJheSBvZiBmbGV4aWJsZSBzdHJ1Y3R1cmVzCmRyaXZlcnMvYmx1ZXRvb3RoL2J0bXJ2
-bF9tYWluLmM6IEluIGZ1bmN0aW9uIOKAmGJ0bXJ2bF9yZWdpc3Rlcl9oZGV24oCZOgpkcml2ZXJz
-L2JsdWV0b290aC9idG1ydmxfbWFpbi5jOjY4Mjo2OiBlcnJvcjog4oCYc3RydWN0IGhjaV9kZXbi
-gJkgaGFzIG5vIG1lbWJlciBuYW1lZCDigJhkZXZfdHlwZeKAmQogIDY4MiB8ICBoZGV2LT5kZXZf
-dHlwZSA9IHByaXYtPmJ0bXJ2bF9kZXYuZGV2X3R5cGU7CiAgICAgIHwgICAgICBefgptYWtlWzRd
-OiAqKiogW3NjcmlwdHMvTWFrZWZpbGUuYnVpbGQ6MjQ0OiBkcml2ZXJzL2JsdWV0b290aC9idG1y
-dmxfbWFpbi5vXSBFcnJvciAxCm1ha2VbM106ICoqKiBbc2NyaXB0cy9NYWtlZmlsZS5idWlsZDo0
-ODU6IGRyaXZlcnMvYmx1ZXRvb3RoXSBFcnJvciAyCm1ha2VbMl06ICoqKiBbc2NyaXB0cy9NYWtl
-ZmlsZS5idWlsZDo0ODU6IGRyaXZlcnNdIEVycm9yIDIKbWFrZVsyXTogKioqIFdhaXRpbmcgZm9y
-IHVuZmluaXNoZWQgam9icy4uLi4KbmV0L2JsdWV0b290aC9oY2lfY29kZWMuYzogbm90ZTogaW4g
-aW5jbHVkZWQgZmlsZToKLi9pbmNsdWRlL25ldC9ibHVldG9vdGgvaGNpX2NvcmUuaDoxNDk6MzU6
-IHdhcm5pbmc6IGFycmF5IG9mIGZsZXhpYmxlIHN0cnVjdHVyZXMKbmV0L2JsdWV0b290aC9zY28u
-Yzogbm90ZTogaW4gaW5jbHVkZWQgZmlsZToKLi9pbmNsdWRlL25ldC9ibHVldG9vdGgvaGNpX2Nv
-cmUuaDoxNDk6MzU6IHdhcm5pbmc6IGFycmF5IG9mIGZsZXhpYmxlIHN0cnVjdHVyZXMKbWFrZVsx
-XTogKioqIFsvZ2l0aHViL3dvcmtzcGFjZS9zcmMvc3JjL01ha2VmaWxlOjE5MTk6IC5dIEVycm9y
-IDIKbWFrZTogKioqIFtNYWtlZmlsZToyNDA6IF9fc3ViLW1ha2VdIEVycm9yIDIKIyMjIyMjIyMj
-IyMjIyMjIyMjIyMjIyMjIyMjIyMjClRlc3Q6IENoZWNrU21hdGNoIC0gRkFJTApEZXNjOiBSdW4g
-c21hdGNoIHRvb2wgd2l0aCBzb3VyY2UKT3V0cHV0OgoKU2VnbWVudGF0aW9uIGZhdWx0IChjb3Jl
-IGR1bXBlZCkKbWFrZVs0XTogKioqIFtzY3JpcHRzL01ha2VmaWxlLmJ1aWxkOjI0NDogbmV0L2Js
-dWV0b290aC9oY2lfY29yZS5vXSBFcnJvciAxMzkKbWFrZVs0XTogKioqIERlbGV0aW5nIGZpbGUg
-J25ldC9ibHVldG9vdGgvaGNpX2NvcmUubycKbWFrZVszXTogKioqIFtzY3JpcHRzL01ha2VmaWxl
-LmJ1aWxkOjQ4NTogbmV0L2JsdWV0b290aF0gRXJyb3IgMgptYWtlWzJdOiAqKiogW3NjcmlwdHMv
-TWFrZWZpbGUuYnVpbGQ6NDg1OiBuZXRdIEVycm9yIDIKbWFrZVsyXTogKioqIFdhaXRpbmcgZm9y
-IHVuZmluaXNoZWQgam9icy4uLi4KU2VnbWVudGF0aW9uIGZhdWx0IChjb3JlIGR1bXBlZCkKbWFr
-ZVs0XTogKioqIFtzY3JpcHRzL01ha2VmaWxlLmJ1aWxkOjI0NDogZHJpdmVycy9ibHVldG9vdGgv
-YmNtMjAzeC5vXSBFcnJvciAxMzkKbWFrZVs0XTogKioqIERlbGV0aW5nIGZpbGUgJ2RyaXZlcnMv
-Ymx1ZXRvb3RoL2JjbTIwM3gubycKbWFrZVs0XTogKioqIFdhaXRpbmcgZm9yIHVuZmluaXNoZWQg
-am9icy4uLi4KbWFrZVszXTogKioqIFtzY3JpcHRzL01ha2VmaWxlLmJ1aWxkOjQ4NTogZHJpdmVy
-cy9ibHVldG9vdGhdIEVycm9yIDIKbWFrZVsyXTogKioqIFtzY3JpcHRzL01ha2VmaWxlLmJ1aWxk
-OjQ4NTogZHJpdmVyc10gRXJyb3IgMgptYWtlWzFdOiAqKiogWy9naXRodWIvd29ya3NwYWNlL3Ny
-Yy9zcmMvTWFrZWZpbGU6MTkxOTogLl0gRXJyb3IgMgptYWtlOiAqKiogW01ha2VmaWxlOjI0MDog
-X19zdWItbWFrZV0gRXJyb3IgMgojIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMKVGVzdDog
-QnVpbGRLZXJuZWwzMiAtIEZBSUwKRGVzYzogQnVpbGQgMzJiaXQgS2VybmVsIGZvciBCbHVldG9v
-dGgKT3V0cHV0OgoKZHJpdmVycy9ibHVldG9vdGgvYnRtcnZsX21haW4uYzogSW4gZnVuY3Rpb24g
-4oCYYnRtcnZsX3JlZ2lzdGVyX2hkZXbigJk6CmRyaXZlcnMvYmx1ZXRvb3RoL2J0bXJ2bF9tYWlu
-LmM6NjgyOjY6IGVycm9yOiDigJhzdHJ1Y3QgaGNpX2RlduKAmSBoYXMgbm8gbWVtYmVyIG5hbWVk
-IOKAmGRldl90eXBl4oCZCiAgNjgyIHwgIGhkZXYtPmRldl90eXBlID0gcHJpdi0+YnRtcnZsX2Rl
-di5kZXZfdHlwZTsKICAgICAgfCAgICAgIF5+Cm1ha2VbNF06ICoqKiBbc2NyaXB0cy9NYWtlZmls
-ZS5idWlsZDoyNDQ6IGRyaXZlcnMvYmx1ZXRvb3RoL2J0bXJ2bF9tYWluLm9dIEVycm9yIDEKbWFr
-ZVszXTogKioqIFtzY3JpcHRzL01ha2VmaWxlLmJ1aWxkOjQ4NTogZHJpdmVycy9ibHVldG9vdGhd
-IEVycm9yIDIKbWFrZVsyXTogKioqIFtzY3JpcHRzL01ha2VmaWxlLmJ1aWxkOjQ4NTogZHJpdmVy
-c10gRXJyb3IgMgptYWtlWzJdOiAqKiogV2FpdGluZyBmb3IgdW5maW5pc2hlZCBqb2JzLi4uLgpt
-YWtlWzFdOiAqKiogWy9naXRodWIvd29ya3NwYWNlL3NyYy9zcmMvTWFrZWZpbGU6MTkxOTogLl0g
-RXJyb3IgMgptYWtlOiAqKiogW01ha2VmaWxlOjI0MDogX19zdWItbWFrZV0gRXJyb3IgMgojIyMj
-IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMKVGVzdDogVGVzdFJ1bm5lcl9tZ210LXRlc3RlciAt
-IEZBSUwKRGVzYzogUnVuIG1nbXQtdGVzdGVyIHdpdGggdGVzdC1ydW5uZXIKT3V0cHV0OgpUb3Rh
-bDogNDkyLCBQYXNzZWQ6IDQ4OSAoOTkuNCUpLCBGYWlsZWQ6IDEsIE5vdCBSdW46IDIKCkZhaWxl
-ZCBUZXN0IENhc2VzCkxMIFByaXZhY3kgLSBBZGQgRGV2aWNlIDYgKFJMIGlzIGZ1bGwpICAgICAg
-ICAgICAgICAgRmFpbGVkICAgICAgIDAuMTg2IHNlY29uZHMKIyMjIyMjIyMjIyMjIyMjIyMjIyMj
-IyMjIyMjIyMjClRlc3Q6IEluY3JlbWVudGFsQnVpbGQgLSBGQUlMCkRlc2M6IEluY3JlbWVudGFs
-IGJ1aWxkIHdpdGggdGhlIHBhdGNoZXMgaW4gdGhlIHNlcmllcwpPdXRwdXQ6Clt2MV0gQmx1ZXRv
-b3RoOiBIQ0k6IFJlbW92ZSBIQ0lfQU1QIHN1cHBvcnQKCmRyaXZlcnMvYmx1ZXRvb3RoL2J0bXJ2
-bF9tYWluLmM6IEluIGZ1bmN0aW9uIOKAmGJ0bXJ2bF9yZWdpc3Rlcl9oZGV24oCZOgpkcml2ZXJz
-L2JsdWV0b290aC9idG1ydmxfbWFpbi5jOjY4Mjo2OiBlcnJvcjog4oCYc3RydWN0IGhjaV9kZXbi
-gJkgaGFzIG5vIG1lbWJlciBuYW1lZCDigJhkZXZfdHlwZeKAmQogIDY4MiB8ICBoZGV2LT5kZXZf
-dHlwZSA9IHByaXYtPmJ0bXJ2bF9kZXYuZGV2X3R5cGU7CiAgICAgIHwgICAgICBefgptYWtlWzRd
-OiAqKiogW3NjcmlwdHMvTWFrZWZpbGUuYnVpbGQ6MjQ0OiBkcml2ZXJzL2JsdWV0b290aC9idG1y
-dmxfbWFpbi5vXSBFcnJvciAxCm1ha2VbM106ICoqKiBbc2NyaXB0cy9NYWtlZmlsZS5idWlsZDo0
-ODU6IGRyaXZlcnMvYmx1ZXRvb3RoXSBFcnJvciAyCm1ha2VbMl06ICoqKiBbc2NyaXB0cy9NYWtl
-ZmlsZS5idWlsZDo0ODU6IGRyaXZlcnNdIEVycm9yIDIKbWFrZVsyXTogKioqIFdhaXRpbmcgZm9y
-IHVuZmluaXNoZWQgam9icy4uLi4KbWFrZVsxXTogKioqIFsvZ2l0aHViL3dvcmtzcGFjZS9zcmMv
-c3JjL01ha2VmaWxlOjE5MTk6IC5dIEVycm9yIDIKbWFrZTogKioqIFtNYWtlZmlsZToyNDA6IF9f
-c3ViLW1ha2VdIEVycm9yIDIKCgotLS0KUmVnYXJkcywKTGludXggQmx1ZXRvb3RoCgo=
+kernel test robot noticed the following build errors:
 
---===============0867799900530758143==--
+[auto build test ERROR on next-20240506]
+[cannot apply to v6.9-rc7 v6.9-rc6 v6.9-rc5 linus/master v6.9-rc7]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Luiz-Augusto-von-Dentz/Bluetooth-HCI-Remove-HCI_AMP-support/20240507-063936
+base:   next-20240506
+patch link:    https://lore.kernel.org/r/20240506223758.460710-1-luiz.dentz%40gmail.com
+patch subject: [PATCH v1] Bluetooth: HCI: Remove HCI_AMP support
+config: arm-defconfig (https://download.01.org/0day-ci/archive/20240507/202405070914.iRNrUUQb-lkp@intel.com/config)
+compiler: clang version 14.0.6 (https://github.com/llvm/llvm-project.git f28c006a5895fc0e329fe15fead81e37457cb1d1)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240507/202405070914.iRNrUUQb-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202405070914.iRNrUUQb-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+>> drivers/bluetooth/btmrvl_main.c:682:8: error: no member named 'dev_type' in 'struct hci_dev'
+           hdev->dev_type = priv->btmrvl_dev.dev_type;
+           ~~~~  ^
+   1 error generated.
+
+
+vim +682 drivers/bluetooth/btmrvl_main.c
+
+132ff4e5fa8dfb Bing Zhao              2009-06-02  656  
+64061607eab7cb Bing Zhao              2010-03-03  657  int btmrvl_register_hdev(struct btmrvl_private *priv)
+132ff4e5fa8dfb Bing Zhao              2009-06-02  658  {
+132ff4e5fa8dfb Bing Zhao              2009-06-02  659  	struct hci_dev *hdev = NULL;
+70a7808b50b119 Abhishek Pandit-Subedi 2020-06-10  660  	struct btmrvl_sdio_card *card = priv->btmrvl_dev.card;
+132ff4e5fa8dfb Bing Zhao              2009-06-02  661  	int ret;
+132ff4e5fa8dfb Bing Zhao              2009-06-02  662  
+132ff4e5fa8dfb Bing Zhao              2009-06-02  663  	hdev = hci_alloc_dev();
+132ff4e5fa8dfb Bing Zhao              2009-06-02  664  	if (!hdev) {
+132ff4e5fa8dfb Bing Zhao              2009-06-02  665  		BT_ERR("Can not allocate HCI device");
+132ff4e5fa8dfb Bing Zhao              2009-06-02  666  		goto err_hdev;
+132ff4e5fa8dfb Bing Zhao              2009-06-02  667  	}
+132ff4e5fa8dfb Bing Zhao              2009-06-02  668  
+132ff4e5fa8dfb Bing Zhao              2009-06-02  669  	priv->btmrvl_dev.hcidev = hdev;
+155961e8001719 David Rheinsberg       2012-02-09  670  	hci_set_drvdata(hdev, priv);
+132ff4e5fa8dfb Bing Zhao              2009-06-02  671  
+c13854cef47510 Marcel Holtmann        2010-02-08  672  	hdev->bus   = HCI_SDIO;
+132ff4e5fa8dfb Bing Zhao              2009-06-02  673  	hdev->open  = btmrvl_open;
+132ff4e5fa8dfb Bing Zhao              2009-06-02  674  	hdev->close = btmrvl_close;
+132ff4e5fa8dfb Bing Zhao              2009-06-02  675  	hdev->flush = btmrvl_flush;
+132ff4e5fa8dfb Bing Zhao              2009-06-02  676  	hdev->send  = btmrvl_send_frame;
+4b245722cabc6e Amitkumar Karwar       2013-10-01  677  	hdev->setup = btmrvl_setup;
+27b869f59d5d98 Amitkumar Karwar       2014-07-18  678  	hdev->set_bdaddr = btmrvl_set_bdaddr;
+4539ca67fe8ede Luiz Augusto von Dentz 2021-10-01  679  	hdev->wakeup = btmrvl_wakeup;
+70a7808b50b119 Abhishek Pandit-Subedi 2020-06-10  680  	SET_HCIDEV_DEV(hdev, &card->func->dev);
+64061607eab7cb Bing Zhao              2010-03-03  681  
+f120c6b635a62d Bing Zhao              2010-03-03 @682  	hdev->dev_type = priv->btmrvl_dev.dev_type;
+f120c6b635a62d Bing Zhao              2010-03-03  683  
+132ff4e5fa8dfb Bing Zhao              2009-06-02  684  	ret = hci_register_dev(hdev);
+132ff4e5fa8dfb Bing Zhao              2009-06-02  685  	if (ret < 0) {
+132ff4e5fa8dfb Bing Zhao              2009-06-02  686  		BT_ERR("Can not register HCI device");
+132ff4e5fa8dfb Bing Zhao              2009-06-02  687  		goto err_hci_register_dev;
+132ff4e5fa8dfb Bing Zhao              2009-06-02  688  	}
+132ff4e5fa8dfb Bing Zhao              2009-06-02  689  
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
