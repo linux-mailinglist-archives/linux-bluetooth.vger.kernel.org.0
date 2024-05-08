@@ -1,185 +1,134 @@
-Return-Path: <linux-bluetooth+bounces-4395-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4399-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A06A8C0033
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 May 2024 16:38:31 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5438E8C0153
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 May 2024 17:46:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BCB631C23D6D
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 May 2024 14:38:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0AB0D289FF5
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 May 2024 15:46:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71E4086626;
-	Wed,  8 May 2024 14:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2187412A169;
+	Wed,  8 May 2024 15:46:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lPaVK6mG"
+	dkim=pass (2048-bit key) header.d=asymptotic.io header.i=@asymptotic.io header.b="GRsAA2Zx"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1711D8288C;
-	Wed,  8 May 2024 14:37:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7A41292E4
+	for <linux-bluetooth@vger.kernel.org>; Wed,  8 May 2024 15:46:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715179073; cv=none; b=ZBbeVEUb/YmWnUHz2azvXaIMac9DbyYDBksTgkcSwdgq8Nsy5ulrbz2V00p2T72nBxSa00sb0IeO2yUp8GzS0cIGFRPXXCTZG6pyrB9llw/lSu6btr+pf/LzAdSM6dI9gw0uCxX1dXO0mEVSjO6QLv2srPacVUp2mHApw+95U/I=
+	t=1715183178; cv=none; b=GbiHjdtAjnGBhREm25E8M3iGEwJnokH1TG7FKKicwUt8ZKWmb4MppSwr36o0FwhAyq0zN7QfCdgjmvEgxYexEUHM+K0/NI1Rb+8tFXtpt9mumScIlpMMAYbs7G+VB0X9s/wTs8XhAnU65FCcW9QzRRYsm9qXDcRaPVE2BDhPXDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715179073; c=relaxed/simple;
-	bh=LFoKAKHXamXRmqSY6b64pUE2lvxxq13VyPY4udQ2bbQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QPQQptxVbn8XSr58SMpedDQyuvJBcOkV22cMkFa7Nvoz+0ERLRcn8CEjqswOiSmgl/K6f4fKnrhYGKYmuF6IW1Pklo/NHe1FprUT1r28BpARpREovS3aAyDX3uOcEfVgv86w8fZK9TegjMlQaj8R1QEJIl9CLc1fmvnlYwG0YGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lPaVK6mG; arc=none smtp.client-ip=209.85.208.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2e22a1bed91so57599371fa.0;
-        Wed, 08 May 2024 07:37:51 -0700 (PDT)
+	s=arc-20240116; t=1715183178; c=relaxed/simple;
+	bh=7TAVVFG+yvXXVIkMlqVJ+BcyraU9juZnjsZsFlYnaw0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ce7Z+1tWre+5BblQGF5cF1r6lv8goRGmiQaYLueF0RsELT9z2oOsgQ+wtKrJvq0HRN5ckcIy77aCI9qeaaDpdbsn0hFN7cJ9R8MokWmgzeNtKbLhXpggplO5A6QwrjlqJtJnu5GxpDIZHwZqDJEuWF/1PnRfcw6tf+f5XSb5JSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=asymptotic.io; spf=pass smtp.mailfrom=asymptotic.io; dkim=pass (2048-bit key) header.d=asymptotic.io header.i=@asymptotic.io header.b=GRsAA2Zx; arc=none smtp.client-ip=209.85.160.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=asymptotic.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=asymptotic.io
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-43ca9047bd2so7380181cf.1
+        for <linux-bluetooth@vger.kernel.org>; Wed, 08 May 2024 08:46:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715179070; x=1715783870; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0xEsgtjhIb67o8dmnbn0ijNuUBqVJ1mlV7N11u3Yqj0=;
-        b=lPaVK6mGBGDcdxJvx4fRyexeKQFXBCcXjhFpgWnOP/YjwTDDN2VUSmjkUoaFzYeIXh
-         K7gzGnNVbLb60wqCcaNsfECVzu8/ZfYxQQQdx7/82f8XYGJnoY5kbh0MVzf7JlSLUjQf
-         xiefnwfvVtzkobYSXdK3ctJuEFfdwc6qrtAkJHvP4SFpifoObKHWCDSN1M1orFFQ17Bf
-         au6CQZM6Ww7SoerdxhRdw82w2jXSWTx241L4cwm7mi3qaS+mN+qhcaC/z8c8TNY0Mh0H
-         EWbHM+zkoJ6BbFFIkcbmwTTeUOnd6PISeb8Mkz0rxPHkowHn9LFczlMvZFVOaq//ndHO
-         p9kg==
+        d=asymptotic.io; s=google; t=1715183172; x=1715787972; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=5UbzPBRTRiDLhFM8NCxYxpmABq2A7M0E5WG9xInU6rY=;
+        b=GRsAA2ZxkQk3fpdtqoEwQp0J7NzL2VeYKWlKs9LeVeVPqHFKXQnhoFsm68ToLFqCgP
+         4Gwseld4F5+ZxptbZI/NUwanrDEsNyTLsvt6rLgCSKEzVKIia6Y5Zk5JirIk9HJJD1VS
+         n7/eq0G7hS1I+FQlxdbGhK8d8JOSk7FugV3/IfNnw10eEF+/VDOoR6+NwwAFVc59pqhO
+         Ztybq22yJP3ZhGzErK5kxNDXRWyzuZSKVqK+UYsnTsK78bpf8zLt22mSqxs9SyrcVfne
+         6dp/XTmgw7JqooMLO9KoPMfIgdJfR/98s4BoAMqGncvznbUUlKdYDPJ1GtZsoCdhmdnI
+         kUbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715179070; x=1715783870;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0xEsgtjhIb67o8dmnbn0ijNuUBqVJ1mlV7N11u3Yqj0=;
-        b=wyP/a89eihh8ks74hJIDLd7G31XixcFztK67ggbi6lgHd38cwyA5lHo7qt+CzqJMCN
-         znYahvJ7MaSn5vQn/4DgaBF2vQQ8Ca5K+FwY4uwg88IlQyWHVrNQArwwuyVrgccOSz7L
-         Rc5NAOjfp1ql3pfvtb/8mxS50im4c6+5GKAXPbDSeRuTKpRGmlTY7MLzwSy2q+Kng5Fp
-         whRKxwiAPhcd2E1jpBJ+DjZAF6kEIDBUM48sc+qWuErzbHGreOtM2GY2rvWOYd8sR+RV
-         /djokfQgRize9BqAbCQTHfbmq8jogrmK8YRAXs1eZeIklkg6zzJMSbwBuoOhbeDq3XuZ
-         7hnA==
-X-Forwarded-Encrypted: i=1; AJvYcCX+tO3cJphZqjSpKtgt6RPW4BoQgdU3VgBfpGE4kgPL4ylo+lY08P6oTOskeiLh80eY2hxY3zvbYsxAtW5lwUOWQlcud18xn3pbFWubrPdoEc98T5SuyDEVCA2nXbHfQ8yo6oBXy5uncZ9NGnoF
-X-Gm-Message-State: AOJu0YzWvzOV4vRuMPzMdsGKqJFU+gEGVlxUMRccVg3uw0ZTYRvKolIZ
-	ufduEx/sp/KDThBLLBJAw1d9FkR6tlWH1Ds+VTxu/KnhUoX3w4gmNsZfJVKsrknqyghBaxR9YT0
-	8rTEpGy+JLA3j7IXfcDcAh/Opze4=
-X-Google-Smtp-Source: AGHT+IEtd4mai1/RSnx1sodt2ztNxupN11yzK5OtIGIUAo2B68m7Slrvnzjv8SPPecfS9DsZKTC378UPvuO26tKadCs=
-X-Received: by 2002:a2e:2286:0:b0:2e1:691b:da0b with SMTP id
- 38308e7fff4ca-2e446f772cemr17059791fa.12.1715179070238; Wed, 08 May 2024
- 07:37:50 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1715183172; x=1715787972;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5UbzPBRTRiDLhFM8NCxYxpmABq2A7M0E5WG9xInU6rY=;
+        b=Bzi37lnJwb8xw0cVjB+1mK5+nYsT7HHWhlGieru2IkSt2lxzy3DvjTlnxWoJ5RxStd
+         K3JhDvFZu4mNdLqYoiYGW1mJnJT9Fz17Gm0JlFyiZAWCSCIutqcFVl2WkBl0qY/RNB+P
+         BQedJdue1msxAbNSRqHmoeD0oFEHVoAtcqOrfonapJkqT2s8GsFL4ASKAfjWzs9pKz7i
+         y2avr3deH1OOEOn0T6ECqClLEUcdPZCf4BHm3NHmo2/kUCx69twBWdUW89zcFVoeTgWK
+         NORPQByo/I61BSlhGx0LSqfbqO97qinpy/gRSSVFRGtvl3EnsRUh+SZbObDf1iwEF5dH
+         Dz8Q==
+X-Gm-Message-State: AOJu0Yw2MdavJATt1npVFMztiRWHLzeHLAqWneqUy5d48xqYehc7gNN3
+	0cdeAbOYejPq7BDN4ZIwEF4uKNxdrgJ4tQEyZCj3QIWtsNWVD2M5vAydd0lr0xb6bIuzbf21AFX
+	l
+X-Google-Smtp-Source: AGHT+IEuyxvrBtcKo2L7nRTQMdRey3rhmd4Zo7Djuu8JZvJrZdtD2oYjphJFmbXfjhpv0b/7irrp4w==
+X-Received: by 2002:ac8:5d0b:0:b0:43a:c90b:34e5 with SMTP id d75a77b69052e-43dec2a3d43mr338221cf.34.1715183172047;
+        Wed, 08 May 2024 08:46:12 -0700 (PDT)
+Received: from andromeda.lan (bras-base-toroon0359w-grc-19-74-15-47-99.dsl.bell.ca. [74.15.47.99])
+        by smtp.gmail.com with ESMTPSA id cd14-20020a05622a418e00b0043791f7d831sm7756513qtb.63.2024.05.08.08.46.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 May 2024 08:46:10 -0700 (PDT)
+From: Arun Raghavan <arun@asymptotic.io>
+To: linux-bluetooth@vger.kernel.org
+Cc: Arun Raghavan <arun@asymptotic.io>
+Subject: [PATCH BlueZ 0/5] ASHA plugin
+Date: Wed,  8 May 2024 11:45:59 -0400
+Message-ID: <20240508154604.276763-1-arun@asymptotic.io>
+X-Mailer: git-send-email 2.45.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <965cd14922aea67e2750ff2c2ecad773f8ba485a.1715109394.git.sean.wang@kernel.org>
- <202405081456.v2MvcQ0P-lkp@intel.com>
-In-Reply-To: <202405081456.v2MvcQ0P-lkp@intel.com>
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Wed, 8 May 2024 10:37:37 -0400
-Message-ID: <CABBYNZLH7mGdP7AcdHnY8q=3i=Lupk-D2Af4G5X4o1_XdbTfVw@mail.gmail.com>
-Subject: Re: [PATCH v4 1/5] Bluetooth: btmtk: add the function to get the fw name
-To: kernel test robot <lkp@intel.com>
-Cc: sean.wang@kernel.org, marcel@holtmann.org, johan.hedberg@gmail.com, 
-	oe-kbuild-all@lists.linux.dev, linux-bluetooth@vger.kernel.org, 
-	linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	Sean Wang <sean.wang@mediatek.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Sean,
+Hi folks,
+I've written an implementation of the Android specification for
+streaming to hearing aids over Bluetooth LE, ASHA[1]. This predates the
+LE audio specification, and has been supported in hearing aids for a
+while now, so I think this is worth supporting as these devices should
+continue to be in use for several years.
 
-On Wed, May 8, 2024 at 3:13=E2=80=AFAM kernel test robot <lkp@intel.com> wr=
-ote:
->
-> Hi,
->
-> kernel test robot noticed the following build warnings:
->
-> [auto build test WARNING on bluetooth/master]
-> [also build test WARNING on bluetooth-next/master linus/master v6.9-rc7 n=
-ext-20240507]
-> [If your patch is applied to the wrong git tree, kindly drop us a note.
-> And when submitting patch, we suggest to use '--base' as documented in
-> https://git-scm.com/docs/git-format-patch#_base_tree_information]
->
-> url:    https://github.com/intel-lab-lkp/linux/commits/sean-wang-kernel-o=
-rg/Bluetooth-btmtk-apply-the-common-btmtk_fw_get_filename/20240508-032333
-> base:   https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetoo=
-th.git master
-> patch link:    https://lore.kernel.org/r/965cd14922aea67e2750ff2c2ecad773=
-f8ba485a.1715109394.git.sean.wang%40kernel.org
-> patch subject: [PATCH v4 1/5] Bluetooth: btmtk: add the function to get t=
-he fw name
-> config: arm64-defconfig (https://download.01.org/0day-ci/archive/20240508=
-/202405081456.v2MvcQ0P-lkp@intel.com/config)
-> compiler: aarch64-linux-gcc (GCC) 13.2.0
-> reproduce (this is a W=3D1 build): (https://download.01.org/0day-ci/archi=
-ve/20240508/202405081456.v2MvcQ0P-lkp@intel.com/reproduce)
->
-> If you fix the issue in a separate patch/commit (i.e. not just a new vers=
-ion of
-> the same patch/commit), kindly add following tags
-> | Reported-by: kernel test robot <lkp@intel.com>
-> | Closes: https://lore.kernel.org/oe-kbuild-all/202405081456.v2MvcQ0P-lkp=
-@intel.com/
->
-> All warnings (new ones prefixed by >>):
->
->    drivers/bluetooth/btmtk.c: In function 'btmtk_fw_get_filename':
-> >> drivers/bluetooth/btmtk.c:115:35: warning: 'mediatek/BT_RAM_CODE_MT' d=
-irective output truncated writing 23 bytes into a region of size 8 [-Wforma=
-t-truncation=3D]
->      115 |                          "mediatek/BT_RAM_CODE_MT%04x_1a_%x_hd=
-r.bin",
->          |                           ~~~~~~~~^~~~~~~~~~~~~~~
->    drivers/bluetooth/btmtk.c:115:26: note: directive argument in the rang=
-e [1, 256]
->      115 |                          "mediatek/BT_RAM_CODE_MT%04x_1a_%x_hd=
-r.bin",
->          |                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~~
->    drivers/bluetooth/btmtk.c:114:17: note: 'snprintf' output between 41 a=
-nd 43 bytes into a destination of size 8
->      114 |                 snprintf(buf, sizeof(size),
->          |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~
->      115 |                          "mediatek/BT_RAM_CODE_MT%04x_1a_%x_hd=
-r.bin",
->          |                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~~~
->      116 |                          dev_id & 0xffff, (fw_ver & 0xff) + 1)=
-;
->          |                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->
->
-> vim +115 drivers/bluetooth/btmtk.c
->
->    105
->    106  void btmtk_fw_get_filename(char *buf, size_t size, u32 dev_id, u3=
-2 fw_ver,
->    107                             u32 fw_flavor)
->    108  {
->    109          if (dev_id =3D=3D 0x7925)
->    110                  snprintf(buf, size,
->    111                           "mediatek/mt%04x/BT_RAM_CODE_MT%04x_1_%x=
-_hdr.bin",
->    112                           dev_id & 0xffff, dev_id & 0xffff, (fw_ve=
-r & 0xff) + 1);
->    113          else if (dev_id =3D=3D 0x7961 && fw_flavor)
->    114                  snprintf(buf, sizeof(size),
->  > 115                           "mediatek/BT_RAM_CODE_MT%04x_1a_%x_hdr.b=
-in",
->    116                           dev_id & 0xffff, (fw_ver & 0xff) + 1);
->    117          else
->    118                  snprintf(buf, size,
->    119                           "mediatek/BT_RAM_CODE_MT%04x_1_%x_hdr.bi=
-n",
->    120                           dev_id & 0xffff, (fw_ver & 0xff) + 1);
->    121  }
->    122  EXPORT_SYMBOL_GPL(btmtk_fw_get_filename);
->    123
+I've reused the MediaEndpoint1 and MediaTransport1 interfaces at Luiz'
+suggestion. The flow is slightly different from A2DP and LE Audio in
+that there isn't really a negotiation step, so the endpoint and
+transport are both available on connection.
 
-Could you please fix the above?
+Also included is a script to stream arbitrary audio to an ASHA device,
+which is handy for making sure that the implementation does work. I have
+tested this against a reference implementation on an onsemi RSL10 board.
 
---=20
-Luiz Augusto von Dentz
+The current implementation is written with a single device in mind. My
+plan is to take this to completion along with a PipeWire implementation
+to expose a single device for playback, and then do a second pass to
+support a pair of devices.
+
+Cheers,
+Arun
+
+[1] https://source.android.com/docs/core/connect/bluetooth/asha
+
+Arun Raghavan (5):
+  profiles: Add initial code for an ASHA plugin
+  asha: Implement volume on transport
+  test: Add a script to test ASHA
+  gitignore: Add compile_commands.json
+  gitignore: Add __pycache__
+
+ .gitignore                 |   3 +
+ Makefile.plugins           |   5 +
+ configure.ac               |   4 +
+ lib/uuid.h                 |   3 +
+ profiles/audio/asha.c      | 835 +++++++++++++++++++++++++++++++++++++
+ profiles/audio/asha.h      |  38 ++
+ profiles/audio/media.c     |  28 ++
+ profiles/audio/media.h     |   2 +
+ profiles/audio/transport.c | 173 +++++++-
+ test/simple-asha           | 158 +++++++
+ 10 files changed, 1247 insertions(+), 2 deletions(-)
+ create mode 100644 profiles/audio/asha.c
+ create mode 100644 profiles/audio/asha.h
+ create mode 100755 test/simple-asha
+
+-- 
+2.45.0
+
 
