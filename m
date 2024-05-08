@@ -1,97 +1,122 @@
-Return-Path: <linux-bluetooth+bounces-4410-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4411-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44C718C060F
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 May 2024 23:10:41 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 880848C0745
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  9 May 2024 00:17:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EEF6F1F230B5
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 May 2024 21:10:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 27F901F22EDE
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 May 2024 22:17:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA2FE131BB4;
-	Wed,  8 May 2024 21:10:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sh3qZ5bP"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01D91132C39;
+	Wed,  8 May 2024 22:17:04 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D1512C497
-	for <linux-bluetooth@vger.kernel.org>; Wed,  8 May 2024 21:10:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C582130E4B
+	for <linux-bluetooth@vger.kernel.org>; Wed,  8 May 2024 22:17:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715202633; cv=none; b=cqzb1+OsNvq0K2kHYdMJ2ievGjlMEAG34LV4pP51B+CIs0VHaKG48+qknVaYyeop/j1ARtxK+Mm+hVfLjCE9k1CmRWD7hfxgErKQfK27r47v5jJe5MHRKmvY5gMSxANj15nvjlDv5aVVZR95wByAhYniEfwVWlDi99y/O32y3V4=
+	t=1715206623; cv=none; b=rTcuqX+smCbTygzXIgfk28uYMd7s30+NyJXum4ttyUJ0UvWdm0JJzc6/s8hx25ugWZrKeUTHsPCLUH28ebOuXWWZQIU8rQ2TMOHRX6bHa6rrK0L9MC1Fgj2YjFDaDl12SAOtZWXOgUdJDbPeh6OYdbyEfg0vTcGdG1/2RLrO1sM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715202633; c=relaxed/simple;
-	bh=xL7z/YIx9p3Xd5AENgT7cZ51/XJ79yw5QLK4NtUXAH8=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=kAprRsRYxu98gGD1kIu38y7AwctBK06+MRHZFfYT5Okay4qgZy86fpz4CE7MDYy1fCA1EB6IPJvIOeXu2evaCa3jBr8YZtahZ+W8WdBDay9tHrtQ3aAem0I2XZlZhkDIn6WttLtPV18V/onbYg9+vHakwLJzGBi/5qd9IWiXp34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sh3qZ5bP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id DE741C32782;
-	Wed,  8 May 2024 21:10:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715202632;
-	bh=xL7z/YIx9p3Xd5AENgT7cZ51/XJ79yw5QLK4NtUXAH8=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=sh3qZ5bP6PhMD7Rr68Os3kHkPXwE/W2DMgolhcIy66LnxpC4UsOpIhxW8TxyFP/GM
-	 dCPrxAbmiS7+07MbLzSE3LGWMw7ga/3RnZAdsfEI+tEX3504GteAF7bGaY2HtiKies
-	 pKz/Caw1tdbBLhL14zW2yw9uXKQiEmbcXVX6K5LN+W9r9L9j1ClF3lMaxFk7X+BzMf
-	 NopWNuiOGPhWamSD9u8yMBHleZPpnMX5g+5GwxnqHCyCPoN497Ubg1TEHjKrIjUc8H
-	 /J8/RoX0dJdZz/7BTOwkZ1Amqt30BVh3ocaFGXt8EMwNlUVHuIUNiSIAzXZ7Eb7Rxu
-	 dDfayHXZdOprQ==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id CBFF8C43330;
-	Wed,  8 May 2024 21:10:32 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1715206623; c=relaxed/simple;
+	bh=uVZpoWw82LqYKxWX7Wrq4qa3CV2sRaj6xwZnqWxJjak=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DLBv0bvQ4xoYclRDCrAUtxAwwJ3Uap7R6apkKvu9emOp3QvCFzEmOQGaJEbOn6FtUdfwZqQztwMAkjRCnaPME+0/ypMUitFgVU9WmWDsN2JsyqmceiOGQu70RqGFwDqZ3wDy/Mm0AfVRfndpoA8rrTLlVcFdNnFKWvOkIrmMfyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sung-woo.kim; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sung-woo.kim
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2df83058d48so2854041fa.1
+        for <linux-bluetooth@vger.kernel.org>; Wed, 08 May 2024 15:17:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715206620; x=1715811420;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uVZpoWw82LqYKxWX7Wrq4qa3CV2sRaj6xwZnqWxJjak=;
+        b=AClfK8DfMNPLDlKExflxxFxtM/qoZWzp4YVPoHT7LrJ4l/9G7yCP6+cnKoayQwM7lj
+         neuhZyvZASzf8MmppJ5HwKkcEzdr2CUWgbz2/pCppbrxkLTRpzkDDa2eEvwFYhTGCsLx
+         jdGMwSQZb1GRuKDskxN2vtDX3XFWI+n8uSw9SAK7Fdoa1IUquzvRVE6dfRHz07TPV6/e
+         Ea9wYaF8fRVYJZkGiDw6ayO32bTr8jXCw0Uo8iD7uPVUwbI8xti5+NhC2hLMIrToHPXe
+         D5I3TSN2kbYyCIECMTBw5wDsK8hwhG3c5CR8MM8KwGCA4somvBBzouQtW66I2dsXFHqn
+         ZzYg==
+X-Gm-Message-State: AOJu0YwGPVTccF9GB6rCbFj0H5wLv2dM1eMfWttRTLT4QeJ2EnxD9RLd
+	GZDlSDM7KsDYIntrE+FoLspnYj4K4GDnv6pmo1+y7cO7SuZFYezmez28LkU6ya0=
+X-Google-Smtp-Source: AGHT+IGSbtkOCFnKj8ztdADRcvlPL0JJBzceDOlFGeYOUfFH/XD+13jMLrqEWPrFIbCbvu8QfLi7RQ==
+X-Received: by 2002:a2e:9858:0:b0:2e2:587:4bc9 with SMTP id 38308e7fff4ca-2e4476af963mr21903041fa.40.1715206620001;
+        Wed, 08 May 2024 15:17:00 -0700 (PDT)
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com. [209.85.167.52])
+        by smtp.gmail.com with ESMTPSA id a7-20020a2e9807000000b002db98d0f2c8sm2579215ljj.85.2024.05.08.15.16.59
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 May 2024 15:16:59 -0700 (PDT)
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-51f3a49ff7dso222108e87.2
+        for <linux-bluetooth@vger.kernel.org>; Wed, 08 May 2024 15:16:59 -0700 (PDT)
+X-Received: by 2002:ac2:522e:0:b0:51b:de39:3826 with SMTP id
+ 2adb3069b0e04-5217ce46c24mr2107480e87.65.1715206619650; Wed, 08 May 2024
+ 15:16:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ v1] shared/util: Fix build error on malloc0
-From: patchwork-bot+bluetooth@kernel.org
-Message-Id: 
- <171520263282.5891.15915392684516199434.git-patchwork-notify@kernel.org>
-Date: Wed, 08 May 2024 21:10:32 +0000
-References: <20240507204407.653383-1-luiz.dentz@gmail.com>
-In-Reply-To: <20240507204407.653383-1-luiz.dentz@gmail.com>
+References: <20240507143639.539863-1-luiz.dentz@gmail.com> <663a497d.050a0220.99cab.8529@mx.google.com>
+ <CABBYNZJ8NDv64Unsa=-j_RJhpCGBBtJf9Vvn2Fq9Vvc9OsHmwg@mail.gmail.com> <CAJNyHpL1sqNxbe_2o1Pjx_BJTka0c5NoanQBfGPU1bYit7dXVQ@mail.gmail.com>
+In-Reply-To: <CAJNyHpL1sqNxbe_2o1Pjx_BJTka0c5NoanQBfGPU1bYit7dXVQ@mail.gmail.com>
+From: Sungwoo Kim <iam@sung-woo.kim>
+Date: Thu, 9 May 2024 07:16:47 +0900
+X-Gmail-Original-Message-ID: <CAJNyHp+HZF_Vh5c9xmNuFxsc6dMmEboQH2tXx2C5KWCNe1C51A@mail.gmail.com>
+Message-ID: <CAJNyHp+HZF_Vh5c9xmNuFxsc6dMmEboQH2tXx2C5KWCNe1C51A@mail.gmail.com>
+Subject: Re: [v2] Bluetooth: HCI: Remove HCI_AMP support
 To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 Cc: linux-bluetooth@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello:
+On Wed, May 8, 2024 at 5:21=E2=80=AFAM Sungwoo Kim <iam@sung-woo.kim> wrote=
+:
+>
+> Hi Luiz,
+>
+> On Wed, May 8, 2024 at 4:26=E2=80=AFAM Luiz Augusto von Dentz
+> <luiz.dentz@gmail.com> wrote:
+> >
+> > Hi Sungwoo,
+> >
+> > On Tue, May 7, 2024 at 11:32=E2=80=AFAM <bluez.test.bot@gmail.com> wrot=
+e:
+> > >
+> > > This is automated email and please do not reply to this email!
+> > >
+> > > Dear submitter,
+> > >
+> > > Thank you for submitting the patches to the linux bluetooth mailing l=
+ist.
+> > > This is a CI test results with your patch series:
+> > > PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=
+=3D851233
+> >
+> > Can you try reproducing the problem with the above change?
 
-This patch was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+This bug is not reproduced under my testing environment.
+https://lore.kernel.org/linux-kernel/20240506022035.663102-1-iam@sung-woo.k=
+im/
 
-On Tue,  7 May 2024 16:44:07 -0400 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-> 
-> This fixes the parameter order of calloc which causes the following
-> error on recent gcc:
-> 
-> CC    client/mgmt.o
-> In file included from client/mgmt.c:43:
-> client/mgmt.c: In function ‘cmd_add_ext_adv_params’:
-> client/mgmt.c:5057:28: error: ‘calloc’ sizes specified with ‘sizeof’ in
-> the earlier argument and not in the later argument
-> [-Werror=calloc-transposed-args]
->  5057 |     cp = malloc0(sizeof(*cp));
->    |
-> 
-> [...]
-
-Here is the summary with links:
-  - [BlueZ,v1] shared/util: Fix build error on malloc0
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=449cf35032e5
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+>
+> Sure, I will.
+>
+> For the patch, we can also remove HCI_FLOW_CTL_MODE_PACKET_BASED and
+> HCI_FLOW_CTL_MODE_BLOCK_BASED from hci.h as no one is using it.
+>
+> One question:
+> This patch removes some HCI commands and flow control modes that are
+> still in the specification v5.4.
+> Should we remove these commands and modes from the specification also?
+>
+> Thanks,
+> Sungwoo.
 
