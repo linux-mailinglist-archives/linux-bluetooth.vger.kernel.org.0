@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-4479-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4485-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 272B78C24A6
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 14:14:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 727B78C24AC
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 14:15:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D3DC328613D
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 12:14:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2B229287083
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 12:15:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA0C01708B8;
-	Fri, 10 May 2024 12:14:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3980171078;
+	Fri, 10 May 2024 12:14:19 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D3917085C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32ED917088E
 	for <linux-bluetooth@vger.kernel.org>; Fri, 10 May 2024 12:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715343257; cv=none; b=A9+v5zZWdEwCOkej3iiILkrCGm84KB87jljajRrKZ3TfkjD+lgiMCML76WOKWy7PV+LAmAyD8isv5gXYJUvDK/3gbGucnJwsSk3ALmtq9lyqb4mrBY88Juv+KHCBX939wAzCdBAOr+Y1qWLac/vvStxv955KYb7KwHo/xvRs9lU=
+	t=1715343259; cv=none; b=D8OaXV7Gk/luv3m41CZpT9brAy8JVddDbf27UqZ/Svqj6bIR+mwWgH7CGPjMACUan2TbJoQ6quXMeNWgH7TqzDMty+tqoLECOC9KiesOWH0g+3pQlq4fzT8Q7V9fFvpwhQLEk+QWh0I0BHXbc5aQItHHDRnN2Y/YNWwSmtXQdUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715343257; c=relaxed/simple;
-	bh=Z3oDkp2d1HpjpI0Xro2LA2pKxiRZBZKIF2k7SUbqM2w=;
+	s=arc-20240116; t=1715343259; c=relaxed/simple;
+	bh=RBs/pTECN0ac63rTo4HqmGiHw5K+O2RiHGc5wsLMjOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gVo/0tKzro4j0c0Nck3nA2xiDPQ7HvkpkaZ1uhwQuB9Sc/WVQbtaG+Tyo8N+f+YONyVCkcXUKVldrRat6gapvVDuYNMIbSxYOw/UUswN9GyS3CR2jp0AnlP4Kj2aYptGPGvDkafQWw/zbVB4u05GkVM/Jjzjve/aTgusPsiBIaI=
+	 MIME-Version; b=YW75hBGoa3wpo4alHms87rLdQh4V2YmYGModMbkS5KRFPQXoHmjoq90AZS2LnzI20W2J95hOu7wMexeqR89Km72pWG6Bhhx3S109k2B9cNUWeGwxBkMzLZPCa1KdwDfDI+MVKaostyXMI6AWqbG4ai2698SGxbJJAd45IfPKJmg=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 8424360016;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id CD71060017;
 	Fri, 10 May 2024 12:14:00 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ v2 16/20] iso-tester: Fix fd leak
-Date: Fri, 10 May 2024 14:10:26 +0200
-Message-ID: <20240510121355.3241456-17-hadess@hadess.net>
+Subject: [BlueZ v2 17/20] sdp: Fix use of uninitialised memory
+Date: Fri, 10 May 2024 14:10:27 +0200
+Message-ID: <20240510121355.3241456-18-hadess@hadess.net>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240510121355.3241456-1-hadess@hadess.net>
 References: <20240510121355.3241456-1-hadess@hadess.net>
@@ -49,30 +49,31 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-Error: RESOURCE_LEAK (CWE-772): [#def63] [important]
-bluez-5.75/tools/iso-tester.c:1796:2: open_fn: Returning handle opened by "socket".
-bluez-5.75/tools/iso-tester.c:1796:2: var_assign: Assigning: "sk" = handle returned from "socket(31, 2053, 8)".
-bluez-5.75/tools/iso-tester.c:1807:3: leaked_handle: Handle variable "sk" going out of scope leaks the handle.
-1805|		if (!master_bdaddr) {
-1806|			tester_warn("No master bdaddr");
-1807|->			return -ENODEV;
-1808|		}
-1809|
+Error: UNINIT (CWE-457): [#def10] [important]
+bluez-5.75/lib/sdp.c:2302:2: alloc_fn: Calling "malloc" which returns uninitialized memory.
+bluez-5.75/lib/sdp.c:2302:2: assign: Assigning: "seqDTDs" = "malloc(seqlen * 8UL)", which points to uninitialized data.
+bluez-5.75/lib/sdp.c:2355:2: uninit_use_in_call: Using uninitialized value "*seqDTDs" when calling "sdp_seq_alloc".
+2353|			}
+2354|		}
+2355|->		seq = sdp_seq_alloc(seqDTDs, seqs, seqlen);
+2356|		free(seqDTDs);
+2357|		free(seqs);
 ---
- tools/iso-tester.c | 1 +
- 1 file changed, 1 insertion(+)
+ lib/sdp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/iso-tester.c b/tools/iso-tester.c
-index 046606068206..d54fa56ecd44 100644
---- a/tools/iso-tester.c
-+++ b/tools/iso-tester.c
-@@ -1804,6 +1804,7 @@ static int create_iso_sock(struct test_data *data)
- 	master_bdaddr = hciemu_get_central_bdaddr(data->hciemu);
- 	if (!master_bdaddr) {
- 		tester_warn("No master bdaddr");
-+		close(sk);
- 		return -ENODEV;
- 	}
+diff --git a/lib/sdp.c b/lib/sdp.c
+index 34b0dbb94eb0..d43bbbd2de05 100644
+--- a/lib/sdp.c
++++ b/lib/sdp.c
+@@ -2299,7 +2299,7 @@ static sdp_data_t *access_proto_to_dataseq(sdp_record_t *rec, sdp_list_t *proto)
+ 	sdp_list_t *p;
+ 
+ 	seqlen = sdp_list_len(proto);
+-	seqDTDs = malloc(seqlen * sizeof(void *));
++	seqDTDs = bt_malloc0(seqlen * sizeof(void *));
+ 	if (!seqDTDs)
+ 		return NULL;
  
 -- 
 2.44.0
