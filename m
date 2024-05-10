@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-4477-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4472-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9699E8C24A4
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 14:14:50 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1A738C249F
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 14:14:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 37DB91F22D0D
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 12:14:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AA5C1284158
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 12:14:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C20B31708B1;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F3FA170883;
 	Fri, 10 May 2024 12:14:17 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AAFA16F829
-	for <linux-bluetooth@vger.kernel.org>; Fri, 10 May 2024 12:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAFA016F823
+	for <linux-bluetooth@vger.kernel.org>; Fri, 10 May 2024 12:14:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715343257; cv=none; b=AugFvVFW5QhU8wKTBneX2en5uRX3lJT59W/OSnfyKxquDfMX1fQTfvFGcKwTR79kNRWVReP6gPVAbvtO8sXTyPqxXCuDJE6rRoP98U80NtVXhstdwUnQTDlx44rtltZkZ5kMArbFNsoH5N92bttj673bwWvT0RY0FzPjcMkVk2E=
+	t=1715343256; cv=none; b=d4VoOfL8m0a8xCWoKsE/HK+mKFcztpZxJNHGre5BsoowebLq+4OUAc3VAwW+GeLLPuM8TlENWgJFmb5Ydfne6maXE3aGcg/GIHTVZY9e+0tk2XOlcL0x9kkDa4+kmoCQdqfF3CeSZ0XrFtHWWYGslnsrKVwSCBeiphgJH3LTkSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715343257; c=relaxed/simple;
-	bh=XL/7SxkDVsEMuouDDcQaTT4AwMz/tx8Nfzhai1nup08=;
+	s=arc-20240116; t=1715343256; c=relaxed/simple;
+	bh=KfzM9M9j5GTuPghCb5LA3rp6JbWwmqCc2mF+vpZC2oQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bvQMiCWRWNgoqTEfue5yu/G9k+Im4WOXSHjlqLxgNuYoKRT0ZCJEKXft1mDN/tiigXACHkBb3l/BHaDbtVcoJCZHQRBEZ45q+eKs/egnKQcvZKQyNdVYUXW+kpR8Cp7FHQqfePKY3T1Lf/XSYYMvVAY0SenN2ck3JS3Broayfqo=
+	 MIME-Version; b=PoyRc8Fe/pqrgOn33HR9bMfjRxqin7RvVQB/yJExpW4C05QeLb6ApGKfSTbKPbVzBRyL/rgGgNILEEBWMCm/VO63J5zGudVnvPd/oY4Iwm6hDdkzY4KJ7+coelMjd+2g1HF/1rXHCelGj1opn/Yx66SArz4FJ62GYOD3RxPWOOY=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 6CA1160011;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id AEBB06000D;
 	Fri, 10 May 2024 12:13:58 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ v2 09/20] media: Fix memory leak
-Date: Fri, 10 May 2024 14:10:19 +0200
-Message-ID: <20240510121355.3241456-10-hadess@hadess.net>
+Subject: [BlueZ v2 10/20] main: Fix memory leaks
+Date: Fri, 10 May 2024 14:10:20 +0200
+Message-ID: <20240510121355.3241456-11-hadess@hadess.net>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240510121355.3241456-1-hadess@hadess.net>
 References: <20240510121355.3241456-1-hadess@hadess.net>
@@ -49,31 +49,73 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-Error: RESOURCE_LEAK (CWE-772): [#def47] [important]
-bluez-5.75/profiles/audio/media.c:1278:2: alloc_arg: "asprintf" allocates memory that is stored into "name". [Note: The source code implementation of the function has been overridden by a builtin model.]
-bluez-5.75/profiles/audio/media.c:1291:2: noescape: Resource "name" is not freed or pointed-to in "bt_bap_add_vendor_pac".
-bluez-5.75/profiles/audio/media.c:1297:3: leaked_storage: Variable "name" going out of scope leaks the storage it points to.
-1295|			error("Unable to create PAC");
-1296|			free(metadata);
-1297|->			return false;
-1298|		}
-1299|
----
- profiles/audio/media.c | 1 +
- 1 file changed, 1 insertion(+)
+Error: RESOURCE_LEAK (CWE-772): [#def51] [important]
+bluez-5.75/src/main.c:451:2: alloc_arg: "parse_config_string" allocates memory that is stored into "str".
+bluez-5.75/src/main.c:454:2: identity_transfer: Passing "str" as argument 1 to function "strtol", which sets "endptr" to that argument.
+bluez-5.75/src/main.c:456:3: noescape: Assuming resource "str" is not freed or pointed-to as ellipsis argument to "btd_error".
+bluez-5.75/src/main.c:457:3: leaked_storage: Variable "endptr" going out of scope leaks the storage it points to.
+bluez-5.75/src/main.c:457:3: leaked_storage: Variable "str" going out of scope leaks the storage it points to.
+455|	if (!endptr || *endptr != '\0') {
+456|		error("%s.%s = %s is not integer", group, key, str);
+457|->		return false;
+458|	}
+459|
 
-diff --git a/profiles/audio/media.c b/profiles/audio/media.c
-index 07147a25d532..4bbd584deaba 100644
---- a/profiles/audio/media.c
-+++ b/profiles/audio/media.c
-@@ -1293,6 +1293,7 @@ static bool endpoint_init_pac(struct media_endpoint *endpoint, uint8_t type,
- 				&data, metadata);
- 	if (!endpoint->pac) {
- 		error("Unable to create PAC");
-+		free(name);
- 		free(metadata);
+Error: RESOURCE_LEAK (CWE-772): [#def52] [important]
+bluez-5.75/src/main.c:451:2: alloc_arg: "parse_config_string" allocates memory that is stored into "str".
+bluez-5.75/src/main.c:454:2: identity_transfer: Passing "str" as argument 1 to function "strtol", which sets "endptr" to that argument.
+bluez-5.75/src/main.c:463:3: leaked_storage: Variable "endptr" going out of scope leaks the storage it points to.
+bluez-5.75/src/main.c:463:3: leaked_storage: Variable "str" going out of scope leaks the storage it points to.
+461|		warn("%s.%s = %zu is out of range (< %zu)", group, key, tmp,
+462|									min);
+463|->		return false;
+464|	}
+465|
+
+Error: RESOURCE_LEAK (CWE-772): [#def53] [important]
+bluez-5.75/src/main.c:451:2: alloc_arg: "parse_config_string" allocates memory that is stored into "str".
+bluez-5.75/src/main.c:454:2: identity_transfer: Passing "str" as argument 1 to function "strtol", which sets "endptr" to that argument.
+bluez-5.75/src/main.c:475:2: leaked_storage: Variable "endptr" going out of scope leaks the storage it points to.
+bluez-5.75/src/main.c:475:2: leaked_storage: Variable "str" going out of scope leaks the storage it points to.
+473|		*val = tmp;
+474|
+475|->	return true;
+476|   }
+477|
+---
+ src/main.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/main.c b/src/main.c
+index 23af6781d931..ac840d684f6d 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -454,21 +454,25 @@ static bool parse_config_int(GKeyFile *config, const char *group,
+ 	tmp = strtol(str, &endptr, 0);
+ 	if (!endptr || *endptr != '\0') {
+ 		error("%s.%s = %s is not integer", group, key, str);
++		g_free(str);
  		return false;
  	}
+ 
+ 	if (tmp < min) {
++		g_free(str);
+ 		warn("%s.%s = %zu is out of range (< %zu)", group, key, tmp,
+ 									min);
+ 		return false;
+ 	}
+ 
+ 	if (tmp > max) {
++		g_free(str);
+ 		warn("%s.%s = %zu is out of range (> %zu)", group, key, tmp,
+ 									max);
+ 		return false;
+ 	}
+ 
++	g_free(str);
+ 	if (val)
+ 		*val = tmp;
+ 
 -- 
 2.44.0
 
