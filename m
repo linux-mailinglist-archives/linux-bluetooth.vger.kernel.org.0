@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-4481-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4479-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD2638C24A9
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 14:15:02 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 272B78C24A6
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 14:14:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 735B0B2523B
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 12:15:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D3DC328613D
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 12:14:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2DAD1708BA;
-	Fri, 10 May 2024 12:14:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA0C01708B8;
+	Fri, 10 May 2024 12:14:17 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC0C17084C
-	for <linux-bluetooth@vger.kernel.org>; Fri, 10 May 2024 12:14:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D3917085C
+	for <linux-bluetooth@vger.kernel.org>; Fri, 10 May 2024 12:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715343258; cv=none; b=ITN0BAUpS5rKpUtcCRPwvkR6xkZYczCBxbFH7aYLQuvlK/f9CyNNJB038bSyGjnqkrhD37V8Izi51ynxE0awDUWZUVF/uZ95wLI+jLcxRmxeNmNwVBfszrkUE3h9MCVOdAC4P/GN6N2VCdYvYMI3aDWH2UHswaAmxBW28cw+hx4=
+	t=1715343257; cv=none; b=A9+v5zZWdEwCOkej3iiILkrCGm84KB87jljajRrKZ3TfkjD+lgiMCML76WOKWy7PV+LAmAyD8isv5gXYJUvDK/3gbGucnJwsSk3ALmtq9lyqb4mrBY88Juv+KHCBX939wAzCdBAOr+Y1qWLac/vvStxv955KYb7KwHo/xvRs9lU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715343258; c=relaxed/simple;
-	bh=1b+p1b7GIT78GDQGbHD5A5ndMiK4C9pGS2ldUhTTJEU=;
+	s=arc-20240116; t=1715343257; c=relaxed/simple;
+	bh=Z3oDkp2d1HpjpI0Xro2LA2pKxiRZBZKIF2k7SUbqM2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RxeEFqw4aAFzI3Pfmo+9q1eUvPdRqZ8A6aQtNtb3hh7xbuimqoIEJXnj1EamIGrj2/c6VHZNmEAbDWiS/VK3kQTWWouEQkfR7yydGQ4lji6t1+LrVpwwboKKg5MGCOibnIWYrdmdP97mvy0gkBNL8gjCKZ+6L2DmN64A3O2W/zY=
+	 MIME-Version; b=gVo/0tKzro4j0c0Nck3nA2xiDPQ7HvkpkaZ1uhwQuB9Sc/WVQbtaG+Tyo8N+f+YONyVCkcXUKVldrRat6gapvVDuYNMIbSxYOw/UUswN9GyS3CR2jp0AnlP4Kj2aYptGPGvDkafQWw/zbVB4u05GkVM/Jjzjve/aTgusPsiBIaI=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 3ECB260014;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 8424360016;
 	Fri, 10 May 2024 12:14:00 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ v2 15/20] isotest: Fix fd leak
-Date: Fri, 10 May 2024 14:10:25 +0200
-Message-ID: <20240510121355.3241456-16-hadess@hadess.net>
+Subject: [BlueZ v2 16/20] iso-tester: Fix fd leak
+Date: Fri, 10 May 2024 14:10:26 +0200
+Message-ID: <20240510121355.3241456-17-hadess@hadess.net>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240510121355.3241456-1-hadess@hadess.net>
 References: <20240510121355.3241456-1-hadess@hadess.net>
@@ -49,30 +49,29 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-Error: RESOURCE_LEAK (CWE-772): [#def65] [important]
-bluez-5.75/tools/isotest.c:923:4: open_fn: Returning handle opened by "open_file".
-bluez-5.75/tools/isotest.c:923:4: var_assign: Assigning: "fd" = handle returned from "open_file(altername)".
-bluez-5.75/tools/isotest.c:953:3: leaked_handle: Handle variable "fd" going out of scope leaks the handle.
-951|
-952|		free(sk_arr);
-953|->		return;
-954|	}
-955|
+Error: RESOURCE_LEAK (CWE-772): [#def63] [important]
+bluez-5.75/tools/iso-tester.c:1796:2: open_fn: Returning handle opened by "socket".
+bluez-5.75/tools/iso-tester.c:1796:2: var_assign: Assigning: "sk" = handle returned from "socket(31, 2053, 8)".
+bluez-5.75/tools/iso-tester.c:1807:3: leaked_handle: Handle variable "sk" going out of scope leaks the handle.
+1805|		if (!master_bdaddr) {
+1806|			tester_warn("No master bdaddr");
+1807|->			return -ENODEV;
+1808|		}
+1809|
 ---
- tools/isotest.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/iso-tester.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/isotest.c b/tools/isotest.c
-index ddace0da3044..58293133a304 100644
---- a/tools/isotest.c
-+++ b/tools/isotest.c
-@@ -950,6 +950,8 @@ static void send_mode(char *filename, char *peer, int i, bool repeat)
- 			close(sk_arr[i]);
- 
- 		free(sk_arr);
-+		if (fd >= 0)
-+			close(fd);
- 		return;
+diff --git a/tools/iso-tester.c b/tools/iso-tester.c
+index 046606068206..d54fa56ecd44 100644
+--- a/tools/iso-tester.c
++++ b/tools/iso-tester.c
+@@ -1804,6 +1804,7 @@ static int create_iso_sock(struct test_data *data)
+ 	master_bdaddr = hciemu_get_central_bdaddr(data->hciemu);
+ 	if (!master_bdaddr) {
+ 		tester_warn("No master bdaddr");
++		close(sk);
+ 		return -ENODEV;
  	}
  
 -- 
