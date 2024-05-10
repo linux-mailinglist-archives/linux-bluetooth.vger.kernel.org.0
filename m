@@ -1,41 +1,44 @@
-Return-Path: <linux-bluetooth+bounces-4450-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4446-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8CC158C20B1
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 11:18:46 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 12DEB8C20AC
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 11:18:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2D0A01F22359
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 09:18:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8F30EB21926
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 09:18:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F254F1649A7;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 101171649D9;
 	Fri, 10 May 2024 09:18:25 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [217.70.183.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 588391635C1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587CA1635BF
 	for <linux-bluetooth@vger.kernel.org>; Fri, 10 May 2024 09:18:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715332705; cv=none; b=NMQt5huzusHLMCVCTVpy3ehS4mWsnmPKwHVi7EMBUa5V9eKItt9eK8RQr1RLaSBj0jt9EuExk5yrN8bTci45EPGDqb0w4zPbwjBUqhs6QXHpVderygLwfFnRDA0cpzY9SVl43bwaYW68gNp4yx+EEzAwdRIr8s39NQSYTFLEMLo=
+	t=1715332704; cv=none; b=I2QXooSgAYqff5F0arjQNjsunRyw1LHOm8pLDwc3zjXKW3246wzNtYK3A3SFG/WVX05VO72tJDxuIa/z3kXPO1MSvsI/3tBp6aKe5GrLPxK3hhZhqlTWZhLdkkyBM9vQUpjErsAySUcm2Zs6y4bJf9BO/MaJO0b52TnSL9v6L+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715332705; c=relaxed/simple;
-	bh=e4R1NokF9Tm1x6vun3UbIi/yRcfytl5Tuws8X6RCSk8=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version; b=HqN5gmvvTBTmBaYKsV43ns9dZtW8YFkGCPlwp2NbftqwGKHeaVNRYL+8luNBnQtyP+vFYAPivDEkE2mfUOPc+uZc2OEd1K1bX21QcCVAvUUE1V6pa6+a+kS7KY2XPhNilR5zhmjbhs7MY/e6um3ZoL2ew7falJd+ygu4sbfAitE=
+	s=arc-20240116; t=1715332704; c=relaxed/simple;
+	bh=Yh0PDSY9sQwh0O2/JTlu7MTW12Eg3DPcxr2592X6H/M=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=EwJ8lwwuHvweiH0uUO+B4DowHW19eW9V5B7HmzO7QsbrfEYRb71K3I/7cWTJIGpP2SarhEF4GM9t+x1hH2R5pi4ZjBHBMXlkv/vaptoGYssa0O7+sImtWIHQ/8xJwhxl3RW6rUZ0hgA7EA6W8EPLrXbL5+DQc1r2ONI9peSESwM=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 56E001BF203
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 88A4A1BF204
 	for <linux-bluetooth@vger.kernel.org>; Fri, 10 May 2024 09:18:15 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
-Subject: [BlueZ 00/14] Fix a number of static analysis issues
-Date: Fri, 10 May 2024 11:10:58 +0200
-Message-ID: <20240510091814.3172988-1-hadess@hadess.net>
+Subject: [BlueZ 01/14] adapter: Use false instead of 0 for bool
+Date: Fri, 10 May 2024 11:10:59 +0200
+Message-ID: <20240510091814.3172988-2-hadess@hadess.net>
 X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240510091814.3172988-1-hadess@hadess.net>
+References: <20240510091814.3172988-1-hadess@hadess.net>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -45,47 +48,23 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-Hello,
+---
+ src/adapter.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This is the first batch of bug fixes for issues found by Red Hat's
-internal static analysis tools.
-
-The best course of action would probably be to merge the one that
-are ready for upstream inclusion after review, and mark the others as
-needing work, so I can include a new version of the patch in following
-batches.
-
-Cheers
-
-Bastien Nocera (14):
-  adapter: Use false instead of 0 for bool
-  attrib/gatt: Guard against possible integer overflow
-  client/gatt: Don't pass negative fd on error
-  client/gatt: Check write_value() retval
-  client/main: Fix array access
-  client/main: Fix mismatched free
-  monitor/att: Fix memory leak
-  bap: Fix memory leaks
-  media: Fix memory leak
-  main: Fix memory leaks
-  isotest: Consider "0" fd to be valid
-  isotest: Fix error check after opening file
-  client/player: Fix copy/paste error
-  shared/vcp: Fix copy/paste error
-
- attrib/gatt.c          |  8 ++++---
- client/gatt.c          | 21 +++++++++++++++----
- client/main.c          |  7 ++++++-
- client/player.c        |  2 +-
- monitor/att.c          | 19 +++++++++++++++++
- profiles/audio/bap.c   | 47 +++++++++++++++++++++++++++++-------------
- profiles/audio/media.c |  1 +
- src/adapter.c          |  2 +-
- src/main.c             |  4 ++++
- src/shared/vcp.c       |  2 +-
- tools/isotest.c        |  4 ++--
- 11 files changed, 90 insertions(+), 27 deletions(-)
-
+diff --git a/src/adapter.c b/src/adapter.c
+index 5505edbb29c1..8b478e213cb5 100644
+--- a/src/adapter.c
++++ b/src/adapter.c
+@@ -2413,7 +2413,7 @@ static int update_discovery_filter(struct btd_adapter *adapter)
+ 	 * starting discovery.
+ 	 */
+ 	if (filters_equal(adapter->current_discovery_filter, sd_cp) &&
+-	    adapter->discovering != 0) {
++	    adapter->discovering != false) {
+ 		DBG("filters were equal, deciding to not restart the scan.");
+ 		g_free(sd_cp);
+ 		return 0;
 -- 
 2.44.0
 
