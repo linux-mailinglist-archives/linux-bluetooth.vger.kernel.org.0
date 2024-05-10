@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-4474-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4476-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8262C8C24A1
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 14:14:43 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A24E8C24A3
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 14:14:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 28A08283365
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 12:14:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4B54F1C21734
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 12:14:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84BA317089C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1DEF1708AD;
 	Fri, 10 May 2024 12:14:17 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB9A17084A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34573170850
 	for <linux-bluetooth@vger.kernel.org>; Fri, 10 May 2024 12:14:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715343257; cv=none; b=r3P2qo0J9s3Hq9AkcQ4oT7vI8PrTJ/KO8v5uCiduBvMNv14vD0k9GOcWjUzuS3mJ3tkHAGSCwg+2H9usz2jXwi7hlfNrSKx39CD+55fR1D9i37dGj8mAGjgYMXTi/NI1vJwOHjhCy9imqr6Xzq442ngwjmth/YlIEqcaACyutxc=
+	t=1715343257; cv=none; b=W6jMsm5Ltr2sGutbn4cpV3IBao94KEaOBkWZX3LqR4ScxOSbWzDCk0zXJIPmxMUY+W7fu2jirBbgf57bE+XUD6TbqR/REbHN8nYcdKiYc+G8dUoGoF6YsGjszdFnmuSxHAVARcAWg0AdmkXQP4SDLzy3mDBrZU4XG3nQzOVs25s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1715343257; c=relaxed/simple;
-	bh=Z4Ect0czkbLcBsbsoMl8fFiwHYkN+tVjcHoe1Tp/VkU=;
+	bh=UVmzgHwRrHupYFJb/Xbq0QuAhlgLC7EEyPNuRozn0po=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NwFRjltRV4PNItOHR+M9jR44iw9ka965oIE3zZJO01Cg32k0mWYthoxe8pNlAIaGigosHxDdQ8DFD8iHLjWzBp7OuTxl9Y8FXsBSZMjvmgAbUx85hYdMgbl/P69BxKXwqYPiA3j2vqMZZPN4SLOcrhtX+JdMRYfVqGQDeT0774E=
+	 MIME-Version; b=fgx1m/Y7Neyj0D/+qKpVqSmTRIY0zA0H8D9dJki/l6yLXMdny206r2P+CDKbzC+uoPazmI0Hd9Uo/2aerm4q0sgOimSo5s2lPm+GMOImgPjcBwsrY0TMblVSf9to/ahPXBtw82GrzEub7/sonuKTx95HvRPKiueVQ59Wo9uZUcI=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 5076360008;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id A30066000C;
 	Fri, 10 May 2024 12:13:59 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ v2 12/20] isotest: Fix error check after opening file
-Date: Fri, 10 May 2024 14:10:22 +0200
-Message-ID: <20240510121355.3241456-13-hadess@hadess.net>
+Subject: [BlueZ v2 13/20] client/player: Fix copy/paste error
+Date: Fri, 10 May 2024 14:10:23 +0200
+Message-ID: <20240510121355.3241456-14-hadess@hadess.net>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240510121355.3241456-1-hadess@hadess.net>
 References: <20240510121355.3241456-1-hadess@hadess.net>
@@ -49,24 +49,32 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-Consider "0" to be a valid fd.
+Error: COPY_PASTE_ERROR (CWE-398): [#def95] [important]
+bluez-5.75/client/player.c:1846:6: original: "qos->sync_cte_type" looks like the original copy.
+bluez-5.75/client/player.c:1852:6: copy_paste_error: "sync_cte_type" in "qos->sync_cte_type" looks like a copy-paste error.
+bluez-5.75/client/player.c:1852:6: remediation: Should it say "mse" instead?
+1850|		}
+1851|
+1852|->		if (qos->sync_cte_type) {
+1853|			bt_shell_printf("MSE %u\n", qos->mse);
+1854|			g_dbus_dict_append_entry(iter, "MSE", DBUS_TYPE_BYTE,
 ---
- tools/isotest.c | 2 +-
+ client/player.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/isotest.c b/tools/isotest.c
-index 810d15d2df2a..ddace0da3044 100644
---- a/tools/isotest.c
-+++ b/tools/isotest.c
-@@ -720,7 +720,7 @@ static int open_file(const char *filename)
- 	syslog(LOG_INFO, "Opening %s ...", filename);
- 
- 	fd = open(filename, O_RDONLY);
--	if (fd <= 0) {
-+	if (fd < 0) {
- 		syslog(LOG_ERR, "Can't open file %s: %s\n",
- 						filename, strerror(errno));
+diff --git a/client/player.c b/client/player.c
+index 6b70e9ed3f9d..7f67425aaf8f 100644
+--- a/client/player.c
++++ b/client/player.c
+@@ -1849,7 +1849,7 @@ static void append_bcast_qos(DBusMessageIter *iter, struct endpoint_config *cfg)
+ 					&qos->sync_cte_type);
  	}
+ 
+-	if (qos->sync_cte_type) {
++	if (qos->mse) {
+ 		bt_shell_printf("MSE %u\n", qos->mse);
+ 		g_dbus_dict_append_entry(iter, "MSE", DBUS_TYPE_BYTE,
+ 						&qos->mse);
 -- 
 2.44.0
 
