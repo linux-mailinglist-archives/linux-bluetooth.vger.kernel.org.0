@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-4466-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4469-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81B028C249A
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 14:14:23 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08C738C249C
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 14:14:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BC8E11C21228
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 12:14:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B5B8E281D57
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 12:14:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7ECEA16F8EC;
-	Fri, 10 May 2024 12:14:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 076C6170884;
+	Fri, 10 May 2024 12:14:15 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C4716F84A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49674170889
 	for <linux-bluetooth@vger.kernel.org>; Fri, 10 May 2024 12:14:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715343252; cv=none; b=YKMxsJuMUHtKYgCbwNZo3rZ/d5hW6fJY6+PTSh+STVQv3UWvAiqe3QsXliby5uYE/rJlg71JOhaU8l/hMdaxfDMUBrbrVfdI3ul7/zhr6Ay363RfM7I9/KTxCacqu5lcaQJgzczbI1Q3i9UPDOMR4TS7e5V2tCNJcwlhaGYJIQ4=
+	t=1715343253; cv=none; b=mgofisy0Nr5zmi88ePf3AcsjqahgKXIHvJNeZ1qCHU+wa/1SvtVc359imDmjMvKgNA5pce8ZVJad6cH0+JEJnwg5tzo4+oj2HlUAxYnyyPk973doX/5oCfiVh2XXRG8HwlSReRzbbyNDTm4NsQvPrao0MByHs5yW+wOM0QD6ACQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715343252; c=relaxed/simple;
-	bh=Yh0PDSY9sQwh0O2/JTlu7MTW12Eg3DPcxr2592X6H/M=;
+	s=arc-20240116; t=1715343253; c=relaxed/simple;
+	bh=qz8dsn86PoKyiEMWJOJVKAKfMqx70ZUJV6tnXXFCHS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OBNB4IgkQzGPYd/zPkZ9wB1cWdxjDHI0ef439NDPuMX0oUyB4okt5lvp6FYi6HG5XYW5h//0LnIQebEKWMXOa0Qfo02jsNAoPzLmjOoSH192vVLYs60tWYqS8Y41Y58uPfoQgPWILn72Y2IFtk4ZA+SpqXbLlCLs1L3Lrz/HgiA=
+	 MIME-Version; b=qqMG5kcRWHZf90j592THZ4lQPb+pFvIOJ/rXD78Jx2oZHiDB1ENoL0vmAuJyqmoSCdrOgy3QUHjFgCii1mj88HeF/7+qIJwXsFRO3Q6moA/e5yPaxCjmkCno4QevhUy4pb3u9PhlB5atTRBZKCEnmRIJDI4TURhw1AzBs2XCw9w=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id DB75B6000A;
-	Fri, 10 May 2024 12:13:55 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 40E7560002;
+	Fri, 10 May 2024 12:13:56 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ v2 01/20] adapter: Use false instead of 0 for bool
-Date: Fri, 10 May 2024 14:10:11 +0200
-Message-ID: <20240510121355.3241456-2-hadess@hadess.net>
+Subject: [BlueZ v2 02/20] attrib/gatt: Guard against possible integer overflow
+Date: Fri, 10 May 2024 14:10:12 +0200
+Message-ID: <20240510121355.3241456-3-hadess@hadess.net>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240510121355.3241456-1-hadess@hadess.net>
 References: <20240510121355.3241456-1-hadess@hadess.net>
@@ -49,23 +49,38 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
+Error: INTEGER_OVERFLOW (CWE-190): [#def30]
+bluez-5.75/attrib/gatt.c:1016:2: known_value_assign: "last" = "65535", its value is now 65535.
+bluez-5.75/attrib/gatt.c:1087:2: overflow_const: Expression "dd->start", which is equal to 65536, where "last + 1" is known to be equal to 65536, overflows the type that receives it, an unsigned integer 16 bits wide.
+1085|		}
+1086|
+1087|->		dd->start = last + 1;
+1088|
+1089|		if (last < dd->end && !uuid_found) {
 ---
- src/adapter.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ attrib/gatt.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/src/adapter.c b/src/adapter.c
-index 5505edbb29c1..8b478e213cb5 100644
---- a/src/adapter.c
-+++ b/src/adapter.c
-@@ -2413,7 +2413,7 @@ static int update_discovery_filter(struct btd_adapter *adapter)
- 	 * starting discovery.
+diff --git a/attrib/gatt.c b/attrib/gatt.c
+index b496dd1ebd95..3cedae9d167a 100644
+--- a/attrib/gatt.c
++++ b/attrib/gatt.c
+@@ -1076,10 +1076,12 @@ static void desc_discovered_cb(guint8 status, const guint8 *ipdu,
+ 	att_data_list_free(list);
+ 
+ 	/*
+-	 * If last handle is lower from previous start handle then it is smth
+-	 * wrong. Let's stop search, otherwise we might enter infinite loop.
++	 * If last handle is lower from previous start handle or if iterating
++	 * to the next handle from the last possible offset would overflow, then
++	 * something is wrong. Let's stop search, otherwise we might enter
++	 * infinite loop.
  	 */
- 	if (filters_equal(adapter->current_discovery_filter, sd_cp) &&
--	    adapter->discovering != 0) {
-+	    adapter->discovering != false) {
- 		DBG("filters were equal, deciding to not restart the scan.");
- 		g_free(sd_cp);
- 		return 0;
+-	if (last < dd->start) {
++	if (last < dd->start || last == G_MAXUINT16) {
+ 		err = ATT_ECODE_UNLIKELY;
+ 		goto done;
+ 	}
 -- 
 2.44.0
 
