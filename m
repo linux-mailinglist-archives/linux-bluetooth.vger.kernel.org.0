@@ -1,41 +1,41 @@
-Return-Path: <linux-bluetooth+bounces-4457-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4456-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7FDA8C20B8
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 11:19:03 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E700F8C20B7
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 11:19:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 63992286734
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 09:19:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 22D281C21C37
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 09:19:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7927816ABCC;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 584D1168B16;
 	Fri, 10 May 2024 09:18:28 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [217.70.183.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7290C1635CD
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 728C71607A3
 	for <linux-bluetooth@vger.kernel.org>; Fri, 10 May 2024 09:18:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715332708; cv=none; b=gu1m5yVB7BsreN576lCMnzSyFExfqh7F+5rSHuttapbQIee6rVv31EdQDKcBkXQCrzhBZSlz5XY2Qt195pTeJl7aCzA/A7CnoMROxXqMd9gDHQSNNmSUhFOWjfHNp2KZxSAUi3h1yublKvMQtx9jx8YtbCljZzgoKLeEXFsKjA4=
+	t=1715332708; cv=none; b=skyeSYu1Sj55QRtfJNNVkv8cKWHQlxg2C6yHLCLH+38GOsuQ0UScy9PFRdX8Is635emATRzi00kv2CdDzbTR3N03QzsdlYROiQ95P4spZPUyuhx/omrVSpXFxDlHeZTo0fU+IhO/KLUawZiA7m5yqCQscnvrJIcbHA3KE84OwgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1715332708; c=relaxed/simple;
-	bh=KfzM9M9j5GTuPghCb5LA3rp6JbWwmqCc2mF+vpZC2oQ=;
+	bh=ZfaaZ7dEeQ9VjznH7vB7wWyIi9NLs2xFK5M4PvwRoK4=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qgpuaMIFnC6m+qPeVlgFhw0De4gTWiRP51v68DRLh/yQ3JVkFU1/Ssjp479rpqVzYVIvo5/L4OpSxgyniS7MWjvUuzBu0fDO0PtVvq570zKUtXCshnpy+ik0ulS13Ic5ypvthOiWtqlV0PfuOGD7Cov3qwAksebL6QoRRl36fdA=
+	 MIME-Version; b=G4YFcgykPtWevzkrsazTLvc5UoeHn+fNX4eQaInBdQYu7z37LuNrfucH1Qk0DVvivtvLyj3lYGjjvFgTR90sJr07fmIco7N/ZxdjcZptqwAkhrLxOW+kJ+HBNnl34W3lc8vL34+iCwvjNoGegeJhVwkJW6udTgBJrecPwvy5wBU=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 5D3561BF20E
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 904D41BF212
 	for <linux-bluetooth@vger.kernel.org>; Fri, 10 May 2024 09:18:17 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
-Subject: [BlueZ 10/14] main: Fix memory leaks
-Date: Fri, 10 May 2024 11:11:08 +0200
-Message-ID: <20240510091814.3172988-11-hadess@hadess.net>
+Subject: [BlueZ 11/14] isotest: Consider "0" fd to be valid
+Date: Fri, 10 May 2024 11:11:09 +0200
+Message-ID: <20240510091814.3172988-12-hadess@hadess.net>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240510091814.3172988-1-hadess@hadess.net>
 References: <20240510091814.3172988-1-hadess@hadess.net>
@@ -48,72 +48,33 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-Error: RESOURCE_LEAK (CWE-772): [#def51] [important]
-bluez-5.75/src/main.c:451:2: alloc_arg: "parse_config_string" allocates memory that is stored into "str".
-bluez-5.75/src/main.c:454:2: identity_transfer: Passing "str" as argument 1 to function "strtol", which sets "endptr" to that argument.
-bluez-5.75/src/main.c:456:3: noescape: Assuming resource "str" is not freed or pointed-to as ellipsis argument to "btd_error".
-bluez-5.75/src/main.c:457:3: leaked_storage: Variable "endptr" going out of scope leaks the storage it points to.
-bluez-5.75/src/main.c:457:3: leaked_storage: Variable "str" going out of scope leaks the storage it points to.
-455|	if (!endptr || *endptr != '\0') {
-456|		error("%s.%s = %s is not integer", group, key, str);
-457|->		return false;
-458|	}
-459|
-
-Error: RESOURCE_LEAK (CWE-772): [#def52] [important]
-bluez-5.75/src/main.c:451:2: alloc_arg: "parse_config_string" allocates memory that is stored into "str".
-bluez-5.75/src/main.c:454:2: identity_transfer: Passing "str" as argument 1 to function "strtol", which sets "endptr" to that argument.
-bluez-5.75/src/main.c:463:3: leaked_storage: Variable "endptr" going out of scope leaks the storage it points to.
-bluez-5.75/src/main.c:463:3: leaked_storage: Variable "str" going out of scope leaks the storage it points to.
-461|		warn("%s.%s = %zu is out of range (< %zu)", group, key, tmp,
-462|									min);
-463|->		return false;
-464|	}
-465|
-
-Error: RESOURCE_LEAK (CWE-772): [#def53] [important]
-bluez-5.75/src/main.c:451:2: alloc_arg: "parse_config_string" allocates memory that is stored into "str".
-bluez-5.75/src/main.c:454:2: identity_transfer: Passing "str" as argument 1 to function "strtol", which sets "endptr" to that argument.
-bluez-5.75/src/main.c:475:2: leaked_storage: Variable "endptr" going out of scope leaks the storage it points to.
-bluez-5.75/src/main.c:475:2: leaked_storage: Variable "str" going out of scope leaks the storage it points to.
-473|		*val = tmp;
-474|
-475|->	return true;
-476|   }
-477|
+Error: RESOURCE_LEAK (CWE-772): [#def79] [important]
+bluez-5.75/tools/isotest.c:923:4: open_fn: Returning handle opened by "open_file".
+bluez-5.75/tools/isotest.c:923:4: var_assign: Assigning: "fd" = handle returned from "open_file(altername)".
+bluez-5.75/tools/isotest.c:925:3: off_by_one: Testing whether handle "fd" is strictly greater than zero is suspicious.  "fd" leaks when it is zero.
+bluez-5.75/tools/isotest.c:925:3: remediation: Did you intend to include equality with zero?
+bluez-5.75/tools/isotest.c:926:4: overwrite_var: Overwriting handle "fd" in "fd = open_file(filename)" leaks the handle.
+924|
+925|		if (fd <= 0)
+926|->			fd = open_file(filename);
+927|	}
+928|
 ---
- src/main.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ tools/isotest.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/src/main.c b/src/main.c
-index 23af6781d931..ac840d684f6d 100644
---- a/src/main.c
-+++ b/src/main.c
-@@ -454,21 +454,25 @@ static bool parse_config_int(GKeyFile *config, const char *group,
- 	tmp = strtol(str, &endptr, 0);
- 	if (!endptr || *endptr != '\0') {
- 		error("%s.%s = %s is not integer", group, key, str);
-+		g_free(str);
- 		return false;
- 	}
+diff --git a/tools/isotest.c b/tools/isotest.c
+index 7e875fa58b15..810d15d2df2a 100644
+--- a/tools/isotest.c
++++ b/tools/isotest.c
+@@ -922,7 +922,7 @@ static void send_mode(char *filename, char *peer, int i, bool repeat)
+ 		if (!err)
+ 			fd = open_file(altername);
  
- 	if (tmp < min) {
-+		g_free(str);
- 		warn("%s.%s = %zu is out of range (< %zu)", group, key, tmp,
- 									min);
- 		return false;
+-		if (fd <= 0)
++		if (fd < 0)
+ 			fd = open_file(filename);
  	}
- 
- 	if (tmp > max) {
-+		g_free(str);
- 		warn("%s.%s = %zu is out of range (> %zu)", group, key, tmp,
- 									max);
- 		return false;
- 	}
- 
-+	g_free(str);
- 	if (val)
- 		*val = tmp;
  
 -- 
 2.44.0
