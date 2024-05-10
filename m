@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-4483-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4481-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 206248C24AA
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 14:15:04 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD2638C24A9
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 14:15:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B3E111F22A8A
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 12:15:03 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 735B0B2523B
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 12:15:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3EB216F26E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2DAD1708BA;
 	Fri, 10 May 2024 12:14:18 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC7917084D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC0C17084C
 	for <linux-bluetooth@vger.kernel.org>; Fri, 10 May 2024 12:14:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715343258; cv=none; b=LIyho4TM/d50Ax+vMpC9yNMXNS971L6ks/8/+rmaTfvINPbO3tZXR3tx0KthFNnfCUbjARyliaxcZ58dmNzpeS4eeO9hZAHcuSJRi17wKoOHB64mZQYpA7aQ/YYB/GeBK/sPnpiF3FB9//mgBgpy5/2DgRe6O8CMfH2V09XzpWs=
+	t=1715343258; cv=none; b=ITN0BAUpS5rKpUtcCRPwvkR6xkZYczCBxbFH7aYLQuvlK/f9CyNNJB038bSyGjnqkrhD37V8Izi51ynxE0awDUWZUVF/uZ95wLI+jLcxRmxeNmNwVBfszrkUE3h9MCVOdAC4P/GN6N2VCdYvYMI3aDWH2UHswaAmxBW28cw+hx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1715343258; c=relaxed/simple;
-	bh=M3Ywyy+4fuNjRQVFMj+DtHH2PN8++yYDfen2QT1Gpis=;
+	bh=1b+p1b7GIT78GDQGbHD5A5ndMiK4C9pGS2ldUhTTJEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DmSr6Iq7Q4VlqDAV4H7KdaEy2pO1jEcW6KCvSes8+g1CVQb/QA+Gi3Z8NZhJXOLwhLdgcU0TtlH4FLZGu+Lo82SeJubBjqnxqKwbSbwuMHDnH8m/5ONLqprFNHJunjpf2N+BeIaB1HQYkF+IfRFGJpwWFoCDtLSthF2BQlXPKuA=
+	 MIME-Version; b=RxeEFqw4aAFzI3Pfmo+9q1eUvPdRqZ8A6aQtNtb3hh7xbuimqoIEJXnj1EamIGrj2/c6VHZNmEAbDWiS/VK3kQTWWouEQkfR7yydGQ4lji6t1+LrVpwwboKKg5MGCOibnIWYrdmdP97mvy0gkBNL8gjCKZ+6L2DmN64A3O2W/zY=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id ED21360013;
-	Fri, 10 May 2024 12:13:59 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 3ECB260014;
+	Fri, 10 May 2024 12:14:00 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ v2 14/20] shared/vcp: Fix copy/paste error
-Date: Fri, 10 May 2024 14:10:24 +0200
-Message-ID: <20240510121355.3241456-15-hadess@hadess.net>
+Subject: [BlueZ v2 15/20] isotest: Fix fd leak
+Date: Fri, 10 May 2024 14:10:25 +0200
+Message-ID: <20240510121355.3241456-16-hadess@hadess.net>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240510121355.3241456-1-hadess@hadess.net>
 References: <20240510121355.3241456-1-hadess@hadess.net>
@@ -49,32 +49,32 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-Error: COPY_PASTE_ERROR (CWE-398): [#def97] [important]
-bluez-5.75/src/shared/vcp.c:2610:16: original: "aics->gain_stting_prop" looks like the original copy.
-bluez-5.75/src/shared/vcp.c:2625:16: copy_paste_error: "gain_stting_prop" in "aics->gain_stting_prop" looks like a copy-paste error.
-bluez-5.75/src/shared/vcp.c:2625:16: remediation: Should it say "aud_ip_type" instead?
-2623|
-2624|			aics = vcp_get_aics(vcp);
-2625|->			if (!aics || aics->gain_stting_prop)
-2626|				return;
-2627|
+Error: RESOURCE_LEAK (CWE-772): [#def65] [important]
+bluez-5.75/tools/isotest.c:923:4: open_fn: Returning handle opened by "open_file".
+bluez-5.75/tools/isotest.c:923:4: var_assign: Assigning: "fd" = handle returned from "open_file(altername)".
+bluez-5.75/tools/isotest.c:953:3: leaked_handle: Handle variable "fd" going out of scope leaks the handle.
+951|
+952|		free(sk_arr);
+953|->		return;
+954|	}
+955|
 ---
- src/shared/vcp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/isotest.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/src/shared/vcp.c b/src/shared/vcp.c
-index 7ba54e64adc0..b7e17e448b74 100644
---- a/src/shared/vcp.c
-+++ b/src/shared/vcp.c
-@@ -2622,7 +2622,7 @@ static void foreach_aics_char(struct gatt_db_attribute *attr, void *user_data)
- 			value_handle);
+diff --git a/tools/isotest.c b/tools/isotest.c
+index ddace0da3044..58293133a304 100644
+--- a/tools/isotest.c
++++ b/tools/isotest.c
+@@ -950,6 +950,8 @@ static void send_mode(char *filename, char *peer, int i, bool repeat)
+ 			close(sk_arr[i]);
  
- 		aics = vcp_get_aics(vcp);
--		if (!aics || aics->gain_stting_prop)
-+		if (!aics || aics->aud_ip_type)
- 			return;
+ 		free(sk_arr);
++		if (fd >= 0)
++			close(fd);
+ 		return;
+ 	}
  
- 		aics->aud_ip_type = attr;
 -- 
 2.44.0
 
