@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-4476-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4483-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A24E8C24A3
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 14:14:49 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 206248C24AA
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 14:15:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4B54F1C21734
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 12:14:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B3E111F22A8A
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 12:15:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1DEF1708AD;
-	Fri, 10 May 2024 12:14:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3EB216F26E;
+	Fri, 10 May 2024 12:14:18 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34573170850
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC7917084D
 	for <linux-bluetooth@vger.kernel.org>; Fri, 10 May 2024 12:14:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715343257; cv=none; b=W6jMsm5Ltr2sGutbn4cpV3IBao94KEaOBkWZX3LqR4ScxOSbWzDCk0zXJIPmxMUY+W7fu2jirBbgf57bE+XUD6TbqR/REbHN8nYcdKiYc+G8dUoGoF6YsGjszdFnmuSxHAVARcAWg0AdmkXQP4SDLzy3mDBrZU4XG3nQzOVs25s=
+	t=1715343258; cv=none; b=LIyho4TM/d50Ax+vMpC9yNMXNS971L6ks/8/+rmaTfvINPbO3tZXR3tx0KthFNnfCUbjARyliaxcZ58dmNzpeS4eeO9hZAHcuSJRi17wKoOHB64mZQYpA7aQ/YYB/GeBK/sPnpiF3FB9//mgBgpy5/2DgRe6O8CMfH2V09XzpWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715343257; c=relaxed/simple;
-	bh=UVmzgHwRrHupYFJb/Xbq0QuAhlgLC7EEyPNuRozn0po=;
+	s=arc-20240116; t=1715343258; c=relaxed/simple;
+	bh=M3Ywyy+4fuNjRQVFMj+DtHH2PN8++yYDfen2QT1Gpis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fgx1m/Y7Neyj0D/+qKpVqSmTRIY0zA0H8D9dJki/l6yLXMdny206r2P+CDKbzC+uoPazmI0Hd9Uo/2aerm4q0sgOimSo5s2lPm+GMOImgPjcBwsrY0TMblVSf9to/ahPXBtw82GrzEub7/sonuKTx95HvRPKiueVQ59Wo9uZUcI=
+	 MIME-Version; b=DmSr6Iq7Q4VlqDAV4H7KdaEy2pO1jEcW6KCvSes8+g1CVQb/QA+Gi3Z8NZhJXOLwhLdgcU0TtlH4FLZGu+Lo82SeJubBjqnxqKwbSbwuMHDnH8m/5ONLqprFNHJunjpf2N+BeIaB1HQYkF+IfRFGJpwWFoCDtLSthF2BQlXPKuA=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id A30066000C;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id ED21360013;
 	Fri, 10 May 2024 12:13:59 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ v2 13/20] client/player: Fix copy/paste error
-Date: Fri, 10 May 2024 14:10:23 +0200
-Message-ID: <20240510121355.3241456-14-hadess@hadess.net>
+Subject: [BlueZ v2 14/20] shared/vcp: Fix copy/paste error
+Date: Fri, 10 May 2024 14:10:24 +0200
+Message-ID: <20240510121355.3241456-15-hadess@hadess.net>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240510121355.3241456-1-hadess@hadess.net>
 References: <20240510121355.3241456-1-hadess@hadess.net>
@@ -49,32 +49,32 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-Error: COPY_PASTE_ERROR (CWE-398): [#def95] [important]
-bluez-5.75/client/player.c:1846:6: original: "qos->sync_cte_type" looks like the original copy.
-bluez-5.75/client/player.c:1852:6: copy_paste_error: "sync_cte_type" in "qos->sync_cte_type" looks like a copy-paste error.
-bluez-5.75/client/player.c:1852:6: remediation: Should it say "mse" instead?
-1850|		}
-1851|
-1852|->		if (qos->sync_cte_type) {
-1853|			bt_shell_printf("MSE %u\n", qos->mse);
-1854|			g_dbus_dict_append_entry(iter, "MSE", DBUS_TYPE_BYTE,
+Error: COPY_PASTE_ERROR (CWE-398): [#def97] [important]
+bluez-5.75/src/shared/vcp.c:2610:16: original: "aics->gain_stting_prop" looks like the original copy.
+bluez-5.75/src/shared/vcp.c:2625:16: copy_paste_error: "gain_stting_prop" in "aics->gain_stting_prop" looks like a copy-paste error.
+bluez-5.75/src/shared/vcp.c:2625:16: remediation: Should it say "aud_ip_type" instead?
+2623|
+2624|			aics = vcp_get_aics(vcp);
+2625|->			if (!aics || aics->gain_stting_prop)
+2626|				return;
+2627|
 ---
- client/player.c | 2 +-
+ src/shared/vcp.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/client/player.c b/client/player.c
-index 6b70e9ed3f9d..7f67425aaf8f 100644
---- a/client/player.c
-+++ b/client/player.c
-@@ -1849,7 +1849,7 @@ static void append_bcast_qos(DBusMessageIter *iter, struct endpoint_config *cfg)
- 					&qos->sync_cte_type);
- 	}
+diff --git a/src/shared/vcp.c b/src/shared/vcp.c
+index 7ba54e64adc0..b7e17e448b74 100644
+--- a/src/shared/vcp.c
++++ b/src/shared/vcp.c
+@@ -2622,7 +2622,7 @@ static void foreach_aics_char(struct gatt_db_attribute *attr, void *user_data)
+ 			value_handle);
  
--	if (qos->sync_cte_type) {
-+	if (qos->mse) {
- 		bt_shell_printf("MSE %u\n", qos->mse);
- 		g_dbus_dict_append_entry(iter, "MSE", DBUS_TYPE_BYTE,
- 						&qos->mse);
+ 		aics = vcp_get_aics(vcp);
+-		if (!aics || aics->gain_stting_prop)
++		if (!aics || aics->aud_ip_type)
+ 			return;
+ 
+ 		aics->aud_ip_type = attr;
 -- 
 2.44.0
 
