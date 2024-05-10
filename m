@@ -1,69 +1,95 @@
-Return-Path: <linux-bluetooth+bounces-4464-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4470-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0536F8C23E6
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 13:50:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5548F8C249D
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 14:14:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 99A4A1F210E1
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 11:50:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EAC1C1F21E55
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 12:14:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 488B016FF36;
-	Fri, 10 May 2024 11:50:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77576170889;
+	Fri, 10 May 2024 12:14:15 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from relay7-d.mail.gandi.net (relay7-d.mail.gandi.net [217.70.183.200])
+Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C2916F8EC
-	for <linux-bluetooth@vger.kernel.org>; Fri, 10 May 2024 11:49:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48CC716FF5B
+	for <linux-bluetooth@vger.kernel.org>; Fri, 10 May 2024 12:14:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715341799; cv=none; b=P599kT1bzD6lZYF8ARVQ/DmSL8vHAnIzboPGlnIvuF2ddV7nV73Hee02UxGWr2HHsOLkc9wgXKIZWGKCMNNkhoxUZvR6ooPL/ITlW3vJJJUQUz117mJOn7VHLq1YYvEbkLkOmpeqVPhdDejwyQQqvfs9bpnIDDSPLlJdcNby4+A=
+	t=1715343254; cv=none; b=CXlSxy7c7Jgb6YsONL7ZJPVcUqlmAuKFHmtzY/q7YBe7R3UwEkbHVhHU6d/Jf19JDU+KDiwJpwBC2KjptqR1CNjsRtzj2ePzDipdozeZJ1mWZtU3FKVP6An12Jq+SPoDf/TpS60ZIPwsGLlZkuMokBJSemJRnr6Jdos0+rBxnQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715341799; c=relaxed/simple;
-	bh=dB9lEhR99wWG16NltKxg/RxU4tJ7SzVL1IzTU/QKbmA=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=HpB5BIbv1wYARUlNP/CJjeP78Yl8WpY+q0KH2JEhNXrNvJBb/NQECBt7C9QSTduRWtW5mk3XVSoMBjdKaJto+I6wOwWsaE3E8vYPO72UFdIJvTNtyIYW1awxPZv8wUJO0LqonhAj1cQ/3GkhGi3I8KGfqEEG7yQYWT1CQdwN4X0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.200
+	s=arc-20240116; t=1715343254; c=relaxed/simple;
+	bh=YxeLF1Ugc5ZMF5i0ShdwAJKFYYj9XeyJpD/3a3qxe0s=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ErB88FhcvEmJQKZksDPdVnsV7Kf1WClKp6axcoH8kLNYGEmBeOe/nCmLVVXh1oHui23f3/d8gQwqX1Z8mVyiuS4ptxCL3R8cEZqP8wWfqN4QOLFHSK/HUReBQPmH2vb3qFoDnaYx3fEi0/A4MdNeG9MdsQQ8Z2zvai8BcZycYXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id C9F5C20008
-	for <linux-bluetooth@vger.kernel.org>; Fri, 10 May 2024 11:49:55 +0000 (UTC)
-Message-ID: <2b58a84ecc072b0230643ac6df34292dff233ae1.camel@hadess.net>
-Subject: Re: Fix a number of static analysis issues
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 8F42160007;
+	Fri, 10 May 2024 12:13:55 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
-Date: Fri, 10 May 2024 13:49:55 +0200
-In-Reply-To: <663e0965.050a0220.980ca.5a23@mx.google.com>
-References: <20240510091814.3172988-2-hadess@hadess.net>
-	 <663e0965.050a0220.980ca.5a23@mx.google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.50.4 (3.50.4-1.fc39) 
+Cc: Bastien Nocera <hadess@hadess.net>
+Subject: [BlueZ v2 00/20] Fix a number of static analysis issues
+Date: Fri, 10 May 2024 14:10:10 +0200
+Message-ID: <20240510121355.3241456-1-hadess@hadess.net>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-On Fri, 2024-05-10 at 04:47 -0700, bluez.test.bot@gmail.com wrote:
-> This is automated email and please do not reply to this email!
->=20
-> Dear submitter,
->=20
-> Thank you for submitting the patches to the linux bluetooth mailing
-> list.
-> This is a CI test results with your patch series:
-> PW
-> Link:https://patchwork.kernel.org/project/bluetooth/list/?series=3D8521
-> 87
+Changes since v1:
+- added 6 patches
+- Fix syntax error in "client/gatt: Check write_value() retval"
 
-Noticed a couple of bugs in those patches, will send a v2 with some
-more patches ASAP.
+Bastien Nocera (20):
+  adapter: Use false instead of 0 for bool
+  attrib/gatt: Guard against possible integer overflow
+  client/gatt: Don't pass negative fd on error
+  client/gatt: Check write_value() retval
+  client/main: Fix array access
+  client/main: Fix mismatched free
+  monitor/att: Fix memory leak
+  bap: Fix memory leaks
+  media: Fix memory leak
+  main: Fix memory leaks
+  isotest: Consider "0" fd to be valid
+  isotest: Fix error check after opening file
+  client/player: Fix copy/paste error
+  shared/vcp: Fix copy/paste error
+  isotest: Fix fd leak
+  iso-tester: Fix fd leak
+  sdp: Fix use of uninitialised memory
+  monitor: Work-around memory leak warning
+  avrcp: Fix uninitialised memory usage
+  main: Simplify variable assignment
 
-Cheers
+ attrib/gatt.c          |  8 ++++---
+ client/gatt.c          | 21 +++++++++++++++----
+ client/main.c          |  7 ++++++-
+ client/player.c        |  2 +-
+ lib/sdp.c              |  2 +-
+ monitor/att.c          | 19 +++++++++++++++++
+ monitor/jlink.c        |  3 ++-
+ profiles/audio/avrcp.c | 10 ++++-----
+ profiles/audio/bap.c   | 47 +++++++++++++++++++++++++++++-------------
+ profiles/audio/media.c |  1 +
+ src/adapter.c          |  2 +-
+ src/main.c             | 16 +++++++-------
+ src/shared/vcp.c       |  2 +-
+ tools/iso-tester.c     |  1 +
+ tools/isotest.c        |  6 ++++--
+ 15 files changed, 104 insertions(+), 43 deletions(-)
+
+-- 
+2.44.0
+
 
