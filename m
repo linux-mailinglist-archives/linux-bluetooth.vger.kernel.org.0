@@ -1,41 +1,41 @@
-Return-Path: <linux-bluetooth+bounces-4452-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4451-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E5768C20B3
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 11:18:53 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B26E8C20B2
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 11:18:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 59E02286453
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 09:18:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9BDF61C21CF3
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 10 May 2024 09:18:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C17C1168AE4;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F77E165FCB;
 	Fri, 10 May 2024 09:18:26 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [217.70.183.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3793F1635CA
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCC81635CD
 	for <linux-bluetooth@vger.kernel.org>; Fri, 10 May 2024 09:18:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715332706; cv=none; b=PyhGKnsGE831NUmR9mXOqHfhZP4Y38aUWpJWFu2mPbIjuHj6NxumcphpmcsdePhUYIKGOG4JKJUrnIkIgSObA8tNs1x80kd0bok8cMLRoph8dvJjXDiF+yh6a2dbgobizf7uWwYuLfy0gwV/oClPZkMMaz2REMWXaafiiypUb9I=
+	t=1715332705; cv=none; b=HSR0cwqVkM5UPhFvuPb1etv1B0wkvJFx8NmQqEgUcm5LK6QEIATqPZnM4hunpWLv/B5ZKRnZz/yz5u+kv3FHDnqckpSQazxxXyhRud2ByCwJako9zVajt9hwAY1PrTRUvgbgXHStiH/cHveGPOlSFnNOmxvTATHTqpZfHfW8Z6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715332706; c=relaxed/simple;
-	bh=qz8dsn86PoKyiEMWJOJVKAKfMqx70ZUJV6tnXXFCHS0=;
+	s=arc-20240116; t=1715332705; c=relaxed/simple;
+	bh=TmByswNQKHOXRhWykun5laQ2PUPsFpZeRBbgJLQuE2w=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aJbtMydpaXg9fOshsGKL/lJYubog/fFRKW+qcDF2HBQLhcJa/GO996T2tUKpPZVkKbprVbZnHRj2zbnBiQISAUciVUTXUsYfAF4L90rhqTrpxG9G86IM4H/y812cLN9zSB8PbgR053JD1zbNXcIiddoSe2lbtcAwPjFoJfYNneI=
+	 MIME-Version; b=dHM4BLMeNV8TJPz3ZLx/LvTcZlSVsmhZP3kr+s1sx1YSgQIw2Eh3QWfo1eKwoAjr4WmqEUbjkmyJBR6nJPMig33fLKwTGIaON4wNQJ2r+Gh+Vk698qFtSJRp3kd5l90bz1rCJJZpmObsrCZqP3p0qxrQesXAM9wLEHbizaR8m/Y=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id BFD8A1BF20A
+Received: by mail.gandi.net (Postfix) with ESMTPSA id F01211BF20B
 	for <linux-bluetooth@vger.kernel.org>; Fri, 10 May 2024 09:18:15 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
-Subject: [BlueZ 02/14] attrib/gatt: Guard against possible integer overflow
-Date: Fri, 10 May 2024 11:11:00 +0200
-Message-ID: <20240510091814.3172988-3-hadess@hadess.net>
+Subject: [BlueZ 03/14] client/gatt: Don't pass negative fd on error
+Date: Fri, 10 May 2024 11:11:01 +0200
+Message-ID: <20240510091814.3172988-4-hadess@hadess.net>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240510091814.3172988-1-hadess@hadess.net>
 References: <20240510091814.3172988-1-hadess@hadess.net>
@@ -48,38 +48,61 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-Error: INTEGER_OVERFLOW (CWE-190): [#def30]
-bluez-5.75/attrib/gatt.c:1016:2: known_value_assign: "last" = "65535", its value is now 65535.
-bluez-5.75/attrib/gatt.c:1087:2: overflow_const: Expression "dd->start", which is equal to 65536, where "last + 1" is known to be equal to 65536, overflows the type that receives it, an unsigned integer 16 bits wide.
-1085|		}
-1086|
-1087|->		dd->start = last + 1;
-1088|
-1089|		if (last < dd->end && !uuid_found) {
----
- attrib/gatt.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+Error: NEGATIVE_RETURNS (CWE-394): [#def33]
+bluez-5.75/client/gatt.c:973:2: negative_return_fn: Function "io_get_fd(io)" returns a negative number.
+bluez-5.75/client/gatt.c:973:2: negative_returns: "io_get_fd(io)" is passed to a parameter that cannot be negative.
+971|	msg.msg_iovlen = iovlen;
+972|
+973|->	ret = sendmsg(io_get_fd(io), &msg, MSG_NOSIGNAL);
+974|	if (ret < 0) {
+975|		ret = -errno;
 
-diff --git a/attrib/gatt.c b/attrib/gatt.c
-index b496dd1ebd95..3cedae9d167a 100644
---- a/attrib/gatt.c
-+++ b/attrib/gatt.c
-@@ -1076,10 +1076,12 @@ static void desc_discovered_cb(guint8 status, const guint8 *ipdu,
- 	att_data_list_free(list);
+Error: NEGATIVE_RETURNS (CWE-394): [#def34]
+bluez-5.75/client/gatt.c:1049:2: negative_return_fn: Function "io_get_fd(io)" returns a negative number.
+bluez-5.75/client/gatt.c:1049:2: assign: Assigning: "fd" = "io_get_fd(io)".
+bluez-5.75/client/gatt.c:1062:2: negative_returns: "fd" is passed to a parameter that cannot be negative.
+1060|		msg.msg_iovlen = 1;
+1061|
+1062|->		bytes_read = recvmsg(fd, &msg, MSG_DONTWAIT);
+1063|		if (bytes_read < 0) {
+1064|			bt_shell_printf("recvmsg: %s", strerror(errno));
+---
+ client/gatt.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/client/gatt.c b/client/gatt.c
+index 3aaa7a9361b9..6c7603985172 100644
+--- a/client/gatt.c
++++ b/client/gatt.c
+@@ -966,11 +966,15 @@ static int sock_send(struct io *io, struct iovec *iov, size_t iovlen)
+ 	struct msghdr msg;
+ 	int ret;
  
- 	/*
--	 * If last handle is lower from previous start handle then it is smth
--	 * wrong. Let's stop search, otherwise we might enter infinite loop.
-+	 * If last handle is lower from previous start handle or if iterating
-+	 * to the next handle from the last possible offset would overflow, then
-+	 * something is wrong. Let's stop search, otherwise we might enter
-+	 * infinite loop.
- 	 */
--	if (last < dd->start) {
-+	if (last < dd->start || last == G_MAXUINT16) {
- 		err = ATT_ECODE_UNLIKELY;
- 		goto done;
- 	}
++	ret = io_get_fd(io);
++	if (ret < 0)
++		return ret;
++
+ 	memset(&msg, 0, sizeof(msg));
+ 	msg.msg_iov = iov;
+ 	msg.msg_iovlen = iovlen;
+ 
+-	ret = sendmsg(io_get_fd(io), &msg, MSG_NOSIGNAL);
++	ret = sendmsg(ret, &msg, MSG_NOSIGNAL);
+ 	if (ret < 0) {
+ 		ret = -errno;
+ 		bt_shell_printf("sendmsg: %s", strerror(-ret));
+@@ -1052,6 +1056,11 @@ static bool sock_read(struct io *io, void *user_data)
+ 	if (io != notify_io.io && !chrc)
+ 		return true;
+ 
++	if (fd < 0) {
++		bt_shell_printf("recvmsg: %s", strerror(-fd));
++		return false;
++	}
++
+ 	iov.iov_base = buf;
+ 	iov.iov_len = sizeof(buf);
+ 
 -- 
 2.44.0
 
