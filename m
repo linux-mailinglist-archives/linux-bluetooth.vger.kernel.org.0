@@ -1,176 +1,112 @@
-Return-Path: <linux-bluetooth+bounces-4540-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4543-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0E5F88C364A
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 12 May 2024 13:55:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D96D48C365E
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 12 May 2024 14:12:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1B5A51C209E7
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 12 May 2024 11:55:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 157A31C203AD
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 12 May 2024 12:12:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D80D208B8;
-	Sun, 12 May 2024 11:55:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4C13250F8;
+	Sun, 12 May 2024 12:12:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TPAeu7L1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H7Yot5SR"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA76F9F7
-	for <linux-bluetooth@vger.kernel.org>; Sun, 12 May 2024 11:55:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C58C20323;
+	Sun, 12 May 2024 12:12:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715514944; cv=none; b=pKs2glmIC/zjsUDtxYL/uGTVpnv2BhHZTRmuMxIR27BowbqfxsfSTJPLbNdyDWa/+UZhwtlLkrdTzpHoHuucTx5q+dzdne6H7q+9w7akN/3l+vgaqwnX1DhsAAv9vZ5laSV0bUL+4+eMO88TPzgxgNyBzylQsif49zNt1zEZWaY=
+	t=1715515938; cv=none; b=PjKBDAgsUSCt5lEmlEl0XWfnY2oQQpjoP2R4V/6QdW6pIoQ01+P7Ne5E7ZJxQIEnzV+khCVe739GtSpLcyUIt2g9BNlhvsxEvmRfHSJ1c5EovHRTHfJLZuBNq8zEtbtDcJ0GM/NyQze9yIWPLDLVQEMqAZ+62gNYACYY8RPyCIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715514944; c=relaxed/simple;
-	bh=khOcufkcbmHBPbkZmA3nJgBEwG+lXrgdB9/0zYwKpOM=;
-	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
-	 In-Reply-To:References; b=hShAReDOILz16AZWn7kO6KfUHOvFoFKUMFaxiIt1jRas+q9KPlOIc0N/h9w25EmUwhdOGottq2FYICHptHLYxaeWNjFCPi4KfOUzhcGp0iQmeTi3a2VcQP+7kS+S6xEAszxwoyOp/6Yq9pYG/KShWb1sPJSNX5+e8VQPBEHXvtA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TPAeu7L1; arc=none smtp.client-ip=209.85.210.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-6f457853950so3032554b3a.0
-        for <linux-bluetooth@vger.kernel.org>; Sun, 12 May 2024 04:55:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715514942; x=1716119742; darn=vger.kernel.org;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=dnHcjLB+PIQC1I1j1YHy5/OLmNs4J3rE9qrL4AtreGo=;
-        b=TPAeu7L1F6sfTMqZqsttl/uMRCoEBeI1QyZ8tqkDRi/cDbwQsXg4x7Jn+yEbOw/KMS
-         0OzAoSWRHO63jWB5g+Fy3Ev32Hk1t4X2rpCtkr5/MfwRSC8TeMr0V45Tl8TF+UwDK2F5
-         O+BH5jrf0jWP2lPSBG8SETOuk2Zj/1c6rZACEoX8Y6ypXnv/eBsPpfBusw3rw1e6cey3
-         UjKP/7yPVBE1G4vcwafGbh+XdIA0yNzYeuaP+3J4azyHxVS2r8lFLA2YPUNzQjJyzXut
-         V3taJX7A7B1QAJ1ioiABksALFH+NfdpvWDfORTzyWVTiQn8ZZrMWJld9ZcybPfuJ4gLv
-         wHTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715514942; x=1716119742;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dnHcjLB+PIQC1I1j1YHy5/OLmNs4J3rE9qrL4AtreGo=;
-        b=LBb8eDO1Yw/heiSXDYNMvpIE3NBth4OmyrHHx2BhtZGXGweX7U/ZbCsPx++WYvyjCy
-         d8h9U3DLFsFn8GQL3WOz1EJPI2z9/bIfpMLlDnDfUB+90LqTYVyX1PkZAnoaWfvRBhe3
-         pZ4OCQzvfVQk3Cofm3HAde8YHCqTPHgaiN1Y2YUy+0RlaKTderew2PKceuHkL72X18PA
-         iK46mPqlnzS+vG8dA437C73gwyuNMk+ftWhHzRe6pQFCZY5mGhNSXltLG1SThl45xjJq
-         CGFVDNMiXxHFtUvcDWb9M7v5ziwy1JLwfJX9t9AJ+myFxfvzzzTOOj2lHCnbTI42gSnd
-         ocJQ==
-X-Gm-Message-State: AOJu0YykNqRwwJ7B9AlL2mmY8ivo7Ue7wVhS6nbS6y2PdIrYSRUJYjhS
-	qEx6SY6NhztfBX/639KlTInUTk5UVXCAdAZez2iMgUpBI3kAdl9vV/g8/A==
-X-Google-Smtp-Source: AGHT+IGQVaabwSlkeTZ34szKV2dbg81y2ZU49S9rUn2EZciovvKNMtbRXRU5udfJANnnMV5N5rLrPA==
-X-Received: by 2002:a17:90b:438d:b0:2a2:f4f4:2c4a with SMTP id 98e67ed59e1d1-2b66001a442mr14680822a91.21.1715514942160;
-        Sun, 12 May 2024 04:55:42 -0700 (PDT)
-Received: from [172.17.0.2] ([20.172.7.10])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2b67105649fsm6127279a91.6.2024.05.12.04.55.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 12 May 2024 04:55:41 -0700 (PDT)
-Message-ID: <6640ae3d.170a0220.2b54e.fdc4@mx.google.com>
-Date: Sun, 12 May 2024 04:55:41 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============3755922231331868382=="
+	s=arc-20240116; t=1715515938; c=relaxed/simple;
+	bh=lOIv9CYGdaM8Wpum8P1i2gOjEdfKKm5DnGLmgvog6Z4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=j0dDIDyKql0tIQFC0f7S/NnZlTb0ezyFJjOI21bDxZVIVHuhiq5cmVSWjCgkRT6t7fCfbf91u4fKBY0DFRxaJgkcuNjMcJ2zUOgH0YuQjLxc9zoa6tqHlfd+BAniC4eQVQAyDip7R+OWSrC9SM2rJsfK0aVi+KHv5Nmtq7oSk4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H7Yot5SR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id C52D2C116B1;
+	Sun, 12 May 2024 12:12:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1715515937;
+	bh=lOIv9CYGdaM8Wpum8P1i2gOjEdfKKm5DnGLmgvog6Z4=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=H7Yot5SR7bM+tEik8pWRwqRAEyzVhl04jbeFEwCIQqEXeLkHpk527/AIfSY9F9QGs
+	 TpTeDUeh3Us2zNuLhth8jqK7+PBM0v5fi4GtvkkRF1rfPCSRHmCJazFGgRAVwxT3yU
+	 um5ty7Py1qzlgp2fubDrq8YqvSuSXP5XOo7+hCRbv1l5lo1aktw5Nq8iPSdCrZ+DT/
+	 uaR1ecJOh98ZGq9lpRI0v4DOVmsf+g+z4LnT5rGWYHW6t0dxIyiCphEaV05BkzyCkd
+	 zBTKtUA+PF7efPJiMQBPb0kAuPJ08dJFkCu2MfgRBeXuE1rQqhJY5ultxNqJLkEhRi
+	 VGtXZj5q85e3Q==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA205C25B5F;
+	Sun, 12 May 2024 12:12:17 +0000 (UTC)
+From: Sven Peter via B4 Relay <devnull+sven.svenpeter.dev@kernel.org>
+Subject: [PATCH 0/2] Bluetooth: hci_bcm4377 fixes
+Date: Sun, 12 May 2024 12:12:06 +0000
+Message-Id: <20240512-btfix-msgid-v1-0-ab1bd938a7f4@svenpeter.dev>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: bluez.test.bot@gmail.com
-To: linux-bluetooth@vger.kernel.org, erick.archer@outlook.com
-Subject: RE: [v2] tty: rfcomm: prefer struct_size over open coded arithmetic
-In-Reply-To: <AS8PR02MB7237262C62B054FABD7229168BE12@AS8PR02MB7237.eurprd02.prod.outlook.com>
-References: <AS8PR02MB7237262C62B054FABD7229168BE12@AS8PR02MB7237.eurprd02.prod.outlook.com>
-Reply-To: linux-bluetooth@vger.kernel.org
-
---===============3755922231331868382==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABayQGYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDU0Mj3aSStMwK3dzi9MwU3RRzMwMjy0TzFEtDcyWgjoKiVKAk2LTo2Np
+ aAC/1v5RdAAAA
+To: Hector Martin <marcan@marcan.st>, 
+ Alyssa Rosenzweig <alyssa@rosenzweig.io>, 
+ Marcel Holtmann <marcel@holtmann.org>, 
+ Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+ linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Sven Peter <sven@svenpeter.dev>, stable@vger.kernel.org
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1715515936; l=990;
+ i=sven@svenpeter.dev; s=20240512; h=from:subject:message-id;
+ bh=lOIv9CYGdaM8Wpum8P1i2gOjEdfKKm5DnGLmgvog6Z4=;
+ b=jo+i34A8NOxsam6xXuE0fOchQDV91L+Thb8dJuNz0ff62D+4IpNSyLKnSj5jHwq69S1kkNjWn
+ LBUq4GIaVAvCemQrrixNxdXViAjDxtvuELGEqQxzUC16YPHvmWJTjQy
+X-Developer-Key: i=sven@svenpeter.dev; a=ed25519;
+ pk=jIiCK29HFM4fFOT2YTiA6N+4N7W+xZYQDGiO0E37bNU=
+X-Endpoint-Received: by B4 Relay for sven@svenpeter.dev/20240512 with
+ auth_id=159
+X-Original-From: Sven Peter <sven@svenpeter.dev>
+Reply-To: sven@svenpeter.dev
 
-This is automated email and please do not reply to this email!
+Hi,
 
-Dear submitter,
+There are just two minor fixes from Hector that we've been carrying downstream
+for a while now. One increases the timeout while waiting for the firmware to
+boot which is optional for the controller already supported upstream but
+required for a newer 4388 board for which we'll also submit support soon.
+It also fixes the units for the timeouts which is why I've already included it
+here. The other one fixes a call to bitmap_release_region where we only wanted
+to release a single bit but are actually releasing much more.
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=852638
+Best,
 
----Test result---
+Sven
 
-Test Summary:
-CheckPatch                    PASS      0.83 seconds
-GitLint                       FAIL      0.47 seconds
-SubjectPrefix                 FAIL      0.31 seconds
-BuildKernel                   PASS      29.53 seconds
-CheckAllWarning               PASS      32.27 seconds
-CheckSparse                   PASS      38.11 seconds
-CheckSmatch                   FAIL      35.80 seconds
-BuildKernel32                 PASS      28.62 seconds
-TestRunnerSetup               PASS      517.15 seconds
-TestRunner_l2cap-tester       PASS      18.47 seconds
-TestRunner_iso-tester         FAIL      31.31 seconds
-TestRunner_bnep-tester        PASS      4.69 seconds
-TestRunner_mgmt-tester        PASS      111.49 seconds
-TestRunner_rfcomm-tester      PASS      7.21 seconds
-TestRunner_sco-tester         PASS      15.40 seconds
-TestRunner_ioctl-tester       PASS      7.58 seconds
-TestRunner_mesh-tester        PASS      5.75 seconds
-TestRunner_smp-tester         PASS      6.70 seconds
-TestRunner_userchan-tester    PASS      4.87 seconds
-IncrementalBuild              PASS      27.48 seconds
-
-Details
-##############################
-Test: GitLint - FAIL
-Desc: Run gitlint
-Output:
-[v2] tty: rfcomm: prefer struct_size over open coded arithmetic
-
-WARNING: I3 - ignore-body-lines: gitlint will be switching from using Python regex 'match' (match beginning) to 'search' (match anywhere) semantics. Please review your ignore-body-lines.regex option accordingly. To remove this warning, set general.regex-style-search=True. More details: https://jorisroovers.github.io/gitlint/configuration/#regex-style-search
-10: B3 Line contains hard tab characters (\t): "	[...]"
-11: B3 Line contains hard tab characters (\t): "	struct   rfcomm_dev_info dev_info[];"
-37: B1 Line exceeds max length (117>80): "Link: https://www.kernel.org/doc/html/latest/process/deprecated.html#open-coded-arithmetic-in-allocator-arguments [1]"
-47: B1 Line exceeds max length (125>80): "v1 -> https://lore.kernel.org/linux-hardening/AS8PR02MB723725E0069F7AE8F64E876E8B142@AS8PR02MB7237.eurprd02.prod.outlook.com/"
-##############################
-Test: SubjectPrefix - FAIL
-Desc: Check subject contains "Bluetooth" prefix
-Output:
-"Bluetooth: " prefix is not specified in the subject
-##############################
-Test: CheckSmatch - FAIL
-Desc: Run smatch tool with source
-Output:
-
-Segmentation fault (core dumped)
-make[4]: *** [scripts/Makefile.build:244: net/bluetooth/hci_core.o] Error 139
-make[4]: *** Deleting file 'net/bluetooth/hci_core.o'
-make[3]: *** [scripts/Makefile.build:485: net/bluetooth] Error 2
-make[2]: *** [scripts/Makefile.build:485: net] Error 2
-make[2]: *** Waiting for unfinished jobs....
-Segmentation fault (core dumped)
-make[4]: *** [scripts/Makefile.build:244: drivers/bluetooth/bcm203x.o] Error 139
-make[4]: *** Deleting file 'drivers/bluetooth/bcm203x.o'
-make[4]: *** Waiting for unfinished jobs....
-Segmentation fault (core dumped)
-make[4]: *** [scripts/Makefile.build:244: drivers/bluetooth/bpa10x.o] Error 139
-make[4]: *** Deleting file 'drivers/bluetooth/bpa10x.o'
-make[3]: *** [scripts/Makefile.build:485: drivers/bluetooth] Error 2
-make[2]: *** [scripts/Makefile.build:485: drivers] Error 2
-make[1]: *** [/github/workspace/src/src/Makefile:1919: .] Error 2
-make: *** [Makefile:240: __sub-make] Error 2
-##############################
-Test: TestRunner_iso-tester - FAIL
-Desc: Run iso-tester with test-runner
-Output:
-Total: 122, Passed: 121 (99.2%), Failed: 1, Not Run: 0
-
-Failed Test Cases
-ISO Connect Suspend - Success                        Failed       4.172 seconds
-
-
+Signed-off-by: Sven Peter <sven@svenpeter.dev>
 ---
-Regards,
-Linux Bluetooth
+Hector Martin (2):
+      Bluetooth: hci_bcm4377: Increase boot timeout
+      Bluetooth: hci_bcm4377: Fix msgid release
+
+ drivers/bluetooth/hci_bcm4377.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+---
+base-commit: cf87f46fd34d6c19283d9625a7822f20d90b64a4
+change-id: 20240512-btfix-msgid-d76029a7d917
+
+Best regards,
+-- 
+Sven Peter <sven@svenpeter.dev>
 
 
---===============3755922231331868382==--
 
