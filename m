@@ -1,153 +1,215 @@
-Return-Path: <linux-bluetooth+bounces-4561-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4563-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 684538C4521
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 May 2024 18:31:56 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE2918C45CC
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 May 2024 19:13:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 98EA61C22B34
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 May 2024 16:31:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 635952826A3
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 May 2024 17:13:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E17D61AACA;
-	Mon, 13 May 2024 16:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDE27208D4;
+	Mon, 13 May 2024 17:13:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dsfsN2KX"
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="VNp/vPjo"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from EUR03-AM7-obe.outbound.protection.outlook.com (mail-am7eur03olkn2010.outbound.protection.outlook.com [40.92.59.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24F217C95;
-	Mon, 13 May 2024 16:31:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715617905; cv=none; b=icPT7mrakqsgbhG1vmnC90Gl1tDMOBHwatbozFR5RkFLRgYYn51/qxp5htL7YRnhH/wZomIJ8P6ucjaRqJG8ogYsLAqDEuXqlTyTk/iJQxRa7uOMCtW2o31DpnK7sj/xP/jqSU9wrbXG4x5VZioc6G0Ara9/6NiTAEK7vOjUTQI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715617905; c=relaxed/simple;
-	bh=311dwzltPk5fOF2CTRb5l8iHO2TC3E82uom3/fmI05o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RvTHqZyvQnOp8NAwT5ec+251i2lTnuQZABRbQK7DG8KVdEZgjPMuFZEBEyl1VsUXDjQvRlcHy3MOu8mlNZZ0dCNf5/4B3Yd5H8gbgiMFS05iV//yEfCt7ZBU/ojAYih0w00OmYHrI6y5VNJDdlaCz3blY3BlOY8BmVaElM3plwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dsfsN2KX; arc=none smtp.client-ip=209.85.208.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2e34e85ebf4so40005681fa.2;
-        Mon, 13 May 2024 09:31:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715617902; x=1716222702; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HUFnT8yyTapCAsA+F1D1wSnTUO1k2FcynX/QhnqWbRY=;
-        b=dsfsN2KXL8RyBqEnoHuPeysMS61hNnzQwzdHosR/Hp2Nbv35lkAzcuTpJtZZ5CJYV7
-         lWp0Jmy78TkB8i2PJ7ysxi9yBmkqN1HazzPD1xBzYJAu001tPA54iygM+Eaqi9B4AXiS
-         7V1Zrbrd2E3WxGerH22Y6m/mVcEPegcdjjkPxCCFMSogxgaStKd4W4QsXEpyElv+dddt
-         wBOpn2mIZ3TEosmlQRRXEz9G8rFn23zxhevJ7JThp1SQwRYTMV8vo0DpxyJXbN9cHbUE
-         hY1pULEHmNdHsghQ3OvJxpp1L2+qGQnq+5ltZRgRcgqukvp2rO361HS+ZQmnFxFhCyG2
-         jPcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715617902; x=1716222702;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HUFnT8yyTapCAsA+F1D1wSnTUO1k2FcynX/QhnqWbRY=;
-        b=XheqE6OPCmGRO5wB9vF5r4lBjDmsRt6coQyBOCYqPUtIk63tAWEtWObfyDwPEmyTjL
-         qnn/G9TI6NlWgPgVJU4yuBLrZemnd5zMmM1BfVCfMZQFalcDuTWGrW6omRZi6z3QxaHd
-         HuhXhcMnVjTFkgi5L8F1DbhItOdj6/G3zou90ZVN67pEYY8qjxuYMii/Y8bPidXUXKun
-         mBY62JCVNEmUYGsIFHByuwuxdGmj61TJ4P4vaXwpG1Dfl0RK93HmKEI0mZx4ncgEW17s
-         e2OV3BaHkKhvvn9NqmpkogIDBhINO9Ggd2ynmWambIHHgHFW7O1xe9UxtJr6jaLo/y3V
-         xk1w==
-X-Forwarded-Encrypted: i=1; AJvYcCX+ZxzK1Un78g9mKblDHbRwC9T9Oaa4+ER+x3ZDPt0MfPnBickeRGc6SUmLDTyb7BcvypPd7U983rFbC+pOu+Fscc8bovs1lDGGPdq2SyUDsJ4gAL0fkv+W2VrVSkz531LBIibsDOvUEjnmzZiDoUfkPmm63RAe28XkzHu4TTXVX3aGOOdSJEWrJX7eK3hWmb9oO4tqI1MJcBpGQreYQsgz0cvfI/73
-X-Gm-Message-State: AOJu0YzxwPKn4nv6rpTyi5TAKYq8CvuJzai9mhi68TV74T5A93NYHOu3
-	fH/G99wgTQPlfLHYDGYUxd74db8X6MBuRAZnOl6O0aB739pjQMY2zkw+qF7bNVW6uDFXBV6vO9L
-	4GqMazEWDdcHrD4ncLU7OOmqKJ1s=
-X-Google-Smtp-Source: AGHT+IEfQfbks6Pb9MhqjUGNG1bzcGu+P0BjYxxyNbUBodsFQi2U8Ir6ig2hVVlBqpKtOgABUOUtPTVs2/IAcJEAvxQ=
-X-Received: by 2002:a2e:a7d6:0:b0:2db:a7c7:5d11 with SMTP id
- 38308e7fff4ca-2e52039e290mr67635451fa.47.1715617901807; Mon, 13 May 2024
- 09:31:41 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC9022EE9;
+	Mon, 13 May 2024 17:13:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.59.10
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1715620393; cv=fail; b=WDeWLWS4W3cZCuzoSLK3ZEK8LtfEXHHEW/+SCy43Zb/gaDBeyKNOxUjBbVdPkXDNqXzLPuqqxjv5wm/t2eAtxFfYDCFNvUok++aUcYFB2RXt/he+Z0lvFa326+3wBxK6KfdL3byNnpaDEUGXo/GC7QBlkeG6QxFiTFSgXXK0hcE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1715620393; c=relaxed/simple;
+	bh=W2NbIWFFq8+93bRJCsvVQhRpRqEvjTNzWpKQRcs2SN8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=SI9mYxzvD7sFasN7wcwGyBGJLPbjv/IjYjEt0IskTI5V/SfWs8n8vVlA4LWuvtqp6/8OWSsXQvdEEuTSjhgZihGLYetJhmVFYu5Nd2ECMhxaf3H1lnLk39aiW13Uman03nl8WUGpk5C6xRMzpCp6Ld8fhVbif6w8kQx6DBBW2xo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=VNp/vPjo; arc=fail smtp.client-ip=40.92.59.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Mk338koxFWtGUKF9RfJ8XlRiR8e8lxtJDxAad2J53MxQ81FNhmcZGUs6rR2QIzyF98yGMqVq/tnAi4IE1RiYJyZohakHkoJs09V6w2KMQE+PJfls3NWbJMAG4fTH3SwtCUCZTYqr/pU4gDqZwFTf7C0pKo9v3dctWRx1N2gPy4ZyvfKEiFpp4dX0o0ux+XQ1skVOtAbcA5NJCoKK0zp6VwPZKqKe9jXyC2Kx0b0gqT0QRD5L+Iyitntt6oZcJRQ8WdnTZp8Zs7hL61PJRfrK/rRT9tyQZac97mR1MwhwW4RpId8d2uaSn0+a1VPmnb5RW8EtIuUYPO4pQTEq1SeWqA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=H7F+s5aaIWjSuzspJg6pQcfY0ACaE1ATMRVyyzjvyng=;
+ b=fCDIWIuF+q/P6C2nrDf3M+jcfBvr9ylMiY+GKH20n5Yu+/mfW/ZsoXh+02sZqUB334v6FLpGUTCoRkFZ2FsO7JG/hYu2Q7okcePeFLLEeDln+lOB0dBV5J++dsYo0USFS+ro65LWOjHjF9rhjQYtWgxGMcBpT7tNFyoLa2tjJvPiizJSIKKFddpb0XGiBofDQ7cbmvia818CFrxWns4icBhcG3hfN6uFQR3D1lF0Jh1l4+3mmXvtl+NmpZTHmmKJ2hEb+7j+OTLpQbhp1skC4DgBU+WAFY6aQ9yd1vWC22lh2umBfpN4kLkIZWhCiTMRvwI7lceb3ufBiQOp9Zl+yg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=H7F+s5aaIWjSuzspJg6pQcfY0ACaE1ATMRVyyzjvyng=;
+ b=VNp/vPjobzrQDmF6WBy84Nhucs69Pm5gfQRxoMCEr4H4yP8yaz0+XuIBldPTnPFhXh++bBBfs3GkETsmix1fFnPoj9P6B1rsT9kM+0hbzPECabNRTnnvC+4QkgvMchRGfDafA8a63J7Axs7+sRmrAgEZRFml78zpPDmlHeS4cgI2ia/Q4w2dMA/NY9AzSW4Ghf98RxJey3JD1OCMwYabMRL0aGywGEOhVEP5RHvTGuJVh38vInnXhIUFEkAL3ms4+6nwWHgoLvCjia3Q7GYqxKX510EhOGo8gNQcuALMFLFUlHfUxjAeMcyynaL7oyzmUlQWXs5LsCqLDcPH/xfFBA==
+Received: from AS8PR02MB7237.eurprd02.prod.outlook.com (2603:10a6:20b:3f1::10)
+ by DU0PR02MB9872.eurprd02.prod.outlook.com (2603:10a6:10:448::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7544.55; Mon, 13 May
+ 2024 17:13:08 +0000
+Received: from AS8PR02MB7237.eurprd02.prod.outlook.com
+ ([fe80::409b:1407:979b:f658]) by AS8PR02MB7237.eurprd02.prod.outlook.com
+ ([fe80::409b:1407:979b:f658%5]) with mapi id 15.20.7544.052; Mon, 13 May 2024
+ 17:13:08 +0000
+Date: Mon, 13 May 2024 19:12:57 +0200
+From: Erick Archer <erick.archer@outlook.com>
+To: Kees Cook <keescook@chromium.org>, Jiri Slaby <jirislaby@kernel.org>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: Erick Archer <erick.archer@outlook.com>,
+	Marcel Holtmann <marcel@holtmann.org>,
+	Johan Hedberg <johan.hedberg@gmail.com>,
+	"David S.  Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
+	llvm@lists.linux.dev
+Subject: Re: [PATCH v2] tty: rfcomm: prefer struct_size over open coded
+ arithmetic
+Message-ID:
+ <AS8PR02MB72379B760CF7B6A26A69C5558BE22@AS8PR02MB7237.eurprd02.prod.outlook.com>
+References: <AS8PR02MB7237262C62B054FABD7229168BE12@AS8PR02MB7237.eurprd02.prod.outlook.com>
+ <d11dacfa-5925-4040-b60b-02ab731d5f1a@kernel.org>
+ <CABBYNZ+4CcoBvkj8ze7mZ4vVfWfm_tyBxdFspvreVASi0VR=6A@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABBYNZ+4CcoBvkj8ze7mZ4vVfWfm_tyBxdFspvreVASi0VR=6A@mail.gmail.com>
+X-TMN: [wRf/Hs5bFdZs1n2BHOQ43jNMyJfg48E7]
+X-ClientProxiedBy: MA3P292CA0007.ESPP292.PROD.OUTLOOK.COM
+ (2603:10a6:250:2c::13) To AS8PR02MB7237.eurprd02.prod.outlook.com
+ (2603:10a6:20b:3f1::10)
+X-Microsoft-Original-Message-ID: <20240513171257.GA7952@titan>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <AS8PR02MB7237ECD397BDB7F529ADC7468BE12@AS8PR02MB7237.eurprd02.prod.outlook.com>
- <202405122008.8A333C2@keescook>
-In-Reply-To: <202405122008.8A333C2@keescook>
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Mon, 13 May 2024 12:31:29 -0400
-Message-ID: <CABBYNZJcg5SpO_pew6ZwN98n1sR7kNZs6VtkFToyOs9NM1bO8Q@mail.gmail.com>
-Subject: Re: [PATCH] Bluetooth: hci_core: Prefer struct_size over open coded arithmetic
-To: Kees Cook <keescook@chromium.org>
-Cc: Erick Archer <erick.archer@outlook.com>, Marcel Holtmann <marcel@holtmann.org>, 
-	Johan Hedberg <johan.hedberg@gmail.com>, "David S. Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
-	Nick Desaulniers <ndesaulniers@google.com>, Bill Wendling <morbo@google.com>, 
-	Justin Stitt <justinstitt@google.com>, linux-bluetooth@vger.kernel.org, 
-	netdev@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-hardening@vger.kernel.org, llvm@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AS8PR02MB7237:EE_|DU0PR02MB9872:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8530ca10-098c-497e-a42b-08dc736ff5d7
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|461199019|440099019|3412199016|1710799017;
+X-Microsoft-Antispam-Message-Info:
+	7NmEyfAJOah5olbWzrIJ+fGweCA0YV7ruthuncJx9CV7qsYUaj41a0xlBDKOsk7ss6BN3MbmOmtEuKYzg0IrIDUoRahRmMq8nc1WoYgxk1TM71uyIwdDkOIkSp+/bwcNvYhh4MR7nFU9D/8VCug3q+EHVejO9truQMA6wkYLODIQx3eypSxynVm7wqRB/o/dCMzACBo8IbFd6O9OXUihZTC6TtQetDSIOCsKoqlrCcam7tUd3H9/1S0A0tIzpghLioBIaROYXMdoX332dP39oU48fYf4WNLQdZlhvEqSeUQpMTILiaw2Rh3iPA8aMjzpjBnM/eiWPVYjqfkf0lBwamgY05Ua5wwN9GWU6uOnbK4Ok7tqnEQYB61tIgj3L07QzNniECHGdcqrXlLajAXvdLryWnW7Y+Zanq5ul8c2E1TjuqItlt39469JS8bMu5O6a5mT8AtoOPLMsfft2KIIeM8LeQlu5RMa93cOc0IfegjFEEbtoXaE5BNXInk3M0qu1DcOWCiub7iyycWLlqxAwF5ghxTlebbqMvnpMrGpJM6JatuqCUkwRLlrKmJANbJ+jP8VKVWSWAbM3g5hRzT+0poycEiDZe9QCADuAOGycd+mU9T43myjldwm6W2Qp5gG
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?S1ZObEh4eHM1OWdtVGVVWW9oRUJJQ0J0dCtTSXRPS05PYllscVljSGYxZGt4?=
+ =?utf-8?B?U2ptVUYzMDNLeWtUb3JRZmxpTldLZjV1amdkc1ZmQnhIdXRiM1IxKzI0ajBh?=
+ =?utf-8?B?OHJHT3hqS0ZtdVlnWXdzTFpmRjM5Vlg5ODZBZDB6RzV2Uzd4NUpVYWVueklr?=
+ =?utf-8?B?ZXF6UmttTFdydGkyUncvUnI5RExwZFNwSmlrdmJ5bGRXRURnTGE4cEpranBZ?=
+ =?utf-8?B?SUhUcEZFaEpHM21PZndpRGthdm92ZzJUZjRyOHhWNXVtTng2UFlER1UvUGxP?=
+ =?utf-8?B?LytITDBiYXg1QTY5UUpEenJmNmY5aVVJRmhuMytNYkVpcUI3dk5EUjVYL2hC?=
+ =?utf-8?B?MzBxbm40Z25udGhFcUsyQzZ1Y3Y1Q0tjNThhbUdZZW5iM2RTcnNwY2RwVmhh?=
+ =?utf-8?B?NGxSVkRHWGJ2L0V5MS9DUUszelkyQUJHN24rdjhSeFk5UWwvc0FGYitWUWNP?=
+ =?utf-8?B?WnNWYndTSnZHS1doWWJOQzNpQ1J4S0lMekgwQ2wvWG9KbExrQnU4MENTNjlk?=
+ =?utf-8?B?eVBRaFVtR2pPZDN3bGQwQTRicUEwamhOUjV5WUNFWU1QYWVuQ0lpcy9MTkNB?=
+ =?utf-8?B?WW9NWUx2SGJuN0RQUS94bFp5ZlUrV1p5a2JqSG1NeFR3djMrd0h4QTlwVTda?=
+ =?utf-8?B?ZjVIRXhDYUFvbXlhMjdReVJ4UnJzYk83ejIrQnc5RnRlUFNSL0ZpM1dNU1FZ?=
+ =?utf-8?B?SEVpcGwyQmZ3MHk2MU0vVy9nV0FnSVJ0VTNpMGNmWFQ2SnRsWVk4anJlOFhY?=
+ =?utf-8?B?Yy9GdE0zaE9nNTNDT1Voa1pYWWdhU1lhcHVHQ095eTB3M3ArV1JWUW1VNFZM?=
+ =?utf-8?B?bVZ6alQveDR5S1YyQ01XYTQ4VWZ0QlBrREROTmNkdGpTdG83TEN1aUZNN2Jv?=
+ =?utf-8?B?NkkrUUlkUTdaY0pnKzhONEUzNzJiZ2dKYWFSZnRuVEx4SkFvSG9RNzVBbTFr?=
+ =?utf-8?B?ZGxkKzFxeU90UERNcndqUEN0cGhLKzA4L2Z4V2x5YUdCd21ndmU5c2hwUkpK?=
+ =?utf-8?B?NlZQRUpUTjBRaVdwclI2Yk9lbk40bm1ZQVcxMnJaTzNnTFF2OGU1YUQycmoz?=
+ =?utf-8?B?bHVEem0xMlJGb1luemxzZUNibC83WjQxK3R3LzBSWi9JdnRENkVhU2F0SXhk?=
+ =?utf-8?B?UUVVcDk1U0lOZTh3ZzVlMlBTRjdGK1hGNEk5b2UyeXUxWDQ5QUNTay9va2FV?=
+ =?utf-8?B?L0w1MzRjWThyM0d0bDI3WUIxTXhFQURYa2NrTGcrb0UxeXFHL1lOUnZoUlVU?=
+ =?utf-8?B?eG5JNnAyc0lTUnpPVVJiSzhRUUNLNkd6bjlPbHU5dnJlQVZ3SE1GWEV6T3dN?=
+ =?utf-8?B?Mnd4NFcwWndFTThvNWV6MC9sRk1SN0JFZjIrR0hZRGRCQVQ2bS90NTlqMzg3?=
+ =?utf-8?B?Z2lHL3EwYzE1d0RrVktLaTJXWGdBWlpwMTdRWklwMHJNcTU3aS9EYzFuWWha?=
+ =?utf-8?B?ODJJc21hNnI5bWJPQmtrRWJCQitGWk9tbVVXdFpQaUJoYXVrM3Q1OG0zY0NQ?=
+ =?utf-8?B?OGxJbzZObFVYeDNqM0hnWHVLVVZ5TytZNmxiZXByNnRjeFBER0x4eXdNK3p4?=
+ =?utf-8?B?cW55bExhbjVOMjNqMzRSNElFeVF2cThWWE8zWXZGR21wL2s0Z2E2Yzhvb21X?=
+ =?utf-8?B?eU9WWEx5REozQmE1M0ZyNWZ0ZE9lNzdZVllQMStMQTR5Y3Rvd3lsUG1HanFa?=
+ =?utf-8?Q?YfQdsbfW7aJC5khD7YD2?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8530ca10-098c-497e-a42b-08dc736ff5d7
+X-MS-Exchange-CrossTenant-AuthSource: AS8PR02MB7237.eurprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 May 2024 17:13:08.4833
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU0PR02MB9872
 
-Hi Eric,
+Hi Kees, Jiri and Luiz,
+First of all, thanks for the reviews.
 
-On Sun, May 12, 2024 at 11:08=E2=80=AFPM Kees Cook <keescook@chromium.org> =
-wrote:
->
-> On Sun, May 12, 2024 at 04:17:06PM +0200, Erick Archer wrote:
-> > This is an effort to get rid of all multiplications from allocation
-> > functions in order to prevent integer overflows [1][2].
+On Mon, May 13, 2024 at 12:29:04PM -0400, Luiz Augusto von Dentz wrote:
+> Hi Jiri, Eric,
+> 
+> On Mon, May 13, 2024 at 1:07 AM Jiri Slaby <jirislaby@kernel.org> wrote:
 > >
-> > As the "dl" variable is a pointer to "struct hci_dev_list_req" and this
-> > structure ends in a flexible array:
+> > On 12. 05. 24, 13:17, Erick Archer wrote:
+> > > This is an effort to get rid of all multiplications from allocation
+> > > functions in order to prevent integer overflows [1][2].
+> > >
+> > > As the "dl" variable is a pointer to "struct rfcomm_dev_list_req" and
+> > > this structure ends in a flexible array:
+> > ...
+> > > --- a/include/net/bluetooth/rfcomm.h
+> > > +++ b/include/net/bluetooth/rfcomm.h
+> > ...
+> > > @@ -528,12 +527,12 @@ static int rfcomm_get_dev_list(void __user *arg)
+> > >       list_for_each_entry(dev, &rfcomm_dev_list, list) {
+> > >               if (!tty_port_get(&dev->port))
+> > >                       continue;
+> > > -             (di + n)->id      = dev->id;
+> > > -             (di + n)->flags   = dev->flags;
+> > > -             (di + n)->state   = dev->dlc->state;
+> > > -             (di + n)->channel = dev->channel;
+> > > -             bacpy(&(di + n)->src, &dev->src);
+> > > -             bacpy(&(di + n)->dst, &dev->dst);
+> > > +             di[n].id      = dev->id;
+> > > +             di[n].flags   = dev->flags;
+> > > +             di[n].state   = dev->dlc->state;
+> > > +             di[n].channel = dev->channel;
+> > > +             bacpy(&di[n].src, &dev->src);
+> > > +             bacpy(&di[n].dst, &dev->dst);
 > >
-> > struct hci_dev_list_req {
-> >       [...]
-> >       struct hci_dev_req dev_req[];   /* hci_dev_req structures */
-> > };
-> >
-> > the preferred way in the kernel is to use the struct_size() helper to
-> > do the arithmetic instead of the calculation "size + count * size" in
-> > the kzalloc() and copy_to_user() functions.
-> >
-> > At the same time, prepare for the coming implementation by GCC and Clan=
-g
-> > of the __counted_by attribute. Flexible array members annotated with
-> > __counted_by can have their accesses bounds-checked at run-time via
-> > CONFIG_UBSAN_BOUNDS (for array indexing) and CONFIG_FORTIFY_SOURCE (for
-> > strcpy/memcpy-family functions).
-> >
-> > In this case, it is important to note that the logic needs a little
-> > refactoring to ensure that the "dev_num" member is initialized before
-> > the first access to the flex array. Specifically, add the assignment
-> > before the list_for_each_entry() loop.
-> >
-> > Also remove the "size" variable as it is no longer needed and refactor
-> > the list_for_each_entry() loop to use dr[n] instead of (dr + n).
+> > This does not relate much to "prefer struct_size over open coded
+> > arithmetic". It should have been in a separate patch.
+> 
+> +1, please split these changes into its own patch so we can apply it separately.
 
-Have the change above split on its own patch.
+Ok, no problem. Also, I will simplify the "bacpy" lines with direct
+assignments as Kees suggested:
 
-> > This way, the code is more readable, idiomatic and safer.
+   di[n].src = dev->src;
+   di[n].dst = dev->dst;
+
+instead of:
+
+   bacpy(&di[n].src, &dev->src);
+   bacpy(&di[n].dst, &dev->dst);
+
+Regards,
+Erick
+
+> > Other than that, LGTM.
 > >
-> > This code was detected with the help of Coccinelle, and audited and
-> > modified manually.
+> > thanks,
+> > --
+> > js
+> > suse labs
 > >
-> > Link: https://www.kernel.org/doc/html/latest/process/deprecated.html#op=
-en-coded-arithmetic-in-allocator-arguments [1]
-> > Link: https://github.com/KSPP/linux/issues/160 [2]
-> >
-> > Signed-off-by: Erick Archer <erick.archer@outlook.com>
->
-> Looks right to me. Thanks!
->
-> Reviewed-by: Kees Cook <keescook@chromium.org>
->
-> --
-> Kees Cook
-
-
-
---=20
-Luiz Augusto von Dentz
+> 
+> 
+> -- 
+> Luiz Augusto von Dentz
 
