@@ -1,82 +1,144 @@
-Return-Path: <linux-bluetooth+bounces-4562-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4560-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03AF98C457F
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 May 2024 18:59:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1BA268C451A
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 May 2024 18:29:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0AE021C20C6E
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 May 2024 16:59:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BF8BC1F225F6
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 May 2024 16:29:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C0551C694;
-	Mon, 13 May 2024 16:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BED0C1553A3;
+	Mon, 13 May 2024 16:29:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NG+ULLTA"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from finn.localdomain (finn.gateworks.com [108.161.129.64])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7336B1AACA;
-	Mon, 13 May 2024 16:59:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=108.161.129.64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9719155326;
+	Mon, 13 May 2024 16:29:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715619589; cv=none; b=pRpape/D4q8Z9hBwiUc8f7LEMK4SUNWTD4LqgLz1jgSMV1+Rz5QTfMzinFRu/Kz9DHRyciv0l5284VClRw7HPRL3zLHJFYqND+yj2uo/nxybRVpN8znKBS+t9TKInvDAylNGw39RI569WAFadTq32ja0FiBDncVIQ6lHk97cHQQ=
+	t=1715617760; cv=none; b=q99GKTut89ntaQso+gU/P2TjdPwF1MCZ1I5xf2NWr0dRYPc/sPu8ruDNNyYYK7dwVmmEp7f9F0tNn28kS6tFMC/M3d8XqosSLf0WCL228fXewtFHCI3GTCN/O5ztiHRFJ3+B9GRz6ZVLQBgpIbyPmDo3AeAaalyKXwbdpwq2fvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715619589; c=relaxed/simple;
-	bh=ysyb2Jplk/f3vs0r/foaa32f7i2ZNfg5vNPzrga2Uh0=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Zn/46n4nwiS+4B525VtzKUtEyTD2zqd+QElzyGLNgh2C8mblBAd08GEnp3krkVImKBNDT2DoGqacaYWo0L0obwA6v2sQGCUq7DZGUJLFG9aDDRiiOncTE9QTSrcxL4thKCmWTCKs4VyXOPxTzvgQobfTsIYwKaU93IrYHxGY+Qk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gateworks.com; spf=pass smtp.mailfrom=gateworks.com; arc=none smtp.client-ip=108.161.129.64
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gateworks.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gateworks.com
-Received: from syn-068-189-091-139.biz.spectrum.com ([68.189.91.139] helo=tharvey.pdc.gateworks.com)
-	by finn.localdomain with esmtp (Exim 4.95)
-	(envelope-from <tharvey@gateworks.com>)
-	id 1s6YRA-009a4I-MK;
-	Mon, 13 May 2024 16:22:04 +0000
-From: Tim Harvey <tharvey@gateworks.com>
-To: Marcel Holtmann <marcel@holtmann.org>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	linux-bluetooth@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Scott Ehlert <ehlert@battelle.org>,
-	Tim Harvey <tharvey@gateworks.com>
-Subject: [PATCH] Bluetooth: btsdio: Do not bind to non-removable CYW4373
-Date: Mon, 13 May 2024 09:22:00 -0700
-Message-Id: <20240513162200.2658571-1-tharvey@gateworks.com>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1715617760; c=relaxed/simple;
+	bh=9oirvRjInAAK2WGeTpkg13GutqE/g028MxGLEUfVJ4U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tGiBihIVDYI56sdTPygqmM6bdFVMUrUCDBNU8zwrKmcSnRf60Jdk5E83j9JeFO7BBR9dqhDMZCewloJ5k/yE4ZDneIN+E6P9Yfu4JEkCrL+678t7ECctJklBdf/wKdhJYQ12xGlf9RP0MNQMt8k7QqddcBogRZhHAXU0S+eH97E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NG+ULLTA; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2e3fa13f018so57505521fa.3;
+        Mon, 13 May 2024 09:29:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1715617757; x=1716222557; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sABAyDDibQeTUxaqpap0tAGtEYkahruaupGbesZnVxw=;
+        b=NG+ULLTALVnG8nXbcS05WAmLq6FOjMRDQy0Tu9YTARNmlmfml3Ke2lwizJlDNY+/v3
+         F30xl2dXDSmcKuSba8+uOl9zVO7faz35ipRJcN4v79B8l7KUiKevTwywf6WVE2pKdEWp
+         aUjcWZd1eH/b7toN/EmTWHwbtZGqldINkFPSrxd5jkBKE+p6uh5LD3ip2TFxIbYD4oPp
+         c6hBs+nCoxGsa7uIhY+dQcq1b7unhnj65JSL4VWa43Otx9ABIQ6FtBFYzrnmSXFMke6K
+         CiQ144uqhUXIWjlEo3ZK8R9TB73mwrXrrO9kdD6wljaKTTsB7GF5pqEs/G2kfkO1EbGn
+         9URw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715617757; x=1716222557;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=sABAyDDibQeTUxaqpap0tAGtEYkahruaupGbesZnVxw=;
+        b=K4/vfjwm7ZErzxSX5lmSpG4ciJppK/v38WlmGHWmcW6BHyL1W9BURBWdXqV6NL71oB
+         50ZC/oEzqF1XnvBmQMtRsInWqpnOZHcWXuQYUwk0S9Te3LFxXaMHGqK4RabSscHqpROI
+         IBxUityXIKQwFxvTa/aCBP4Fl1WFjVBuv2ZXblLao6biN4piur8F/f/qIyZsMhsAQwJ3
+         wYuHKkXib5yzRyCXf3RXvDdZsEbzEgMaUNlt6c1R0TmxbNW6QNoZXDN31Cs1InVfp9QT
+         gkoQlGU7oZewynVu9O0g0B+/BN8ULaztvx54dwJT7ybafflkYWi2GU7csP6B5Npr7gV/
+         qO5g==
+X-Forwarded-Encrypted: i=1; AJvYcCXAyAUGjPBCfTpdUXsQ1F9OzoIrFJelCRWuqll6rCiPcJXPL4ORUuAvQfpwkXD+hFkZ/0ImwFR1SVcIidrSLbosXm+WgbH79t0Q/PxgN4R08CeO/tCg+02ZEWbG1c/Xg6rnKbxxhoaxXELQ5h4xwVyULfLrMFT4/JKrdw2aR8WgBafLcco5Ra3iFWFp8j43WpTzZ6IwOh1/qATBlIm/AeYyr6TsT11Q
+X-Gm-Message-State: AOJu0Yx7tQ2g1XdErnVU4jl2+pPMbQb2c3cblRJ8P5+r2tVI6GxHxue1
+	xy7CDgSH7N04caxq+SW95ECyCCB9dQId+4aFqWkzOtZZOQB7t+LCk+nlDYMq+q9S0PIHp/3z++Y
+	JFClQ/AcjUQ2TuxzJYIBlY5y0Bz8=
+X-Google-Smtp-Source: AGHT+IEzW3swQESCG1PQZCau4vY6voiOCRmeopxeRXdBZmXXzeygMwKz9BndpIVFZiSJ3rYSQcVeLpqTsjWpyxNmprY=
+X-Received: by 2002:a2e:91ce:0:b0:2df:1e3e:327f with SMTP id
+ 38308e7fff4ca-2e52039bcb3mr71238121fa.38.1715617756547; Mon, 13 May 2024
+ 09:29:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <AS8PR02MB7237262C62B054FABD7229168BE12@AS8PR02MB7237.eurprd02.prod.outlook.com>
+ <d11dacfa-5925-4040-b60b-02ab731d5f1a@kernel.org>
+In-Reply-To: <d11dacfa-5925-4040-b60b-02ab731d5f1a@kernel.org>
+From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date: Mon, 13 May 2024 12:29:04 -0400
+Message-ID: <CABBYNZ+4CcoBvkj8ze7mZ4vVfWfm_tyBxdFspvreVASi0VR=6A@mail.gmail.com>
+Subject: Re: [PATCH v2] tty: rfcomm: prefer struct_size over open coded arithmetic
+To: Jiri Slaby <jirislaby@kernel.org>
+Cc: Erick Archer <erick.archer@outlook.com>, Marcel Holtmann <marcel@holtmann.org>, 
+	Johan Hedberg <johan.hedberg@gmail.com>, "David S. Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Kees Cook <keescook@chromium.org>, "Gustavo A. R. Silva" <gustavoars@kernel.org>, 
+	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, 
+	Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Geert Uytterhoeven <geert@linux-m68k.org>, 
+	linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org, 
+	llvm@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Scott Ehlert <ehlert@battelle.org>
+Hi Jiri, Eric,
 
-CYW4373 devices soldered onto the PCB (non-removable),
-use a UART connection for Bluetooth and the advertised btsdio
-support as an SDIO function should be ignored.
+On Mon, May 13, 2024 at 1:07=E2=80=AFAM Jiri Slaby <jirislaby@kernel.org> w=
+rote:
+>
+> On 12. 05. 24, 13:17, Erick Archer wrote:
+> > This is an effort to get rid of all multiplications from allocation
+> > functions in order to prevent integer overflows [1][2].
+> >
+> > As the "dl" variable is a pointer to "struct rfcomm_dev_list_req" and
+> > this structure ends in a flexible array:
+> ...
+> > --- a/include/net/bluetooth/rfcomm.h
+> > +++ b/include/net/bluetooth/rfcomm.h
+> ...
+> > @@ -528,12 +527,12 @@ static int rfcomm_get_dev_list(void __user *arg)
+> >       list_for_each_entry(dev, &rfcomm_dev_list, list) {
+> >               if (!tty_port_get(&dev->port))
+> >                       continue;
+> > -             (di + n)->id      =3D dev->id;
+> > -             (di + n)->flags   =3D dev->flags;
+> > -             (di + n)->state   =3D dev->dlc->state;
+> > -             (di + n)->channel =3D dev->channel;
+> > -             bacpy(&(di + n)->src, &dev->src);
+> > -             bacpy(&(di + n)->dst, &dev->dst);
+> > +             di[n].id      =3D dev->id;
+> > +             di[n].flags   =3D dev->flags;
+> > +             di[n].state   =3D dev->dlc->state;
+> > +             di[n].channel =3D dev->channel;
+> > +             bacpy(&di[n].src, &dev->src);
+> > +             bacpy(&di[n].dst, &dev->dst);
+>
+> This does not relate much to "prefer struct_size over open coded
+> arithmetic". It should have been in a separate patch.
 
-Signed-off-by: Scott Ehlert <ehlert@battelle.org>
-Signed-off-by: Tim Harvey <tharvey@gateworks.com>
----
- drivers/bluetooth/btsdio.c | 1 +
- 1 file changed, 1 insertion(+)
++1, please split these changes into its own patch so we can apply it separa=
+tely.
 
-diff --git a/drivers/bluetooth/btsdio.c b/drivers/bluetooth/btsdio.c
-index f19d31ee37ea..bc9631bddc40 100644
---- a/drivers/bluetooth/btsdio.c
-+++ b/drivers/bluetooth/btsdio.c
-@@ -298,6 +298,7 @@ static int btsdio_probe(struct sdio_func *func,
- 		case SDIO_DEVICE_ID_BROADCOM_4345:
- 		case SDIO_DEVICE_ID_BROADCOM_43455:
- 		case SDIO_DEVICE_ID_BROADCOM_4356:
-+		case SDIO_DEVICE_ID_BROADCOM_CYPRESS_4373:
- 			return -ENODEV;
- 		}
- 	}
--- 
-2.25.1
+> Other than that, LGTM.
+>
+> thanks,
+> --
+> js
+> suse labs
+>
 
+
+--=20
+Luiz Augusto von Dentz
 
