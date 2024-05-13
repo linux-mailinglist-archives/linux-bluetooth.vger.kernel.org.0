@@ -1,50 +1,49 @@
-Return-Path: <linux-bluetooth+bounces-4559-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4562-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB7DA8C42E0
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 May 2024 16:10:34 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03AF98C457F
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 May 2024 18:59:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 95CDC1F216C0
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 May 2024 14:10:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0AE021C20C6E
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 May 2024 16:59:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A93C450279;
-	Mon, 13 May 2024 14:10:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZWMhhTi1"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C0551C694;
+	Mon, 13 May 2024 16:59:49 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from finn.localdomain (finn.gateworks.com [108.161.129.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162EC153814
-	for <linux-bluetooth@vger.kernel.org>; Mon, 13 May 2024 14:10:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7336B1AACA;
+	Mon, 13 May 2024 16:59:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=108.161.129.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715609428; cv=none; b=Aotou1KcEICEImX/yEMDwHxp3SawNZh+Y9n2AcQuDleqRzSBkUdQo2FZFWPwBmx1xyQc5/nHfXO78em8jiizWTA7mFbE6YaIAeKFOmM6bmf0ZsdJxpf/W/atAoy2Y/loWTAALFcgBAW6TAZWDOwXx6fKhbcZ4C2cBxgxMMwTDKw=
+	t=1715619589; cv=none; b=pRpape/D4q8Z9hBwiUc8f7LEMK4SUNWTD4LqgLz1jgSMV1+Rz5QTfMzinFRu/Kz9DHRyciv0l5284VClRw7HPRL3zLHJFYqND+yj2uo/nxybRVpN8znKBS+t9TKInvDAylNGw39RI569WAFadTq32ja0FiBDncVIQ6lHk97cHQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715609428; c=relaxed/simple;
-	bh=3LXZm6MiljU6uxEnBesbIndsI3pOb/r62ngKU0Wbgak=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=tsfZs2mL4zbU3rVgw7q26TZH0Qf7ubsOVSYjVpo2PEeMPjc+qSiVPmAV0QQZ4mpGumxdjjkuGhEnli+bY6bcmF/nFCUVnhKKVZc9TUMS10GsSixhZ4E131GDI38aCIsVUa31lQOgtwjSt+nK1/PynWkAAnyrCfXL+EoN3NPKVSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZWMhhTi1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id BECDBC4AF10;
-	Mon, 13 May 2024 14:10:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715609427;
-	bh=3LXZm6MiljU6uxEnBesbIndsI3pOb/r62ngKU0Wbgak=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=ZWMhhTi1OLGcsBKMHwd1yUXuZA8p3IIsUUS1cehGVHhj8n1FgvjFOAzmUD4++IjyH
-	 H1hFJOocXWDR2Q8AoJ4fGbzalNd61Vwn7h/opyk7/sJaRGvIH13+LyJ9YMS1Dwefd/
-	 4e0zNNyW/5hScPox4VdzQIy17GaHqhEvsYYyyoF0oUGOrhgd0IsD+C0NoeIzHwRapv
-	 v8xUAdDQG5na0YWdiJd7vvVZillKvcQx+kDza1tZ2W4a5iiqapZyHcrJzYnluq3E4T
-	 I9fRnYfQ4lDwN+PXT6yvgqRqiNNPLb2UXo4DwKsWVP4aQFoFYcvmUMgXsva88i0HTS
-	 VS4JWYD8xxOmA==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id ADDB9C433E9;
-	Mon, 13 May 2024 14:10:27 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1715619589; c=relaxed/simple;
+	bh=ysyb2Jplk/f3vs0r/foaa32f7i2ZNfg5vNPzrga2Uh0=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Zn/46n4nwiS+4B525VtzKUtEyTD2zqd+QElzyGLNgh2C8mblBAd08GEnp3krkVImKBNDT2DoGqacaYWo0L0obwA6v2sQGCUq7DZGUJLFG9aDDRiiOncTE9QTSrcxL4thKCmWTCKs4VyXOPxTzvgQobfTsIYwKaU93IrYHxGY+Qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gateworks.com; spf=pass smtp.mailfrom=gateworks.com; arc=none smtp.client-ip=108.161.129.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gateworks.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gateworks.com
+Received: from syn-068-189-091-139.biz.spectrum.com ([68.189.91.139] helo=tharvey.pdc.gateworks.com)
+	by finn.localdomain with esmtp (Exim 4.95)
+	(envelope-from <tharvey@gateworks.com>)
+	id 1s6YRA-009a4I-MK;
+	Mon, 13 May 2024 16:22:04 +0000
+From: Tim Harvey <tharvey@gateworks.com>
+To: Marcel Holtmann <marcel@holtmann.org>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	linux-bluetooth@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Scott Ehlert <ehlert@battelle.org>,
+	Tim Harvey <tharvey@gateworks.com>
+Subject: [PATCH] Bluetooth: btsdio: Do not bind to non-removable CYW4373
+Date: Mon, 13 May 2024 09:22:00 -0700
+Message-Id: <20240513162200.2658571-1-tharvey@gateworks.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -52,38 +51,32 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ] tools: fix using too small buffers in test-runner
-From: patchwork-bot+bluetooth@kernel.org
-Message-Id: 
- <171560942770.21927.763537423012567620.git-patchwork-notify@kernel.org>
-Date: Mon, 13 May 2024 14:10:27 +0000
-References: <9b7b8130a4296de7e02435d7be3c6d00c4976427.1715423446.git.pav@iki.fi>
-In-Reply-To: <9b7b8130a4296de7e02435d7be3c6d00c4976427.1715423446.git.pav@iki.fi>
-To: Pauli Virtanen <pav@iki.fi>
-Cc: linux-bluetooth@vger.kernel.org
 
-Hello:
+From: Scott Ehlert <ehlert@battelle.org>
 
-This patch was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+CYW4373 devices soldered onto the PCB (non-removable),
+use a UART connection for Bluetooth and the advertised btsdio
+support as an SDIO function should be ignored.
 
-On Sat, 11 May 2024 13:32:07 +0300 you wrote:
-> Fix compiler warning:
-> 
-> tools/test-runner.c:309:57: error: 'sprintf' may write a terminating nul
->   past the end of the destination [-Werror=format-overflow=]
-> ---
->  tools/test-runner.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+Signed-off-by: Scott Ehlert <ehlert@battelle.org>
+Signed-off-by: Tim Harvey <tharvey@gateworks.com>
+---
+ drivers/bluetooth/btsdio.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Here is the summary with links:
-  - [BlueZ] tools: fix using too small buffers in test-runner
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=24039249854e
-
-You are awesome, thank you!
+diff --git a/drivers/bluetooth/btsdio.c b/drivers/bluetooth/btsdio.c
+index f19d31ee37ea..bc9631bddc40 100644
+--- a/drivers/bluetooth/btsdio.c
++++ b/drivers/bluetooth/btsdio.c
+@@ -298,6 +298,7 @@ static int btsdio_probe(struct sdio_func *func,
+ 		case SDIO_DEVICE_ID_BROADCOM_4345:
+ 		case SDIO_DEVICE_ID_BROADCOM_43455:
+ 		case SDIO_DEVICE_ID_BROADCOM_4356:
++		case SDIO_DEVICE_ID_BROADCOM_CYPRESS_4373:
+ 			return -ENODEV;
+ 		}
+ 	}
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.25.1
 
 
