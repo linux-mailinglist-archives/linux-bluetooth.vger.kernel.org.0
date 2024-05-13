@@ -1,49 +1,49 @@
-Return-Path: <linux-bluetooth+bounces-4556-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4558-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 33C948C42C1
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 May 2024 16:00:40 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 595558C42E1
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 May 2024 16:10:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6443C1C21134
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 May 2024 14:00:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EEC9B1F21882
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 May 2024 14:10:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9CC515358D;
-	Mon, 13 May 2024 14:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A951915382D;
+	Mon, 13 May 2024 14:10:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZWbqBWwB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="heq4Lu8G"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36EC21474BB
-	for <linux-bluetooth@vger.kernel.org>; Mon, 13 May 2024 14:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16331153815
+	for <linux-bluetooth@vger.kernel.org>; Mon, 13 May 2024 14:10:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715608832; cv=none; b=pdxk0GwjyVeZCMTSe7AnMJJZfaOFBoYuBumusFdo0Z3KJphylJoYU6uxeOB00Rwk5tZBQfDzvC5hP+KhYNLVHdhvFdXyW2sMpKESpDvVeHEJUXghGK1980Yv+QIuIItb8OcfiPT342powRyZVAV9ruC+PgekXDykNAP8nSVPfL8=
+	t=1715609428; cv=none; b=Sj7l1XHgc72vnoa1IvzfLIFfcpZQ7+bPPNcKhRbydPHoCrQKT8w/g27Jhfctw+/vVVeafD3rqbSs5FcycdG4enP9lMhYDUQA7rwFCOK+CTl8nVTHNhd708+mNotUknPlNAyG3oeC/0qRGgd8ggBHkJClyy/nTFQEJedIJso9sog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715608832; c=relaxed/simple;
-	bh=Lg4eaznftMNZMmuA6lejJJB3YTjqitLoBM47C0NYbzc=;
+	s=arc-20240116; t=1715609428; c=relaxed/simple;
+	bh=xkfVd6YHB6IBXkZgJ66OKU6uTmF62OA8L56R6EJW9CY=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=SKXS1Ao23igiqzObIAQRQhgAceghHmh8h3JMUVpjLI0acKdPOa2+oP2LdTG+l/HUZNV0W+Fku0+MKHlnCHU+ajqkL+rdWSbz0Ly53CzOwUYtCPOaZc937j7dT5W4UkzK+fmzFl0d2qKiD4R51lyTUAJXl/xGQPwPqxUc6RKwDDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZWbqBWwB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 04C0CC4AF0E;
-	Mon, 13 May 2024 14:00:31 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=nLBOQG7rZli3HCGt07PbLl+xRsgwR0E34CZE+0vjMZL9bcgv8QKyCs1++D83BeiA9xNDz4QOiX1kWlwkntBkTNCGh1dNu3xBgxqN1/g2iS1tGHUdgkW4E9j2a7zn98GueAyc5d/SQnbHI5Fxh3gvVUv+JOFvyGo7Dvj2fA9tH9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=heq4Lu8G; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id B8021C4AF09;
+	Mon, 13 May 2024 14:10:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715608832;
-	bh=Lg4eaznftMNZMmuA6lejJJB3YTjqitLoBM47C0NYbzc=;
+	s=k20201202; t=1715609427;
+	bh=xkfVd6YHB6IBXkZgJ66OKU6uTmF62OA8L56R6EJW9CY=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=ZWbqBWwBZmUT6kHD2ANd6RZ/ULKUUSO1EalJHWqgqP/9bf/LkTThebmSshvA+5RLX
-	 JgMqWUI0NqLECjaqyqTngmXiM7xozuBZris8laVrnGdBnG1X1eg3tus8fQGHHfUHbr
-	 ySyAhlUcR9B28D1es1W5Nn8D/VQe78pjaiVc5253biGqjIdxGx/ku+NfHYnFfETs2M
-	 IvzHXpp3mF4EovUJmoyXwX933YBFr2YhdePOLwbEGPe0SB5bRT+Z4BDdIFM+H81JoB
-	 Fi1BX+P9ZaBBWuOTveUcQYvu3IhQEx/N6VLj06pcuZZOk8kYCs9qOsoLxub2vi0cqs
-	 MKPD5z/M9ca8Q==
+	b=heq4Lu8Grrb0awqxx+sqAcjwBhOUCnBcou3GGX1wB4Hg9vcrohqtJDxtPgY1CsANS
+	 bUduXzyuxUq86CzhMyFq0/4HtgVwtSdm8yHLjb6//Oo+zO4A8D9V+Uv7GbAW/h3N40
+	 9fGpiSyX0ATZtfOCGI0u1vKzZUTsONl86wdTwJVJEPD49fXfOXCS2JOq+YeFLLO0Zd
+	 0PPcdh8CRLX6/yFUAxKVkAVJh47Be5eP9PqpJ4XUlsh2FCAAiVWBvWlP8tuGxhf69p
+	 2zcUj3Fd1l2vH1gPZ551D3pRcVpLgcK+XSLxE8MvPuXxw0NHKZFOQDx8lEC/kEeFUr
+	 d9rBrYsI+fyqQ==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id E23AAC43443;
-	Mon, 13 May 2024 14:00:31 +0000 (UTC)
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id A5CDBC43443;
+	Mon, 13 May 2024 14:10:27 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
@@ -52,47 +52,36 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ 0/4] test-bap: Add Broadcast Source SCC tests
+Subject: Re: [PATCH BlueZ v2] client: fix ISO send data rate
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <171560883192.16121.2248821930726811006.git-patchwork-notify@kernel.org>
-Date: Mon, 13 May 2024 14:00:31 +0000
-References: <20240510142754.3901-1-iulia.tanasescu@nxp.com>
-In-Reply-To: <20240510142754.3901-1-iulia.tanasescu@nxp.com>
-To: Iulia Tanasescu <iulia.tanasescu@nxp.com>
-Cc: linux-bluetooth@vger.kernel.org, claudia.rosu@nxp.com,
- mihai-octavian.urzica@nxp.com, silviu.barbulescu@nxp.com,
- vlad.pruteanu@nxp.com, andrei.istodorescu@nxp.com, luiz.dentz@gmail.com
+ <171560942767.21927.2728272166472720576.git-patchwork-notify@kernel.org>
+Date: Mon, 13 May 2024 14:10:27 +0000
+References: <30fd803be62f762706486698821e9e5fff2d0b63.1715442270.git.pav@iki.fi>
+In-Reply-To: <30fd803be62f762706486698821e9e5fff2d0b63.1715442270.git.pav@iki.fi>
+To: Pauli Virtanen <pav@iki.fi>
+Cc: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This series was applied to bluetooth/bluez.git (master)
+This patch was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Fri, 10 May 2024 17:27:50 +0300 you wrote:
-> This patch implements unit tests for BAP Broadcast Source BASE
-> configuration (4.13.1 Broadcast Source Configures Broadcast Audio Stream)
+On Sat, 11 May 2024 18:45:46 +0300 you wrote:
+> We are sending data to controller at wrong average rate not equal to
+> 1 packet / SDU interval, if Transport_Latency is not an integer multiple
+> of SDU_Interval.  The calculation currently may also give zero, so no
+> data gets sent.
 > 
-> Some fixes in shared/bap.c and shared/l3c.h have also been included
-> for successful test implementation.
-> 
-> Iulia Tanasescu (4):
->   shared/bap: Fix uninitialized field at BASE generation
->   shared/lc3: Add missing LC3_QOS_8_1_2_B define
->   test-bap: Pass test_setup as test define argument
->   test-bap: Add Broadcast Source SCC tests
+> We are sending data in bursts of num ~= Transport_Latency/SDU_Interval
+> packets, in hopes that possibly larger timer interval makes things more
+> efficient.
 > 
 > [...]
 
 Here is the summary with links:
-  - [BlueZ,1/4] shared/bap: Fix uninitialized field at BASE generation
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=33fdb06e7de5
-  - [BlueZ,2/4] shared/lc3: Add missing LC3_QOS_8_1_2_B define
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=969ccb526ba9
-  - [BlueZ,3/4] test-bap: Pass test_setup as test define argument
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=78bf2ab7bdfd
-  - [BlueZ,4/4] test-bap: Add Broadcast Source SCC tests
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=ffd538cf7757
+  - [BlueZ,v2] client: fix ISO send data rate
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=e453a336c404
 
 You are awesome, thank you!
 -- 
