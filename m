@@ -1,33 +1,34 @@
-Return-Path: <linux-bluetooth+bounces-4628-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4626-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5BA788C5C67
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 14 May 2024 22:42:10 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D82288C5C65
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 14 May 2024 22:42:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 138F0282C87
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 14 May 2024 20:42:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 64D681F21585
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 14 May 2024 20:42:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 892541EB37;
-	Tue, 14 May 2024 20:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EAC01DDD6;
+	Tue, 14 May 2024 20:42:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="FBlFdIAu"
+	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="LOSyEO9U"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [185.185.170.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB06C365
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB0A23D69
 	for <linux-bluetooth@vger.kernel.org>; Tue, 14 May 2024 20:41:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=185.185.170.37
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715719321; cv=pass; b=MMgUjn+FFQK50rp5quLe5H+M5dWqKl0b1cFmYmtSWGDjbsxFQrLMQ+vn1Nn8aTH87i7FCMegwVaV8BO7VQ8xLrb3/Q4QZriqavBqm8vYwuMwFktM9CjnQ3S1eNi6hpxzrtRqoSNLC/1JFwTa+ebKShXnNLvkE9WKwippwyA+ZTE=
+	t=1715719320; cv=pass; b=auv5r0tC5V9Uhq8EyOU/hnYaryFwxC+6UvVO575y/10HJE1uA50T0o4fL/by6slytTSvLqN11U7OxOgK1eP5KcTOihShwiHa2ZZWv1fsSLR/JaYmn6s4oME2gSwXMsvxv2WMzd/fEDfolE5iUSIQlqVOWiuFkV+m2Z3TDvmOpVs=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715719321; c=relaxed/simple;
-	bh=o7xea0l3cdI7iKOBK11360xGhye9BD2hvlCxYhBNhok=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=SFxmcr97dAh1qBWG5rBbQ1V6J4WkrLiB+JzqQsHs/3C9tq1scLhIfop83WuWwcKkIY+gdAzoTDrbLNxfOhCwgXQyyYfYrHHD0joww1S0YAacFNA3/r758C64+Um3u6MjBXDo5haKkt3qS5XtEzpgax0xi3K11dlqu0lQnpvIhUI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=FBlFdIAu; arc=pass smtp.client-ip=185.185.170.37
+	s=arc-20240116; t=1715719320; c=relaxed/simple;
+	bh=smN4YFx3lN8TysEC1D7lSZu7UvDc7rfNaK8xnbkPPWY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=RFLBw+zLt3aYfprexVX0HLDcZobsLNTXmITpz2Ypi73nmTNYeIjzFCRV6HxcMuGkVq1ZJv/TxlMicyQpm0Hz4agVNyK6I9aZWcUuiYoFS0oDe5E7JcegvSeaVUCLWzqssriStwoosKVBevBOYlOkl+MIbZNVMcDxfzuZd67LoLY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=LOSyEO9U; arc=pass smtp.client-ip=185.185.170.37
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [193.138.7.198])
@@ -35,47 +36,51 @@ Received: from monolith.lan (unknown [193.138.7.198])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4Vf7ZB1dSRz49Pxk;
-	Tue, 14 May 2024 23:41:54 +0300 (EEST)
+	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4Vf7ZC2jpzz49Q2Q;
+	Tue, 14 May 2024 23:41:55 +0300 (EEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
-	t=1715719314;
+	t=1715719316;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=n5Q3RcNn6aqRf9vxqs0zp6Q/tBJ32vbsd0o+j0yspsE=;
-	b=FBlFdIAubvxdeZcJ2K+q5ij0obYuB0cb9TVZU5w01tNlbz6mGy6xbnquhlP6VAiUVvDaLF
-	RRAf/0a6qPQUQOZqI2p956ilKhRHSKkSdIUb8Hmim7Njcj133BjOSCHuDhgGLTP3QZIcye
-	W97Xzq/z+CNIkb4NvwBKmYB6lMTQCGGTpQvzE+4IWhJLk8/BE+9FE1e9WC/7AgsopmWGlI
-	9SRYvRe2ZqBOUEQq1Z9M5RGqGkL6B7sAhTH/JUMYVktZdzYHxDMSwHOwkHeaT3CB0Q9m9R
-	4RGVtL3d6RAd9rdubwcEesosxcPfun7/KyYLsDt+Ab5QxUxJVhsdCXcdbK8G8Q==
-ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1715719314; a=rsa-sha256;
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Iqr216H90c1VZMKSKecVXtTYE+O2T0UB5R0wxqjVPoQ=;
+	b=LOSyEO9Uj0e6zcKtWMSDf/CtNbwht548mKVF9SCLw7b22d0UpGWEVq2Q1un/vc8K80CSX3
+	9rqfzCsPhC1/HM2VXiqx7j49fVzp5I50+2OQj4f2USuyYC2KWsZRLx6rSZ06Newwv6IvVK
+	JNnZ+TSa5wJ/S/StIKKarxH9nfqd9DItXVv8pkZz9cXVNTmBf3Q5S/J/FGo74bL10C+x8X
+	fwYRay1U1MIRGVPC3D1GQgPGSrqUyOH/iex6wYj+yalErFIaBRNkEV3Lado8mL5D19vlTE
+	Xfbuj6igA4Rme2xH3F4CIEOUV1bkcyFWW9ecbY/g2UFHh5UFoJzZVykt8yaIhQ==
+ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1715719316; a=rsa-sha256;
 	cv=none;
-	b=KGyk3HWd1O/4PHkMAU6oRG+q4TLI4F9YTSxTaY7+hI0604qswTUu3wUiIYasdyN244MlON
-	PUl0i/j+ZEO33ae38JAIcAi2o1HVxG/yyCCEZ4UO6WTGYTTydlBU8Pos25nDEZrlq4UoAL
-	faopaIu5woIYSEiwva1dlA/O3JHrK+wlzUgBXHsJxiKK1YSsSCc0EoXXPQC8ck5kP9G6yl
-	GBLAufuQvhTg/LP2VuaAyf4Fe6cNgzmsyjMDLrvSmV8ZpPWrMKWQaC3HvETjCuO0twzYt1
-	4rAYLK99D0sOvsDj1DjKr5LVhmUPnO/l9f9a0ExcNjdNMe+th5HW1Hc+WwVDsg==
+	b=iMhd/ZhmvXfxiFHu5q8fatD6z9JFlE+43ZlBbuud9j/WyzYk1gLDI+qawWPmeIteCJWvc+
+	iO2LA+KqZahQAKeYg2bAo8FHNC33uShNFfQSxEMxo2xUMsq+xLH/OmR2Q464qYPSvJJy9Z
+	jr95Wsoi779iJtItnPXJnO7MtGg+bck+g2xXiMrgSgOJCziBx7j20QVBwDLnbXphcJ9DCU
+	z8kB+U9plfXERPF1dOwk+Kr5VoLgcknkRunhUYDGU1ObQ4oRAW3kCaO/JetqxOUuNedXln
+	nA1t/IAgPkn87Zf1uc4mBm40bNlWVxb4aeY9avMU0i42KUQKQcD1bwvFBgL5JA==
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=lahtoruutu; t=1715719314;
+	s=lahtoruutu; t=1715719316;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=n5Q3RcNn6aqRf9vxqs0zp6Q/tBJ32vbsd0o+j0yspsE=;
-	b=EfAEOPYzQtYFMLz0Zl4X0p3jYVr47lYhbNtpSxa0YNVrGiphmNOFLpzwvmGko/FGeeW0hh
-	3rlqbbCkLY1Pmw2+HY8gUnH+J8bZKK43imoU3ctV4yB1WPqXDe2dRFt3v8Sa6P124FBI/e
-	nqRoVOc/m9jjyCZIRTF6fBlBRtI4jhtrDb5SGmy7Yqk1lkuC5gY74jQUEB/T4Ly22ORlgC
-	/ITCpkF/ZC/FavkWmX0eCwzXDGJtivahs74YTKilTjnDfxyuShv7qqGdv2P9e4mSIQLwPP
-	X5BfvMKTCzolw9MD3HFXgq3/yo1/be/kvFWVgevX3eya8zqJ3ZnhwmMGsfNRDw==
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Iqr216H90c1VZMKSKecVXtTYE+O2T0UB5R0wxqjVPoQ=;
+	b=Hte4Axw62e8yEdwk7O+ZoYsFwE9FYSaDR5Athhr4pNhFKM3GDR9ONTHIdVqGeMqKX9MAw5
+	EFPClKWQgswO87qfW1bWm3Gbb3SkA7PcqwOpUaI2uy5qm6pUTX0QpNN3+Z/Vkxmm5n9Hk4
+	yxpkNkntQClL3PiSArtwTDUxFstyS1Luqiq+GdcJgbmbSHngMnC5Ae2y/g76tGEhVIX+KI
+	+8IkKFvp0R2oikkJzXcLtWJGRM54czVLx4lgFvQse1gQAmQ3naakD/AdY3PWvOJ+pPfOws
+	aM1WYE1U+Q7mPQLRZGNn7tXcj8N70yUxrVjJa8SCqD+cmpGA65yyMAEw99q2Iw==
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ 1/3] shared/tester: add ability to skip tests unless explicitly selected
-Date: Tue, 14 May 2024 23:41:48 +0300
-Message-ID: <d832a406db3b7f8509fdc67d0e9f2775c6ea7b6d.1715719254.git.pav@iki.fi>
+Subject: [PATCH BlueZ 2/3] tools: disable running TX timestamping tests for now
+Date: Tue, 14 May 2024 23:41:49 +0300
+Message-ID: <2913ef3da3faabea047ff977c579329a873cbff4.1715719254.git.pav@iki.fi>
 X-Mailer: git-send-email 2.45.0
+In-Reply-To: <d832a406db3b7f8509fdc67d0e9f2775c6ea7b6d.1715719254.git.pav@iki.fi>
+References: <d832a406db3b7f8509fdc67d0e9f2775c6ea7b6d.1715719254.git.pav@iki.fi>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -84,78 +89,64 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Make it possible to skip running a test, and skip running if the test
-was not explicitly selected on command line.
+Disable the TX timestamping related tests for now, as the feature will
+need some further work.
 ---
+ tools/iso-tester.c   | 5 +++++
+ tools/l2cap-tester.c | 6 ++++++
+ tools/sco-tester.c   | 6 ++++++
+ 3 files changed, 17 insertions(+)
 
-Notes:
-    This series disables the TX timestamping related tests by default for
-    now. The TX timestamping itself should be OK, and the assumption is we'd
-    re-enable these tests again once the kernel feature is reworked.
-    
-    I left the BT_POLL_ERRQUEUE parts in aside from the tests for now, not
-    yet clear where if that is going to go further yet.
-
- src/shared/tester.c | 32 ++++++++++++++++++++++++++++++++
- src/shared/tester.h |  2 ++
- 2 files changed, 34 insertions(+)
-
-diff --git a/src/shared/tester.c b/src/shared/tester.c
-index a1ee5b687..56c8cba6f 100644
---- a/src/shared/tester.c
-+++ b/src/shared/tester.c
-@@ -563,6 +563,38 @@ void tester_pre_setup_failed(void)
- 	g_idle_add(done_callback, test);
- }
+diff --git a/tools/iso-tester.c b/tools/iso-tester.c
+index d54fa56ec..e80c2159c 100644
+--- a/tools/iso-tester.c
++++ b/tools/iso-tester.c
+@@ -690,6 +690,11 @@ static void test_pre_setup(const void *test_data)
+ 	struct test_data *data = tester_get_data();
+ 	const struct iso_client_data *isodata = test_data;
  
-+void tester_pre_setup_abort(void)
-+{
-+	struct test_case *test;
-+
-+	if (!test_current)
-+		return;
-+
-+	test = test_current->data;
-+
-+	if (test->stage != TEST_STAGE_PRE_SETUP)
-+		return;
-+
-+	if (test->timeout_id > 0) {
-+		timeout_remove(test->timeout_id);
-+		test->timeout_id = 0;
++	if (isodata && isodata->so_timestamping) {
++		if (tester_pre_setup_skip_by_default())
++			return;
 +	}
 +
-+	print_progress(test->name, COLOR_YELLOW, "not run");
-+
-+	g_idle_add(done_callback, test);
-+}
-+
-+bool tester_pre_setup_skip_by_default(void)
-+{
-+	if (!option_prefix && !option_string) {
-+		tester_pre_setup_abort();
-+		return true;
-+	}
-+
-+	return false;
-+}
-+
- void tester_setup_complete(void)
+ 	data->mgmt = mgmt_new_default();
+ 	if (!data->mgmt) {
+ 		tester_warn("Failed to setup management interface");
+diff --git a/tools/l2cap-tester.c b/tools/l2cap-tester.c
+index 02d1571d2..c34080654 100644
+--- a/tools/l2cap-tester.c
++++ b/tools/l2cap-tester.c
+@@ -214,6 +214,12 @@ static void read_index_list_callback(uint8_t status, uint16_t length,
+ static void test_pre_setup(const void *test_data)
  {
- 	struct test_case *test;
-diff --git a/src/shared/tester.h b/src/shared/tester.h
-index 16f41022d..1f8138434 100644
---- a/src/shared/tester.h
-+++ b/src/shared/tester.h
-@@ -59,6 +59,8 @@ void *tester_get_data(void);
+ 	struct test_data *data = tester_get_data();
++	const struct l2cap_data *l2data = test_data;
++
++	if (l2data && l2data->so_timestamping) {
++		if (tester_pre_setup_skip_by_default())
++			return;
++	}
  
- void tester_pre_setup_complete(void);
- void tester_pre_setup_failed(void);
-+void tester_pre_setup_abort(void);
-+bool tester_pre_setup_skip_by_default(void);
+ 	data->mgmt = mgmt_new_default();
+ 	if (!data->mgmt) {
+diff --git a/tools/sco-tester.c b/tools/sco-tester.c
+index ff8a3613f..a56cb9153 100644
+--- a/tools/sco-tester.c
++++ b/tools/sco-tester.c
+@@ -197,6 +197,12 @@ static void read_index_list_callback(uint8_t status, uint16_t length,
+ static void test_pre_setup(const void *test_data)
+ {
+ 	struct test_data *data = tester_get_data();
++	const struct sco_client_data *scodata = test_data;
++
++	if (scodata && scodata->so_timestamping) {
++		if (tester_pre_setup_skip_by_default())
++			return;
++	}
  
- void tester_setup_complete(void);
- void tester_setup_failed(void);
+ 	data->mgmt = mgmt_new_default();
+ 	if (!data->mgmt) {
 -- 
 2.45.0
 
