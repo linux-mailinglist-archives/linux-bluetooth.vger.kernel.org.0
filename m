@@ -1,48 +1,48 @@
-Return-Path: <linux-bluetooth+bounces-4616-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4615-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 952898C584B
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A830A8C584C
 	for <lists+linux-bluetooth@lfdr.de>; Tue, 14 May 2024 16:53:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 27AD028464A
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CAAD01C2223F
 	for <lists+linux-bluetooth@lfdr.de>; Tue, 14 May 2024 14:53:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F27F517EB83;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F283D17EB85;
 	Tue, 14 May 2024 14:53:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LNGe611h"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g7g8SW1J"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC3C17B518
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FBED1E487
 	for <linux-bluetooth@vger.kernel.org>; Tue, 14 May 2024 14:53:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715698388; cv=none; b=sv8gYYhJltamaSG8wpySu18LmFvHuiEjLnGybcpxO3NZ1lgZQysJApJRIJGKJJbQ+60buWMbISD593ZaXAThsVW49I1xTJZM++01h56KRtT6VV2w8xYXaT9v+UMeTsFXZ559eVhIvs5QPRmaPg2othyr7Jx6BlMq8+o3+PFkPbo=
+	t=1715698388; cv=none; b=kdevVSwMZ1MB6a+Vd5xkdEeuC8mCeufwhAvChLF8ueqcw4ajPpvNjyhUA8xxR7chW1Qew7+Na/CECan3sckCd+IBc5Su+UDUyxDneOZEVP81WyE1tsJP+enwvJkkDF7DjufGq+bWjQoVl5UCTT4gS/xnMFgGixAwpWR7b5joAdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1715698388; c=relaxed/simple;
-	bh=fCyiRCjH8w2NAtPBbqrNCbIaGx8lR9umSKo717uATIs=;
+	bh=9BtJdI2/pPOJ4VtoObTEt+v7DjoiWjipMETEwt2IiUY=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=jCXFSRNHmH2vopDOVpT9iECq2evcgdBDmGhl4zYhRVFfYDieUJt6AoazISnsaExWpPBwMMvtMyntbDFswz7tjPkuwgc6s6Y1Qag60iorpbWofYaUOA5QziUPWj3epD/htrGyneIOYrW2wLcy53VkuBb+hDAmfqoM3FyR6dd9R4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LNGe611h; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 0B38FC32782;
-	Tue, 14 May 2024 14:53:08 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=AM9jWh93gHylNyDT0hZ24vUZEm4FGL2pHrOjhdY1hM16MYdZVuU9L81FHva5j294rNTRzh7defr79mb2mIz/omUhJ6HY9bSgTPtgK5U26heH0ae3qBNmzlc5mQjGi4GPYi8qcWM40sryPx7NwBuKH8o4Ku8ZZLrALr1ol4GmU/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g7g8SW1J; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id F06DCC32781;
+	Tue, 14 May 2024 14:53:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1715698388;
-	bh=fCyiRCjH8w2NAtPBbqrNCbIaGx8lR9umSKo717uATIs=;
+	bh=9BtJdI2/pPOJ4VtoObTEt+v7DjoiWjipMETEwt2IiUY=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=LNGe611hJOEXDeKzD8nrtJLLaHvtqgE6bCWpRr7RtaVlKEqxyiBJcskC3n5c3tVWF
-	 ncuyaGwkQ8VbjmsopJDwKz8Px5Go01Ux+m5k907AB2JlOSofZy8QwbCY9fspTUkpY7
-	 pShAcxyV8H82u4dYiPj2JCRvgJarb9Dvrxyh6zCdj0gCqm8wlMiu2kL65+maDpFFkw
-	 Ow7Ui319imIPs3fVxH/j+Ol98kCeUzSNoYN+G5IB+Gh3kwnUndh34Vz44UBBDQ+d59
-	 Hklmbn0wpz0e0Zqlo2hZmGPC/JtUfOyzs4gZJb1Wwjsmc/TeliX5a15Bfc9UCkHmMK
-	 kJB+VTzHbw13A==
+	b=g7g8SW1Je/9uk7IXWF3mTwjadLn3Sb393TRyNsZhwZyrHxGe9zEltGbeY5qvcEz/+
+	 eRHeP7FHC0Oc1OqVHBaTtNRbeUIO1SZkirMZIyWiqpfsHiDhK4bKGAFdQoWon40fU4
+	 T9LS7MflS/6smHZipaP08pB/7mUPBHtoxCsnqmsw8uooDb5SutGk2eh1ao1bHa57+d
+	 d2e7GL/qrJ5+LmbPLdlU+h1geGXYgoM5ZIOyGGJ4WzTyryVlF5J1Ywm4KXKyaLLs6u
+	 uRyeuB2HDkVt8XDV7cXd87I4uQYTfqTY0nNjnm2IYW/+Sz8j+dBCRJcnXQhxoDR274
+	 bKJjI1Po5fgcw==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id ED01FC3274D;
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id E2EB8C1614E;
 	Tue, 14 May 2024 14:53:07 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
@@ -52,36 +52,39 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v1] Bluetooth: hci_core: Fix not handling
- hdev->le_num_of_adv_sets=1
+Subject: Re: [PATCH v1 1/2] Bluetooth: btintel_pcie: Fix warning reported by
+ sparse
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <171569838796.3449.15186494222653472444.git-patchwork-notify@kernel.org>
+ <171569838792.3449.10440377454024129807.git-patchwork-notify@kernel.org>
 Date: Tue, 14 May 2024 14:53:07 +0000
-References: <20240513202607.369337-1-luiz.dentz@gmail.com>
-In-Reply-To: <20240513202607.369337-1-luiz.dentz@gmail.com>
-To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: linux-bluetooth@vger.kernel.org
+References: <20240511054059.349729-1-kiran.k@intel.com>
+In-Reply-To: <20240511054059.349729-1-kiran.k@intel.com>
+To: Kiran K <kiran.k@intel.com>
+Cc: linux-bluetooth@vger.kernel.org, ravishankar.srivatsa@intel.com,
+ chethan.tumkur.narayan@intel.com, chandrashekar.devegowda@intel.com,
+ lkp@intel.com
 
 Hello:
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
+This series was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Mon, 13 May 2024 16:26:07 -0400 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+On Sat, 11 May 2024 11:10:58 +0530 you wrote:
+> Fix sparse error.
 > 
-> If hdev->le_num_of_adv_sets is set to 1 it means that only handle 0x00
-> can be used, but since the MGMT interface instances start from 1
-> (instance 0 means all instances in case of MGMT_OP_REMOVE_ADVERTISING)
-> the code needs to map the instance to handle otherwise users will not be
-> able to advertise as instance 1 would attempt to use handle 0x01.
+> Fixes: a6c49bbb0b72 ("Bluetooth: btintel_pcie: Add support for PCIe transport")
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/oe-kbuild-all/202405100654.0djvoryZ-lkp@intel.com/
+> Signed-off-by: Kiran K <kiran.k@intel.com>
 > 
 > [...]
 
 Here is the summary with links:
-  - [v1] Bluetooth: hci_core: Fix not handling hdev->le_num_of_adv_sets=1
-    https://git.kernel.org/bluetooth/bluetooth-next/c/99d699310c39
+  - [v1,1/2] Bluetooth: btintel_pcie: Fix warning reported by sparse
+    https://git.kernel.org/bluetooth/bluetooth-next/c/c5cbf4f0271c
+  - [v1,2/2] Bluetooth: btintel_pcie: Refactor and code cleanup
+    https://git.kernel.org/bluetooth/bluetooth-next/c/710dfef50bab
 
 You are awesome, thank you!
 -- 
