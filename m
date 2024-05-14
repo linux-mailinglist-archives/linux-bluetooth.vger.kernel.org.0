@@ -1,130 +1,92 @@
-Return-Path: <linux-bluetooth+bounces-4614-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4616-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A76EB8C583B
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 14 May 2024 16:44:42 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 952898C584B
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 14 May 2024 16:53:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A896F1C21857
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 14 May 2024 14:44:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 27AD028464A
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 14 May 2024 14:53:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 574A217EB83;
-	Tue, 14 May 2024 14:44:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F27F517EB83;
+	Tue, 14 May 2024 14:53:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YEq5DbUv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LNGe611h"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331F026AC6;
-	Tue, 14 May 2024 14:44:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC3C17B518
+	for <linux-bluetooth@vger.kernel.org>; Tue, 14 May 2024 14:53:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715697875; cv=none; b=ZbEaVKerur8BYu8lCVN5EkVMqblp1IPBH1HcQESyY17qiLr6DZSj76RrTQMhxvzxRN8a3gETj7O66jOvy0y2PjdbmINOdDW+EVOWxGfwkBG9/zJEwdMxIVfF9RRjlbJZ4xuFBvY1kPa3rnhfSWu43PVr0iXTWy/85FbvkNa46+g=
+	t=1715698388; cv=none; b=sv8gYYhJltamaSG8wpySu18LmFvHuiEjLnGybcpxO3NZ1lgZQysJApJRIJGKJJbQ+60buWMbISD593ZaXAThsVW49I1xTJZM++01h56KRtT6VV2w8xYXaT9v+UMeTsFXZ559eVhIvs5QPRmaPg2othyr7Jx6BlMq8+o3+PFkPbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715697875; c=relaxed/simple;
-	bh=mKUx7XqLsr2OSa2jdDCXHSMFkPyGb9MI+ayaFjLz75M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fMwcST5R30Y1wsy7TE/c6nXMT6rbrZnfCMe19YWogURmucGqkE1QlGePqbe7tZo6eXEELhWdKuVSNhYzOAHBoKXkPgEqzSkhIvIr/7d6hXhrubXl+OV6NAsJGLwITLS7J8DzuRkOhbECwCwA5MmUO+Fn4MN9LX7NgWZKY51XpEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YEq5DbUv; arc=none smtp.client-ip=209.85.208.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2e2b468ea12so49001441fa.1;
-        Tue, 14 May 2024 07:44:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715697872; x=1716302672; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mKUx7XqLsr2OSa2jdDCXHSMFkPyGb9MI+ayaFjLz75M=;
-        b=YEq5DbUv5CNrAKZWfQsBGvVucIWhS8UcimODnegPrS8jEmNFjUDOXAbtjvPwpT/+d1
-         aaX4f6TOybOuLIw/kymSSe2yNozidy3iylzGUTdRe+WC+9hE6uTtMxWlQEJK3EKFqHTg
-         sK6RyHvX/MOK80fUV9vMVJlaajHz/zADDA8RDLShaRkDQyCmY9xHDfRch4qlUCvdF8Uu
-         3y/F1PSQNzpj4XEdf7LmjI+j+hyFDR+wyhY3SvnPcNxM3OWqffEh7vAEAYlOFURPf+7x
-         AzTWWzhVnVxaauf+3dzv8o1k1aBhwukq3Xxlym+g7sBLtpZVGwfybfAO1NeTgeCz8uNu
-         mQtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715697872; x=1716302672;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mKUx7XqLsr2OSa2jdDCXHSMFkPyGb9MI+ayaFjLz75M=;
-        b=gz7z8vg/qtX0XdNtNPEhX8XW0luQagp8+jI5wLse21V0THDE0fIBLiYA9kdMYbU33v
-         ewyqbt6Kgw965QEtj75M62iJKMvPDrsIVFrtVTG2bzXD9tfLXcd4WM8Vw+WLbCuVwsP2
-         9ul2h07IoV+fJCfLkMnVbtcqxSZqlbqQshcbF6dtxJHPIHIZSE2KYflHpUAEUMAMs5BQ
-         RwnyAPE0MTYV7tF2sfYDep1Op+6E76gI7KkSIHV0VJIwRMAXgWgygaD2i6dOor14YNFQ
-         aCHmQfggOWPZtLBuW/JYHFv7eMqtOMg/orNZShiD+Dhk0WndLPvdyUMwZz6pIqdac1sa
-         YYOQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWexsvi6pq9sB6QuaC3lJ6w3RWlILxHUYLcJtkw/9MZsR08ihyaY0AzsHXsoIiM6EvjlHYPWqMPCfrpOVuLGZA9vtvDXyLzAX51wl4obGptFnatdn0GoiZdVgVYQJBXa5p04CkhyiwM
-X-Gm-Message-State: AOJu0Yy94HtGLzsUv9s4V45lIlCpa9jtjq2gtz4FWdfkLtzlyIgLc9mQ
-	plUYK5tFXwh1xJiArtaGl1/sBjyM0417BZv3kwBBYtMmH71Am++uziNfjideXj7TXctUsGWinJo
-	vYh27s2zRMgswO2Psr/up6dgsF5I=
-X-Google-Smtp-Source: AGHT+IHX7IKBXxotn/TKiULx6jjaFm7E0R+pAYRGWkwNahOiXC7uTRAgRMEH1GsKbGGod+iczxn2Rk25wAMZ8KsJMsg=
-X-Received: by 2002:a2e:1319:0:b0:2d8:4892:bee2 with SMTP id
- 38308e7fff4ca-2e51b17f931mr47659181fa.20.1715697872127; Tue, 14 May 2024
- 07:44:32 -0700 (PDT)
+	s=arc-20240116; t=1715698388; c=relaxed/simple;
+	bh=fCyiRCjH8w2NAtPBbqrNCbIaGx8lR9umSKo717uATIs=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=jCXFSRNHmH2vopDOVpT9iECq2evcgdBDmGhl4zYhRVFfYDieUJt6AoazISnsaExWpPBwMMvtMyntbDFswz7tjPkuwgc6s6Y1Qag60iorpbWofYaUOA5QziUPWj3epD/htrGyneIOYrW2wLcy53VkuBb+hDAmfqoM3FyR6dd9R4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LNGe611h; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 0B38FC32782;
+	Tue, 14 May 2024 14:53:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1715698388;
+	bh=fCyiRCjH8w2NAtPBbqrNCbIaGx8lR9umSKo717uATIs=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=LNGe611hJOEXDeKzD8nrtJLLaHvtqgE6bCWpRr7RtaVlKEqxyiBJcskC3n5c3tVWF
+	 ncuyaGwkQ8VbjmsopJDwKz8Px5Go01Ux+m5k907AB2JlOSofZy8QwbCY9fspTUkpY7
+	 pShAcxyV8H82u4dYiPj2JCRvgJarb9Dvrxyh6zCdj0gCqm8wlMiu2kL65+maDpFFkw
+	 Ow7Ui319imIPs3fVxH/j+Ol98kCeUzSNoYN+G5IB+Gh3kwnUndh34Vz44UBBDQ+d59
+	 Hklmbn0wpz0e0Zqlo2hZmGPC/JtUfOyzs4gZJb1Wwjsmc/TeliX5a15Bfc9UCkHmMK
+	 kJB+VTzHbw13A==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id ED01FC3274D;
+	Tue, 14 May 2024 14:53:07 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240510211431.1728667-1-luiz.dentz@gmail.com>
- <20240513142641.0d721b18@kernel.org> <CABBYNZKn5YBRjj+RT_TVDtjOBS6V_H7BQmFMufQj-cOTC=RXDA@mail.gmail.com>
- <20240513154332.16e4e259@kernel.org> <6642bf28469d6_203b4c294bc@willemb.c.googlers.com.notmuch>
- <CABBYNZKJSpQcY+k8pczPgNYEoF+OE6enZFE5=Qu_HeWDkcfZEg@mail.gmail.com>
- <CABBYNZ+f8L946_=6RyGvsN3bmu4EwJ2tTgxPg9YmNxckJTc_iw@mail.gmail.com> <20240514073402.72d2887c@kernel.org>
-In-Reply-To: <20240514073402.72d2887c@kernel.org>
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Tue, 14 May 2024 10:44:19 -0400
-Message-ID: <CABBYNZ+M5FYzGe6xLM7uThwNrfRs4-hN40-LYiwp_249NKMomQ@mail.gmail.com>
-Subject: Re: pull request: bluetooth-next 2024-05-10
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: Willem de Bruijn <willemdebruijn.kernel@gmail.com>, davem@davemloft.net, 
-	linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org, 
-	Pauli Virtanen <pav@iki.fi>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v1] Bluetooth: hci_core: Fix not handling
+ hdev->le_num_of_adv_sets=1
+From: patchwork-bot+bluetooth@kernel.org
+Message-Id: 
+ <171569838796.3449.15186494222653472444.git-patchwork-notify@kernel.org>
+Date: Tue, 14 May 2024 14:53:07 +0000
+References: <20240513202607.369337-1-luiz.dentz@gmail.com>
+In-Reply-To: <20240513202607.369337-1-luiz.dentz@gmail.com>
+To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: linux-bluetooth@vger.kernel.org
 
-Hi Jakub,
+Hello:
 
-On Tue, May 14, 2024 at 10:34=E2=80=AFAM Jakub Kicinski <kuba@kernel.org> w=
-rote:
->
-> On Mon, 13 May 2024 22:12:04 -0400 Luiz Augusto von Dentz wrote:
-> > > > It might be safer to only suppress the sk_error_report in
-> > > > sock_queue_err_skb. Or at least in bt_sock_poll to check the type o=
-f
-> > > > all outstanding errors and only suppress if all are timestamps.
-> > >
-> > > Or perhaps we could actually do that via poll/epoll directly? Not tha=
-t
-> > > it would make it much simpler since the library tends to wrap the
-> > > usage of poll/epoll but POLLERR meaning both errors or errqueue event=
-s
-> > > is sort of the problem we are trying to figure out how to process the=
-m
-> > > separately.
-> >
-> > @Jakub Kicinski I'm fine removing these from the pull request, or if
-> > you want to do it yourself, in order not to miss the merge window,
-> > then we can discuss it better and even put you and Willem on CC to
-> > review the upcoming changes.
->
-> Sounds like the best way forward, thanks!
-> Could you drop them and resend the PR?
->
-> It's going to take me until noon pacific to write up the PR text
-> for all of net-next, to give you a sense of when our PR will come
-> out.
+This patch was applied to bluetooth/bluetooth-next.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-Perfect, will also make sure to include the btintel_pcie fix for the
-warning and drop the entire set implementing support SO_TIMESTAMPING.
+On Mon, 13 May 2024 16:26:07 -0400 you wrote:
+> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> 
+> If hdev->le_num_of_adv_sets is set to 1 it means that only handle 0x00
+> can be used, but since the MGMT interface instances start from 1
+> (instance 0 means all instances in case of MGMT_OP_REMOVE_ADVERTISING)
+> the code needs to map the instance to handle otherwise users will not be
+> able to advertise as instance 1 would attempt to use handle 0x01.
+> 
+> [...]
+
+Here is the summary with links:
+  - [v1] Bluetooth: hci_core: Fix not handling hdev->le_num_of_adv_sets=1
+    https://git.kernel.org/bluetooth/bluetooth-next/c/99d699310c39
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
-
---=20
-Luiz Augusto von Dentz
 
