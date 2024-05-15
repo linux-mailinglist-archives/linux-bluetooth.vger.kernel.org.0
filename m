@@ -1,120 +1,130 @@
-Return-Path: <linux-bluetooth+bounces-4648-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4651-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C61BF8C6BDC
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 May 2024 20:08:06 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D32B8C6C07
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 May 2024 20:15:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B3C22847D0
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 May 2024 18:08:05 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 248C5B21969
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 May 2024 18:15:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B741B158DB1;
-	Wed, 15 May 2024 18:08:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3963159217;
+	Wed, 15 May 2024 18:15:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P2fkm01k"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hd7/Rcge"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B3D158DA0
-	for <linux-bluetooth@vger.kernel.org>; Wed, 15 May 2024 18:07:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09D3433BC;
+	Wed, 15 May 2024 18:15:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715796480; cv=none; b=pJT0cVCK3Ej5neS0EzMkAatnHN/4Sr1qrXwoZYiVoFe9RnZK0eQnEDwGiGYmEVMpi4aGduZZW7czYWkqyO1LGPDFVmi9iuG3qaMkcLhH1L8JE7zUQi8CcCoAuS+eBtMieQXaCJ+Uen+uKRoZ9MKJ20ptImuTWWi1+6bGW9EgK1k=
+	t=1715796913; cv=none; b=G83pDr2sL/Flq8eKFEUuTT/9quQHpBJHQpqv6dAZ+x4Zxwp1E9bthMV1+JMWOIazD163sDeSOSJxoTETDGLnTgvFvLrem33DTPcsbqUXNFuC2AVQWgaqnvtuicTyWfcDM8UEJtsNVRZOc9Ipn5mlUiDRju3HS4SG1V030jOVv70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715796480; c=relaxed/simple;
-	bh=myA6WNQ2TFzmolEXQqcTwjcz3WbtPAVr+l0XPiaqxn0=;
-	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
-	 In-Reply-To:References; b=Hu7SvX4ypFoACltS3efXkoaYfHIJ61wB/x0hhu7CuaYOl+QgB1BYgNXPJWAai6GsQUvaO1/nlpikdndDml5OGD1aNImaQabdqAuGIGnuYao32RX02074OJrlGm9MPMMEya1paRoN1dEr5GZ8EN7yY2LjfaPLnZZCmEFL0Qbf2uM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P2fkm01k; arc=none smtp.client-ip=209.85.160.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-43e23ce7b07so15154671cf.1
-        for <linux-bluetooth@vger.kernel.org>; Wed, 15 May 2024 11:07:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1715796477; x=1716401277; darn=vger.kernel.org;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=8uItHYb0YoGuvyHeQ5tSwhqtJfLDVnpvV3g6KBefrd0=;
-        b=P2fkm01k/MHHi7eJzKxBBWGpOqhgVDvxF6WrDhN+eUiUpRafBx6/ch/Pfa6griEsez
-         hD/IYb7LHxm6mlcLMcaR4FfXZHwNOD6VOXeMt4FPYqSLTH3PDsw+QtKA6oqeFUsTpkYS
-         e40qW20czVtdq1tVpDPcGWRuJCWDq8ouqo1fzBb45zUvdv8q7JvHAmYw/HVB9sEcbLR+
-         1DtHJP37UPAl5NI3Q3rS9nkrhnWq3wDJyKVgkd39qZUmeRvQ1kdx8dqscFwlCERxFIed
-         RDctWMDZQp3h+75iLSeBRSkQB2fVVhtxnT3OaQpcZveEBsuvl+rb/nAt4mDvptSSPpmj
-         eCXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1715796477; x=1716401277;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8uItHYb0YoGuvyHeQ5tSwhqtJfLDVnpvV3g6KBefrd0=;
-        b=cUWqGNVRzeHpvjR7vWQTyqANFY25icMCXY3WY7Vnt/275q/Xc8jH0M02o7v79qOEpy
-         U/fYiZUNVuH71m6RXDYVk+c9wrxCKZoXqo13zEnAC6f6JRCC2CdWRIrs3Fdhj5OBl1M8
-         577AmXh6NhZywapa+UdSxhHKu495WHwNEhJV9xXD+F3UG1g1mw4A8LSguogTtf6YpzMF
-         CXiW8IIpwICcstSOvzQXz86ueWCKoFfaEyyV8eCiwXwSxw3qBWrjibOcVNYtz3Qko3JI
-         kO1wJQ4qD78lu07tCqOSjHA/EPFDTkZUQ8VgBJraz4Km2hAeRifAzCOEKVo18WVX9hk3
-         Qjcw==
-X-Gm-Message-State: AOJu0YwonP2NghusTSkiwHbgj1buRO+NLOFE2ychSVT4olwB7v9YjTyT
-	+RJ+w3tWCZJN8QNTh0dWnbo5u8CdbpvRMy/YBMoZpIzIP0+0YDPGGIL4hQ==
-X-Google-Smtp-Source: AGHT+IEMapgOVopu4jfzUCYJR0vekQzYVE/Lk/LqvUVT9iZMHlQK+XSrOAlHa3VTYovghn1jlRIb2Q==
-X-Received: by 2002:ac8:5d0e:0:b0:43d:dee6:812a with SMTP id d75a77b69052e-43dfdd0d327mr193828631cf.61.1715796477501;
-        Wed, 15 May 2024 11:07:57 -0700 (PDT)
-Received: from [172.17.0.2] ([20.102.199.110])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-43e16c5485fsm45797011cf.2.2024.05.15.11.07.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 May 2024 11:07:57 -0700 (PDT)
-Message-ID: <6644f9fd.050a0220.52f4.fc22@mx.google.com>
-Date: Wed, 15 May 2024 11:07:57 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============0980542157905522357=="
+	s=arc-20240116; t=1715796913; c=relaxed/simple;
+	bh=PGURJy5MHlm6XUXszUKhFzRvUcIs8Hj8iEYpUECP0Y0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ReGE9MTFqrfuhb7t+iAbXxhlSoKSEV8z8kbdS5brUfTT0BXE6wH9IeEMsWmf01zba5Lr5aGGpwAGLglCYb+rbX2oviC2jkBWf+IFOEKnzeCOeQY2lX4vo226sFVR2mKyz567Q7WJ5nGHCrRxrEAwJcBjNeeyjHmvWIkRS8rmQdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hd7/Rcge; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 8769FC116B1;
+	Wed, 15 May 2024 18:15:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1715796912;
+	bh=PGURJy5MHlm6XUXszUKhFzRvUcIs8Hj8iEYpUECP0Y0=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=hd7/RcgeU+BH0ZVdd5Yv4E6Gc1pYPqQbLyN/McVEe81RoVUpZKEdkQcV852AEeB4W
+	 y2t19I7ndNisZyChd3JQzVOon9tqvDU1DLHo54Sndf4i9MMaHhPAlejBuNcw/8t80V
+	 YuhWhFz67Dfpkm0xX9jEKc5tbXsAYJ0p/REr11DjXbMJ2ActMLoJ/Pbudc8X0IxHib
+	 KnpQ3Vvnl9HdsloREjmwdClkd4kIqT6E3HcdxOyoGViToK2Pe8mlItEqKqeq6ZoJdm
+	 CNfQa37pJAXNVN7m0QkOHQahTkUdxH9hnBXXvAlLQdFcMrVnBrGRJYXZESVtFqtXc/
+	 ckaq6Qei0W5BA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76F79C25B75;
+	Wed, 15 May 2024 18:15:12 +0000 (UTC)
+From: Sven Peter via B4 Relay <devnull+sven.svenpeter.dev@kernel.org>
+Subject: [PATCH v2 0/3] Bluetooth: hci_bcm4377 fixes
+Date: Wed, 15 May 2024 18:15:01 +0000
+Message-Id: <20240515-btfix-msgid-v2-0-bb06b9ecb6d1@svenpeter.dev>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: bluez.test.bot@gmail.com
-To: linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com
-Subject: RE: [BlueZ,v1,1/2] shared/ad: Add bt_ad_length
-In-Reply-To: <20240515161250.1714375-1-luiz.dentz@gmail.com>
-References: <20240515161250.1714375-1-luiz.dentz@gmail.com>
-Reply-To: linux-bluetooth@vger.kernel.org
-
---===============0980542157905522357==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKX7RGYC/22MQQ7CIBBFr9LM2jGAVcSV9zBdgEzbWUgbIETTc
+ Hexa5fv/7y3QaLIlODWbRCpcOIlNFCHDp6zDRMh+8aghOrFWSp0eeQ3vtLEHr2+CGWs9kZqaMY
+ aqZ177TE0njnlJX72eJG/9X+nSBRonXTenK5Wj/09FQorZYpHTwWGWusXkPK1faoAAAA=
+To: Hector Martin <marcan@marcan.st>, 
+ Alyssa Rosenzweig <alyssa@rosenzweig.io>, 
+ Marcel Holtmann <marcel@holtmann.org>, 
+ Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+ linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Sven Peter <sven@svenpeter.dev>, stable@vger.kernel.org, 
+ Neal Gompa <neal@gompa.dev>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1715796911; l=1561;
+ i=sven@svenpeter.dev; s=20240512; h=from:subject:message-id;
+ bh=PGURJy5MHlm6XUXszUKhFzRvUcIs8Hj8iEYpUECP0Y0=;
+ b=rWKwkEblh6RdLBuKAhQAswaTPpV6aL8Wlnu8pLb0phkNIIfvgOLdAMCME/FjRPa1SgQyUa4Vu
+ txh3IgfhG9KCoQ9FpGoeKnyAJ6Htc4DOcOoVEJvVsMLLMP30Ve5yNKd
+X-Developer-Key: i=sven@svenpeter.dev; a=ed25519;
+ pk=jIiCK29HFM4fFOT2YTiA6N+4N7W+xZYQDGiO0E37bNU=
+X-Endpoint-Received: by B4 Relay for sven@svenpeter.dev/20240512 with
+ auth_id=159
+X-Original-From: Sven Peter <sven@svenpeter.dev>
+Reply-To: sven@svenpeter.dev
 
-This is automated email and please do not reply to this email!
+Hi,
 
-Dear submitter,
+There are just two minor fixes from Hector that we've been carrying downstream
+for a while now. One increases the timeout while waiting for the firmware to
+boot which is optional for the controller already supported upstream but
+required for a newer 4388 board for which we'll also submit support soon.
+It also fixes the units for the timeouts which is why I've already included it
+here. The other one fixes a call to bitmap_release_region where we only wanted
+to release a single bit but are actually releasing much more.
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=853469
+Best,
 
----Test result---
+Sven
 
-Test Summary:
-CheckPatch                    PASS      0.76 seconds
-GitLint                       PASS      0.53 seconds
-BuildEll                      PASS      26.76 seconds
-BluezMake                     PASS      1686.82 seconds
-MakeCheck                     PASS      12.91 seconds
-MakeDistcheck                 PASS      178.64 seconds
-CheckValgrind                 PASS      247.58 seconds
-CheckSmatch                   PASS      350.63 seconds
-bluezmakeextell               PASS      118.55 seconds
-IncrementalBuild              PASS      2981.30 seconds
-ScanBuild                     PASS      982.69 seconds
+To: Hector Martin <marcan@marcan.st>
+To: Alyssa Rosenzweig <alyssa@rosenzweig.io>
+To: Marcel Holtmann <marcel@holtmann.org>
+To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: asahi@lists.linux.dev
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-bluetooth@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Sven Peter <sven@svenpeter.dev>
 
-
+Changes in v2:
+- split the timeout commit into two
+- collect Neal's tag
+- Link to v1: https://lore.kernel.org/r/20240512-btfix-msgid-v1-0-ab1bd938a7f4@svenpeter.dev
 
 ---
-Regards,
-Linux Bluetooth
+Hector Martin (2):
+      Bluetooth: hci_bcm4377: Increase boot timeout
+      Bluetooth: hci_bcm4377: Fix msgid release
+
+Sven Peter (1):
+      Bluetooth: hci_bcm4377: Use correct unit for timeouts
+
+ drivers/bluetooth/hci_bcm4377.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+---
+base-commit: cf87f46fd34d6c19283d9625a7822f20d90b64a4
+change-id: 20240512-btfix-msgid-d76029a7d917
+
+Best regards,
+-- 
+Sven Peter <sven@svenpeter.dev>
 
 
---===============0980542157905522357==--
 
