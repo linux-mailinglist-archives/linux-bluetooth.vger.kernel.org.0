@@ -1,50 +1,77 @@
-Return-Path: <linux-bluetooth+bounces-4661-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4663-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7AC48C6D0B
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 May 2024 22:00:44 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 09E628C6D1A
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 May 2024 22:16:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7F8352824A0
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 May 2024 20:00:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 349541C21A28
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 15 May 2024 20:16:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0C1E15B0F1;
-	Wed, 15 May 2024 20:00:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DD7D15B0E5;
+	Wed, 15 May 2024 20:16:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TkXFeHut"
+	dkim=pass (2048-bit key) header.d=asymptotic.io header.i=@asymptotic.io header.b="zBllCJX2"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58AF83BBEA;
-	Wed, 15 May 2024 20:00:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AA9E15B0E0
+	for <linux-bluetooth@vger.kernel.org>; Wed, 15 May 2024 20:16:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715803230; cv=none; b=gMDq8iU/Gi1wLp4w4Hy32TfnfkYpm3oGXIcG7h0U/jYkxiV6V8UzmshmQCBh18vTa7FGmVbXNbEyjb6bWRyi/a2prJadGyCre17WW74vod04Jm1iQLu7dLhwUwoqm7BCpx+EG5mz9eotTHQoeFKYN2UZyw7KBhjU4Tn8ACGAiks=
+	t=1715804179; cv=none; b=XkhKbjz9RJJ3VQhkgbIoXtk83L+9mIRURl9xE8yHmkWjI5FmMP3BxrVRZosrk+wwY5MbHDBuXT0mUCKB+gyzW4jvKKo2fG/6uwV/mjZzIOMGP17/BE/vv/gmCwNfL/n5354zArMd5oRJtGnqyURLnDdwk/QXVXHXhIn84S+VUNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715803230; c=relaxed/simple;
-	bh=gezJVNyXWrZVZTb8KuqsmOP/7coKyvtbTCJzDLiS+8w=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=Pp4Qlx4JiPLXGYXEhbnROzeGSrae72RzVnh5xavxnhJTAhH9tOIkjqRX9li0KWYtwn9yEAOB8qf7dQRIlbJb4oQL347k5Nk/8D4k3JwsDpHiXwlvu2+tIZbHof06pPHphpgxZS3IbdGicW5O7ZYXw7V4gJZFiYaII9PbjNkCCNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TkXFeHut; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id CDB0BC32781;
-	Wed, 15 May 2024 20:00:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1715803229;
-	bh=gezJVNyXWrZVZTb8KuqsmOP/7coKyvtbTCJzDLiS+8w=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=TkXFeHutZ3eezwOBJsU1SZS1E+JtND1RWFStjVCjjFEhejjd5mbLbXloyoUQMhUH5
-	 s6SH/d27oxCM/zwB/6ufYpmqUoE9Vws+DqTrVCfwakryQycGCf5WMPhAAbs2wa+58P
-	 FG5NI4npfeT+dOAuojF18IaQ7vf/dDL4jySdWwZV+O/kWPZHidYKZqnQ+6XCZjDbsk
-	 z3/duZ8glvt31hBsm/C/tZURZN0gieMUqp4UaQA9LsAiBBneaimjs7ldYo6/63Ex/p
-	 DtPwe9V2ssT1Gld9rzB99FFw3GwkRhND3qei28PdHnVgmNf4XaA9hh7KeHucjeXurF
-	 tOM2UgW4vwadA==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id B8258C433A2;
-	Wed, 15 May 2024 20:00:29 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1715804179; c=relaxed/simple;
+	bh=A5WAuMoCa+cfy6pjs/Yq0/4ihIWGGyl6xhSynq8yMqE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=uRbDl+yQb0r9juwPIpNGQKFbBwuWiwVViqqHBN+c6SBqqoNhMwKTth54S5NRq4hXQ47moZe35EjVe42yDdS0g6cEUSU7Qs6Lph4q77Qp+umSkWVvhDyk5IBJMGF94SSjt//E3QwwbBPjnBwzrTM52hAxKLYpYfrY9MpZ6Azdjuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=asymptotic.io; spf=pass smtp.mailfrom=asymptotic.io; dkim=pass (2048-bit key) header.d=asymptotic.io header.i=@asymptotic.io header.b=zBllCJX2; arc=none smtp.client-ip=209.85.208.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=asymptotic.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=asymptotic.io
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5731ffcc905so2634583a12.2
+        for <linux-bluetooth@vger.kernel.org>; Wed, 15 May 2024 13:16:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=asymptotic.io; s=google; t=1715804175; x=1716408975; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=4CWCqkupJnwh65ncAXkPaZhS3oY21ZanDzCmV8H+ti8=;
+        b=zBllCJX2FJIcPuabyei5nIvvcQGquSk9+yvLi4GvblIbFEui8anrK7gNqbarhRrxYF
+         JH/ET+1WXkEn5L6ZPtog8RcvTbjoExX501IDFY7DXsaBu2wNTkLyqA7T/IhaQ5G9fOQc
+         409N431mNZa75jHGQviAtsodtsf8NtShDrWnIFk+pEy29TbXXsYEp15AYbUKdMafkHoH
+         lRmZy12z2Nu1Sv7mBRcJaHwLXbwEA1jlcUvhajF42qORO9vfRfIn2GU9m8MMu+p8eCb0
+         CeUJTm+siI2UOvMYgRnOKB14wbMsveBigmWmCJkHRXt6vZSDfpdXB5qQAUzQUXWIqbUT
+         o8ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1715804175; x=1716408975;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4CWCqkupJnwh65ncAXkPaZhS3oY21ZanDzCmV8H+ti8=;
+        b=RQuYGwn6IZBbc+gK55vGbyWaNYsLf1poppHxIPozeE6F58aIyTf3u6CkcvyFA+G9bR
+         bbSHENPLmunQ4heVKu7Xxj/9TVLpjLKc7v82uQopLGdNLPFph7tBXoKPZSCFPax/xk63
+         O4qnvl4t0LbUkeZ6aq0208pvY87n0uUbwmPDrjo2MJ7hTTdAhZauD8+/Si8CaegfZPNu
+         c3xP6+ULGnV2DpsjTCmFMZtcjUS07ddYGNPmC7crS/aH49fIpZalIsGB6Z2YgKsxxSst
+         GZ8jlodISxJlF/vcbHndyIapp234B39bsQeF/89QR5hqVtCqV9if/4sC3Mv0ceYmx2fo
+         NOdw==
+X-Gm-Message-State: AOJu0YwabWkY0IdZoSyhxNhnwjNlYtDlpZRq5BkpcMHJn5SoZvgmC0dm
+	iz+gr0PLoUJn/w1tU2mNQgtyLsL5JDOHxGoffbG17RyTLXNf6d68nxogOvahL460kq1MUUZyev7
+	E
+X-Google-Smtp-Source: AGHT+IFt6pgYHbGaq3dHTxTCNYv+sTZ19Bj9EfNl42cOahqZtzSJI4bN7PGn27Ehpy9JyFuzsOXtCQ==
+X-Received: by 2002:a05:6402:3185:b0:573:55ca:8f15 with SMTP id 4fb4d7f45d1cf-57355ca8f51mr10558229a12.39.1715804174746;
+        Wed, 15 May 2024 13:16:14 -0700 (PDT)
+Received: from andromeda.lan ([74.15.47.99])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5743065dd09sm7457142a12.64.2024.05.15.13.16.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 May 2024 13:16:14 -0700 (PDT)
+From: Arun Raghavan <arun@asymptotic.io>
+To: linux-bluetooth@vger.kernel.org
+Cc: Arun Raghavan <arun@asymptotic.io>
+Subject: [PATCH BlueZ,v3 0/5] ASHA plugin
+Date: Wed, 15 May 2024 16:15:47 -0400
+Message-ID: <20240515201552.1831618-1-arun@asymptotic.io>
+X-Mailer: git-send-email 2.45.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -52,49 +79,41 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v1 0/3] Enable status prints for firmware download
-From: patchwork-bot+bluetooth@kernel.org
-Message-Id: 
- <171580322975.27792.4751752969653585130.git-patchwork-notify@kernel.org>
-Date: Wed, 15 May 2024 20:00:29 +0000
-References: <20240515070657.85132-1-neeraj.sanjaykale@nxp.com>
-In-Reply-To: <20240515070657.85132-1-neeraj.sanjaykale@nxp.com>
-To: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
-Cc: marcel@holtmann.org, luiz.dentz@gmail.com,
- linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
- amitkumar.karwar@nxp.com, rohit.fule@nxp.com, sherry.sun@nxp.com,
- ziniu.wang_1@nxp.com, haibo.chen@nxp.com, LnxRevLi@nxp.com,
- guillaume.legoupil@nxp.com, salim.chebbo@nxp.com
 
-Hello:
+Hi all,
+This is v2 of the ASHA plugins. This fixes some of the issues that
+cropped up in CI, and splits the profile implementation and plugin into
+separate patches for easier review.
 
-This series was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+Cheers,
+Arun
 
-On Wed, 15 May 2024 12:36:54 +0530 you wrote:
-> This patch series enables prints for firmware download functionality to
-> help any automation tests framework to verify this feature.
-> 
-> While testing some scenarios such as downloading corrupt FW file, if
-> the driver is removed before FW download completes, or FW download
-> timeout occurs, a kernel crash is observed due to Null Pointer
-> Dereference, which is fixed along with a print to indicate automation
-> framework that the FW Download was Aborted.
-> 
-> [...]
+Arun Raghavan (5):
+  src/shared: Add initial implementation for an ASHA profile
+  profiles/audio: Add an ASHA plugin
+  test: Add a script to test ASHA
+  gitignore: Add compile_commands.json
+  gitignore: Add __pycache__
 
-Here is the summary with links:
-  - [v1,1/3] Bluetooth: btnxpuart: Fix Null pointer dereference in btnxpuart_flush()
-    https://git.kernel.org/bluetooth/bluetooth-next/c/50f1fe988518
-  - [v1,2/3] Bluetooth: btnxpuart: Enable status prints for firmware download
-    https://git.kernel.org/bluetooth/bluetooth-next/c/aed74319d44d
-  - [v1,3/3] Bluetooth: btnxpuart: Handle FW Download Abort scenario
-    https://git.kernel.org/bluetooth/bluetooth-next/c/3b42b64036e5
+ .gitignore                 |   3 +
+ Makefile.am                |   3 +-
+ Makefile.plugins           |   5 +
+ configure.ac               |   4 +
+ lib/uuid.h                 |   3 +
+ profiles/audio/asha.c      | 336 ++++++++++++++++++++++++
+ profiles/audio/media.c     |  30 +++
+ profiles/audio/media.h     |   2 +
+ profiles/audio/transport.c | 173 ++++++++++++-
+ src/shared/asha.c          | 505 +++++++++++++++++++++++++++++++++++++
+ src/shared/asha.h          |  73 ++++++
+ test/simple-asha           | 158 ++++++++++++
+ 12 files changed, 1292 insertions(+), 3 deletions(-)
+ create mode 100644 profiles/audio/asha.c
+ create mode 100644 src/shared/asha.c
+ create mode 100644 src/shared/asha.h
+ create mode 100755 test/simple-asha
 
-You are awesome, thank you!
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.45.0
 
 
