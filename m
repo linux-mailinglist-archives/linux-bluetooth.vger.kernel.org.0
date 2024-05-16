@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-4685-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4687-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ECBA38C7361
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 May 2024 11:04:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 989AE8C7363
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 May 2024 11:04:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B0BD22813A0
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 May 2024 09:03:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4D0261F21D56
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 May 2024 09:04:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54A0C143737;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E2DA14373A;
 	Thu, 16 May 2024 09:03:50 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329AF142E98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3286A142E8C
 	for <linux-bluetooth@vger.kernel.org>; Thu, 16 May 2024 09:03:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715850230; cv=none; b=p9HJhzI/Cj++6qXlB+VGfs+azpsTUgq+eIWYToLWhp5qD2HHdbDHFaUuFZ7dsysmkDh/1WnOKvTfC4GFhj2IMYzJ06K9zAaYzzZ/DRo9OppcnOZBhx471sDQCJ6glWu1bjJXwvK8aPKtuKnhx/UXTR6iuSO7mqMLMUZ0Pa3ZIrQ=
+	t=1715850230; cv=none; b=TK55/zsPmrwuhHqd045TKIBBp81u93eDrECUgnILHNIqm7V2in0b3eucSiYWB7X8/p+F+pE7QgCE14n6rGfhibSYZYrcnMMy+Puhng3aKnMlDbQhEFeRfoNZ4EU7XoG4W2y7mxj/c6k5oKD7iPomVG9KeSuSUlth651uIGo2S6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1715850230; c=relaxed/simple;
-	bh=775yw1FtGK63PePq+QzcMwFpusP36M4cfJGURqF/dsY=;
+	bh=nJD3hKR3Np3JLEdiyiWo5d5x/H0q+Tf7XAmtKd6Lob8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YScOLhPNtL8USKb3CkNmXVUV/EqZwITfR7Y1jaLdeAXkbCrGIZdsnf4BkcnyWWQWI2jBItNJBj7uh8MRnf9MrvcCsY4asoQY0y7a0klNOhGHPynW/FnAv4NHVSfQQugSh18pokyiw3DqiXw2LgwoCA2yUHmRpUEnyM1ntQ2jTFc=
+	 MIME-Version; b=jr8mI/wUbTCgO8YrU80E/RsTDDYQTdUT4ZM/veGx2OrqWl2/pv18fE9RrKRFzaAFxaFmasbdEpSZRQaJfsaOoMw9JXGTrMOy/0espVgnnbWRewettQHnZ0SHb8kCVCqL6hl8dharjaD6TS6jjHTtIr4ChfIXoPrX7ERAiYip+Do=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 90A491C0009;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id DB7611C000F;
 	Thu, 16 May 2024 09:03:41 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ 02/15] shared/ecc: Fix uninitialised variable usage
-Date: Thu, 16 May 2024 11:03:06 +0200
-Message-ID: <20240516090340.61417-3-hadess@hadess.net>
+Subject: [BlueZ 03/15] shared/gatt-client: Fix uninitialised variable usage
+Date: Thu, 16 May 2024 11:03:07 +0200
+Message-ID: <20240516090340.61417-4-hadess@hadess.net>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240516090340.61417-1-hadess@hadess.net>
 References: <20240516090340.61417-1-hadess@hadess.net>
@@ -49,50 +49,31 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-Error: UNINIT (CWE-457): [#def41] [important]
-bluez-5.75/src/shared/ecc.c:869:2: var_decl: Declaring variable "pk" without initializer.
-bluez-5.75/src/shared/ecc.c:885:34: uninit_use_in_call: Using uninitialized element of array "pk.x" when calling "ecc_point_is_zero".
-883|
-884|		ecc_point_mult(&pk, &curve_g, priv, NULL, vli_num_bits(priv));
-885|->	} while (ecc_point_is_zero(&pk));
-886|
-887|	ecc_native2bytes(priv, private_key);
-
-Error: UNINIT (CWE-457): [#def42] [important]
-bluez-5.75/src/shared/ecc.c:869:2: var_decl: Declaring variable "pk" without initializer.
-bluez-5.75/src/shared/ecc.c:885:34: uninit_use_in_call: Using uninitialized element of array "pk.x" when calling "ecc_point_is_zero".
-bluez-5.75/src/shared/ecc.c:885:34: uninit_use_in_call: Using uninitialized element of array "pk.y" when calling "ecc_point_is_zero".
-883|
-884|		ecc_point_mult(&pk, &curve_g, priv, NULL, vli_num_bits(priv));
-885|->	} while (ecc_point_is_zero(&pk));
-886|
-887|	ecc_native2bytes(priv, private_key);
-
-Error: UNINIT (CWE-457): [#def43] [important]
-bluez-5.75/src/shared/ecc.c:869:2: var_decl: Declaring variable "pk" without initializer.
-bluez-5.75/src/shared/ecc.c:889:2: uninit_use_in_call: Using uninitialized value "*pk.y" when calling "ecc_native2bytes".
-887|	ecc_native2bytes(priv, private_key);
-888|	ecc_native2bytes(pk.x, public_key);
-889|->	ecc_native2bytes(pk.y, &public_key[32]);
-890|
-891|	return true;
+Error: UNINIT (CWE-457): [#def44] [important]
+bluez-5.75/src/shared/gatt-client.c:1669:2: var_decl: Declaring variable "value" without initializer.
+bluez-5.75/src/shared/gatt-client.c:1686:2: uninit_use_in_call: Using uninitialized value "value" when calling "bt_gatt_client_write_value".
+1684|		}
+1685|
+1686|->		att_id = bt_gatt_client_write_value(notify_data->client,
+1687|							notify_data->chrc->ccc_handle,
+1688|							(void *)&value, sizeof(value),
 ---
- src/shared/ecc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ src/shared/gatt-client.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/src/shared/ecc.c b/src/shared/ecc.c
-index adaae2082e1f..02bccbd430f6 100644
---- a/src/shared/ecc.c
-+++ b/src/shared/ecc.c
-@@ -870,6 +870,8 @@ bool ecc_make_key(uint8_t public_key[64], uint8_t private_key[32])
- 	uint64_t priv[NUM_ECC_DIGITS];
- 	unsigned int tries = 0;
+diff --git a/src/shared/gatt-client.c b/src/shared/gatt-client.c
+index dcf6f0211a67..8e4ae7e5e230 100644
+--- a/src/shared/gatt-client.c
++++ b/src/shared/gatt-client.c
+@@ -1666,7 +1666,7 @@ static bool notify_data_write_ccc(struct notify_data *notify_data, bool enable,
+ 					bt_gatt_client_callback_t callback)
+ {
+ 	unsigned int att_id;
+-	uint16_t value;
++	uint16_t value = 0x0000;
+ 	uint16_t properties = notify_data->chrc->properties;
  
-+	memset(&pk, 0, sizeof(pk));
-+
- 	do {
- 		if (!get_random_number(priv) || (tries++ >= MAX_TRIES))
- 			return false;
+ 	assert(notify_data->chrc->ccc_handle);
 -- 
 2.44.0
 
