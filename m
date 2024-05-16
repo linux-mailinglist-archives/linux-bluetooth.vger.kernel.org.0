@@ -1,104 +1,115 @@
-Return-Path: <linux-bluetooth+bounces-4698-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4701-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A01B8C736E
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 May 2024 11:04:35 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 933238C738B
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 May 2024 11:13:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 14C4B281B6B
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 May 2024 09:04:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C471F1C20D02
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 May 2024 09:13:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88C10143878;
-	Thu, 16 May 2024 09:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BDFEB143749;
+	Thu, 16 May 2024 09:13:43 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
+Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [217.70.183.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8DBB14375A
-	for <linux-bluetooth@vger.kernel.org>; Thu, 16 May 2024 09:03:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5F61369A6
+	for <linux-bluetooth@vger.kernel.org>; Thu, 16 May 2024 09:13:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715850233; cv=none; b=GiUE3WuLiphumcVpN6Fng7vwPDqPNGKNiakQL+UcLwCQryjPsOlQtMGHSibDB6lVJrYtmj0sid1NJozrChTtnDMSm3k22UhaAMNIbbdLFJZ18exm6aJ0hMYCEWF4Dd6XprwiGJoaUibzZhWodTAJFaXfsrNTFSdrDVHAAJ3WQw0=
+	t=1715850823; cv=none; b=Spp1vO11H9g9NMW6ZFuk0+8XSfGFnUJxNnR/1KirfYf9UsB3jFbidg3aKCC9XL/G34IhCQYCNyso8km/yFN56FMZfHJpqUuchez4HbcxIzzGl6VN1wYcfaxPF/xyCPAlRCQLIE3Agm26O6x+wqUpf6aOjegRz7xooYqm9AEfaEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715850233; c=relaxed/simple;
-	bh=QV8iOXArHBSYhkapCBUq3kge/lWMrwIohrKFkyrnxNY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fsi1UXLgDAp+VGwcwpt3HIBHtYLTnYV7X1vfaumvF5269WDCbS0YesgH6dLcVUYQLpebEPW1Pz/Nzb9/BISaUFfP9FCd308g8B/LsY9lQMQwpA7nUzx08Kc4FGUtfxu8c359fwm5J9yCNuxznfTwb/zjzXVvpizPtIxAsOD1tP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.197
+	s=arc-20240116; t=1715850823; c=relaxed/simple;
+	bh=RyEBeKhga8MF+0FaMIPzfAGukcqiF6lIbOPmToAtDCM=;
+	h=Message-ID:Subject:From:To:Date:Content-Type:MIME-Version; b=hk0Kj3DEMjMnhUDwoXR3nmEI/y3MiHw6/mzVsb5a6Yyqrwj1SvqDa4tcJL52geLtXA7FbSj9Ts7RTA9+ggpsD0VwUtyLpIc8AXbtNRm5WZHQhceu6XsYfY67hrSOK7mxlTnPshalQ+td7ep1MA9vsOTFokymk1qlXdry9u4RrGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.194
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 785721C0018;
-	Thu, 16 May 2024 09:03:45 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id C2B6640002
+	for <linux-bluetooth@vger.kernel.org>; Thu, 16 May 2024 09:13:39 +0000 (UTC)
+Message-ID: <78e4c9a65b6e7509a1f743f945270568a8548f26.camel@hadess.net>
+Subject: seid structure in profiles/audio/avdtp.c
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
-Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ 15/15] android/handsfree: Check sprintf retval
-Date: Thu, 16 May 2024 11:03:19 +0200
-Message-ID: <20240516090340.61417-16-hadess@hadess.net>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240516090340.61417-1-hadess@hadess.net>
-References: <20240516090340.61417-1-hadess@hadess.net>
+Date: Thu, 16 May 2024 11:13:39 +0200
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.50.4 (3.50.4-1.fc39) 
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-Error: SNYK_CODE_WARNING (CWE-125): [#def62] [important]
-bluez-5.75/android/handsfree.c:1247:15: error[cpp/NegativeIndex]: The value from sprintf, a standard library function that can return a negative value is used as an index. A negative array index can lead to reading or writing outside the bounds of the array. Ensure the value of the index used is within bounds before use.
-1245|			buf = g_malloc(len);
-1246|
-1247|->			ptr = buf + sprintf(buf, "+CIND:");
-1248|
-1249|			for (i = 0; i < IND_COUNT; i++) {
----
- android/handsfree.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+Hey,
 
-diff --git a/android/handsfree.c b/android/handsfree.c
-index 2365356c2cf7..7b803fae5263 100644
---- a/android/handsfree.c
-+++ b/android/handsfree.c
-@@ -1243,15 +1243,22 @@ static void at_cmd_cind(struct hfp_context *result, enum hfp_gw_cmd_type type,
- 		}
- 
- 		buf = g_malloc(len);
--
--		ptr = buf + sprintf(buf, "+CIND:");
-+		if (sprintf(buf, "+CIND:") != strlen("+CIND:")) {
-+			g_free(buf);
-+			break;
-+		}
-+		ptr = buf + strlen("+CIND:");
- 
- 		for (i = 0; i < IND_COUNT; i++) {
--			ptr += sprintf(ptr, "(\"%s\",(%d%c%d)),",
-+			int printed;
-+			printed = sprintf(ptr, "(\"%s\",(%d%c%d)),",
- 					dev->inds[i].name,
- 					dev->inds[i].min,
- 					dev->inds[i].max == 1 ? ',' : '-',
- 					dev->inds[i].max);
-+			if (printed < 0)
-+				goto fail;
-+			ptr += printed;
- 		}
- 
- 		ptr--;
-@@ -1273,6 +1280,7 @@ static void at_cmd_cind(struct hfp_context *result, enum hfp_gw_cmd_type type,
- 		break;
- 	}
- 
-+fail:
- 	hfp_gw_send_result(dev->gw, HFP_RESULT_ERROR);
- 
- 	if (dev->state != HAL_EV_HANDSFREE_CONN_STATE_SLC_CONNECTED)
--- 
-2.44.0
+I was looking at the code in profiles/audio/avdtp.c surrounding those
+static analyser warnings, and couldn't understand how the seid arrays
+were constructed.
 
+There's similar code in android/ which might also need fixing.
+
+I could only find the code that assigned ".first_seid", nothing about
+how the rest of the structure is allocated and assigned.
+
+Cheers
+
+PS: Please CC: on the answer, as I'm not subscribed to the list
+
+Error: ARRAY_VS_SINGLETON (CWE-119): [#def29] [important]
+bluez-5.75/profiles/audio/avdtp.c:1675:2: address_of: Taking address with "=
+&start->first_seid" yields a singleton pointer.
+bluez-5.75/profiles/audio/avdtp.c:1675:2: assign: Assigning: "seid" =3D "&s=
+tart->first_seid".
+bluez-5.75/profiles/audio/avdtp.c:1679:25: ptr_arith: Using "seid" as an ar=
+ray.  This might corrupt or misinterpret adjacent memory locations.
+# 1677|   	int i;
+# 1678|  =20
+# 1679|-> 	for (i =3D 0; i < count; i++, seid++) {
+# 1680|   		if (seid->seid =3D=3D id) {
+# 1681|   			req->collided =3D TRUE;
+
+Error: ARRAY_VS_SINGLETON (CWE-119): [#def30] [important]
+bluez-5.75/profiles/audio/avdtp.c:1690:2: address_of: Taking address with "=
+&suspend->first_seid" yields a singleton pointer.
+bluez-5.75/profiles/audio/avdtp.c:1690:2: assign: Assigning: "seid" =3D "&s=
+uspend->first_seid".
+bluez-5.75/profiles/audio/avdtp.c:1694:25: ptr_arith: Using "seid" as an ar=
+ray.  This might corrupt or misinterpret adjacent memory locations.
+# 1692|   	int i;
+# 1693|  =20
+# 1694|-> 	for (i =3D 0; i < count; i++, seid++) {
+# 1695|   		if (seid->seid =3D=3D id) {
+# 1696|   			req->collided =3D TRUE;
+
+Error: ARRAY_VS_SINGLETON (CWE-119): [#def31] [important]
+bluez-5.75/profiles/audio/avdtp.c:1799:2: address_of: Taking address with "=
+&req->first_seid" yields a singleton pointer.
+bluez-5.75/profiles/audio/avdtp.c:1799:2: assign: Assigning: "seid" =3D "&r=
+eq->first_seid".
+bluez-5.75/profiles/audio/avdtp.c:1801:30: ptr_arith: Using "seid" as an ar=
+ray.  This might corrupt or misinterpret adjacent memory locations.
+# 1799|   	seid =3D &req->first_seid;
+# 1800|  =20
+# 1801|-> 	for (i =3D 0; i < seid_count; i++, seid++) {
+# 1802|   		failed_seid =3D seid->seid;
+# 1803|  =20
+
+Error: ARRAY_VS_SINGLETON (CWE-119): [#def32] [important]
+bluez-5.75/profiles/audio/avdtp.c:1912:2: address_of: Taking address with "=
+&req->first_seid" yields a singleton pointer.
+bluez-5.75/profiles/audio/avdtp.c:1912:2: assign: Assigning: "seid" =3D "&r=
+eq->first_seid".
+bluez-5.75/profiles/audio/avdtp.c:1914:30: ptr_arith: Using "seid" as an ar=
+ray.  This might corrupt or misinterpret adjacent memory locations.
+# 1912|   	seid =3D &req->first_seid;
+# 1913|  =20
+# 1914|-> 	for (i =3D 0; i < seid_count; i++, seid++) {
+# 1915|   		failed_seid =3D seid->seid;
+# 1916|  =20
 
