@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-4692-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4686-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 872FC8C7368
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 May 2024 11:04:18 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD24A8C7362
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 May 2024 11:04:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3E26D1F236A3
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 May 2024 09:04:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EE62E1C21533
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 May 2024 09:04:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 189FC143752;
-	Thu, 16 May 2024 09:03:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55AA6143739;
+	Thu, 16 May 2024 09:03:50 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328EE142E91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329ED142E9A
 	for <linux-bluetooth@vger.kernel.org>; Thu, 16 May 2024 09:03:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715850230; cv=none; b=CYrfVvJqU132dSRl0D0ZKeIEM6weNLRWNywx0AA/3QOhuobyMBpzbXA+2v3Em+RzPOdgoiGc5esE/YdwTik/oCKx6ZvtQ2p8Zl9XjmX7ElQ0OQvNST7Uq7jLj2lqLBY4My5h9BGIJdF9hcUbLj4YJ3ILoxrJEgb1pbk8dv3Zr0E=
+	t=1715850230; cv=none; b=Dsawoq4XmXCsi8QIqyXMy5MinxB2dDJaKEIAVjlEBsD92KJnuZC2moWuAWYw8Dg9Ejs/SRzxE+MWTDQL4dGpBW37F2WR7qgL4vCjqRbfyGph1BxfAGKgiAf1pL4WE174D9/7Wt54JHewStbxdkSXEuSAbIeyf0RZoUdLh4AaO+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1715850230; c=relaxed/simple;
-	bh=G0YIdC2Ro9VnFebL+xvd7S9Fy6i8yWt/cOQX3ft3yIg=;
+	bh=NBJkrCOhf1LhOUZCleZrx2xtGxd/DhKz9plgXoUn2q0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VVNp0II0ksUomc99Bzl+bAYuH85aenwgOqDszJbTBn/OHB5rnvahoWXwit7WoRZ68VRLRSz0vGUmS4skMyVauz0RiUs9AZ05UDJXV6yypmV75Ah+A3iQaVU965r2Ctl1rc79rykJV6oadGHOpYTfPUTsdPpH8rdLOsvVK07T9/U=
+	 MIME-Version; b=rnO/3wvdp6uIYo3GRuGbAQjyPG2n+ouY0JLFdvpl1UY4q1rd8q++ob2E5NFse8QbwXJKi3dtu1WS+GhHx2SSiKjxZOkIBoBje+biF9kL5KRuTzbcNZl3dwEG/kAWrpI4cBmlRZzzG/745VmX5I4/Eq0QtCNWQCOQ/0xEaoYePqQ=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 7262B1C0015;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id BBE441C0016;
 	Thu, 16 May 2024 09:03:42 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ 05/15] test-runner: Remove unused envp
-Date: Thu, 16 May 2024 11:03:09 +0200
-Message-ID: <20240516090340.61417-6-hadess@hadess.net>
+Subject: [BlueZ 06/15] test-runner: Fix uninitialised variable usage
+Date: Thu, 16 May 2024 11:03:10 +0200
+Message-ID: <20240516090340.61417-7-hadess@hadess.net>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240516090340.61417-1-hadess@hadess.net>
 References: <20240516090340.61417-1-hadess@hadess.net>
@@ -49,49 +49,34 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-Error: UNINIT (CWE-457): [#def70] [important]
-bluez-5.75/tools/test-runner.c:644:2: var_decl: Declaring variable "envp" without initializer.
-bluez-5.75/tools/test-runner.c:682:3: uninit_use_in_call: Using uninitialized value "*envp" when calling "execve".
-680|
-681|	if (pid == 0) {
-682|->		execve(argv[0], argv, envp);
-683|		exit(EXIT_SUCCESS);
-684|	}
-
-Error: UNINIT (CWE-457): [#def71] [important]
-bluez-5.75/tools/test-runner.c:701:2: var_decl: Declaring variable "envp" without initializer.
-bluez-5.75/tools/test-runner.c:739:3: uninit_use_in_call: Using uninitialized value "*envp" when calling "execve".
-737|
-738|	if (pid == 0) {
-739|->		execve(argv[0], argv, envp);
-740|		exit(EXIT_SUCCESS);
-741|	}
+Error: UNINIT (CWE-457): [#def72] [important]
+bluez-5.75/tools/test-runner.c:856:2: var_decl: Declaring variable "argv" without initializer.
+bluez-5.75/tools/test-runner.c:945:2: uninit_use: Using uninitialized value "argv[0]".
+943|   	envp[pos] = NULL;
+944|
+945|-> 	printf("Running command %s\n", cmdname ? cmdname : argv[0]);
+946|
+947|   	pid = fork();
 ---
- tools/test-runner.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/test-runner.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/tools/test-runner.c b/tools/test-runner.c
-index 5bdcf42fcd7a..134e26f9c691 100644
+index 134e26f9c691..ff5e19825801 100644
 --- a/tools/test-runner.c
 +++ b/tools/test-runner.c
-@@ -641,7 +641,7 @@ static const char *monitor_table[] = {
- static pid_t start_btmon(const char *home)
- {
- 	const char *monitor = NULL;
--	char *argv[3], *envp[2];
-+	char *argv[3];
- 	pid_t pid;
- 	int i;
+@@ -912,6 +912,11 @@ static void run_command(char *cmdname, char *home)
+ 		audio_pid[0] = audio_pid[1] = -1;
  
-@@ -679,7 +679,7 @@ static pid_t start_btmon(const char *home)
- 	}
- 
- 	if (pid == 0) {
--		execve(argv[0], argv, envp);
-+		execv(argv[0], argv);
- 		exit(EXIT_SUCCESS);
- 	}
- 
+ start_next:
++	if (!run_auto && !cmdname) {
++		fprintf(stderr, "Missing command argument\n");
++		return;
++	}
++
+ 	if (run_auto) {
+ 		if (chdir(home + 5) < 0) {
+ 			perror("Failed to change home test directory");
 -- 
 2.44.0
 
