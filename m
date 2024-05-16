@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-4695-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4700-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 758FC8C736B
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 May 2024 11:04:30 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7E728C7370
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 May 2024 11:04:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 170FB1F21A7B
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 May 2024 09:04:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 051AC1C216D5
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 May 2024 09:04:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55F7F143870;
-	Thu, 16 May 2024 09:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2B63143880;
+	Thu, 16 May 2024 09:03:54 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8061D142912
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A84D3143758
 	for <linux-bluetooth@vger.kernel.org>; Thu, 16 May 2024 09:03:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715850233; cv=none; b=llrqvyt0gyDAGsY9E1x/nT7bQOLPXq8/qW4xgMnNVhtLWTgrLomcW0i7KukS8zyuLmb93EUD8JQaYpgbMCZWoMIPCaSD3ACf4e0qJpIKmcjEtHT0zyaTPh0CSGlac5OmN1lgEwHPTPRgbjqz97DG2eiPx+oZ1n/0MVedDKYc9AA=
+	t=1715850234; cv=none; b=Z0FCagpti9Bz3w3EKJXeHR1DZthRHbTs4EFYSyRbRmGeErfmHicf96YTRoZXq9uF7r7Bh4GDBtwh+Ts4DbE+qRw93nvjk1bH4Y1XfPOQPFupJt0VwIBEq3mxbtDIwAirP16m1Xp2GiRN3nZrJIhfOUb+ffQngRLnQT0EVVeWcDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1715850233; c=relaxed/simple;
-	bh=d1o3XOd5RyFGZH2VnJi5Sb7N85gZFU73tOOQkeoxsig=;
+	s=arc-20240116; t=1715850234; c=relaxed/simple;
+	bh=6z2Ai1Je6gdzEgUhoN0CkfwGrcsjJ2hvvIPwUXANVB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PObvqe3yBwEf7GwfmTXPnoNAIUWkaEQoMYKFFLYEPzql7UU+tp+AyiW+jIMcOnJhY8u5tohLiHy3ua7e4g/bBGfFdCLogjiWH7ZqfSJ+puZbwvMCmr3hx2DuzYpdT4Rst2ht8dpzgR54vdWv+1L1OBtP9ZlFcmt9vpJXdrZFSIY=
+	 MIME-Version; b=XoRd3ILQzWfI0uA69QTEG8HdLzGsbDCvIKxhHbNgs48NkJNaaAayiQLJgA/KXuxSqREz9SCeM9JcWatJyYfiiMBZFsDMRo7DSVj7gaSb2AUrqwXfdv7nEcIxXXGELbTVF0paGfY2c5uVqLnPlusjPvlzYb3R4kLvvYXkCR1Uk0s=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id F13FA1C0012;
-	Thu, 16 May 2024 09:03:43 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 49C3A1C0002;
+	Thu, 16 May 2024 09:03:44 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ 10/15] test-runner: Fix fd leak on failure
-Date: Thu, 16 May 2024 11:03:14 +0200
-Message-ID: <20240516090340.61417-11-hadess@hadess.net>
+Subject: [BlueZ 11/15] isotest: Fix string size expectations
+Date: Thu, 16 May 2024 11:03:15 +0200
+Message-ID: <20240516090340.61417-12-hadess@hadess.net>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240516090340.61417-1-hadess@hadess.net>
 References: <20240516090340.61417-1-hadess@hadess.net>
@@ -49,31 +49,63 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-Error: RESOURCE_LEAK (CWE-772): [#def65] [important]
-bluez-5.75/tools/test-runner.c:877:3: open_fn: Returning handle opened by "attach_proto".
-bluez-5.75/tools/test-runner.c:877:3: var_assign: Assigning: "serial_fd" = handle returned from "attach_proto(node, 0U, basic_flags, extra_flags)".
-bluez-5.75/tools/test-runner.c:955:3: leaked_handle: Handle variable "serial_fd" going out of scope leaks the handle.
-953|	if (pid < 0) {
-954|		perror("Failed to fork new process");
-955|->		return;
-956|	}
-957|
----
- tools/test-runner.c | 2 ++
- 1 file changed, 2 insertions(+)
+Verify that the peer is a valid bdaddr (and so has the correct length)
+before using it.
 
-diff --git a/tools/test-runner.c b/tools/test-runner.c
-index 908327255ad7..de0f2260480c 100644
---- a/tools/test-runner.c
-+++ b/tools/test-runner.c
-@@ -952,6 +952,8 @@ start_next:
- 	pid = fork();
- 	if (pid < 0) {
- 		perror("Failed to fork new process");
-+		if (serial_fd >= 0)
-+			close(serial_fd);
- 		return;
- 	}
+Error: STRING_SIZE (CWE-120): [#def54] [important]
+bluez-5.75/tools/isotest.c:1198:26: string_size_argv: "argv" contains strings with unknown size.
+bluez-5.75/tools/isotest.c:1459:4: string_size: Passing string "argv[optind + i]" of unknown size to "send_mode", which expects a string of a particular size.
+
+Error: STRING_SIZE (CWE-120): [#def55] [important]
+bluez-5.75/tools/isotest.c:1198:26: string_size_argv: "argv" contains strings with unknown size.
+bluez-5.75/tools/isotest.c:1476:4: var_assign_var: Assigning: "peer" = "argv[optind + i]". Both are now tainted.
+bluez-5.75/tools/isotest.c:1484:5: string_size: Passing string "peer" of unknown size to "bcast_do_connect_mbis", which expects a string of a particular size.
+
+Error: STRING_SIZE (CWE-120): [#def56] [important]
+bluez-5.75/tools/isotest.c:1198:26: string_size_argv: "argv" contains strings with unknown size.
+bluez-5.75/tools/isotest.c:1476:4: var_assign_var: Assigning: "peer" = "argv[optind + i]". Both are now tainted.
+bluez-5.75/tools/isotest.c:1514:5: string_size: Passing string "argv[optind + i]" of unknown size to "do_connect", which expects a string of a particular size.
+---
+ tools/isotest.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/tools/isotest.c b/tools/isotest.c
+index fc1c26b23c3b..f98f25497b85 100644
+--- a/tools/isotest.c
++++ b/tools/isotest.c
+@@ -1456,7 +1456,12 @@ int main(int argc, char *argv[])
+ 
+ 		switch (mode) {
+ 		case SEND:
+-			send_mode(filename, argv[optind + i], i, repeat);
++			peer = argv[optind + i];
++			if (bachk(peer) < 0) {
++				fprintf(stderr, "Invalid peer address '%s'\n", peer);
++				exit(1);
++			}
++			send_mode(filename, peer, i, repeat);
+ 			if (filename && strchr(filename, ',')) {
+ 				char *tmp = filename;
+ 				filename = strdup(strchr(filename, ',') + 1);
+@@ -1474,6 +1479,10 @@ int main(int argc, char *argv[])
+ 
+ 		case CONNECT:
+ 			peer = argv[optind + i];
++			if (bachk(peer) < 0) {
++				fprintf(stderr, "Invalid peer address '%s'\n", peer);
++				exit(1);
++			}
+ 
+ 			mgmt_set_experimental();
+ 
+@@ -1511,7 +1520,7 @@ int main(int argc, char *argv[])
+ 
+ 				free(sk_arr);
+ 			} else {
+-				sk = do_connect(argv[optind + i]);
++				sk = do_connect(peer);
+ 				if (sk < 0)
+ 					exit(1);
  
 -- 
 2.44.0
