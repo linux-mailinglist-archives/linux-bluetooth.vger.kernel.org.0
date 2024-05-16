@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-4686-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4690-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD24A8C7362
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 May 2024 11:04:01 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CCC5B8C7366
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 May 2024 11:04:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EE62E1C21533
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 May 2024 09:04:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8EAEF281AD1
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 May 2024 09:04:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55AA6143739;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D452914374B;
 	Thu, 16 May 2024 09:03:50 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329ED142E9A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3296F142E96
 	for <linux-bluetooth@vger.kernel.org>; Thu, 16 May 2024 09:03:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1715850230; cv=none; b=Dsawoq4XmXCsi8QIqyXMy5MinxB2dDJaKEIAVjlEBsD92KJnuZC2moWuAWYw8Dg9Ejs/SRzxE+MWTDQL4dGpBW37F2WR7qgL4vCjqRbfyGph1BxfAGKgiAf1pL4WE174D9/7Wt54JHewStbxdkSXEuSAbIeyf0RZoUdLh4AaO+I=
+	t=1715850230; cv=none; b=fnkgHbozWfbknAzGALYNzuctnxWKlYHDc1XQ7OllS+3j+naUfWTshJTSsxMr8aoYa2nezg77dtGSnjv72k8gFYYWXboOWU0VTpWvQZpJ7llaGmUZaLI0P//mC9sQJGVsEDlmGzYbAfGBt3oV9nkakLQ9oZnx28kNcus54dthfY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1715850230; c=relaxed/simple;
-	bh=NBJkrCOhf1LhOUZCleZrx2xtGxd/DhKz9plgXoUn2q0=;
+	bh=qgt4Ntngs7YG4F+yMa9fB5zhvbuMNsssLDX4d2JLqrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rnO/3wvdp6uIYo3GRuGbAQjyPG2n+ouY0JLFdvpl1UY4q1rd8q++ob2E5NFse8QbwXJKi3dtu1WS+GhHx2SSiKjxZOkIBoBje+biF9kL5KRuTzbcNZl3dwEG/kAWrpI4cBmlRZzzG/745VmX5I4/Eq0QtCNWQCOQ/0xEaoYePqQ=
+	 MIME-Version; b=miY7wlnTf1X/JV/wSP6OFkkyJ8Qvv1IZsasnqWIuoEf6Xhto7n05f3CCjJqmoo1uRbiPKU/kNmic/es5XY2frxTQEPnKQs1BU1stqsT0HERuDBvHQQfl7B7mrz2x0iL2apPgGUd/noisY4rjyE9Qk5vVuE7RoPVD4S2aDKLQi8k=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id BBE441C0016;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 0D7F71C0017;
 	Thu, 16 May 2024 09:03:42 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ 06/15] test-runner: Fix uninitialised variable usage
-Date: Thu, 16 May 2024 11:03:10 +0200
-Message-ID: <20240516090340.61417-7-hadess@hadess.net>
+Subject: [BlueZ 07/15] test-runner: Fix uninitialised variable usage
+Date: Thu, 16 May 2024 11:03:11 +0200
+Message-ID: <20240516090340.61417-8-hadess@hadess.net>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240516090340.61417-1-hadess@hadess.net>
 References: <20240516090340.61417-1-hadess@hadess.net>
@@ -49,34 +49,40 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-Error: UNINIT (CWE-457): [#def72] [important]
-bluez-5.75/tools/test-runner.c:856:2: var_decl: Declaring variable "argv" without initializer.
-bluez-5.75/tools/test-runner.c:945:2: uninit_use: Using uninitialized value "argv[0]".
-943|   	envp[pos] = NULL;
-944|
-945|-> 	printf("Running command %s\n", cmdname ? cmdname : argv[0]);
-946|
-947|   	pid = fork();
+Error: UNINIT (CWE-457): [#def64] [important]
+bluez-5.75/tools/test-runner.c:701:2: var_decl: Declaring variable "envp" without initializer.
+bluez-5.75/tools/test-runner.c:739:3: uninit_use_in_call: Using uninitialized value "*envp" when calling "execve".
+737|
+738|	if (pid == 0) {
+739|->		execve(argv[0], argv, envp);
+740|		exit(EXIT_SUCCESS);
+741|	}
 ---
- tools/test-runner.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ tools/test-runner.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/tools/test-runner.c b/tools/test-runner.c
-index 134e26f9c691..ff5e19825801 100644
+index ff5e19825801..908327255ad7 100644
 --- a/tools/test-runner.c
 +++ b/tools/test-runner.c
-@@ -912,6 +912,11 @@ static void run_command(char *cmdname, char *home)
- 		audio_pid[0] = audio_pid[1] = -1;
+@@ -698,7 +698,7 @@ static const char *btvirt_table[] = {
+ static pid_t start_btvirt(const char *home)
+ {
+ 	const char *btvirt = NULL;
+-	char *argv[3], *envp[2];
++	char *argv[3];
+ 	pid_t pid;
+ 	int i;
  
- start_next:
-+	if (!run_auto && !cmdname) {
-+		fprintf(stderr, "Missing command argument\n");
-+		return;
-+	}
-+
- 	if (run_auto) {
- 		if (chdir(home + 5) < 0) {
- 			perror("Failed to change home test directory");
+@@ -736,7 +736,7 @@ static pid_t start_btvirt(const char *home)
+ 	}
+ 
+ 	if (pid == 0) {
+-		execve(argv[0], argv, envp);
++		execv(argv[0], argv);
+ 		exit(EXIT_SUCCESS);
+ 	}
+ 
 -- 
 2.44.0
 
