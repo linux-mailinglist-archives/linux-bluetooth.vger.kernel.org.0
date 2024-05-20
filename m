@@ -1,50 +1,75 @@
-Return-Path: <linux-bluetooth+bounces-4822-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4824-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B514A8CA313
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 20 May 2024 22:01:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3DF908CA322
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 20 May 2024 22:10:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E58481C2188E
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 20 May 2024 20:01:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D37171F217AA
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 20 May 2024 20:10:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36627139580;
-	Mon, 20 May 2024 20:00:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC8EC13848F;
+	Mon, 20 May 2024 20:10:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HXKTkWcB"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YGv7zmwX"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97BD91B947
-	for <linux-bluetooth@vger.kernel.org>; Mon, 20 May 2024 20:00:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47481CD39
+	for <linux-bluetooth@vger.kernel.org>; Mon, 20 May 2024 20:10:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716235230; cv=none; b=Pvl+V8jkoGLIUcCAaFAE9BwUSElGN3NglCAhcoqg9Bnjm3ck+mmvgLPKpqqV4Z3YNYOpqkLoju3vuCfJRnpNaDWut2E9XThVDSPkVnOs7wr8WDEyFyV17p9ilqCeJsxznDzSUzfYlKLFCWhG4zEIWD2Jzve1zKkEGdPkzzabEoQ=
+	t=1716235830; cv=none; b=gfEfaCQqVC8Uop79xcjd1CaNvjw6vmqjOXWU3pstpyC8K1BLOPwRRfvf0uoF7KIPUGnXDFXuyi/xwRYlKnkRtJQiurQQjdg6jOKIaaLIs16Eauc4GYTODzNDyOC303NkyEL+63SJRkW6NjHtzjY/AcMjAGpnhH014MmuOX3RBLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716235230; c=relaxed/simple;
-	bh=Mvtp5W0CFCY5/nNJIuC2BAd1klCZhacco9vGGMqnRts=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=XhZVjIRQmqHFTMfNfgYnWveaifmfokvdWfwAu+fwLATk8EpkAqugxm7tHcrsh6OXpq/hoUzjAz7jPR5rCeC9z0a9ZYOi2JgklO5n1ZkM5v7Rrr7mrKXPw9mJDcyYKiVqN+OwlG4j1oK+BK+pusuiSwpL8P6niHVuI5pLcdA9dR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HXKTkWcB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 316B8C4AF07;
-	Mon, 20 May 2024 20:00:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716235230;
-	bh=Mvtp5W0CFCY5/nNJIuC2BAd1klCZhacco9vGGMqnRts=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=HXKTkWcBlXsdq8sZnMPMT3SFW3lEDUzPhp06mO95bWoH//LbboqbYO0NAqqYOs/oj
-	 NC/UF8g5TYC7EWoKsEKDUslsQ6UT/1Fu+WUCbfUv9u2gcWnWBszPjXi0yPRaASk083
-	 MWm9QDH9YAclj9SwrTCW9rYFcRrpqByBxMNUxniGeacejohn881bQHDfdkfLT8I4in
-	 plseixz37q0gKnkPD5h/9eQYf4ABi61aelOcGlmqklDwlxlNOhSakW6+mUXCfRuXqj
-	 ks+ESdMpGlV9cy5841i1l6ah1ti02mNQnxM0bFfPcwLVcB2flMT3Sl8mJW5GrM7wh3
-	 KpHzj6SKyw+kA==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 22494C54BDA;
-	Mon, 20 May 2024 20:00:30 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1716235830; c=relaxed/simple;
+	bh=TWC+ZOOXvAWWR3XzoQ3Ky5DBWJ85eGrZORcCRwzE5DU=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=A74WEtL1HX6zaqbCIq2zMN2lJttjHfV31/glzcwcjtOuoCLOE72TzzgVvWqIEqFDEQAFtzx1EgrXz6zstYwkz+NmAIY/aTXE/21mjSlQasiqmOn5P1l0w1/yLunetJOec3wI4WYH+kIkR45I9CePPMpcutKVT42qtqdVpZVIJWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YGv7zmwX; arc=none smtp.client-ip=209.85.222.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ua1-f47.google.com with SMTP id a1e0cc1a2514c-7f919bc2e1cso1785409241.1
+        for <linux-bluetooth@vger.kernel.org>; Mon, 20 May 2024 13:10:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1716235827; x=1716840627; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=8yR3clpzcV/wPbdIQW/CsMCbzfmYu7wisd9LZ8FAEN0=;
+        b=YGv7zmwXLG37a62neXuJfA5i84w40fNOvykGt7NC+zNsrP9C/1ja26WrqWUtmgHpfr
+         7dy0cGT0edbBIalqMnBgUe99MvjhEAy6ju/zAuNCtWPGpcyc2NW+5NZgTeOTzmA8+F0a
+         Wr/mWC7BMeHCROeoXoU+5LawcKzzcH2ppEPQNzrziYN3nLGcK4Nc/TNRqdUjHON1TYcy
+         EVaH/Hr71NzNeltZXzTMduVh6W2RRFrOdgHhlPpXGPbcz7KbSL7MPPthtAokx6RwG+1Y
+         3BrnAHGlSwVAQjlXv++N4NZNpkqHRGd3vQkxfyyyinxCFg9GaiZEm43AZQoNEU4gMWVN
+         c+FA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1716235827; x=1716840627;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8yR3clpzcV/wPbdIQW/CsMCbzfmYu7wisd9LZ8FAEN0=;
+        b=wN7G/OfJoRCGVAiCn//U8EB+kQ8MVXwjQsO2UugZx+JX4aooKMbY/dee3bXhV8x5jO
+         QNnwAls+DJPHbBC3yDjItnEeWff8LOcYmX3fRgcwKL+B5UkpdoS4qgCv8t0fzxT6iaVS
+         Z5ZbS05fOY1pCxOi4Vj+QJs4mCdLgwuDD8QSeiJFsj6y/0MoVhI0Io+UwiErQ2vYzemd
+         s8BNkj4TRw3x1O4nvWhKucCguoDFW5C91O6Jd9/JGm7NqXfcqURJKGCGrHIx1K6lz80f
+         FYCfV0Wij/K7Ndfm4h53ceqGsogQTcmJTel3+hgPrqm0RktxAeGWljYa7ITazYLhiF0Z
+         cFeA==
+X-Gm-Message-State: AOJu0Yzxhj6Nzaui7U8Grc1EakdzD8pCS3jLRTGKhMZhdlFsCfHsuudk
+	ctyqNSRTALLZR0Vd9rYkp0znpuM1xnoP2s/L0llmLbUCGpm6WbVCTdl7BQ==
+X-Google-Smtp-Source: AGHT+IGwWV7lOTmcEeF07lIUt+JoEha1Na3zPiJz1yeXaG6b9NHZT8TgLZHa4w2935eMNwN8fBgQ4w==
+X-Received: by 2002:a05:6102:548d:b0:47c:362f:4c47 with SMTP id ada2fe7eead31-48851e85101mr6372752137.14.1716235825392;
+        Mon, 20 May 2024 13:10:25 -0700 (PDT)
+Received: from lvondent-mobl4.. (syn-107-146-107-067.res.spectrum.com. [107.146.107.67])
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-7f8ff9eaf93sm3396680241.2.2024.05.20.13.10.24
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 May 2024 13:10:24 -0700 (PDT)
+From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+To: linux-bluetooth@vger.kernel.org
+Subject: [PATCH v1] Bluetooth: L2CAP: Fix rejecting L2CAP_CONN_PARAM_UPDATE_REQ
+Date: Mon, 20 May 2024 16:10:23 -0400
+Message-ID: <20240520201023.1437548-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.45.1
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -52,43 +77,49 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ v2 1/3] device: Add btd_device_get_icon
-From: patchwork-bot+bluetooth@kernel.org
-Message-Id: 
- <171623523013.22228.15466448160017910242.git-patchwork-notify@kernel.org>
-Date: Mon, 20 May 2024 20:00:30 +0000
-References: <20240520181439.1407634-1-luiz.dentz@gmail.com>
-In-Reply-To: <20240520181439.1407634-1-luiz.dentz@gmail.com>
-To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: linux-bluetooth@vger.kernel.org
 
-Hello:
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This series was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+This removes the bogus check for max > hcon->le_conn_max_interval since
+the later is just the initial maximum conn interval not the maximum the
+stack could support which is really 3200=4000ms.
 
-On Mon, 20 May 2024 14:14:37 -0400 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-> 
-> This adds btd_device_get_icon which can be used to retriev the icon
-> string of a device object.
-> ---
->  src/device.c | 12 +++++-------
->  src/device.h |  1 +
->  2 files changed, 6 insertions(+), 7 deletions(-)
+In order to pass GAP/CONN/CPUP/BV-05-C one shall probably enter values
+of the following fields in IXIT that would cause hci_check_conn_params
+to fail:
 
-Here is the summary with links:
-  - [BlueZ,v2,1/3] device: Add btd_device_get_icon
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=25d3b629e4df
-  - [BlueZ,v2,2/3] hog-lib: Add force parameter to bt_hog_detach
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=db383a5b4a8d
-  - [BlueZ,v2,3/3] shared/uhid: Add special handling for non-keyboards
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=e4f6c68f2a4d
+TSPX_conn_update_int_min
+TSPX_conn_update_int_max
+TSPX_conn_update_peripheral_latency
+TSPX_conn_update_supervision_timeout
 
-You are awesome, thank you!
+Link: https://github.com/bluez/bluez/issues/847
+Fixes: e4b019515f95 ("Bluetooth: Enforce validation on max value of connection interval")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+---
+ net/bluetooth/l2cap_core.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
+
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 5b509b767557..c49e0d4b3c0d 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4647,13 +4647,7 @@ static inline int l2cap_conn_param_update_req(struct l2cap_conn *conn,
+ 
+ 	memset(&rsp, 0, sizeof(rsp));
+ 
+-	if (max > hcon->le_conn_max_interval) {
+-		BT_DBG("requested connection interval exceeds current bounds.");
+-		err = -EINVAL;
+-	} else {
+-		err = hci_check_conn_params(min, max, latency, to_multiplier);
+-	}
+-
++	err = hci_check_conn_params(min, max, latency, to_multiplier);
+ 	if (err)
+ 		rsp.result = cpu_to_le16(L2CAP_CONN_PARAM_REJECTED);
+ 	else
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.45.1
 
 
