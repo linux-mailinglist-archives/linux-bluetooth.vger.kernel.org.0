@@ -1,49 +1,49 @@
-Return-Path: <linux-bluetooth+bounces-4818-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4820-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13B168CA2CC
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 20 May 2024 21:40:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DF798CA2E6
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 20 May 2024 21:51:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C417C281B18
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 20 May 2024 19:40:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DEAF5281833
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 20 May 2024 19:51:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E50D1386B7;
-	Mon, 20 May 2024 19:40:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C929A139CE2;
+	Mon, 20 May 2024 19:50:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QHiRudx9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vc1Cmh1d"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC301095B
-	for <linux-bluetooth@vger.kernel.org>; Mon, 20 May 2024 19:40:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217618C06;
+	Mon, 20 May 2024 19:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716234032; cv=none; b=YcHBaNsJcRkMGkTHIdV3ojAPsnDGI9ybstCkyi63cIizpB7wpOX28yBRidpyxRvKgs5GCzeRPTMhdUWh8Gf/c+be7zd+5CWqrnr0VpPOPCefWbx0hhpWg1Z2iq+rghuh8qFmkNrzIZnVdr+qYrHjeQk6gSGl2znBqOYd+IupaCE=
+	t=1716234631; cv=none; b=c6o2sUxpMOn3AuJX2uQSnnKP0vrs9y3+Zh+CDP5XwOS13H4aqUxHZuv3aYGBLvay+VOHneg5PImAC0wWrmA1n2zmVTCEL0llAlL8FcdhXPkKM/2jPfew7JeycSFt20vXIJpfw37sw314aF/IWEr4kd8wy67fB5YRqV2LOCN+pkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716234032; c=relaxed/simple;
-	bh=VuVJDDP2qN/WsD8cADG0UFaMCCJ28hjCJAt5Qeh+Sxc=;
+	s=arc-20240116; t=1716234631; c=relaxed/simple;
+	bh=EvgQOLJlhEDLuvEcXOFO1LKZforMGGSKQWSuu1CIxy8=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=aJEaMxWU2y7tKqmgd4SafcKCqyBT5GaAIO98Qe5vXJftP9/L3UsMk5bJnFRjC8/wfdzsHU0VBX4Ov102MFmaO+xsloL7hAbeysNI1KoAx7pWsD1FhjM0wxH0QNz59lhIOi9+/RdgABEDGSn4zcJuQdiw5ObZ6TIhTDGDuB882Ns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QHiRudx9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 72D01C4AF08;
-	Mon, 20 May 2024 19:40:32 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=ilmb7qgs43HmLa2/tvj7wX2fR3McdtjOOThNRHRLLM/bQu6mfa8NTPki4PtHzt5HIpdXgiJr3NU69UY0gawooxG9s30feUlPA8PiZQybD4TXgYeOnkGR46kzfymhbwhc47hk66yqkKwrV1/Kyu56g3bonSw4BYce6D4TGjrh+Yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vc1Cmh1d; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 965A9C4AF07;
+	Mon, 20 May 2024 19:50:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716234032;
-	bh=VuVJDDP2qN/WsD8cADG0UFaMCCJ28hjCJAt5Qeh+Sxc=;
+	s=k20201202; t=1716234630;
+	bh=EvgQOLJlhEDLuvEcXOFO1LKZforMGGSKQWSuu1CIxy8=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=QHiRudx931jx1/oEcEUgIh9yO+9g3usPJWcsNoasi3gkKnRiIlV2YUbwM2iawt1Zr
-	 hE+TjiXKv3C9yJBuyiB2AL2LaiCgiUqUQbf2vYsPGBejCiEXJuSHdHDQiaJ3Qwid8r
-	 Q5SvEFui7onzdxkNGuCq43zsxMM5QigLVhCuPBHKbY9/yAOZ1XV0Ox+QtaiQaQNemF
-	 garbvZrB1OLSthH+/QoNEhVK8sQcrkKCZzF9O/fK4XpCIK3VYi5/pDIBt0h79YVoZx
-	 jJ1QMrDa5W3UbNjAXx9i9Ybq36r/b3flva8kJIbCB2sHVnVrlyxkbtK63XX1XJLGl6
-	 02jP6+ofwdQ3w==
+	b=Vc1Cmh1dyaHUlTzuHmyzA8EkgAib/Qwfh1vj9sEYyuKgXfdenGeo53qKzsqUIJhwB
+	 xiuv7P5yL7bc1nK/eRCb9v7hJRSuQDwutVxpDBv+YxVtUk5lUKe3M2QHfRw2bgH6MW
+	 dI7+N7uBWenfbVxheOq7S1KDzA75UcN5okBT6qUUXEZ3n5e0btPpeLp5dsiQorCZEn
+	 gzDYkv2AKf4Dayzto/MUg1YwWmINCYZ5NqBIVTUzQYI/6x8NK88cSRcXOXMlxZsl7n
+	 BdJ99WZEp9fQ0OP26iGUjfMgLmv/CEsRf2ax/OCC6adGeF1pRmczmKZySrebdoktU7
+	 J/+CnNY4DVz9Q==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 618BBCF21D8;
-	Mon, 20 May 2024 19:40:32 +0000 (UTC)
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 79A39C54BB0;
+	Mon, 20 May 2024 19:50:30 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
@@ -52,42 +52,47 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3 1/3] Bluetooth: btintel_pcie: Print Firmware Sequencer
- information
+Subject: Re: [PATCH v2 0/2] Bluetooth: hci_core: Refactor hci_get_dev_list()
+ function
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <171623403239.10216.12970057119968193365.git-patchwork-notify@kernel.org>
-Date: Mon, 20 May 2024 19:40:32 +0000
-References: <20240517095447.956132-1-kiran.k@intel.com>
-In-Reply-To: <20240517095447.956132-1-kiran.k@intel.com>
-To: Kiran K <kiran.k@intel.com>
-Cc: linux-bluetooth@vger.kernel.org, ravishankar.srivatsa@intel.com,
- chethan.tumkur.narayan@intel.com, chandrashekar.devegowda@intel.com,
- vijay.satija@intel.com
+ <171623463049.16907.5107608936857144260.git-patchwork-notify@kernel.org>
+Date: Mon, 20 May 2024 19:50:30 +0000
+References: <AS8PR02MB72371852645FF17D07AE0CA98BEF2@AS8PR02MB7237.eurprd02.prod.outlook.com>
+In-Reply-To: <AS8PR02MB72371852645FF17D07AE0CA98BEF2@AS8PR02MB7237.eurprd02.prod.outlook.com>
+To: Erick Archer <erick.archer@outlook.com>
+Cc: marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+ davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+ keescook@chromium.org, gustavoars@kernel.org, nathan@kernel.org,
+ ndesaulniers@google.com, morbo@google.com, justinstitt@google.com,
+ linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
+ llvm@lists.linux.dev
 
 Hello:
 
 This series was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Fri, 17 May 2024 15:24:45 +0530 you wrote:
-> Firmware sequencer (FSEQ) is a common code shared across Bluetooth
-> and Wifi. Printing FSEQ will help to debug if there is any mismatch
-> between Bluetooth and Wifi FSEQ.
+On Sat, 18 May 2024 10:30:37 +0200 you wrote:
+> This is an effort to get rid of all multiplications from allocation
+> functions in order to prevent integer overflows [1][2].
 > 
-> Make 'btintel_print_fseq_info' public and use it in btintel_pcie.c.
+> As the "dl" variable is a pointer to "struct hci_dev_list_req" and this
+> structure ends in a flexible array:
 > 
-> dmesg:
+> struct hci_dev_list_req {
+> 	[...]
+> 	struct hci_dev_req dev_req[];	/* hci_dev_req structures */
+> };
 > 
 > [...]
 
 Here is the summary with links:
-  - [v3,1/3] Bluetooth: btintel_pcie: Print Firmware Sequencer information
-    https://git.kernel.org/bluetooth/bluetooth-next/c/6197d390371e
-  - [v3,2/3] Bluetooth: btintel_pcie: Fix irq leak
-    https://git.kernel.org/bluetooth/bluetooth-next/c/cb49bd050d31
-  - [v3,3/3] Bluetooth: btintel_pcie: Fix REVERSE_INULL issue reported by coverity
-    https://git.kernel.org/bluetooth/bluetooth-next/c/637579ef9271
+  - [v2,1/2] Bluetooth: hci_core: Prefer struct_size over open coded arithmetic
+    https://git.kernel.org/bluetooth/bluetooth-next/c/d2526ccaab74
+  - [v2,2/2] Bluetooth: hci_core: Prefer array indexing over pointer arithmetic
+    https://git.kernel.org/bluetooth/bluetooth-next/c/68b1e55bdf24
 
 You are awesome, thank you!
 -- 
