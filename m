@@ -1,46 +1,46 @@
-Return-Path: <linux-bluetooth+bounces-4970-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-4971-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9AE98D03BC
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 27 May 2024 16:31:30 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C508E8D03FF
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 27 May 2024 16:36:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1E0E1282BFB
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 27 May 2024 14:31:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E888D1C20DA7
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 27 May 2024 14:36:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A69A51836D4;
-	Mon, 27 May 2024 14:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BEE1A1C231F;
+	Mon, 27 May 2024 14:16:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qaNRgyYm"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PgNbHvC4"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11FC916C451;
-	Mon, 27 May 2024 14:15:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A7831C230D;
+	Mon, 27 May 2024 14:16:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1716819332; cv=none; b=MYG7Udq1jsQTwkdyLiLFMYy/NWlmMKJaasxHcb2Sfyr4nG+9llhUHG8N8VMDQY6XY2yzwQPrP2Sv8AS1VfAVNWnO+mWNjhyMX4GNnq0vk6KTQIk3qZ6YJCzImteXF3dkhhG2Q/zYamHUlU4ZheCgrQf6y651LgWn0s5ZM+tb0AQ=
+	t=1716819414; cv=none; b=e1EYELMjFPGmK5C97o/9DkhMYwnHHijd0GcOQPhollM//9QLyhQyrecyzxjAxT8ANVhWOW1n7ZYR8cXtPLxulRa1P1w2l0w9cs7pttAbzoEpWxKy0zKXSK8/czYZoiwlV9A4/VfLc6d1HseHDn0AA/9i8+5txVskeKy+0f6iugg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1716819332; c=relaxed/simple;
+	s=arc-20240116; t=1716819414; c=relaxed/simple;
 	bh=UUX6FM7FevEjcmk/Q+b3AHxsD6DcfXw/QHAtxiCn7Kc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gn+my+LRfsr/phxncgRXwn/yY9R4Zhe5LiTvvdPMemtigNCZ59Y2Cl796UxBBn+i4qZi39Db9k29+hKMq5SX7MPsXY7y4m3xM5VhWKoKO11cryA0Wz/oFX0kSCsp6e79DuiRhCpLBxZJEE0Fj+nN9BH1tdr46mfAvc2dv8JQrPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qaNRgyYm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6728C4AF08;
-	Mon, 27 May 2024 14:15:30 +0000 (UTC)
+	 MIME-Version; b=S6BG3F+VRHsnVuHijgEVGjadRiqn+UaIxHvm/Vg+jtc//1WIlIN8sQ034bamLySadyo3yvMmw1OzzkYVMhNcG8shJKnXeaLqcbKmAJbm073i5slsMUc3BeykB+qaeUAZXfcNjIrccu8DpO415Kgsfh0IaLZYfmEn7Sn9u4dtaKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PgNbHvC4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ED1FC32789;
+	Mon, 27 May 2024 14:16:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1716819331;
+	s=k20201202; t=1716819414;
 	bh=UUX6FM7FevEjcmk/Q+b3AHxsD6DcfXw/QHAtxiCn7Kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qaNRgyYmxTegceBTF3oSqlDfnYqx2VX9xYx4cmfMs9MZAaGyIwQdl9Mj0TdaOB+7r
-	 JTq0XIj90YUkkHk6jdVFahpHOUOdhnQGgVmyl5cEOfErA1xn7t5l9lswFXujccZobl
-	 3QUgkUBb8B7Y7p9bAkcsvl4SCmO0EShEWMkvHXRiUDKzaHK3YeyZ3hXTtDpffQFrz5
-	 A7mBn9Te742/g7EcJ0WEzWCJoBOLpWtKBbySvQb7KtC5llQ9jcvhehis4baw1xC9q4
-	 r9o2nejqwfamiTeUGQCKYxozxCz0eKaGk/wNVw5KUQz2ZmNEfRP8RL4MV9xL8bEbh0
-	 xdbS72O4Pju+w==
+	b=PgNbHvC4v19eI+SDtnpVj99CUoespN2M1ugDxkQhDmNZEzcfZSbBioycerd1ceujV
+	 CECdiomtJOJMWj+ZJfxTqEsTR9KjC399HmOgMwKyM49CpgoVR0eXAZNRw8J2bsvscO
+	 bH168NpkKog+dlfcNlB2UPW4dZnz42MGAdZ2FOEodoydiU6x1fxcc/idyp0yQMqkTx
+	 Tpc6P2U4tz/9FY8lhwxTIrMtqJ5aPTIC0hoXk3L/B6As08OeB5j352062zWakt07ps
+	 8Chj1xopMV8au8jvKa4CtEMEi72E3izw7mWEhKuYv8VFMkmzFNWW5vPGvhEwITYOTA
+	 XVNpr05f6StsA==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
@@ -50,12 +50,12 @@ Cc: Uri Arev <me@wantyapps.xyz>,
 	marcel@holtmann.org,
 	luiz.dentz@gmail.com,
 	linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.8 30/30] Bluetooth: ath3k: Fix multiple issues reported by checkpatch.pl
-Date: Mon, 27 May 2024 10:13:39 -0400
-Message-ID: <20240527141406.3852821-30-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.6 21/21] Bluetooth: ath3k: Fix multiple issues reported by checkpatch.pl
+Date: Mon, 27 May 2024 10:15:32 -0400
+Message-ID: <20240527141551.3853516-21-sashal@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240527141406.3852821-1-sashal@kernel.org>
-References: <20240527141406.3852821-1-sashal@kernel.org>
+In-Reply-To: <20240527141551.3853516-1-sashal@kernel.org>
+References: <20240527141551.3853516-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -64,7 +64,7 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.8.11
+X-stable-base: Linux 6.6.32
 Content-Transfer-Encoding: 8bit
 
 From: Uri Arev <me@wantyapps.xyz>
