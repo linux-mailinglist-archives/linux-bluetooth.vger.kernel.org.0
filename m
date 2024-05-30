@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-5041-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5038-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FD788D4E8E
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 May 2024 17:01:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 476BA8D4E8B
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 May 2024 17:01:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A593C1F22CA7
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 May 2024 15:01:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0A1AE2853EA
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 May 2024 15:01:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9AB717F512;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56D7A16F0DA;
 	Thu, 30 May 2024 15:01:03 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay7-d.mail.gandi.net (relay7-d.mail.gandi.net [217.70.183.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4AE5839E3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3BF0145A01
 	for <linux-bluetooth@vger.kernel.org>; Thu, 30 May 2024 15:01:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717081263; cv=none; b=FqFwtDXbrm8uuGFNMaWbfgYFF4DOgaEq5iNtiTDBPX9l9CDj1eMCCuSYxsV9QA+JRL6QuaHXmLWFA59hMgP6nX1JDCEFRQFPiBgj6V3Ran1HjMnr5JaFEs8SaGYwN/Hus70doopBjYgEJmDUB+5bei3PBhLe5A/yByb06/RRxm0=
+	t=1717081263; cv=none; b=tE6bqGfsqFufnGdGi5I8puc0cx5L9Fax8M6omxHnNWvx2eg9bzbK8Gl9TA45ZtJg2Xz30Iw1VZ1bOX0Cc22QUgcN5DA3Fz5W4kbbg9JYXd6NsS4MXWHjUXv8seLK+G8YUXgCJm7zvCZAeWSC+bKFVHF+9mI/OZ2QzkxhDFTZd0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1717081263; c=relaxed/simple;
-	bh=ee2MtFQfQtU/kqb6rS+D2WqPs7QmF9VRRDIgJT6sSE0=;
+	bh=zTCzTXSatAKZBJ5sPdSyoJ6iX/dT7b91Sw2MA+Zf84E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pokO8uSHx89xVeAwIeDl6wbyrJWmXyeSEVqIT1oBQGY8+jJZ+SIUm6VntfR8OJSLD4cH8Vl4KondpIlmlh3chqw+lObrZdx4+y4hre3bBEz62UOI+XjLt8X0EzU1yXZS6GgkUSWiJ3ep5iyTDKxGzBEtsbgzlJTpWKKAMYROE40=
+	 MIME-Version; b=awN6c04v7ai8bbI43vOPfA+bRfxgPAtUSnqrEPqUW08OpxtliZ7CDoxeq/0LFYKseA9IK6vLH8cLzlAaB79s+vhMf50227i824qvTiFDDlOWcZqP0U6od60erEvfjoNMvneM7HpBHsbdj4IXhiDckOceNa4/qp/hgabv4HurKU4=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.200
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id D1DAC2000A;
-	Thu, 30 May 2024 15:00:58 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 1F8522000F;
+	Thu, 30 May 2024 15:00:59 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ 4/9] rfkill: Avoid using a signed int for an unsigned variable
-Date: Thu, 30 May 2024 16:57:58 +0200
-Message-ID: <20240530150057.444585-5-hadess@hadess.net>
+Subject: [BlueZ 5/9] shared/mainloop: Fix integer overflow
+Date: Thu, 30 May 2024 16:57:59 +0200
+Message-ID: <20240530150057.444585-6-hadess@hadess.net>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240530150057.444585-1-hadess@hadess.net>
 References: <20240530150057.444585-1-hadess@hadess.net>
@@ -49,42 +49,45 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-Error: INTEGER_OVERFLOW (CWE-190): [#def37] [important]
-bluez-5.76/src/rfkill.c:101:3: tainted_data_argument: The value "event" is considered tainted.
-bluez-5.76/src/rfkill.c:105:3: tainted_data_argument: "event.idx" is considered tainted.
-bluez-5.76/src/rfkill.c:105:3: underflow: The cast of "event.idx" to a signed type could result in a negative number.
-103|			break;
-104|
-105|->		id = get_adapter_id_for_rfkill(event.idx);
-106|
-107|		if (index == id) {
+signalfd_siginfo uses a u32 for the signal number, but siginfo_t uses a
+signed integer for it, so an (unlikely) big value for the signal number
+could result in a negative value being passed to the callbacks. Catch
+that and bail early.
 
-Error: INTEGER_OVERFLOW (CWE-190): [#def38] [important]
-bluez-5.76/src/rfkill.c:133:2: tainted_data_argument: The value "event" is considered tainted.
-bluez-5.76/src/rfkill.c:143:2: tainted_data_argument: "event.idx" is considered tainted.
-bluez-5.76/src/rfkill.c:157:2: underflow: The cast of "event.idx" to a signed type could result in a negative number.
-155|		return TRUE;
-156|
-157|->	id = get_adapter_id_for_rfkill(event.idx);
-158|	if (id < 0)
-159|		return TRUE;
+Error: INTEGER_OVERFLOW (CWE-190): [#def44] [important]
+bluez-5.76/src/shared/mainloop-notify.c:132:2: tainted_data_argument: The value "si" is considered tainted.
+bluez-5.76/src/shared/mainloop-notify.c:137:3: tainted_data_argument: "si.ssi_signo" is considered tainted.
+bluez-5.76/src/shared/mainloop-notify.c:137:3: underflow: The cast of "si.ssi_signo" to a signed type could result in a negative number.
+135|
+136|	if (data && data->func)
+137|->		data->func(si.ssi_signo, data->user_data);
+138|
+139|	return true;
 ---
- src/rfkill.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ src/shared/mainloop-notify.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/src/rfkill.c b/src/rfkill.c
-index a0a50d9e45d9..8a0e48f01c4f 100644
---- a/src/rfkill.c
-+++ b/src/rfkill.c
-@@ -55,7 +55,7 @@ struct rfkill_event {
- };
- #define RFKILL_EVENT_SIZE_V1    8
+diff --git a/src/shared/mainloop-notify.c b/src/shared/mainloop-notify.c
+index 33be3cf8d78e..11989512e013 100644
+--- a/src/shared/mainloop-notify.c
++++ b/src/shared/mainloop-notify.c
+@@ -15,6 +15,7 @@
+ #define _GNU_SOURCE
+ #include <stdio.h>
+ #include <errno.h>
++#include <limits.h>
+ #include <unistd.h>
+ #include <stdlib.h>
+ #include <stddef.h>
+@@ -130,7 +131,7 @@ static bool signal_read(struct io *io, void *user_data)
+ 	fd = io_get_fd(io);
  
--static int get_adapter_id_for_rfkill(int rfkill_id)
-+static int get_adapter_id_for_rfkill(uint32_t rfkill_id)
- {
- 	char sysname[PATH_MAX];
- 	int namefd;
+ 	result = read(fd, &si, sizeof(si));
+-	if (result != sizeof(si))
++	if (result != sizeof(si) || si.ssi_signo > INT_MAX)
+ 		return false;
+ 
+ 	if (data && data->func)
 -- 
 2.45.1
 
