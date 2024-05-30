@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-5036-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5041-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F3048D4E89
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 May 2024 17:01:11 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0FD788D4E8E
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 May 2024 17:01:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1BCA81F22DD9
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 May 2024 15:01:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A593C1F22CA7
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 May 2024 15:01:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1DBE17D8B2;
-	Thu, 30 May 2024 15:01:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9AB717F512;
+	Thu, 30 May 2024 15:01:03 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay7-d.mail.gandi.net (relay7-d.mail.gandi.net [217.70.183.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE5C1E89A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4AE5839E3
 	for <linux-bluetooth@vger.kernel.org>; Thu, 30 May 2024 15:01:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717081262; cv=none; b=RTwcmjmfKXculQj5qrYzu0cAzIuvXAysIeIiiRTu4k05uiiDcHRF+sz+SDL/zQWE9d4HBvwyAOHwlDOWM2eZ7xEa0fnlCft8KSMYUkVj6MAuYEMhxKqapMZpM7OKjkWAZQSeZ5/zfmSivIeyqyi1J3cW1XSho1Ey9248xEPxsBo=
+	t=1717081263; cv=none; b=FqFwtDXbrm8uuGFNMaWbfgYFF4DOgaEq5iNtiTDBPX9l9CDj1eMCCuSYxsV9QA+JRL6QuaHXmLWFA59hMgP6nX1JDCEFRQFPiBgj6V3Ran1HjMnr5JaFEs8SaGYwN/Hus70doopBjYgEJmDUB+5bei3PBhLe5A/yByb06/RRxm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717081262; c=relaxed/simple;
-	bh=YdhSO3QIYKxHiPHW4z302UhfJABUeFRJ4d58sXWWM6k=;
+	s=arc-20240116; t=1717081263; c=relaxed/simple;
+	bh=ee2MtFQfQtU/kqb6rS+D2WqPs7QmF9VRRDIgJT6sSE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ncaMSI0s4eawBXnUFiNJYCSBcEIN4gge8FHvNNZcDHCswc0tTWIKA/oUdwQDGPKK4b6FPA6WYcu2TzZRFfg0QXGah9cV8d26ZOPoJrkvG776bm1zVuXzGhGUQ8SYIkjiGpDGFROGOBkbuWcOTasJhZ6vK/unYNExtyr3J6TFbf8=
+	 MIME-Version; b=pokO8uSHx89xVeAwIeDl6wbyrJWmXyeSEVqIT1oBQGY8+jJZ+SIUm6VntfR8OJSLD4cH8Vl4KondpIlmlh3chqw+lObrZdx4+y4hre3bBEz62UOI+XjLt8X0EzU1yXZS6GgkUSWiJ3ep5iyTDKxGzBEtsbgzlJTpWKKAMYROE40=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.200
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 938CA20012;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id D1DAC2000A;
 	Thu, 30 May 2024 15:00:58 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ 3/9] l2test: Add missing error checking
-Date: Thu, 30 May 2024 16:57:57 +0200
-Message-ID: <20240530150057.444585-4-hadess@hadess.net>
+Subject: [BlueZ 4/9] rfkill: Avoid using a signed int for an unsigned variable
+Date: Thu, 30 May 2024 16:57:58 +0200
+Message-ID: <20240530150057.444585-5-hadess@hadess.net>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240530150057.444585-1-hadess@hadess.net>
 References: <20240530150057.444585-1-hadess@hadess.net>
@@ -49,33 +49,42 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-send() might fail and return a negative len, catch that to avoid
-advancing the send buffer in the wrong direction and causing all sorts
-of problems.
+Error: INTEGER_OVERFLOW (CWE-190): [#def37] [important]
+bluez-5.76/src/rfkill.c:101:3: tainted_data_argument: The value "event" is considered tainted.
+bluez-5.76/src/rfkill.c:105:3: tainted_data_argument: "event.idx" is considered tainted.
+bluez-5.76/src/rfkill.c:105:3: underflow: The cast of "event.idx" to a signed type could result in a negative number.
+103|			break;
+104|
+105|->		id = get_adapter_id_for_rfkill(event.idx);
+106|
+107|		if (index == id) {
 
-977|->			len = send(sk, buf + sent, buflen, 0);
-978|
-979|			sent += len;
+Error: INTEGER_OVERFLOW (CWE-190): [#def38] [important]
+bluez-5.76/src/rfkill.c:133:2: tainted_data_argument: The value "event" is considered tainted.
+bluez-5.76/src/rfkill.c:143:2: tainted_data_argument: "event.idx" is considered tainted.
+bluez-5.76/src/rfkill.c:157:2: underflow: The cast of "event.idx" to a signed type could result in a negative number.
+155|		return TRUE;
+156|
+157|->	id = get_adapter_id_for_rfkill(event.idx);
+158|	if (id < 0)
+159|		return TRUE;
 ---
- tools/l2test.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ src/rfkill.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/l2test.c b/tools/l2test.c
-index 011a68c3781e..7b6c36e165da 100644
---- a/tools/l2test.c
-+++ b/tools/l2test.c
-@@ -975,6 +975,11 @@ static void do_send(int sk)
- 			buflen = (size > omtu) ? omtu : size;
+diff --git a/src/rfkill.c b/src/rfkill.c
+index a0a50d9e45d9..8a0e48f01c4f 100644
+--- a/src/rfkill.c
++++ b/src/rfkill.c
+@@ -55,7 +55,7 @@ struct rfkill_event {
+ };
+ #define RFKILL_EVENT_SIZE_V1    8
  
- 			len = send(sk, buf + sent, buflen, 0);
-+			if (len < 0) {
-+				syslog(LOG_ERR, "Send failed: %s (%d)",
-+							strerror(errno), errno);
-+				exit(1);
-+			}
- 
- 			sent += len;
- 			size -= len;
+-static int get_adapter_id_for_rfkill(int rfkill_id)
++static int get_adapter_id_for_rfkill(uint32_t rfkill_id)
+ {
+ 	char sysname[PATH_MAX];
+ 	int namefd;
 -- 
 2.45.1
 
