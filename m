@@ -1,42 +1,45 @@
-Return-Path: <linux-bluetooth+bounces-5035-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5037-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68DE88D4E88
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 May 2024 17:01:08 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D850F8D4E8A
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 May 2024 17:01:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2E760283765
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 May 2024 15:01:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8D4E41F22E13
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 May 2024 15:01:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F71117D8A0;
-	Thu, 30 May 2024 15:01:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30DFE17E445;
+	Thu, 30 May 2024 15:01:03 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay7-d.mail.gandi.net (relay7-d.mail.gandi.net [217.70.183.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC3541DFE8
-	for <linux-bluetooth@vger.kernel.org>; Thu, 30 May 2024 15:00:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3534B16F0DA
+	for <linux-bluetooth@vger.kernel.org>; Thu, 30 May 2024 15:01:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717081261; cv=none; b=uK0gvZo0wNoEpKLKTS6igrzVxDNTEkc6rMGN6LHPCz9it3zOH+0Kts0RkQKlodCKqGI5DJtm09JFQoN/Iwfv5AkJwvrBQtViefA4ntydq4t2rhPqhaASfSfigluqp8tsd30R0n0S6lanAOym3VghoyQ0w/pmW5AVFh7jNvepkpg=
+	t=1717081262; cv=none; b=e+jGp9CYP5vQacmP44ObncQIfRSqbbAglf1EltcHdJ7SiF6JB6XcooyXKBj4LBohDOzExtmdVyeunCAN373LH85mwYQ+fj37agYON6JxJsMG5p5NieRAC0cxdU7t5lK3MfAPRuTbOH2eM/9xytKwAemnvnzCGSy6JnmoBAeQwng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717081261; c=relaxed/simple;
-	bh=V/JOPG/Yzv3TattD5gR3BZWHiGICXMO3fS4RFao5UgE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=d3xMb22y+C9lA8yp19z5FjAkCayGtDk3EDlr2p9VZ6sIBxuumBS8pkbzTHpjCSKfbq6NocWinFV3aZP8VqFBRoH7iZXOaHz1JGd0t38iIkcj9na2aEViPFv3OQsD2SG1D7AfNwSVzK3ftTKVJNz+rL7RCVPp3kq1WVp4Q0o1ek0=
+	s=arc-20240116; t=1717081262; c=relaxed/simple;
+	bh=gfZu0KVCoQ5wGva5wZeqr64mlcdoNf+tqpQU6FXiceA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=CCMtPKDcpfFdpJU1/59feWaAQzOVrTERcpnI76XrcLU/0eGXDGdu29ISgz4dSqzgPAlyQmPSa7OLYSOF3v/oIcLAZbRwNvJLo6t3emyi1FFazWKOOF4Kmr03696sRkVXWrEDFSMubBjRpa5RuYxrX706j27c7Hty1jM2Hhv7eLY=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.200
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id BC7B220009;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 0CF722000B;
 	Thu, 30 May 2024 15:00:57 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ 0/9] Fix a number of static analysis issues #3
-Date: Thu, 30 May 2024 16:57:54 +0200
-Message-ID: <20240530150057.444585-1-hadess@hadess.net>
+Subject: [BlueZ 1/9] rctest: Fix possible overrun
+Date: Thu, 30 May 2024 16:57:55 +0200
+Message-ID: <20240530150057.444585-2-hadess@hadess.net>
 X-Mailer: git-send-email 2.45.1
+In-Reply-To: <20240530150057.444585-1-hadess@hadess.net>
+References: <20240530150057.444585-1-hadess@hadess.net>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -46,35 +49,33 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-14 defects fixed, and 1 error check added.
+Error: OVERRUN (CWE-119): [#def57] [important]
+bluez-5.76/tools/rctest.c:556:3: return_constant: Function call "read(fd, buf, data_size)" may return -1. [Note: The source code implementation of the function has been overridden by a builtin model.]
+bluez-5.76/tools/rctest.c:556:3: assignment: Assigning: "len" = "read(fd, buf, data_size)". The value of "len" is now -1.
+bluez-5.76/tools/rctest.c:557:3: overrun-buffer-arg: Calling "send" with "buf" and "len" is suspicious because of the very large index, 18446744073709551615. The index may be due to a negative parameter being interpreted as unsigned.
+555|		}
+556|		len = read(fd, buf, data_size);
+557|->		send(sk, buf, len, 0);
+558|		close(fd);
+559|		return;
+---
+ tools/rctest.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Let me know whether there's any problems with the implementation, I'm
-thinking in particular of the avdtp changes which are pretty invasive.
-
-Cheers
-
-Bastien Nocera (9):
-  rctest: Fix possible overrun
-  mgmt-tester: Fix buffer overrun
-  l2test: Add missing error checking
-  rfkill: Avoid using a signed int for an unsigned variable
-  shared/mainloop: Fix integer overflow
-  sdp: Fix ineffective error guard
-  obexd: Fix buffer overrun
-  bap: Fix more memory leaks on error
-  avdtp: Fix manipulating struct as an array
-
- gobex/gobex.c                |  2 +-
- lib/sdp.c                    |  8 ++++----
- profiles/audio/avdtp.c       | 33 ++++++++++++++++++++++-----------
- profiles/audio/bap.c         |  5 ++++-
- src/rfkill.c                 |  2 +-
- src/shared/mainloop-notify.c |  3 ++-
- tools/l2test.c               |  5 +++++
- tools/mgmt-tester.c          |  2 +-
- tools/rctest.c               |  3 ++-
- 9 files changed, 42 insertions(+), 21 deletions(-)
-
+diff --git a/tools/rctest.c b/tools/rctest.c
+index d31180880ef4..ff91eb2f159d 100644
+--- a/tools/rctest.c
++++ b/tools/rctest.c
+@@ -554,7 +554,8 @@ static void do_send(int sk)
+ 			exit(1);
+ 		}
+ 		len = read(fd, buf, data_size);
+-		send(sk, buf, len, 0);
++		if (len > 0)
++			send(sk, buf, len, 0);
+ 		close(fd);
+ 		return;
+ 	} else {
 -- 
 2.45.1
 
