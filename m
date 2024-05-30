@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-5043-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5040-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0765C8D4E90
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 May 2024 17:01:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D262E8D4E8D
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 May 2024 17:01:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B7461286BB6
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 May 2024 15:01:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 869E11F22D20
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 May 2024 15:01:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A489517FAAF;
-	Thu, 30 May 2024 15:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C592717F50A;
+	Thu, 30 May 2024 15:01:03 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay7-d.mail.gandi.net (relay7-d.mail.gandi.net [217.70.183.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D7F17C214
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF00017C216
 	for <linux-bluetooth@vger.kernel.org>; Thu, 30 May 2024 15:01:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717081264; cv=none; b=P6M6Ogfc2+uz6CPjWKVF3UHxqxU6RfZzQ7fdbB6MwFxs0XU81FwKv2x2ru+IcaxdyPi1OQDw0SEmFu58CB/uGJ4pUuzUOoqgtsO+LffOkfANhiH0vQEBZBAmDBD3iPuz/NC7QS/JM7bpcxHq2jl4dSksQ7p8Lm44+ya2r9KqG7A=
+	t=1717081263; cv=none; b=ChTPISny4YR1wpKG5GroQsPRhJmi1hOX+BU1AWQ4srnd3eLvf4cRrtJJHAr0aF5hcPCtrWCxlK6pSbDXSoqJ8FhQwMPAcBxzRkuP6HbKAd438bSByF1ot+Pop9tFUXyl9FaTiv0F+bKGqd+FhMxL3OdbS97xovUj9AwFPtiaN6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717081264; c=relaxed/simple;
-	bh=nRdVYVVSmZ2ZAu8GRAxcCR1c4rYFBz0G2V4WoL8zsrc=;
+	s=arc-20240116; t=1717081263; c=relaxed/simple;
+	bh=mqvn619TSm5ld0odQr215jbTYvsACUe3F6Wkz9yu7qU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ep0Fag/wnuF9pisSD1WrVa06mTembMhUNUToywdXvYDV0hERSQ2Davrd7arm5ve39BZ7zjzMLRbFTk2mU8TJ0Ep3k+Xtn7j/xqqEtFzpMYUxkwegmZxBHMlRudcFu0UijWjN4xQtehBTRwmH34A4Z1QnltUbkL9xUZpmasiqEGY=
+	 MIME-Version; b=g0Af6bf/59Bnof5b7tsfJEj8nn6du4WLU56O2r3ZCPzRGaABmtHhe2+91EQHUuEiMi1jufLpgbo2J2QiTC0ntHH2ntgEcQyK1FQRolKZ02suIRfXQaTVHLH/59RimxfOjAtK9BMgrdVRoVvO/7yrpl8TRiMP1lhKxud7CwFaxrc=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.200
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id A81A520011;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id EAAA220017;
 	Thu, 30 May 2024 15:00:59 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ 7/9] obexd: Fix buffer overrun
-Date: Thu, 30 May 2024 16:58:01 +0200
-Message-ID: <20240530150057.444585-8-hadess@hadess.net>
+Subject: [BlueZ 8/9] bap: Fix more memory leaks on error
+Date: Thu, 30 May 2024 16:58:02 +0200
+Message-ID: <20240530150057.444585-9-hadess@hadess.net>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240530150057.444585-1-hadess@hadess.net>
 References: <20240530150057.444585-1-hadess@hadess.net>
@@ -49,33 +49,51 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-Don't access path at byte 2 when it might only contain a single byte.
+Error: RESOURCE_LEAK (CWE-772): [#def32] [important]
+bluez-5.76/profiles/audio/bap.c:1166:4: alloc_arg: "asprintf" allocates memory that is stored into "path". [Note: The source code implementation of the function has been overridden by a builtin model.]
+bluez-5.76/profiles/audio/bap.c:1178:5: leaked_storage: Variable "path" going out of scope leaks the storage it points to.
+1176|					free(l3_caps);
+1177|					ret = false;
+1178|->					goto group_fail;
+1179|				}
+1180|
 
-Error: OVERRUN (CWE-119): [#def27] [important]
-bluez-5.76/obexd/client/session.c:1135:2: alias: Assigning: "first" = """". "first" now points to byte 0 of """" (which consists of 1 bytes).
-bluez-5.76/obexd/client/session.c:1142:2: overrun-buffer-val: Overrunning buffer pointed to by "first" of 1 bytes by passing it to a function which accesses it at byte offset 2.
-1140|		req->index++;
-1141|
-1142|->		p->req_id = g_obex_setpath(p->session->obex, first, setpath_cb, p, err);
-1143|		if (*err != NULL)
-1144|			return (*err)->code;
+Error: RESOURCE_LEAK (CWE-772): [#def33] [important]
+bluez-5.76/profiles/audio/bap.c:1166:4: alloc_arg: "asprintf" allocates memory that is stored into "path". [Note: The source code implementation of the function has been overridden by a builtin model.]
+bluez-5.76/profiles/audio/bap.c:1199:5: leaked_storage: Variable "path" going out of scope leaks the storage it points to.
+1197|
+1198|				if (matched_lpac == NULL || merged_caps == NULL)
+1199|->					continue;
+1200|
+1201|				create_stream_for_bis(bap_data, matched_lpac, qos,
 ---
- gobex/gobex.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ profiles/audio/bap.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/gobex/gobex.c b/gobex/gobex.c
-index fdeb11c65130..40d6b8129b00 100644
---- a/gobex/gobex.c
-+++ b/gobex/gobex.c
-@@ -1611,7 +1611,7 @@ guint g_obex_setpath(GObex *obex, const char *path, GObexResponseFunc func,
+diff --git a/profiles/audio/bap.c b/profiles/audio/bap.c
+index 3fcf21df58aa..53e7b3e34378 100644
+--- a/profiles/audio/bap.c
++++ b/profiles/audio/bap.c
+@@ -1174,6 +1174,7 @@ static bool parse_base(struct bap_data *bap_data, struct bt_iso_base *base,
+ 			if (!util_iov_pull_u8(&iov,
+ 						(void *)&l3_caps->iov_len)) {
+ 				free(l3_caps);
++				free(path);
+ 				ret = false;
+ 				goto group_fail;
+ 			}
+@@ -1195,8 +1196,10 @@ static bool parse_base(struct bap_data *bap_data, struct bt_iso_base *base,
+ 					l2_caps, l3_caps, &matched_lpac,
+ 					&merged_caps);
  
- 	memset(&data, 0, sizeof(data));
+-			if (matched_lpac == NULL || merged_caps == NULL)
++			if (matched_lpac == NULL || merged_caps == NULL) {
++				free(path);
+ 				continue;
++			}
  
--	if (path != NULL && strncmp("..", path, 2) == 0) {
-+	if (path != NULL && strlen(path) >= 2 && strncmp("..", path, 2) == 0) {
- 		data.flags = 0x03;
- 		folder = (path[2] == '/') ? &path[3] : NULL;
- 	} else {
+ 			create_stream_for_bis(bap_data, matched_lpac, qos,
+ 					merged_caps, meta, path);
 -- 
 2.45.1
 
