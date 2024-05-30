@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-5037-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5039-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D850F8D4E8A
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 May 2024 17:01:14 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55BAB8D4E8C
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 May 2024 17:01:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8D4E41F22E13
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 May 2024 15:01:14 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DE99EB22EB3
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 May 2024 15:01:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30DFE17E445;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78C1A145A01;
 	Thu, 30 May 2024 15:01:03 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay7-d.mail.gandi.net (relay7-d.mail.gandi.net [217.70.183.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3534B16F0DA
-	for <linux-bluetooth@vger.kernel.org>; Thu, 30 May 2024 15:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC2D1E532
+	for <linux-bluetooth@vger.kernel.org>; Thu, 30 May 2024 15:00:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717081262; cv=none; b=e+jGp9CYP5vQacmP44ObncQIfRSqbbAglf1EltcHdJ7SiF6JB6XcooyXKBj4LBohDOzExtmdVyeunCAN373LH85mwYQ+fj37agYON6JxJsMG5p5NieRAC0cxdU7t5lK3MfAPRuTbOH2eM/9xytKwAemnvnzCGSy6JnmoBAeQwng=
+	t=1717081263; cv=none; b=bUqqR994JOQdPARwsrjiaxfA3MZHkyOaFFHxt26nU8Wg1veV6xxdmKMGHBjby3RE/ajV57wGbal9ShIi3Gtp/JVp9AcEZFC/mVXgsWIWkQA2UwettWG+Eg/xyvLR0Ok9aklXie0uheqQPfVTLiW3OaRSzLF2k2yRA7Q1IDjanoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717081262; c=relaxed/simple;
-	bh=gfZu0KVCoQ5wGva5wZeqr64mlcdoNf+tqpQU6FXiceA=;
+	s=arc-20240116; t=1717081263; c=relaxed/simple;
+	bh=vs7XiLagZa5ntsanP3R0MRDHQ8gAeVOhTp8wK47UJK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CCMtPKDcpfFdpJU1/59feWaAQzOVrTERcpnI76XrcLU/0eGXDGdu29ISgz4dSqzgPAlyQmPSa7OLYSOF3v/oIcLAZbRwNvJLo6t3emyi1FFazWKOOF4Kmr03696sRkVXWrEDFSMubBjRpa5RuYxrX706j27c7Hty1jM2Hhv7eLY=
+	 MIME-Version; b=lvy8MegikkYUBC1oXnvsuxer4dzyXQNYNp3PSbr6r0FJjWvlnxnawTf9zKndeEIhFs/AZ2tEU0oh1AVCov36DUv7CaFoFT9dZoyhmyz2rKUqQYh/h51uX0z5cJl297ieuqh6MmQJA7gxjDuji0Rs3qq6wddaKhfR2djaxu50iFo=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.200
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 0CF722000B;
-	Thu, 30 May 2024 15:00:57 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 50B362000E;
+	Thu, 30 May 2024 15:00:58 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ 1/9] rctest: Fix possible overrun
-Date: Thu, 30 May 2024 16:57:55 +0200
-Message-ID: <20240530150057.444585-2-hadess@hadess.net>
+Subject: [BlueZ 2/9] mgmt-tester: Fix buffer overrun
+Date: Thu, 30 May 2024 16:57:56 +0200
+Message-ID: <20240530150057.444585-3-hadess@hadess.net>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240530150057.444585-1-hadess@hadess.net>
 References: <20240530150057.444585-1-hadess@hadess.net>
@@ -49,33 +49,34 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-Error: OVERRUN (CWE-119): [#def57] [important]
-bluez-5.76/tools/rctest.c:556:3: return_constant: Function call "read(fd, buf, data_size)" may return -1. [Note: The source code implementation of the function has been overridden by a builtin model.]
-bluez-5.76/tools/rctest.c:556:3: assignment: Assigning: "len" = "read(fd, buf, data_size)". The value of "len" is now -1.
-bluez-5.76/tools/rctest.c:557:3: overrun-buffer-arg: Calling "send" with "buf" and "len" is suspicious because of the very large index, 18446744073709551615. The index may be due to a negative parameter being interpreted as unsigned.
-555|		}
-556|		len = read(fd, buf, data_size);
-557|->		send(sk, buf, len, 0);
-558|		close(fd);
-559|		return;
----
- tools/rctest.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Error: OVERRUN (CWE-119): [#def56] [important]
+bluez-5.76/tools/mgmt-tester.c:12667:2: identity_transfer: Passing "512UL" as argument 3 to function "vhci_read_devcd", which returns that argument.
+bluez-5.76/tools/mgmt-tester.c:12667:2: assignment: Assigning: "read" = "vhci_read_devcd(vhci, buf, 512UL)". The value of "read" is now 512.
+bluez-5.76/tools/mgmt-tester.c:12674:2: overrun-local: Overrunning array "buf" of 513 bytes at byte offset 513 using index "read + 1" (which evaluates to 513).
+12672|		}
+12673|		/* Make sure buf is nul-terminated */
+12674|->	buf[read + 1] = '\0';
+12675|
+12676|		/* Verify if all devcoredump header fields are present */
 
-diff --git a/tools/rctest.c b/tools/rctest.c
-index d31180880ef4..ff91eb2f159d 100644
---- a/tools/rctest.c
-+++ b/tools/rctest.c
-@@ -554,7 +554,8 @@ static void do_send(int sk)
- 			exit(1);
- 		}
- 		len = read(fd, buf, data_size);
--		send(sk, buf, len, 0);
-+		if (len > 0)
-+			send(sk, buf, len, 0);
- 		close(fd);
+Fixes: 49d06560692f ("mgmt-tester: Fix non-nul-terminated string")
+---
+ tools/mgmt-tester.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tools/mgmt-tester.c b/tools/mgmt-tester.c
+index 8076ec105ebb..1d5c82ae0745 100644
+--- a/tools/mgmt-tester.c
++++ b/tools/mgmt-tester.c
+@@ -12671,7 +12671,7 @@ static void verify_devcd(void *user_data)
  		return;
- 	} else {
+ 	}
+ 	/* Make sure buf is nul-terminated */
+-	buf[read + 1] = '\0';
++	buf[read] = '\0';
+ 
+ 	/* Verify if all devcoredump header fields are present */
+ 	line = strtok_r(buf, delim, &saveptr);
 -- 
 2.45.1
 
