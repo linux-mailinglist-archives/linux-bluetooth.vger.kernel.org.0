@@ -1,99 +1,113 @@
-Return-Path: <linux-bluetooth+bounces-5071-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5074-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DCF728D8347
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  3 Jun 2024 15:02:26 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8E64D8D8379
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  3 Jun 2024 15:07:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6DEF628910A
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  3 Jun 2024 13:02:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BFC491C24CD5
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  3 Jun 2024 13:07:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60F80131182;
-	Mon,  3 Jun 2024 13:00:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD2AE12CDAE;
+	Mon,  3 Jun 2024 13:05:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M3ClA1DC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e/WIPyor"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFAC1304B0;
-	Mon,  3 Jun 2024 13:00:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF2F132106
+	for <linux-bluetooth@vger.kernel.org>; Mon,  3 Jun 2024 13:05:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717419630; cv=none; b=bn2J3jKOcOxN6NQ5BXxqKCZz+EyFyla8lPhkwLlKpiXaxN9FGyDjglqYqt9JrSRqZp7nH0sXIlQ6v7wZEXGisYr14GyDJ57sVOsa0kfCtseJMVor4w/u6rfHA5ddeHk2cLsJlSYHnI81TLQX6w0TqmVJfKp2/WD0Sl6bJnkFOB4=
+	t=1717419944; cv=none; b=dlHd8gRr1+7MpUARUeuGj6ppNN12JguIyNPPtMcgSZ6XGjTuiQS7oviQUPlZa73SQq9B3fudLbPxeYKzPjfRPDmB6P4+klv/E1Z7itid1VN+CZMIXHnbNNjsHLYhAV4yvOjHDisCpgX+DxFxkU2CzmcHayTUzU+wQaxrc4NGbbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717419630; c=relaxed/simple;
-	bh=Q72Tv4sMGNv7GdLHS+0Z8Gj75xba7+6TdHAU/WbXGv0=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=XihazXCvWHWhvpXbyyIyB0wpCW43irEACnfBLJloRqHaXya7CIuHGc8d37TomHppTeiRAzzijb1urtxdufpXCVTKOqxfxlSpTIeK5R4/0lcMz5EPvULH2kxT1TP//uSNcfqPTSxVLb2ssRucx1RQIbnXmMhamkcYMzQ7fdqO3gk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M3ClA1DC; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 3D635C4AF0D;
-	Mon,  3 Jun 2024 13:00:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1717419630;
-	bh=Q72Tv4sMGNv7GdLHS+0Z8Gj75xba7+6TdHAU/WbXGv0=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=M3ClA1DCUwD/Ezv4Q06mEushpDezB61obknyzvuAS8ALyV1Fs4dE0B+Ku3seRqT8w
-	 Ar77fYgWcvwtiqax5Ro/9Bbqd9TRWJYlzqw5UcqBicbCMed1cXfHuYPZdS4HyuywBR
-	 W8wC6fVK92tEzniCe/ZgoS8699cCmPc1B8IgG/VyuE90q/HTfZOeKeRiZkescqnksx
-	 WIq1GbJyOHbHNl+52kTvq11vizXJaBqtD9acV1ys2JcRxE1h696LiAbNK25wTdwR2x
-	 6N/K25thMumMVfm7zQrVK9UP9SDDPv1J60XmbgmlcwJOXMwaQanFPLrotsf9DFfFOX
-	 3tJoK0wWv3vZQ==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 2B295C43617;
-	Mon,  3 Jun 2024 13:00:30 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1717419944; c=relaxed/simple;
+	bh=oRrXHboVTtYwQqI/Ai7YRBqcC9c8IpY7IdHq4YSRF5I=;
+	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
+	 In-Reply-To:References; b=qnZ2veuMIpv0msDtgEFhXBFrKB0l1/9M8fisVx6P9hqSsRWzoe9I72UIKqG5rG9DDNRpTOruqbqZCwyuS7oxCVrGCiR/FpcNB1he7vJM/KPYgTOiPH64Jj+HRBJQuf8hUtA4AnHKj7FlSPMaijdPDkzTxlaOthFPU3EF2WH9gCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e/WIPyor; arc=none smtp.client-ip=209.85.222.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-792ecce9522so287381085a.3
+        for <linux-bluetooth@vger.kernel.org>; Mon, 03 Jun 2024 06:05:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1717419942; x=1718024742; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=oRrXHboVTtYwQqI/Ai7YRBqcC9c8IpY7IdHq4YSRF5I=;
+        b=e/WIPyorJJYa+WExIaYmQiXgNIHBFOaeUWU3CdTCqRfX8Ea+Lak58LnXCpd28NS3sT
+         QIpTImRAhEz87xt5QzgDnncHBixRrahDJszL495jh1GO4WesVVDhIPESN3Rqtjt7Eh9V
+         AZg/ncHpwzK0RYHOuOpw2CKU2nDcd5xTXyZpfypyHIG4yx388JN7hTcYY7HCYjh0wHNw
+         V9CQe1FMiP9T024XUYBJzfN7QEQhfeDv7poAVDNSJWPp+b3el/9Wbijtk0eD1uIYTgbU
+         MWyanfKuFyWSbLOWBWDNO1n1Z24UjDQqYgAF+0vEoS+b/5qmrVSOeTG5hPYmbdTlIA+t
+         vPOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717419942; x=1718024742;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oRrXHboVTtYwQqI/Ai7YRBqcC9c8IpY7IdHq4YSRF5I=;
+        b=Nop5B7iX6tXNoS61TL9rNO9Ygb66asZmA5pJYyFhJLMyRxdtOSizGxFg7AV7nd0R+l
+         shxFspsVD/ZxlFPWuULigBSOr5vvvEfogkXf6v/2DGoR1cJa1j7oNwUiVph4jNCzPJ4+
+         A9np2dVXXSO6YR1Nsia0IQXdevk4Ft7ynXpEhvlAxK+cWwqqveGPTVeU/8RtUOFRrlJl
+         a1tFsxS0Je7besrO1T+0Z+e0LV9TYUZVFRiym9jsS/OzSzQ73kg8JA++eCrWN+uZttvs
+         eYoBfLCCD9elE832Qet3y5MWGL+8oATn1crT+CFVxTSNsOwjr2WGi5DQeSjles5y9jYR
+         9rRQ==
+X-Gm-Message-State: AOJu0Yy3KY/77Qeq5XMfVsN+TAlEx+JOL8I6O2yFsjWaBJagD0SxiumO
+	I/EiwfBKG7GTtuyi5G/XXutyXQEzuCmHiMGGRPHedyzIUo7otv7CFAOFKw==
+X-Google-Smtp-Source: AGHT+IFBYUd0bihxm0wGJWjmxsT3J6ZLMxiWWeFk9nXwFR8/rho2qc0exyJtkkYRQbpJIlBmBcQsJQ==
+X-Received: by 2002:a05:620a:12f4:b0:792:cd65:7311 with SMTP id af79cd13be357-794f5ed41fbmr897877685a.66.1717419941458;
+        Mon, 03 Jun 2024 06:05:41 -0700 (PDT)
+Received: from [172.17.0.2] ([172.183.82.224])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-794f3172da2sm279896185a.123.2024.06.03.06.05.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Jun 2024 06:05:41 -0700 (PDT)
+Message-ID: <665dbfa5.050a0220.dcdbe.be0d@mx.google.com>
+Date: Mon, 03 Jun 2024 06:05:41 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============4334935119680859976=="
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v4] Bluetooth: Add vendor-specific packet classification for
- ISO data
-From: patchwork-bot+bluetooth@kernel.org
-Message-Id: 
- <171741963017.17349.14932650657966489507.git-patchwork-notify@kernel.org>
-Date: Mon, 03 Jun 2024 13:00:30 +0000
-References: <20240529080123.2146946-1-yinghsu@chromium.org>
-In-Reply-To: <20240529080123.2146946-1-yinghsu@chromium.org>
-To: Ying Hsu <yinghsu@chromium.org>
-Cc: linux-bluetooth@vger.kernel.org, luiz.dentz@gmail.com,
- pmenzel@molgen.mpg.de, horms@kernel.org,
- chromeos-bluetooth-upstreaming@chromium.org, davem@davemloft.net,
- edumazet@google.com, kuba@kernel.org, johan.hedberg@gmail.com,
- marcel@holtmann.org, pabeni@redhat.com, linux-kernel@vger.kernel.org,
- netdev@vger.kernel.org
+From: bluez.test.bot@gmail.com
+To: linux-bluetooth@vger.kernel.org, quic_janathot@quicinc.com
+Subject: RE: PENDING: Bluetooth: Increase settling time for baudrate change VSC
+In-Reply-To: <20240603125357.3035-1-quic_janathot@quicinc.com>
+References: <20240603125357.3035-1-quic_janathot@quicinc.com>
+Reply-To: linux-bluetooth@vger.kernel.org
 
-Hello:
+--===============4334935119680859976==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+This is an automated email and please do not reply to this email.
 
-On Wed, 29 May 2024 08:00:00 +0000 you wrote:
-> When HCI raw sockets are opened, the Bluetooth kernel module doesn't
-> track CIS/BIS connections. User-space applications have to identify
-> ISO data by maintaining connection information and look up the mapping
-> for each ACL data packet received. Besides, btsnoop log captured in
-> kernel couldn't tell ISO data from ACL data in this case.
-> 
-> To avoid additional lookups, this patch introduces vendor-specific
-> packet classification for Intel BT controllers to distinguish
-> ISO data packets from ACL data packets.
-> 
-> [...]
+Dear Submitter,
 
-Here is the summary with links:
-  - [v4] Bluetooth: Add vendor-specific packet classification for ISO data
-    https://git.kernel.org/bluetooth/bluetooth-next/c/d33224ba26e5
+Thank you for submitting the patches to the linux bluetooth mailing list.
+While preparing the CI tests, the patches you submitted couldn't be applied to the current HEAD of the repository.
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+----- Output -----
+
+error: patch failed: drivers/bluetooth/btqca.c:600
+error: drivers/bluetooth/btqca.c: patch does not apply
+error: patch failed: drivers/bluetooth/hci_qca.c:1904
+error: drivers/bluetooth/hci_qca.c: patch does not apply
+hint: Use 'git am --show-current-patch' to see the failed patch
+
+Please resolve the issue and submit the patches again.
 
 
+---
+Regards,
+Linux Bluetooth
+
+
+--===============4334935119680859976==--
 
