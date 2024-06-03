@@ -1,130 +1,91 @@
-Return-Path: <linux-bluetooth+bounces-5070-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5073-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0567E8D82F6
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  3 Jun 2024 14:54:49 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A69798D8349
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  3 Jun 2024 15:02:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A55461F21F5A
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  3 Jun 2024 12:54:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 61161288C45
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  3 Jun 2024 13:02:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F15AD12CDAE;
-	Mon,  3 Jun 2024 12:54:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63E241311A7;
+	Mon,  3 Jun 2024 13:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jXoErLu0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FqYcJM1Q"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB84B84E1C;
-	Mon,  3 Jun 2024 12:54:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF2A12FF8F;
+	Mon,  3 Jun 2024 13:00:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717419271; cv=none; b=AEdBDu8RKrZySHU11rUOl4SbM1/V4tvh3fIAJnpZvsdoBNzoKV4yp0/2G7ZJBqveQuQYXRm8K/FImdCSKAQW2u/RNuaSDyaa9flDbXg2LpZoO5EWb7fBnj120RsLhbs/fgJjtZywLBSVmApY0HTxSVqIOLR/irg1446xnvzOQ2U=
+	t=1717419630; cv=none; b=SHEOdhFt87G6S2bFF0uT4y72aqi8bZfBBeKOfaQAHY//dozqEa25zflMPGuOVlkIO1zH37KPSqzzjP7RrjRheNDhGTC5R9A2pRaJpaDtuLNPu5Fq5YKBp6GDKBoquy2WGIXhM8jzsjoUZtNNZHppyx2FWn3ecamH4cYLPtKVMfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717419271; c=relaxed/simple;
-	bh=Klr9xhZV+I6k2FQesG4sY2yBk1nNGSSVrtAem4YIPz4=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AKPK0QnHN2HsQKwWOletl/3BVcIwPKW7sG1+T4gc8LgS0+5gPz7DTFDbFM535D+TDZVqWQQl4OgxdLLYpw+QpDwT1J6uH9GSvJUZeM6u4rNC2loMPeY8D+5VjxeigdhUFeU5MGmBS/OT3T7pTOiEWe3v2zQsz04ExBvUQ28u29I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jXoErLu0; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4530GX70020269;
-	Mon, 3 Jun 2024 12:54:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=WmU+f25Abmug8NQIuVhV19e7
-	A10T3q8jZsyCdyPsYG4=; b=jXoErLu0CM8hUoC34eCAe/tXIvyV9atui4Bv3qPN
-	PczbIxgh9mhYQqAjRV/pQSgStXjRUKFdX1IsExMMnoCJ4JRnAfMKTIuo4ZxQ3g3A
-	Km/wZOsX3mCU4FdCSfR0fpxGdJLbgpzxeOH2Y9o1kVNqcr8ZFtC1SMfwTm3WZbjh
-	kp9FWChNioWTo+l5OLgpqWqfjJ1QYRwMG4UlA2QtYSaIEgew/ndLaXfmUetvfIno
-	Xs6pGUPZ9fPYIGJ8MjDhuynmMB1uARu/en+HECZiCXIPhS0pjFC5zM0/ZWL2HQmK
-	4FsOGY4fAGnBMXD0V/bHh6oXoku0vc/QAUmb/H/JZcr6Lw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3yfw42uvt4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 03 Jun 2024 12:54:26 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 453CsPoF016732
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 3 Jun 2024 12:54:25 GMT
-Received: from hu-janathot-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 3 Jun 2024 05:54:23 -0700
-From: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
-To: Marcel Holtmann <marcel@holtmann.org>,
-        Luiz Augusto von Dentz
-	<luiz.dentz@gmail.com>
-CC: <quic_mohamull@quicinc.com>, <quic_hbandi@quicinc.com>,
-        <linux-bluetooth@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v1] Bluetooth: hci_qca: Increase settling time for baudrate change VSC
-Date: Mon, 3 Jun 2024 18:23:57 +0530
-Message-ID: <20240603125357.3035-2-quic_janathot@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20240603125357.3035-1-quic_janathot@quicinc.com>
-References: <20240603125357.3035-1-quic_janathot@quicinc.com>
+	s=arc-20240116; t=1717419630; c=relaxed/simple;
+	bh=VNKgUSfzKmIN8sW92eU0450tuP/32atN00WNWDD8y2k=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=pdyGqpLY9912Mhvsc0OafeA7ujXrAM0xJVEX5eVmYtTsgNV76mYqiBFxRRBp7/EHX9oSyLkdnTTlKoCAw7Gl34tDQrnGAO5dGqoT7Msd171CoDDnWvWxJfAVPFQFSsj185+OeE4oFVjjspeu62VoPvKn2DTFufdNlgqcBqKmop8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FqYcJM1Q; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 2D550C4AF0A;
+	Mon,  3 Jun 2024 13:00:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1717419630;
+	bh=VNKgUSfzKmIN8sW92eU0450tuP/32atN00WNWDD8y2k=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=FqYcJM1QGwKunAzolLm03wuXOmYhUmXeaGNXhQljHhYgoy2BtBjGSjjofwYXReY9F
+	 hYZtTaA103Io1ebvw4QQEiiVn4sMcw7ySx/kpUl7laWrtYF0uxRtfkt+F3jWMVMnPU
+	 u5N644UcPPinA2rpZtmEXCeEsmQAVmvgAQw7Fo8DroBag7XYV+lk6FEpidbF4Ii04O
+	 o4CfYcVQRvzE90RbEdZQWLjZ7Ttz4K27qz35dPZR0C+BvSGcyd7tQvK3v3mi4y/+6Q
+	 lCDIOoZnfbtDl2njGvItlPAai2gEepjyWkx3DecNzABTNTTmHDFwlTporWp5yBkRxO
+	 Cw6S20wVaKVTg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 208A2C59A4C;
+	Mon,  3 Jun 2024 13:00:30 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: _9JXeD0hPCGutFbA8X4JaK6M-Ppvrk-H
-X-Proofpoint-ORIG-GUID: _9JXeD0hPCGutFbA8X4JaK6M-Ppvrk-H
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.650,FMLib:17.12.28.16
- definitions=2024-06-03_08,2024-05-30_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- impostorscore=0 mlxlogscore=928 clxscore=1015 bulkscore=0
- priorityscore=1501 suspectscore=0 phishscore=0 malwarescore=0 adultscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2405170001 definitions=main-2406030107
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH] Bluetooth: iso: remove unused struct 'iso_list_data'
+From: patchwork-bot+bluetooth@kernel.org
+Message-Id: 
+ <171741963012.17349.10173582992476486602.git-patchwork-notify@kernel.org>
+Date: Mon, 03 Jun 2024 13:00:30 +0000
+References: <20240531232614.302215-1-linux@treblig.org>
+In-Reply-To: <20240531232614.302215-1-linux@treblig.org>
+To: Dr. David Alan Gilbert <linux@treblig.org>
+Cc: marcel@holtmann.org, johan.hedberg@gmail.com,
+ linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
 
-This change is done to align the settling time and
-synchronization for baudrate VSC for WCN6750.
+Hello:
 
-In logging disabled builds and few devices
-baudrate change and flow control is taking time
-so increasing the wait time to controller and uart
-to handle baudrate change request properly.
+This patch was applied to bluetooth/bluetooth-next.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-Signed-off-by: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
----
- drivers/bluetooth/hci_qca.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+On Sat,  1 Jun 2024 00:26:14 +0100 you wrote:
+> From: "Dr. David Alan Gilbert" <linux@treblig.org>
+> 
+> 'iso_list_data' has been unused since the original
+> commit ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type").
+> 
+> Remove it.
+> 
+> [...]
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 0c9c9ee56592..667687835306 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1356,12 +1356,15 @@ static int qca_set_baudrate(struct hci_dev *hdev, uint8_t baudrate)
- 	case QCA_WCN3990:
- 	case QCA_WCN3991:
- 	case QCA_WCN3998:
--	case QCA_WCN6750:
- 	case QCA_WCN6855:
- 	case QCA_WCN7850:
- 		usleep_range(1000, 10000);
- 		break;
- 
-+	case QCA_WCN6750:
-+		msleep(30);
-+		break;
-+
- 	default:
- 		msleep(300);
- 	}
+Here is the summary with links:
+  - Bluetooth: iso: remove unused struct 'iso_list_data'
+    https://git.kernel.org/bluetooth/bluetooth-next/c/d8b6a4e3ad78
+
+You are awesome, thank you!
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
 
