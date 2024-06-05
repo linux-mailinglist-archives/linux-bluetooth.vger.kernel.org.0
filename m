@@ -1,527 +1,236 @@
-Return-Path: <linux-bluetooth+bounces-5135-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5137-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40EED8FCF29
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  5 Jun 2024 15:26:54 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B85268FCF82
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  5 Jun 2024 15:37:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 598E7B29597
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  5 Jun 2024 13:17:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BBA041C23DBC
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  5 Jun 2024 13:37:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BC691993BE;
-	Wed,  5 Jun 2024 12:39:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9673E194A6D;
+	Wed,  5 Jun 2024 13:13:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="0r4Ys5eC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mLL7na70"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC1319AD78
-	for <linux-bluetooth@vger.kernel.org>; Wed,  5 Jun 2024 12:39:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3B0194A53
+	for <linux-bluetooth@vger.kernel.org>; Wed,  5 Jun 2024 13:12:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717591178; cv=none; b=gcq8r43T03R01NK4RZioqW0cY1bzIStWyTdYTjo5scCYNsnyVU5LWc5RFYFNLTLYp39X+m+NHF5S/cyoQHDPREryZ3bUOINbBFgAsgvVRtygJtVibdfuxuYMPobLQ6xxXWtVf+WMYM2o1YStkKNkAek4JMfg7GmVnE+yhgj0TGg=
+	t=1717593181; cv=none; b=Yio/Ax9JCXUMF8veSeyrg0REoy/MPKeAyrowEYAF0t7eb70sKuGngrE34hu6zM6GPUAB7hbsyMtUKfwjf5zz+6LUaUmUfCfv8fCbS2yYKWdKZ4yqv569qQ253GIT8FfJsNSKqlBn0C8qV/GzYQw3hmi0HlNGPfEyS/1M/ihTCF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717591178; c=relaxed/simple;
-	bh=yU1zUf+faD6JgyhE+bFIg993kTzscUEBjSG8Xzmsj+0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LvECwm6CTVBLqmcfVMkXv/f7O5Hbd5QQiOOjFcW4MamEkQmstYZFWOOYX7FZrZZmmeHmjVMuQrod28j/PR/9fS4doZtxWHK4ZfTTti/7iKt0uIakoWGKyL3zFj4bKNYBrv9cUQjRbF57wux2Xzkuv2m0dIq9vhHNEtLyMNbko1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=0r4Ys5eC; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-42148c0cb1aso20177955e9.3
-        for <linux-bluetooth@vger.kernel.org>; Wed, 05 Jun 2024 05:39:35 -0700 (PDT)
+	s=arc-20240116; t=1717593181; c=relaxed/simple;
+	bh=xaWLg0jYxDEMFZ5ckEhKakU9W5NAvNld+JTOjn7PBYs=;
+	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
+	 In-Reply-To:References; b=k5axcV+Mx3pcQaHcp5eHQ8CgJfmpxaN2EKwAR3oJTvmUkrRQ1rMzxDAYMxdnQb+ZaToqTrdnL6O3CgzfvUuWrnAq7MuKYj1nrGuEBtUSLjuPsKooh6ATx88Iw04Wy0rMAxQCf/WnNQehfKd+Lu18OI9CVG04iNC+cjLWKnhkTb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mLL7na70; arc=none smtp.client-ip=209.85.161.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-5b9c7ae2c98so1234687eaf.3
+        for <linux-bluetooth@vger.kernel.org>; Wed, 05 Jun 2024 06:12:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1717591174; x=1718195974; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nLJqIWJeQNkMBFWQ7v6+RLQIvbPqzd6527VcybskqUQ=;
-        b=0r4Ys5eCOciGHV9E0CezTMIftDUarXkGTMULtr70tUAQ9dVopJ5PJIHDkXe/+O855m
-         jaMuh2SFdJVoTWHrfmo0ypfasJDbXmovY14tPsuj8duV7mvRcGkkdjfKC1y0Dx2YdEY1
-         p9Nmka51RPEPIhRIzi9q5ARZ5Dz7ldT5uahLfvP3lhk+vZC04plXXKYB6oTMiypWQjlr
-         EmdslRtH83pfgNXsrhGodU4YhfF1r6oEj5ruDiI3DQRaD30jtqc15VA0xM1heX7JDN2N
-         thrgEM6cUGSpPdwwSIcq8QBB6WbGKELSPAUPKulkdCXqDkA1XzuApHCK0DSeTIdikgru
-         GYDw==
+        d=gmail.com; s=20230601; t=1717593178; x=1718197978; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=dRuEhBSP8JpOWbeVE1ECNF4Ir5HAcGBuRVQPH2ErAi4=;
+        b=mLL7na702JJJTzZy64Gp0kvNvTSjKbw2jUnHEAQehfgMp3yiAX4u3osNH5i6kl04Uj
+         msosqHnq5or5ixp5y9/UWcISUfeglbMIz0NI0xbtrRivAM83qV5+frNpb5ajtN0UVMwg
+         liu/m70F/cmpLKYNMyQwqiWHlHpYbbZp0IF1T3BSLj6VhYIf35lqw0QMtxgExud/6fJ9
+         qO0mwwREFN8/2aWOP+PLDrQ2VlLjtj9GbnZwNxX2VUCTwRQVRT4f5o6T5g1GOFhXErcQ
+         BbkKwEnEr9cnCKnemV1F5q2Z7LEW1cyBQ02a81c2++xRpGk1jNbBm/+8Ew+npwNRFFeg
+         +eRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1717591174; x=1718195974;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nLJqIWJeQNkMBFWQ7v6+RLQIvbPqzd6527VcybskqUQ=;
-        b=QhhEtvf0gz3sFrFGLW9k3P7/fbe5G3pTNp9wFad44TJiCXVSXpEmV/Mx6pWb6LCgzx
-         8t072pzMh/vUSHDtgveumBdUZQeka1b6OEmwESArEU9Cvkmy9goEXqp6tCMFDkYUORRT
-         ZODtPn8O531E63gTIq2urvd3pZ+VChqhv5T5XSv2rE+2ErsUUsByWTK0dQhPsI7EBp/L
-         5Z6GmsHJbSONSlZjntjD1BM0omd1HC8h7t+7NbtrFr82/Pl9bMxHu48b146ZKg57chGL
-         BesqjGfl7kCukx9Tk9Lp8WfMp+X8Vi4mII6WTSJtU/b5ExagSbbZZ8KrolQqoRhyb7sp
-         iuWA==
-X-Gm-Message-State: AOJu0YxACCk9MNSpMY3JMh8OK90g80+7tPnQXZ1Xt4KzN35Hs17SnrS1
-	dCoTvcjpsFrl7lioE6RjR5Mbcy4aQAwP2wNwEO3zE9z7s4HT0RdV6b0wJVsZ4Q8=
-X-Google-Smtp-Source: AGHT+IFkU9V1vqVoPhWtT14MJgaDv5EWKjQeJi+58c7DX4CmjM2wKHZTP6VmBQXo0ZrXi3nXBSbLmw==
-X-Received: by 2002:a05:600c:1c84:b0:420:173f:e1e9 with SMTP id 5b1f17b1804b1-421562dc3b6mr18874035e9.21.1717591173573;
-        Wed, 05 Jun 2024 05:39:33 -0700 (PDT)
-Received: from brgl-uxlite.home ([2a01:cb1d:75a:e000:d3dd:423:e1eb:d88b])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42158148f66sm21992535e9.32.2024.06.05.05.39.32
+        d=1e100.net; s=20230601; t=1717593178; x=1718197978;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dRuEhBSP8JpOWbeVE1ECNF4Ir5HAcGBuRVQPH2ErAi4=;
+        b=YHGlk9IdqzYCAJG9gR/6c2GC2p8ThDp1oadU6+rSXjQ+HCcnoCMEYyeXCqILj263vW
+         Mq83XjElXRcm1/yYTAog1aZubrfElaTWy7yRUAOCnbZTxRb96fMd3DnOlSf1bZE90iC6
+         j8QSGJamVTyCwT62iSiHblH9k9RvuzCRnFQVuL/gTNVfZW1J6dX/YCX+hxgNwMKjXbSg
+         K5YxkNYOtt+wGnxFuCATNd77W99DYdKGIMDXH9lgbuAZUYGzqqj2PDZoSJHgTmW7OPOZ
+         xZqAbAIIGr50Z/4u6bGPouJwKn29w5GrV482LOCDIiQXgRl1/LGJHIS90ynFwY7BYxJu
+         5KIA==
+X-Gm-Message-State: AOJu0YxVICMdsm/wy0fp0anV6FhB5zk7o81JWkTll3houHOn/ivxfRWK
+	mh9ipb+pIWkZ5m4HcSNbfNcJqRNW8c1ySIlSS7nkw+SQaJLReh1lvVMnXA==
+X-Google-Smtp-Source: AGHT+IGhi3V4HaNfT/8dR0x2xkPBN4+1Zldg5WOpGuyf/wSY+g1/aB1RH7D/WVgYSf1pHRh+nQX85w==
+X-Received: by 2002:a05:6358:2809:b0:199:2942:1b32 with SMTP id e5c5f4694b2df-19c6c68f609mr271578955d.8.1717593177935;
+        Wed, 05 Jun 2024 06:12:57 -0700 (PDT)
+Received: from [172.17.0.2] ([40.76.119.170])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6ae4a5964f1sm48315916d6.0.2024.06.05.06.12.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Jun 2024 05:39:33 -0700 (PDT)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-To: Marcel Holtmann <marcel@holtmann.org>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	"David S . Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Kalle Valo <kvalo@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Saravana Kannan <saravanak@google.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Alex Elder <elder@linaro.org>,
-	Srini Kandagatla <srinivas.kandagatla@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Lukas Wunner <lukas@wunner.de>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Amit Pundir <amit.pundir@linaro.org>,
-	Xilin Wu <wuxilin123@gmail.com>
-Cc: linux-bluetooth@vger.kernel.org,
-	netdev@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-wireless@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-pci@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Caleb Connolly <caleb.connolly@linaro.org>
-Subject: [PATCH v9 2/2] power: pwrseq: add a driver for the PMU module on the QCom WCN chipsets
-Date: Wed,  5 Jun 2024 14:38:50 +0200
-Message-ID: <20240605123850.24857-3-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240605123850.24857-1-brgl@bgdev.pl>
-References: <20240605123850.24857-1-brgl@bgdev.pl>
+        Wed, 05 Jun 2024 06:12:57 -0700 (PDT)
+Message-ID: <66606459.050a0220.fad90.570b@mx.google.com>
+Date: Wed, 05 Jun 2024 06:12:57 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============8534803293047653844=="
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: bluez.test.bot@gmail.com
+To: linux-bluetooth@vger.kernel.org, brgl@bgdev.pl
+Subject: RE: pwrseq: introduce the subsystem and first driver
+In-Reply-To: <20240605123850.24857-2-brgl@bgdev.pl>
+References: <20240605123850.24857-2-brgl@bgdev.pl>
+Reply-To: linux-bluetooth@vger.kernel.org
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+--===============8534803293047653844==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-This adds the power sequencing driver for the PMU modules present on the
-Qualcomm WCN Bluetooth and Wifi chipsets. It uses the pwrseq subsystem
-and knows how to match the sequencer to the consumer device by verifying
-the relevant properties and DT layout. Using this driver will allow the
-BT and WLAN drivers to respect the required delays between enabling the
-two modules.
+This is automated email and please do not reply to this email!
 
-Tested-by: Amit Pundir <amit.pundir@linaro.org>
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD, SM8650-QRD & SM8650-HDK
-Tested-by: Caleb Connolly <caleb.connolly@linaro.org> # OnePlus 8T
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- drivers/power/sequencing/Kconfig           |  17 ++
- drivers/power/sequencing/Makefile          |   2 +
- drivers/power/sequencing/pwrseq-qcom-wcn.c | 336 +++++++++++++++++++++
- 3 files changed, 355 insertions(+)
- create mode 100644 drivers/power/sequencing/pwrseq-qcom-wcn.c
+Dear submitter,
 
-diff --git a/drivers/power/sequencing/Kconfig b/drivers/power/sequencing/Kconfig
-index ba5732b1dbf8..c9f1cdb66524 100644
---- a/drivers/power/sequencing/Kconfig
-+++ b/drivers/power/sequencing/Kconfig
-@@ -10,3 +10,20 @@ menuconfig POWER_SEQUENCING
- 	  during power-up.
- 
- 	  If unsure, say no.
-+
-+if POWER_SEQUENCING
-+
-+config POWER_SEQUENCING_QCOM_WCN
-+	tristate "Qualcomm WCN family PMU driver"
-+	default m if ARCH_QCOM
-+	help
-+	  Say Y here to enable the power sequencing driver for Qualcomm
-+	  WCN Bluetooth/WLAN chipsets.
-+
-+	  Typically, a package from the Qualcomm WCN family contains the BT
-+	  and WLAN modules whose power is controlled by the PMU module. As the
-+	  former two share the power-up sequence which is executed by the PMU,
-+	  this driver is needed for correct power control or else we'd risk not
-+	  respecting the required delays between enabling Bluetooth and WLAN.
-+
-+endif
-diff --git a/drivers/power/sequencing/Makefile b/drivers/power/sequencing/Makefile
-index dcdf8c0c159e..2eec2df7912d 100644
---- a/drivers/power/sequencing/Makefile
-+++ b/drivers/power/sequencing/Makefile
-@@ -2,3 +2,5 @@
- 
- obj-$(CONFIG_POWER_SEQUENCING)		+= pwrseq-core.o
- pwrseq-core-y				:= core.o
-+
-+obj-$(CONFIG_POWER_SEQUENCING_QCOM_WCN)	+= pwrseq-qcom-wcn.o
-diff --git a/drivers/power/sequencing/pwrseq-qcom-wcn.c b/drivers/power/sequencing/pwrseq-qcom-wcn.c
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=859074
+
+---Test result---
+
+Test Summary:
+CheckPatch                    FAIL      5.03 seconds
+GitLint                       FAIL      0.82 seconds
+SubjectPrefix                 FAIL      0.48 seconds
+BuildKernel                   PASS      30.02 seconds
+CheckAllWarning               PASS      32.76 seconds
+CheckSparse                   PASS      38.99 seconds
+CheckSmatch                   FAIL      35.25 seconds
+BuildKernel32                 PASS      29.18 seconds
+TestRunnerSetup               PASS      530.88 seconds
+TestRunner_l2cap-tester       PASS      18.53 seconds
+TestRunner_iso-tester         PASS      32.68 seconds
+TestRunner_bnep-tester        PASS      4.91 seconds
+TestRunner_mgmt-tester        FAIL      116.67 seconds
+TestRunner_rfcomm-tester      PASS      7.49 seconds
+TestRunner_sco-tester         PASS      17.12 seconds
+TestRunner_ioctl-tester       PASS      8.42 seconds
+TestRunner_mesh-tester        PASS      6.08 seconds
+TestRunner_smp-tester         PASS      7.05 seconds
+TestRunner_userchan-tester    PASS      5.10 seconds
+IncrementalBuild              PASS      33.20 seconds
+
+Details
+##############################
+Test: CheckPatch - FAIL
+Desc: Run checkpatch.pl script
+Output:
+[v9,1/2] power: sequencing: implement the pwrseq core
+WARNING: ENOSYS means 'invalid syscall nr' and nothing else
+#1374: FILE: include/linux/pwrseq/consumer.h:31:
++	return ERR_PTR(-ENOSYS);
+
+WARNING: ENOSYS means 'invalid syscall nr' and nothing else
+#1384: FILE: include/linux/pwrseq/consumer.h:41:
++	return ERR_PTR(-ENOSYS);
+
+WARNING: ENOSYS means 'invalid syscall nr' and nothing else
+#1389: FILE: include/linux/pwrseq/consumer.h:46:
++	return -ENOSYS;
+
+WARNING: ENOSYS means 'invalid syscall nr' and nothing else
+#1394: FILE: include/linux/pwrseq/consumer.h:51:
++	return -ENOSYS;
+
+total: 0 errors, 4 warnings, 1274 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/github/workspace/src/src/13686797.patch has style problems, please review.
+
+NOTE: Ignored message types: UNKNOWN_COMMIT_ID
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+[v9,2/2] power: pwrseq: add a driver for the PMU module on the QCom WCN chipsets
+WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+#192: 
 new file mode 100644
-index 000000000000..42dacfda745e
---- /dev/null
-+++ b/drivers/power/sequencing/pwrseq-qcom-wcn.c
-@@ -0,0 +1,336 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (C) 2024 Linaro Ltd.
-+ */
-+
-+#include <linux/clk.h>
-+#include <linux/delay.h>
-+#include <linux/device.h>
-+#include <linux/gpio/consumer.h>
-+#include <linux/jiffies.h>
-+#include <linux/mod_devicetable.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+#include <linux/platform_device.h>
-+#include <linux/regulator/consumer.h>
-+#include <linux/pwrseq/provider.h>
-+#include <linux/string.h>
-+#include <linux/types.h>
-+
-+struct pwrseq_qcom_wcn_pdata {
-+	const char *const *vregs;
-+	size_t num_vregs;
-+	unsigned int pwup_delay_ms;
-+	unsigned int gpio_enable_delay_ms;
-+};
-+
-+struct pwrseq_qcom_wcn_ctx {
-+	struct pwrseq_device *pwrseq;
-+	struct device_node *of_node;
-+	const struct pwrseq_qcom_wcn_pdata *pdata;
-+	struct regulator_bulk_data *regs;
-+	struct gpio_desc *bt_gpio;
-+	struct gpio_desc *wlan_gpio;
-+	struct clk *clk;
-+	unsigned long last_gpio_enable_jf;
-+};
-+
-+static void pwrseq_qcom_wcn_ensure_gpio_delay(struct pwrseq_qcom_wcn_ctx *ctx)
-+{
-+	unsigned long diff_jiffies;
-+	unsigned int diff_msecs;
-+
-+	if (!ctx->pdata->gpio_enable_delay_ms)
-+		return;
-+
-+	diff_jiffies = jiffies - ctx->last_gpio_enable_jf;
-+	diff_msecs = jiffies_to_msecs(diff_jiffies);
-+
-+	if (diff_msecs < ctx->pdata->gpio_enable_delay_ms)
-+		msleep(ctx->pdata->gpio_enable_delay_ms - diff_msecs);
-+}
-+
-+static int pwrseq_qcom_wcn_vregs_enable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_qcom_wcn_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	return regulator_bulk_enable(ctx->pdata->num_vregs, ctx->regs);
-+}
-+
-+static int pwrseq_qcom_wcn_vregs_disable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_qcom_wcn_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	return regulator_bulk_disable(ctx->pdata->num_vregs, ctx->regs);
-+}
-+
-+static const struct pwrseq_unit_data pwrseq_qcom_wcn_vregs_unit_data = {
-+	.name = "regulators-enable",
-+	.enable = pwrseq_qcom_wcn_vregs_enable,
-+	.disable = pwrseq_qcom_wcn_vregs_disable,
-+};
-+
-+static int pwrseq_qcom_wcn_clk_enable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_qcom_wcn_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	return clk_prepare_enable(ctx->clk);
-+}
-+
-+static int pwrseq_qcom_wcn_clk_disable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_qcom_wcn_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	clk_disable_unprepare(ctx->clk);
-+
-+	return 0;
-+}
-+
-+static const struct pwrseq_unit_data pwrseq_qcom_wcn_clk_unit_data = {
-+	.name = "clock-enable",
-+	.enable = pwrseq_qcom_wcn_clk_enable,
-+	.disable = pwrseq_qcom_wcn_clk_disable,
-+};
-+
-+static const struct pwrseq_unit_data *pwrseq_qcom_wcn_unit_deps[] = {
-+	&pwrseq_qcom_wcn_vregs_unit_data,
-+	&pwrseq_qcom_wcn_clk_unit_data,
-+	NULL
-+};
-+
-+static int pwrseq_qcom_wcn_bt_enable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_qcom_wcn_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	pwrseq_qcom_wcn_ensure_gpio_delay(ctx);
-+	gpiod_set_value_cansleep(ctx->bt_gpio, 1);
-+	ctx->last_gpio_enable_jf = jiffies;
-+
-+	return 0;
-+}
-+
-+static int pwrseq_qcom_wcn_bt_disable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_qcom_wcn_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	gpiod_set_value_cansleep(ctx->bt_gpio, 0);
-+
-+	return 0;
-+}
-+
-+static const struct pwrseq_unit_data pwrseq_qcom_wcn_bt_unit_data = {
-+	.name = "bluetooth-enable",
-+	.deps = pwrseq_qcom_wcn_unit_deps,
-+	.enable = pwrseq_qcom_wcn_bt_enable,
-+	.disable = pwrseq_qcom_wcn_bt_disable,
-+};
-+
-+static int pwrseq_qcom_wcn_wlan_enable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_qcom_wcn_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	pwrseq_qcom_wcn_ensure_gpio_delay(ctx);
-+	gpiod_set_value_cansleep(ctx->wlan_gpio, 1);
-+	ctx->last_gpio_enable_jf = jiffies;
-+
-+	return 0;
-+}
-+
-+static int pwrseq_qcom_wcn_wlan_disable(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_qcom_wcn_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	gpiod_set_value_cansleep(ctx->wlan_gpio, 0);
-+
-+	return 0;
-+}
-+
-+static const struct pwrseq_unit_data pwrseq_qcom_wcn_wlan_unit_data = {
-+	.name = "wlan-enable",
-+	.deps = pwrseq_qcom_wcn_unit_deps,
-+	.enable = pwrseq_qcom_wcn_wlan_enable,
-+	.disable = pwrseq_qcom_wcn_wlan_disable,
-+};
-+
-+static int pwrseq_qcom_wcn_pwup_delay(struct pwrseq_device *pwrseq)
-+{
-+	struct pwrseq_qcom_wcn_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+
-+	if (ctx->pdata->pwup_delay_ms)
-+		msleep(ctx->pdata->pwup_delay_ms);
-+
-+	return 0;
-+}
-+
-+static const struct pwrseq_target_data pwrseq_qcom_wcn_bt_target_data = {
-+	.name = "bluetooth",
-+	.unit = &pwrseq_qcom_wcn_bt_unit_data,
-+	.post_enable = pwrseq_qcom_wcn_pwup_delay,
-+};
-+
-+static const struct pwrseq_target_data pwrseq_qcom_wcn_wlan_target_data = {
-+	.name = "wlan",
-+	.unit = &pwrseq_qcom_wcn_wlan_unit_data,
-+	.post_enable = pwrseq_qcom_wcn_pwup_delay,
-+};
-+
-+static const struct pwrseq_target_data *pwrseq_qcom_wcn_targets[] = {
-+	&pwrseq_qcom_wcn_bt_target_data,
-+	&pwrseq_qcom_wcn_wlan_target_data,
-+	NULL
-+};
-+
-+static const char *const pwrseq_qca6390_vregs[] = {
-+	"vddio",
-+	"vddaon",
-+	"vddpmu",
-+	"vddrfa0p95",
-+	"vddrfa1p3",
-+	"vddrfa1p9",
-+	"vddpcie1p3",
-+	"vddpcie1p9",
-+};
-+
-+static const struct pwrseq_qcom_wcn_pdata pwrseq_qca6390_of_data = {
-+	.vregs = pwrseq_qca6390_vregs,
-+	.num_vregs = ARRAY_SIZE(pwrseq_qca6390_vregs),
-+	.pwup_delay_ms = 60,
-+	.gpio_enable_delay_ms = 100,
-+};
-+
-+static const char *const pwrseq_wcn7850_vregs[] = {
-+	"vdd",
-+	"vddio",
-+	"vddio1p2",
-+	"vddaon",
-+	"vdddig",
-+	"vddrfa1p2",
-+	"vddrfa1p8",
-+};
-+
-+static const struct pwrseq_qcom_wcn_pdata pwrseq_wcn7850_of_data = {
-+	.vregs = pwrseq_wcn7850_vregs,
-+	.num_vregs = ARRAY_SIZE(pwrseq_wcn7850_vregs),
-+	.pwup_delay_ms = 50,
-+};
-+
-+static int pwrseq_qcom_wcn_match(struct pwrseq_device *pwrseq,
-+				 struct device *dev)
-+{
-+	struct pwrseq_qcom_wcn_ctx *ctx = pwrseq_device_get_drvdata(pwrseq);
-+	struct device_node *dev_node = dev->of_node;
-+
-+	/*
-+	 * The PMU supplies power to the Bluetooth and WLAN modules. both
-+	 * consume the PMU AON output so check the presence of the
-+	 * 'vddaon-supply' property and whether it leads us to the right
-+	 * device.
-+	 */
-+	if (!of_property_present(dev_node, "vddaon-supply"))
-+		return 0;
-+
-+	struct device_node *reg_node __free(device_node) =
-+			of_parse_phandle(dev_node, "vddaon-supply", 0);
-+	if (!reg_node)
-+		return 0;
-+
-+	/*
-+	 * `reg_node` is the PMU AON regulator, its parent is the `regulators`
-+	 * node and finally its grandparent is the PMU device node that we're
-+	 * looking for.
-+	 */
-+	if (!reg_node->parent || !reg_node->parent->parent ||
-+	    reg_node->parent->parent != ctx->of_node)
-+		return 0;
-+
-+	return 1;
-+}
-+
-+static int pwrseq_qcom_wcn_probe(struct platform_device *pdev)
-+{
-+	struct device *dev = &pdev->dev;
-+	struct pwrseq_qcom_wcn_ctx *ctx;
-+	struct pwrseq_config config;
-+	int i, ret;
-+
-+	ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
-+	if (!ctx)
-+		return -ENOMEM;
-+
-+	ctx->of_node = dev->of_node;
-+
-+	ctx->pdata = of_device_get_match_data(dev);
-+	if (!ctx->pdata)
-+		return dev_err_probe(dev, -ENODEV,
-+				     "Failed to obtain platform data\n");
-+
-+	ctx->regs = devm_kcalloc(dev, ctx->pdata->num_vregs,
-+				 sizeof(*ctx->regs), GFP_KERNEL);
-+	if (!ctx->regs)
-+		return -ENOMEM;
-+
-+	for (i = 0; i < ctx->pdata->num_vregs; i++)
-+		ctx->regs[i].supply = ctx->pdata->vregs[i];
-+
-+	ret = devm_regulator_bulk_get(dev, ctx->pdata->num_vregs, ctx->regs);
-+	if (ret < 0)
-+		return dev_err_probe(dev, ret,
-+				     "Failed to get all regulators\n");
-+
-+	ctx->bt_gpio = devm_gpiod_get_optional(dev, "bt-enable", GPIOD_OUT_LOW);
-+	if (IS_ERR(ctx->bt_gpio))
-+		return dev_err_probe(dev, PTR_ERR(ctx->bt_gpio),
-+				     "Failed to get the Bluetooth enable GPIO\n");
-+
-+	ctx->wlan_gpio = devm_gpiod_get_optional(dev, "wlan-enable",
-+						 GPIOD_OUT_LOW);
-+	if (IS_ERR(ctx->wlan_gpio))
-+		return dev_err_probe(dev, PTR_ERR(ctx->wlan_gpio),
-+				     "Failed to get the WLAN enable GPIO\n");
-+
-+	ctx->clk = devm_clk_get_optional(dev, NULL);
-+	if (IS_ERR(ctx->clk))
-+		return dev_err_probe(dev, PTR_ERR(ctx->clk),
-+				     "Failed to get the reference clock\n");
-+
-+	memset(&config, 0, sizeof(config));
-+
-+	config.parent = dev;
-+	config.owner = THIS_MODULE;
-+	config.drvdata = ctx;
-+	config.match = pwrseq_qcom_wcn_match;
-+	config.targets = pwrseq_qcom_wcn_targets;
-+
-+	ctx->pwrseq = devm_pwrseq_device_register(dev, &config);
-+	if (IS_ERR(ctx->pwrseq))
-+		return dev_err_probe(dev, PTR_ERR(ctx->pwrseq),
-+				     "Failed to register the power sequencer\n");
-+
-+	return 0;
-+}
-+
-+static const struct of_device_id pwrseq_qcom_wcn_of_match[] = {
-+	{
-+		.compatible = "qcom,qca6390-pmu",
-+		.data = &pwrseq_qca6390_of_data,
-+	},
-+	{
-+		.compatible = "qcom,wcn7850-pmu",
-+		.data = &pwrseq_wcn7850_of_data,
-+	},
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, pwrseq_qcom_wcn_of_match);
-+
-+static struct platform_driver pwrseq_qcom_wcn_driver = {
-+	.driver = {
-+		.name = "pwrseq-qcom_wcn",
-+		.of_match_table = pwrseq_qcom_wcn_of_match,
-+	},
-+	.probe = pwrseq_qcom_wcn_probe,
-+};
-+module_platform_driver(pwrseq_qcom_wcn_driver);
-+
-+MODULE_AUTHOR("Bartosz Golaszewski <bartosz.golaszewski@linaro.org>");
-+MODULE_DESCRIPTION("Qualcomm WCN PMU power sequencing driver");
-+MODULE_LICENSE("GPL");
--- 
-2.40.1
 
+WARNING: DT compatible string "qcom,qca6390-pmu" appears un-documented -- check ./Documentation/devicetree/bindings/
+#510: FILE: drivers/power/sequencing/pwrseq-qcom-wcn.c:314:
++		.compatible = "qcom,qca6390-pmu",
+
+WARNING: DT compatible string "qcom,wcn7850-pmu" appears un-documented -- check ./Documentation/devicetree/bindings/
+#514: FILE: drivers/power/sequencing/pwrseq-qcom-wcn.c:318:
++		.compatible = "qcom,wcn7850-pmu",
+
+total: 0 errors, 3 warnings, 361 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/github/workspace/src/src/13686796.patch has style problems, please review.
+
+NOTE: Ignored message types: UNKNOWN_COMMIT_ID
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+##############################
+Test: GitLint - FAIL
+Desc: Run gitlint
+Output:
+[v9,1/2] power: sequencing: implement the pwrseq core
+
+WARNING: I3 - ignore-body-lines: gitlint will be switching from using Python regex 'match' (match beginning) to 'search' (match anywhere) semantics. Please review your ignore-body-lines.regex option accordingly. To remove this warning, set general.regex-style-search=True. More details: https://jorisroovers.github.io/gitlint/configuration/#regex-style-search
+11: B1 Line exceeds max length (94>80): "Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD, SM8650-QRD & SM8650-HDK"
+[v9,2/2] power: pwrseq: add a driver for the PMU module on the QCom WCN chipsets
+
+WARNING: I3 - ignore-body-lines: gitlint will be switching from using Python regex 'match' (match beginning) to 'search' (match anywhere) semantics. Please review your ignore-body-lines.regex option accordingly. To remove this warning, set general.regex-style-search=True. More details: https://jorisroovers.github.io/gitlint/configuration/#regex-style-search
+13: B1 Line exceeds max length (94>80): "Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD, SM8650-QRD & SM8650-HDK"
+##############################
+Test: SubjectPrefix - FAIL
+Desc: Check subject contains "Bluetooth" prefix
+Output:
+"Bluetooth: " prefix is not specified in the subject
+"Bluetooth: " prefix is not specified in the subject
+##############################
+Test: CheckSmatch - FAIL
+Desc: Run smatch tool with source
+Output:
+
+Segmentation fault (core dumped)
+make[4]: *** [scripts/Makefile.build:244: net/bluetooth/hci_core.o] Error 139
+make[4]: *** Deleting file 'net/bluetooth/hci_core.o'
+make[3]: *** [scripts/Makefile.build:485: net/bluetooth] Error 2
+make[2]: *** [scripts/Makefile.build:485: net] Error 2
+make[2]: *** Waiting for unfinished jobs....
+Segmentation fault (core dumped)
+make[4]: *** [scripts/Makefile.build:244: drivers/bluetooth/bcm203x.o] Error 139
+make[4]: *** Deleting file 'drivers/bluetooth/bcm203x.o'
+make[4]: *** Waiting for unfinished jobs....
+make[3]: *** [scripts/Makefile.build:485: drivers/bluetooth] Error 2
+make[2]: *** [scripts/Makefile.build:485: drivers] Error 2
+make[1]: *** [/github/workspace/src/src/Makefile:1919: .] Error 2
+make: *** [Makefile:240: __sub-make] Error 2
+##############################
+Test: TestRunner_mgmt-tester - FAIL
+Desc: Run mgmt-tester with test-runner
+Output:
+Total: 492, Passed: 488 (99.2%), Failed: 2, Not Run: 2
+
+Failed Test Cases
+LL Privacy - Add Device 5 (2 Devices to RL)          Failed       0.165 seconds
+LL Privacy - Remove Device 4 (Disable Adv)           Timed out    2.353 seconds
+
+
+---
+Regards,
+Linux Bluetooth
+
+
+--===============8534803293047653844==--
 
