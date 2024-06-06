@@ -1,347 +1,178 @@
-Return-Path: <linux-bluetooth+bounces-5179-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5182-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80D998FF4AA
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Jun 2024 20:31:07 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E42C8FF50B
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Jun 2024 20:59:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5FD981C26C47
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Jun 2024 18:31:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1AB2928AFF6
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Jun 2024 18:59:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFF43481DD;
-	Thu,  6 Jun 2024 18:30:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B02D34F5FB;
+	Thu,  6 Jun 2024 18:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kemnade.info header.i=@kemnade.info header.b="PGDAZ2wx"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XT+pu/wd"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail2.andi.de1.cc (vmd64148.contaboserver.net [161.97.139.27])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D523B79F;
-	Thu,  6 Jun 2024 18:30:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=161.97.139.27
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBED81BC3C
+	for <linux-bluetooth@vger.kernel.org>; Thu,  6 Jun 2024 18:59:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1717698648; cv=none; b=awbjD4qZjE4v7Zz7HbFrnRQs899JbV6mduS4Rq9MS+M+FkhilHF7bjGJXJLXPdrOSsizjd37KBWrq0JazxTTPV8itYj/G5vMezDvJ2w2OZNOeIv3ZDkWEsHC3foyEBCSpJM9iAEZzz+4ZmOfNDUMhj1FsDAvZBWBXHLuVKGM5ZI=
+	t=1717700361; cv=none; b=O20C7KFDFLs28iOzYnci/2eNdr9BBOBnVO4ynZIt/DrUeKbtmLYll6I7qTtUUb8j93AN15vbd+uvnpV9OeCKluisjjVbzGi3/h6cN5EmUp2A0dFeimb8ATfG1AQGm6EESI42HEpwspnha2t36Elu0kjn2ZT1QdD+DrFIrNTxUDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1717698648; c=relaxed/simple;
-	bh=audM1GFMFlK0723o2y3zV7ty4VIfDO8jaEerO3PeTN0=;
-	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=daD6Aw34ixvSVMdKzYHF39DI4WQxdEh+w/yoQ/8JwbcA4UeMZOfRkHIYvDNXg9pwj3lMzFpp1ai9eQXSiK9nnWgQEBv+xT+0yr+07zKZDzzGZTNw2os8eUlBDWSG5LXf+dGGxgZ9mWyGgEo/bs9RBQG2hlru3HYpS+RMDtYnPkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kemnade.info; spf=pass smtp.mailfrom=kemnade.info; dkim=pass (2048-bit key) header.d=kemnade.info header.i=@kemnade.info header.b=PGDAZ2wx; arc=none smtp.client-ip=161.97.139.27
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kemnade.info
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kemnade.info
-Received: from mail.andi.de1.cc ([2a02:c205:3004:2154::1])
-	by mail2.andi.de1.cc with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <andreas@kemnade.info>)
-	id 1sFHsp-0090wt-0N;
-	Thu, 06 Jun 2024 20:30:44 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=kemnade.info; s=20220719; h=Content-Transfer-Encoding:MIME-Version:
-	References:In-Reply-To:Message-Id:Date:Subject:To:From:Sender:Reply-To:Cc:
-	Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=/wRtwRt7d5bwW8PrzaTjfLtLqO+p3QGKLvHTBjCKdYg=; b=PGDAZ2wxfmD5rDL7K2/WWKZNUq
-	Nrhd+fkmeFKYCYGcx5SypVZIBt8G7BNVaGq1ct2gajEpVWdZB2WGM7ExJXhf1T1D4PFB7uMBWVKNI
-	ZR1ZXjCzNXEgQbwJo03MDz3qqj2U0gEdXONAaAwnPrPEQpFwXDbRKWZ8DdxJJChTR1s5MZ9i6L1tD
-	aK4IOPTu1E8B2pRFKIjhy8z7llEBR8X4zyqyS9BiZvZYbt53xkZwq2kzrq09yeS5MwZ8zQoK5xiZ3
-	CdMAder8gNw/5Z2QGgW4lYh8ZUHy6UCFzFE0UYeT3cTJQVZdnwdo4y1f60QXFczSp5l+9YFYFnKVH
-	Fra0jnlQ==;
-Received: from p200300c20737c2001a3da2fffebfd33a.dip0.t-ipconnect.de ([2003:c2:737:c200:1a3d:a2ff:febf:d33a] helo=aktux)
-	by mail.andi.de1.cc with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <andreas@kemnade.info>)
-	id 1sFHsn-002nvz-0A;
-	Thu, 06 Jun 2024 20:30:42 +0200
-Received: from andi by aktux with local (Exim 4.96)
-	(envelope-from <andreas@kemnade.info>)
-	id 1sFHsn-002s4g-3D;
-	Thu, 06 Jun 2024 20:30:42 +0200
-From: Andreas Kemnade <andreas@kemnade.info>
-To: marcel@holtmann.org,
-	luiz.dentz@gmail.com,
-	johan@kernel.org,
-	pmenzel@molgen.mpg.de,
-	jirislaby@kernel.org,
-	andreas@kemnade.info,
-	gregkh@linuxfoundation.org,
-	linux-kernel@vger.kernel.org,
-	linux-bluetooth@vger.kernel.org,
-	Adam Ford <aford173@gmail.com>,
-	Tony Lindgren <tony@atomide.com>,
-	tomi.valkeinen@ideasonboard.com,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@gmail.com>,
-	robh@kernel.org,
-	hns@goldelico.com
-Subject: [PATCH RFC v4 4/4] gnss: ai2: replace long sleeps by wait for acks
-Date: Thu,  6 Jun 2024 20:30:32 +0200
-Message-Id: <20240606183032.684481-5-andreas@kemnade.info>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240606183032.684481-1-andreas@kemnade.info>
-References: <20240606183032.684481-1-andreas@kemnade.info>
+	s=arc-20240116; t=1717700361; c=relaxed/simple;
+	bh=cmaMKKcWQjMGaiXztfofzHOoY6rWnlyRbSh1jiQUIdM=;
+	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
+	 In-Reply-To:References; b=DslsvjXcZjstam0Ms+5KidU6iAqE+ja11RzLQ6ObiXvJlTpZuj+cVVoTVxInnMJ3EyMFp4Nv//oQPpbOUi2XKyD7gWf3Fpo1E4+50pRgNn68OWfS0TpfhHwac+ArutY6WlQVqfY0cxh2a9Yx/duZNn+giha+vPurelhSo5jEVyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XT+pu/wd; arc=none smtp.client-ip=209.85.161.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-5ba69e446f4so537687eaf.2
+        for <linux-bluetooth@vger.kernel.org>; Thu, 06 Jun 2024 11:59:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1717700359; x=1718305159; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=ogeuq0Xr9ikxHxHvtgCh/UPfCVB4Y8wAOkEeZwZOatw=;
+        b=XT+pu/wdrH0OJ5WkICIZh69sO4fqmwpmrjwfK2oY5V9F1xQsRb48/+YuxRwZgAAX4F
+         KKgkjCMVjPg6L+rVDN6M5NNkkynuGoEFz+SfJijQS6X91oX74gHh80l6QciN7++Hpnvs
+         v0sLyg7keY1tU/gnd/2k/d/yNqLiGoXhQrfAqDVR41qUB4swjCxKTCOKg4NsVeuwp+He
+         NIEiOhdYo+29m9h5jLxl71suKFnF9WKlKJ54YspIHCJ73c36hnhv54rGq44d7dZfT4K2
+         5DV/4qgIkxkKnXJ2BmY+fhTxk/P1FUaEyqZfBfyzah18kD9dlVJ3lGgbLtqvhQpQhWNI
+         T9hQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1717700359; x=1718305159;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ogeuq0Xr9ikxHxHvtgCh/UPfCVB4Y8wAOkEeZwZOatw=;
+        b=Rcx/T1ggpH2q4F12aJ9MqEjKpCAuiYW5B1kqKCut37lqgXI1wal3Yfnz42Z/YOUY5m
+         ZFVmSogzJwh6awm9CHNOtmNVQjGrVnnh/USGiK4/y3EpHVO3nFTkmGKj21g/FyZLKEWv
+         aq3ACtE5JsS/prs7//Ooag+fHNHgq1EYBqOKEoKwyzwIuKLrzHjWrnYnHnFAR0Qlkp87
+         IDwrZ55T/y7kfqyRt/4Fyv8KVKtXhz/6O6h9YVxA1fl3pzGsoYonzJDFFsH9ysR0Cd4d
+         sAN1c3WwMpJHMebGlYn8t+U3n+Ctwuskm7i5d8bz1/l+kLtjmfzouzvDdD4HkHZI9Xqg
+         8bWw==
+X-Gm-Message-State: AOJu0YxlWGCeKSH4kttfzSbierbKWwxIpChXT6s+ctuRCIU/IaxzIW7t
+	cjHHoNRGKY3fvjVGCNETeRpOLpPZdMA7o8Rn99hyDKVJ+gtsllQf3CpKJw==
+X-Google-Smtp-Source: AGHT+IG3G8gSHvHETIkO1tLIeerKOjIcM+zvslp3/nGK/92fyIO913I5c7Eh/gqkNHaDiBr4JM1YZA==
+X-Received: by 2002:a05:6359:4c8d:b0:19f:1c23:e809 with SMTP id e5c5f4694b2df-19f1fd005d2mr75858955d.6.1717700358278;
+        Thu, 06 Jun 2024 11:59:18 -0700 (PDT)
+Received: from [172.17.0.2] ([172.190.111.254])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6b04f9891b8sm8656356d6.101.2024.06.06.11.59.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Jun 2024 11:59:18 -0700 (PDT)
+Message-ID: <66620706.050a0220.30331c.3aac@mx.google.com>
+Date: Thu, 06 Jun 2024 11:59:18 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============8775745180764138738=="
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: bluez.test.bot@gmail.com
+To: linux-bluetooth@vger.kernel.org, andreas@kemnade.info
+Subject: RE: Bluetooth/gnss: GNSS support for TiWi chips
+In-Reply-To: <20240606183032.684481-2-andreas@kemnade.info>
+References: <20240606183032.684481-2-andreas@kemnade.info>
+Reply-To: linux-bluetooth@vger.kernel.org
 
-Previously there were long sleeps for everything sent out.
-Replace the sleeps by some wait for completion.
-Wait times like 60ms are seen.
-There are ack packets sent out if requested. Unfortunately
-just waiting for them seems not stable, some open()/close()
-loop stress-testing brings the communication into complete
-disorder. Unfortunately these ack packets arrive before
-a complete answer of the command has been received but
-apparently after some processing has been done.
-Properly declaring expected answers might help but adding
-that can only be justified after some wider testing.
+--===============8775745180764138738==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-So leaving this part of the series as a RFC and base
-for future optimzations.
+This is automated email and please do not reply to this email!
 
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=859667
+
+---Test result---
+
+Test Summary:
+CheckPatch                    FAIL      3.96 seconds
+GitLint                       PASS      1.28 seconds
+SubjectPrefix                 FAIL      4.71 seconds
+BuildKernel                   PASS      28.53 seconds
+CheckAllWarning               PASS      31.36 seconds
+CheckSparse                   PASS      37.23 seconds
+CheckSmatch                   FAIL      33.96 seconds
+BuildKernel32                 PASS      27.60 seconds
+TestRunnerSetup               PASS      510.26 seconds
+TestRunner_l2cap-tester       PASS      18.14 seconds
+TestRunner_iso-tester         PASS      30.23 seconds
+TestRunner_bnep-tester        PASS      4.79 seconds
+TestRunner_mgmt-tester        PASS      110.24 seconds
+TestRunner_rfcomm-tester      PASS      7.33 seconds
+TestRunner_sco-tester         PASS      14.99 seconds
+TestRunner_ioctl-tester       PASS      7.80 seconds
+TestRunner_mesh-tester        PASS      5.89 seconds
+TestRunner_smp-tester         PASS      6.82 seconds
+TestRunner_userchan-tester    PASS      4.97 seconds
+IncrementalBuild              PASS      40.97 seconds
+
+Details
+##############################
+Test: CheckPatch - FAIL
+Desc: Run checkpatch.pl script
+Output:
+[v4,3/4] gnss: Add driver for AI2 protocol
+WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+#139: 
+new file mode 100644
+
+total: 0 errors, 1 warnings, 551 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/github/workspace/src/src/13688879.patch has style problems, please review.
+
+NOTE: Ignored message types: UNKNOWN_COMMIT_ID
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+##############################
+Test: SubjectPrefix - FAIL
+Desc: Check subject contains "Bluetooth" prefix
+Output:
+"Bluetooth: " prefix is not specified in the subject
+"Bluetooth: " prefix is not specified in the subject
+"Bluetooth: " prefix is not specified in the subject
+##############################
+Test: CheckSmatch - FAIL
+Desc: Run smatch tool with source
+Output:
+
+Segmentation fault (core dumped)
+make[4]: *** [scripts/Makefile.build:244: net/bluetooth/hci_core.o] Error 139
+make[4]: *** Deleting file 'net/bluetooth/hci_core.o'
+make[3]: *** [scripts/Makefile.build:485: net/bluetooth] Error 2
+make[2]: *** [scripts/Makefile.build:485: net] Error 2
+make[2]: *** Waiting for unfinished jobs....
+Segmentation fault (core dumped)
+make[4]: *** [scripts/Makefile.build:244: drivers/bluetooth/bcm203x.o] Error 139
+make[4]: *** Deleting file 'drivers/bluetooth/bcm203x.o'
+make[4]: *** Waiting for unfinished jobs....
+make[3]: *** [scripts/Makefile.build:485: drivers/bluetooth] Error 2
+make[2]: *** [scripts/Makefile.build:485: drivers] Error 2
+make[1]: *** [/github/workspace/src/src/Makefile:1919: .] Error 2
+make: *** [Makefile:240: __sub-make] Error 2
+
+
 ---
- drivers/gnss/ai2.c | 110 +++++++++++++++++++++++++++++----------------
- 1 file changed, 71 insertions(+), 39 deletions(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/drivers/gnss/ai2.c b/drivers/gnss/ai2.c
-index 930c065050917..be72fb7fcc272 100644
---- a/drivers/gnss/ai2.c
-+++ b/drivers/gnss/ai2.c
-@@ -6,6 +6,7 @@
-  * Copyright (C) 2024 Andreas Kemnade <andreas@kemnade.info>
-  */
- #include <asm/byteorder.h>
-+#include <linux/completion.h>
- #include <linux/errno.h>
- #include <linux/gnss.h>
- #include <linux/init.h>
-@@ -68,6 +69,16 @@ struct ai2_device {
- 	struct device *dev;
- 	struct sk_buff *recv_skb;
- 	bool recv_esc;
-+	/*
-+	 * completion for the lower level around
-+	 * GPS_CH9_OP_COMPLETED_EVT
-+	 * probably more important if we send large
-+	 * fragmented packets
-+	 */
-+	struct completion ch9_complete;
-+
-+	/* completion for AI2 ack packets */
-+	struct completion ai2_ack_complete;
- };
- 
- static struct sk_buff *ai2_skb_alloc(unsigned int len, gfp_t how)
-@@ -87,6 +98,7 @@ static int ai2_send_frame(struct ai2_device *ai2dev,
- 	int len;
- 	struct gps_event_hdr *gnssdrv_hdr;
- 	struct hci_dev *hdev;
-+	int ret;
- 
- 	if (skb->len >= U16_MAX)
- 		return -EINVAL;
-@@ -96,13 +108,25 @@ static int ai2_send_frame(struct ai2_device *ai2dev,
- 	 * not needed for simple config commands
- 	 */
- 	len = skb->len;
-+	print_hex_dump_bytes("ai2 send frame: ", DUMP_PREFIX_OFFSET, skb->data, skb->len);
-+
- 	gnssdrv_hdr = skb_push(skb, sizeof(struct gps_event_hdr));
- 	gnssdrv_hdr->opcode = GPS_CH9_OP_WRITE;
- 	gnssdrv_hdr->plen = __cpu_to_le16(len);
--
- 	hci_skb_pkt_type(skb) = GPS_CH9_PKT_NUMBER;
- 	hdev = st_get_hci(ai2dev->dev->parent);
--	return hdev->send(hdev, skb);
-+	reinit_completion(&ai2dev->ch9_complete);
-+
-+	ret = hdev->send(hdev, skb);
-+	if (ret)
-+		return ret;
-+
-+	if (!wait_for_completion_timeout(&ai2dev->ch9_complete,
-+					 msecs_to_jiffies(2000)))
-+		return -ETIMEDOUT;
-+	dev_dbg(ai2dev->dev, "send finished\n");
-+
-+	return 0;
- }
- 
- static void ai2_put_escaped(struct sk_buff *skb, u8 d)
-@@ -151,30 +175,50 @@ static struct sk_buff *ai2_compose_frame(bool request_ack,
- 	return skb;
- }
- 
--static int ai2_set_receiver_state(struct ai2_device *ai2dev,
--					      uint8_t state)
-+static int ai2_compose_send_frame(struct ai2_device *ai2dev,
-+				  bool request_ack,
-+				  u8 cmd,
-+				  const u8 *data,
-+				  int len)
- {
--	struct sk_buff *skb = ai2_compose_frame(true, AI2_CMD_RECEIVER_STATE,
--						&state, 1);
-+	struct sk_buff *skb = ai2_compose_frame(request_ack, cmd, data, len);
- 	if (!skb)
- 		return -ENOMEM;
- 
-+	if (request_ack) {
-+		int ret;
-+
-+		reinit_completion(&ai2dev->ai2_ack_complete);
-+
-+		ret = ai2_send_frame(ai2dev, skb);
-+		if (ret)
-+			return ret;
-+
-+		if (!wait_for_completion_timeout(&ai2dev->ai2_ack_complete,
-+						 msecs_to_jiffies(2000)))
-+			return -ETIMEDOUT;
-+
-+		return 0;
-+	}
-+
- 	return ai2_send_frame(ai2dev, skb);
- }
- 
-+static int ai2_set_receiver_state(struct ai2_device *ai2dev,
-+				  uint8_t state)
-+{
-+	return ai2_compose_send_frame(ai2dev, true, AI2_CMD_RECEIVER_STATE,
-+				      &state, 1);
-+}
-+
- static int ai2_config_nmea_reports(struct ai2_device *ai2dev,
- 				   uint8_t mask)
- {
- 	u8 buf[4] = {0};
--	struct sk_buff *skb;
- 
- 	buf[0] = mask;
--	skb = ai2_compose_frame(true, AI2_CMD_CONFIG_NMEA,
--				buf, sizeof(buf));
--	if (!skb)
--		return -ENOMEM;
--
--	return ai2_send_frame(ai2dev, skb);
-+	return ai2_compose_send_frame(ai2dev, true, AI2_CMD_CONFIG_NMEA,
-+				      buf, sizeof(buf));
- }
- 
- /*
-@@ -187,22 +231,12 @@ static int gnss_ai2_init(struct ai2_device *ai2dev)
- {
- 	int ret;
- 	u8 d = 0x01;
--	struct sk_buff *skb = ai2_compose_frame(true, 0xf5, &d, 1);
--
--	if (!skb)
--		return -ENOMEM;
--
--	ret = ai2_send_frame(ai2dev, skb);
-+	ret = ai2_compose_send_frame(ai2dev, true, 0xf5, &d, 1);
- 	if (ret)
- 		return ret;
- 
--	msleep(200); /* seen some 60ms response time here, so wait a bit */
- 	d = 5;
--	skb = ai2_compose_frame(true, 0xf1, &d, 1);
--	if (!skb)
--		return -ENOMEM;
--
--	return ai2_send_frame(ai2dev, skb);
-+	return ai2_compose_send_frame(ai2dev, true, 0xf1, &d, 1);
- }
- 
- static int gnss_ai2_open(struct gnss_device *gdev)
-@@ -220,18 +254,14 @@ static int gnss_ai2_open(struct gnss_device *gdev)
- 	if (ret)
- 		goto err;
- 
--	/* TODO: find out on what kind of ack we should wait */
--	msleep(50);
- 	ret = ai2_set_receiver_state(ai2dev, RECEIVER_STATE_IDLE);
- 	if (ret)
- 		goto err;
- 
--	msleep(100);
- 	ret = ai2_config_nmea_reports(ai2dev, NMEA_MASK_ALL);
- 	if (ret)
- 		goto err;
- 
--	msleep(50);
- 	ret = ai2_set_receiver_state(ai2dev, RECEIVER_STATE_ON);
- 	if (ret)
- 		goto err;
-@@ -254,13 +284,9 @@ static void gnss_ai2_close(struct gnss_device *gdev)
- {
- 	struct ai2_device *ai2dev = gnss_get_drvdata(gdev);
- 
--	/* TODO: find out on what kind of ack we should wait */
- 	if (!ai2raw) {
--		msleep(50);
- 		ai2_set_receiver_state(ai2dev, RECEIVER_STATE_IDLE);
--		msleep(50);
- 		ai2_set_receiver_state(ai2dev, RECEIVER_STATE_OFF);
--		msleep(200); /* seen some longer response time here, so wait */
- 	}
- 
- 	mutex_lock(&ai2dev->gdev_mutex);
-@@ -345,8 +371,10 @@ static void process_ai2_frame(struct ai2_device *ai2dev)
- 	}
- 
- 	/* reached if byte 1 in the command packet is set to 1 */
--	if (data[1] == AI2_ACK)
-+	if (data[1] == AI2_ACK) {
-+		complete(&ai2dev->ai2_ack_complete);
- 		return;
-+	}
- 
- 	head = skb_pull(ai2dev->recv_skb, 2); /* drop frame start marker */
- 	while (head && (ai2dev->recv_skb->len >= 3)) {
-@@ -434,11 +462,9 @@ static void gnss_recv_frame(struct device *dev, struct sk_buff *skb)
- 	gnss_hdr = (struct gps_event_hdr *)skb->data;
- 
- 	data = skb_pull(skb, sizeof(*gnss_hdr));
--	/*
--	 * REVISIT: maybe do something with the completed
--	 * event
--	 */
--	if (gnss_hdr->opcode ==	GPS_CH9_OP_READ) {
-+
-+	switch (gnss_hdr->opcode) {
-+	case GPS_CH9_OP_READ:
- 		mutex_lock(&ai2dev->gdev_mutex);
- 		if (ai2dev->gdev_open) {
- 			if (ai2raw)
-@@ -450,6 +476,10 @@ static void gnss_recv_frame(struct device *dev, struct sk_buff *skb)
- 				"receiving data while chip should be off\n");
- 		}
- 		mutex_unlock(&ai2dev->gdev_mutex);
-+		break;
-+	case GPS_CH9_OP_COMPLETED_EVT:
-+		complete(&ai2dev->ch9_complete);
-+		break;
- 	}
- 	kfree_skb(skb);
- }
-@@ -475,6 +505,8 @@ static int gnss_ai2_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, ai2dev);
- 	st_set_gnss_recv_func(pdev->dev.parent, gnss_recv_frame);
- 	mutex_init(&ai2dev->gdev_mutex);
-+	init_completion(&ai2dev->ch9_complete);
-+	init_completion(&ai2dev->ai2_ack_complete);
- 
- 	ret = gnss_register_device(gdev);
- 	if (ret)
--- 
-2.39.2
 
+--===============8775745180764138738==--
 
