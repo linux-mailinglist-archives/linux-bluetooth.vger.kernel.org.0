@@ -1,157 +1,91 @@
-Return-Path: <linux-bluetooth+bounces-5300-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5302-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 636829079F9
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Jun 2024 19:36:10 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 27AF5907A15
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Jun 2024 19:40:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0CC6E1F23401
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Jun 2024 17:36:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3BDDE1C246EF
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Jun 2024 17:40:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C30A14A0AE;
-	Thu, 13 Jun 2024 17:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6E7714A0B6;
+	Thu, 13 Jun 2024 17:40:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="CWctTDsv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tM20g9bU"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-23.smtp.github.com (out-23.smtp.github.com [192.30.252.206])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6F614A098
-	for <linux-bluetooth@vger.kernel.org>; Thu, 13 Jun 2024 17:36:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.206
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B3E14A093
+	for <linux-bluetooth@vger.kernel.org>; Thu, 13 Jun 2024 17:40:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718300163; cv=none; b=CPmK0xTI1gCPb+Y8v4freuMBzppgVxxxgKH3gP79ryOuj2N0P21ga7ew4b63SNegSuYpT2EUomuEy9T00ukWOY0x7hvS43EuQ7vugDp9l96KG4t6JfrbpqPn+aBDL9T8qJQSjxg1oJ1vQtL6pfb+QrEWU/vXPS1QwSO/0TFBBqI=
+	t=1718300430; cv=none; b=ViOoAUVMCNJQaSP4DgapEj/VsYsn1+HVOejcgofAK9e9SlWMz1yu9mRQky5yS3CRE28x3jSU85DSMHUxqU5bIarRdbkhQQMywWVbrT1HaAfH3V5fqQk6TanHRMXNXl4w/Aqh+E4SyblKaIDVhwRRL4Bq1OEDTgPD95sx6snEGhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718300163; c=relaxed/simple;
-	bh=Ok4RNWSPX0DQbmszGJbHz2xLGx7oU8wqpXvYf7dOzmI=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=cORBQ6ozbiMmCBHrSJk6sOe4aZN3K76mMYeUolCOtUWQ4J5jHXgj2dwqEYVXw/C8IHh48pAithz9BMDDPNeIfj2RQywmUyossRAoTsEt8q73aL+JEB905St+b/NLtOxZbKSen7ZsAzymG/gVnKqcea9brZIzDWyhtpAgbQIFBJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=CWctTDsv; arc=none smtp.client-ip=192.30.252.206
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-85c6ce3.ac4-iad.github.net [10.52.13.23])
-	by smtp.github.com (Postfix) with ESMTPA id 906255E075C
-	for <linux-bluetooth@vger.kernel.org>; Thu, 13 Jun 2024 10:36:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1718300160;
-	bh=cIsRmaw2POfBE5f5s59C1vUXRd/FwIOvihLkfGUZxqw=;
-	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=CWctTDsva+UMLBH4p2Ekl0pa6uhrcLhHTwzJGFd+JTz6gZmyewMzAFFGbXK1Isk34
-	 8Nzg9ebdASgdY5yW4BGk+zqHpGKePd2vnQCJR0BHb9BhACJQyBZFvKMW1UgfGIQPTf
-	 hu1Uufhg6ckQkvWqw28rvdbLPbYpl6WfAopJT62o=
-Date: Thu, 13 Jun 2024 10:36:00 -0700
-From: Arun Raghavan <noreply@github.com>
-To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/master/891552-792cff@github.com>
-Subject: [bluez/bluez] 7861c5: client/player: Fix transport.send
+	s=arc-20240116; t=1718300430; c=relaxed/simple;
+	bh=01dKhvsoQde/ygXruV4R3Zvahru5L/h7J9XCvl7Lnn0=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=VG7kgE6DYrhlJhVEZ1FWqfZYL5VqUz0GcxwhH9uYQ/Ue3PEawO6zGYVyIxZTr8DSVT6NwRwRhP7F9Oe5Bm/IXTvw9Qh473wXn6Ej5MEJHpli/gMMG7aXe9ma+9npdAmN0ezwDgl3vqWeV60mpX3WiO8WggAh0YI0dqw4UIhhZB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tM20g9bU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id B6F8DC32789;
+	Thu, 13 Jun 2024 17:40:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1718300429;
+	bh=01dKhvsoQde/ygXruV4R3Zvahru5L/h7J9XCvl7Lnn0=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=tM20g9bUt6LZcJLRVpFlW7d4l0iRbJvc2aPx7/m4s1QcGaSS1oRGp+5CDRdbZHSm0
+	 NWp1834MZQbb3xHdACGld77fk4hSSTVLrN14dw1R7Nc79d/EdsY7mb36EjzGZQ6O0B
+	 WmD4YDcfu+kO6/W8Y4pqxvH2Qu10YSZGxiAfyv5toEg6yVe8KsZM7ULdrNyZcrjJTx
+	 NJS9XokkGkiTSkkIo5GnbHAByMOEqMorF72EZndymbglP9AmX1HmG3p4oXJ/cMGHMG
+	 UVDiqLAJNB0GIaikYhHFYXMEZYyk4tk/62XhZynCKVOg6enXprwl8y2f0DDBO2gbm+
+	 kGsmDWR3Rkt8g==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id A8C8EC4361A;
+	Thu, 13 Jun 2024 17:40:29 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH BlueZ v1] client/player: Fix transport.send
+From: patchwork-bot+bluetooth@kernel.org
+Message-Id: 
+ <171830042968.19766.3335532854851472168.git-patchwork-notify@kernel.org>
+Date: Thu, 13 Jun 2024 17:40:29 +0000
+References: <20240613134854.1545034-1-luiz.dentz@gmail.com>
+In-Reply-To: <20240613134854.1545034-1-luiz.dentz@gmail.com>
+To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: linux-bluetooth@vger.kernel.org
 
-  Branch: refs/heads/master
-  Home:   https://github.com/bluez/bluez
-  Commit: 7861c511ca7ecbbf8223aee22a3085d6152799cf
-      https://github.com/bluez/bluez/commit/7861c511ca7ecbbf8223aee22a3085d6152799cf
-  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-  Date:   2024-06-13 (Thu, 13 Jun 2024)
+Hello:
 
-  Changed paths:
-    M client/player.c
+This patch was applied to bluetooth/bluez.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-  Log Message:
-  -----------
-  client/player: Fix transport.send
+On Thu, 13 Jun 2024 09:48:54 -0400 you wrote:
+> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> 
+> This fixes the usage of getpeername, introduced by 04153538aaf4
+> ("client/player: Fix using unicast QoS for broadcast"), without
+> initializing optlen which causes the following problem:
+> 
+> Unable to send: Operation not permitted (1)
+> 
+> [...]
 
-This fixes the usage of getpeername, introduced by 04153538aaf4
-("client/player: Fix using unicast QoS for broadcast"), without
-initializing optlen which causes the following problem:
+Here is the summary with links:
+  - [BlueZ,v1] client/player: Fix transport.send
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=7861c511ca7e
 
-Unable to send: Operation not permitted (1)
-
-
-  Commit: 8e4bece63ce91f2debc9468a793f2c65e41c5bb2
-      https://github.com/bluez/bluez/commit/8e4bece63ce91f2debc9468a793f2c65e41c5bb2
-  Author: Arun Raghavan <arun@asymptotic.io>
-  Date:   2024-06-13 (Thu, 13 Jun 2024)
-
-  Changed paths:
-    M Makefile.am
-    M lib/uuid.h
-    A src/shared/asha.c
-    A src/shared/asha.h
-
-  Log Message:
-  -----------
-  src/shared: Add initial implementation for an ASHA profile
-
-This implements the server role for the Audio Streaming for Hearing Aid
-specification[1]. Includes basic ability to probe the ASHA GATT service,
-as well as starting/stopping streaming.
-
-[1] https://source.android.com/docs/core/connect/bluetooth/asha
-
-Resolves: https://github.com/bluez/bluez/issues/481
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
-  Commit: c26389c466a0e7010acd245adc7a68b5178ca1d8
-      https://github.com/bluez/bluez/commit/c26389c466a0e7010acd245adc7a68b5178ca1d8
-  Author: Arun Raghavan <arun@asymptotic.io>
-  Date:   2024-06-13 (Thu, 13 Jun 2024)
-
-  Changed paths:
-    M Makefile.plugins
-    M configure.ac
-    A profiles/audio/asha.c
-    A profiles/audio/asha.h
-    M profiles/audio/media.c
-    M profiles/audio/media.h
-    M profiles/audio/transport.c
-
-  Log Message:
-  -----------
-  profiles/audio: Add an ASHA plugin
-
-This exposes the ASHA profile implementation in the previous commit as
-an audio profile.
-
-The implementation registers a remote endpoint using a subset of the
-MediaEndpoint1 interface, without any mechanism for setting/selecting a
-configuration, as this is all static in the spec for now. Also exposed
-on connection is a MediaTransport1 object, which can be used to obtain
-an fd to stream to the device.
-
-Resolves: https://github.com/bluez/bluez/issues/481
-
-
-  Commit: 792cffb4992dee18ec4a8f3423c9a3c681c828dd
-      https://github.com/bluez/bluez/commit/792cffb4992dee18ec4a8f3423c9a3c681c828dd
-  Author: Arun Raghavan <arun@asymptotic.io>
-  Date:   2024-06-13 (Thu, 13 Jun 2024)
-
-  Changed paths:
-    A test/simple-asha
-
-  Log Message:
-  -----------
-  test: Add a script to test ASHA
-
-Plays out an audio file to the device. Depends on GStreamer for media
-file reading and decoding (specifically, gstreamer core,
-gst-plugins-base, gst-ffmpeg, and gst-python, or equivalent packages).
-
-Resolves: https://github.com/bluez/bluez/issues/481
-
-
-Compare: https://github.com/bluez/bluez/compare/891552999317...792cffb4992d
-
-To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
