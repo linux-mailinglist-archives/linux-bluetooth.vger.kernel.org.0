@@ -1,93 +1,131 @@
-Return-Path: <linux-bluetooth+bounces-5304-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5305-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9A6A907E0D
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Jun 2024 23:20:58 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ADB15907E36
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Jun 2024 23:36:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 63DC528674E
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Jun 2024 21:20:57 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0E341B25E7C
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Jun 2024 21:36:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36DC813D531;
-	Thu, 13 Jun 2024 21:20:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA54813DDBA;
+	Thu, 13 Jun 2024 21:36:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gsskt3jh"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="CHmDXgjM"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-28.smtp.github.com (out-28.smtp.github.com [192.30.252.211])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9275E5F876
-	for <linux-bluetooth@vger.kernel.org>; Thu, 13 Jun 2024 21:20:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9DC07E796
+	for <linux-bluetooth@vger.kernel.org>; Thu, 13 Jun 2024 21:36:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.211
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718313651; cv=none; b=lpsnA+rYY04IhuZeW9hLAVWNTmjhp8eVqqnpBas+JBNWQHUQjWGRJwdRXbKaRmROStxJCXbV3NV9CqdvSD3xc4CqTfa6fRki8qNIws81Mf8SGfCR6VSdzua6E+xQNX8scdilk9cMC/6D2/OZqwZXNfl26/j8B3z+CFydPoqtMkc=
+	t=1718314571; cv=none; b=nRKvTuOWGZXVxV0VZF3VCksk4iDGtPrNtjlMOcXTQQqwvTe86jTDkWROzJSJvWhMVcaYlY/Uqd/9mJ/drj1ixGXZFLg2HZw3PlttDcAcZk/Pv6ygGXZYAstTOc5VzPFcITKdJcRjIG5z7k8cIHmxesRmwmNn36P9Y+10uinN494=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718313651; c=relaxed/simple;
-	bh=1liEW4+KlBDVc7PQ2G4hfZcT6E/RHRcph54UvZ1dlaM=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=dx1hoJTNHdw1eiAvuS4FYgeL49rdPSbGWfcDgHuE3i/e8tZDcjxZ9tB2us18vr4R/GldtqenKjeXsQnRgJvI0TRFWGGEkeSFwWHPfn2d5VewImi1mjhu2wm2HfVzf0y20Ozcw9zCcLlNidex8pNK0DX8nzOpRhgA2EWZIzr8t7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gsskt3jh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 48462C32786;
-	Thu, 13 Jun 2024 21:20:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718313651;
-	bh=1liEW4+KlBDVc7PQ2G4hfZcT6E/RHRcph54UvZ1dlaM=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=Gsskt3jh+DB0T3Voo25GeebRt6l5KopFpGtKo0YtyTA/VimTS56Ru036Lz4kNJSMO
-	 WQa2GjngGQxTqhQcBdcoCOcXW4YQADLKrD4Uw97KwRryu0xYsyi+mStEesRvKk0bWq
-	 tyI3ECd1Nn88b9aBxzuYJVsRnfGspO3nBKzUuB2WdA90bI5kB4ZJIn8xfCLWVGwdRC
-	 3oaImKm6btBxJkjdCaljG+vRNfGEbVX5m8y5OYjWs0JvocH2J4wEZljnljo9TFxN8x
-	 SzPfIl0lZCP4YHBZ2UHky3TBkmfj1fpf6A3Quof0jEpP+uDuZC7VTNtdptxsuFKbrS
-	 pS8w9ZyEOc6Sg==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 2ED76C43612;
-	Thu, 13 Jun 2024 21:20:51 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1718314571; c=relaxed/simple;
+	bh=1KNPVMrYrpIK0Bh7GX9/7pZYgI0MM95TKTFSQM4JKuE=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=JmkvS+pZZb99lsYxiSElw4xwdDpUZL4yDfmQHcU1KzMfo7mL7ql5Wo7AYLCv+qq5Ze1dS5aSWg0F5qke/Zi0ZjiNntoViWeQa10LnP/6uY3469tpv4/iGJ8IP6G362XtPdlw08LLMNPZlRBXev/N6NiM9ACZOu/KtUkoMhWTJW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=CHmDXgjM; arc=none smtp.client-ip=192.30.252.211
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
+Received: from github.com (hubbernetes-node-1ee83c3.ash1-iad.github.net [10.56.179.10])
+	by smtp.github.com (Postfix) with ESMTPA id DD3C76C10F3
+	for <linux-bluetooth@vger.kernel.org>; Thu, 13 Jun 2024 14:36:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+	s=pf2023; t=1718314568;
+	bh=tQHoODm7s77D+vEbJyzLu7EUDzhnfHD7nIb0jdOpBMg=;
+	h=Date:From:To:Subject:List-Unsubscribe:From;
+	b=CHmDXgjMjdeIV1aUyHMqLecom9MtHRoJ3IC4YLVKKicuYR8M+lgdRpgldF+OzkzWs
+	 VfjM5rcRzgjqnNf2TokAfnbTJnqp2EE31MJQm9VMXnRDBD8LyagOT2dgbkX639R1Uw
+	 cOLR+rbXVTL8SXT9d/+fynQGPv43a9tGSpLm7hxA=
+Date: Thu, 13 Jun 2024 14:36:08 -0700
+From: Luiz Augusto von Dentz <noreply@github.com>
+To: linux-bluetooth@vger.kernel.org
+Message-ID: <bluez/bluez/push/refs/heads/master/792cff-0b0237@github.com>
+Subject: [bluez/bluez] 98676d: device: Fix storing conn parameters without
+ first ...
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ v1 1/2] device: Fix storing conn parameters without
- first attempting to use them
-From: patchwork-bot+bluetooth@kernel.org
-Message-Id: 
- <171831365118.19058.3511430040776473148.git-patchwork-notify@kernel.org>
-Date: Thu, 13 Jun 2024 21:20:51 +0000
-References: <20240612191145.1379415-1-luiz.dentz@gmail.com>
-In-Reply-To: <20240612191145.1379415-1-luiz.dentz@gmail.com>
-To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: linux-bluetooth@vger.kernel.org
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
 
-Hello:
+  Branch: refs/heads/master
+  Home:   https://github.com/bluez/bluez
+  Commit: 98676d410bde71425e4d56cf7e29b4757fb0c97c
+      https://github.com/bluez/bluez/commit/98676d410bde71425e4d56cf7e29b4757fb0c97c
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2024-06-13 (Thu, 13 Jun 2024)
 
-This series was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+  Changed paths:
+    M src/device.c
 
-On Wed, 12 Jun 2024 15:11:44 -0400 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-> 
-> Some controller seems to have problems to use connections parameters
-> that comes from PPCP as seem bellow, so instead of storing the
-> parameters immediately this wait the MGMT_EV_NEW_CONN_PARAM to confirm
-> the connection parameters are save to be stored:
-> 
-> [...]
+  Log Message:
+  -----------
+  device: Fix storing conn parameters without first attempting to use them
 
-Here is the summary with links:
-  - [BlueZ,v1,1/2] device: Fix storing conn parameters without first attempting to use them
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=98676d410bde
-  - [BlueZ,v1,2/2] gas: Fix default PPCP connection intervals
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=0b02371e2b15
+Some controller seems to have problems to use connections parameters
+that comes from PPCP as seem bellow, so instead of storing the
+parameters immediately this wait the MGMT_EV_NEW_CONN_PARAM to confirm
+the connection parameters are save to be stored:
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+< HCI Command: LE Extended Create Connection (0x08|0x0043) plen 42
+        Filter policy: Accept list is not used (0x00)
+        Own address type: Public (0x00)
+        Peer address type: Random (0x01)
+        Peer address: FE:D5:D9:EC:AB:99 (Static)
+        Initiating PHYs: 0x03
+        Entry 0: LE 1M
+          Scan interval: 60.000 msec (0x0060)
+          Scan window: 60.000 msec (0x0060)
+          Min connection interval: 7.50 msec (0x0006)
+          Max connection interval: 4000.00 msec (0x0c80)
+          Connection latency: 0 (0x0000)
+          Supervision timeout: 5000 msec (0x01f4)
+          Min connection length: 0.000 msec (0x0000)
+          Max connection length: 0.000 msec (0x0000)
+        Entry 1: LE 2M
+          Scan interval: 60.000 msec (0x0060)
+          Scan window: 60.000 msec (0x0060)
+          Min connection interval: 7.50 msec (0x0006)
+          Max connection interval: 4000.00 msec (0x0c80)
+          Connection latency: 0 (0x0000)
+          Supervision timeout: 5000 msec (0x01f4)
+          Min connection length: 0.000 msec (0x0000)
+          Max connection length: 0.000 msec (0x0000)
+> HCI Event: Command Status (0x0f) plen 4
+      LE Extended Create Connection (0x08|0x0043) ncmd 1
+        Status: Invalid HCI Command Parameters (0x12)
+
+Fixes: https://github.com/bluez/bluez/issues/876
 
 
+  Commit: 0b02371e2b15295d45bf2c8bf7faf39ce48d6953
+      https://github.com/bluez/bluez/commit/0b02371e2b15295d45bf2c8bf7faf39ce48d6953
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2024-06-13 (Thu, 13 Jun 2024)
+
+  Changed paths:
+    M profiles/gap/gas.c
+
+  Log Message:
+  -----------
+  gas: Fix default PPCP connection intervals
+
+If the remove sets 0xffff switch to using 30-50ms as that is the
+recommended values for GAP as 7.5ms-4s seems to be causing problems on
+some controllers.
+
+
+Compare: https://github.com/bluez/bluez/compare/792cffb4992d...0b02371e2b15
+
+To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
