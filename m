@@ -1,50 +1,81 @@
-Return-Path: <linux-bluetooth+bounces-5375-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5377-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9EEB690B607
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 17 Jun 2024 18:16:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1CF0690B7E4
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 17 Jun 2024 19:24:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5A575B3BABA
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 17 Jun 2024 15:01:49 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7C50FB2744F
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 17 Jun 2024 17:00:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EDEE13C687;
-	Mon, 17 Jun 2024 14:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2BFA167DAD;
+	Mon, 17 Jun 2024 16:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eeUml2zM"
+	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="Y4A6PhhA"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [185.185.170.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773D513C3F2;
-	Mon, 17 Jun 2024 14:10:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718633431; cv=none; b=BZgaa3e/0KbzYDcuy7meQeoRolyvY1yxp9wa/kjNcl9rHFJ9pGaDEluxlsEJq95GkfUQ4KBrTPM06ScXT7NHdSvId3PCVGDf2yRWJFo0yonbrgzJ8AtWYdL/Ap/eocZTfpqJXDkUHqPR0WseBNepcOBYhXBM+EIAThP7Wh3HkiY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718633431; c=relaxed/simple;
-	bh=ZY0frUm/l/ELazp3keFtHSZU2+jYmNK9nHk3XE/5PDM=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=MLgMl43w/KHY0NmMchjyXIBpKy8BaCt8krxr1AnxpFF4pSDkoq9KyWzOcv/M3Fm7uK/4qgWul0FCmTo+2aUhyrDNkVtBq510H/C34AhVPy4r2jasx38JECuUv6Nk1YrVKXNtONnwM5dlNlVwlxIcYj3CNL1OYPsVGEeddJKKUkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eeUml2zM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 1AD6EC4DDF3;
-	Mon, 17 Jun 2024 14:10:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1718633431;
-	bh=ZY0frUm/l/ELazp3keFtHSZU2+jYmNK9nHk3XE/5PDM=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=eeUml2zMnU9Tr5usyo/xu22P0H0SOSWbGapAD48Ecn7eOpCgavdMidKMLs0eJS9DY
-	 mL9Uart+1OAdxwAb6t5nIgWaaIGP0z8KEJDhtsm58N6FJiN3tYjHnRREycPY1u1ZE2
-	 qZOleREEQumGu+73JOertCtKUPMelURDh5/yciWo54NHp7yBMPUxKGYWVRD3a6Pc+x
-	 Chd041nW/rl82cKPyZ6gEu82jrx+EjXVvWml44LO8c1sxdVEgmBoUJyc2p1wzJAzwF
-	 ZSt0ODjkQ8Xr7aQhr5M6AT16PCK3VuClD8wQy3TYnxiDsLGnTqk+hDYTJYlL7VS3N3
-	 oCJn4IgFdTHbw==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id EF192C4361B;
-	Mon, 17 Jun 2024 14:10:30 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C0716631B
+	for <linux-bluetooth@vger.kernel.org>; Mon, 17 Jun 2024 16:59:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=185.185.170.37
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1718643594; cv=pass; b=a5LVk4OHPqRThQklBEn2MVBd7l3EVWarMMag3Yk/yp0S+bnX3D/1cb5Kys6O3GuRM0KSCmz14pRm9VsvztjECYLZOKoRrv8NAakZEK/PvnnIg45yxahCmIp133dALYfx68+7AOKSd+VKrUgOejYK2eMsRcrIUcOfqa4WvwtFTqY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1718643594; c=relaxed/simple;
+	bh=sBCZV3xQWlhUAkp4EPssHKjE8mjVM/W0m3L3eoc1sMM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mTx+VH2hAQLBGO3jq9Bfyi9YHHKSZPjwUTCUtstidWHo7Bq9ialea6DpI7duH/O23tMCTGJoyLJe5qvGIV0N9ccta4syxN3cn5WaD9R61J9S22aZd+qStd7gYs3oLnibsGkVePDK1SWCX7mpG7yIt23KoXgGWJBktTWkfD9l5wg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=Y4A6PhhA; arc=pass smtp.client-ip=185.185.170.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
+Received: from monolith.lan (unknown [193.138.7.138])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: pav)
+	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4W2x2F2YwXz49Pyq;
+	Mon, 17 Jun 2024 19:59:49 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
+	t=1718643589;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=9AE2y6Gj7mMGlS+2EZwxrpHi3eWlrWwvC9Utw/42wkM=;
+	b=Y4A6PhhALGhdBrlq5B6Rz7MYCDDk1DoeELroyTgFfU+Ql2K8kCWqGWzAcwUfIiGDUzRVXO
+	ic+fnOUWWbKRcu0Z4SxfXnz16/kOIJfpQTL6NmxhUoHbCK7NI45OmC0GWqiKJ6KsCmZ2Pg
+	v5F9unf4CrH1GSaZ8kqm3xd8WEaNgHsMEZeMxJ/rkQ8th+peH+MflnqK5sD6wnNgfV2M7U
+	3HtBVJrj0R5hAB9bvSc+TAvTOhWei4o7godUd2vg6CyEhfgazVIjfkV/zph7wD07qcZh96
+	T3ginVXKGcAdGdIqefiRaa1G7iDyK8rlsUqJcqahO+lS1bNgV12xH2OCVOzlQw==
+ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1718643589; a=rsa-sha256;
+	cv=none;
+	b=EniMZNAzGHs8Nd/ZebmZlJmibaaUi9stlsd4vxSqwLjJn28d9au56POkiNLDCfqypULlKA
+	GWaGxTybGZWCbkMJ/O5nxX5qFaGR926gAR0e6C576NJ9IF0NUezFS6JgfroXIqTQai/qy0
+	rUkVM6ezZEMQSNLEnrbLKdbYpSJLvKZGQuYSyM6Ffw0dhTPKz9+S2GAIoTIUCq398eIrmx
+	NEwawYnh+GpYE2Iztl9ym/Ioc/1kcaRhCv2ilOyFwrZduKjVQM+3/1TQVSIZexZVz3y+Rs
+	M21ySvX/bNWNC7YjvffAOcONAGV5zS4UcjWoXchePMHJaUVc7ZtTSMis/DNkjg==
+ARC-Authentication-Results: i=1;
+	ORIGINATING;
+	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
+	s=lahtoruutu; t=1718643589;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=9AE2y6Gj7mMGlS+2EZwxrpHi3eWlrWwvC9Utw/42wkM=;
+	b=VgcHsDx5hfCmqJbP9mKVSANlhKWj1e6uLLwhtvimhmXisL5xiQ7IbWlucMaPfZMpZS0FrX
+	d3Cmck899F5noaetbzQmZljbUH+hTbMpAYkqzRzFKrUuDdLIX7ugGN4qw8XyCCqFqtQ1yP
+	r36DjxiQzyrZe6Dkjg5uy4kF8bNcTbVE2/f5YFdSR086ToJaAe1/69PeBLKz3cWXd4Qgfl
+	wUSYHYaFVfq+kdnydG1E+hFSDP5Eu+g1CJ8HIKeXziaw+i0MCNn8Cz2IKt9EMLC5NXoFOX
+	vOqu+wZTd1jHpH4HoHbd8vU9Jb2AyO3sSTcGjwE8RuSQTWoPX0w17Nj6KQIG2g==
+From: Pauli Virtanen <pav@iki.fi>
+To: linux-bluetooth@vger.kernel.org
+Cc: Pauli Virtanen <pav@iki.fi>
+Subject: [PATCH BlueZ v2] shared/bap: make BT_BAP_* direction defines valid bitmasks
+Date: Mon, 17 Jun 2024 19:59:40 +0300
+Message-ID: <8dded7c01676b68e3042dbd0021e97c198a03b49.1718643571.git.pav@iki.fi>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -52,45 +83,43 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2] Bluetooth: Ignore too large handle values in BIG
-From: patchwork-bot+bluetooth@kernel.org
-Message-Id: 
- <171863343097.8850.935824555783496146.git-patchwork-notify@kernel.org>
-Date: Mon, 17 Jun 2024 14:10:30 +0000
-References: <tencent_E43E1B2F25E4BA5EBBEC33229E5E1BEB4B08@qq.com>
-In-Reply-To: <tencent_E43E1B2F25E4BA5EBBEC33229E5E1BEB4B08@qq.com>
-To: Edward Adam Davis <eadavis@qq.com>
-Cc: pmenzel@molgen.mpg.de, davem@davemloft.net, edumazet@google.com,
- johan.hedberg@gmail.com, kuba@kernel.org, linux-bluetooth@vger.kernel.org,
- linux-kernel@vger.kernel.org, luiz.dentz@gmail.com, luiz.von.dentz@intel.com,
- marcel@holtmann.org, netdev@vger.kernel.org, pabeni@redhat.com,
- syzkaller-bugs@googlegroups.com, william.xuanziyang@huawei.com
 
-Hello:
+The directions appear to be intended as bitmasks, as
+bt_bap_stream_io_dir() will bitwise or linked stream directions.
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+Fix the defines to be separate bits.
 
-On Mon, 17 Jun 2024 19:09:37 +0800 you wrote:
-> hci_le_big_sync_established_evt is necessary to filter out cases where the
-> handle value is belonging to ida id range, otherwise ida will be erroneously
-> released in hci_conn_cleanup.
-> 
-> Fixes: 181a42edddf5 ("Bluetooth: Make handle of hci_conn be unique")
-> Reported-by: syzbot+b2545b087a01a7319474@syzkaller.appspotmail.com
-> Closes: https://syzkaller.appspot.com/bug?extid=b2545b087a01a7319474
-> Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-> 
-> [...]
+Fixes confusion due to BT_BAP_BCAST_SOURCE == BT_BAP_SINK|BT_BAP_SOURCE,
+which causes e.g. unicast transports to be in PENDING state after QoS
+although this does not make sense for BAP unicast Client.
+---
 
-Here is the summary with links:
-  - [v2] Bluetooth: Ignore too large handle values in BIG
-    https://git.kernel.org/bluetooth/bluetooth-next/c/401ad9b792e1
+Notes:
+    v2: use BIT macro
 
-You are awesome, thank you!
+ src/shared/bap-defs.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/src/shared/bap-defs.h b/src/shared/bap-defs.h
+index 2467e816f..27fefa34f 100644
+--- a/src/shared/bap-defs.h
++++ b/src/shared/bap-defs.h
+@@ -15,10 +15,10 @@
+ #define __packed __attribute__((packed))
+ #endif
+ 
+-#define BT_BAP_SINK			0x01
+-#define	BT_BAP_SOURCE			0x02
+-#define	BT_BAP_BCAST_SOURCE		0x03
+-#define	BT_BAP_BCAST_SINK		0x04
++#define BT_BAP_SINK			BIT(0)
++#define	BT_BAP_SOURCE			BIT(1)
++#define	BT_BAP_BCAST_SOURCE		BIT(2)
++#define	BT_BAP_BCAST_SINK		BIT(3)
+ 
+ #define BT_BAP_STREAM_TYPE_UCAST	0x01
+ #define	BT_BAP_STREAM_TYPE_BCAST	0x02
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.45.2
 
 
