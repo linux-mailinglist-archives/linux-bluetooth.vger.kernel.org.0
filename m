@@ -1,48 +1,48 @@
-Return-Path: <linux-bluetooth+bounces-5418-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5420-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 283AD90EFD9
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Jun 2024 16:12:06 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 008ED90EFD7
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Jun 2024 16:12:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 95B21280E06
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 131F01C2151C
 	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Jun 2024 14:12:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E4851509A0;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E35515099D;
 	Wed, 19 Jun 2024 14:10:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hDoH4wJH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p4W0ri2G"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8486C14F9FD
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847C71482EE
 	for <linux-bluetooth@vger.kernel.org>; Wed, 19 Jun 2024 14:10:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718806229; cv=none; b=u6R3coQZC+n2NpTl7OMupUvgTdmwqtfVbGtmOujJwZOvRqJ7Yfkip/iWZumXaTwU05xUuHUlTYQzW3JOVkYQu8v5Yu3loWlKGmgHsS83CD1238OwU9nSj1nAJEaJNV8bdF8Q9AdITkezKS+Fq+m2azF2lCCnboX/UbQ92Ou06JY=
+	t=1718806229; cv=none; b=l8+q5NSU3YsgwwOQ6bTCGBiBEVwA88CODz61aGvDCu3zJsbyNq294C6i6PxtCscij5zHq9jenZZuzuhAlhRxFvfWMlUsvoenlSiO7cz8DiCH5UUE2KjbgZsnHHlhyYIlkyK6TddDRfpuvCVA/neExec+bG/FRpTCiEhnAMr6/PI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1718806229; c=relaxed/simple;
-	bh=Y0+DexkDMqfmH/+47Gp5RFqbiSJRj4AnIGyNJkmvUgo=;
+	bh=7D4Ibql1yynvYT+ThhCoSlYMBAQmB/tw0gCVPdpV+JI=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=gLMkCcGcu88J5qe5AZp/qeVc+bZohEqCHgtp3Qt1FvbmUEhpeW27qIZUip5QOJrJVi2619tgYM8R7ACc9xQ2ZvX8pfM0dopDgm8wcN4T/z5NdfLAySIsKZ33zb8qyqfeOMhr6K1T2ZBKDb5OXiAcLUkMJlmri+mLtvT6AqDHGkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hDoH4wJH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 2B506C32786;
+	 In-Reply-To:To:Cc; b=OEDrZ9aPI+r1UFCmIjiGutgJZUwvCJTbeeY5PondlhBXv3idy77hIxp85XKm6u5ZvoM7h/yznVXMFjtBjlgN8W+LGlkKwWFR/EKq728YrGLy/SoDBBowXsTsSeO2L8skdnefe59+AK/mPFvomJatlFCMjRcYxkfdLxXGXZnbKWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p4W0ri2G; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 314C7C32781;
 	Wed, 19 Jun 2024 14:10:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1718806229;
-	bh=Y0+DexkDMqfmH/+47Gp5RFqbiSJRj4AnIGyNJkmvUgo=;
+	bh=7D4Ibql1yynvYT+ThhCoSlYMBAQmB/tw0gCVPdpV+JI=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=hDoH4wJHTXPfqWAN9aB5Fl3fRmpiJxrBsxBm3bDhMSbYHux2NsLAAiwmBghFkUKfF
-	 kJHdGfuIVVYOf+g2q7l6nAfJBYE0MbjPKvcmY6/GJxhR5SGDi9R2jEVf15gKQsy4AZ
-	 81Os6ycGK80MDtl6ztNbjKW5Mr6qceHCoErvkFax7XTTJYQIsn7chZ88/rVC4eMz1u
-	 piN2PUrUlmkVikS3dw3yC3vTfLcseMiFzDlXPrZ7QGq0JB9YA/P11fSqS4b+iAE1cn
-	 S7874bZejKp99welUTzgEZI8j+Ecd/qmPGMytdFljQntP1wwbitJKwBg5jMeGE/tVP
-	 R1t7gzEmD14Ow==
+	b=p4W0ri2GOCmq8+wok6lq5TKUjBehTwe3ec5q7NOTq7kPP0cF65ypzE0nSYXH1vY6y
+	 69Il+EPu2aR5cocZCkKiOUlmsk6bSyikH26r5mqSQ2YXAg3a8A3+6sHwVZvd7t74yD
+	 R6MHUPKjXuHHci25GfrtnSOPY18GkY12FcRQ/P7Uav5ke7aRfvMGGZibTCFjS52mL9
+	 pO0jdKntZiJ7+3DCVe0wbkE1Wx87tMeWgiOxjKxcDDGqESPSvCBJajzhyNu25IeiSg
+	 lucLuw/n1v/RxcRvCscqqkYfgbwSnVzF3GgE7AeONP+4o4v1fisJihX8gMl7dQsa1Z
+	 RXsHX/khqTvkA==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 1F0DAD2D0FC;
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 114BDC41621;
 	Wed, 19 Jun 2024 14:10:29 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
@@ -52,36 +52,39 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ v2 1/2] shared/mcp: Implement next/previous track
- commands
+Subject: Re: [PATCH BlueZ v2 0/2] bap: Allocate memory for broadcast code
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <171880622911.19669.9913507880334963530.git-patchwork-notify@kernel.org>
+ <171880622906.19669.10788137030713318361.git-patchwork-notify@kernel.org>
 Date: Wed, 19 Jun 2024 14:10:29 +0000
-References: <20240619120433.3666313-1-yauhen.kharuzhy@softeq.com>
-In-Reply-To: <20240619120433.3666313-1-yauhen.kharuzhy@softeq.com>
-To: Yauhen Kharuzhy <yauhen.kharuzhy@softeq.com>
-Cc: linux-bluetooth@vger.kernel.org
+References: <20240619095119.167652-1-vlad.pruteanu@nxp.com>
+In-Reply-To: <20240619095119.167652-1-vlad.pruteanu@nxp.com>
+To: Vlad Pruteanu <vlad.pruteanu@nxp.com>
+Cc: linux-bluetooth@vger.kernel.org, mihai-octavian.urzica@nxp.com,
+ iulia.tanasescu@nxp.com, andrei.istodorescu@nxp.com, luiz.dentz@gmail.com
 
 Hello:
 
 This series was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Wed, 19 Jun 2024 15:04:32 +0300 you wrote:
-> Add bt_mcp_{next,previous}_track functions to shared MCP client
-> profile code. This allows user to have basic control of the media player
-> in addition to simple play/pause/stop actions.
-> ---
->  src/shared/mcp.c | 20 ++++++++++++++++++++
->  src/shared/mcp.h |  2 ++
->  2 files changed, 22 insertions(+)
+On Wed, 19 Jun 2024 12:51:17 +0300 you wrote:
+> Currently the broadcast code is set without memory being allocated
+> for it resulting in segmentation fault. This implements an util_iov_new
+> function that allocates the memory before setting the user_data. The issue is
+> fixed by using this function instead of util_iov_append.
+> 
+> Vlad Pruteanu (2):
+>   shared/util: Add util_iov_new function
+>   bap: Use util_iov_new when setting bcode
+> 
+> [...]
 
 Here is the summary with links:
-  - [BlueZ,v2,1/2] shared/mcp: Implement next/previous track commands
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=a91471400f97
-  - [BlueZ,v2,2/2] mcp: Implement Next Track and Previous Track commands
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=811e48d340d8
+  - [BlueZ,v2,1/2] shared/util: Add util_iov_new function
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=503ecbc655c5
+  - [BlueZ,v2,2/2] bap: Use util_iov_new when setting bcode
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=5ec05848a9d4
 
 You are awesome, thank you!
 -- 
