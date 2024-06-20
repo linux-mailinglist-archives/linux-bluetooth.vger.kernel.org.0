@@ -1,207 +1,160 @@
-Return-Path: <linux-bluetooth+bounces-5456-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5458-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65D8691119D
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Jun 2024 20:58:05 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0FA31911230
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Jun 2024 21:34:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 880FE1C21B2B
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Jun 2024 18:58:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8FEB71F223D3
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Jun 2024 19:34:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5C6A1B5811;
-	Thu, 20 Jun 2024 18:57:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E677A1B9ABF;
+	Thu, 20 Jun 2024 19:34:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=dell.com header.i=@dell.com header.b="YKRzpvQ3"
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="T8nqgziM"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mx0a-00154904.pphosted.com (mx0a-00154904.pphosted.com [148.163.133.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5281B47DF
-	for <linux-bluetooth@vger.kernel.org>; Thu, 20 Jun 2024 18:57:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.133.20
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718909864; cv=fail; b=WkPceVY6lPCG/QLUzXaZkaYkOPs4WK55rf2uZb/kvA1Qj+HPnmziEoQFXZcL38V8fqu7PumndajBLpYqmGU3xxy/bfX2+nFT5KgxkFKuhoMXvZ7kWMsr/yIclEmMt8tTfhcIDdd1j5FRFRpEGbcj94qCF+QWi2sxj1iAGN7OjWo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718909864; c=relaxed/simple;
-	bh=aX6ez6L0fDkXVXyxv/ciWakgU1Dr+GCQlUzj3RBxB3M=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=R4DIrXJdjgOCt2/iqtOSd8+MywU5bj3dWASFuofIyn2pOAV594RSMarNXCeYkM4hGx+B2mQQ43ifkRiSeFxmRtyyHD/LF/dxjXs2Vso6W1B+Ptf+jj+URMDJv4yhUi7oBetATQOko6GHgsGYs/JKUBILXEKNeHxZO7tKgopcfQM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=dell.com; spf=pass smtp.mailfrom=dell.com; dkim=pass (2048-bit key) header.d=dell.com header.i=@dell.com header.b=YKRzpvQ3; arc=fail smtp.client-ip=148.163.133.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=dell.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dell.com
-Received: from pps.filterd (m0170391.ppops.net [127.0.0.1])
-	by mx0a-00154904.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 45KHnH2B010297
-	for <linux-bluetooth@vger.kernel.org>; Thu, 20 Jun 2024 14:57:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dell.com;
- h=content-transfer-encoding : content-type : date : from : message-id :
- mime-version : subject : to; s=smtpout1;
- bh=2fnk9TPKWjudMBq4AoNV9JiQojqrRBLBoul9oNMpeMU=;
- b=YKRzpvQ3K1PNiWMR39FIlCtB9vWS/g9ykM/C4/eibVM7uIevfud2iJd3yMYVwQ8Y3/FD
- QY6TUpxuULz5wsKxuOFQDyvFyzfWOi2KsQhrfVoiMGbuUlWqxDcHydxLCjuwOOYJqPM8
- ipKbrVDigEpf/e1JemXthkcLn5QKoXJ/gHOlm++1nd78vT8lTTEU/PF9X7tvIHcKDuuM
- PvEKRSM8N/tVPNT0lxNj8huRFwJkGA3zh5BGqXvIueCuT4g54oERnyGeEJWveLZZaz6Q
- 29vXxtw2D6VfbpJj4c2uFqMSZ3uDMxRWWvck69TSNSgwkwlhaGv+/eEE/xG3FbVoQQc3 tg== 
-Received: from mx0b-00154901.pphosted.com (mx0b-00154901.pphosted.com [67.231.157.37])
-	by mx0a-00154904.pphosted.com (PPS) with ESMTPS id 3yvs5pg88w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <linux-bluetooth@vger.kernel.org>; Thu, 20 Jun 2024 14:57:40 -0400
-Received: from pps.filterd (m0144102.ppops.net [127.0.0.1])
-	by mx0b-00154901.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 45KIhClM010792
-	for <linux-bluetooth@vger.kernel.org>; Thu, 20 Jun 2024 14:57:39 -0400
-Received: from nam12-bn8-obe.outbound.protection.outlook.com (mail-bn8nam12lp2175.outbound.protection.outlook.com [104.47.55.175])
-	by mx0b-00154901.pphosted.com (PPS) with ESMTPS id 3yvrp9965x-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
-	for <linux-bluetooth@vger.kernel.org>; Thu, 20 Jun 2024 14:57:39 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=j2HYYvbQ9Fz7p/WHxoChB0sPKKlAUFZB9JFkzqupCl37YAFoUTWZPziH5gRqmH/uVnILJo3amfoBOUjo+E23yxj+CMIYVuHCcVlGtmom5CH3bsPWoJ9VjMdENR/qfwz6foNX9kbj6oMx3AtYeVyvZI9cA8Bx3VhOVl/PRl1sbhnh3JW0me5ENR5+//k0WClbGdRmU7qxCnHgE0Kj3KcZm4s0QzU3hoPN5iNK5rYPqpndD76QFOVWIcgVPLfQMq0hqBQddx1jwUJhjEJFykoDTLTMSZNhUh+FI9/eNbrKlADQ5LFej2y92rjsBiWB2E8vOIJHT5V9QJD6GLUWVJsg6Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2fnk9TPKWjudMBq4AoNV9JiQojqrRBLBoul9oNMpeMU=;
- b=TyzECz55HPNwuYk/3Nm1IiQOSZX1RSbATFClSqm8THQN6FO8OwCTLRqNXHGCi89KNcVj+vytzx0ls2NS1DG8Q6pdF1Or2vfOMkOLrsk3IXYVjNjJ03he9XfaU+jWO2G2ToifOeSfMDReiGMEOr0fpKFqqUiyM5468zSvoCiFjK7ssxGjjkLHWJXU3PCQswjG47836fnd3RUBNpRGukFsPj+q7Igeu9Uqq2ZZ95+82dLs2UanC/JD6seRuWIR+BBo5QEETidpRF6elGzSDkeZj9LrdvvdLeEs0kDvxqDScYqGbXGbxBRc+OYSb/ISUqwlm2mdRn7ylDtX4Ou0a+uNZg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=dell.com; dmarc=pass action=none header.from=dell.com;
- dkim=pass header.d=dell.com; arc=none
-Received: from SN4PR19MB5421.namprd19.prod.outlook.com (2603:10b6:806:20c::7)
- by PH0PR19MB4922.namprd19.prod.outlook.com (2603:10b6:510:77::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7698.20; Thu, 20 Jun
- 2024 18:57:35 +0000
-Received: from SN4PR19MB5421.namprd19.prod.outlook.com
- ([fe80::237c:614c:8f0b:ae83]) by SN4PR19MB5421.namprd19.prod.outlook.com
- ([fe80::237c:614c:8f0b:ae83%4]) with mapi id 15.20.7698.017; Thu, 20 Jun 2024
- 18:57:35 +0000
-From: "Ramsay, Trey" <Trey.Ramsay@dell.com>
-To: "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>
-Subject: [PATCH] ATT: Error (0x01) - Error: Unlikely error (14)  Prepare Write
- req (0x16) 
-Thread-Topic: [PATCH] ATT: Error (0x01) - Error: Unlikely error (14)  Prepare
- Write req (0x16) 
-Thread-Index: AdrDQ46/6Jy8+sp6TbCfSD4zIwQXtg==
-Date: Thu, 20 Jun 2024 18:57:35 +0000
-Message-ID:
- <SN4PR19MB5421B1226EA92B735CADEA44E4C82@SN4PR19MB5421.namprd19.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
- MSIP_Label_73dd1fcc-24d7-4f55-9dc2-c1518f171327_ActionId=f55f75bb-60a4-4c83-b5b8-07503f14e6be;MSIP_Label_73dd1fcc-24d7-4f55-9dc2-c1518f171327_ContentBits=0;MSIP_Label_73dd1fcc-24d7-4f55-9dc2-c1518f171327_Enabled=true;MSIP_Label_73dd1fcc-24d7-4f55-9dc2-c1518f171327_Method=Standard;MSIP_Label_73dd1fcc-24d7-4f55-9dc2-c1518f171327_Name=No
- Protection (Label Only) - Internal
- Use;MSIP_Label_73dd1fcc-24d7-4f55-9dc2-c1518f171327_SetDate=2024-06-20T18:55:26Z;MSIP_Label_73dd1fcc-24d7-4f55-9dc2-c1518f171327_SiteId=945c199a-83a2-4e80-9f8c-5a91be5752dd;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SN4PR19MB5421:EE_|PH0PR19MB4922:EE_
-x-ms-office365-filtering-correlation-id: a5dff9cc-01c6-43a9-4d48-08dc915ad934
-x-exotenant: 2khUwGVqB6N9v58KS13ncyUmMJd8q4
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230037|1800799021|366013|376011|38070700015;
-x-microsoft-antispam-message-info:
- =?us-ascii?Q?y+iCaeIjFRzwKmCGmlBQu0PaVmhEtsIr8juMGp7F1me4qk6xTdK/pj9HX18j?=
- =?us-ascii?Q?BGOruhZX2JDCPeaKciIDpbZIowpRjp4YQYbH/4RsJopxnjEg0Hw13u3a9t7/?=
- =?us-ascii?Q?K6zX+Dl08E0KxSdGLtRqGPM56zcfAfHPEAHmtW59gjZKu2qhcMIySWmO0R1L?=
- =?us-ascii?Q?cMHEMJyh2JPibmMJis+I4LHFNUWxdzcJabKZvL3vjY1ejRKGaIOp0YuxymDf?=
- =?us-ascii?Q?mpAcfiC5uDkU6iDCdFsT2BaTE4cYsvGEFOV053PBI8PJBneZOm3hSJLX30dp?=
- =?us-ascii?Q?Dma6GN4byBFpPETBcE2/Uy2+x+0l6yjc6L/b9UG3JRrn3ARkKwFHNfoknlzG?=
- =?us-ascii?Q?iE7vgR7o0dIA+bsroU9iCG1Dl7AMdKykuocdXnn/UsZCid/n/VaWDdr8SvuH?=
- =?us-ascii?Q?n0SqbudWgKLrIcg72YHArXN4Av72ljoMLLZd0SXGKNyecBDv2ANQZp4maXYd?=
- =?us-ascii?Q?DbhgC1WGV5jVImbAGt8iHJz45QXyvImhPRxVy5OqrAQF+DjobRGV0N1fc/cp?=
- =?us-ascii?Q?O1q5XkFG75UixeQdArd4LaN6E3+lYu1h4q3BBTCkqKMIiiwLNae4naDUgSb/?=
- =?us-ascii?Q?pUK9snlOxbpfSQrcQS0eyn/0pe6gFJTH/00O++wgN4unCNeMGnKSXUtP1U4K?=
- =?us-ascii?Q?nh19F4CSKM4VEoyEjadR/AR67Z+WZNIfRo1Gp885tyiCDNgHq0xXvNilCcEb?=
- =?us-ascii?Q?WVWV3Udrl09OtRlwr9i9lsOacAHQwGcQU/gQDkkq/dkPxiETJcxeEhu0JnhN?=
- =?us-ascii?Q?QptkWuZX5DIS1Moa4iNjXAhu1gAY2T2Q/sOuozfvJMp4j8q1rdT0Ftp0iZqh?=
- =?us-ascii?Q?krQvL5EWTeo+ch+7c2SJwMJhjfkcg3EeuhYd6CTFPgzPq+c6EJrs9la5vgqM?=
- =?us-ascii?Q?EAuVBIKLj9c5WB7VDawISTZaaXAiNcXB25uTMas5xmL/UDyc/obwPtfnanoK?=
- =?us-ascii?Q?PnfJ2gfmKk8adqTCI9jgE7phSFrWmwUezRSItYZchEtDAdZ5p3qgSAIrsnM8?=
- =?us-ascii?Q?aOiAktAzkxmamJVHC87eahaj4S+7BSWPkC6F1ViuQpev2qN1hcywZRJf8ZX/?=
- =?us-ascii?Q?7nCkztiap+OoXK3tPdtc3bgqw/TSZKHoJYQDpZaAixvBQuz2soynMuUWdbgJ?=
- =?us-ascii?Q?CsLCeR287cLiWju92ytbTipx7vwpIPditZSAdUAF2n/z+kxAv7e4NSvuO90I?=
- =?us-ascii?Q?jxOz0vQH433FpHjeRGU1Bx4A1BgXvR8KfBcepk+J08SE4UINj2LltmHQtl0m?=
- =?us-ascii?Q?r4H49ammazUh3axavMdQPKoUTwh29kba3dl3jCxJFPSW0m59+FJHfyV6O/Qf?=
- =?us-ascii?Q?O5mq3EHP2iylF+tDC5Kn99gO?=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN4PR19MB5421.namprd19.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230037)(1800799021)(366013)(376011)(38070700015);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?NIUBJAh5OQnsk75EeM4E7F+JrGLuh2dL95XNpvXWYzzGyjxP8BusyOx/5tc9?=
- =?us-ascii?Q?8O4k6cQHFJqYlwf7lyhomFovrF403FxLAwP7vXgCcRfq4mhrZxWwLZNUqYqm?=
- =?us-ascii?Q?EaT8DVC+9Dlu0Bp/D5gP5gGI0W9EvjpOHcexknayaqcItPseCWrsTrci6Jyi?=
- =?us-ascii?Q?fwKfMUbPmSTGlF4QC5kQvWJBkkPOdntb1rgoX0/sTd6me+OS35jFwePBjH7B?=
- =?us-ascii?Q?2FAZ7SQw9e9DhMQbxK0nPOqzzOnDFjhJiHSPJ6LqJmQVBSofFYseoUIUgfly?=
- =?us-ascii?Q?/DNo4yEti35QJzfpuEowoImss4+kypj47dN0d/zd5wrYS1zhKFWPE/5dSQeZ?=
- =?us-ascii?Q?bizW89cs9i4jzUBHvHMySe7dtoRDEq6CMK6imWpskQKUe8lJLhdHc5oPfT+B?=
- =?us-ascii?Q?Q5rLfMskXZo6Nwr3FkISo/R5lynOLnDF/6ZjezY/YjS3hk0RWSDhI1S3TmB+?=
- =?us-ascii?Q?pCGe4z1MVipPzXr5a16KnXK1vWwYCx9EqfucpXSz2ZoV11p3qd/1iAfoGhR8?=
- =?us-ascii?Q?RvpXf4XFNBdwahDjlnCFr7H7ETHXJfSpZL9SAUxeuNkdK91XTFdg7r0TAGT5?=
- =?us-ascii?Q?QL4LyBO4EAiQkLDJfHJ/jBABkY0vfh2S7eIumBJ8ltGrIc8oQEaKWQAf8Eu6?=
- =?us-ascii?Q?BdifHypUUTXGtJdlJP3Z58Pk6U5KoYdonhBqpK4V29F7Qtvj2mD3+UjUDWj9?=
- =?us-ascii?Q?jNmE+6HbGWGbhzV9zJ3MaKfLvVqIChtUc0XxPND07sVSmD157S8gV6fv8qoe?=
- =?us-ascii?Q?VutJcOJv6diuuKhzlSiiDrPdAsSovHoiVR2QexEiu3brZ1q2qj69vFBC+hqG?=
- =?us-ascii?Q?b7W6Ykpz/2+dt/oxPMzjK6iF333FCrfHK7O7pC7DPurnxTKKuNPF89sgCD2n?=
- =?us-ascii?Q?zS+L83qNRSgfq630OsrcA9qrG7gYHNL9kMkfIWzteB3Ar7g+cL3GXG0E1RCe?=
- =?us-ascii?Q?67zbvlfwfpV2tQPG0PUDVpDF/yzF1ycLVxuWFbObzzk6aK/lXSeLiPJ/H9ue?=
- =?us-ascii?Q?7wWPWpcqqGAUZDgBTr5mVzfjJ5NVksvdtLdmbGvG3s/FIrTac5IwhHwmi/CJ?=
- =?us-ascii?Q?cOyvyGX0YOuF0Fs/fMzEGEQqCwCTubaRXsMhnicMWLX/5rXpimZnDMSOHXEd?=
- =?us-ascii?Q?Y4StIsiVTnYTr92HOsbZ/o3F3/7rptL4F2f37+nAA6lzoAJkjYC+Z+mQpfSX?=
- =?us-ascii?Q?itPMSsdAkYkHmG2phDBJirpXvgh+fxoU4o1NarcWrm9MijkszLcIzXeLB0sD?=
- =?us-ascii?Q?MF2d2vGJijnX47JpY1DkKHZnM7R82FEcWgUHF0PM4FNHg+R9SyEVbWqhSrsN?=
- =?us-ascii?Q?07J59YcwvJp34y4j9NS5If1+eSG4YfMy4I3kNb0I6PYwIy2iJAMLcgwOv35J?=
- =?us-ascii?Q?u7buX+Misj23nY9mZdp0iOjnLrGDFo7lnWVi/f+LLi3nDm14WiHhpl6NsKPc?=
- =?us-ascii?Q?KCxmMDwSUTM6doRt4gE/ZJpNXBxNUWqlMpuKdARq0kQOsYBHRaQ3vB6jXjQG?=
- =?us-ascii?Q?CyUp+ZoZNhQw2Lg3eJ5Oss7WYsDsqmW7GwUFiDUzNMTDjwqZJ5SELlzr5ofN?=
- =?us-ascii?Q?9HemXgzvGnhWZY2rPum2vCEH/+r2PE5WyEew6m8e?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A5E1B4C3D
+	for <linux-bluetooth@vger.kernel.org>; Thu, 20 Jun 2024 19:34:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1718912058; cv=none; b=HDiyJTtji0FkjvldLohP23pVEDg7jSQlyLbEF8Ew64Uwl7hGbjMhUxLdYIj9HwHlaQdhm9WXf/HBPYdqo6c9T3+IkDmkM61C923Lham/VtnGRD1+HfGv3EDonYlhbcy58oiR9beW9SI5XcdjOuG9rQUsUBzgXKXQlc9J3y9nSBc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1718912058; c=relaxed/simple;
+	bh=LMJhwXKqZKwDoZfSA47gsl66tl0ZA7Fm/pP5alDoprs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=aNQUKQBi25ILDymy7DfTOEIDjowvAGuHnYFsaH0zYtpuihqRo8XmipTK2KPphLDHPzZFnhA0KrSgAMNiQBJlgW0D+gRFmr+slm0HqVJp6d1BjCQESKs4N+733A+fzEC0R/RBw5VJsUI3TeAuI5S6Dd76IrX2aNwXTqr+fivmXOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=T8nqgziM; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a63359aaacaso189359466b.1
+        for <linux-bluetooth@vger.kernel.org>; Thu, 20 Jun 2024 12:34:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google; t=1718912055; x=1719516855; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=rxmltmQrKwAluprbf/AG1nvFIcYg57/7dnDwU0ucSDg=;
+        b=T8nqgziMBEYRN680BTXWFLc8Utv4ywSChHlG1sx7gpoAJ8TalEW/nk2aASMZsJ5JEV
+         II32E1WYPBr1Q44ut+ufaQZNoL92ZLvIuN7EzaJDP5/f+9lU6P5o30sZ6D2iJq4fdmqq
+         +NPgS4qVvVbmjK8FNNFOvr/a1Eh73Q+EWPO48=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1718912055; x=1719516855;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rxmltmQrKwAluprbf/AG1nvFIcYg57/7dnDwU0ucSDg=;
+        b=jBOhlJqP/TZJ55loQSLtoKzbEvzlsA3gKgYYg7Q6KRc6X8BUu816ZqBI2W7SP8tIfI
+         CvQfm3uw48r8/mXDZrQvV82ZzAwkj37Ed6+dcrBQjVWFcymaUpAUc3DTNY3yePhYP8sj
+         fNNLNLzQlTPLQ1numniCxEcZetXiFKZdxAfb2ynZkoGNqWhe2VGP60bXM5PLcB2PVQIh
+         dVxoQLqaCa2xy8jofclx4O+pAW960LjtUCgwt3BhbQtNrmrOdm1X1qrQV4k/htBk0A/y
+         yLm1OuRN+8NbdqJSUeo59RhY9t8scnSe3BK4aUfrLqUTy2O23Y+LAul8r1kBiDxkQwfI
+         i4aQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW8lDnzZtVMhp0LzsHeZOggz9aR8RZk3s2UdEAmTRG13utLpS/k134oplKcgINcxBVSe+hUCrVwUaVq3NbmW8M7tebfE9sbFbrcuOt+DHoJ
+X-Gm-Message-State: AOJu0Yxc3k7ZvbkratX+GL6qUKvx2gfk96fxjDuRDaV0DCTS6SpQ+y9E
+	o6DehUCaHSpTHUA5e2xYhKM35/OXKfVAT2b6dmWeRnP2ndcc6yWZXfba6GHYTMbSBghoZ/cVONu
+	9umPYmhrk
+X-Google-Smtp-Source: AGHT+IEJ1JdTm3bREztVYoqso3jQoqe3d9JzzPmqrzIEYzvaOvndnK+YS+v3uymyFKcJE3XxqYOcDg==
+X-Received: by 2002:a17:907:a581:b0:a6f:af4f:ff82 with SMTP id a640c23a62f3a-a6faf500049mr463576766b.25.1718912054911;
+        Thu, 20 Jun 2024 12:34:14 -0700 (PDT)
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com. [209.85.221.46])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a6fcf428b41sm3747566b.21.2024.06.20.12.34.14
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Jun 2024 12:34:14 -0700 (PDT)
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-35f2d723ef0so993760f8f.1
+        for <linux-bluetooth@vger.kernel.org>; Thu, 20 Jun 2024 12:34:14 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCXiBjuiccfXZyq1Hd0bBk6xBFOwEW5AYnR7yTBUjNi9Mv1xVvhNOKxfMIgtDF7SO1E5WrXcp9zvLAknNiMvKiZ96bScaTkYhPQMqiDE/bA3
+X-Received: by 2002:a5d:6152:0:b0:35f:308a:cab0 with SMTP id
+ ffacd0b85a97d-363170ecbe5mr4379764f8f.13.1718911595412; Thu, 20 Jun 2024
+ 12:26:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: Dell.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SN4PR19MB5421.namprd19.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a5dff9cc-01c6-43a9-4d48-08dc915ad934
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Jun 2024 18:57:35.6435
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 945c199a-83a2-4e80-9f8c-5a91be5752dd
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: XUGqcLbzF4PAUz5c4X/Vjp+EIyIgWbfRaQdDuI+RlhdsJis2OJAiDXz7/KNbHSVR/4Q5wbswsh+7fkkU89BF4A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR19MB4922
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-20_08,2024-06-20_04,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- lowpriorityscore=0 bulkscore=0 mlxlogscore=618 priorityscore=1501
- mlxscore=0 adultscore=0 impostorscore=0 suspectscore=0 phishscore=0
- clxscore=1015 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2406180000 definitions=main-2406200137
-X-Proofpoint-GUID: eK1_rMgv4M9apWVh9KSukOZwYKiMiMa6
-X-Proofpoint-ORIG-GUID: eK1_rMgv4M9apWVh9KSukOZwYKiMiMa6
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1015 priorityscore=1501
- malwarescore=0 impostorscore=0 lowpriorityscore=0 adultscore=0 spamscore=0
- phishscore=0 mlxscore=0 bulkscore=0 suspectscore=0 mlxlogscore=571
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2406180000
- definitions=main-2406200137
+References: <20240620175703.605111-1-yury.norov@gmail.com> <CAHk-=wiUTXC452qbypG3jW6XCZGfc8d-iehSavxn5JkQ=sv0zA@mail.gmail.com>
+ <ZnR1tQN01kN97G_F@yury-ThinkPad>
+In-Reply-To: <ZnR1tQN01kN97G_F@yury-ThinkPad>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Thu, 20 Jun 2024 12:26:18 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wjv-DkukaKb7f04WezyPjRERp=xfxv34j5fA8cDQ_JudA@mail.gmail.com>
+Message-ID: <CAHk-=wjv-DkukaKb7f04WezyPjRERp=xfxv34j5fA8cDQ_JudA@mail.gmail.com>
+Subject: Re: [PATCH v4 00/40] lib/find: add atomic find_bit() primitives
+To: Yury Norov <yury.norov@gmail.com>
+Cc: linux-kernel@vger.kernel.org, "David S. Miller" <davem@davemloft.net>, 
+	"H. Peter Anvin" <hpa@zytor.com>, "James E.J. Bottomley" <jejb@linux.ibm.com>, 
+	"K. Y. Srinivasan" <kys@microsoft.com>, "Md. Haris Iqbal" <haris.iqbal@ionos.com>, 
+	Akinobu Mita <akinobu.mita@gmail.com>, Andrew Morton <akpm@linux-foundation.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Borislav Petkov <bp@alien8.de>, Chaitanya Kulkarni <kch@nvidia.com>, 
+	Christian Brauner <brauner@kernel.org>, Damien Le Moal <damien.lemoal@opensource.wdc.com>, 
+	Dave Hansen <dave.hansen@linux.intel.com>, David Disseldorp <ddiss@suse.de>, 
+	Edward Cree <ecree.xilinx@gmail.com>, Eric Dumazet <edumazet@google.com>, 
+	Fenghua Yu <fenghua.yu@intel.com>, Geert Uytterhoeven <geert@linux-m68k.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Gregory Greenman <gregory.greenman@intel.com>, 
+	Hans Verkuil <hverkuil@xs4all.nl>, Hans de Goede <hdegoede@redhat.com>, 
+	Hugh Dickins <hughd@google.com>, Ingo Molnar <mingo@redhat.com>, Jakub Kicinski <kuba@kernel.org>, 
+	Jaroslav Kysela <perex@perex.cz>, Jason Gunthorpe <jgg@ziepe.ca>, Jens Axboe <axboe@kernel.dk>, 
+	Jiri Pirko <jiri@resnulli.us>, Jiri Slaby <jirislaby@kernel.org>, Kalle Valo <kvalo@kernel.org>, 
+	Karsten Graul <kgraul@linux.ibm.com>, Karsten Keil <isdn@linux-pingi.de>, 
+	Kees Cook <keescook@chromium.org>, Leon Romanovsky <leon@kernel.org>, 
+	Mark Rutland <mark.rutland@arm.com>, Martin Habets <habetsm.xilinx@gmail.com>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Michael Ellerman <mpe@ellerman.id.au>, Michal Simek <monstr@monstr.eu>, 
+	Nicholas Piggin <npiggin@gmail.com>, Oliver Neukum <oneukum@suse.com>, Paolo Abeni <pabeni@redhat.com>, 
+	Paolo Bonzini <pbonzini@redhat.com>, Peter Zijlstra <peterz@infradead.org>, 
+	Ping-Ke Shih <pkshih@realtek.com>, Rich Felker <dalias@libc.org>, Rob Herring <robh@kernel.org>, 
+	Robin Murphy <robin.murphy@arm.com>, Sean Christopherson <seanjc@google.com>, 
+	Shuai Xue <xueshuai@linux.alibaba.com>, Stanislaw Gruszka <stf_xl@wp.pl>, 
+	Steven Rostedt <rostedt@goodmis.org>, Thomas Bogendoerfer <tsbogend@alpha.franken.de>, 
+	Thomas Gleixner <tglx@linutronix.de>, Valentin Schneider <vschneid@redhat.com>, 
+	Vitaly Kuznetsov <vkuznets@redhat.com>, Wenjia Zhang <wenjia@linux.ibm.com>, 
+	Will Deacon <will@kernel.org>, Yoshinori Sato <ysato@users.sourceforge.jp>, 
+	GR-QLogic-Storage-Upstream@marvell.com, alsa-devel@alsa-project.org, 
+	ath10k@lists.infradead.org, dmaengine@vger.kernel.org, iommu@lists.linux.dev, 
+	kvm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-block@vger.kernel.org, 
+	linux-bluetooth@vger.kernel.org, linux-hyperv@vger.kernel.org, 
+	linux-m68k@lists.linux-m68k.org, linux-media@vger.kernel.org, 
+	linux-mips@vger.kernel.org, linux-net-drivers@amd.com, 
+	linux-pci@vger.kernel.org, linux-rdma@vger.kernel.org, 
+	linux-s390@vger.kernel.org, linux-scsi@vger.kernel.org, 
+	linux-serial@vger.kernel.org, linux-sh@vger.kernel.org, 
+	linux-sound@vger.kernel.org, linux-usb@vger.kernel.org, 
+	linux-wireless@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, 
+	mpi3mr-linuxdrv.pdl@broadcom.com, netdev@vger.kernel.org, 
+	sparclinux@vger.kernel.org, x86@kernel.org, 
+	Alexey Klimov <alexey.klimov@linaro.org>, Bart Van Assche <bvanassche@acm.org>, Jan Kara <jack@suse.cz>, 
+	Matthew Wilcox <willy@infradead.org>, Mirsad Todorovac <mirsad.todorovac@alu.unizg.hr>, 
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>, Sergey Shtylyov <s.shtylyov@omp.ru>
+Content-Type: text/plain; charset="UTF-8"
 
-Bluez Maintainers
-Here is a fix for attribute writes not working in src/shared/gatt-db.c
+On Thu, 20 Jun 2024 at 11:32, Yury Norov <yury.norov@gmail.com> wrote:
+>
+> Is that in master already? I didn't get any email, and I can't find
+> anything related in the master branch.
 
-https://github.com/tramsay/bluez-tramsay/commit/246bc960629dff34e744c728f04=
-8e9f50f1a005d
+It's 5d272dd1b343 ("cpumask: limit FORCE_NR_CPUS to just the UP case").
 
-shared/gatt-db: Prepare Write req error BT_ATT_ERROR_UNLIKELY
-Fixes Prepare Write req error: BT_ATT_ERROR_UNLIKELY
+> > New rule: before you send some optimization, you need to have NUMBERS.
+>
+> I tried to underline that it's not a performance optimization at my
+> best.
 
-    ATT: Error (0x01)
-      Error: Unlikely error (14)
-      Prepare Write req (0x16) on handle 0x0069
+If it's not about performance, then it damn well shouldn't be 90%
+inline functions in a header file.
 
-The prep_write_complete_cb was not getting called
-The attrib->write_func code block should not be called when len is 0
+If it's a helper function, it needs to be a real function elsewhere. Not this:
 
-Internal Use - Confidential
+ include/linux/find_atomic.h                  | 324 +++++++++++++++++++
+
+because either performance really matters, in which case you need to
+show profiles, or performance doesn't matter, in which case it damn
+well shouldn't have special cases for small bitsets that double the
+size of the code.
+
+              Linus
 
