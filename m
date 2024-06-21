@@ -1,359 +1,145 @@
-Return-Path: <linux-bluetooth+bounces-5483-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5486-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE6F49126D9
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 21 Jun 2024 15:41:56 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A363491288B
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 21 Jun 2024 16:53:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A42E52885CC
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 21 Jun 2024 13:41:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5B5EA1F25DB7
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 21 Jun 2024 14:53:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2DDA10A39;
-	Fri, 21 Jun 2024 13:41:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50DE0383A2;
+	Fri, 21 Jun 2024 14:53:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IzbFG1cq"
+	dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b="h8fRXHvb"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out203-205-221-235.mail.qq.com (out203-205-221-235.mail.qq.com [203.205.221.235])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E5A1D55D
-	for <linux-bluetooth@vger.kernel.org>; Fri, 21 Jun 2024 13:41:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63DE2940F;
+	Fri, 21 Jun 2024 14:53:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.205.221.235
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1718977270; cv=none; b=qC/kly/oXMl0c4Hg293U75CRxQaZ1QZPnjoNy+fnTfUFdY7S48vnOGKTutX4p3TU4sJ7Z9HXJ4w4mZ/s3U9rNeZwaL+7QtTFAiqLKkQBoXJJBn5aJjo/SBXErDcZFap9H7Mp6N0AUTTr1cy0461ceS4+5REIkvBzwAEnFeiC64E=
+	t=1718981614; cv=none; b=DsJFxBsNo1hL9KJQJc76aZH7wUfin0DGCrr5qKrxcsvAO1o6AxhG8520F9o104HxegnEhRbhpCGpkocHchSSUHFijFfr3zRlGQNLKiSLcZ+b2VDpvlklAU28ECLOZOncVsu5C+T7bUEhtCdJPKp2pggozavXkeTxWKE1hP2hESw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1718977270; c=relaxed/simple;
-	bh=vEM7Eq/8t8RtB+hQ9Mj2jh+hL1e/MfykMflGe+mbWuQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JPLWWKFu0h65GQ+QQyn8Ohy+3LMyXUviktUnK60TlDqDWlfcMfvp+fOnWLlWSxUVaK8iKUi2vkPlrjkug2zKG0iDLR6+xMuOmI4BsgFhHxTlazhTYNUQZVrjmwUItHnsFpPh1zVnLpcTsVcGmoKaUnVVw/lSWtT46ws8OXuF0Lw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IzbFG1cq; arc=none smtp.client-ip=209.85.208.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2ec17eb4493so28725531fa.2
-        for <linux-bluetooth@vger.kernel.org>; Fri, 21 Jun 2024 06:41:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1718977266; x=1719582066; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=A+fLGjUorxE9ykH/fcUDYxB4BUMleuygZBcL4sL75To=;
-        b=IzbFG1cqYAmIJwjnehnlQFglX0K0r3cyD9PVN4VYI6sgFT+JqNgOxurS5YQh5aa3S3
-         Wkqt4vkPwbnVpL8WOs0TDOKP98nlRIF0Q0H8BRo5mEQNIg6I2Jo7TelECu/Md1ZdML0F
-         le+WtbwuQn+UJpRXtcBtKdsysJIHLCJY/BY9oIAOBRURoyv0oxfqBqZm5PShzCeCkW2y
-         z00rlgfiW+v2yuWp0cZEZ1dgjYZZ3RiQkcntl7ExYavbaJJzVAvRDUcF3qTVzRQ/eGF1
-         xnAr94+unH0slBYN20EA+T3gAmvog2zj2gYZ183Tc2Q+a7ARe2nb4JYZ1WMRjI5k/UwQ
-         edJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1718977266; x=1719582066;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=A+fLGjUorxE9ykH/fcUDYxB4BUMleuygZBcL4sL75To=;
-        b=hKaOM6Y1GoP4MMgpf0PVjIk73OjZIi8SIo6A8SpO0dRQyWm6c32UcKfa9kuANDlpaz
-         TDEnc+YoVej+wr2FA/s8x+oMp2LlolrUtbQqs2NjTBNDmQEuxV/AUlXit2GoXqH/lxxV
-         x8QVv+RAU2t33prROwfl+Uvrb1sjXeH0QKgbAfI2enRJa8wX9reZrvz1Gp6/oMlvfHw5
-         gFjcFnO2dLBvCEthToxTYxEM4iiCt+wfTprHnn4sT50q5wE7wHCkqlcYjCmSFzjFyUJp
-         2ziapeSW2c2fi0gIZtlp/oGBL21bkTDtttkCcit9FuqTzaSD9H9/dYwEm0WmKXI+gecc
-         PzRw==
-X-Forwarded-Encrypted: i=1; AJvYcCUFfRPrIpGyzXfzK77dE5vXq8xuCViMkuikiXHQOFbwpHfcbfy43w74GMLzD/tp81hmPeDmV1iK7qOuPlGSEPkxDYF2LP7OctUgsIPeI9wY
-X-Gm-Message-State: AOJu0YwUYE7bIDOQBoEQ3zMz6FXlmXcIe875SndoIzNOW71+AP6eRTop
-	WjiDEkhnkDmOCbVYLgxA1IzIVI9motkTWTh6WChUqfeNInwkHF/LRJ9m31Wf+EfpvQhogC7Yoep
-	pyxasnBdei+lp3j36LNkvp/HLxmYSOFgy
-X-Google-Smtp-Source: AGHT+IGRuxfOf3764xWJtmyerYV4XkR6c01TqDa9La21Tuwk3lxU5oW9jkRd4yleMlZj9xTKhA/TgyimAXN4okRvJrc=
-X-Received: by 2002:a2e:b01a:0:b0:2ec:5258:e889 with SMTP id
- 38308e7fff4ca-2ec5258ea0cmr4331551fa.46.1718977265796; Fri, 21 Jun 2024
- 06:41:05 -0700 (PDT)
+	s=arc-20240116; t=1718981614; c=relaxed/simple;
+	bh=Mx6dgVm7zvxMqJKaAF6ajtL8qQ23avXiryh6wLs6fkQ=;
+	h=Message-ID:From:To:Cc:Subject:Date:In-Reply-To:References:
+	 MIME-Version; b=C+isUQUwQBaEiwZnka85kHcQBwxFqzx58IYQqWH0cHGxJ9KSGhN03MlDnN27c4Tv+DD1uX0rI2B30nUPxj7hdMTTj7DyBdH5MLpfb9gvYm2W6XkM1lufE44ch9QFNh0mYHWI4yZf9r015qjZGy/wYitp2+bhtZ7O7mvcsQH0sPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com; spf=pass smtp.mailfrom=qq.com; dkim=pass (1024-bit key) header.d=qq.com header.i=@qq.com header.b=h8fRXHvb; arc=none smtp.client-ip=203.205.221.235
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=qq.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qq.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1718981602; bh=yrEHKGjDKt8ixCB7ppttczBEgFxHHq0Bjh5xMq23SLE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=h8fRXHvbKAvwuLMZYEC8QRRk+GBavV7d+6PQ4avFLiLEIxRBZsca5r50P0KgR0FFj
+	 hhIB2ErA4uQ8SePoDBN9bXKE+sidR0TBdd45BjIlxZAEPy05kb9N5+7mYZG1pgAEn5
+	 pN/nO7lOzhx0fu6Cvt0OuKy6prjQvD4kJXwcMNso=
+Received: from pek-lxu-l1.wrs.com ([111.198.228.103])
+	by newxmesmtplogicsvrszb9-1.qq.com (NewEsmtp) with SMTP
+	id B41950D4; Fri, 21 Jun 2024 22:45:01 +0800
+X-QQ-mid: xmsmtpt1718981101txvlk5cbc
+Message-ID: <tencent_8AF62ECF8CADE7DB86DA52DE864289872E06@qq.com>
+X-QQ-XMAILINFO: M0PjjqbLT90wOnsn7kdF1t9MzzqNu2WTDONPqYYLQbXtuBedKivw1ZqAkENd5X
+	 XL1Nigu1IxNQ/K1yyDQMsuNnKrvKJmQlbFAE/QfW1dfjigcP7lXe3sM/vT+4IKeA1Pmk4WmAurYo
+	 cEkTJUxUUWknMs7BqNUycEuY8f4n7qerwMCsNbftsGwXX4YxE17XH9iWJpFG+mcW2/KqB+y47h7/
+	 g+raCYeh/P+vgrtllZ/FhVyqeC2qDYdTJ0rUURO2Sj7x4dTni4Hl6Vc0PkQr0ae8NFXC/U0jHzjD
+	 Q5d7fvyHN+ON6MO+rZZAcxkI5OSlrIK14BmgSFgxqVP7bgML48hgCSPw7roFodi54TXNgVANgY13
+	 mYH6SlLQKcE9c6mnTRD8m3OhBWyLrHkUPrNU+/LFY5O4aTpoiLmRwex59kWLw6f8FIGupvALyYgh
+	 uCJ81Gt+qCTmDv7PskDBWkimUIHH+tQ6hRqL8j9gqpEzsOxpPxYX6bDkAyls+uCqLVLg/AuzadVo
+	 sN/cb9wMEKZyuhpmHYsnYm4Jsv5newTAj5J1TSE5MJjjj01id9cSOJwKITEG1Etax5/WvEfkOsv1
+	 81R7nEQAGkZyRzEjWGWqaq0/oIWghUYj8w3KdtNbUnnkUPfuI/31S1oxI2VpC+d+WlWznYmK46Te
+	 MaV+3L/CkRCEqHZhHuOTjA3GEEjfkzevbIIYysK0iOev+IOwqG8ZcmkEARxDzileZ+KSWg8kT6kp
+	 xy4zgeZ0DZa19ZRtxij9cwaHq3fvNvNdHige0c08nlvSEarWARdJD4JE1n0lSwDBhmeiu9MALVzh
+	 OTbcF7OHAIZgzbUt7fm9k0mZ/G0hKkSr2ExDbUhGDweMo+kn33CaklfkvYNyF/qhylNjGNBvgkPD
+	 THjjLOFG/T10SC4b0df9w3AbEnAxm/MvS149qynTourv5jU+pdSiGDqXLN4zFu79BgMhrWJW7K4z
+	 KbHl0AMR0=
+X-QQ-XMRINFO: OWPUhxQsoeAVDbp3OJHYyFg=
+From: Edward Adam Davis <eadavis@qq.com>
+To: luiz.dentz@gmail.com
+Cc: eadavis@qq.com,
+	johan.hedberg@gmail.com,
+	linux-bluetooth@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	marcel@holtmann.org,
+	syzbot+b7f6f8c9303466e16c8a@syzkaller.appspotmail.com,
+	syzkaller-bugs@googlegroups.com
+Subject: Re: [PATCH] bluetooth/l2cap: sync sock recv cb and release
+Date: Fri, 21 Jun 2024 22:45:02 +0800
+X-OQ-MSGID: <20240621144501.2680696-2-eadavis@qq.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <CABBYNZLu-wAu6cdyDVim=bP+0Ld-P=YvENO=fa6r=rdY4UqukQ@mail.gmail.com>
+References: <CABBYNZLu-wAu6cdyDVim=bP+0Ld-P=YvENO=fa6r=rdY4UqukQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CABBYNZJh1Maz1ZyG7+N-Xux7c3hbx_YqEinCO_z=tMvpRxU+dA@mail.gmail.com>
- <20240621131026.5814-1-iulia.tanasescu@nxp.com>
-In-Reply-To: <20240621131026.5814-1-iulia.tanasescu@nxp.com>
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Fri, 21 Jun 2024 09:40:52 -0400
-Message-ID: <CABBYNZKf4hysErxwCH9GsR+aQnLVQOTuK8szv_EhRLL_BX=k8w@mail.gmail.com>
-Subject: Re: [PATCH RFC,BlueZ] doc: Add initial MediaSetup rst
-To: Iulia Tanasescu <iulia.tanasescu@nxp.com>
-Cc: andrei.istodorescu@nxp.com, claudia.rosu@nxp.com, 
-	linux-bluetooth@vger.kernel.org, mihai-octavian.urzica@nxp.com, 
-	vlad.pruteanu@nxp.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Iulia,
+Hi Luiz Augusto von Dentz,
 
-On Fri, Jun 21, 2024 at 9:10=E2=80=AFAM Iulia Tanasescu <iulia.tanasescu@nx=
-p.com> wrote:
->
-> Hi Luiz,
->
-> > -----Original Message-----
-> > From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-> > Sent: Wednesday, June 19, 2024 5:53 PM
-> > To: Iulia Tanasescu <iulia.tanasescu@nxp.com>
-> > Cc: linux-bluetooth@vger.kernel.org; Claudia Cristina Draghicescu
-> > <claudia.rosu@nxp.com>; Mihai-Octavian Urzica <mihai-
-> > octavian.urzica@nxp.com>; Vlad Pruteanu <vlad.pruteanu@nxp.com>; Andrei
-> > Istodorescu <andrei.istodorescu@nxp.com>
-> > Subject: Re: [PATCH RFC,BlueZ] doc: Add initial MediaSetup rst
+On Thu, 20 Jun 2024 12:53:19 -0400, Luiz Augusto von Dentz wrote:
+> >         release_sock(sk);
+> > +       l2cap_chan_unlock(chan);
+> > +       l2cap_chan_put(chan);
 > >
-> > Hi Iulia,
-> >
-> > On Wed, Jun 19, 2024 at 7:35 AM Iulia Tanasescu <iulia.tanasescu@nxp.co=
-m>
-> > wrote:
-> > >
-> > > This proposes a new D-Bus API to be used by the BAP Broadcast
-> > > Assistant role.
-> > >
-> > > The BAP Broadcast Assistant is a Master device that can have multiple
-> > > connections with BAP Scan Delegators. The Broadcast Assistant has the
-> > > UI to start scanning, enumerate Broadacast Sources, allow the user to
-> > > select a desired Source and send the stream information to one of the
-> > > peers. If the selected stream is encrypted and the peer requires a
-> > > Broadcast Code to decrypt the stream, the user should issue a command=
- to
-> > send the code.
-> > >
-> > > A new D-Bus API is necessary to allow the BAP Broadcast Assistant
-> > > implementation in BlueZ to communicate with a top level UI process.
-> > >
-> > > The Broadcast Assistant in BlueZ should register a D-Bus object for
-> > > each scanned BIS that matches the Audio capabilities of a peer. Each
-> > > object should be linked with the stream and the peer device that
-> > > matches the stream capabilities.
-> > >
-> > > The top level process should detect these objects and display the
-> > > information to the user. The user can issue commands to select an
-> > > object or to provide the Broadcast Code for an object.
-> > >
-> > > More information on the proposed design can be found here:
-> > > https://gith/
-> > >
-> > ub.com%2Forgs%2Fbluez%2Fdiscussions%2F822&data=3D05%7C02%7Ciulia.tana
-> > ses
-> > >
-> > cu%40nxp.com%7Cc4b5189ccea94198202d08dc906f805b%7C686ea1d3bc2b
-> > 4c6fa92c
-> > >
-> > d99c5c301635%7C0%7C0%7C638544055766136877%7CUnknown%7CTWFp
-> > bGZsb3d8eyJW
-> > >
-> > IjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0
-> > %7C%
-> > >
-> > 7C%7C&sdata=3Dw8yqp2HZQqouwJTFALZVB9Z32st0a3GTKm3w1TcHg10%3D&res
-> > erved=3D0
-> > > ---
-> > >  Makefile.am                  |  6 ++---
-> > >  doc/org.bluez.MediaSetup.rst | 45
-> > > ++++++++++++++++++++++++++++++++++++
-> > >  2 files changed, 48 insertions(+), 3 deletions(-)  create mode 10064=
-4
-> > > doc/org.bluez.MediaSetup.rst
-> > >
-> > > diff --git a/Makefile.am b/Makefile.am index 0ae721111..217e7d2e4
-> > > 100644
-> > > --- a/Makefile.am
-> > > +++ b/Makefile.am
-> > > @@ -362,7 +362,7 @@ man_MANS +=3D doc/org.bluez.Adapter.5
-> > > doc/org.bluez.Device.5 \  man_MANS +=3D doc/org.bluez.Media.5
-> > doc/org.bluez.MediaControl.5 \
-> > >                 doc/org.bluez.MediaPlayer.5 doc/org.bluez.MediaFolder=
-.5 \
-> > >                 doc/org.bluez.MediaItem.5 doc/org.bluez.MediaEndpoint=
-.5 \
-> > > -               doc/org.bluez.MediaTransport.5
-> > > +               doc/org.bluez.MediaTransport.5
-> > > + doc/org.bluez.MediaSetup.5
-> > >  man_MANS +=3D doc/org.bluez.GattManager.5 doc/org.bluez.GattProfile.=
-5 \
-> > >                 doc/org.bluez.GattService.5 \
-> > >                 doc/org.bluez.GattCharacteristic.5 \ @@ -395,7 +395,7
-> > > @@ manual_pages +=3D doc/org.bluez.Adapter.5 doc/org.bluez.Device.5 \
-> > > manual_pages +=3D doc/org.bluez.Media.5 doc/org.bluez.MediaControl.5 =
-\
-> > >                 doc/org.bluez.MediaPlayer.5 doc/org.bluez.MediaFolder=
-.5 \
-> > >                 doc/org.bluez.MediaItem.5 doc/org.bluez.MediaEndpoint=
-.5 \
-> > > -               doc/org.bluez.MediaTransport.5
-> > > +               doc/org.bluez.MediaTransport.5
-> > > + doc/org.bluez.MediaSetup.5
-> > >  manual_pages +=3D doc/org.bluez.GattManager.5 doc/org.bluez.GattProf=
-ile.5 \
-> > >                 doc/org.bluez.GattService.5 \
-> > >                 doc/org.bluez.GattCharacteristic.5 \ @@ -475,7 +475,7
-> > > @@ EXTRA_DIST +=3D doc/org.bluez.Adapter.rst doc/org.bluez.Device.rst=
- \
-> > > EXTRA_DIST +=3D doc/org.bluez.Media.rst doc/org.bluez.MediaControl.rs=
-t \
-> > >                 doc/org.bluez.MediaPlayer.rst doc/org.bluez.MediaFold=
-er.rst \
-> > >                 doc/org.bluez.MediaItem.rst doc/org.bluez.MediaEndpoi=
-nt.rst \
-> > > -               doc/org.bluez.MediaTransport.rst
-> > > +               doc/org.bluez.MediaTransport.rst
-> > > + doc/org.bluez.MediaSetup.rst
-> > >
-> > >  EXTRA_DIST +=3D doc/org.bluez.GattManager.rst doc/org.bluez.GattProf=
-ile.rst\
-> > >                 doc/org.bluez.GattService.rst \ diff --git
-> > > a/doc/org.bluez.MediaSetup.rst b/doc/org.bluez.MediaSetup.rst new fil=
-e
-> > > mode 100644 index 000000000..7463d7cfb
-> > > --- /dev/null
-> > > +++ b/doc/org.bluez.MediaSetup.rst
-> > > @@ -0,0 +1,45 @@
-> > > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
-> > > +org.bluez.MediaSetup
-> > > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
-> >
-> > Let's use MediaAssistant as name:
-> > https://github.c/
-> > om%2Forgs%2Fbluez%2Fdiscussions%2F822%23discussioncomment-
-> > 9818645&data=3D05%7C02%7Ciulia.tanasescu%40nxp.com%7Cc4b5189ccea941
-> > 98202d08dc906f805b%7C686ea1d3bc2b4c6fa92cd99c5c301635%7C0%7C0%
-> > 7C638544055766147461%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjA
-> > wMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C
-> > &sdata=3DjHOPPf1bg8SpRg4N3AP33ozX51GGUslWid9JObkRzFw%3D&reserved=3D
-> > 0
-> >
-> > > +
-> > > +-------------------------------------------
-> > > +BlueZ D-Bus MediaSetup API documentation
-> > > +-------------------------------------------
-> > > +
-> > > +:Version: BlueZ
-> > > +:Date: June 2024
-> > > +:Manual section: 5
-> > > +:Manual group: Linux System Administration
-> > > +
-> > > +Interface
-> > > +=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > > +
-> > > +:Service:      org.bluez
-> > > +:Interface:    org.bluez.MediaSetup1
-> > > +:Object path:
-> > > +/org/bluez/{hci0,hci1,...}/src_XX_XX_XX_XX_XX_XX/dev_YY_YY_YY_YY_YY_=
-Y
-> > > +Y/bisZ
-> > > +
-> > > +Methods
-> > > +-------
-> > > +
-> > > +void Select()
-> > > +````````````````````````````````````````````````````````
-> >
-> > How about using Push as the method name here?
-> >
-> > > +
-> > > +       Send stream information to the remote device.
-> > > +
-> > > +void SetBcode(array{byte} broadcast_code)
-> > > +`````````````````````````````````````````````````````````
-> > > +
-> > > +       Send Broadcast_Code to the remote device.
-> >
-> > Hmm, I wonder if it wouldn't be better to just have a dictionary that y=
-ou can
-> > pass to the Push method.
->
-> So you're suggesting instead of having a separate method for setting the
-> Broadcast_Code, we can provide it through the Push method if the stream
-> is encrypted? I think this can work, but we will need another MediaAssist=
-ant
-> property to indicate stream information, maybe a "QoS" property like
-> MediaTransport is implementing.
->
-> So when calling Push from bluetoothctl, we can read the QoS property and
-> if the stream is encrypted, we can display a prompt for the user to enter
-> the Broadcast_Code.
-
-Yep, I think we will need QoS properties anyway if we don't have a
-transport to refer to, otherwise bluetoothctl would not be able to
-list the stream configuration.
-
-> >
-> > > +Properties
-> > > +----------
-> > > +
-> > > +string State [readonly]
-> > > +```````````````````````
-> > > +
-> > > +       Indicates the state of the setup. Possible values are:
-> > > +
-> > > +       :"idle": setup created
-> > > +       :"pending": setup selected
-> > > +       :"requesting": remote device requires Broadcast_Code
-> > > +       :"active": remote device started receiving stream
-> >
-> > We might want to add a property that refers to the MediaTransport objec=
-t, that
-> > way the application can tell what is the BIS configuration from the tra=
-nsport and
-> > we don't need to duplicate them here. The lifetime of MediaAssistant sh=
-all be
-> > the same as the MediaTransport object it refers to, so if the transport=
- is
-> > removed/free so is its MediaAssistant object, we may want to document t=
-his
-> > though because the Device object could persist if they are not temporar=
-y but the
-> > MediaTransport objects for broadcasters are normally considered tempora=
-ry as
-> > they are not paired/bonded.
->
-> I think most use cases do not require a Broadcast Assistant to enumerate
-> MediaTransports, so I don't think the objects can be linked:
-> https://github.com/orgs/bluez/discussions/822#discussioncomment-9839217
-
-Fair point.
-
-> But even if MediaTransports and MediaAssistants would coexist on a Broadc=
-ast
-> Assistant, they refer to different things: MediaTransports refer to strea=
-ms
-> that the local device is trying to receive, while MediaAssistants refer t=
-o
-> streams that peer Scan Delegators are trying to receive.
->
-> As I see it, the "State" of a MediaAssistant allows the user to know the
-> stream state on the peer: For example, if the user calls the "Push" metho=
-d on
-> a MediaAssistant, the BASS Client in BlueZ adds the stream information on=
- the
-> peer, and then the BASS Client receives a notification that the peer
-> successfully acquired the stream, then the MediaAssistant goes to "active=
-"
-> state.
-
-Fair enough, we just need to make sure the clients have enough
-information to decide on what to Push thus it is probably a good idea
-to have QoS property as well.
-
-> >
-> > > \ No newline at end of file
-> > > --
-> > > 2.39.2
-> > >
-> >
-> >
+> >         return err;
+> >  }
 > > --
-> > Luiz Augusto von Dentz
->
-> Regards,
-> Iulia
+> > 2.43.0
+> 
+> Looks like this was never really tested properly:
+> 
+> ============================================
+> WARNING: possible recursive locking detected
+> 6.10.0-rc3-g4029dba6b6f1 #6823 Not tainted
+> --------------------------------------------
+> kworker/u5:0/35 is trying to acquire lock:
+> ffff888002ec2510 (&chan->lock#2/1){+.+.}-{3:3}, at:
+> l2cap_sock_recv_cb+0x44/0x1e0
+> 
+> but task is already holding lock:
+> ffff888002ec2510 (&chan->lock#2/1){+.+.}-{3:3}, at:
+> l2cap_get_chan_by_scid+0xaf/0xd0
+> 
+> other info that might help us debug this:
+>  Possible unsafe locking scenario:
+> 
+>        CPU0
+>        ----
+>   lock(&chan->lock#2/1);
+>   lock(&chan->lock#2/1);
+> 
+>  *** DEADLOCK ***
+> 
+>  May be due to missing lock nesting notation
+> 
+> 3 locks held by kworker/u5:0/35:
+>  #0: ffff888002b8a940 ((wq_completion)hci0#2){+.+.}-{0:0}, at:
+> process_one_work+0x750/0x930
+>  #1: ffff888002c67dd0 ((work_completion)(&hdev->rx_work)){+.+.}-{0:0},
+> at: process_one_work+0x44e/0x930
+>  #2: ffff888002ec2510 (&chan->lock#2/1){+.+.}-{3:3}, at:
+> l2cap_get_chan_by_scid+0xaf/0xd0
+> 
+> l2cap_sock_recv_cb is assumed to be called with the chan_lock held so
+> perhaps we can just do:
+> 
+>        sk = chan->data;
+>        if (!sk)
+>                return -ENXIO;
 
+If the release occurs after this judgment, the same problem will still occur. 
+Recv and release must be synchronized using locks, which can be solved by
+adding new lock.
 
+Can you provide a reproduction program for the AA lock mentioned above?
 
---=20
-Luiz Augusto von Dentz
+--
+Edward
+
 
