@@ -1,48 +1,48 @@
-Return-Path: <linux-bluetooth+bounces-5573-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5574-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3CA9D9198AA
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 26 Jun 2024 22:00:53 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C4C09198A8
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 26 Jun 2024 22:00:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EAC4E282CE5
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D30DF1F21D0C
 	for <lists+linux-bluetooth@lfdr.de>; Wed, 26 Jun 2024 20:00:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2247192B9A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADF3F192B97;
 	Wed, 26 Jun 2024 20:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dJThQgOn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hUjHP/LZ"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9AD6E5FD;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA4F18FC9C;
 	Wed, 26 Jun 2024 20:00:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719432033; cv=none; b=Q2qyPXypl1j9PMlc3EKdLdM50k6u0TJ7SC3Ak7Yl+t4r/ywXIT2GJLOXTShjb4hlzvcVMiee7XvoAidEVqiSKkQ51uboSMdPCw3DozeF+Qv4gEERdTXfTlrBE+H3y84hspMRNSWJuTbDFWh6G99iIPgkOAjNXTUxa4/M8TB1bFE=
+	t=1719432033; cv=none; b=AEx8H52wuf3vULH8P0FxrtFw8F2s4ByDLWA3zEHvky74Bp1nnOcOid87/h1+b6JJKdtDa9qdM92zMZY8j9A3PPV+qu8Me+YbwpYYlOn2Uaq14HbFGrzGGDIU1mlbPlh7AZNi3zaxsaoqRPnEBLQu8DoVeHcyWKdTsxCxaSZzE/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1719432033; c=relaxed/simple;
-	bh=s0Pjw5exodtUQISQqUDHdgSMGGpzR11AeiENJJCvE9I=;
+	bh=HYHpe0pq5g0+okKD/6rI2QS/YyqmW5YCZzuUSCj2C7c=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=u2gGkAz8iee1kXiYxe2SHn0SmcgE0J2ff/oC7yXuchq+w0PrhNfzoE59jdPPpfhuA73+7cOEfe16F3EPcTaPWjXeM0QsmnuoQQZijB1ZvMLa9+N1yhGQYcrJHigAVk4BPAXoyfakp/wOAsXSuIsDfGgBYy9OxAHxa8pOmowZJlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dJThQgOn; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B50C5C32789;
+	 In-Reply-To:To:Cc; b=A9dYQdHYFzsehlBxvP0LUNxtEficDZz0JQn3Ky7nX3yHXoQ7yYCRXqbdIvvmC6+Wjbw2MLiCmUuGmaPbn1d1tU+nDUDDbTQoVyRQ/QAiAXmFZmNgNpxCYQaf56et2+Lie9Rncx1sZx+BmJIg9/m3ZOfpx/OSPYS3wRaCzVn9CdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hUjHP/LZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id BCD47C4AF07;
 	Wed, 26 Jun 2024 20:00:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1719432032;
-	bh=s0Pjw5exodtUQISQqUDHdgSMGGpzR11AeiENJJCvE9I=;
+	bh=HYHpe0pq5g0+okKD/6rI2QS/YyqmW5YCZzuUSCj2C7c=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=dJThQgOn03+H/m24EsKmMrw7Ch+zCHkyNtSYn6vt13tfLmKadrGH3TCYI6Q9Itd4p
-	 AxRA8WhY+h3mYN3u9kmlb5NxvxKj5+uwSzxe2NCSC5j7R4K7h9HUe7F+0PiOXXkxYP
-	 84du66nlkYo4Ksh9LGjJlbIkVMUnOsxlIQ+DLMlFidhT6b8768/8GG7czsVRV6uPMm
-	 egEuopfE9xdCc/EbQ1beuTF3B+Wr+LEKMGkorUuT8B3xbdBojqBnkqr0JfbkVwrrnX
-	 of+Qir7enkY0IffQNTd+eH4s+J4ykmJPDllu3xPeIzKriXDbDx72Ao4VpS9h9e2V2u
-	 hklSkWYrLHdnQ==
+	b=hUjHP/LZHbkELKJU5nMH1aY+VJydm/AdIrGIePf50g9pHWTm0wk5gsi5JmZF5Avkb
+	 GcmiwFgU9K2aunImU4u1lW9QhNzTlcgFp3LAgkVQpUj2qzxpjUeEPsF6TRiuaT5vTr
+	 39AF0wY/199OywbWNwI9ncw5x1MmjClefJqoRUqGVeqoZ9zBcyMvmHWzDY/4mFNsz9
+	 LHW5hjfg+yeSFoqNBQOJbHgZD8Y6dkFoExVuGQrC/hKOS7dGs6A5P1mBhV+CSIX6D/
+	 OtYFDzdxZzaKQKmCng7hGsW/MP1emCspQRzYSMCHS/MHmuRLkV3DVMeoJneui9oN7n
+	 hkCKxkteG55lw==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id A4B2AC43338;
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id AD1C1C43446;
 	Wed, 26 Jun 2024 20:00:32 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
@@ -52,37 +52,34 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] Bluetooth: qca: don't disable power management for QCA6390
+Subject: Re: [PATCH] Bluetooth: btintel: Fix spelling of *intermediate* in comment
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <171943203267.19782.10434982501955892840.git-patchwork-notify@kernel.org>
+ <171943203270.19782.16945455633652764768.git-patchwork-notify@kernel.org>
 Date: Wed, 26 Jun 2024 20:00:32 +0000
-References: <20240624194518.37458-1-brgl@bgdev.pl>
-In-Reply-To: <20240624194518.37458-1-brgl@bgdev.pl>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: marcel@holtmann.org, luiz.dentz@gmail.com,
- linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
- bartosz.golaszewski@linaro.org, dmitry.baryshkov@linaro.org
+References: <20240621071858.148358-1-pmenzel@molgen.mpg.de>
+In-Reply-To: <20240621071858.148358-1-pmenzel@molgen.mpg.de>
+To: Paul Menzel <pmenzel@molgen.mpg.de>
+Cc: marcel@holtmann.org, luiz.dentz@gmail.com, kiran.k@intel.com,
+ luiz.von.dentz@intel.com, linux-bluetooth@vger.kernel.org,
+ linux-kernel@vger.kernel.org
 
 Hello:
 
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Mon, 24 Jun 2024 21:45:18 +0200 you wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> We unnecessarily fallthrough the case for QCA6390 when initializing the
-> device and hit the condition where - due to the lack of the enable-gpio
-> - we disable power management despite using the power sequencer. We don't
-> need to look for clocks on this model so it makes more sense to just
-> register the hci device and break the switch.
-> 
-> [...]
+On Fri, 21 Jun 2024 09:18:57 +0200 you wrote:
+> Fixes: f3b845e0aea3 ("Bluetooth: btintel: Add support to download intermediate loader")
+> Cc: Kiran K <kiran.k@intel.com>
+> Signed-off-by: Paul Menzel <pmenzel@molgen.mpg.de>
+> ---
+>  drivers/bluetooth/btintel.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
 Here is the summary with links:
-  - Bluetooth: qca: don't disable power management for QCA6390
-    https://git.kernel.org/bluetooth/bluetooth-next/c/561cb4e9a238
+  - Bluetooth: btintel: Fix spelling of *intermediate* in comment
+    https://git.kernel.org/bluetooth/bluetooth-next/c/94382b8caa3b
 
 You are awesome, thank you!
 -- 
