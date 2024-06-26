@@ -1,48 +1,48 @@
-Return-Path: <linux-bluetooth+bounces-5576-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5575-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98B5F9198AB
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 26 Jun 2024 22:00:54 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD71D9198A9
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 26 Jun 2024 22:00:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 42E0A1F21C1E
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 26 Jun 2024 20:00:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 94F5D1F22218
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 26 Jun 2024 20:00:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B41CD192B9E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1FDF192B99;
 	Wed, 26 Jun 2024 20:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LVKbeT/a"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fV5jGPKC"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC3D191473;
-	Wed, 26 Jun 2024 20:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ABE718FDDF
+	for <linux-bluetooth@vger.kernel.org>; Wed, 26 Jun 2024 20:00:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719432033; cv=none; b=ZusMzdgugzuMZ0CHUJKEWGkyRs16cbhDD+J3okHYfAeYx1jAU98Ep5UVBnIM1Vi4YH2oZabeFbkVhf8NLXTZqiP9T8MEmpRI6LzEPVEP68FTkSxd1ecz5cEQVg5SihAw9oFGc8fQl65w00aGismTwgX7BQBuqpdLURpSWzEN3dg=
+	t=1719432033; cv=none; b=nd8IfGm4xXvsBLpM5/dYVJl8d+sZF+GWwkjV6BPpDWeOlF18dDpzFs6aMPT8RcgTFZdJJsyvZGU5EM7qNY4rAvEd0mfnx/qiuE6rcHe+FutsX+Vm0D8foKJqr5yLh8+fAd6zp9qzKgxOvJ8W9VHp0nFR0emV4DTvmsLdz04Hj1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1719432033; c=relaxed/simple;
-	bh=uhGQthDuXbKZos3gqEFmnB3YOE38LiquQGA/KO+E5D8=;
+	bh=LDVl9YA7lkCdFEE4fG9wbxSmLqOJiR9Xu/inER06L1Y=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=qABIdzGQwEfR8Vs6Sr8zFUZ/Ys4vpJmQXLgBVeY+t6UEnijVH1jgm1G67TbnWqMmaxoaZfTuL52509mCS337vSsvtaTlOXoMAAkCd7MdQAAAjX77XBQ4P0B/Rcj5B7VeT30ip/zhEXFc7IQ92HUdAjRjNZTeK/bSz70rBJjWCjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LVKbeT/a; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C3468C4AF09;
+	 In-Reply-To:To:Cc; b=PCzCrPEXJiglGNNltIE+uVX59Y2Fhfvqe5fx3Vis7Y6v3P1ARJQjHF/mVIpGfQW8hChBfARrLcerOR9Jj+O6vJLZts8DPChKIX8XgRIzNtnEX5oN7xbIfMF+d2Um4+2o7zfRW5DC+BQhOnIHkc/w/+TR9y+BaGzkMsJWdPfzvN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fV5jGPKC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id CC5C2C4AF0A;
 	Wed, 26 Jun 2024 20:00:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1719432032;
-	bh=uhGQthDuXbKZos3gqEFmnB3YOE38LiquQGA/KO+E5D8=;
+	bh=LDVl9YA7lkCdFEE4fG9wbxSmLqOJiR9Xu/inER06L1Y=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=LVKbeT/aYJUXGZUaQU9GmUDMCi4ev2TUawytq7rYoEQH+xFQkg6aseI2Y5V0CVUYA
-	 CvophdEEilxIuHS3LisXScVXZ3C7GYHZgSKS9TjmnlBuPN+sZBq/dYQtSOUQFc6p2N
-	 yawbqbVoxnly8gkmFNHDCF7GTw4PkurUnIE32sSDgiQqSC9N24vlD6OUZchVQBVQtd
-	 ARaJmp9m1LAPaM6MUFSc3lZejeAqwoK4tEccIB34pC0ePE7UzyFcD5GVPQ9VeAkBnU
-	 lZSIyWai/eyP+BNZgGIDZv5z78tIXH17pKeFUkK6wa5PYFcu6Vv73C+Vexn4MAYmPt
-	 uHoWYtbiVKCfQ==
+	b=fV5jGPKCJu/7Sv3Qr45Ag0+N1a/2SUNmKEm+2ord8DQkY244AZi13dJaBMKjV/6IU
+	 uGK1Nrqzg+y+ianlt4EUjmYhgep1MX8+LgivZL90lGr5u4cOkuUZ9tMxWd5RPWyTh6
+	 Zyaa/v5Z1hsI1LY28qz6UE+5beNS4etk6WIcxi0kzCkucSmkqkXPi+z9HeNeq95pJo
+	 q3zPjfRqj5fRu/uUSWxbdkD4PTUGOuFHUk+2KFOClcFy850rYh3YR7UJzC45qtv0R2
+	 5psai5wcuyntL8kTDFFfB1expeJLirsIvvhFIkB/6W9G6w2x394jlNcGBPSAb3xUmb
+	 JdGg+RamAiRow==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id B5F79C4333A;
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id BF0B5C43468;
 	Wed, 26 Jun 2024 20:00:32 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
@@ -52,38 +52,36 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] bluetooth/hci: disallow setting handle bigger than
- HCI_CONN_HANDLE_MAX
+Subject: Re: [PATCH v1] Bluetooth: L2CAP: Fix deadlock
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <171943203274.19782.12756236597529287956.git-patchwork-notify@kernel.org>
+ <171943203277.19782.18176674708645424435.git-patchwork-notify@kernel.org>
 Date: Wed, 26 Jun 2024 20:00:32 +0000
-References: <20240620192747.45267-1-paskripkin@gmail.com>
-In-Reply-To: <20240620192747.45267-1-paskripkin@gmail.com>
-To: Pavel Skripkin <paskripkin@gmail.com>
-Cc: marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
- william.xuanziyang@huawei.com, linux-bluetooth@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- syzbot+b2545b087a01a7319474@syzkaller.appspotmail.com
+References: <20240624134637.3790278-1-luiz.dentz@gmail.com>
+In-Reply-To: <20240624134637.3790278-1-luiz.dentz@gmail.com>
+To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: linux-bluetooth@vger.kernel.org
 
 Hello:
 
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Thu, 20 Jun 2024 22:27:47 +0300 you wrote:
-> Syzbot hit warning in hci_conn_del() caused by freeing handle that was
-> not allocated using ida allocator.
+On Mon, 24 Jun 2024 09:46:37 -0400 you wrote:
+> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 > 
-> This is caused by handle bigger than HCI_CONN_HANDLE_MAX passed by
-> hci_le_big_sync_established_evt(), which makes code think it's unset
-> connection.
+> This fixes the following deadlock introduced by e3203b177717
+> ("bluetooth/l2cap: sync sock recv cb and release"):
+> 
+> ============================================
+> WARNING: possible recursive locking detected
+> 6.10.0-rc3-g4029dba6b6f1 #6823 Not tainted
 > 
 > [...]
 
 Here is the summary with links:
-  - bluetooth/hci: disallow setting handle bigger than HCI_CONN_HANDLE_MAX
-    https://git.kernel.org/bluetooth/bluetooth-next/c/6115f1ecd308
+  - [v1] Bluetooth: L2CAP: Fix deadlock
+    https://git.kernel.org/bluetooth/bluetooth-next/c/d8abca53bb2b
 
 You are awesome, thank you!
 -- 
