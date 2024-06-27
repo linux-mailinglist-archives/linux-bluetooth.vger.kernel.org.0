@@ -1,48 +1,48 @@
-Return-Path: <linux-bluetooth+bounces-5612-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5614-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F33591AF34
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 27 Jun 2024 20:40:59 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D069991AF33
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 27 Jun 2024 20:40:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 536AE1F2162F
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 27 Jun 2024 18:40:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0D1FD1C21669
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 27 Jun 2024 18:40:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B940119B5BB;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B92AE19B5B4;
 	Thu, 27 Jun 2024 18:40:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m7Mkntc0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RXMYMuVc"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 204C019ADA8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205B819ADBC
 	for <linux-bluetooth@vger.kernel.org>; Thu, 27 Jun 2024 18:40:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719513631; cv=none; b=dsjUODHHaOvkbRIWyrGifqlUL66TzW05rb1YBkgv/9XcNwpkoTK23y6j0vI5eWNImY/2wxfP0uKn6sYFIbJp3EB5EG32ALq7NuqywfXmuOuBpD/eWxZKEHMSn6BpPjYK467YeZbKq0q6GPxb6zeVb7CouxvwGUfZuHqJMMenIbE=
+	t=1719513631; cv=none; b=nfqeHtKRn3LUvQNIFE2GjXf7JBdCzzbAajPWUnugEbsBfCqkEyCxd+HeZJO8eXMeV3trZEMolxTnbiYYj7DX1jAZT+drUq5HGdJLPNYZpYGH2JBP1MN+2xQULzqCAuB3TZJeJ6wkkBG5yls3BpZJLlGy/QglJVBOp031wp1cv6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1719513631; c=relaxed/simple;
-	bh=icVyVw+iogV0h+952XnzkZz7O9ABT4SE9Xv+j8dL93w=;
+	bh=cmRnVxacpOZ4UNedMVa3Rkr4xYMmWeAv3e3NWrbBf30=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=JSBsUF+8BInsD4xuOe4ejdfkCRSdcUKMEMyOriR6K5hKjVR0TlYCKtIXHC8Z89y5snD4BSiMtEN14+6gvH26ZY6eVyu6/rjbtTbgLmdla3h483TBEL2Ti8Ea4m0eyBay76FHPvX2pJUbf7jGUSRgCg51zEqanB532j61S1UiEyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m7Mkntc0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 9669FC4AF0D;
+	 In-Reply-To:To:Cc; b=XXdsHwxSxY58NJvmhtPhaG1+DNHTxoLwriD6a7Vn1cz8Xl8QHnGgPoZ6CnIN/9uHc8ZhuNOkB4lEZZJ0llMA9XL1/3zpwCQxCsALN8Z/yAM0tVHGazhsSvRCvDDBla0OvI8oDIvFe8OWtSseGULYObJG0scRHyeT34uzXbQGUNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RXMYMuVc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 8199AC4AF0A;
 	Thu, 27 Jun 2024 18:40:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1719513630;
-	bh=icVyVw+iogV0h+952XnzkZz7O9ABT4SE9Xv+j8dL93w=;
+	bh=cmRnVxacpOZ4UNedMVa3Rkr4xYMmWeAv3e3NWrbBf30=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=m7Mkntc0PoNyTEdvMtfUxae1gr7iJTJRzw+44ulur74clJIfB2l9df5JI9IP3Vi3v
-	 jI9rzHL/TLZeiUXMnFRYeWY31c8o1q5kO8SlDbh3iP6T87/CFvaGx10OyEIdSzFtXt
-	 90/K2L+tPjeP/+KIcZPDK4vd2sAfhwSQ6QsCMwulZ+7UTRpCJ4S1ulzQDJMNHunOTQ
-	 1jYeTheJqSWfAql6pcgBvvbDFJJ7RJCw5eynKGuRFNM4lI2Wwx+lpTZNsGX4L+oEhu
-	 tOW8xV2F+iKUGLlu3S8Biz3mHReCmNQ9s+TwuGcX6Ys/gLntUL+C01iIvL5gdK3LEA
-	 +HuvWTxLu4j6w==
+	b=RXMYMuVcpmOGuWlgZXqKRkE2aoxciq9ZUMQoji/tyJIKa6Y4hhWXGdL3SPeGA2BYl
+	 nLx8E2B4Xx9JvyS9wqS7jCWDSk2+/22wKvIDbi/7bK0y56vcOxa3plbJZzAJUrtqBj
+	 bgY9CtJbS0Rt5FjSgpsdmVu1YU5RTafpohwjzR3Q054naJfiaE/YN4/y0pUW9Tuu9F
+	 vX72kLMOzAKpSP6x17xHltHEqMSsqBrr0OM8/pMVwfZOAeisY/XUm3pSq7s7IHV9ZC
+	 RpGlJaKGY4s9anK6M7Oc7mU6rTkIFJ5CZM74Mui9K/t+zV8B9+Dx1UiMZgwK3BVL+v
+	 kjASJv+UsUqoA==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 89431C43148;
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 71D7FC43336;
 	Thu, 27 Jun 2024 18:40:30 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
@@ -52,13 +52,13 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ v1] health/mcap: fix memory leak in mcap_create_mcl()
+Subject: Re: [PATCH BlueZ v2] plugins/sixaxis: add NULL check in setup_device()
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <171951363055.21304.2509939165318729559.git-patchwork-notify@kernel.org>
+ <171951363046.21304.5216423130914448485.git-patchwork-notify@kernel.org>
 Date: Thu, 27 Jun 2024 18:40:30 +0000
-References: <20240627133222.82707-1-r.smirnov@omp.ru>
-In-Reply-To: <20240627133222.82707-1-r.smirnov@omp.ru>
+References: <20240627123935.67784-1-r.smirnov@omp.ru>
+In-Reply-To: <20240627123935.67784-1-r.smirnov@omp.ru>
 To: Roman Smirnov <r.smirnov@omp.ru>
 Cc: linux-bluetooth@vger.kernel.org
 
@@ -67,20 +67,20 @@ Hello:
 This patch was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Thu, 27 Jun 2024 16:32:21 +0300 you wrote:
-> set_default_cb() can allocate memory for mcl->cb but it does
-> not free mcl->cb before exiting the function.
+On Thu, 27 Jun 2024 15:39:02 +0300 you wrote:
+> btd_adapter_get_device() may return NULL on the next call stack:
 > 
-> Add freeing mcl->cb before exiting the function.
-> 
-> Found by Linux Verification Center (linuxtesting.org) with the SVACE
-> static analysis tool.
+> btd_adapter_get_device()
+>     adapter_create_device()
+>         device_create()
+>             device_new()
+>                 g_try_malloc0()
 > 
 > [...]
 
 Here is the summary with links:
-  - [BlueZ,v1] health/mcap: fix memory leak in mcap_create_mcl()
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=2ebb415b12c4
+  - [BlueZ,v2] plugins/sixaxis: add NULL check in setup_device()
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=e3616b776ae0
 
 You are awesome, thank you!
 -- 
