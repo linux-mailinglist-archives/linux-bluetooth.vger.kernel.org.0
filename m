@@ -1,43 +1,43 @@
-Return-Path: <linux-bluetooth+bounces-5592-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5594-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37A8191A6BA
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 27 Jun 2024 14:43:20 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B02091A745
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 27 Jun 2024 15:06:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 668CD1C22589
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 27 Jun 2024 12:43:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 16A16281826
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 27 Jun 2024 13:06:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1112C15AAC2;
-	Thu, 27 Jun 2024 12:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F7D2186E59;
+	Thu, 27 Jun 2024 13:06:23 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from mx01.omp.ru (mx01.omp.ru [90.154.21.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B34515688D
-	for <linux-bluetooth@vger.kernel.org>; Thu, 27 Jun 2024 12:40:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A255513F00A
+	for <linux-bluetooth@vger.kernel.org>; Thu, 27 Jun 2024 13:06:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.154.21.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719492194; cv=none; b=q0POznqbgxkB5l4WfyjErmUQB6pmQ4j9vkmTCvsjC0pnpDctA3zy19rRPkkY9jGYB6ZaO8Ufl9I8bwiQEbYYHjrTgwppBpWSNZsVTb7aMBYIYFyscz960GTteYLLZxZbNJOSXC+vskIIAuo/z1lWk/d4e8qPA5VzSeYa+Y+Hu6k=
+	t=1719493583; cv=none; b=ZFSY9lsAAT6b5YX/T7XR36WjLbkOLPB3H8aIuCCfDNJMo82edRUjpuparxKbg41eFP/JOyqe2AoNZjy7g015GFXWHSOIQUvvxTDjSKATGSK8LwxpYlrbHkhjV3gXhY6LNMmIxquGRA3iD4gybGeAIDULfFSOPv4hYiufiCrVKPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719492194; c=relaxed/simple;
-	bh=+nJk9AskrUM/xWoXuKPnNKth7awwK3+00TL/kDvs0wM=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=kNl5YnrFuB7BWe5mIRj68HAsImpbJmZL5NillcGyboJyYFv73bMYSJvJsIDiNU/dSsMd+C7THuVe2u2+k2ZEa4J6Be0MmR740QN4qM9hqyFtDmCOY1z7nFIBrQyI0JKaVY93QO3vrYtJmLz5rM6EPEZBbjmCQ6Jp3pGSCm1OCC4=
+	s=arc-20240116; t=1719493583; c=relaxed/simple;
+	bh=ofxSREcIJyCcoyUiyU11C1zJjM0LykSeAw/y2dOwYzk=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=GICa2rKxo218W/O40E/DqRCfv0Wd7SmakTpVrFXIRNCfjiBhY/tfo42EtuNeLm1rWSO/bC5BJt7cHHx1ev1ogZYbpA3ZdlpVa1pDuZPArZK/s8B0t/a1HRm8qawR+b4UAzk50KTTFWDK8/v8CPAbTKrFwtmopAGgzah3YYoeBcc=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=omp.ru; spf=pass smtp.mailfrom=omp.ru; arc=none smtp.client-ip=90.154.21.10
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=omp.ru
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=omp.ru
 Received: from localhost.localdomain (84.18.99.27) by msexch01.omp.ru
  (10.188.4.12) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1258.12; Thu, 27 Jun
- 2024 15:39:49 +0300
+ 2024 16:06:05 +0300
 From: Roman Smirnov <r.smirnov@omp.ru>
 To: <linux-bluetooth@vger.kernel.org>
 CC: Roman Smirnov <r.smirnov@omp.ru>
-Subject: [PATCH BlueZ v2] plugins/sixaxis: add NULL check in setup_device()
-Date: Thu, 27 Jun 2024 15:39:02 +0300
-Message-ID: <20240627123935.67784-1-r.smirnov@omp.ru>
+Subject: [PATCH BlueZ v1] media: fix memory leak in endpoint_init_pac()
+Date: Thu, 27 Jun 2024 16:05:51 +0300
+Message-ID: <20240627130552.80610-1-r.smirnov@omp.ru>
 X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
@@ -51,11 +51,11 @@ X-ClientProxiedBy: msexch01.omp.ru (10.188.4.12) To msexch01.omp.ru
  (10.188.4.12)
 X-KSE-ServerInfo: msexch01.omp.ru, 9
 X-KSE-AntiSpam-Interceptor-Info: scan successful
-X-KSE-AntiSpam-Version: 6.1.0, Database issued on: 06/27/2024 12:17:40
+X-KSE-AntiSpam-Version: 6.1.0, Database issued on: 06/27/2024 12:55:56
 X-KSE-AntiSpam-Status: KAS_STATUS_NOT_DETECTED
 X-KSE-AntiSpam-Method: none
 X-KSE-AntiSpam-Rate: 19
-X-KSE-AntiSpam-Info: Lua profiles 186185 [Jun 27 2024]
+X-KSE-AntiSpam-Info: Lua profiles 186188 [Jun 27 2024]
 X-KSE-AntiSpam-Info: Version: 6.1.0.4
 X-KSE-AntiSpam-Info: Envelope from: r.smirnov@omp.ru
 X-KSE-AntiSpam-Info: LuaCore: 21 0.3.21
@@ -65,7 +65,7 @@ X-KSE-AntiSpam-Info: {Tracking_from_domain_doesnt_match_to}
 X-KSE-AntiSpam-Info: {SMTP from is not routable}
 X-KSE-AntiSpam-Info: {Found in DNSBL: 84.18.99.27 in (user) dbl.spamhaus.org}
 X-KSE-AntiSpam-Info:
-	d41d8cd98f00b204e9800998ecf8427e.com:7.1.1;127.0.0.199:7.1.2;omp.ru:7.1.1
+	127.0.0.199:7.1.2;omp.ru:7.1.1;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1
 X-KSE-AntiSpam-Info: ApMailHostAddress: 84.18.99.27
 X-KSE-AntiSpam-Info: {DNS response errors}
 X-KSE-AntiSpam-Info: Rate: 19
@@ -76,43 +76,36 @@ X-KSE-AntiSpam-Info: Auth:dmarc=temperror header.from=omp.ru;spf=temperror
 X-KSE-Antiphishing-Info: Clean
 X-KSE-Antiphishing-ScanningType: Heuristic
 X-KSE-Antiphishing-Method: None
-X-KSE-Antiphishing-Bases: 06/27/2024 12:21:00
+X-KSE-Antiphishing-Bases: 06/27/2024 12:59:00
 X-KSE-Antivirus-Interceptor-Info: scan successful
 X-KSE-Antivirus-Info: Clean, bases: 6/27/2024 11:06:00 AM
 X-KSE-Attachment-Filter-Triggered-Rules: Clean
 X-KSE-Attachment-Filter-Triggered-Filters: Clean
 X-KSE-BulkMessagesFiltering-Scan-Result: InTheLimit
 
-btd_adapter_get_device() may return NULL on the next call stack:
+asprintf() allocates memory in the name variable but does not
+free it before exiting the function, which causes a memory leak.
 
-btd_adapter_get_device()
-    adapter_create_device()
-        device_create()
-            device_new()
-                g_try_malloc0()
+Add freeing of the name variable before exiting.
 
-It is necessary to prevent this to avoid dereferencing a null
-pointer further.
+Found by Linux Verification Center (linuxtesting.org) with the SVACE
+static analysis tool.
 ---
- plugins/sixaxis.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ profiles/audio/media.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/plugins/sixaxis.c b/plugins/sixaxis.c
-index 544ab399a..3e69f1dd2 100644
---- a/plugins/sixaxis.c
-+++ b/plugins/sixaxis.c
-@@ -346,6 +346,11 @@ static bool setup_device(int fd, const char *sysfs_path,
+diff --git a/profiles/audio/media.c b/profiles/audio/media.c
+index b5644736a..746e538fc 100644
+--- a/profiles/audio/media.c
++++ b/profiles/audio/media.c
+@@ -1280,6 +1280,7 @@ static bool endpoint_init_pac(struct media_endpoint *endpoint, uint8_t type,
+ 	if (asprintf(&name, "%s:%s", endpoint->sender, endpoint->path) < 0) {
+ 		error("Could not allocate name for pac %s:%s",
+ 				endpoint->sender, endpoint->path);
++		free(name);
+ 		return false;
+ 	}
  
- 	device = btd_adapter_get_device(adapter, &device_bdaddr, BDADDR_BREDR);
- 
-+	if (!device) {
-+		error("sixaxis: unable to set up a new device");
-+		return false;
-+	}
-+
- 	info("sixaxis: setting up new device");
- 
- 	btd_device_device_set_name(device, cp->name);
 -- 
 2.43.0
 
