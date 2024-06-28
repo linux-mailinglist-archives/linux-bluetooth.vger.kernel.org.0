@@ -1,43 +1,43 @@
-Return-Path: <linux-bluetooth+bounces-5624-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5626-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E031991B8DC
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Jun 2024 09:48:36 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F7DC91B924
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Jun 2024 09:57:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1CFFF1C2293D
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Jun 2024 07:48:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 98E812828F4
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Jun 2024 07:57:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 070CB142E88;
-	Fri, 28 Jun 2024 07:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B43A14375A;
+	Fri, 28 Jun 2024 07:57:52 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from mx01.omp.ru (mx01.omp.ru [90.154.21.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 148361420A8
-	for <linux-bluetooth@vger.kernel.org>; Fri, 28 Jun 2024 07:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C3DC148
+	for <linux-bluetooth@vger.kernel.org>; Fri, 28 Jun 2024 07:57:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.154.21.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719560910; cv=none; b=h6cpHc30Q0QNt4Z7MH4ObnaoQ7GsXNDY5wEv3SI3gR7OzE1jRGWZekLKpB2X/34LAagkb+HJjj6RepyjOGaxzjbJOKOICQ20BmTMiXaXZV8n5uHxAJyokZr/4reH3TU51iobExwkmZNj/yUwIEq8N3B1A7xKrTbwi9pNDCwIlr8=
+	t=1719561472; cv=none; b=g11Vj1KJNuGvRDCc+iM37Iny6if93zd5foxaLR6RKl/3Z7Ap90SmEF/JZyE/o7WknOgw6BB2pUKFmxERPtWcoDQyDcQQ1J0MzjtEu8INhWUbLG3+HBcMzijCJVSV0fy3lJkIUhLKt38FNwn/NilB8LKSEHTXril/q/8W9KeGV0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719560910; c=relaxed/simple;
-	bh=+i3gqne2mi/6lu6jUTxae/9ibE3KYRLolVZdMO5A6CU=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=IkVNb9TGHIidxVkQz1KEO7DJykTGw+CrvP9BcXAJacFGkXLBIpfbTO5ujFEQCsErj9ZDeiDnCFmehBybpkpRI/yhyOVqdZ+fizIspYXR5pYHNgOFwgH47QN+oo7g8ltnw0QePWNycpl32gF4rkyHPHx5PqLVcD0MFgq/EuLs/Iw=
+	s=arc-20240116; t=1719561472; c=relaxed/simple;
+	bh=1ZCWtKPi5LjD5gXdsNhew4iSKhhgGxgbgtthX3JG9GU=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=pwv5dBTRm10pzu5MVCnxyQWPGLiVxpSgY4QeZJP5Iml/wkkganA0/5i53Ve5K5i+5eGIpbJtbH6aeoWpTyjyE+tZhCIia9KRsSLMjkGIWplAp3joJL0TCMmuZcyn5pGP3XEFWyl92Biatu86DnsrEwj9mIJgRalBcOmPMyXxr1Y=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=omp.ru; spf=pass smtp.mailfrom=omp.ru; arc=none smtp.client-ip=90.154.21.10
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=omp.ru
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=omp.ru
 Received: from localhost.localdomain (84.18.99.27) by msexch01.omp.ru
  (10.188.4.12) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1258.12; Fri, 28 Jun
- 2024 10:48:02 +0300
+ 2024 10:57:32 +0300
 From: Roman Smirnov <r.smirnov@omp.ru>
 To: <linux-bluetooth@vger.kernel.org>
 CC: Roman Smirnov <r.smirnov@omp.ru>
-Subject: [PATCH BlueZ v1] core: add NULL check to adapter_service_remove()
-Date: Fri, 28 Jun 2024 10:47:49 +0300
-Message-ID: <20240628074750.35992-1-r.smirnov@omp.ru>
+Subject: [PATCH BlueZ v2] gatt-server: fix memory leak in bt_gatt_server_send_notification()
+Date: Fri, 28 Jun 2024 10:57:18 +0300
+Message-ID: <20240628075719.42796-1-r.smirnov@omp.ru>
 X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
@@ -51,7 +51,7 @@ X-ClientProxiedBy: msexch01.omp.ru (10.188.4.12) To msexch01.omp.ru
  (10.188.4.12)
 X-KSE-ServerInfo: msexch01.omp.ru, 9
 X-KSE-AntiSpam-Interceptor-Info: scan successful
-X-KSE-AntiSpam-Version: 6.1.0, Database issued on: 06/28/2024 07:32:36
+X-KSE-AntiSpam-Version: 6.1.0, Database issued on: 06/28/2024 07:43:15
 X-KSE-AntiSpam-Status: KAS_STATUS_NOT_DETECTED
 X-KSE-AntiSpam-Method: none
 X-KSE-AntiSpam-Rate: 19
@@ -64,7 +64,7 @@ X-KSE-AntiSpam-Info: {rep_avail}
 X-KSE-AntiSpam-Info: {Tracking_from_domain_doesnt_match_to}
 X-KSE-AntiSpam-Info: {SMTP from is not routable}
 X-KSE-AntiSpam-Info:
-	d41d8cd98f00b204e9800998ecf8427e.com:7.1.1;127.0.0.199:7.1.2;omp.ru:7.1.1
+	omp.ru:7.1.1;127.0.0.199:7.1.2;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1
 X-KSE-AntiSpam-Info: ApMailHostAddress: 84.18.99.27
 X-KSE-AntiSpam-Info: {DNS response errors}
 X-KSE-AntiSpam-Info: Rate: 19
@@ -75,33 +75,39 @@ X-KSE-AntiSpam-Info: Auth:dmarc=temperror header.from=omp.ru;spf=temperror
 X-KSE-Antiphishing-Info: Clean
 X-KSE-Antiphishing-ScanningType: Heuristic
 X-KSE-Antiphishing-Method: None
-X-KSE-Antiphishing-Bases: 06/28/2024 07:36:00
+X-KSE-Antiphishing-Bases: 06/28/2024 07:47:00
 X-KSE-Antivirus-Interceptor-Info: scan successful
 X-KSE-Antivirus-Info: Clean, bases: 6/28/2024 4:47:00 AM
 X-KSE-Attachment-Filter-Triggered-Rules: Clean
 X-KSE-Attachment-Filter-Triggered-Filters: Clean
 X-KSE-BulkMessagesFiltering-Scan-Result: InTheLimit
 
-Make adapter_service_remove() safe for passing NULL pointers.
----
- src/adapter.c | 4 ++++
- 1 file changed, 4 insertions(+)
+data-pdu is allocated but not released when an error occurs.
 
-diff --git a/src/adapter.c b/src/adapter.c
-index bdc5bf920..57e4dcd54 100644
---- a/src/adapter.c
-+++ b/src/adapter.c
-@@ -1349,6 +1349,10 @@ int adapter_service_add(struct btd_adapter *adapter, sdp_record_t *rec)
- void adapter_service_remove(struct btd_adapter *adapter, uint32_t handle)
- {
- 	sdp_record_t *rec;
-+	
-+	if (!adapter)
-+		return;
-+
- 	/*
- 	 * If the controller does not support BR/EDR operation,
- 	 * there is no point in trying to remote SDP records.
+Add data-pdu release before exiting the function in case of an error.
+
+Found by Linux Verification Center (linuxtesting.org) with the SVACE
+static analysis tool.
+---
+ src/shared/gatt-server.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/src/shared/gatt-server.c b/src/shared/gatt-server.c
+index 0e399ceb1..3a53d5dfd 100644
+--- a/src/shared/gatt-server.c
++++ b/src/shared/gatt-server.c
+@@ -1822,8 +1822,10 @@ bool bt_gatt_server_send_notification(struct bt_gatt_server *server,
+ 	return result;
+ 
+ error:
+-	if (data)
++	if (data) {
++		free(data->pdu);
+ 		free(data);
++	}
+ 
+ 	return false;
+ }
 -- 
 2.43.0
 
