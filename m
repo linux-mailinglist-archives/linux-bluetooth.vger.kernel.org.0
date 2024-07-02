@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-5729-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5728-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5589E9238C8
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Jul 2024 10:49:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CB2A9238C7
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Jul 2024 10:49:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 899631C227E1
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Jul 2024 08:49:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AD2921F22E2F
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Jul 2024 08:49:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02CD215217F;
-	Tue,  2 Jul 2024 08:49:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE803152161;
+	Tue,  2 Jul 2024 08:49:12 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0206714F9C8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E84A014F10E
 	for <linux-bluetooth@vger.kernel.org>; Tue,  2 Jul 2024 08:49:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719910152; cv=none; b=aSu/ojWHBxsPQpfK/nVSZ+Vm7is7u94/kYPYkAV25j7gREuz5ltQ/E7vKUwniSAg3E/QpxSHObMWdX32aaUk7s2q6wHmMmQ4ni/pZcXVEl0Z4aMnTLLykSXz9jwCKgOOmsWen0pUk9JeYQfL6dw3H7WXO1ODP7zg/EX5WJ0lel8=
+	t=1719910152; cv=none; b=RaXuMVmNPhHuxVpZlXKIO9WSZ6YJbytFthG5g/JXrZjS6zAD5sXRXZMUgcehOftA2nLCzzqlyLqDWLftWMtWCBU91QwqnT112EmPDvOOASwFYEJk4NT/24v9mwNhRw1NstApPT3THoZ0k+GrWq7w9a/s1hgZK9Tphgmvj3JCjg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1719910152; c=relaxed/simple;
-	bh=LY1+OI1MtuM9RErM6AybQdpyESH5/KY00NIOZBUbgEs=;
+	bh=pEFwQqrxZ7hYKYFfzvdo3ASO2CPzdk2+VAZswynkeqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MgI4bCbCQ+4N5n1nNKDma9fJBKmFABx1pV3Ki5KeWDH24BhTI1nIXaFFfqKL3opEzkU4fYGj/N4HTD0H3rzoJ1ht1S0hc0gF4B5JeHCw5AQGc5j205MQO+yW6U/ORasmZpc93VfniyCWrGOrBczo9uTzFsVeafZxSNQdgXlQmus=
+	 MIME-Version; b=r0LfsFKAPVWOl6g8eXwiTs37Vp1kDzY6eMkH49YD4JS+ADzjXX7wQj9moT4+tmp3uUO0P4YRgcoT5Fz1jlt5SK0bB0NUMN1cbInkBitwzCBVasiH0Qyq9yYe/YI3xXx0y3Bgg7Zrw+8KSAzKq+7XyGY3uGZxG9b1a+07lQa4KdY=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.196
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id A4B84E000C;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id E7E70E0005;
 	Tue,  2 Jul 2024 08:49:02 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [PATCH 6/9] obexd: Fix leak in backup_object struct
-Date: Tue,  2 Jul 2024 10:47:21 +0200
-Message-ID: <20240702084900.773620-7-hadess@hadess.net>
+Subject: [PATCH 7/9] health/mcap: Fix memory leak in mcl struct
+Date: Tue,  2 Jul 2024 10:47:22 +0200
+Message-ID: <20240702084900.773620-8-hadess@hadess.net>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702084900.773620-1-hadess@hadess.net>
 References: <20240702084900.773620-1-hadess@hadess.net>
@@ -49,31 +49,30 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-Error: RESOURCE_LEAK (CWE-772): [#def37] [important]
-bluez-5.76/obexd/plugins/pcsuite.c:370:2: alloc_fn: Storage is returned from allocation function "g_path_get_basename".
-bluez-5.76/obexd/plugins/pcsuite.c:370:2: var_assign: Assigning: "obj->cmd" = storage returned from "g_path_get_basename(name)".
-bluez-5.76/obexd/plugins/pcsuite.c:379:3: leaked_storage: Freeing "obj" without freeing its pointer field "cmd" leaks the storage that "cmd" points to.
-377|
-378|	if (send_backup_dbus_message("open", obj, size) == FALSE) {
-379|->		g_free(obj);
-380|		obj = NULL;
-381|	}
+Error: RESOURCE_LEAK (CWE-772): [#def40] [important]
+bluez-5.76/profiles/health/mcap.c:2052:3: alloc_arg: "set_default_cb" allocates memory that is stored into "mcl->cb".
+bluez-5.76/profiles/health/mcap.c:2055:4: leaked_storage: Freeing "mcl" without freeing its pointer field "cb" leaks the storage that "cb" points to.
+2053|			if (util_getrandom(&val, sizeof(val), 0) < 0) {
+2054|				mcap_instance_unref(mcl->mi);
+2055|->				g_free(mcl);
+2056|				goto drop;
+2057|			}
 ---
- obexd/plugins/pcsuite.c | 1 +
+ profiles/health/mcap.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/obexd/plugins/pcsuite.c b/obexd/plugins/pcsuite.c
-index 752074c08f45..07c444ff27e0 100644
---- a/obexd/plugins/pcsuite.c
-+++ b/obexd/plugins/pcsuite.c
-@@ -376,6 +376,7 @@ static void *backup_open(const char *name, int oflag, mode_t mode,
- 	obj->error_code = 0;
- 
- 	if (send_backup_dbus_message("open", obj, size) == FALSE) {
-+		g_free(obj->cmd);
- 		g_free(obj);
- 		obj = NULL;
- 	}
+diff --git a/profiles/health/mcap.c b/profiles/health/mcap.c
+index b544b9a0a9b4..7eceaa88a3a9 100644
+--- a/profiles/health/mcap.c
++++ b/profiles/health/mcap.c
+@@ -2052,6 +2052,7 @@ static void connect_mcl_event_cb(GIOChannel *chan, GError *gerr,
+ 		set_default_cb(mcl);
+ 		if (util_getrandom(&val, sizeof(val), 0) < 0) {
+ 			mcap_instance_unref(mcl->mi);
++			g_free(mcl->cb);
+ 			g_free(mcl);
+ 			goto drop;
+ 		}
 -- 
 2.45.2
 
