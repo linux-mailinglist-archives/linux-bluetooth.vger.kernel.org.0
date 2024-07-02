@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-5771-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5773-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 807D89240A1
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Jul 2024 16:25:10 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D92879240A8
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Jul 2024 16:25:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B1F211C22C08
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Jul 2024 14:25:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 911E01F24EE2
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Jul 2024 14:25:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07B2A1BA869;
-	Tue,  2 Jul 2024 14:24:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25BA51B5837;
+	Tue,  2 Jul 2024 14:24:50 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay1-d.mail.gandi.net (relay1-d.mail.gandi.net [217.70.183.193])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8AE51BA073
-	for <linux-bluetooth@vger.kernel.org>; Tue,  2 Jul 2024 14:24:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EE5D1BA08C
+	for <linux-bluetooth@vger.kernel.org>; Tue,  2 Jul 2024 14:24:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719930288; cv=none; b=Hy6IuDKe9LItBzzCJZZrFsYnNEjEfHCOgFtch13QVbOQzyshG/RNlO49IHjbwINrUZ+o2zPnGDH52+RJTJWyAuENfgEvZEorkFPtM+nwf+QiSlUPmw7Ne9eyRmfPsOQKiwbqDSkhimzaZ9+k3Fe7zA8Zco5CbP6G2v2XFFyjVbo=
+	t=1719930289; cv=none; b=s/d9ZWKkLqkiBeJOAHV+dRMrRf97/6aJxExVUzT8w/LqxoDe9qrcdtpez0C2h9AzO0+ievLvIyBggozwiFWHYABkLTytqEpwsQSTSGelDoBJl+gVahbr4TUYm/S4jY9IQjVPADrg6ewxEfZI58UhZ0sW9oWPHFE9usrFsBK5hvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719930288; c=relaxed/simple;
-	bh=pEFwQqrxZ7hYKYFfzvdo3ASO2CPzdk2+VAZswynkeqE=;
+	s=arc-20240116; t=1719930289; c=relaxed/simple;
+	bh=sIwc6ePtSzw560EK6jNHzIqsaPWzGQU3M10lm6e07TI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nWYzs4nXOG0m+qQScIWMhDbN/BgW59tW15/5cdL7hoetY+yv73dKpNSq351Zt+OypxhnuWwpkXh+A24oLa7LmovbuWF4cZHbR9mqRYts8BmabZ32K7mKFTebBvD/mDqIN1L8rkYTmIY7qwGx8Pl/X/CWwlR9jo0048o7e8pX4rA=
+	 MIME-Version; b=fcceM5lQ6mcgf4hvqcPks8/OyOPaNcVO4UeDRu3SdyWC0Lc9MXXd5KqZs8XGAH5lZa2V655ALQ+r/nW77qAfwQpT67oL+4NF5gRFGpjHf/360DW8FqOQRzUHR2A+KbSsbN0GKYO50fK9SGlIWufHpDRqr3m/BfH8ceTsm4QbAHg=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.193
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 724A5240010;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id B7084240011;
 	Tue,  2 Jul 2024 14:24:39 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ resend 7/9] health/mcap: Fix memory leak in mcl struct
-Date: Tue,  2 Jul 2024 16:23:39 +0200
-Message-ID: <20240702142436.833138-8-hadess@hadess.net>
+Subject: [BlueZ resend 8/9] sdp: Fix memory leak in sdp_data_alloc*()
+Date: Tue,  2 Jul 2024 16:23:40 +0200
+Message-ID: <20240702142436.833138-9-hadess@hadess.net>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240702142436.833138-1-hadess@hadess.net>
 References: <20240702142436.833138-1-hadess@hadess.net>
@@ -49,30 +49,54 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-Error: RESOURCE_LEAK (CWE-772): [#def40] [important]
-bluez-5.76/profiles/health/mcap.c:2052:3: alloc_arg: "set_default_cb" allocates memory that is stored into "mcl->cb".
-bluez-5.76/profiles/health/mcap.c:2055:4: leaked_storage: Freeing "mcl" without freeing its pointer field "cb" leaks the storage that "cb" points to.
-2053|			if (util_getrandom(&val, sizeof(val), 0) < 0) {
-2054|				mcap_instance_unref(mcl->mi);
-2055|->				g_free(mcl);
-2056|				goto drop;
-2057|			}
----
- profiles/health/mcap.c | 1 +
- 1 file changed, 1 insertion(+)
+Make sure to free already allocated memory if we run out of memory
+before the end of the loop.
 
-diff --git a/profiles/health/mcap.c b/profiles/health/mcap.c
-index b544b9a0a9b4..7eceaa88a3a9 100644
---- a/profiles/health/mcap.c
-+++ b/profiles/health/mcap.c
-@@ -2052,6 +2052,7 @@ static void connect_mcl_event_cb(GIOChannel *chan, GError *gerr,
- 		set_default_cb(mcl);
- 		if (util_getrandom(&val, sizeof(val), 0) < 0) {
- 			mcap_instance_unref(mcl->mi);
-+			g_free(mcl->cb);
- 			g_free(mcl);
- 			goto drop;
- 		}
+Error: RESOURCE_LEAK (CWE-772): [#def8] [important]
+bluez-5.76/lib/sdp.c:542:4: alloc_fn: Storage is returned from allocation function "sdp_data_alloc".
+bluez-5.76/lib/sdp.c:542:4: var_assign: Assigning: "data" = storage returned from "sdp_data_alloc(dtd, values[i])".
+bluez-5.76/lib/sdp.c:550:4: var_assign: Assigning: "seq" = "data".
+bluez-5.76/lib/sdp.c:552:3: var_assign: Assigning: "curr" = "data".
+bluez-5.76/lib/sdp.c:553:2: out_of_scope: Variable "data" goes out of scope.
+bluez-5.76/lib/sdp.c:552:3: overwrite_var: Overwriting "curr" in "curr = data".
+bluez-5.76/lib/sdp.c:545:4: leaked_storage: Variable "seq" going out of scope leaks the storage it points to.
+543|
+544|		if (!data)
+545|->			return NULL;
+546|
+547|		if (curr)
+---
+ lib/sdp.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/lib/sdp.c b/lib/sdp.c
+index 2e66505b21b8..b87951b007a3 100644
+--- a/lib/sdp.c
++++ b/lib/sdp.c
+@@ -513,8 +513,10 @@ sdp_data_t *sdp_seq_alloc_with_length(void **dtds, void **values, int *length,
+ 		else
+ 			data = sdp_data_alloc_with_length(dtd, values[i], length[i]);
+ 
+-		if (!data)
++		if (!data) {
++			sdp_data_free(seq);
+ 			return NULL;
++		}
+ 
+ 		if (curr)
+ 			curr->next = data;
+@@ -541,8 +543,10 @@ sdp_data_t *sdp_seq_alloc(void **dtds, void **values, int len)
+ 		else
+ 			data = sdp_data_alloc(dtd, values[i]);
+ 
+-		if (!data)
++		if (!data) {
++			sdp_data_free(seq);
+ 			return NULL;
++		}
+ 
+ 		if (curr)
+ 			curr->next = data;
 -- 
 2.45.2
 
