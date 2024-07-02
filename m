@@ -1,42 +1,45 @@
-Return-Path: <linux-bluetooth+bounces-5764-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5769-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4030A92409A
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Jul 2024 16:24:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BB2449240A0
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Jul 2024 16:25:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 728421C21ED4
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Jul 2024 14:24:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ED3C51C22B13
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Jul 2024 14:25:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D60F1BA07A;
-	Tue,  2 Jul 2024 14:24:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E93E41BA865;
+	Tue,  2 Jul 2024 14:24:48 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay1-d.mail.gandi.net (relay1-d.mail.gandi.net [217.70.183.193])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1BA986AFA
-	for <linux-bluetooth@vger.kernel.org>; Tue,  2 Jul 2024 14:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906E21B583E
+	for <linux-bluetooth@vger.kernel.org>; Tue,  2 Jul 2024 14:24:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719930287; cv=none; b=GlfJ5xrZwiA8ESEEloivRhnHQ7IWWqkGxV5qenk3m0762Q8gGGSnZdo1KL5tkgTAIBd3Y/0teljflHydrcGDILJ8bDb/o86Xm1qfE5WuVux39Gy0YxVJdcAWLVp1h4117PPYyPbPQ72od5APWYFkVizeV8LCbu0nF9lJnHcEF00=
+	t=1719930288; cv=none; b=VWz+n0tFq3hFYirMKkU5IgF+c5rYQvlohO8NtP2r5j1QDQC/Z45N0j920S/hJ7TqMob7SWKmDQDZpsb7YYRVl/KMK2QVnkAMvJgg0ry8OJgUh/5FaMATL9Z4B5ERByEydRlkPFaZSIMVIiLOHodjoIF3EWadBzLQ1XiQOARqKYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719930287; c=relaxed/simple;
-	bh=pY7IJnJvVtfhOHUjSuNMaMdEr0cl9pK5yH1g0maw10k=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=i0Pkyexp/v3EZe+46BmMkN1LhQP7Ig87JBdl6YTjBw/119K+TeEls0s7RxXd9JvXz/8h1uEB2D51m3IpwEo7p3M6tlju72vqHCvLQCrdJzMTpTZLAaKJF7B1AVCrcU6luSxg+ANnHsG/H53H8+5PQ452ACwFXoubqKScpdsNqlE=
+	s=arc-20240116; t=1719930288; c=relaxed/simple;
+	bh=SygPxPvYyqAKNBGu+ImyRhBldapxXCSzpjOLb0s9Gxo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=GE6Oe4kLetHl4bF5g0ovvbbQgkhRPWsuGDsNlR0XOnJSPOoiHLrfwNy0AzGw9YimjgQcPEtKCnE9r2R1/Kbz9lBPBTXZWrplxzzhYcfe2LlNMeI51+OvBY/G8ydocP1TiPHBLaP0hY3nfH8/5bFVUi7wZZNxO76ZGEFY7ywTmh0=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.193
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 7A34124000A;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id BA57624000C;
 	Tue,  2 Jul 2024 14:24:37 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ resend 0/9] Fix a number of static analysis issues #4
-Date: Tue,  2 Jul 2024 16:23:32 +0200
-Message-ID: <20240702142436.833138-1-hadess@hadess.net>
+Subject: [BlueZ resend 1/9] main: Simplify parse_config_string()
+Date: Tue,  2 Jul 2024 16:23:33 +0200
+Message-ID: <20240702142436.833138-2-hadess@hadess.net>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240702142436.833138-1-hadess@hadess.net>
+References: <20240702142436.833138-1-hadess@hadess.net>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -46,33 +49,76 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-"main: Simplify parse_config_string()" is a repeat. If you don't want
-the patch, please let me know and I'll carry it downstream.
+The memory management done by parse_config_string() was quite
+complicated, as it expected to be able to free the value in the return
+variable if it was already allocated.
 
-More fixes incoming, please review carefully, thanks!
+That particular behaviour was only used for a single variable which was
+set to its default value during startup and might be overwritten after
+this function call.
 
-Re-sent with the correct prefix
+Use an intermediate variable to check whether we need to free
+btd_opts.name and simplify parse_config_string().
 
-Bastien Nocera (9):
-  main: Simplify parse_config_string()
-  avdtp: Fix manipulating struct as an array
-  mesh: Avoid accessing array out-of-bounds
-  obexd: Fix possible memleak
-  obexd: Fix memory leak in entry struct
-  obexd: Fix leak in backup_object struct
-  health/mcap: Fix memory leak in mcl struct
-  sdp: Fix memory leak in sdp_data_alloc*()
-  sdp: Check memory allocation in sdp_copy_seq()
+Error: RESOURCE_LEAK (CWE-772): [#def39] [important]
+bluez-5.75/src/main.c:425:2: alloc_fn: Storage is returned from allocation function "g_key_file_get_string".
+bluez-5.75/src/main.c:425:2: var_assign: Assigning: "tmp" = storage returned from "g_key_file_get_string(config, group, key, &err)".
+bluez-5.75/src/main.c:433:2: noescape: Assuming resource "tmp" is not freed or pointed-to as ellipsis argument to "btd_debug".
+bluez-5.75/src/main.c:440:2: leaked_storage: Variable "tmp" going out of scope leaks the storage it points to.
+438|	}
+439|
+440|->	return true;
+441|   }
+442|
+---
+ src/main.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
- lib/sdp.c                      | 13 ++++++++--
- mesh/prov-initiator.c          |  9 +++++--
- obexd/plugins/messages-dummy.c | 12 ++++++++-
- obexd/plugins/pcsuite.c        |  1 +
- profiles/audio/avdtp.c         | 45 +++++++++++++++++-----------------
- profiles/health/mcap.c         |  1 +
- src/main.c                     | 19 +++++++-------
- 7 files changed, 64 insertions(+), 36 deletions(-)
-
+diff --git a/src/main.c b/src/main.c
+index 62453bffaf57..9db8d7000490 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -420,9 +420,10 @@ static bool parse_config_string(GKeyFile *config, const char *group,
+ 					const char *key, char **val)
+ {
+ 	GError *err = NULL;
+-	char *tmp;
+ 
+-	tmp = g_key_file_get_string(config, group, key, &err);
++	g_return_val_if_fail(val, false);
++
++	*val = g_key_file_get_string(config, group, key, &err);
+ 	if (err) {
+ 		if (err->code != G_KEY_FILE_ERROR_KEY_NOT_FOUND)
+ 			DBG("%s", err->message);
+@@ -430,12 +431,7 @@ static bool parse_config_string(GKeyFile *config, const char *group,
+ 		return false;
+ 	}
+ 
+-	DBG("%s.%s = %s", group, key, tmp);
+-
+-	if (val) {
+-		g_free(*val);
+-		*val = tmp;
+-	}
++	DBG("%s.%s = %s", group, key, *val);
+ 
+ 	return true;
+ }
+@@ -1004,7 +1000,12 @@ static void parse_secure_conns(GKeyFile *config)
+ 
+ static void parse_general(GKeyFile *config)
+ {
+-	parse_config_string(config, "General", "Name", &btd_opts.name);
++	char *str = NULL;
++
++	if (parse_config_string(config, "General", "Name", &str)) {
++		g_free(btd_opts.name);
++		btd_opts.name = str;
++	}
+ 	parse_config_hex(config, "General", "Class", &btd_opts.class);
+ 	parse_config_u32(config, "General", "DiscoverableTimeout",
+ 						&btd_opts.discovto,
 -- 
 2.45.2
 
