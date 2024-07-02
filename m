@@ -1,53 +1,53 @@
-Return-Path: <linux-bluetooth+bounces-5720-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5722-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85FB391F0AE
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Jul 2024 10:01:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B3F9E9237D3
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Jul 2024 10:43:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 408D7284553
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Jul 2024 08:01:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BB8C12859CC
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Jul 2024 08:24:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 279CD148314;
-	Tue,  2 Jul 2024 08:01:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C4A914D2BF;
+	Tue,  2 Jul 2024 08:24:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XA/DG5OD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zmt0xjMn"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8540316419
-	for <linux-bluetooth@vger.kernel.org>; Tue,  2 Jul 2024 08:01:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B423C14BF97
+	for <linux-bluetooth@vger.kernel.org>; Tue,  2 Jul 2024 08:24:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719907312; cv=none; b=IrjQdwwi/SP5jODme+9bHeRMqqU21vi2ocSbNXIM8VZiX9I7tzAdoDL7hwKDlyO6m/b+sTsUk/hwWW6n2fw8vu6oAbnaF9X4l/QywnesL+xjGf3X8fck08cIPiQgabrmTbkSoDBMg1rRZ4wn7y3yXxeCTrgMWj7Qe9+EvG82SYE=
+	t=1719908657; cv=none; b=sxr2Pn8h8xFvGmMoHXCBlTdNW0kQ51SVzRp0V5RvfI6NPCt2YjH6xvX/+GQfPws/4d4y3SLO13TMUEj1cEqV/MGRHJfzT/ZsEo0UgiqS+wmBGnipXlOxsRQhpzXd8zTgjNcCkLV598/aj5SHoRGf7ldyfMhqScJnq063Y3TP12Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719907312; c=relaxed/simple;
-	bh=Qf03flAX6FrMLFUMdOjfnzKX+xS0+FH+rr1qneMn8/Q=;
+	s=arc-20240116; t=1719908657; c=relaxed/simple;
+	bh=bhfv95ZhkRAg+nc13M/M+0o63nhRE2KGGFticP/wZik=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Q7iI2k3QGSHjSiBlgEVrP3LeOCqO46i/+HyQRXqCr9D3Lte26f9DVRGw1bxxdiVFtwEerAEvvop51g8siEyVwfnuWV+ioN9WVc9QKCtG1J8ExfyboEIvGnhECK1gEwFpadj1iCbArJ+/VwuL2m1/1pUg+6CFY3t3V9SZS0VNIms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XA/DG5OD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 19479C32781
-	for <linux-bluetooth@vger.kernel.org>; Tue,  2 Jul 2024 08:01:52 +0000 (UTC)
+	 Content-Type:MIME-Version; b=HMt/yMwFntPcD2m+jVeQYactwS89NZ8C+AIDN8Tbm4DMDQn05IDX7SSL94P2wdKMjUUFg+Hup82pqihuEVy8qXK+y0BeDUY1hGIdbclUfrdq1U7kSjDrj87+TCJkd51RNL1J5HogjXkbNsS8iCYNFluQHBf887lRO3Tqa3WEulo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zmt0xjMn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 44BAEC116B1
+	for <linux-bluetooth@vger.kernel.org>; Tue,  2 Jul 2024 08:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1719907312;
-	bh=Qf03flAX6FrMLFUMdOjfnzKX+xS0+FH+rr1qneMn8/Q=;
+	s=k20201202; t=1719908657;
+	bh=bhfv95ZhkRAg+nc13M/M+0o63nhRE2KGGFticP/wZik=;
 	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=XA/DG5ODd88Kacu1ylQZL2Gwcq2ytZdOiQ3zQXefuAnrQl7cYkutGE10BTKlNQWsk
-	 g6m7jReh5nYv3XXfQdEIUIhMQWELPuoyq4F93BfqiIsWFW55ysciKFj+3r6nXRX4Lq
-	 zR80yEtgsYeflTRVj9qVDTKzFTtmpgQOesDYhujpIxEJrh4S+OBSc5CCcmXNPZInas
-	 Iei5KGN/EtLaMbXncA4yafDAqbyHZQURgkVU6SJEqt+nFSKDcpmV5I4OXE2WaBIdUw
-	 aDLjM7NbEduAZdyFYd2LC9vmnDm9UiyEHU2pkk28JgKU4OX8tzW155n/erk8Mj1d7r
-	 nsSykxj6vzVMg==
+	b=Zmt0xjMnn3vNPdNOb0eq6DObjaP/mCuqD8UKINVDMU5d2jasHrUTYNoTh8aa2VYeJ
+	 B1MDkTEkB9XPgMuJc7vvc5PVVRzvwZosw+/9hbDX/sfmDRWAHBz9J27/Wym+P1rzZr
+	 FbYL5Q8EvvRPmGvgjylLVti9c9LmTvw01WJ1m/XVpPkmhiI8IxHY6p4QVJmGUt+lsq
+	 xMOdlNkJlWs8gBb7CJAGbBmdfI8oevlROmAw9kMfeKini4Zh2lTriOn2wTpLbRf4+S
+	 zMPJBxH97peKf0B8jRxIoeamXfIVpdpiTSEbxTxQaO1u9cg7APuNNwg17y1/JVIfVd
+	 XnxUS/PsWr/LA==
 Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-	id 057C0C53B7E; Tue,  2 Jul 2024 08:01:52 +0000 (UTC)
+	id 26DB4C53B73; Tue,  2 Jul 2024 08:24:17 +0000 (UTC)
 From: bugzilla-daemon@kernel.org
 To: linux-bluetooth@vger.kernel.org
 Subject: [Bug 219001] mt7921e: hibernate/resume not working | Bluetooth:
  hci0: Failed to get fw version (-108)
-Date: Tue, 02 Jul 2024 08:01:51 +0000
+Date: Tue, 02 Jul 2024 08:24:16 +0000
 X-Bugzilla-Reason: AssignedTo
 X-Bugzilla-Type: changed
 X-Bugzilla-Watch-Reason: None
@@ -56,14 +56,14 @@ X-Bugzilla-Component: Bluetooth
 X-Bugzilla-Version: 2.5
 X-Bugzilla-Keywords: 
 X-Bugzilla-Severity: normal
-X-Bugzilla-Who: aros@gmx.com
+X-Bugzilla-Who: g.wenzel@gmail.com
 X-Bugzilla-Status: NEW
 X-Bugzilla-Resolution: 
 X-Bugzilla-Priority: P3
 X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
 X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: cf_kernel_version
-Message-ID: <bug-219001-62941-IWsvdKLViU@https.bugzilla.kernel.org/>
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-219001-62941-izRAI4aeYY@https.bugzilla.kernel.org/>
 In-Reply-To: <bug-219001-62941@https.bugzilla.kernel.org/>
 References: <bug-219001-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
@@ -79,18 +79,11 @@ MIME-Version: 1.0
 
 https://bugzilla.kernel.org/show_bug.cgi?id=3D219001
 
-Artem S. Tashkinov (aros@gmx.com) changed:
-
-           What    |Removed                     |Added
-----------------------------------------------------------------------------
-     Kernel Version|                            |6.10.0-rc6
-
---- Comment #1 from Artem S. Tashkinov (aros@gmx.com) ---
-Is this a regression? What was the last kernel version that worked? Could y=
-ou
-bisect?
-
-https://docs.kernel.org/admin-guide/bug-bisect.html
+--- Comment #2 from Georg (g.wenzel@gmail.com) ---
+It is a new mini pc. I only tested with Arch Linux kernel 6.9.7.arch1-1 but=
+ the
+bluetooth device was not supported. Then I tested 6.10.0-rc5-x86_64 and
+6.10.0-rc6-x86_64 kernel. Both have the same hibernate/resume problem.
 
 --=20
 You may reply to this email to add a comment.
