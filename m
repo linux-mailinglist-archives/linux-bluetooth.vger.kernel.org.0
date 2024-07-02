@@ -1,45 +1,44 @@
-Return-Path: <linux-bluetooth+bounces-5730-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5733-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BAFF9238C9
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Jul 2024 10:49:32 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D73229238CC
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Jul 2024 10:49:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 22E181F22B98
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Jul 2024 08:49:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4CF87B2235E
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Jul 2024 08:49:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 121E714E2E9;
-	Tue,  2 Jul 2024 08:49:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E6E5A14A62D;
+	Tue,  2 Jul 2024 08:49:40 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mx01.omp.ru (mx01.omp.ru [90.154.21.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020AC14F9CA
-	for <linux-bluetooth@vger.kernel.org>; Tue,  2 Jul 2024 08:49:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1E484D39
+	for <linux-bluetooth@vger.kernel.org>; Tue,  2 Jul 2024 08:49:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.154.21.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719910152; cv=none; b=VMRdDHEdBHV8YUKCiha2WzrwB31LcGIY+R0PVYns7yfWWrJ+tWMYv0H41GCH33Adev8VvOWxY2gJM4B3xE4XYlE++EntyG1v9UXPizUbeGzm/8B3+4CX2CZnXPCPCIVUMZOnlEAHzjYstBMl9VkX68mk+KlhKgUwLBXrFGNEUow=
+	t=1719910180; cv=none; b=GFizRuzeJe0WRGlyvN6BjsdAByHHSY7yD9hCt3sz+Ls2vqH+7y1ZgY1MgJ9dN3DT+92Q2MlQK22HL7plPDA8H6tGDXJVFduEIytIWWR5Mke2YuaKRNqVkg1ILUK8S3e1mF+vNwOob6MUIXaCCpvC1N+c2CRA8hkNuHYhK/a0FZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719910152; c=relaxed/simple;
-	bh=AMs8ychV2P29ai3YR75bpglgCf2JFXuMVDB5Yw5686M=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xk6DEJjAxRB6rA2r0qoSxyf1Mfzf5oW/5YfO475HkkOYc2letAMlc3RviRK6yxmfxK++uFlYJBbDQPdO6oKK5msAx+3dAwCdW+Gve1DuiptseW4dW3YLScAOD0+AdCyIHjyELfx97YS2Pze4n7ljdUchghk9KTopMg/K1gsrBhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.196
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 83C8BE0010;
-	Tue,  2 Jul 2024 08:49:03 +0000 (UTC)
-From: Bastien Nocera <hadess@hadess.net>
-To: linux-bluetooth@vger.kernel.org
-Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [PATCH 9/9] sdp: Check memory allocation in sdp_copy_seq()
-Date: Tue,  2 Jul 2024 10:47:24 +0200
-Message-ID: <20240702084900.773620-10-hadess@hadess.net>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240702084900.773620-1-hadess@hadess.net>
-References: <20240702084900.773620-1-hadess@hadess.net>
+	s=arc-20240116; t=1719910180; c=relaxed/simple;
+	bh=yxHJAxI1xcuUjnH3XbuP0imHf7olPqOYYY4oMSVlroQ=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=pzC7LjhRcW30Gz2OlhM4WQrL2xlBmtfMCACLXQsh7i1xmWp9Eapdz8YI+eKIEcnB99TcaRoLZLmRZCtoPM7dZCLoJLOwuN/ZOMNvE2StvFa6NVNpKHpiMqz82WHYxcuKNq6yO5kZV+jf80lQsOEhfTmoKY9+XEJE4YV29A1Qn9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=omp.ru; spf=pass smtp.mailfrom=omp.ru; arc=none smtp.client-ip=90.154.21.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=omp.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=omp.ru
+Received: from inp1wst083.omp.ru (81.22.207.138) by msexch01.omp.ru
+ (10.188.4.12) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1258.12; Tue, 2 Jul
+ 2024 11:49:25 +0300
+From: Roman Smirnov <r.smirnov@omp.ru>
+To: <linux-bluetooth@vger.kernel.org>
+CC: Roman Smirnov <r.smirnov@omp.ru>
+Subject: [PATCH BlueZ v1] shared/vcp: add NULL checks to foreach_vocs_service()
+Date: Tue, 2 Jul 2024 11:49:07 +0300
+Message-ID: <20240702084907.26066-1-r.smirnov@omp.ru>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -47,31 +46,66 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-GND-Sasl: hadess@hadess.net
+Content-Type: text/plain
+X-ClientProxiedBy: msexch01.omp.ru (10.188.4.12) To msexch01.omp.ru
+ (10.188.4.12)
+X-KSE-ServerInfo: msexch01.omp.ru, 9
+X-KSE-AntiSpam-Interceptor-Info: scan successful
+X-KSE-AntiSpam-Version: 6.1.0, Database issued on: 07/02/2024 08:30:59
+X-KSE-AntiSpam-Status: KAS_STATUS_NOT_DETECTED
+X-KSE-AntiSpam-Method: none
+X-KSE-AntiSpam-Rate: 19
+X-KSE-AntiSpam-Info: Lua profiles 186271 [Jul 02 2024]
+X-KSE-AntiSpam-Info: Version: 6.1.0.4
+X-KSE-AntiSpam-Info: Envelope from: r.smirnov@omp.ru
+X-KSE-AntiSpam-Info: LuaCore: 21 0.3.21
+ ebee5449fc125b2da45f1a6a6bc2c5c0c3ad0e05
+X-KSE-AntiSpam-Info: {rep_avail}
+X-KSE-AntiSpam-Info: {Tracking_from_domain_doesnt_match_to}
+X-KSE-AntiSpam-Info: {SMTP from is not routable}
+X-KSE-AntiSpam-Info: {Found in DNSBL: 81.22.207.138 in (user)
+ b.barracudacentral.org}
+X-KSE-AntiSpam-Info:
+	127.0.0.199:7.1.2;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1;inp1wst083.omp.ru:7.1.1;omp.ru:7.1.1;81.22.207.138:7.1.2
+X-KSE-AntiSpam-Info: ApMailHostAddress: 81.22.207.138
+X-KSE-AntiSpam-Info: {DNS response errors}
+X-KSE-AntiSpam-Info: Rate: 19
+X-KSE-AntiSpam-Info: Status: not_detected
+X-KSE-AntiSpam-Info: Method: none
+X-KSE-AntiSpam-Info: Auth:dmarc=temperror header.from=omp.ru;spf=temperror
+ smtp.mailfrom=omp.ru;dkim=none
+X-KSE-Antiphishing-Info: Clean
+X-KSE-Antiphishing-ScanningType: Heuristic
+X-KSE-Antiphishing-Method: None
+X-KSE-Antiphishing-Bases: 07/02/2024 08:34:00
+X-KSE-Antivirus-Interceptor-Info: scan successful
+X-KSE-Antivirus-Info: Clean, bases: 7/2/2024 7:20:00 AM
+X-KSE-Attachment-Filter-Triggered-Rules: Clean
+X-KSE-Attachment-Filter-Triggered-Filters: Clean
+X-KSE-BulkMessagesFiltering-Scan-Result: InTheLimit
 
-Fix a potential null-dereference if sdp_data_alloc_with_length() fails,
-as is done in other similar functions.
+Make foreach_vocs_service() safe for passing NULL pointers.
+
+Found with the SVACE static analysis tool.
 ---
- lib/sdp.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ src/shared/vcp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/lib/sdp.c b/lib/sdp.c
-index b87951b007a3..b64245f668d3 100644
---- a/lib/sdp.c
-+++ b/lib/sdp.c
-@@ -1538,6 +1538,11 @@ static sdp_data_t *sdp_copy_seq(sdp_data_t *data)
- 		value = sdp_data_value(tmp, &len);
- 		datatmp = sdp_data_alloc_with_length(tmp->dtd, value, len);
+diff --git a/src/shared/vcp.c b/src/shared/vcp.c
+index b7e17e448..06264a241 100644
+--- a/src/shared/vcp.c
++++ b/src/shared/vcp.c
+@@ -2701,6 +2701,9 @@ static void foreach_vocs_service(struct gatt_db_attribute *attr,
+ 	struct bt_vcp *vcp = user_data;
+ 	struct bt_vocs *vocs = vcp_get_vocs(vcp);
  
-+		if (!datatmp) {
-+			sdp_data_free(seq);
-+			return NULL;
-+		}
++	if (!vocs || !attr)
++		return;
 +
- 		if (cur)
- 			cur->next = datatmp;
- 		else
+ 	vocs->service = attr;
+ 
+ 	gatt_db_service_set_claimed(attr, true);
 -- 
-2.45.2
+2.34.1
 
 
