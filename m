@@ -1,150 +1,89 @@
-Return-Path: <linux-bluetooth+bounces-5826-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5831-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0DF0D92644A
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Jul 2024 17:06:51 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 082EA926478
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Jul 2024 17:11:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A75CB1F23AC6
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Jul 2024 15:06:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3B3EC1C2183E
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Jul 2024 15:11:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5415717DA06;
-	Wed,  3 Jul 2024 15:06:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36C0E18131E;
+	Wed,  3 Jul 2024 15:10:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RBP7JREa"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jSlLjaTE"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D2017E46A
-	for <linux-bluetooth@vger.kernel.org>; Wed,  3 Jul 2024 15:06:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FAA117DA3F
+	for <linux-bluetooth@vger.kernel.org>; Wed,  3 Jul 2024 15:10:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720019193; cv=none; b=F6B+VqLtl1kWedSs+aFlY5KorbjQDlYPpGznjtQfdnAYe5SX6tEulwxXchMrqSf+Kd1SNGlTyJhPiuzc2JoODXfUc4gELqk9Z13rY7cA/NOnYB5empxL0eRBG4DcFxMgkQFweLqVDKCAYLOzEYNJsv9SoJkmjw9eUpzCsjeIemM=
+	t=1720019433; cv=none; b=ATsTIx83Uo3CBmNr6Ok/DqE30C7r+wp78JongWSIjg1nb/YFNpbI0H6fMSGUe3gHRBMUVUdtjhHPNXztxPtuTMPgnZbe2HBcE98Q8vYiJ/CIIt6ZrZQ7v56xhsrju2URsFFRTrkbiQQ7q4wm7k9AgzNDrCygEE1EaomgTkWc9Wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720019193; c=relaxed/simple;
-	bh=yyweQCSh24CDgbkKMPskoIfs9NoH/e8H9GQzVTdg7J0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ehTOUp2uHE8UQM1EXl7XOzcLuuH1gMJemOc8QZm4nHkezf+FnM81Fi9QtsHfqYw1JwL5n8r1iSoh0AuXOP9cg5aGmjGzmex6QcUyrKarHj3b/I7l1c1ydXUx2ahRpAyiz55Q23kFaf1ZFTABz/mRiW9vmudBp17696a2eOpZgH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RBP7JREa; arc=none smtp.client-ip=209.85.208.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2ebec2f11b7so62727331fa.2
-        for <linux-bluetooth@vger.kernel.org>; Wed, 03 Jul 2024 08:06:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720019189; x=1720623989; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=R2Cv3jC2w6mkoU0XBvBsZKzyGfc6dr9C87H/ZVxFi0c=;
-        b=RBP7JREapp0HoN7xhHbqK/JZoO3N/9hHXMndhH/MmE1fc41pPGMt4huZtXK/PGUGnc
-         H6ICq6GALVad08QX50+zc3OxLJpxqf1QaTyE1XeXAvg0un7UvpInWhCO9jA09aUMIUE6
-         oisnKSTDzLRb///xY30HmFfzd8pDfTbuNTh/YrT4LVHpCK0PQMrK8mF3ZCK1psUa0MhT
-         PpZ0/s5ICjZEDsCbyj71Hy3JUceJGwQiLxg+JEyfSYqnXhNVptw0dikS8KqHaMx/o6J2
-         a5T9qNGPdOmUk7op1jaCQt69pBExsLo904HeMzLKPU26ikc+TBVI675UjuuI85Wa++VG
-         FIbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720019189; x=1720623989;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=R2Cv3jC2w6mkoU0XBvBsZKzyGfc6dr9C87H/ZVxFi0c=;
-        b=gWQF3tDcTZckq5emLphD5C3qoOpH0q0xldM88tr3cx2lzwfujZcGoOQMT61Bv6k87+
-         4LXskvh69+1MisymMhPWKYHhHDnFehYSzc73jlpjnwJbE29hsqBrqshLzjMRzKhEB518
-         d4rADapL6aIAQyzO41HGOjc9E67ok8ggzleWUQZRjXYTeEyp+AN0Ah9Rn3rXdW3or3A1
-         lo6PcuKnpXy2h1i3BSoKrYifNJmgKu7z5LwZgZ427q8gU3lz4y/UMQwEbYTNlJMEL1x+
-         xPYevsB2Kq9Q4RHTRXVuq3nYbGkfwbSjx5Gs7oYRfckkVsoQ4W5mgOZQyQADT0AwKSDW
-         hIgA==
-X-Gm-Message-State: AOJu0Yx/UCS4nd2JSEHiamPiNWq8P6eHXzNfLQt7OYf3UQ5DDJlcnOvt
-	HVHCDDrUdka6Xf6BFXCwOU8k23vnq54sCcyjwQAjahrZlYE10T+AtZ+nRvvNZh579ksvWZLCO6a
-	e08lSRH5yjtr7NMjF2qBqZDWvnaP/Xn0T
-X-Google-Smtp-Source: AGHT+IFmEMRztvKbhp+bbEke6oCG8SXbcqdTU6M3Xmln1501EbtYAw3Mz3PCGsgduLtx8dNsuuKHZGcMKLqlZ3fdD7M=
-X-Received: by 2002:a2e:b7c9:0:b0:2ec:56b9:259b with SMTP id
- 38308e7fff4ca-2ee5e6bd1demr64259251fa.49.1720019188392; Wed, 03 Jul 2024
- 08:06:28 -0700 (PDT)
+	s=arc-20240116; t=1720019433; c=relaxed/simple;
+	bh=bJoqrIf1lIZGghgL7xmEerWrQD2j1E2fYyZnoSJgn+Y=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=JoC1CNkX71cSMd+QIWMBdMhttmWVJxRq6yT/pD6YVJ8uT6ZX8K5O6ifwZ2Kg1roqwwQAWeOAbRbeS2KQmuiiC8fJCRkjZnSjQtWZTZEOfCDdYz2PupX8BrDJl0jIQZdvwXbI5wGqLmcIE5CcPCDeeQjZ6WxQqfcKfHU7t5cT6uM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jSlLjaTE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 150A8C3277B;
+	Wed,  3 Jul 2024 15:10:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1720019433;
+	bh=bJoqrIf1lIZGghgL7xmEerWrQD2j1E2fYyZnoSJgn+Y=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=jSlLjaTEhkZkZPZB0YlFzJeVA6QTWKQm9MgKGDKROMd7UUMF4Q8x8waT5qzD7LG1a
+	 3yEGO7VexQ+a0fuUUxrdfo3zYjxKnIvCkc31QDPq5lSCDxtLqGKLfn/CrRvQmbWXeE
+	 KohanfF39Zs8genOLpxB5IbEkgcmahfKm/yJ8nhGM4tthO0U9Hw01Y3V8pUwlH26/6
+	 b1CDh9p82D7PV9zDhYhMUXHAJIjIBu6dOYJGSeKOOKbKyFyHAqJKnjZAQyZQfV0cnF
+	 9L8uuMeSqR7IUzRebP6dt65Hyfbc2b1MatajqH4Pqnginay3H05qgLP0DUx68AYZEi
+	 zHRZVC4VCXELA==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id F33B1C43446;
+	Wed,  3 Jul 2024 15:10:32 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240703123745.56443-1-r.smirnov@omp.ru> <20240703123745.56443-2-r.smirnov@omp.ru>
-In-Reply-To: <20240703123745.56443-2-r.smirnov@omp.ru>
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Wed, 3 Jul 2024 11:06:16 -0400
-Message-ID: <CABBYNZ+FTK=+R75RSY8Po5R0w_3S-AKuThximnQJvzWn8043oQ@mail.gmail.com>
-Subject: Re: [PATCH BlueZ v1 1/3] shared/vcp: prevent dereferencing of NULL pointers
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH BlueZ v1] gatt: add return value check of io_get_fd() to
+ sock_io_read()
+From: patchwork-bot+bluetooth@kernel.org
+Message-Id: 
+ <172001943299.18626.4427747354401755294.git-patchwork-notify@kernel.org>
+Date: Wed, 03 Jul 2024 15:10:32 +0000
+References: <20240702131506.91493-1-r.smirnov@omp.ru>
+In-Reply-To: <20240702131506.91493-1-r.smirnov@omp.ru>
 To: Roman Smirnov <r.smirnov@omp.ru>
 Cc: linux-bluetooth@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi Roman,
+Hello:
 
-On Wed, Jul 3, 2024 at 8:39=E2=80=AFAM Roman Smirnov <r.smirnov@omp.ru> wro=
-te:
->
-> It is necessary to check that malloc() was able to allocate memory.
->
+This patch was applied to bluetooth/bluez.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+
+On Tue, 2 Jul 2024 16:15:06 +0300 you wrote:
+> It is necessary to add a return value check.
+> 
 > Found with the SVACE static analysis tool.
 > ---
->  src/shared/vcp.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
->
-> diff --git a/src/shared/vcp.c b/src/shared/vcp.c
-> index b7e17e448..2ffdb22a0 100644
-> --- a/src/shared/vcp.c
-> +++ b/src/shared/vcp.c
-> @@ -2128,14 +2128,15 @@ static void read_vocs_audio_descriptor(struct bt_=
-vcp *vcp, bool success,
->         }
->
->         vocs_ao_dec_r =3D malloc(length+1);
-> -       memset(vocs_ao_dec_r, 0, length+1);
-> -       memcpy(vocs_ao_dec_r, value, length);
->
->         if (!vocs_ao_dec_r) {
->                 DBG(vcp, "Unable to get VOCS Audio Descriptor");
->                 return;
->         }
->
-> +       memset(vocs_ao_dec_r, 0, length+1);
-> +       memcpy(vocs_ao_dec_r, value, length);
-> +
->         DBG(vcp, "VOCS Audio Descriptor: %s", vocs_ao_dec_r);
->         free(vocs_ao_dec_r);
->         vocs_ao_dec_r =3D NULL;
-> @@ -2532,14 +2533,15 @@ static void read_aics_audio_ip_description(struct=
- bt_vcp *vcp, bool success,
->         }
->
->         ip_descrptn =3D malloc(length+1);
-> -       memset(ip_descrptn, 0, length+1);
-> -       memcpy(ip_descrptn, value, length);
->
->         if (!ip_descrptn) {
->                 DBG(vcp, "Unable to get Audio Input Description");
->                 return;
->         }
->
-> +       memset(ip_descrptn, 0, length+1);
-> +       memcpy(ip_descrptn, value, length);
-> +
->         DBG(vcp, "Audio Input Description: %s", ip_descrptn);
->         free(ip_descrptn);
->         ip_descrptn =3D NULL;
-> --
-> 2.43.0
+>  src/gatt-database.c | 5 +++++
+>  1 file changed, 5 insertions(+)
 
-We might be better off using util_memdup here since it already
-incorporates these checks and aborts if we cannot allocate memory.
+Here is the summary with links:
+  - [BlueZ,v1] gatt: add return value check of io_get_fd() to sock_io_read()
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=d36983e032e9
 
->
->
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
---=20
-Luiz Augusto von Dentz
 
