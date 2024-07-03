@@ -1,44 +1,47 @@
-Return-Path: <linux-bluetooth+bounces-5815-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5816-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1DF82926086
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Jul 2024 14:39:01 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C98E4926088
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Jul 2024 14:39:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 500491C2195D
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Jul 2024 12:39:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 08B811C22283
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  3 Jul 2024 12:39:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE3D4176ADE;
-	Wed,  3 Jul 2024 12:38:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 489E2176FBD;
+	Wed,  3 Jul 2024 12:39:01 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from mx01.omp.ru (mx01.omp.ru [90.154.21.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A0A1428F8
-	for <linux-bluetooth@vger.kernel.org>; Wed,  3 Jul 2024 12:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC076176255
+	for <linux-bluetooth@vger.kernel.org>; Wed,  3 Jul 2024 12:38:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.154.21.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720010335; cv=none; b=rbJ1noDxBvqxt0mMd8lzQmF71tsE/IPXRGWgAD/T44LfG6vDZJQfgQct7+FmFFeUSYZG44zuKJxCHkjMQJDi2Y7XLoEoq5BSx8vah3bAGn60M9R/QJ+uuUa3jFM/c7go7pWsVFPOu+zH8wchz3E26smdfGbZsspSx+GnTSmbFV0=
+	t=1720010340; cv=none; b=HhgQuV4N3tUkV01eWJ3ZWFAnuPrTH69H3FJyo9Y45Z4D9LK5n32ptcvIV2UZJRAn+wdA0Rh3K0dT+RGtfCqGHuSrCECn5vCVEoPVxX8iNju9wbcDRmkL2nZ1D2oGjyBq/VUikyBMP+aTBV+0qkVTLYACoxuVNRcJxnkqg0rIE3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720010335; c=relaxed/simple;
-	bh=6DcM7NMprQJYbrrgGxiJkXxGI393+v6snjre2kgRVwY=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=kcBlDIs9yf1BjhSyrib16EQWNIH4tnlkRl1fCtKidLf1rb529RRLnLLvHlKLUwCphfyvMQrhpO3RUwgSBS6kIqUZILsgr2ILdvnSFmaLDcOvSr5rH9lk53cAbe25bZBdFlrqbpp/Cf6ZDHF5CHD5oMH4cm3Ij+Kg00Hspu/qdnY=
+	s=arc-20240116; t=1720010340; c=relaxed/simple;
+	bh=j9eFscgCDK6YZCcIZ4vMtWQZroZtNHHYRdZ7xE75ru0=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=KiEOCu6C2xt5oiDCTr/a3TQO/LJoh6vUnggFapxmb0EeJ/CyDBW8zsnq5pxGioeCe/UbbTGmg0uIMO2NLfzBIA8gUFW3xzYsHMzfZkeSC6y3VU6zMRzU/cD5eL0fwrsYt4epU4Rgl4OGmn0HVVeniN+xETkSl4k1Kt8N8okxe6E=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=omp.ru; spf=pass smtp.mailfrom=omp.ru; arc=none smtp.client-ip=90.154.21.10
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=omp.ru
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=omp.ru
 Received: from localhost.localdomain (217.23.187.157) by msexch01.omp.ru
  (10.188.4.12) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1258.12; Wed, 3 Jul
- 2024 15:38:38 +0300
+ 2024 15:38:43 +0300
 From: Roman Smirnov <r.smirnov@omp.ru>
 To: <linux-bluetooth@vger.kernel.org>
 CC: Roman Smirnov <r.smirnov@omp.ru>
-Subject: [PATCH BlueZ v1 0/3] fix errors found by SVACE static analyzer
-Date: Wed, 3 Jul 2024 15:37:40 +0300
-Message-ID: <20240703123745.56443-1-r.smirnov@omp.ru>
+Subject: [PATCH BlueZ v1 1/3] shared/vcp: prevent dereferencing of NULL pointers
+Date: Wed, 3 Jul 2024 15:37:41 +0300
+Message-ID: <20240703123745.56443-2-r.smirnov@omp.ru>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240703123745.56443-1-r.smirnov@omp.ru>
+References: <20240703123745.56443-1-r.smirnov@omp.ru>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -69,13 +72,16 @@ X-KSE-AntiSpam-Info: {Found in DNSBL: 217.23.187.157 in (user)
 X-KSE-AntiSpam-Info: {Found in DNSBL: 217.23.187.157 in (user)
  dbl.spamhaus.org}
 X-KSE-AntiSpam-Info:
-	127.0.0.199:7.1.2;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1;217.23.187.157:7.1.2;omp.ru:7.1.1
+	217.23.187.157:7.1.2;omp.ru:7.1.1;127.0.0.199:7.1.2;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1
+X-KSE-AntiSpam-Info: FromAlignment: s
+X-KSE-AntiSpam-Info: {rdns complete}
+X-KSE-AntiSpam-Info: {fromrtbl complete}
 X-KSE-AntiSpam-Info: ApMailHostAddress: 217.23.187.157
 X-KSE-AntiSpam-Info: {DNS response errors}
 X-KSE-AntiSpam-Info: Rate: 59
 X-KSE-AntiSpam-Info: Status: not_detected
 X-KSE-AntiSpam-Info: Method: none
-X-KSE-AntiSpam-Info: Auth:dmarc=temperror header.from=omp.ru;spf=temperror
+X-KSE-AntiSpam-Info: Auth:dmarc=none header.from=omp.ru;spf=none
  smtp.mailfrom=omp.ru;dkim=none
 X-KSE-Antiphishing-Info: Clean
 X-KSE-Antiphishing-ScanningType: Heuristic
@@ -87,18 +93,53 @@ X-KSE-Attachment-Filter-Triggered-Rules: Clean
 X-KSE-Attachment-Filter-Triggered-Filters: Clean
 X-KSE-BulkMessagesFiltering-Scan-Result: InTheLimit
 
-Several bug fixes.
+It is necessary to check that malloc() was able to allocate memory.
 
-Roman Smirnov (3):
-  shared/vcp: prevent dereferencing of NULL pointers
-  client/player: fix wrong argument order in cmd_register_endpoint()
-  shared/gatt-client: add NULL check to discover_secondary_cb()
+Found with the SVACE static analysis tool.
+---
+ src/shared/vcp.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
- client/player.c          |  2 +-
- src/shared/gatt-client.c |  4 +++-
- src/shared/vcp.c         | 10 ++++++----
- 3 files changed, 10 insertions(+), 6 deletions(-)
-
+diff --git a/src/shared/vcp.c b/src/shared/vcp.c
+index b7e17e448..2ffdb22a0 100644
+--- a/src/shared/vcp.c
++++ b/src/shared/vcp.c
+@@ -2128,14 +2128,15 @@ static void read_vocs_audio_descriptor(struct bt_vcp *vcp, bool success,
+ 	}
+ 
+ 	vocs_ao_dec_r = malloc(length+1);
+-	memset(vocs_ao_dec_r, 0, length+1);
+-	memcpy(vocs_ao_dec_r, value, length);
+ 
+ 	if (!vocs_ao_dec_r) {
+ 		DBG(vcp, "Unable to get VOCS Audio Descriptor");
+ 		return;
+ 	}
+ 
++	memset(vocs_ao_dec_r, 0, length+1);
++	memcpy(vocs_ao_dec_r, value, length);
++
+ 	DBG(vcp, "VOCS Audio Descriptor: %s", vocs_ao_dec_r);
+ 	free(vocs_ao_dec_r);
+ 	vocs_ao_dec_r = NULL;
+@@ -2532,14 +2533,15 @@ static void read_aics_audio_ip_description(struct bt_vcp *vcp, bool success,
+ 	}
+ 
+ 	ip_descrptn = malloc(length+1);
+-	memset(ip_descrptn, 0, length+1);
+-	memcpy(ip_descrptn, value, length);
+ 
+ 	if (!ip_descrptn) {
+ 		DBG(vcp, "Unable to get Audio Input Description");
+ 		return;
+ 	}
+ 
++	memset(ip_descrptn, 0, length+1);
++	memcpy(ip_descrptn, value, length);
++
+ 	DBG(vcp, "Audio Input Description: %s", ip_descrptn);
+ 	free(ip_descrptn);
+ 	ip_descrptn = NULL;
 -- 
 2.43.0
 
