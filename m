@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-5867-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5869-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C89039273FF
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Jul 2024 12:26:41 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A0446927402
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Jul 2024 12:26:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 57C05B206B2
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Jul 2024 10:26:39 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 20ED7B20D6F
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  4 Jul 2024 10:26:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FCCB1ABC4A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D505C1ABCA0;
 	Thu,  4 Jul 2024 10:26:24 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay1-d.mail.gandi.net (relay1-d.mail.gandi.net [217.70.183.193])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C27D71AB911
-	for <linux-bluetooth@vger.kernel.org>; Thu,  4 Jul 2024 10:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46F11AB91B
+	for <linux-bluetooth@vger.kernel.org>; Thu,  4 Jul 2024 10:26:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720088783; cv=none; b=WemqLlWbD7HbNxpjgxkbvt41srrgLgp7UN9/aCfl4jHmql5BEiX9aHcfEKGIwg3ENcC/S/LFRGzHFtr4OGabyQMQkYCyGKMyQO1rQ4Vv2FpGocb0joqdJ3L/DPip+88UjV7PrMMQNEXBE44/qgVyE06blLfqeb+kUOo7cLJ7bro=
+	t=1720088784; cv=none; b=AKL/H6uZ7OvWHeV2kf32QVvI6/tXCsJhYmWfU/a14KMmxCz3FZkqQEV6mtopMmFEJpW8XlHBDA+T6lBsRRfG2i+coA3hwkvw2kqrf2CcOYIbZPfepRUXy2ulB92oOvNykrqPiQKRDHZOSo2WVzL07OZZiZoxiD1ZEN4gHZdLoCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720088783; c=relaxed/simple;
-	bh=yudE9JDnTEeVHlV5siLpbDQxihf+gd9DYV9bxay1mTA=;
+	s=arc-20240116; t=1720088784; c=relaxed/simple;
+	bh=lvIg2+dDecXMydPp3QRxG42uiS2BVeRFzszFwjtEl44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=md4utmdCSKD8EuBNKJHBE0T4a4COTuIwZhv8YuDeMf0YSjyF6LG6B9dfH1Z8V+sZ1GVzmBRFPz97qrliFabx+zak2Ez6fSkoi2ec4RiOjb9pSOCN8hpmX2SXpn6rT6oWQfCeJufzIXRc87oeewBMxNFVWdSJuLxKpwj6z5jLdqo=
+	 MIME-Version; b=apcnjZYG8h1El4pUO+27Yy86/FbaigJ6XLfvY69c3+F6QyUSdXjXt1G0cpKG6mGm7fUvif8R+xkRGpIXAvGHIjCa7IH54R8+5B4p5g9XHESZIYRIUQKJuVgQiTE9U0YBfGKoipIacmHMzj1pTdNmM/iuo3BOzamBap+bTLCx/v4=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.193
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id C1489240006;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 1486124000E;
 	Thu,  4 Jul 2024 10:26:19 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ 04/12] shared/shell: Fix fd leak if -s is passed multiple times
-Date: Thu,  4 Jul 2024 12:24:35 +0200
-Message-ID: <20240704102617.1132337-5-hadess@hadess.net>
+Subject: [BlueZ 05/12] btsnoop: Fix possible negative memcpy length
+Date: Thu,  4 Jul 2024 12:24:36 +0200
+Message-ID: <20240704102617.1132337-6-hadess@hadess.net>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240704102617.1132337-1-hadess@hadess.net>
 References: <20240704102617.1132337-1-hadess@hadess.net>
@@ -49,39 +49,51 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-Error: RESOURCE_LEAK (CWE-772): [#def37] [important]
-bluez-5.76/src/shared/shell.c:1305:5: open_fn: Returning handle opened by "open". [Note: The source code implementation of the function has been overridden by a user model.]
-bluez-5.76/src/shared/shell.c:1305:5: var_assign: Assigning: "data.init_fd" = handle returned from "open(optarg, 0)".
-bluez-5.76/src/shared/shell.c:1305:5: overwrite_var: Overwriting handle "data.init_fd" in "data.init_fd = open(optarg, 0)" leaks the handle.
-1303|			case 's':
-1304|				if (optarg)
-1305|->					data.init_fd = open(optarg, O_RDONLY);
-1306|				if (data.init_fd < 0)
-1307|					printf("Unable to open %s: %s (%d)\n", optarg,
----
- src/shared/shell.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+Error: INTEGER_OVERFLOW (CWE-190): [#def41] [important]
+bluez-5.76/tools/btsnoop.c:438:2: tainted_data_return: Called function "read(fd, buf, toread)", and a possible return value may be less than zero.
+bluez-5.76/tools/btsnoop.c:438:2: assign: Assigning: "len" = "read(fd, buf, toread)".
+bluez-5.76/tools/btsnoop.c:473:4: overflow: The cast of "len - 9L", which is potentially negative, to an unsigned type could result in an overflow.
+471|			/* next 4 bytes are data len and cid */
+472|			current_cid = buf[8] << 8 | buf[7];
+473|->			memcpy(pdu_buf, buf + 9, len - 9);
+474|			pdu_len = len - 9;
+475|		} else if (acl_flags & 0x01) {
 
-diff --git a/src/shared/shell.c b/src/shared/shell.c
-index c09d41ee54df..d500dddf8acf 100644
---- a/src/shared/shell.c
-+++ b/src/shared/shell.c
-@@ -1306,11 +1306,12 @@ void bt_shell_init(int argc, char **argv, const struct bt_shell_opt *opt)
- 			data.mode = 1;
- 			goto done;
- 		case 's':
--			if (optarg)
-+			if (optarg && data.init_fd < 0) {
- 				data.init_fd = open(optarg, O_RDONLY);
--			if (data.init_fd < 0)
--				printf("Unable to open %s: %s (%d)\n", optarg,
-+				if (data.init_fd < 0)
-+					printf("Unable to open %s: %s (%d)\n", optarg,
- 						strerror(errno), errno);
-+			}
- 			break;
- 		case 't':
- 			if (optarg)
+Error: INTEGER_OVERFLOW (CWE-190): [#def42] [important]
+bluez-5.76/tools/btsnoop.c:438:2: tainted_data_return: Called function "read(fd, buf, toread)", and a possible return value may be less than zero.
+bluez-5.76/tools/btsnoop.c:438:2: assign: Assigning: "len" = "read(fd, buf, toread)".
+bluez-5.76/tools/btsnoop.c:476:4: overflow: The cast of "len - 5L", which is potentially negative, to an unsigned type could result in an overflow.
+474|			pdu_len = len - 9;
+475|		} else if (acl_flags & 0x01) {
+476|->			memcpy(pdu_buf + pdu_len, buf + 5, len - 5);
+477|			pdu_len += len - 5;
+478|		}
+---
+ tools/btsnoop.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/tools/btsnoop.c b/tools/btsnoop.c
+index efaa45db41dd..0bd28b65b6e1 100644
+--- a/tools/btsnoop.c
++++ b/tools/btsnoop.c
+@@ -448,7 +448,7 @@ next_packet:
+ 		acl_flags = buf[2] >> 4;
+ 
+ 		/* use only packet with ACL start flag */
+-		if (acl_flags & 0x02) {
++		if ((acl_flags & 0x02) && len > 9) {
+ 			if (current_cid == 0x0040 && pdu_len > 0) {
+ 				int i;
+ 				if (!pdu_first)
+@@ -472,7 +472,7 @@ next_packet:
+ 			current_cid = buf[8] << 8 | buf[7];
+ 			memcpy(pdu_buf, buf + 9, len - 9);
+ 			pdu_len = len - 9;
+-		} else if (acl_flags & 0x01) {
++		} else if ((acl_flags & 0x01) && len > 5) {
+ 			memcpy(pdu_buf + pdu_len, buf + 5, len - 5);
+ 			pdu_len += len - 5;
+ 		}
 -- 
 2.45.2
 
