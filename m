@@ -1,42 +1,45 @@
-Return-Path: <linux-bluetooth+bounces-5921-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5929-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BDF9928446
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Jul 2024 10:59:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 679C492844F
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Jul 2024 11:00:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 26FE228219A
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Jul 2024 08:59:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1D5AD1F227CB
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Jul 2024 09:00:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2A2F14658C;
-	Fri,  5 Jul 2024 08:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EE49146A8C;
+	Fri,  5 Jul 2024 08:59:48 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 514F1143887
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5149A13C809
 	for <linux-bluetooth@vger.kernel.org>; Fri,  5 Jul 2024 08:59:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720169985; cv=none; b=Ry9FOEHJmHywgxUfbdFR4NTFBuo1q4VceATnhV3tEbLtl4Iur3kYm/jhRqGR2Vkq+kep/65B1hJvqQCq8db9aNDZ5OdGmaMmqe6v2Mx5aNeW/Qk4PTKEEAYgwQv4fWmzKnZaFcD4Gf5cIjFE97gaX2llQEphdVhiMn32ZZTOFDw=
+	t=1720169987; cv=none; b=VW0XAJ+FLqjJOtT0IGbZDJowygrKJkLJtN0Dmx9fgxUBp1HfO4S2H0yMclkFKKju6LEOgfBiecW8GTgRHUfMkTlYMC5j3/Eu1OlRBr00egs8bwjgxutWFncLprNfb3qQ7Mr71LGb51T+TNjUF/e5F3rnQ9iSXmPkKA8qLuVTrLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720169985; c=relaxed/simple;
-	bh=++1Pw8cwKxv9whpIErI5pPogT6xTef5b3bUsfOY8AUw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=S7U5NJfoUwdyB0odKKiP/v3PjNN7d/GVcLlnNdWSdgtQGK3IEgUOwqjrPFvGLtr5anOHYS9DSFZKWpLeAeq6/MnsDTCzmFMU0fv73XbT04lS5Ikc+oSFZz+PzGI57zgeIv2iPs1GHtL8nvATGjeNaTNKOwZHqFEwyeQ/4t9HeY0=
+	s=arc-20240116; t=1720169987; c=relaxed/simple;
+	bh=4UgF2Ma8Ry2HBALH6UqTPjSXhuSqVk4ELQyVT++w4ts=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=S134lXEzh2BYQxyqeMrPCQuOwlYJ3z9bcjtNNRZrdskeT3uiXYw8RG/ux6R5t16tbq+/p/NfBNcoZWwSstOrMFuGD7+UQKGRzlDys4GvgwxZ6keinsO8UhcZQ9eYV9zakb1fGoZPvlOZ0MYEf6P3DfwEz9PfxcALTXmRJDHfbBo=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id CE14260009;
-	Fri,  5 Jul 2024 08:59:35 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 2BA2460006;
+	Fri,  5 Jul 2024 08:59:36 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ v2 00/11] Fix a number of static analysis issues #5
-Date: Fri,  5 Jul 2024 10:57:28 +0200
-Message-ID: <20240705085935.1255725-1-hadess@hadess.net>
+Subject: [BlueZ v2 01/11] gatt-server: Don't allocate negative data
+Date: Fri,  5 Jul 2024 10:57:29 +0200
+Message-ID: <20240705085935.1255725-2-hadess@hadess.net>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240705085935.1255725-1-hadess@hadess.net>
+References: <20240705085935.1255725-1-hadess@hadess.net>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -46,35 +49,37 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-Fixed review comments in:
-gatt-server: Don't allocate negative data
-shared/shell: Free memory allocated by wordexp()
-tools/mesh: Fix integer overflow due to cast operation
+Set a lower-bound to the data MTU to avoid allocating -1 elements if
+bt_att_get_mtu() returns zero.
 
-Bastien Nocera (11):
-  gatt-server: Don't allocate negative data
-  shared/shell: Free memory allocated by wordexp()
-  shared/shell: Fix fd leak if -s is passed multiple times
-  btsnoop: Fix possible negative memcpy length
-  sdp: Fix possible null dereference
-  sdp: Fix mismatched int casting
-  emulator: Fix integer truncation warnings
-  gatt-server: Fix integer overflow due to cast operation
-  mesh: Fix integer overflow due to cast operation
-  tools/mesh: Fix integer overflow due to cast operation
-  unit/ringbuf: Fix ineffective guard due to signedness
+Error: OVERRUN (CWE-119): [#def36] [important]
+bluez-5.76/src/shared/gatt-server.c:1121:2: zero_return: Function call "bt_att_get_mtu(server->att)" returns 0.
+bluez-5.76/src/shared/gatt-server.c:1121:2: assignment: Assigning: "data->mtu" = "bt_att_get_mtu(server->att)". The value of "data->mtu" is now 0.
+bluez-5.76/src/shared/gatt-server.c:1123:19: assignment: Assigning: "__n" = "(size_t)(data->mtu - 1UL)". The value of "__n" is now 18446744073709551615.
+bluez-5.76/src/shared/gatt-server.c:1123:19: assignment: Assigning: "__s" = "1UL".
+bluez-5.76/src/shared/gatt-server.c:1123:19: overrun-buffer-arg: Calling "memset" with "__p" and "__n * __s" is suspicious because of the very large index, 18446744073709551615. The index may be due to a negative parameter being interpreted as unsigned. [Note: The source code implementation of the function has been overridden by a builtin model.]
+1121|		data->mtu = bt_att_get_mtu(server->att);
+1122|		data->length = 0;
+1123|->		data->rsp_data = new0(uint8_t, data->mtu - 1);
+1124|
+1125|		return data;
+---
+ src/shared/gatt-server.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- emulator/amp.c           |  3 ++-
- emulator/bthost.c        |  8 +++++---
- lib/sdp.c                |  6 +++++-
- mesh/pb-adv.c            |  2 +-
- src/shared/gatt-server.c |  8 ++++----
- src/shared/ringbuf.c     |  2 +-
- src/shared/shell.c       | 29 ++++++++++++++++++++---------
- tools/btsnoop.c          |  4 ++--
- tools/mesh/mesh-db.c     |  9 ++++-----
- 9 files changed, 44 insertions(+), 27 deletions(-)
-
+diff --git a/src/shared/gatt-server.c b/src/shared/gatt-server.c
+index 3a53d5dfde6b..66e370d1fe3d 100644
+--- a/src/shared/gatt-server.c
++++ b/src/shared/gatt-server.c
+@@ -1120,7 +1120,7 @@ static struct read_mult_data *read_mult_data_new(struct bt_gatt_server *server,
+ 	data->cur_handle = 0;
+ 	data->mtu = bt_att_get_mtu(server->att);
+ 	data->length = 0;
+-	data->rsp_data = new0(uint8_t, data->mtu - 1);
++	data->rsp_data = new0(uint8_t, MAX(data->mtu, 1) - 1);
+ 
+ 	return data;
+ }
 -- 
 2.45.2
 
