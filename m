@@ -1,95 +1,111 @@
-Return-Path: <linux-bluetooth+bounces-5936-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5938-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49CA4928647
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Jul 2024 12:01:43 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3360292867D
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Jul 2024 12:15:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DF7691F22093
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Jul 2024 10:01:42 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B76F1B2177B
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Jul 2024 10:15:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2E8E145359;
-	Fri,  5 Jul 2024 10:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3D121487E3;
+	Fri,  5 Jul 2024 10:15:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lynp6w6k"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtpbgeu2.qq.com (smtpbgeu2.qq.com [18.194.254.142])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E9513A252;
-	Fri,  5 Jul 2024 10:01:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.194.254.142
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E21821474A8
+	for <linux-bluetooth@vger.kernel.org>; Fri,  5 Jul 2024 10:15:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720173696; cv=none; b=JP3qTl3CqNuEUudrPIRQKYMizjTtk10TmQFrdLtwoV6ZV7xe036pd3IlAfMQP/y584acxTe1OOw4S4lztREQVKt0KVByeSpNmZHIv6Jot/pIm5jWw7WXLoGsyxeuWIB1lBIVQQZvRUtGzjhTQgV9ms9uc36775Ux2V/kfQcuoZc=
+	t=1720174507; cv=none; b=nvS1TINfwXgidrHEVYw3buTexP//H0qQ6VDLWuSakWK2KuEI4q9oHbUinfqEwL+cgNIjiDFgdVF7zL+bgLd0YNxaw3Ena2QSsegFj3GmoTWLXJJtlyH4gkOai+Q6xDMeqexZSb3Mfp/wLtJh15FCNLZNDWv+nsihr4mObNjkaiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720173696; c=relaxed/simple;
-	bh=8ggn2Gtnn/u2RvU2sioDLfNnICoKxTU5C3l1Z6azTC0=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=J1VJ6HumIz/NZxrlJYAt2X+20VYbIO0s5ys3R8A7YlMztY7IiUBZV/stNFrhTSuELzQof4jVwV/vN93Fn3biuIGg/NMPPenKcHuWCyt72nYJOY9CgkKQAH3DL3YNAcuuRUP619OG8MBWi6OB+H6HKIhEGb4Y32zygFJqvHOw6VE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; arc=none smtp.client-ip=18.194.254.142
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=uniontech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
-X-QQ-mid: bizesmtpsz4t1720173669twdmk4r
-X-QQ-Originating-IP: ZFWWM7NHnITK1MzzQCRyJIo0W03FFO1hJRONed26+oA=
-Received: from localhost.localdomain ( [113.57.152.160])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 05 Jul 2024 18:01:08 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 15895109735684369604
-From: Wentao Guan <guanwentao@uniontech.com>
-To: stable@vger.kernel.org
-Cc: linux-bluetooth@vger.kernel.org,
-	guanwentao@uniontech.com,
-	Jaganath Kanakkassery <jaganath.k.os@gmail.com>
-Subject: [PATCH 4.19] Bluetooth: Fix incorrect pointer arithmatic in ext_adv_report_evt
-Date: Fri,  5 Jul 2024 18:01:06 +0800
-Message-Id: <20240705100106.25403-1-guanwentao@uniontech.com>
-X-Mailer: git-send-email 2.20.1
+	s=arc-20240116; t=1720174507; c=relaxed/simple;
+	bh=Ebe+yjSQd3ytHdQOB09O1N9l8lTKPaL1EGOvdLWpcvY=;
+	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
+	 In-Reply-To:References; b=plyBckjeD4EC4vJdkpZXQaXa1E6Un5Y0vx+fY9mmuN89sgtr/+kJgRqdCZa8g1dcfmqok915Hnnz2POp2FgZmcoFM+fKZQ8xE8g3FNMpHFrEOfpKyB3GzzPFWiKYHWlMiG6+3T8S5IhEWe/AAb3OQikd1d9pVY4IWec26OkfxyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lynp6w6k; arc=none smtp.client-ip=209.85.222.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-79c0e7ec66dso108049585a.1
+        for <linux-bluetooth@vger.kernel.org>; Fri, 05 Jul 2024 03:15:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1720174504; x=1720779304; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ebe+yjSQd3ytHdQOB09O1N9l8lTKPaL1EGOvdLWpcvY=;
+        b=lynp6w6k6ItG8JEUZcDt7fYt6mfVCNxXO12s9fm2arxbrekJ5N3qKMXf2z+ZJJbXDA
+         iAD8bGCzFaSHl8ktSfmQCR/xGIPAxppKh34vSn0xIOGObrzrJJJDqOVdsGVz/fySJz1y
+         WEeLIlxKtMi/+QKB3BrZaa6MQI0pnfvc6qTYoZd7zDy61dcPL6LjIoM4Kmx4TjaITlPq
+         JUYkm/x2sKpbVrMiYHX9d1GV3vRkb2a64kntM62TP4+hM9S8AZ26cYEzoa9n5x+rPBKC
+         wJQrYski5NpzCRtNA57R4W6Bh9tftTTmczG6FWzbckbuaHHvjEde1T77R+S9eO8fvIju
+         Tk3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1720174504; x=1720779304;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ebe+yjSQd3ytHdQOB09O1N9l8lTKPaL1EGOvdLWpcvY=;
+        b=pQUkcFIqdmr2hN/cEAKwdBxBa4V4hhY4RhSEsj8rzqRo8P1oIJOWNaHDxQIodOJiu7
+         g7gJ+7/QSuoJ35HX69klxR/BTcVFFiako4l3Ha5049iWMjndN9O839Uj+W4WlQUUVM2u
+         nk8nIc2hM5e2HKJ9enpOZh1QvASLe6JMdJw8N7GD+NdDSO/PrNwwcqzD76w6MkKRXX0t
+         wdES14s5LTSeoPpEQxRapZDm3iocrGRV/bkf0hdYMZXBMNkJn1si16G5xyrBE7CsKVXk
+         Ak3F6Y7Y0o0s/DrietVtOKWXRXN+J81vaJYHWqJwjmS0i/WVIbQd+bpSER1vopQUo7+a
+         FZZg==
+X-Gm-Message-State: AOJu0YwmS8bOmH8N7Lwvwi1oUXNMQF0DJZM68p1wKkkYFdqEJk8nI7wg
+	l13AMh+fsnQ4Kl7SRZCQ9F60fAF44c0lNXKrIRh8mQzDRxWjaVBqYkYqrg==
+X-Google-Smtp-Source: AGHT+IHDJbWY7EAePyGuaXGC6GYwGLIw1n3dCPk7e4d4TT+yR7SXX6rNicA0KVb74qDM7592sXK9Qw==
+X-Received: by 2002:a05:620a:6113:b0:79d:93a7:8c36 with SMTP id af79cd13be357-79eee1dfbd8mr420889885a.45.1720174504341;
+        Fri, 05 Jul 2024 03:15:04 -0700 (PDT)
+Received: from [172.17.0.2] ([20.55.47.96])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6b5bfcce25esm51526576d6.78.2024.07.05.03.15.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Jul 2024 03:15:04 -0700 (PDT)
+Message-ID: <6687c7a8.050a0220.f29b7.33d1@mx.google.com>
+Date: Fri, 05 Jul 2024 03:15:04 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============6985061534781963563=="
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: bizesmtpsz:uniontech.com:qybglogicsvrsz:qybglogicsvrsz4a-1
+From: bluez.test.bot@gmail.com
+To: linux-bluetooth@vger.kernel.org, guanwentao@uniontech.com
+Subject: RE: [4.19] Bluetooth: Fix incorrect pointer arithmatic in ext_adv_report_evt
+In-Reply-To: <20240705100106.25403-1-guanwentao@uniontech.com>
+References: <20240705100106.25403-1-guanwentao@uniontech.com>
+Reply-To: linux-bluetooth@vger.kernel.org
 
-From: Jaganath Kanakkassery <jaganath.k.os@gmail.com>
+--===============6985061534781963563==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-Please apply the upstream commit:
-commit cd9151b618da ("Bluetooth: Fix incorrect pointer arithmatic in ext_adv_report_evt")
- 
-Solved kernel BT Err  "Bluetooth: Unknown advertising packet type: 0x100"
+This is an automated email and please do not reply to this email.
 
--------------------------------------------------------------------------
+Dear Submitter,
 
-In ext_adv_report_event rssi comes before data (not after data as
-in legacy adv_report_evt) so "+ 1" is not required in the ptr arithmatic
-to point to next report.
+Thank you for submitting the patches to the linux bluetooth mailing list.
+While preparing the CI tests, the patches you submitted couldn't be applied to the current HEAD of the repository.
 
-Cc: stable@vger.kernel.org # 4.19-
-Signed-off-by: Jaganath Kanakkassery <jaganath.kanakkassery@intel.com>
-Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+----- Output -----
+
+error: patch failed: net/bluetooth/hci_event.c:5402
+error: net/bluetooth/hci_event.c: patch does not apply
+hint: Use 'git am --show-current-patch' to see the failed patch
+
+Please resolve the issue and submit the patches again.
+
+
 ---
- net/bluetooth/hci_event.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 3e7badb3ac2d..4f972c9e9dbe 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -5402,7 +5402,7 @@ static void hci_le_ext_adv_report_evt(struct hci_dev *hdev, struct sk_buff *skb)
- 					   ev->data, ev->length);
- 		}
- 
--		ptr += sizeof(*ev) + ev->length + 1;
-+		ptr += sizeof(*ev) + ev->length;
- 	}
- 
- 	hci_dev_unlock(hdev);
--- 
-2.20.1
 
+--===============6985061534781963563==--
 
