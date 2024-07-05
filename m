@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-5927-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5923-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F45A92844D
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Jul 2024 11:00:26 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BAF90928449
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Jul 2024 11:00:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7FC1EB250A1
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Jul 2024 09:00:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ECCC41C20AEF
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Jul 2024 09:00:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D415D146A81;
-	Fri,  5 Jul 2024 08:59:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A889D1465A4;
+	Fri,  5 Jul 2024 08:59:46 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96271145FE0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962C9145FED
 	for <linux-bluetooth@vger.kernel.org>; Fri,  5 Jul 2024 08:59:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720169987; cv=none; b=JeGl62AGe6/K3HDxeVt0n1BEi1Djc4aAAQY2RImHE6M/nTX4fowyj6CCltCmKVizA2RW2HI2IaZtM5O1GA5kmqnKOxTR/3/uBBCgUK8yrPYgMzQ1kZN9exxtIkzmqUj9IUhTVhNdA/pUBZy4/zuXTx6OuUGB95a4FhUzNNsuJjE=
+	t=1720169986; cv=none; b=kIxoVlMwwLH3TOKpdTkpYPr+YLnJoMkU//Cw8LUiLpK23j3Hx2OCNBBJ6qTVk+bfXFg1JuFQrPEQaEOvdch0UaE3TC7gsIfwXrE/oTpjDJOeVeeSh/V87o4RrNM4j6gSEgjOI+7kj1ebiqmdYR2pmpJe5c85pWNtmQ6vRvDY4rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720169987; c=relaxed/simple;
-	bh=lvIg2+dDecXMydPp3QRxG42uiS2BVeRFzszFwjtEl44=;
+	s=arc-20240116; t=1720169986; c=relaxed/simple;
+	bh=gcgUu0Tuh8qeZ3Gh7h2fkiGCf8wsPAt8jwuDMZhbNS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qClbhdsgoIggcQ8gMKz59vf9TiC8xS4CIgPiOdOcLGfd+Drs1nwKfmwMoPkRlC6kxcFq8uDdUl7mYjd2HhfL6f2pcZQFrNKSngi8p8PXfyWzoIYHLh6RZnQZt/79Hxmin8XZzyLnSF+vlYjkSVOrEOvcaMVTDVAldGw/oDu95cs=
+	 MIME-Version; b=ep6MEA6Y6naWRSlacjhsi38jqZDyECCAO3Z4uZBi0EK9iq/Wv+xs5pSBVi3HxBUGJHA4eoL0GY2357i/wIJU1tuoO9uklBnAqTBVZG9rDLPjwj4IYCmBMRMX5Q4mHGyDi72Yg1tUjfqa/GcJR1vjHf0Sujk4P6EBQ4NVM6pZx6E=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 06CF860005;
-	Fri,  5 Jul 2024 08:59:36 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 4C9206000E;
+	Fri,  5 Jul 2024 08:59:37 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ v2 04/11] btsnoop: Fix possible negative memcpy length
-Date: Fri,  5 Jul 2024 10:57:32 +0200
-Message-ID: <20240705085935.1255725-5-hadess@hadess.net>
+Subject: [BlueZ v2 05/11] sdp: Fix possible null dereference
+Date: Fri,  5 Jul 2024 10:57:33 +0200
+Message-ID: <20240705085935.1255725-6-hadess@hadess.net>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240705085935.1255725-1-hadess@hadess.net>
 References: <20240705085935.1255725-1-hadess@hadess.net>
@@ -49,51 +49,39 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-Error: INTEGER_OVERFLOW (CWE-190): [#def41] [important]
-bluez-5.76/tools/btsnoop.c:438:2: tainted_data_return: Called function "read(fd, buf, toread)", and a possible return value may be less than zero.
-bluez-5.76/tools/btsnoop.c:438:2: assign: Assigning: "len" = "read(fd, buf, toread)".
-bluez-5.76/tools/btsnoop.c:473:4: overflow: The cast of "len - 9L", which is potentially negative, to an unsigned type could result in an overflow.
-471|			/* next 4 bytes are data len and cid */
-472|			current_cid = buf[8] << 8 | buf[7];
-473|->			memcpy(pdu_buf, buf + 9, len - 9);
-474|			pdu_len = len - 9;
-475|		} else if (acl_flags & 0x01) {
-
-Error: INTEGER_OVERFLOW (CWE-190): [#def42] [important]
-bluez-5.76/tools/btsnoop.c:438:2: tainted_data_return: Called function "read(fd, buf, toread)", and a possible return value may be less than zero.
-bluez-5.76/tools/btsnoop.c:438:2: assign: Assigning: "len" = "read(fd, buf, toread)".
-bluez-5.76/tools/btsnoop.c:476:4: overflow: The cast of "len - 5L", which is potentially negative, to an unsigned type could result in an overflow.
-474|			pdu_len = len - 9;
-475|		} else if (acl_flags & 0x01) {
-476|->			memcpy(pdu_buf + pdu_len, buf + 5, len - 5);
-477|			pdu_len += len - 5;
-478|		}
+From the BlueZ scanbot:
+lib/sdp.c:586:12: warning: Access to field 'attrId' results in a dereference of a null pointer (loaded from variable 'd')
+        d->attrId = attr;
+        ~         ^
+lib/sdp.c:967:10: warning: Access to field 'dtd' results in a dereference of a null pointer (loaded from variable 'd')
+        switch (d->dtd) {
+                ^~~~~~
 ---
- tools/btsnoop.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ lib/sdp.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/btsnoop.c b/tools/btsnoop.c
-index efaa45db41dd..0bd28b65b6e1 100644
---- a/tools/btsnoop.c
-+++ b/tools/btsnoop.c
-@@ -448,7 +448,7 @@ next_packet:
- 		acl_flags = buf[2] >> 4;
+diff --git a/lib/sdp.c b/lib/sdp.c
+index b64245f668d3..e260a5a9663e 100644
+--- a/lib/sdp.c
++++ b/lib/sdp.c
+@@ -582,6 +582,8 @@ int sdp_attr_add(sdp_record_t *rec, uint16_t attr, sdp_data_t *d)
  
- 		/* use only packet with ACL start flag */
--		if (acl_flags & 0x02) {
-+		if ((acl_flags & 0x02) && len > 9) {
- 			if (current_cid == 0x0040 && pdu_len > 0) {
- 				int i;
- 				if (!pdu_first)
-@@ -472,7 +472,7 @@ next_packet:
- 			current_cid = buf[8] << 8 | buf[7];
- 			memcpy(pdu_buf, buf + 9, len - 9);
- 			pdu_len = len - 9;
--		} else if (acl_flags & 0x01) {
-+		} else if ((acl_flags & 0x01) && len > 5) {
- 			memcpy(pdu_buf + pdu_len, buf + 5, len - 5);
- 			pdu_len += len - 5;
- 		}
+ 	if (p)
+ 		return -1;
++	if (!d)
++		return -1;
+ 
+ 	d->attrId = attr;
+ 	rec->attrlist = sdp_list_insert_sorted(rec->attrlist, d, sdp_attrid_comp_func);
+@@ -964,6 +966,8 @@ static void data_seq_free(sdp_data_t *seq)
+ 
+ void sdp_data_free(sdp_data_t *d)
+ {
++	if (!d)
++		return;
+ 	switch (d->dtd) {
+ 	case SDP_SEQ8:
+ 	case SDP_SEQ16:
 -- 
 2.45.2
 
