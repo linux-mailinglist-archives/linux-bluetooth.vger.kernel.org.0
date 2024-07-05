@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-5928-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-5925-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F18D92844E
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Jul 2024 11:00:28 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC26A92844A
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Jul 2024 11:00:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DC060B24716
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Jul 2024 09:00:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 75E3B1F22083
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Jul 2024 09:00:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA857145FF5;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 511E0146A63;
 	Fri,  5 Jul 2024 08:59:47 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5786B145FF8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58EC1145FFF
 	for <linux-bluetooth@vger.kernel.org>; Fri,  5 Jul 2024 08:59:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720169987; cv=none; b=B5H5oyuQTq0KEDyLch1j5+lDRH86CfyMRIiH4qV6BOhpGsVLL2T3xGZIw78fVkwD9rxBC02XnaYTiOpeNhBmF8vgkUQMetltx8XqgS74D3dAuXU+q0DEgLgM6UWDdIb9gXnqn+vXyZB3vLBjjmrkyomodk573A433TQAHDE13X0=
+	t=1720169987; cv=none; b=egMuZ4Y0mYVDXKkQM8CD67I2/PofDPXYL5piJTdFL43MKEsYfOAJFmfVnMtOwSiCO6dtax9zC/Uxc9Jq3uCToQCbjN/5PybO1ZrCrXov5jE/W8MpYUJh0LpRsioVfppLPyqFW8HTDwg4wZOG6+We/AY1bnkTZ/LGLdQwgK2xvWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1720169987; c=relaxed/simple;
-	bh=E0SSEybmdjBxLSSaKZC832oxacklCxLzNzdU7QbqVes=;
+	bh=ch4jcXh4i5Ulh/ewP/akSPzoVSZeMohj51lCQNNSAcg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tb9AHVaEC4NPBBldE3ISO9GSU/aesw3YHGHWTMb1s22PsvNcf1rN+xDR1muG+oSLAxFguAWAeJNOOGkdyaEls2dmZomO+8aIvPheFJCmMjmxITMNMX3D8Ha5VB8+BcNZOdFV248WJKvDBmhUS7SU0IdswZotEAneH3iS4JStjd8=
+	 MIME-Version; b=dgyQmntqKG5TknqV5nw7qLKwmaJgEWyIZjqKUXBlPfuZHJ5b9mQ0erBW6NpA/9aD1vavw3CSJYgxqoeQFPjeZzdYMia8/dKA3O6L09xcn1NLYCEsMU25W72TErd/oR8q5NwU0FOsg1zcyF1aE8LyvN6zs70wbMioMMMNO5GFyA8=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id E4C9860012;
-	Fri,  5 Jul 2024 08:59:37 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 3C29B60014;
+	Fri,  5 Jul 2024 08:59:38 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ v2 07/11] emulator: Fix integer truncation warnings
-Date: Fri,  5 Jul 2024 10:57:35 +0200
-Message-ID: <20240705085935.1255725-8-hadess@hadess.net>
+Subject: [BlueZ v2 08/11] gatt-server: Fix integer overflow due to cast operation
+Date: Fri,  5 Jul 2024 10:57:36 +0200
+Message-ID: <20240705085935.1255725-9-hadess@hadess.net>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240705085935.1255725-1-hadess@hadess.net>
 References: <20240705085935.1255725-1-hadess@hadess.net>
@@ -49,92 +49,49 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-Error: INTEGER_OVERFLOW (CWE-190): [#def1] [important]
-bluez-5.76/emulator/amp.c:693:2: cast_overflow: Truncation due to cast operation on "(remain_assoc_len > 248) ? 248 : remain_assoc_len" from 32 to 16 bits.
-bluez-5.76/emulator/amp.c:693:2: overflow_assign: "fragment_len" is assigned from "(remain_assoc_len > 248) ? 248 : remain_assoc_len".
-bluez-5.76/emulator/amp.c:698:2: overflow_sink: "fragment_len", which might have overflowed, is passed to "memcpy(rsp.assoc_fragment, amp->local_assoc + len_so_far, fragment_len)". [Note: The source code implementation of the function has been overridden by a builtin model.]
-696|	rsp.phy_handle = cmd->phy_handle;
-697|	rsp.remain_assoc_len = cpu_to_le16(remain_assoc_len);
-698|->	memcpy(rsp.assoc_fragment, amp->local_assoc + len_so_far,
-699|							fragment_len);
-700|
-
-Error: INTEGER_OVERFLOW (CWE-190): [#def2] [important]
-bluez-5.76/emulator/amp.c:701:2: cast_overflow: Truncation due to cast operation on "4 + fragment_len" from 32 to 8 bits.
-bluez-5.76/emulator/amp.c:701:2: overflow_sink: "4 + fragment_len", which might have overflowed, is passed to "cmd_complete(amp, 5130, &rsp, 4 + fragment_len)".
-699|							fragment_len);
-700|
-701|->	cmd_complete(amp, BT_HCI_CMD_READ_LOCAL_AMP_ASSOC,
-702|						&rsp, 4 + fragment_len);
-703|   }
-
-Error: INTEGER_OVERFLOW (CWE-190): [#def4] [important]
-bluez-5.76/emulator/bthost.c:3309:3: cast_overflow: Truncation due to cast operation on "len - offset" from 32 to 8 bits.
-bluez-5.76/emulator/bthost.c:3309:3: overflow_assign: "cp->data_len" is assigned from "len - offset".
-bluez-5.76/emulator/bthost.c:3317:2: overflow_sink: "cp->data_len", which might have overflowed, is passed to "memcpy(cp->data, data + offset, cp->data_len)". [Note: The source code implementation of the function has been overridden by a builtin model.]
-3315|		}
-3316|
-3317|->		memcpy(cp->data, data + offset, cp->data_len);
-3318|
-3319|		send_command(bthost, BT_HCI_CMD_LE_SET_PA_DATA, buf,
+Error: INTEGER_OVERFLOW (CWE-190): [#def25] [important]
+bluez-5.76/src/shared/gatt-server.c:927:2: cast_overflow: Truncation due to cast operation on "((unsigned int)mtu - 1U < len) ? (unsigned int)mtu - 1U : len" from 32 to 16 bits.
+bluez-5.76/src/shared/gatt-server.c:927:2: overflow_sink: "((unsigned int)mtu - 1U < len) ? (unsigned int)mtu - 1U : len", which might have overflowed, is passed to "bt_att_chan_send(op->chan, rsp_opcode, (len ? value : NULL), (((unsigned int)mtu - 1U < len) ? (unsigned int)mtu - 1U : len), NULL, NULL, NULL)".
+925|	rsp_opcode = get_read_rsp_opcode(op->opcode);
+926|
+927|->	bt_att_chan_send_rsp(op->chan, rsp_opcode, len ? value : NULL,
+928|					MIN((unsigned int) mtu - 1, len));
+929|	async_read_op_destroy(op);
 ---
- emulator/amp.c    | 3 ++-
- emulator/bthost.c | 8 +++++---
- 2 files changed, 7 insertions(+), 4 deletions(-)
+ src/shared/gatt-server.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/emulator/amp.c b/emulator/amp.c
-index 49d2df7b39df..6daf00189f3a 100644
---- a/emulator/amp.c
-+++ b/emulator/amp.c
-@@ -680,7 +680,8 @@ static void cmd_read_local_amp_assoc(struct bt_amp *amp,
- {
- 	const struct bt_hci_cmd_read_local_amp_assoc *cmd = data;
- 	struct bt_hci_rsp_read_local_amp_assoc rsp;
--	uint16_t len_so_far, remain_assoc_len, fragment_len;
-+	uint16_t len_so_far, remain_assoc_len;
-+	size_t fragment_len;
+diff --git a/src/shared/gatt-server.c b/src/shared/gatt-server.c
+index 66e370d1fe3d..e0e1776779cd 100644
+--- a/src/shared/gatt-server.c
++++ b/src/shared/gatt-server.c
+@@ -908,7 +908,7 @@ static void read_complete_cb(struct gatt_db_attribute *attr, int err,
+ 	struct async_read_op *op = user_data;
+ 	struct bt_gatt_server *server = op->server;
+ 	uint8_t rsp_opcode;
+-	uint16_t mtu;
++	size_t mtu;
+ 	uint16_t handle;
  
- 	if (cmd->phy_handle != amp->phy_handle) {
- 		cmd_status(amp, BT_HCI_ERR_INVALID_PARAMETERS,
-diff --git a/emulator/bthost.c b/emulator/bthost.c
-index cc9bf7240531..95160506d0c4 100644
---- a/emulator/bthost.c
-+++ b/emulator/bthost.c
-@@ -3290,6 +3290,7 @@ static void set_pa_data(struct bthost *bthost, const uint8_t *data,
- {
- 	struct bt_hci_cmd_le_set_pa_data *cp;
- 	uint8_t buf[sizeof(*cp) + BT_PA_MAX_DATA_LEN];
-+	size_t data_len;
+ 	DBG(server, "Read Complete: err %d", err);
+@@ -916,7 +916,7 @@ static void read_complete_cb(struct gatt_db_attribute *attr, int err,
+ 	mtu = bt_att_get_mtu(server->att);
+ 	handle = gatt_db_attribute_get_handle(attr);
  
- 	cp = (void *)buf;
+-	if (err) {
++	if (err || mtu <= 1) {
+ 		bt_att_chan_send_error_rsp(op->chan, op->opcode, handle, err);
+ 		async_read_op_destroy(op);
+ 		return;
+@@ -925,7 +925,7 @@ static void read_complete_cb(struct gatt_db_attribute *attr, int err,
+ 	rsp_opcode = get_read_rsp_opcode(op->opcode);
  
-@@ -3299,14 +3300,14 @@ static void set_pa_data(struct bthost *bthost, const uint8_t *data,
- 	cp->handle = 1;
+ 	bt_att_chan_send_rsp(op->chan, rsp_opcode, len ? value : NULL,
+-					MIN((unsigned int) mtu - 1, len));
++					MIN(mtu - 1, len));
+ 	async_read_op_destroy(op);
+ }
  
- 	if (len - offset > BT_PA_MAX_DATA_LEN) {
--		cp->data_len = BT_PA_MAX_DATA_LEN;
-+		data_len = BT_PA_MAX_DATA_LEN;
- 
- 		if (!offset)
- 			cp->operation = 0x01;
- 		else
- 			cp->operation = 0x00;
- 	} else {
--		cp->data_len = len - offset;
-+		data_len = len - offset;
- 
- 		if (!offset)
- 			cp->operation = 0x03;
-@@ -3314,7 +3315,8 @@ static void set_pa_data(struct bthost *bthost, const uint8_t *data,
- 			cp->operation = 0x02;
- 	}
- 
--	memcpy(cp->data, data + offset, cp->data_len);
-+	memcpy(cp->data, data + offset, data_len);
-+	cp->data_len = data_len;
- 
- 	send_command(bthost, BT_HCI_CMD_LE_SET_PA_DATA, buf,
- 					sizeof(*cp) + cp->data_len);
 -- 
 2.45.2
 
