@@ -1,109 +1,92 @@
-Return-Path: <linux-bluetooth+bounces-6012-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-6015-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A6F9892AB16
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  8 Jul 2024 23:20:44 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5913092ABCF
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Jul 2024 00:14:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D83771C21692
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  8 Jul 2024 21:20:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0240D1F22F7B
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  8 Jul 2024 22:14:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69C9A14F105;
-	Mon,  8 Jul 2024 21:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4F8214F9F1;
+	Mon,  8 Jul 2024 22:14:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tzf3OvlJ"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="V/qH0Gh9"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-24.smtp.github.com (out-24.smtp.github.com [192.30.252.207])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88E11CD3D;
-	Mon,  8 Jul 2024 21:20:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005A02746D
+	for <linux-bluetooth@vger.kernel.org>; Mon,  8 Jul 2024 22:14:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.207
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720473633; cv=none; b=JM1F47VgL4NNYO78YuuN5M3SqbC+9QSZdvtq54K4LWqoOaeu6W+7b1Vymn3xbdXye/D/TT+7regkADtmEH2johAiunhbihww6Jfs1gIMBC3PlolfnjXDKX9l4obmWEjw9CPbzS1l3XwQhEw7OIEoISMsGEgTxJswAjcTSOMTYH0=
+	t=1720476849; cv=none; b=S+pG+Th4ulnDVVEA5ldguGeVQSLXgJM7DS3gkOC4n3H/xn9HWfY1fBp7sKADhlz0viJxS/Wur9gxG9ZDCCaurYEr8TEEFR+vsCQ2pC2hHRXbs9WdUHtp1LyqhMtMoK9yoAdyqgcZDSmeljywPOG8rW06UVzhSzmnjzWIsUMf8Ro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720473633; c=relaxed/simple;
-	bh=UWSUycG/PBa3IFkaEkQfdVNMaUwjTzQgOq0EeeYQahg=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=AW+0UYntgCrSeVWqg1DtHJcwJscqZsZCT4ixRmvcO7QTXyomIuEMndH3EjA0v8S+8WjNrs9BkH1zrn/PH6TBgn2DuFPE1SYBH9zVpD+yOZxHCVpPK7NV0sCG/cwFmBcZ/xZw+DAlaKU4/c+Ho3EjQTM0EPEA9CuyyGnTo/TbOwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tzf3OvlJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 7FC7AC3277B;
-	Mon,  8 Jul 2024 21:20:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1720473633;
-	bh=UWSUycG/PBa3IFkaEkQfdVNMaUwjTzQgOq0EeeYQahg=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=Tzf3OvlJ7VLaI7Cc6adcYuF1tiePYjXl4cOjQ04OvnQMp253PGnyf7Bwb6vRtvFEW
-	 Fn57tGkPCruoBjaHyBpKpvww5/isXUak0mbOrx24QvxkssRgHcWIm3SmnT9pNlSvax
-	 1sEhKlCwCwgBod7ztWUmPvxEuvdtoGCjrh94WRDjx//T+qPxBYH0Cwsj3hZ0rkJz+S
-	 2AAkTVyJvaA+KUavhg81LB+b5xf1dsE38s7UBYlS8Z2/XSKLklhSEeP5c+ksq2CAVY
-	 xzM3Rz4me6mGtnDvSJ5080Z8flYjK+hEWhGgcfcTTBBciXcAIo9GixDzdh+sDSUu4u
-	 +QGHsMp9iik7A==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 722C7DF3716;
-	Mon,  8 Jul 2024 21:20:33 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1720476849; c=relaxed/simple;
+	bh=eqHG34RVkIG0CHYvmA5dNBtdcmblgfq8/yeCICa19Tw=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=cG5I6zLKY6mNDJyn9rrHT31MxD6HCGniQ77qyIjad2tF7V0MPOTet23dAtZWKjz3+N7VFgU0Yy7Ptk8Nr3PINi77g6tzn7AqDpUsBE2iHPZtKMfrthjLM1w1P5tEgI/kIzUeD95r+wdNIsr/nNsu1DCO8gMEGdO8icduYmMWlgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=V/qH0Gh9; arc=none smtp.client-ip=192.30.252.207
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
+Received: from github.com (hubbernetes-node-66923d6.ac4-iad.github.net [10.52.147.35])
+	by smtp.github.com (Postfix) with ESMTPA id 1AADD640CAA
+	for <linux-bluetooth@vger.kernel.org>; Mon,  8 Jul 2024 15:14:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+	s=pf2023; t=1720476847;
+	bh=5jx4gXqa7JfpD2VrVVnOcmvDJHIJIa/WsxdSeBs5w58=;
+	h=Date:From:To:Subject:List-Unsubscribe:From;
+	b=V/qH0Gh9pHoCVN7EtXFrILW7bt7C/K4qjVmS3zd9quRBeillW/bJ09UgiaQm2JQ10
+	 ehLoAQFGOBm+fpaOqrcqVVA1y4c6V7yb0UAvI8oaRipwuX0AkRcgLCardBb/d+5EO1
+	 mKY1nuLjchzcpTd3Tg951rIbc+K1t7l9dq7a/V34=
+Date: Mon, 08 Jul 2024 15:14:07 -0700
+From: Marcel Holtmann <noreply@github.com>
+To: linux-bluetooth@vger.kernel.org
+Message-ID: <bluez/bluez/push/refs/heads/master/337cca-68864d@github.com>
+Subject: [bluez/bluez] 895143: build: Add l2cap.7 and rfcomm.7 to ignore list
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v7 0/8] Bluetooth: btmtk: MediaTek ISO data transmission
- support
-From: patchwork-bot+bluetooth@kernel.org
-Message-Id: 
- <172047363346.9973.16198479983313620239.git-patchwork-notify@kernel.org>
-Date: Mon, 08 Jul 2024 21:20:33 +0000
-References: <20240704060116.16600-1-chris.lu@mediatek.com>
-In-Reply-To: <20240704060116.16600-1-chris.lu@mediatek.com>
-To: Chris Lu <chris.lu@mediatek.com>
-Cc: marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
- sean.wang@mediatek.com, aaron.hou@mediatek.com, steve.lee@mediatek.com,
- linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-mediatek@lists.infradead.org
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
 
-Hello:
+  Branch: refs/heads/master
+  Home:   https://github.com/bluez/bluez
+  Commit: 8951437476a1f9616d9836320df3d07ef6ca0898
+      https://github.com/bluez/bluez/commit/8951437476a1f9616d9836320df3d07ef6ca0898
+  Author: Marcel Holtmann <marcel@holtmann.org>
+  Date:   2024-07-08 (Mon, 08 Jul 2024)
 
-This series was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+  Changed paths:
+    M .gitignore
 
-On Thu, 4 Jul 2024 14:01:08 +0800 you wrote:
-> Since SIG has not yet clearly defined the specification for ISO data
-> transmission over USB, MediaTek has adopted a method of adding an
-> additional interrupt endpoint for ISO data transmission. This approach
-> differs from the current method used in the Bluetooth upstream driver,
-> which utilizes existing bulk endpoints. The interrupt endpoint provides
-> guaranteed bandwidth, sufficient maximum data length for ISO packets
-> and error checking.
-> 
-> [...]
-
-Here is the summary with links:
-  - [v7,1/8] Bluetooth: btusb: mediatek: remove the unnecessary goto tag
-    https://git.kernel.org/bluetooth/bluetooth-next/c/a06a1458192e
-  - [v7,2/8] Bluetooth: btusb: mediatek: return error for failed reg access
-    https://git.kernel.org/bluetooth/bluetooth-next/c/ac7daf0f197c
-  - [v7,3/8] Bluetooth: btmtk: rename btmediatek_data
-    https://git.kernel.org/bluetooth/bluetooth-next/c/dfad4030dcc4
-  - [v7,4/8] Bluetooth: btusb: add callback function in btusb suspend/resume
-    https://git.kernel.org/bluetooth/bluetooth-next/c/cacda8ed6753
-  - [v7,5/8] Bluetooth: btmtk: move btusb_mtk_hci_wmt_sync to btmtk.c
-    https://git.kernel.org/bluetooth/bluetooth-next/c/39a9e1c69e74
-  - [v7,6/8] Bluetooth: btmtk: move btusb_mtk_[setup, shutdown] to btmtk.c
-    https://git.kernel.org/bluetooth/bluetooth-next/c/314f1c00d267
-  - [v7,7/8] Bluetooth: btmtk: move btusb_recv_acl_mtk to btmtk.c
-    https://git.kernel.org/bluetooth/bluetooth-next/c/91d0ac304edf
-  - [v7,8/8] Bluetooth: btusb: mediatek: add ISO data transmission functions
-    https://git.kernel.org/bluetooth/bluetooth-next/c/7eac027d1b20
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+  Log Message:
+  -----------
+  build: Add l2cap.7 and rfcomm.7 to ignore list
 
 
+  Commit: 68864d1aa818aca00d67f7a4d6078344483e9509
+      https://github.com/bluez/bluez/commit/68864d1aa818aca00d67f7a4d6078344483e9509
+  Author: Marcel Holtmann <marcel@holtmann.org>
+  Date:   2024-07-08 (Mon, 08 Jul 2024)
+
+  Changed paths:
+    M ChangeLog
+    M configure.ac
+
+  Log Message:
+  -----------
+  Release 5.77
+
+
+Compare: https://github.com/bluez/bluez/compare/337cca13037f...68864d1aa818
+
+To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
