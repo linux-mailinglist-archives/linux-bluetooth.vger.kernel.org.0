@@ -1,120 +1,97 @@
-Return-Path: <linux-bluetooth+bounces-6057-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-6059-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3808092C30E
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Jul 2024 20:04:06 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 076A092C39C
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Jul 2024 21:03:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E6CDB283FE1
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Jul 2024 18:04:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B1EB11F23671
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Jul 2024 19:03:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38D96157470;
-	Tue,  9 Jul 2024 18:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2721B1B86D8;
+	Tue,  9 Jul 2024 19:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rtyyr18j"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rlGREkD3"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 667B51B86E8
-	for <linux-bluetooth@vger.kernel.org>; Tue,  9 Jul 2024 18:03:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C4E51DFCF
+	for <linux-bluetooth@vger.kernel.org>; Tue,  9 Jul 2024 19:03:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720548235; cv=none; b=ein6wVvw6wj3CkSiALOdvqy/dviIBnbd2vO3Psddy7UZkzD14nUGA+eD7qgkkLn50qGeyRQnV1P9jAbZW+b7l8FbUyogFcAqLTOr0PnlMsEOMsQDZvYaeuXaWM56oc0HqK/QbHSETuOs8MIXTGCjPAYb3joX3qniZ4gMqKGQXFY=
+	t=1720551782; cv=none; b=DrEuwaz1obs3lJNTsuM9SGbKSw2ugp1l8SyzXha62zXJB+UdcaXBhp6nfATntmfZxfugTxbr7/bKSabG+4zpiR9JHuF9ErMtPue/1DMFLmTyKvAWSfTK2I/bVjZ/sfEYeh0CJwvrzEPKcfXuC8W2qflgcZgPKJ6f2nEOAJgFiws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1720548235; c=relaxed/simple;
-	bh=laBmacV5zGVRAo8w/Copc7Kyh01xYchpEk09X0TUBqE=;
-	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
-	 In-Reply-To:References; b=RRiCpndm/RtNUDXIPuD8dxJrfUitiKKYk/QtWL/cQZg4G5gLHGhuh+bMrGfi/yhIsFIayHEw6xzHJ0pgqazLyvPZivhxQQGgfgWA1zz0+vhcIGlvntDgIBIdhQcZEDfQjtKM4dztuqh+fVBKEWn8n69HABVNvbhh3Y6P02J59bw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rtyyr18j; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2bfdae7997aso3319739a91.2
-        for <linux-bluetooth@vger.kernel.org>; Tue, 09 Jul 2024 11:03:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1720548233; x=1721153033; darn=vger.kernel.org;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=bdr1AC1mB6EZc9YWRAJeR/Qsv2HAwq+Gjdc4z592inY=;
-        b=Rtyyr18j5HoPpRk6t1eSPj1BZpfsHVuvjw26C1qojqq533lq6E4Vum8TqWcPxRfsgd
-         LiziafQquXr3LI0Igq8VIYFhpjcalgmyljmz1i8xOCLiy1FMN4UdofAc9AFgsPSL+zeC
-         o5DkHh2rTnbav6I6VFHz2fuLG80fgttHvA0UaVHMhihXJ8D0hl10QNTNz+qlAYpvmVu0
-         Wha5enPjw/P9GMjUX8ev5rRC2e8J/98eoGiIBvbL3pxzaW0TV2NBFI0rppwvnY59oxU6
-         piMGrrvt1ucYpdFrGk1j7QoVJ40mzZkpImuJM6nNoFFcNLT7TV9eARsxu21aFGRqZYVM
-         PUyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1720548233; x=1721153033;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bdr1AC1mB6EZc9YWRAJeR/Qsv2HAwq+Gjdc4z592inY=;
-        b=m6S5cuap7ZVpYF5cQuRRK9Wm0sBjl8kjPzTiJ/hhXNuWr9jKp8eKyETOxoGhS9EF+n
-         UjMk1GvOh4SEdvrwH9LUWjDezn9NKEKh7t+V7T3VyAyG0+7pT4MefTkqTX3Dy1w262RW
-         WXSup3np7reUFh5HJ6vBjsBN4ZBi3uS3serlwoOFyE3hvnfjWg00KKktw86/8FuRhu+R
-         f6xYxOjMS/MIv71/CSLsAre3/OcQeAi972dCmx6oJ957XBUIrFbuYIb25PlTLxoqK/3X
-         0v3OE+h2wOKDaiZIzVdYG3xqlgoY+lZiMWWdOc3RWiBeB5+Goll77biJKI6S95WSyUMy
-         Afwg==
-X-Gm-Message-State: AOJu0Yw6dYKsbaKdTXL8cPD2df7AxVerrugVQkx8EhgvKICLrAl4OZXC
-	dpttKO+eHQt+pMTLBBVnGVrqJi3eOV2L8CBGy/nb3n0UTrG+N/NX9zCKjA==
-X-Google-Smtp-Source: AGHT+IExx60kaXyMCgwLoBpAFgIswYYj3wNsBeSUUBqFN2+hkCCcxH2EUvkmwwasv7Se8yUR7AKYhw==
-X-Received: by 2002:a17:90a:d24f:b0:2c9:8c34:9754 with SMTP id 98e67ed59e1d1-2ca35c7be35mr2875038a91.21.1720548233199;
-        Tue, 09 Jul 2024 11:03:53 -0700 (PDT)
-Received: from [172.17.0.2] ([20.172.5.82])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2ca353cc6cfsm2222972a91.54.2024.07.09.11.03.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Jul 2024 11:03:52 -0700 (PDT)
-Message-ID: <668d7b88.170a0220.b3e0a.cf27@mx.google.com>
-Date: Tue, 09 Jul 2024 11:03:52 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============7888894521532163339=="
+	s=arc-20240116; t=1720551782; c=relaxed/simple;
+	bh=i8AqnSkrm9riXFQla+1hFWg4F8gixk5UAWYK/d31cLk=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=IbNYIuTnbeCDoyVYxLOHEDLhjn3uqo4h/ZS9n6BdIFeNveBtuk/jOp0n1posw7OVuqRT+V44HxrgdMKBycpbmQDRhYH/XxGFbiItjPtkJfF0lDPumocIF3Q5HoKGCGCXYK/x2/Xh5w4t2zni+snG5itng5tuShufSklT4FqFNUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rlGREkD3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 2449EC32786;
+	Tue,  9 Jul 2024 19:03:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1720551782;
+	bh=i8AqnSkrm9riXFQla+1hFWg4F8gixk5UAWYK/d31cLk=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=rlGREkD3PYGUk2hJyvrNhnt32JeUWrzXCQoDUsWnuCDqstTpTCEmR0lXNOjYMq8p0
+	 9laA1AYCeze9oJMr/uDqxkHOPDM4rH5h9aU2VyjmPJDja6MQSFv3KOXGHNXRO0qK9u
+	 Flxn/OfwEml8xbd4udOiKGHGkpKhE6xuhTIl5EEa25DbRPNbzLqYohuthhs/Cdkwb2
+	 YBp19u7tDUWzICcAqdxKv5KwLLrkWRbd/GmnZK76788UTNIv4xsWw8G9mIAPAOnC88
+	 ULmmz1qTWFmNJEtMuzTgGLyFUq34yg8uqg3GaLncU48YcLY2jMF/IqJxUrnoIP5AG+
+	 Oy2QpjQsMHCCg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 116E9C4332C;
+	Tue,  9 Jul 2024 19:03:02 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: bluez.test.bot@gmail.com
-To: linux-bluetooth@vger.kernel.org, r.smirnov@omp.ru
-Subject: RE: fix errors found by SVACE static analyzer #3
-In-Reply-To: <20240709143503.12142-2-r.smirnov@omp.ru>
-References: <20240709143503.12142-2-r.smirnov@omp.ru>
-Reply-To: linux-bluetooth@vger.kernel.org
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH BlueZ v2 0/4] fix errors found by SVACE static analyzer #3
+From: patchwork-bot+bluetooth@kernel.org
+Message-Id: 
+ <172055178206.32169.6195426319508636656.git-patchwork-notify@kernel.org>
+Date: Tue, 09 Jul 2024 19:03:02 +0000
+References: <20240709143503.12142-1-r.smirnov@omp.ru>
+In-Reply-To: <20240709143503.12142-1-r.smirnov@omp.ru>
+To: Roman Smirnov <r.smirnov@omp.ru>
+Cc: linux-bluetooth@vger.kernel.org
 
---===============7888894521532163339==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Hello:
 
-This is automated email and please do not reply to this email!
+This series was applied to bluetooth/bluez.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-Dear submitter,
+On Tue, 9 Jul 2024 17:34:59 +0300 you wrote:
+> Several bug fixes.
+> 
+> Roman Smirnov (4):
+>   health: mcap: add checks for NULL mcap_notify_error()
+>   shared: prevent dereferencing of NULL pointers
+>   settings: limit string size in load_service()
+>   settings: limit string size in gatt_db_load()
+> 
+> [...]
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=869742
+Here is the summary with links:
+  - [BlueZ,v2,1/4] health: mcap: add checks for NULL mcap_notify_error()
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=aa6063aa6695
+  - [BlueZ,v2,2/4] shared: prevent dereferencing of NULL pointers
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=11dcc9bf0dba
+  - [BlueZ,v2,3/4] settings: limit string size in load_service()
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=755091581336
+  - [BlueZ,v2,4/4] settings: limit string size in gatt_db_load()
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=4ca662fcea16
 
----Test result---
-
-Test Summary:
-CheckPatch                    PASS      1.32 seconds
-GitLint                       PASS      1.88 seconds
-BuildEll                      PASS      25.18 seconds
-BluezMake                     PASS      1713.50 seconds
-MakeCheck                     PASS      13.36 seconds
-MakeDistcheck                 PASS      180.35 seconds
-CheckValgrind                 PASS      255.85 seconds
-CheckSmatch                   PASS      358.51 seconds
-bluezmakeextell               PASS      120.61 seconds
-IncrementalBuild              PASS      4642.11 seconds
-ScanBuild                     PASS      1036.55 seconds
-
-
-
----
-Regards,
-Linux Bluetooth
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
---===============7888894521532163339==--
 
