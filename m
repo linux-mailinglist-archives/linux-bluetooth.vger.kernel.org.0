@@ -1,48 +1,48 @@
-Return-Path: <linux-bluetooth+bounces-6048-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-6050-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E996492BD75
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Jul 2024 16:51:30 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3895292BD72
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Jul 2024 16:50:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4D187B22515
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Jul 2024 14:50:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 698451C2292F
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Jul 2024 14:50:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 931F419CCF6;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92F5E19CCF4;
 	Tue,  9 Jul 2024 14:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jlfy9F/D"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JQ9PA3mk"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01ED915F3E7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E9715B57D
 	for <linux-bluetooth@vger.kernel.org>; Tue,  9 Jul 2024 14:50:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1720536632; cv=none; b=DvGvdsTWlShzvoMZ+T34oUsQZLds8yQ95w6P8OFftS11cFoZAs1r7mA6uN8kZSv2NYNdS4W/mLVldI+/QTj4wy2srjTWoYMireYE1G8bGe74CRSgt8IEXilRIdeMWWrf4tgo4hpmGhQ0T3e7BUINVWBZ7nxzN9UPNgQw2cI9crc=
+	t=1720536632; cv=none; b=bk0P8lLLID/mQAlQtknHYXiFSVegWqFj8EGw/4mU9gTFvJFLeJbW/V3p+IW+cAwNGJU8TrUSCbM4obMGtFaC67dNp8gY5Mc3LksyB14ZnfVBQoIBmI/1BHnv/dZK38MWOjwwxHaota5PPjvku6hGIPclMfUEjEdRzESpf/O3NWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1720536632; c=relaxed/simple;
-	bh=vnZtWfmdXMcu1xxFU7aDqmlkL27+FVz5EZFo7LqoRAU=;
+	bh=cF+urcaYyzcegfpbA1RY+mRpG5QxSeV9JOuREJTnKts=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=bm13NgxAdVP5dMHJhLqPVDr0CqVdcyIxZrv15Q7oOxHVqfuj1uGP/JmvIZB483vRmj391+Nq/O/gnopkgFBvmgbsmbGt9y3yqu9TsFVTN+Fy498/oET2L1hElsM7rvTH7vN/lXjW4mC1k5W5DaIgnZ/pyJRAF/YaHcQKqC+lZFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jlfy9F/D; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B1803C4AF07;
+	 In-Reply-To:To:Cc; b=XR64pvRHLamQlLvEhka2QQ6FOtjjj6AAdX5H8MQowOR3lYm9nWW9j5eMumZvC366bob9Endypt9Y6HASfJTZZD/TI3oP8t46jKCcUeMZpOcU4YUZmz4wggehRbd+DQEY4u0pVkslxB4fvWSHjiT08Z48fiRoi8K20Xp8e1kVPjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JQ9PA3mk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id A3086C32786;
 	Tue,  9 Jul 2024 14:50:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1720536631;
-	bh=vnZtWfmdXMcu1xxFU7aDqmlkL27+FVz5EZFo7LqoRAU=;
+	bh=cF+urcaYyzcegfpbA1RY+mRpG5QxSeV9JOuREJTnKts=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=Jlfy9F/D00m1xnYzWRG3DS+Gaeha22rAxvWQCuvkp1TByIFiW7zf2+rQjXhqV+FGT
-	 YuK/hlmLDjjB40uI8UlP6o0vdar1O+mZYzihJliLwNOm32uhEzAI2Ojhz5jcK5qIfP
-	 MqrU/frAEsK8NCCrnhZ6So9pPT92VjKgwywcpwHFKFRkW0EEchDAsH2CDHia9awxy1
-	 oTpeKTAUkdmdSdcfQ+YtY9EzJlqSiN3Uiyn8dLHEa5/MzNZU0IuoTkG9GcuA8UVdO6
-	 Bfddo/eBRpmvGdRwsu65ET8PkoS9bm8KYLgiYZnCQrQ/6mdffbHdfGXRQ/Ie+5pLS9
-	 H/0MPnR4vdeFA==
+	b=JQ9PA3mk7ULYyV7ZBTiHmQz1JfIMcub3rxdcuOkzp6fMNUm8W5ZhbxLmt+wtHtVSj
+	 7mOXpIcfQx/74AxC7AzwHUzQfLtyTX6HLL1Yw9V7Gi51AAUBn0bqMAWtiVHQ+MYtEC
+	 YMxZcx/v55g7gJYYAvCEzjoHPdNVUN2o1jjrPpFjfF9c+Acm7nPGLOGVJsQaK8pI5n
+	 nuqVse+L4EwX3XCpzYxk8OgMIuxJoZ1oBa0RsxIn6Fnvl1RiDxPyxNIx5ZScPMrFNO
+	 Sm277dygIZVFKWwMeFvCSwJMsj5VYOUbam1UTYKL2u7cvYbDsv+9rxmVySjiyXwFdG
+	 fyCQOiBEn09Lw==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id A32A4C4333C;
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 93A17C4332D;
 	Tue,  9 Jul 2024 14:50:31 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
@@ -52,34 +52,37 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ] tools/btmgmt: Fix --index option for non-interactive
- mode
+Subject: Re: [PATCH BlueZ 0/1] Add Cypress support for bdaddr
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <172053663166.10405.6998663440385214638.git-patchwork-notify@kernel.org>
+ <172053663159.10405.10122710292582684536.git-patchwork-notify@kernel.org>
 Date: Tue, 09 Jul 2024 14:50:31 +0000
-References: <20240709115541.66118-1-arjan@opmeer.net>
-In-Reply-To: <20240709115541.66118-1-arjan@opmeer.net>
-To: Arjan Opmeer <arjan.opmeer@gmail.com>
-Cc: linux-bluetooth@vger.kernel.org, arjan@opmeer.net
+References: <20240704101123.51164-1-antoniovazquezblanco@gmail.com>
+In-Reply-To: <20240704101123.51164-1-antoniovazquezblanco@gmail.com>
+To: =?utf-8?q?Antonio_V=C3=A1zquez_Blanco_=3Cantoniovazquezblanco=40gmail=2Ecom?=@codeaurora.org,
+	=?utf-8?q?=3E?=@codeaurora.org
+Cc: linux-bluetooth@vger.kernel.org
 
 Hello:
 
 This patch was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Tue,  9 Jul 2024 13:55:41 +0200 you wrote:
-> In non-interactive mode the --index option does not work because the
-> call to mgmt_set_index() is made after bt_shell_attach().
-> See also https://github.com/bluez/bluez/issues/893
+On Thu,  4 Jul 2024 12:11:22 +0200 you wrote:
+> Cypress Bluetooth controllers seem to either use Broadcom chipsets or
+> to be based on Broadcom designs and share many of their vendor commands
+> with Broadcom chipsets.
 > 
-> ---
->  tools/btmgmt.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> Particularly, the patch has been tested on a CYW920819EVB-02 board.
+> 
+> Antonio Vázquez Blanco (1):
+>   bdaddr: Add cypress manufacturer support
+> 
+> [...]
 
 Here is the summary with links:
-  - [BlueZ] tools/btmgmt: Fix --index option for non-interactive mode
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=f00d5546c9e9
+  - [BlueZ,1/1] bdaddr: Add cypress manufacturer support
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=34aca9a4fbcf
 
 You are awesome, thank you!
 -- 
