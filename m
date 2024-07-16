@@ -1,46 +1,46 @@
-Return-Path: <linux-bluetooth+bounces-6232-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-6233-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA6D0932950
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 Jul 2024 16:42:47 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5577993295E
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 Jul 2024 16:43:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EAED11C224B5
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 Jul 2024 14:42:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0FCCA284C70
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 16 Jul 2024 14:43:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D0331AE85B;
-	Tue, 16 Jul 2024 14:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20A931B0118;
+	Tue, 16 Jul 2024 14:30:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l948XojN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LMpEdInU"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63DDC1A2C36;
-	Tue, 16 Jul 2024 14:30:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A7D11B0103;
+	Tue, 16 Jul 2024 14:30:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721140235; cv=none; b=Voe9DmoNd551ciTpyj9j1mwk/Nd2IcT0CGvlrxDlKpUaJZIEjLt+JkxggTZGYq6D14iAjbrXpxyVOtZKXaicX/nF/mVDsocgQTz2GHctETXWRyEmA6X8z65m2kHo3cgjub1C82omaHM/R6wBhC82RZA1S2m2krGzPtgIqp/fV88=
+	t=1721140248; cv=none; b=P80ziTT+V7d8yvkxx4x6NtBSZXo9EIiX1bEzcnuoRt6Rpmg9XUsuY1BpUpEE71GIWu53rsWVMjI8IOxQMP9EHvo9bSe9AD3mSrqmnEtxbycnRTQyercoGkJGOnNzXvN/TRXfpMyM+MZbJEGGBZNJDwEvxD65WqQN9SRUwIhWi+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721140235; c=relaxed/simple;
-	bh=t6Ou0cgHkOSKv9/IlyZnC/gqXLn53JTX48K5CiGFsbs=;
+	s=arc-20240116; t=1721140248; c=relaxed/simple;
+	bh=rpt6V8R5x61DJSB/3S3GK2NF0QY8Ptd/pvj4btpY0Rw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LEuesM+9A/2dnKhfD/Z3E3uIj0qpjdmx5VBwroZPSkgNJEruB64ZZN6AWk1dU8b1YzxDRImrBaYd8YEq6h83FuvPOiH38um4J53PnmzVKdg7gNZSLtcbviC71pDuMQ/2Qb2+GCMDrStI8dYQl3vBRxTiwo7vPHTI4N+dAJc/OQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l948XojN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8B59C4AF0F;
-	Tue, 16 Jul 2024 14:30:33 +0000 (UTC)
+	 MIME-Version; b=TcHdtOeDRVZv29QlqDLIRERSqfXiZQ0yOsez/lRWKfkrEdIvW4KUmARBh0u2rkyL/A6gANRJFfEFth1qOtDqThSgsqIxmFMJrQsacxuCw4fThBWuRhec3+DGy0xuTDbmj23cqXCxl21GQT+MK8cgtahX0cNJWz9tTLjCyBO/SzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LMpEdInU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB1AC4AF0D;
+	Tue, 16 Jul 2024 14:30:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721140235;
-	bh=t6Ou0cgHkOSKv9/IlyZnC/gqXLn53JTX48K5CiGFsbs=;
+	s=k20201202; t=1721140248;
+	bh=rpt6V8R5x61DJSB/3S3GK2NF0QY8Ptd/pvj4btpY0Rw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l948XojNMYsJcyKCA5gqGIYqZr7rGJl1exonPTQq/PvxcUDy0/lLYSllEVbaleBvM
-	 x+uIOPAhQoVdXaT/XSjpGQU6PO1N6F1yZN50dvAIVGxLp4iriR1H22yhLOdTCZ8s78
-	 7v4QCrnQG27ZBSZHpZ526b7mrm7FFrqlXaztiiSHZV6B0wz5xEeZsRh/yCTgWFN4rf
-	 0ImnQlSB0diMBLdKBjBhoBaxTDnFwNng9Ew4OWLaTwgL5A6k/3g6dDxVN3tlvoh3A+
-	 w/w8Vpfbq0qwbktxxsbKdXe7VCgUvhz7+bSkH8jD9Q2qJsf+bMMaQyUl06+7X04UvU
-	 7wpzBacvMYH5Q==
+	b=LMpEdInUazRO9PSVgW+8JJxTjTLipthdkNWquKHjSaw6xfY26pYQIVSEBX9DDW718
+	 0b747CaKchzP0gnyN562iYenmEZ2gZ9iZwpOzzGGphemnEbiYp0sJZISBTDsCTsZG2
+	 tp9ypOOS6epXr5taIemlXOIBn1oybD0fuqxSWIhvfCmPIcGNyfXxqsoLEb17vM0pq6
+	 nkN6LcgFxq5bqdaMtfk/HEUZAslTiJdvFfsiVJE9O1wWcFKC2wXbmTS8YT1B7KFhUT
+	 dUZOHA+5sKRClWoeHMitACto71lUNV4FU/rWCPymwNzYDwxraq0wNzW18cYE1rYaiZ
+	 tLHVP9n85KWPQ==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
@@ -52,12 +52,12 @@ Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
 	johan.hedberg@gmail.com,
 	luiz.dentz@gmail.com,
 	linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 5/7] Bluetooth: hci_core: cancel all works upon hci_unregister_dev()
-Date: Tue, 16 Jul 2024 10:30:13 -0400
-Message-ID: <20240716143021.2714348-5-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.19 2/3] Bluetooth: hci_core: cancel all works upon hci_unregister_dev()
+Date: Tue, 16 Jul 2024 10:30:41 -0400
+Message-ID: <20240716143043.2714553-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240716143021.2714348-1-sashal@kernel.org>
-References: <20240716143021.2714348-1-sashal@kernel.org>
+In-Reply-To: <20240716143043.2714553-1-sashal@kernel.org>
+References: <20240716143043.2714553-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -66,7 +66,7 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 5.4.279
+X-stable-base: Linux 4.19.317
 Content-Transfer-Encoding: 8bit
 
 From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
@@ -100,10 +100,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 4 insertions(+)
 
 diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index c60204b639ab7..71a7e42097cc0 100644
+index 47f1eec0eb35f..504f6aa4e95db 100644
 --- a/net/bluetooth/hci_core.c
 +++ b/net/bluetooth/hci_core.c
-@@ -3412,7 +3412,11 @@ void hci_unregister_dev(struct hci_dev *hdev)
+@@ -3288,7 +3288,11 @@ void hci_unregister_dev(struct hci_dev *hdev)
  	list_del(&hdev->list);
  	write_unlock(&hci_dev_list_lock);
  
