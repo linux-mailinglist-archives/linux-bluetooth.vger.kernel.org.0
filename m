@@ -1,337 +1,161 @@
-Return-Path: <linux-bluetooth+bounces-6263-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-6265-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44E93934F0E
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 18 Jul 2024 16:24:25 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C982934F2B
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 18 Jul 2024 16:35:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 68B1A1C213E5
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 18 Jul 2024 14:24:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2901B1F247F0
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 18 Jul 2024 14:35:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88B6A140378;
-	Thu, 18 Jul 2024 14:24:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1FA71422BC;
+	Thu, 18 Jul 2024 14:35:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jsh01yda"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L+K+bXwn"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F923DDB8
-	for <linux-bluetooth@vger.kernel.org>; Thu, 18 Jul 2024 14:24:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E309F140394
+	for <linux-bluetooth@vger.kernel.org>; Thu, 18 Jul 2024 14:35:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721312659; cv=none; b=BJ5wRE5xC87gx3bE6Gh7OG7ydEM2ki4er+W+tIw3CymyCAhTE7fY3N27Be6n9l5sZb3RG6c/hzCh3s0GqiNt3UVbI4mSBem7xOeoUERD4vVs7ExipZrR03FNMi/bMPVn9nNVCcnmeBqc0NZUfBuku7Mj28htUGl7ngaGYPLuMH0=
+	t=1721313334; cv=none; b=HmNBODhNuSWOBdvGwS/HyrcTXBzinPMztCkZnhm978522pbkaHWBaYqYRd7b9fqh00acTGUgPlhaVp/2mEsC3Cfc3pZ0//Icir963e9D220CegiWBN7mplvY/YxljkQxRFzZyk3ofg1UYLb3VaK8pT2N9GJrJmtGLPrfL0Iqql0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721312659; c=relaxed/simple;
-	bh=DEFKkXDQlyGsiKBGLEa0zsLifE8teUXywbeNhD8znlM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Uv/ZmtqxOXGBdgjVnFcNcg7qTJHxDhZMWBtPsBLLNjTHCs25y0QNCoQjzA2MQUZtKofxBo43JMbRJQ2LhZCcyOLPOyLlRPq3//YHb3PHAefJkzmJRrTZlZ56czdhzlWUtvYHxU89ExW5JBg/LIXB6SG/0E/WOS/72SsAk+Tx510=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jsh01yda; arc=none smtp.client-ip=209.85.208.175
+	s=arc-20240116; t=1721313334; c=relaxed/simple;
+	bh=hU/9hHEfEwptl4+SoQGGYmCq9cR0KXaOji7oqKiuI1A=;
+	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
+	 In-Reply-To:References; b=BheHSOnZViAJCZIZBVCHEr3e9jP1Gmb832faGcVQS7rka6OitHcT1fkcVOa3wLyHZmJTYMuuC1UX775N874b33BUhNU6ua8ivjtwFexgQEDdq698q5WItRuqSdr6cjObFxOYalQCdpqe3ylh2L3U5UFrOS0/8gvowBJGnupdcaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L+K+bXwn; arc=none smtp.client-ip=209.85.219.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2eee1384e0aso11570881fa.1
-        for <linux-bluetooth@vger.kernel.org>; Thu, 18 Jul 2024 07:24:16 -0700 (PDT)
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6b7a3b75133so2907166d6.2
+        for <linux-bluetooth@vger.kernel.org>; Thu, 18 Jul 2024 07:35:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721312655; x=1721917455; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SO+IA4w+B0eKwnfI8b8L6Kzp4ykBtet+GyFuIETOooY=;
-        b=Jsh01ydaCwNMZxZYw0op1CgkRYF9ey4LHH3Oym0d08wfJ9OAdSFdh2lcQpSrd0pnq5
-         tb/xhwd4GtpYB4ot10VatrPQl3Nya93umD4DbLVy69/TygqC2mR7r7kSxVd18DWH9XBO
-         fXDA/BY1CaDm5N+mT+EiF/ibtf6xMP6G2BZu9hv/inE8T1TYEol+iV1R+Kml1udw9AYB
-         FUI7KTPetpMdWVrn5JwPLSaaDeboBGyMkNasI6NQkjHIcgPFGuQdezKMpInAur7Gt4Js
-         TymAIW/X6qaU9kWrSJ+kXoKFgwfU/bCL5bcEGt1rjlqgV1wHHqTGpXKQWX5xQPPhmcI4
-         iv8A==
+        d=gmail.com; s=20230601; t=1721313332; x=1721918132; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=dZlfLcORaD5t7zMhommF1oFsDBg/Dlqse0uj49UzRlM=;
+        b=L+K+bXwn7q85FHXnsoq9hAKvpK9WV43VUSGQR1OarXbPb0ui/wAw/7zb5vi3OD3KtH
+         UUSeKMYlK8+Nx0W2RXDYy+7nf0xKGU2RzJIzA+b8pC7CzSe77dSRhSYUiaFVz1KWzqJl
+         UqXtjH4cz2VsYFZyKAwsf1a/bPo4e5trr6mBdzh5zyP1m+vuy1WZK546VdzveZBWbBVe
+         EmWqkLRXS0389e1DFiBwFg2++1PXstgF6NKVcf9S1AD7tFKnaCn57UnzrE5BdLPC8fDM
+         hNg0yutuaPMnWhudVrRlFuCNCqffbeGeW+xtHSM9RwqT1vZsPGAiWP46ubY4jcpmEEsg
+         KHnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721312655; x=1721917455;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SO+IA4w+B0eKwnfI8b8L6Kzp4ykBtet+GyFuIETOooY=;
-        b=UBEnzILV8Wae/Gt/a+RsrInyT51qmxzKhI9+YFHl5k2qJCDvf4tbR6NpPcjbhM+cye
-         0xH+ykZO7ZogdBjF1gyOqmsvLY4xRYZ+rD1ZoBX1VCrCRZ+eduhkhjaFToVGDfx27th8
-         W5kIP9ALv3SUuBciuNvHjR8cIue29SX/8Ju21BE4j+szzk9QBQoF63XqWdNP3VdNb1Q8
-         o6ze05EhoIkIBia80Logq7oJCpqwhfWgvauzjVNP+owqyhMxIGZjuMiSlMecEk0ywU+w
-         6YwWNW+MH/RK7ftZBhawFAVEf0lWnk+/Tn84S+YBOVri3tmC4I3AFfbYY1P+eP5QLqGF
-         y/pw==
-X-Forwarded-Encrypted: i=1; AJvYcCXP55XWrdxXcyyo6NBBqJNCII06qRzVHswP3kGPtwMHUKEsfwHhnLNSXTYpEeLhCwnqddY80apgK2mUY5chGMgunUP3V5X1q0YKC9mnO2IM
-X-Gm-Message-State: AOJu0YyK6oE0ERFk/OhUZ58gU2pKR5YqszyAYrX2xEPmQhw+mHBmLvI0
-	7Zd51cWBeFyu8zrf4FmFioMOBmq9zKbTsfIcWYTGA8ZZKkE88aH0ATw+87EuDewyhXx0gIC/k2O
-	JJW54bpNfXgmIzNFF4kuYgr15HTZt9Q==
-X-Google-Smtp-Source: AGHT+IHdZEWSA6wDZ3k5aLBS+kXqPkjQdm4HLtiqVyHX0OZnl9oufdCWz2pGscqp+gmttUz/eJrZfOVSe8QnB37/LlM=
-X-Received: by 2002:a2e:9a85:0:b0:2ec:5061:d7d2 with SMTP id
- 38308e7fff4ca-2ef05c6ff2bmr16656261fa.18.1721312654832; Thu, 18 Jul 2024
- 07:24:14 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1721313332; x=1721918132;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dZlfLcORaD5t7zMhommF1oFsDBg/Dlqse0uj49UzRlM=;
+        b=SqhkRBxP9IvDyrbntzyAcmEKu+hWX7TwGSoKVL1Yqh8+1n1CFPk5BjjwYMS/+5HQHh
+         GGoV83vMNdK3DVsxbM0Zl1lzdhbUnwvzTcAd4eaP5An8hN7DVxIdAfvDGg0be0Vpley2
+         Bw8HXMbi0eRQMtByUOsAqvTeKHzFM16mwxiFlUZA6j1gHDMv9DvxtzZ+UVRPKsZstWBg
+         QtGI2ntJtWHnUmCK3hjuuQHSZGypbykFYl93n1fg2WgozkYzj5aiHsBZzVNFgKjN1vx4
+         AQIDcQjDJi0X+9Yt9gDRwh5HMiMr8KfW3sGIexjUJ7197obdEjI+YV3x3vv9FmMx+fs1
+         mGog==
+X-Gm-Message-State: AOJu0YxCdpRrtrmnYqtQv5mxBxIfJXcNLwSaFTWPITzk3rJ4uvkoBQNt
+	p/a/Y+BDG0mgy/9tpP480Vn/hu/g4Rb+m6aMRLmOAuXXCjIiaJ724dZDMA==
+X-Google-Smtp-Source: AGHT+IEmjuzKMcl3TlJZT08+/5ld9mVI9iqXhQC+G3i3qO1C2nKELGJJgpiu/q44qDDWdviawE2yqg==
+X-Received: by 2002:ad4:5fc9:0:b0:6b7:a4dc:e243 with SMTP id 6a1803df08f44-6b7a4dce559mr10176346d6.15.1721313331508;
+        Thu, 18 Jul 2024 07:35:31 -0700 (PDT)
+Received: from [172.17.0.2] ([172.200.199.165])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6b79c609bbesm8559346d6.99.2024.07.18.07.35.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Jul 2024 07:35:31 -0700 (PDT)
+Message-ID: <66992833.050a0220.4957c.348d@mx.google.com>
+Date: Thu, 18 Jul 2024 07:35:31 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============4855436098914058693=="
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <202407182017.s3aT6Gyx-lkp@intel.com>
-In-Reply-To: <202407182017.s3aT6Gyx-lkp@intel.com>
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Thu, 18 Jul 2024 10:24:02 -0400
-Message-ID: <CABBYNZKGokegMmMZ+_4z_o5kRpRGeMAOXbUmKWhMnYtF90=ZmQ@mail.gmail.com>
-Subject: Re: [bluetooth-next:master] BUILD REGRESSION 54dd4796336de8ce5cbf344db837f9b8448ebcf8
-To: kernel test robot <lkp@intel.com>, Chris Lu <chris.lu@mediatek.com>
-Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>, linux-bluetooth@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+From: bluez.test.bot@gmail.com
+To: linux-bluetooth@vger.kernel.org, kiran.k@intel.com
+Subject: RE: [v4] Bluetooth: btintel: Allow configuring drive strength of BRI
+In-Reply-To: <20240718135655.3948028-1-kiran.k@intel.com>
+References: <20240718135655.3948028-1-kiran.k@intel.com>
+Reply-To: linux-bluetooth@vger.kernel.org
 
-Hi Chris,
+--===============4855436098914058693==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jul 18, 2024 at 8:10=E2=80=AFAM kernel test robot <lkp@intel.com> w=
-rote:
->
-> tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bl=
-uetooth-next.git master
-> branch HEAD: 54dd4796336de8ce5cbf344db837f9b8448ebcf8  Bluetooth: hci_syn=
-c: Fix suspending with wrong filter policy
->
-> Error/Warning ids grouped by kconfigs:
->
-> recent_errors
-> |-- arm64-randconfig-051-20240718
-> |   |-- arch-arm64-boot-dts-qcom-qrb5165-rb5-vision-mezzanine.dtb:bluetoo=
-th:vddbtcmx-supply-is-a-required-property
-> |   |-- arch-arm64-boot-dts-qcom-qrb5165-rb5-vision-mezzanine.dtb:bluetoo=
-th:vddrfa0p8-supply-is-a-required-property
-> |   |-- arch-arm64-boot-dts-qcom-qrb5165-rb5-vision-mezzanine.dtb:bluetoo=
-th:vddrfa1p2-supply-is-a-required-property
-> |   |-- arch-arm64-boot-dts-qcom-qrb5165-rb5-vision-mezzanine.dtb:bluetoo=
-th:vddrfa1p7-supply-is-a-required-property
-> |   |-- arch-arm64-boot-dts-qcom-qrb5165-rb5-vision-mezzanine.dtb:bluetoo=
-th:vddrfacmn-supply-is-a-required-property
-> |   |-- arch-arm64-boot-dts-qcom-qrb5165-rb5.dtb:bluetooth:vddbtcmx-suppl=
-y-is-a-required-property
-> |   |-- arch-arm64-boot-dts-qcom-qrb5165-rb5.dtb:bluetooth:vddrfa0p8-supp=
-ly-is-a-required-property
-> |   |-- arch-arm64-boot-dts-qcom-qrb5165-rb5.dtb:bluetooth:vddrfa1p2-supp=
-ly-is-a-required-property
-> |   |-- arch-arm64-boot-dts-qcom-qrb5165-rb5.dtb:bluetooth:vddrfa1p7-supp=
-ly-is-a-required-property
-> |   |-- arch-arm64-boot-dts-qcom-qrb5165-rb5.dtb:bluetooth:vddrfacmn-supp=
-ly-is-a-required-property
-> |   |-- arch-arm64-boot-dts-qcom-sm8650-qrd.dtb:bluetooth:vddrfa1p8-suppl=
-y-is-a-required-property
-> |   |-- arch-arm64-boot-dts-qcom-sm8650-qrd.dtb:bluetooth:vddrfacmn-suppl=
-y-is-a-required-property
-> |   |-- arch-arm64-boot-dts-qcom-sm8650-qrd.dtb:bluetooth:vddwlcx-supply-=
-is-a-required-property
-> |   `-- arch-arm64-boot-dts-qcom-sm8650-qrd.dtb:bluetooth:vddwlmx-supply-=
-is-a-required-property
-> `-- i386-randconfig-006-20240718
->     |-- ERROR:usb_alloc_urb-drivers-bluetooth-btmtk.ko-undefined
->     |-- ERROR:usb_anchor_urb-drivers-bluetooth-btmtk.ko-undefined
->     |-- ERROR:usb_control_msg-drivers-bluetooth-btmtk.ko-undefined
->     |-- ERROR:usb_free_urb-drivers-bluetooth-btmtk.ko-undefined
->     `-- ERROR:usb_submit_urb-drivers-bluetooth-btmtk.ko-undefined
+This is automated email and please do not reply to this email!
 
+Dear submitter,
 
-Looks like there are still problems with btmtk.c, is that file
-exclusive to interface to btusb.c?
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=872275
 
-> elapsed time: 937m
->
-> configs tested: 184
-> configs skipped: 4
->
-> tested configs:
-> alpha                            alldefconfig   gcc-13.3.0
-> alpha                             allnoconfig   gcc-13.2.0
-> alpha                             allnoconfig   gcc-13.3.0
-> alpha                            allyesconfig   gcc-13.3.0
-> alpha                               defconfig   gcc-13.2.0
-> arc                              allmodconfig   gcc-13.2.0
-> arc                               allnoconfig   gcc-13.2.0
-> arc                              allyesconfig   gcc-13.2.0
-> arc                                 defconfig   gcc-13.2.0
-> arm                              allmodconfig   gcc-13.2.0
-> arm                              allmodconfig   gcc-14.1.0
-> arm                               allnoconfig   clang-19
-> arm                               allnoconfig   gcc-13.2.0
-> arm                              allyesconfig   gcc-13.2.0
-> arm                              allyesconfig   gcc-14.1.0
-> arm                                 defconfig   gcc-13.2.0
-> arm                            hisi_defconfig   gcc-13.3.0
-> arm                          moxart_defconfig   gcc-14.1.0
-> arm                         nhk8815_defconfig   gcc-14.1.0
-> arm                           spitz_defconfig   gcc-13.3.0
-> arm                       versatile_defconfig   gcc-13.3.0
-> arm                        vexpress_defconfig   gcc-14.1.0
-> arm                         vf610m4_defconfig   gcc-13.3.0
-> arm64                            allmodconfig   clang-19
-> arm64                            allmodconfig   gcc-13.2.0
-> arm64                             allnoconfig   gcc-13.2.0
-> arm64                             allnoconfig   gcc-14.1.0
-> arm64                               defconfig   gcc-13.2.0
-> csky                              allnoconfig   gcc-13.2.0
-> csky                              allnoconfig   gcc-14.1.0
-> csky                                defconfig   gcc-13.2.0
-> hexagon                          allmodconfig   clang-19
-> hexagon                           allnoconfig   clang-19
-> hexagon                          allyesconfig   clang-19
-> i386                             allmodconfig   clang-18
-> i386                             allmodconfig   gcc-13
-> i386                              allnoconfig   clang-18
-> i386                              allnoconfig   gcc-13
-> i386                             allyesconfig   clang-18
-> i386                             allyesconfig   gcc-13
-> i386         buildonly-randconfig-001-20240718   gcc-11
-> i386         buildonly-randconfig-002-20240718   gcc-11
-> i386         buildonly-randconfig-002-20240718   gcc-7
-> i386         buildonly-randconfig-003-20240718   gcc-11
-> i386         buildonly-randconfig-003-20240718   gcc-13
-> i386         buildonly-randconfig-004-20240718   clang-18
-> i386         buildonly-randconfig-004-20240718   gcc-11
-> i386         buildonly-randconfig-005-20240718   gcc-11
-> i386         buildonly-randconfig-005-20240718   gcc-9
-> i386         buildonly-randconfig-006-20240718   gcc-11
-> i386         buildonly-randconfig-006-20240718   gcc-13
-> i386                                defconfig   clang-18
-> i386                  randconfig-001-20240718   gcc-11
-> i386                  randconfig-001-20240718   gcc-13
-> i386                  randconfig-002-20240718   gcc-11
-> i386                  randconfig-002-20240718   gcc-13
-> i386                  randconfig-003-20240718   clang-18
-> i386                  randconfig-003-20240718   gcc-11
-> i386                  randconfig-004-20240718   clang-18
-> i386                  randconfig-004-20240718   gcc-11
-> i386                  randconfig-005-20240718   clang-18
-> i386                  randconfig-005-20240718   gcc-11
-> i386                  randconfig-006-20240718   clang-18
-> i386                  randconfig-006-20240718   gcc-11
-> i386                  randconfig-011-20240718   gcc-11
-> i386                  randconfig-011-20240718   gcc-13
-> i386                  randconfig-012-20240718   gcc-11
-> i386                  randconfig-012-20240718   gcc-13
-> i386                  randconfig-013-20240718   gcc-10
-> i386                  randconfig-013-20240718   gcc-11
-> i386                  randconfig-014-20240718   clang-18
-> i386                  randconfig-014-20240718   gcc-11
-> i386                  randconfig-015-20240718   clang-18
-> i386                  randconfig-015-20240718   gcc-11
-> i386                  randconfig-016-20240718   gcc-11
-> i386                  randconfig-016-20240718   gcc-13
-> loongarch                        alldefconfig   gcc-14.1.0
-> loongarch                        allmodconfig   gcc-14.1.0
-> loongarch                         allnoconfig   gcc-13.2.0
-> loongarch                         allnoconfig   gcc-14.1.0
-> loongarch                           defconfig   gcc-13.2.0
-> m68k                             allmodconfig   gcc-14.1.0
-> m68k                              allnoconfig   gcc-13.2.0
-> m68k                              allnoconfig   gcc-14.1.0
-> m68k                             allyesconfig   gcc-14.1.0
-> m68k                         amcore_defconfig   gcc-13.3.0
-> m68k                                defconfig   gcc-13.2.0
-> m68k                        mvme16x_defconfig   gcc-14.1.0
-> m68k                           virt_defconfig   gcc-13.3.0
-> microblaze                       allmodconfig   gcc-14.1.0
-> microblaze                        allnoconfig   gcc-13.2.0
-> microblaze                        allnoconfig   gcc-14.1.0
-> microblaze                       allyesconfig   gcc-14.1.0
-> microblaze                          defconfig   gcc-13.2.0
-> mips                              allnoconfig   gcc-13.2.0
-> mips                              allnoconfig   gcc-14.1.0
-> mips                         cobalt_defconfig   gcc-13.3.0
-> mips                         db1xxx_defconfig   gcc-14.1.0
-> mips                  decstation_64_defconfig   gcc-14.1.0
-> mips                           ip27_defconfig   gcc-13.3.0
-> mips                        maltaup_defconfig   gcc-14.1.0
-> nios2                             allnoconfig   gcc-13.2.0
-> nios2                             allnoconfig   gcc-14.1.0
-> nios2                               defconfig   gcc-13.2.0
-> openrisc                          allnoconfig   gcc-14.1.0
-> openrisc                         allyesconfig   gcc-14.1.0
-> openrisc                            defconfig   gcc-14.1.0
-> parisc                           allmodconfig   gcc-14.1.0
-> parisc                            allnoconfig   gcc-14.1.0
-> parisc                           allyesconfig   gcc-14.1.0
-> parisc                              defconfig   gcc-14.1.0
-> parisc64                            defconfig   gcc-13.2.0
-> powerpc                          allmodconfig   gcc-14.1.0
-> powerpc                           allnoconfig   gcc-14.1.0
-> powerpc                          allyesconfig   clang-19
-> powerpc                          allyesconfig   gcc-14.1.0
-> powerpc                 canyonlands_defconfig   gcc-13.3.0
-> powerpc                   microwatt_defconfig   gcc-13.3.0
-> powerpc                 mpc834x_itx_defconfig   gcc-13.3.0
-> powerpc                  mpc866_ads_defconfig   gcc-14.1.0
-> powerpc                      ppc64e_defconfig   gcc-14.1.0
-> powerpc                      ppc6xx_defconfig   gcc-13.3.0
-> powerpc                     tqm8548_defconfig   gcc-13.3.0
-> powerpc                 xes_mpc85xx_defconfig   gcc-14.1.0
-> riscv                            allmodconfig   clang-19
-> riscv                            allmodconfig   gcc-14.1.0
-> riscv                             allnoconfig   gcc-14.1.0
-> riscv                            allyesconfig   clang-19
-> riscv                            allyesconfig   gcc-14.1.0
-> riscv                               defconfig   gcc-14.1.0
-> s390                             allmodconfig   clang-19
-> s390                              allnoconfig   clang-19
-> s390                             allyesconfig   clang-19
-> s390                             allyesconfig   gcc-14.1.0
-> s390                                defconfig   gcc-14.1.0
-> sh                               allmodconfig   gcc-14.1.0
-> sh                                allnoconfig   gcc-13.2.0
-> sh                                allnoconfig   gcc-14.1.0
-> sh                               allyesconfig   gcc-14.1.0
-> sh                         apsh4a3a_defconfig   gcc-13.3.0
-> sh                        apsh4ad0a_defconfig   gcc-13.3.0
-> sh                                  defconfig   gcc-14.1.0
-> sh                         ecovec24_defconfig   gcc-14.1.0
-> sh                        sh7763rdp_defconfig   gcc-13.3.0
-> sparc                            allmodconfig   gcc-14.1.0
-> sparc64                             defconfig   gcc-14.1.0
-> um                               allmodconfig   clang-19
-> um                                allnoconfig   clang-17
-> um                               allyesconfig   gcc-13
-> um                                  defconfig   gcc-14.1.0
-> um                             i386_defconfig   gcc-14.1.0
-> um                           x86_64_defconfig   gcc-14.1.0
-> x86_64                            allnoconfig   clang-18
-> x86_64                           allyesconfig   clang-18
-> x86_64       buildonly-randconfig-001-20240718   gcc-11
-> x86_64       buildonly-randconfig-002-20240718   gcc-11
-> x86_64       buildonly-randconfig-003-20240718   gcc-11
-> x86_64       buildonly-randconfig-004-20240718   gcc-11
-> x86_64       buildonly-randconfig-005-20240718   gcc-11
-> x86_64       buildonly-randconfig-006-20240718   gcc-11
-> x86_64                              defconfig   clang-18
-> x86_64                              defconfig   gcc-13
-> x86_64                randconfig-001-20240718   gcc-11
-> x86_64                randconfig-002-20240718   gcc-11
-> x86_64                randconfig-003-20240718   gcc-11
-> x86_64                randconfig-004-20240718   gcc-11
-> x86_64                randconfig-005-20240718   gcc-11
-> x86_64                randconfig-006-20240718   gcc-11
-> x86_64                randconfig-011-20240718   gcc-11
-> x86_64                randconfig-012-20240718   gcc-11
-> x86_64                randconfig-013-20240718   gcc-11
-> x86_64                randconfig-014-20240718   gcc-11
-> x86_64                randconfig-015-20240718   gcc-11
-> x86_64                randconfig-016-20240718   gcc-11
-> x86_64                randconfig-071-20240718   gcc-11
-> x86_64                randconfig-072-20240718   gcc-11
-> x86_64                randconfig-073-20240718   gcc-11
-> x86_64                randconfig-074-20240718   gcc-11
-> x86_64                randconfig-075-20240718   gcc-11
-> x86_64                randconfig-076-20240718   gcc-11
-> x86_64                          rhel-8.3-rust   clang-18
-> xtensa                            allnoconfig   gcc-13.2.0
-> xtensa                            allnoconfig   gcc-14.1.0
-> xtensa                  audio_kc705_defconfig   gcc-14.1.0
->
-> --
-> 0-DAY CI Kernel Test Service
-> https://github.com/intel/lkp-tests/wiki
->
+---Test result---
+
+Test Summary:
+CheckPatch                    FAIL      0.96 seconds
+GitLint                       FAIL      0.56 seconds
+SubjectPrefix                 PASS      0.13 seconds
+BuildKernel                   PASS      30.28 seconds
+CheckAllWarning               PASS      32.81 seconds
+CheckSparse                   PASS      38.42 seconds
+CheckSmatch                   PASS      102.39 seconds
+BuildKernel32                 PASS      28.65 seconds
+TestRunnerSetup               PASS      524.54 seconds
+TestRunner_l2cap-tester       PASS      22.03 seconds
+TestRunner_iso-tester         PASS      121.95 seconds
+TestRunner_bnep-tester        PASS      4.89 seconds
+TestRunner_mgmt-tester        PASS      113.87 seconds
+TestRunner_rfcomm-tester      PASS      7.52 seconds
+TestRunner_sco-tester         PASS      16.09 seconds
+TestRunner_ioctl-tester       PASS      7.96 seconds
+TestRunner_mesh-tester        PASS      6.12 seconds
+TestRunner_smp-tester         PASS      7.03 seconds
+TestRunner_userchan-tester    PASS      5.12 seconds
+IncrementalBuild              PASS      28.08 seconds
+
+Details
+##############################
+Test: CheckPatch - FAIL
+Desc: Run checkpatch.pl script
+Output:
+[v4] Bluetooth: btintel: Allow configuring drive strength of BRI
+ERROR: Remove Gerrit Change-Id's before submitting upstream
+#113: 
+Change-Id: Ia51d0d86b980fcca1b12247ed8fe9ae9d2b06307
+
+total: 1 errors, 0 warnings, 148 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/github/workspace/src/src/13736562.patch has style problems, please review.
+
+NOTE: Ignored message types: UNKNOWN_COMMIT_ID
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
 
 
---=20
-Luiz Augusto von Dentz
+##############################
+Test: GitLint - FAIL
+Desc: Run gitlint
+Output:
+[v4] Bluetooth: btintel: Allow configuring drive strength of BRI
+
+WARNING: I3 - ignore-body-lines: gitlint will be switching from using Python regex 'match' (match beginning) to 'search' (match anywhere) semantics. Please review your ignore-body-lines.regex option accordingly. To remove this warning, set general.regex-style-search=True. More details: https://jorisroovers.github.io/gitlint/configuration/#regex-style-search
+13: B1 Line exceeds max length (81>80): "[21.982720] Bluetooth: hci0: Bootloader timestamp 2023.33 buildtype 1 build 45995"
+34: B1 Line exceeds max length (82>80): "Reviewed-on: https://gerritwcs.ir.intel.com/c/bcp_linux-bt_drv_kernel-5_3/+/117825"
+
+
+---
+Regards,
+Linux Bluetooth
+
+
+--===============4855436098914058693==--
 
