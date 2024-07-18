@@ -1,45 +1,47 @@
-Return-Path: <linux-bluetooth+bounces-6260-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-6262-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16A56934D63
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 18 Jul 2024 14:46:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 086F9934E83
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 18 Jul 2024 15:50:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BF82F1F21603
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 18 Jul 2024 12:46:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B24841F21FB3
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 18 Jul 2024 13:50:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C70BF13D258;
-	Thu, 18 Jul 2024 12:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94160144D0E;
+	Thu, 18 Jul 2024 13:48:36 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
+Received: from relay7-d.mail.gandi.net (relay7-d.mail.gandi.net [217.70.183.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA9413D281
-	for <linux-bluetooth@vger.kernel.org>; Thu, 18 Jul 2024 12:46:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D8F1411E7
+	for <linux-bluetooth@vger.kernel.org>; Thu, 18 Jul 2024 13:48:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721306766; cv=none; b=lpPWERr5x9d+cNRiOB/9pWhJPj5sqY2tzhQJMxQr6IStYWNPirLmnTq1c89vq02pVOme38aFBtibMgpfBoO8ySmTXvX4UCftQiJdD2nUzZmt2ZRLUSj0SAb9wcCc1y/pSC7aGyDh90wgChDbQV7LiaD2534g3aSgo4Nl0/NyMl0=
+	t=1721310516; cv=none; b=JOG6Q0G9d7aED9R6tO0L5hwzpU+MkBDBJzx0iAT3WSLq3k9O/uDSuAmJMPBG0eylnfJsn+M0wRLYmnPdd9kd0gcDOSzLD8Cg/m4fVca2pmwyeTBSE5cCRvQy3Fb4piQ4oQRgj7gbrI337iw7ImIRiYqRAiO3XKeDJSGDVPmy1dE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721306766; c=relaxed/simple;
-	bh=M/wztX1SXYm/Iv4ytctFKLjPAaFaboqfOoKzkDTkQc8=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=GG6RGTpd9TvjS4rM0BeczrjqwC2MBlIcXkB6G3aLgiuW0rdC4sQ4sKGJ71wknxM51XFN93EPKUmIzQg8HIgu6W+ApSWO2q5u65YOTFF9T+VNbBzuWaTxtHAj3Q0BdOuhOe6pI9Z3ks4ZempUiYig/O6MtzJQGU0c5JSBUFdpeF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.195
+	s=arc-20240116; t=1721310516; c=relaxed/simple;
+	bh=M2eKnknpZT6H4iBrd00oq/eX6MM2V1NQocIQ24amQf4=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=uxYDAc6Kkw3GusZkVoN1YoFGf1Yr7UqPI+UXGnwjgsb4JY7ngRy2gg3XIznWvMEUxT3LjhYs4qd18rBAQVVYre205yPUz/s1PMQ9SbnCwAmc0P60SNLi25q9U0RjqPfoMdVufeXr4shIVROLvv1S8u5pcq75fEc+7Wj/SWsrS4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.200
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 1BCF36000D
-	for <linux-bluetooth@vger.kernel.org>; Thu, 18 Jul 2024 12:46:01 +0000 (UTC)
-Message-ID: <d268e3addcf7831caea829a09eb6d317d00ec4a1.camel@hadess.net>
-Subject: Re: [BlueZ v2 02/11] shared/shell: Free memory allocated by
- wordexp()
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 813CE20002;
+	Thu, 18 Jul 2024 13:48:26 +0000 (UTC)
+Message-ID: <c9240ade6670887af205a0b6a6c3c936cc8583df.camel@hadess.net>
+Subject: Re: [BlueZ v2 01/11] gatt-server: Don't allocate negative data
 From: Bastien Nocera <hadess@hadess.net>
-To: linux-bluetooth@vger.kernel.org
-Date: Thu, 18 Jul 2024 14:46:01 +0200
-In-Reply-To: <20240705085935.1255725-3-hadess@hadess.net>
+To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: linux-bluetooth@vger.kernel.org
+Date: Thu, 18 Jul 2024 15:48:26 +0200
+In-Reply-To: <5763c696d519074969d3ddcb6c1468a44bebba07.camel@hadess.net>
 References: <20240705085935.1255725-1-hadess@hadess.net>
-	 <20240705085935.1255725-3-hadess@hadess.net>
+	 <20240705085935.1255725-2-hadess@hadess.net>
+	 <CABBYNZ+dDvU4nUeCU+9VNfynmQ1iajp=SkD_oFf4F8wxWqsh9g@mail.gmail.com>
+	 <5763c696d519074969d3ddcb6c1468a44bebba07.camel@hadess.net>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.52.3 (3.52.3-1.fc40) 
@@ -51,102 +53,90 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-GND-Sasl: hadess@hadess.net
 
-On Fri, 2024-07-05 at 10:57 +0200, Bastien Nocera wrote:
-<snip>
-> diff --git a/src/shared/shell.c b/src/shared/shell.c
-> index add4fa131c7a..e8f75124f167 100644
-> --- a/src/shared/shell.c
-> +++ b/src/shared/shell.c
-> @@ -452,13 +452,23 @@ static void shell_print_menu_zsh_complete(void)
-> =C2=A0	}
-> =C2=A0}
-> =C2=A0
-> +static int _wordexp(const char *restrict s, wordexp_t *restrict p,
-> int flags)
-> +{
-> +	int ret;
-> +
-> +	ret =3D wordexp(s, p, flags);
-> +	if (ret !=3D 0)
-> +		wordfree(p);
-> +	return ret;
-> +}
-> +
-> =C2=A0static int parse_args(char *arg, wordexp_t *w, char *del, int flags=
-)
-> =C2=A0{
-> =C2=A0	char *str;
-> =C2=A0
-> =C2=A0	str =3D strdelimit(arg, del, '"');
-> =C2=A0
-> -	if (wordexp(str, w, flags)) {
-> +	if (_wordexp(str, w, flags) !=3D 0) {
-> =C2=A0		free(str);
-> =C2=A0		return -EINVAL;
-> =C2=A0	}
+On Thu, 2024-07-18 at 14:40 +0200, Bastien Nocera wrote:
+> On Mon, 2024-07-08 at 10:44 -0400, Luiz Augusto von Dentz wrote:
+> > Hi Bastien,
+> >=20
+> > On Fri, Jul 5, 2024 at 5:00=E2=80=AFAM Bastien Nocera <hadess@hadess.ne=
+t>
+> > wrote:
+> > >=20
+> > > Set a lower-bound to the data MTU to avoid allocating -1 elements
+> > > if
+> > > bt_att_get_mtu() returns zero.
+> > >=20
+> > > Error: OVERRUN (CWE-119): [#def36] [important]
+> > > bluez-5.76/src/shared/gatt-server.c:1121:2: zero_return: Function
+> > > call "bt_att_get_mtu(server->att)" returns 0.
+> > > bluez-5.76/src/shared/gatt-server.c:1121:2: assignment:
+> > > Assigning:
+> > > "data->mtu" =3D "bt_att_get_mtu(server->att)". The value of "data-
+> > > > mtu" is now 0.
+> >=20
+> > We are disconnected or have an invalid bt_att instance if
+> > bt_att_get_mtu returns 0 so it is probably pointless to attempt to
+> > send any response if that is the case.
+>=20
+> Same as for patch 8 in this series:
+> gatt-server: Fix integer overflow due to cast operation
+>=20
+> Is "1" a valid value here?
 
-Any reason not to pick this patch up?
+Never mind, Coverity is happy, so I'm happy too.
 
-You can see here:
-https://sourceware.org/git/?p=3Dglibc.git;a=3Dblob;f=3Dposix/wordexp.c;h=3D=
-a7362ef31b05280001e961c3a630e953110b7397;hb=3DHEAD#l2203
-that wordexp() will return without freeing we_wordv if there's an error
-and the WRDE_APPEND flag isn't set.
-
-Let me know if you want me to re-spin this one with a different style,
-or want me to add the info above to the commit message.
-
-Cheers
-
-> @@ -537,7 +547,7 @@ static int cmd_exec(const struct
-> bt_shell_menu_entry *entry,
-> =C2=A0		goto fail;
-> =C2=A0	}
-> =C2=A0
-> -	flags |=3D WRDE_APPEND;
-> +	flags |=3D WRDE_APPEND | WRDE_REUSE;
-> =C2=A0	opt =3D strdup(entry->arg + len + 1);
-> =C2=A0
-> =C2=A0optional:
-> @@ -1043,7 +1053,7 @@ static char **args_completion(const struct
-> bt_shell_menu_entry *entry, int argc,
-> =C2=A0	args.we_offs =3D 0;
-> =C2=A0	wordfree(&args);
-> =C2=A0
-> -	if (wordexp(str, &args, WRDE_NOCMD))
-> +	if (_wordexp(str, &args, WRDE_NOCMD))
-> =C2=A0		goto done;
-> =C2=A0
-> =C2=A0	rl_completion_display_matches_hook =3D NULL;
-> @@ -1115,7 +1125,7 @@ static char **shell_completion(const char
-> *text, int start, int end)
-> =C2=A0	if (start > 0) {
-> =C2=A0		wordexp_t w;
-> =C2=A0
-> -		if (wordexp(rl_line_buffer, &w, WRDE_NOCMD))
-> +		if (_wordexp(rl_line_buffer, &w, WRDE_NOCMD))
-> =C2=A0			return NULL;
-> =C2=A0
-> =C2=A0		matches =3D menu_completion(default_menu, text,
-> w.we_wordc,
-> @@ -1416,7 +1426,7 @@ int bt_shell_exec(const char *input)
-> =C2=A0	if (data.monitor)
-> =C2=A0		bt_log_printf(0xffff, data.name, LOG_INFO, "%s",
-> input);
-> =C2=A0
-> -	err =3D wordexp(input, &w, WRDE_NOCMD);
-> +	err =3D _wordexp(input, &w, WRDE_NOCMD);
-> =C2=A0	switch (err) {
-> =C2=A0	case WRDE_BADCHAR:
-> =C2=A0		return -EBADMSG;
-> @@ -1426,7 +1436,7 @@ int bt_shell_exec(const char *input)
-> =C2=A0	case WRDE_NOSPACE:
-> =C2=A0		return -ENOMEM;
-> =C2=A0	case WRDE_CMDSUB:
-> -		if (wordexp(input, &w, 0))
-> +		if (_wordexp(input, &w, 0))
-> =C2=A0			return -ENOEXEC;
-> =C2=A0		break;
-> =C2=A0	};
+>=20
+> >=20
+> > > bluez-5.76/src/shared/gatt-server.c:1123:19: assignment:
+> > > Assigning:
+> > > "__n" =3D "(size_t)(data->mtu - 1UL)". The value of "__n" is now
+> > > 18446744073709551615.
+> > > bluez-5.76/src/shared/gatt-server.c:1123:19: assignment:
+> > > Assigning:
+> > > "__s" =3D "1UL".
+> > > bluez-5.76/src/shared/gatt-server.c:1123:19: overrun-buffer-arg:
+> > > Calling "memset" with "__p" and "__n * __s" is suspicious because
+> > > of the very large index, 18446744073709551615. The index may be
+> > > due
+> > > to a negative parameter being interpreted as unsigned. [Note: The
+> > > source code implementation of the function has been overridden by
+> > > a
+> > > builtin model.]
+> > > 1121|=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dat=
+a->mtu =3D bt_att_get_mtu(server->att);
+> > > 1122|=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dat=
+a->length =3D 0;
+> > > 1123|->=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 data->rsp_dat=
+a =3D new0(uint8_t, data->mtu - 1);
+> > > 1124|
+> > > 1125|=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ret=
+urn data;
+> > > ---
+> > > =C2=A0src/shared/gatt-server.c | 2 +-
+> > > =C2=A01 file changed, 1 insertion(+), 1 deletion(-)
+> > >=20
+> > > diff --git a/src/shared/gatt-server.c b/src/shared/gatt-server.c
+> > > index 3a53d5dfde6b..66e370d1fe3d 100644
+> > > --- a/src/shared/gatt-server.c
+> > > +++ b/src/shared/gatt-server.c
+> > > @@ -1120,7 +1120,7 @@ static struct read_mult_data
+> > > *read_mult_data_new(struct bt_gatt_server *server,
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 data->cur_handle =3D 0;
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 data->mtu =3D bt_att_get_m=
+tu(server->att);
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 data->length =3D 0;
+> > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 data->rsp_data =3D new0(uint8_t=
+, data->mtu - 1);
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 data->rsp_data =3D new0(uint8_t=
+, MAX(data->mtu, 1) - 1);
+> > >=20
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return data;
+> > > =C2=A0}
+> > > --
+> > > 2.45.2
+> > >=20
+> > >=20
+> >=20
+> >=20
+>=20
 
 
