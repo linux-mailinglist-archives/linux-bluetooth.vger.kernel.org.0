@@ -1,48 +1,48 @@
-Return-Path: <linux-bluetooth+bounces-6270-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-6272-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EAA2193519A
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 18 Jul 2024 20:30:53 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 95EA093519B
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 18 Jul 2024 20:30:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 248681C21F81
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 50BD728418E
 	for <lists+linux-bluetooth@lfdr.de>; Thu, 18 Jul 2024 18:30:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDE6A145A0C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDEB7145A0D;
 	Thu, 18 Jul 2024 18:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xqz+3zMU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GT9GQMIr"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451F242045
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 452644D8AF
 	for <linux-bluetooth@vger.kernel.org>; Thu, 18 Jul 2024 18:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721327436; cv=none; b=TgNHnrGXKyyhq8tc9vm+N9eoPL9ekXB+TJ+CBnaL+rKuJ53uj66mF08nDJ4fWHGLMCEd+gIkOJRUcWFc8Ojn12lvL/fAeMsF18pGx5ANJa5IZXCnAyZLERMZsQWRYcJxIR/z0pUVZbJXg4q++J2NSbLSsSlc7XAyQXdxlsTDXsE=
+	t=1721327436; cv=none; b=JpfBnQJ2b1f0D5UQqSi+XnR7qI3n0w+VwGpoeig2ntg4yMPIDT0FK9jiMglTSm0oJ+/Z11+nXJtyWk1jzgP/CTAo8s1cr1hxYHjKPSu39tZMy4EpJL/d3w3XQdvgMLljr/4/vaET43DyGEO4fjWFRARsSQ47KfTtxFq86/wFz8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1721327436; c=relaxed/simple;
-	bh=Z/gVuUcr7G+8Vfo4pyv6wgC5nmst4z3wYqCcY1gGVO0=;
+	bh=k9IQHeK8VYD1/4uKlkiIaImQZP5CQ7+bcVO++ZAvcIY=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=LhqwIOmE4CuRniD6XxW5xyobmH9dv2AP3UlYRbF/qtgSkBZ3+MJ23dpV/8IoumXJlFEzrt5bqger/JnRMV9i7K6+qYq4XgKYvrSENnZvThaQGxeYgdRdQ/eYq96nszNTKWnU1I+1ESWHwqln+6uVqbCHHwolLbVLIGPfm5ETbTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xqz+3zMU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id E50D0C4AF0F;
+	 In-Reply-To:To:Cc; b=unETif0ksGsP0YBDttsWGbz2P7dwZB2xNE2xcOI6ZFuxKUFRcQ3B/njOB7PUYc29QrGGdS23zIEphc5xVE5YcP+p65MRueyyeQBNyv+T3Sdfgkt9dripmvgaRy3PmF7gVM3H0V7eWkphj4sgUH1abOK3Hu/CdBSBI+tt6vs8pDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GT9GQMIr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id D41E6C4AF0C;
 	Thu, 18 Jul 2024 18:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1721327435;
-	bh=Z/gVuUcr7G+8Vfo4pyv6wgC5nmst4z3wYqCcY1gGVO0=;
+	bh=k9IQHeK8VYD1/4uKlkiIaImQZP5CQ7+bcVO++ZAvcIY=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=Xqz+3zMUbu+Z0in5xu1vkmw/lTZFxurmdmWpeFFbPQinhTp6yevfcywRDWAAzDpxI
-	 4Em6KN6DbEEXrXKcYw/Gcxc05dpLJHqSgkoGt0asefkkl+1iRymFS0RCzFxlnm1Qld
-	 6FvkoD1Vqvez5E+qw6QSc+q8OJKtFUml9pAbNz6BW0hhvIBiwz75G2Rp52Zt5t9Wes
-	 dRB1/B1804IPwjoadHw2KjzcLx7insbZJtGpxo1I/uflJnSYwzCNFuIGX0XzDMXy0N
-	 uTpM1TKk+EqfEtgtXIaOEEfCTzGlQXj2NU1Bv7223+sJ44a3s405tcSA5A+sa1T16T
-	 zAou1zfdozKGg==
+	b=GT9GQMIruCarusjrvwo1YOAP4M5xsxL509WPgkTuWEAw9lvbAw3Dlx0TBiHOhFRiC
+	 ndwHVHahuQfAtv/LBry6tVqNPn4NzcvHRDCvM6HPoB4gRspHsVtDDfixVy3yqVdbno
+	 1S2Z6uP9Hnefp1ZavdQIQG1dh3wpT9+au1kqrVJd6R3OJCy2Qkjc/dxBb81vYr7Irq
+	 BmWFaeHgGdrRnz6hka4TVstRA33M2Fgzc6aeC60MIm977jqZg+Gn7AmMI1kPnkmK6n
+	 9plWPpQqZh6YtKCmVAeIL5xFz6XSo/H1hvC+2FZIMqrpKuQomCh5rwPLqYzA+/O2Pu
+	 QTP1HVBbBX40Q==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id CF0F1C43443;
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id BD73EC433E9;
 	Thu, 18 Jul 2024 18:30:35 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
@@ -52,34 +52,59 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ v1] client/player: Add support for name custom presets
+Subject: Re: [PATCH BlueZ 00/10] Initial implementation of BAP Broadcast Assistant
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <172132743584.20188.10826744795415360673.git-patchwork-notify@kernel.org>
+ <172132743577.20188.15530964698289453048.git-patchwork-notify@kernel.org>
 Date: Thu, 18 Jul 2024 18:30:35 +0000
-References: <20240718180059.1159551-1-luiz.dentz@gmail.com>
-In-Reply-To: <20240718180059.1159551-1-luiz.dentz@gmail.com>
-To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: linux-bluetooth@vger.kernel.org
+References: <20240716142207.4298-1-iulia.tanasescu@nxp.com>
+In-Reply-To: <20240716142207.4298-1-iulia.tanasescu@nxp.com>
+To: Iulia Tanasescu <iulia.tanasescu@nxp.com>
+Cc: linux-bluetooth@vger.kernel.org, claudia.rosu@nxp.com,
+ mihai-octavian.urzica@nxp.com, vlad.pruteanu@nxp.com,
+ andrei.istodorescu@nxp.com, luiz.dentz@gmail.com
 
 Hello:
 
-This patch was applied to bluetooth/bluez.git (master)
+This series was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Thu, 18 Jul 2024 14:00:58 -0400 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+On Tue, 16 Jul 2024 17:21:57 +0300 you wrote:
+> This patch adds an initial implementation of the BAP Broadcast Assistant
+> role.
 > 
-> This adds support for naming custom presets instead of always having
-> just one "custom" codec preset which needs to be overwriten everytime
-> a new set of settings needs to be entered.
-> ---
->  client/player.c | 130 ++++++++++++++++++++++++++++++++----------------
->  1 file changed, 87 insertions(+), 43 deletions(-)
+> The core implementation resides in the BASS plugin (the BAP Broadcast
+> Assistant is a BASS Client).
+> 
+> The BAP plugin implements the callback to probe Broadcast Sources and
+> parse the BASE. Information about each detected stream is notified to
+> the BASS plugin, which will compare stream audio capabilities with the
+> capabilities supported by the peer Scan Delegator (discovered by reading
+> the Sink PAC characteristic).
+> 
+> [...]
 
 Here is the summary with links:
-  - [BlueZ,v1] client/player: Add support for name custom presets
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=025f07ec0d0e
+  - [BlueZ,01/10] shared/bap: Add separate API to merge caps
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=caa4202a7ee3
+  - [BlueZ,02/10] shared/bap: Update bt_bap_verify_bis to receive caps
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=679349fbc9f2
+  - [BlueZ,03/10] shared/bap: Remove unused param from bt_bap_verify_bis
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=bbcf4891cd46
+  - [BlueZ,04/10] shared/bap: Allow checking bis caps against peer caps
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=662aee4357f8
+  - [BlueZ,05/10] shared/bap: Append bcast sink pacs to Sink PAC char
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=2c98c478863e
+  - [BlueZ,06/10] bap: Add API to get bt_bap matching device
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=f16391348810
+  - [BlueZ,07/10] shared/bass: Add API to get GATT client reference
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=88bf423eb525
+  - [BlueZ,08/10] bass: Register MediaAssistant objects
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=77e4c0976c0d
+  - [BlueZ,09/10] bap: Notify scanned BISes to BASS
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=22779f0bce61
+  - [BlueZ,10/10] client: Add assistant submenu
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=a3f9970f7a8b
 
 You are awesome, thank you!
 -- 
