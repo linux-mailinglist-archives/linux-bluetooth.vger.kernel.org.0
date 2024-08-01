@@ -1,48 +1,48 @@
-Return-Path: <linux-bluetooth+bounces-6599-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-6597-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F17C944663
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Aug 2024 10:20:50 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id BABE1944664
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Aug 2024 10:20:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7F7C11C2398A
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 46686B22D14
 	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Aug 2024 08:20:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CD8416E86E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 015D516E861;
 	Thu,  1 Aug 2024 08:20:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AiVIAm9v"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dFDW4trt"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B21316CD0A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60BAB13D891
 	for <linux-bluetooth@vger.kernel.org>; Thu,  1 Aug 2024 08:20:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722500435; cv=none; b=BudKZrL1+FWpljiBuc6fb6jgKHMIrhYBn2u2ZVFuW8nopl1O9RsiG0MZGyCoHIAeufdX5EcX2qAA3jIBNSS9VHACu2wqrrIe6xbQSpPtoDXKf2gK+ciU81u8+2hObpFp+oq+0vsGpX0Ib+ZbBoXs/KR+4k8nbKy3LhnPpwcJeU8=
+	t=1722500435; cv=none; b=g+ZCbSGBAQh0meZuPHZbMF+cTcki+HFJPTdXd7nQm9SdX62tZfF0du9Fbn/kY6AXn4A41gfVRQZLmhROVbC7QyVRWQMM2fHljEzYYbQZvpdOPSk9ch/Xkgb0lbvysUMsTJuzQVeKcDve4hO6gk9fmGzS56q2LnDXPGMY2KXhy5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1722500435; c=relaxed/simple;
-	bh=AP4quI6GxWZtRg2vXhA2aovuAj49mpN+kVXNIoxmvZA=;
+	bh=aQzM8uZsnmAgn0Qj8eHVPLFShCLwYdCAXCQCwpI6LXM=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=V3YO6sQS3Bz9DKmbMXwqRi8S/RpWh6bWAwPX9pc7MZATrXMzBfAp4fMt//5JrQOPFVZ1UDSq4GM/OBSJYj8ZF7QKv0myzwDN1obrSCxGf9tBTt6xB/1qSEMrzLaiJN6OS3GX6j6MUydwpBfKrq/P2HlBqiskuBZWzcwIjymP8tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AiVIAm9v; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 14DC6C32786;
+	 In-Reply-To:To:Cc; b=ER1BJt3guqlmm6ynI2qs4EfX1oXWXr2F09+AgfYeZUnVmqm9QTIlF4JIDsr030H36vC5J0WRyG2zFjLVyHYTb5OZKrhw7/Fh5ASBO8jtvHXbLA/PN9Itg8eD4lpznk6NzuXxMcddSXz3YCOsSNYhTDFX/gFJUVAqL8IDFhAGRVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dFDW4trt; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 3EC63C4AF0D;
 	Thu,  1 Aug 2024 08:20:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1722500435;
-	bh=AP4quI6GxWZtRg2vXhA2aovuAj49mpN+kVXNIoxmvZA=;
+	bh=aQzM8uZsnmAgn0Qj8eHVPLFShCLwYdCAXCQCwpI6LXM=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=AiVIAm9vzKVRqdjqftoLYJu97xZ0RZ3J9IF0cbw3DCX+W8Mc6lR9icBcR3oHMoMbo
-	 9q0Liv3piJBDNN4P991/5FVnugBHU3tPsW8u7HFt/Kdo7eiYh2r+JIeZNoGcd/VdQ6
-	 QWfagTBA58ORIqjqo7ORqWadG1xZ0voscqrLND/H8Za2ql5ywaWo6c9VWdpRr5w+iJ
-	 +/P3p5i2FdyQh1lwEsBVBUI8yJrZ3MbFn0ErnjGqRyGd5qAVG6s8F1PtWGn2gW9pM/
-	 ceTnoKLvhdKVhguIWwPKEAMAKvU82XeObapfm+35o/ekvCfuXMGJfcASOVilpIwrHJ
-	 itO+/Ja+7LpcA==
+	b=dFDW4trt4oHQFHzzFcuYfZA0cbhewD5TORSBTM3LVgDRV5B5TC+LTNawCVSK00DVj
+	 iI0fN8iQiVvXpUweJK/Z2ED61132w+nYh5qWMhWfp+ZZjaQxWZ4zebub71wZS6EE1Y
+	 r4oOTBxw47PY48tsCsYLW0u6HKXQG3nje3BF9TUUt8yRURCblzqOdaT58yzR5RPEtM
+	 RhXXUw70bIfOL/sAOMXvgVNSlkdkGP4Ns3dwy/ykxnDpN38oeZSZNV2ZR9UXB4xQ83
+	 SqYb/708mE/Abk3b3TXWJru+k9yxIUU8xXaaxr5r1UAuEdtU5aeVdd/yxdgqYaa427
+	 XIgxr4GYN5Wcw==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 0B3B9C43445;
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 31CCBC43443;
 	Thu,  1 Aug 2024 08:20:35 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
@@ -52,35 +52,36 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2] Bluetooth: hci_sync: avoid dup filtering when passive
- scanning with adv monitor
+Subject: Re: [PATCH] Bluetooth: L2CAP: Fix missing unlock in l2cap_conless_channel
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <172250043503.11616.3247724024892353101.git-patchwork-notify@kernel.org>
+ <172250043520.11616.17755338420150049860.git-patchwork-notify@kernel.org>
 Date: Thu, 01 Aug 2024 08:20:35 +0000
-References: <20240729195810.25040-1-anton@khirnov.net>
-In-Reply-To: <20240729195810.25040-1-anton@khirnov.net>
-To: Anton Khirnov <anton@khirnov.net>
-Cc: linux-bluetooth@vger.kernel.org
+References: <7f815a56-34bd-4aea-9072-312cfdd0d80a@I-love.SAKURA.ne.jp>
+In-Reply-To: <7f815a56-34bd-4aea-9072-312cfdd0d80a@I-love.SAKURA.ne.jp>
+To: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Cc: marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+ linux-bluetooth@vger.kernel.org, syzkaller-bugs@googlegroups.com,
+ syzbot+45ac74737e866894acb0@syzkaller.appspotmail.com
 
 Hello:
 
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Mon, 29 Jul 2024 21:58:10 +0200 you wrote:
-> This restores behaviour (including the comment) from now-removed
-> hci_request.c, and also matches existing code for active scanning.
+On Sat, 27 Jul 2024 16:49:37 +0900 you wrote:
+> syzbot is reporting that l2cap_chan_unlock(chan) is missing.
 > 
-> Without this, the duplicates filter is always active when passive
-> scanning, which makes it impossible to work with devices that send
-> nontrivial dynamic data in their advertisement reports.
+> Reported-by: syzbot <syzbot+45ac74737e866894acb0@syzkaller.appspotmail.com>
+> Closes: https://syzkaller.appspot.com/bug?extid=45ac74737e866894acb0
+> Fixes: f1a8f402f13f ("Bluetooth: L2CAP: Fix deadlock")
+> Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 > 
 > [...]
 
 Here is the summary with links:
-  - [v2] Bluetooth: hci_sync: avoid dup filtering when passive scanning with adv monitor
-    https://git.kernel.org/bluetooth/bluetooth-next/c/2360f368524b
+  - Bluetooth: L2CAP: Fix missing unlock in l2cap_conless_channel
+    https://git.kernel.org/bluetooth/bluetooth-next/c/1e69bd3ba19c
 
 You are awesome, thank you!
 -- 
