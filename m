@@ -1,48 +1,48 @@
-Return-Path: <linux-bluetooth+bounces-6602-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-6604-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C74F0944818
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Aug 2024 11:24:33 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 23F65944819
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Aug 2024 11:24:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 648EBB28375
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Aug 2024 09:24:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D4EE0285363
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  1 Aug 2024 09:24:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7057E19E7D0;
-	Thu,  1 Aug 2024 09:20:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 111CC19EEC0;
+	Thu,  1 Aug 2024 09:20:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OcPCF/Je"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rx+Hocxc"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF4E189536
-	for <linux-bluetooth@vger.kernel.org>; Thu,  1 Aug 2024 09:20:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E9119E7E0
+	for <linux-bluetooth@vger.kernel.org>; Thu,  1 Aug 2024 09:20:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722504038; cv=none; b=rVfUMzSycC2Q8H6YiGI8b5XRdPU6RnGENCpO5whAQgpCaAxwUlDIq97I61AULq79+3tgp8L4VXVbkoSgRW/+7/v8txeRyHtCi2cgFVGpgHkobI1x/TAKCfijk8qcYBgLDMmMxdq5nggjNZZrs66Go9SmHclw/PJ8sQ46bXk4bk8=
+	t=1722504039; cv=none; b=CWJvECpQoD6HNw65ZoZduh17f6TS76u0ObGNAhQcqrwOURa36AIWo+sWti+C0N1HIiKRvEzplhOgcc9a5KykTc1k85VfQ2w/kp6iJE19Pu9P2Y5mZO6qalKUchp1DxcaBhkC9krwBAvCCNEbjMCjpFTJ/DG8J5XbreqK/9Gcfno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722504038; c=relaxed/simple;
-	bh=ozDPzhcpKfLeyKM6X75QqPco/i8VheiMKhA9zlkRTSQ=;
+	s=arc-20240116; t=1722504039; c=relaxed/simple;
+	bh=t/yr8+nwjfyue9uykz7AdN65V/1t8LUQJLWnppXSIx4=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=FgKeFvUrHRGhVB/3i0fIBSbfXttotSrFcNT5tt33D+BSPkpnLzif9xTPuWYQz6XeHxQJPT+Kxh3tJIHzn7/y9Kfs5wVYz/FNocFjB+wUiSZNVBXZMsq7Kq35Ri2HQAEih2nMxlZcaboTNdgCtBSbJHSUix00hz7M91IDXPB0fiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OcPCF/Je; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 46561C4AF0B;
+	 In-Reply-To:To:Cc; b=KncksO+dj7jl1rHssOHDg4Rt6VP1PoR9xznNFzR3WNHjNNAD6OS9lheQGRF2MxBJSHavyV9lSYoo04M4V/OGAZCxWXxzAHDg5eVHHwHQgVC0pIO57SguHB7ngiKztp7Bbu4l0S8amku/oZqGUoEdOSeqp/Ko6oEvZnlwedO1CnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rx+Hocxc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id E3633C4AF09;
 	Thu,  1 Aug 2024 09:20:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1722504038;
-	bh=ozDPzhcpKfLeyKM6X75QqPco/i8VheiMKhA9zlkRTSQ=;
+	bh=t/yr8+nwjfyue9uykz7AdN65V/1t8LUQJLWnppXSIx4=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=OcPCF/JenL9AJZpyFwI4NAuc2B/FjL1PAI7I5lrT0Ajsn1+y0RFoDksNYK5n6tNzu
-	 R+dmXQKe7s0A55QT/SVANGzkmK58Ix8kJ4pKD5xotLuDXH4S4b6FbgjChXas9QySXa
-	 pmVOAe34NG0u+/avcaMq1bWVHre/U9kTEnR+jqXxp8P1RainrgLyFxt0PfHqEN/f/I
-	 3+yL/AUKANdFEl0cxzQOAPnd8/L0dQUKCppNwF170y+VCy6i27Rr8ozM8n6710vxN/
-	 VEzt4Jsu0kHV2ghWhIGrP3wZ0U8lFmtDIhZxam1zW/aXLtmnU0HQFhY7hMyC5N6Jo6
-	 j8fgKm4Jpl6Dg==
+	b=Rx+Hocxcp8oM3UvOUWWCfWWs6knLx3pPGeOtxRU7v4R40lRZqJj2pfEgSoXxTOpwA
+	 b8Ze0aoymwJ/UhpOgnaLLNK/J50lUQKNh9UiACQ3F2x5DOu+qcefKP3o6v+8VTnyGg
+	 YcKeyEdnkQv6CMbFY+K7xbts0WQ7frcJdJDE5r9LMsw99BGP4GmNjtcDxA7pFShr+y
+	 WPE172hwgmQPqD6UfEDMdb6LL+9N+XPqG+pTEXoq9cixphk2kbWECptHDavFJ85b21
+	 IeCp9c700F0fRDh/R1fZFCuoi6piG4016rXk/PhiEUJtdxrhX34De14/XteB75FrOH
+	 X9qKcHNPq6gvA==
 Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 3C134C43445;
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id DA9B2C43445;
 	Thu,  1 Aug 2024 09:20:38 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
@@ -52,54 +52,33 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ v5 0/8] Add 'broadcasting' state
+Subject: Re: [PATCH BlueZ] client/gatt: Set handle before calling print functions
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <172250403824.1152.13634174812370548618.git-patchwork-notify@kernel.org>
+ <172250403889.1152.4360610369088404319.git-patchwork-notify@kernel.org>
 Date: Thu, 01 Aug 2024 09:20:38 +0000
-References: <20240731061713.435586-1-vlad.pruteanu@nxp.com>
-In-Reply-To: <20240731061713.435586-1-vlad.pruteanu@nxp.com>
-To: Vlad Pruteanu <vlad.pruteanu@nxp.com>
-Cc: linux-bluetooth@vger.kernel.org, mihai-octavian.urzica@nxp.com,
- iulia.tanasescu@nxp.com, andrei.istodorescu@nxp.com, luiz.dentz@gmail.com,
- pav@iki.fi
+References: <20240731102321.700398-1-alexander.ganslandt@axis.com>
+In-Reply-To: <20240731102321.700398-1-alexander.ganslandt@axis.com>
+To: Alexander Ganslandt <alexander.ganslandt@axis.com>
+Cc: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This series was applied to bluetooth/bluez.git (master)
+This patch was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Wed, 31 Jul 2024 09:17:05 +0300 you wrote:
-> This series adds a new 'broadcasting' state for transports created by
-> the Broadcast Sink device as a result of scanning a Broadcast Source.
-> Such transports will remain  in the 'idle' state until the user
-> selects them, at which point they will be moved to 'broadcasting'.
-> PipeWire detects these transports and automatically acquires them.
-> 
-> The transport selection is done using the 'transport.select' method,
-> that this series implements. This allows the user to select the desired
-> stream when running the setup with PipeWire since it acquires any
-> transport that is broadcasting.
-> 
-> [...]
+On Wed, 31 Jul 2024 12:23:21 +0200 you wrote:
+> The print functions (print_service, print_chrc and print_desc) all print
+> the handle, but the handle is never set in the struct object. This
+> results in the handle always printing as 0x0000. Set the handle before
+> calling the print function.
+> ---
+>  client/gatt.c | 21 +++++++++++++++++++++
+>  1 file changed, 21 insertions(+)
 
 Here is the summary with links:
-  - [BlueZ,v5,1/8] doc/media: Add 'broadcasting' state and 'Select' method
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=d7b7f3a39562
-  - [BlueZ,v5,2/8] transport: Add 'broadcasting' state
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=9357edb87bb9
-  - [BlueZ,v5,3/8] transport: Add 'Select' method
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=083d1a7b66b5
-  - [BlueZ,v5,4/8] client/player: Expose transport 'Select' method to the user
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=61e16e3b8317
-  - [BlueZ,v5,5/8] transport: Broadcast sink: wait for user to select transport
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=53a4078cb350
-  - [BlueZ,v5,6/8] doc/media: Add 'Unselect' method
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=c7e79fa8bfff
-  - [BlueZ,v5,7/8] transport: Add 'Unselect' method
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=6ee75c3ec383
-  - [BlueZ,v5,8/8] client/player: Expose transport 'Unselect' method to the user
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=827416638289
+  - [BlueZ] client/gatt: Set handle before calling print functions
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=720e8ec9760b
 
 You are awesome, thank you!
 -- 
