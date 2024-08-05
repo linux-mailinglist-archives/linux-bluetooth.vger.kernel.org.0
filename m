@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-6670-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-6668-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9FBE947C87
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  5 Aug 2024 16:09:14 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DCBF8947C85
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  5 Aug 2024 16:09:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 537D01F21532
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  5 Aug 2024 14:09:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 19CD11C21B60
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  5 Aug 2024 14:09:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A9B413B5AD;
-	Mon,  5 Aug 2024 14:08:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7877E13AD39;
+	Mon,  5 Aug 2024 14:08:47 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay7-d.mail.gandi.net (relay7-d.mail.gandi.net [217.70.183.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0628B12C484
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DCA112D20D
 	for <linux-bluetooth@vger.kernel.org>; Mon,  5 Aug 2024 14:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722866927; cv=none; b=EKXPHI/zQU4bHbcyW/uwUy4U77sVUfd+FM/l+oRN9qPOkUY1RY4JM2O4aBWmf5Ddfp1Egl+pCbvhvHhDEE4NekCgTcIvX1WaJRKtKDjVw0R1TWqCurhseCno5x0RkR7uUNRtj7VeYqPFinlECQpqQ9I/yKawqqSkey1pwHVEU6k=
+	t=1722866927; cv=none; b=QOlHbz+rU4idMlVC/b+w978D2J+SkB2Mo52BdAKh9T62ixDyvXZDEO2V56SDvOXOnvU0wW39mhsSxDu/Ujity+tLai5VRforJe9NQT72Gu04liJyRAqTXAtuYuHqn3Y0Uwr4+pcLvpQOR4krF3RknT4TLTSmhAWXyMAxVrF5HEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1722866927; c=relaxed/simple;
-	bh=yUneGDyBLidQe02OZmR7Mstv0imyNiw+9ggZirz2eHw=;
+	bh=0wqNcyaL74Bj6IpXL6qGatPX6UlTMhwbuxzp+0BeNmo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oFh9K9PNvrj741lzUytNZkz+bz67+Km4SZT5D1h/v2nG7JfyExpvxv+ucgZizXs+kOnjEMG3vZYdk5J1qhmF/7SJAUwgwzgwvuWXk+5Yaha6jLp4Fp5RQrOZWZZ3zvLcYvKB1c7sO6BB6JcoiH1K/cXCMvKtdaGR8RBZRgQ/SyE=
+	 MIME-Version; b=AFckHxRyfzgHUQKig9CNRRzHliJxb9Dt5Pd+2LyzssVhF0DajQKwwQeL8tMPUD9sUpKY0+Z/yawEX8xIrQYwP+ZW1UNNllzfp6CX5xionxx+V8VGV4sblHjmvBV8oPfcIl32WQrNX+9VcBZDgr32D3V18UKRAd1f2PQIbJrXU1I=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.200
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 390362000D;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 82ED52000F;
 	Mon,  5 Aug 2024 14:08:43 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ 6/8] shared/gatt-db: Fix possible buffer overrun
-Date: Mon,  5 Aug 2024 16:06:44 +0200
-Message-ID: <20240805140840.1606239-7-hadess@hadess.net>
+Subject: [BlueZ 7/8] shared/btsnoop: Avoid underflowing toread variable
+Date: Mon,  5 Aug 2024 16:06:45 +0200
+Message-ID: <20240805140840.1606239-8-hadess@hadess.net>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240805140840.1606239-1-hadess@hadess.net>
 References: <20240805140840.1606239-1-hadess@hadess.net>
@@ -49,49 +49,43 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-uuid_to_le() returns one of the possible values from bt_uuid_len().
-bt_uuid_len() returns "type / 8".
-type is a value between 0 and 128, but could be something else
-depending on the validity of the UUID that's parsed. So an invalid
-value of type between 128 and 256 would trigger an overrun.
-
-Add a check to make sure that an invalid type isn't used to calculate
-the length.
-
-Error: OVERRUN (CWE-119): [#def6] [important]
-bluez-5.77/src/shared/gatt-db.c:612:2: assignment: Assigning: "len" = "uuid_to_le(uuid, value)". The value of "len" is now between 0 and 31 (inclusive).
-bluez-5.77/src/shared/gatt-db.c:614:2: overrun-buffer-arg: Overrunning array "value" of 16 bytes by passing it to a function which accesses it at byte offset 30 using argument "len" (which evaluates to 31).
-612|	len = uuid_to_le(uuid, value);
-613|
-614|->	service->attributes[0] = new_attribute(service, handle, type, value,
-615|									len);
-616|	if (!service->attributes[0]) {
+Error: INTEGER_OVERFLOW (CWE-190): [#def8] [important]
+bluez-5.77/src/shared/btsnoop.c:556:3: underflow: The decrement operator on the unsigned variable "toread" might result in an underflow.
+bluez-5.77/src/shared/btsnoop.c:572:2: overflow_sink: "toread", which might have underflowed, is passed to "read(btsnoop->fd, data, toread)". [Note: The source code implementation of the function has been overridden by a builtin model.]
+570|	}
+571|
+572|->	len = read(btsnoop->fd, data, toread);
+573|	if (len < 0) {
+574|		btsnoop->aborted = true;
 ---
- src/shared/gatt-db.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ src/shared/btsnoop.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/src/shared/gatt-db.c b/src/shared/gatt-db.c
-index b35763410d17..cd0eba6bf1d0 100644
---- a/src/shared/gatt-db.c
-+++ b/src/shared/gatt-db.c
-@@ -560,9 +560,14 @@ static int uuid_to_le(const bt_uuid_t *uuid, uint8_t *dst)
- 		return bt_uuid_len(uuid);
+diff --git a/src/shared/btsnoop.c b/src/shared/btsnoop.c
+index bc5f7fcbe84c..bb0bccf0dd01 100644
+--- a/src/shared/btsnoop.c
++++ b/src/shared/btsnoop.c
+@@ -530,7 +530,7 @@ bool btsnoop_read_hci(struct btsnoop *btsnoop, struct timeval *tv,
  	}
  
--	bt_uuid_to_uuid128(uuid, &uuid128);
--	bswap_128(&uuid128.value.u128, dst);
--	return bt_uuid_len(&uuid128);
-+	if (uuid->type == BT_UUID32 ||
-+	    uuid->type == BT_UUID128) {
-+		bt_uuid_to_uuid128(uuid, &uuid128);
-+		bswap_128(&uuid128.value.u128, dst);
-+		return bt_uuid_len(&uuid128);
+ 	toread = be32toh(pkt.len);
+-	if (toread > BTSNOOP_MAX_PACKET_SIZE) {
++	if (toread > BTSNOOP_MAX_PACKET_SIZE || toread < 1) {
+ 		btsnoop->aborted = true;
+ 		return false;
+ 	}
+@@ -569,6 +569,11 @@ bool btsnoop_read_hci(struct btsnoop *btsnoop, struct timeval *tv,
+ 		return false;
+ 	}
+ 
++	if (toread == 0) {
++		btsnoop->aborted = true;
++		return false;
 +	}
 +
-+	return 0;
- }
- 
- static bool le_to_uuid(const uint8_t *src, size_t len, bt_uuid_t *uuid)
+ 	len = read(btsnoop->fd, data, toread);
+ 	if (len < 0) {
+ 		btsnoop->aborted = true;
 -- 
 2.45.2
 
