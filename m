@@ -1,136 +1,195 @@
-Return-Path: <linux-bluetooth+bounces-6695-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-6697-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6AFE694AB51
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  7 Aug 2024 17:05:45 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A632894AD1C
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  7 Aug 2024 17:42:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1E80EB28109
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  7 Aug 2024 15:04:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2D78A1F2974A
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  7 Aug 2024 15:42:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C415D129A78;
-	Wed,  7 Aug 2024 15:03:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ceitQJsN"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A34D413774B;
+	Wed,  7 Aug 2024 15:39:50 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [217.70.183.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8078723CE;
-	Wed,  7 Aug 2024 15:03:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A76136E30
+	for <linux-bluetooth@vger.kernel.org>; Wed,  7 Aug 2024 15:39:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043006; cv=none; b=IPH4iFQcOiQ9SqHhFsLxPsdfTM0e6Sq5PcEbHQimaQV0b3L+tP1KG5i6Hgkxm37cCSd+Xk3FyutZcqrxp8By5sRdPNc2JBkznySTGlgPlyOA2QoN+HfwMNdiIdrfK8hcBX+ben8Hn6kdwSbahVg+jtKd3B1p2tWgkZvQ3IVuW34=
+	t=1723045190; cv=none; b=AghRxqDSAbujsF1/VeZRfIVzHhXt5xq+VwPPYuMnkIRUbHvc294erF8tTv3ChLmAS3+w5JrDwyPEcXcIubU4K/OmbiXcExhosC9xscscqAB1X6RkJka4Mcl1hcaa76PtjWuZTBFhNi9WlGBODB9tBIEO9x2SJt5rq90OFEwj32U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043006; c=relaxed/simple;
-	bh=nRMrw4V9Pr41+Lv5ihVF8n+cyXHutqNgOrphUFs46B8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NzYEqTC7Ctmk90OekPm1TskR7eGboZ6jngEswcuDoxmLsN7fiwZ024BGHIWqeAQTNwp5tnDxTfJoVWXvM8RhvGMn3fxuoFRv2QZF64UYNzwVnH7wle5VzWHfBwthXAO2JUZyNQVE3h1V2HfYuS8OozHOKCv27kb+O8dGVWwPP0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ceitQJsN; arc=none smtp.client-ip=209.85.208.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2f149845d81so23509611fa.0;
-        Wed, 07 Aug 2024 08:03:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723043003; x=1723647803; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nRMrw4V9Pr41+Lv5ihVF8n+cyXHutqNgOrphUFs46B8=;
-        b=ceitQJsNoEVsRSGNmaWvfIV3Dic7UF7N2uzAVz88/s5o2vBEcRU1/c0MVrlwoPpnwJ
-         FjVIFVFL0eX0NhL6dgqMlnCYbHAHcHojZ1X+7q9nPwmLQuDw9Z7y/hjT5TS0qEurnKC0
-         BayQFA21XMOlPG7HKjfHLn1+rk3Ll5BYNkS7bDEdkX7Sbx3DDNgxYGdbL38lsh8Ucy4W
-         w0yikD5UbiqAnlTIoPY4MQArNmXFqVyIa5z54HRcLAlnEMw+RWk8F/JgQz6tS2oype6/
-         tlVwv/T76XIDtYn0lIvekYpqEm8W+L9W3e638+0LRAP5aP0dqz4iaB4WwpBwxjk0xdtD
-         jvmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723043003; x=1723647803;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nRMrw4V9Pr41+Lv5ihVF8n+cyXHutqNgOrphUFs46B8=;
-        b=nT82RclxLF0iAv/KsUsUcWPrsCN2cZaGYeMhRDIL9SAi1PcIBCWvzhu6QvUsJFVIup
-         nGPsLAwImqrkIfEed44qWo/BvSVAEKeqx/S9IE93GtiSg7Qs4rLV6sNkhcSqTR05mZzP
-         wUyDJT34LxSkN+mCqUYGmjJ6ZGYAFf1q4pMHftbrW8NC5ItzYb6BDuj8ugJqLy0OpIVv
-         hx59wYt6gJiypiuCk3apMBvoPu4KKF+JWKwUetrIw/a9DuC4IxiaMMAMS0PNnaLIEyQZ
-         dn0Doc0k0aWz5ySaqxmkNLohyZ8w95Oi/XxyHUegAm5I/zY7jPmbzwn+wiDTlSrgYxph
-         I6NQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUY/A4nRuYiWHAlyCrLvDctDWJGXbKKUwsGz4mVTekGHRo48w+i+AkFrCKs/qFw1xHSDBiPqrbHjQX9ETbDNRyWJiYnXle+PwqFXf835M4OA4uboaCk9XdU7C1dgJatZ6MY+gGVnFbGzMo6Ta9l
-X-Gm-Message-State: AOJu0Yzuez0qyP33qp77ZOR7SdJWYJ21CvCvIP8NWiGx4gBmDFv2Ql/s
-	8jAACA2TzDZ/rZBpmy60dwmjHLVqWEWQIj1HrQC2vswvsxwBalvlp+pwwmBIVX2MY/++2C3UAOE
-	3d13MWAUxH8aeFl30YSV4igtfWrA=
-X-Google-Smtp-Source: AGHT+IFHVvEQ0ERmGM9Z9oiubHndmesWcONaitsAYkyBKiSKbwUzIkD4KlYucskdiUerAijqBlVinTDKhFuBgTdgOcc=
-X-Received: by 2002:a2e:2c11:0:b0:2ef:243b:6dce with SMTP id
- 38308e7fff4ca-2f15aa84ec7mr114696851fa.10.1723043002139; Wed, 07 Aug 2024
- 08:03:22 -0700 (PDT)
+	s=arc-20240116; t=1723045190; c=relaxed/simple;
+	bh=L8NsJIvDAxk/N/oqHkQvJEaBvq1J3n93rtyXjaD8d70=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=Czha5TkpCpSnW9EtHLR2nLwAqZM0T2oaHoNsiffow6C8ApmQwOJ/uQ+wTle3NspV7wDBIZUWX5TYkV77SV//ofwTmwvgvp9vzQodsUsWNZ8rih2MQ7ihxevMMOa80Kqmf/uGR1lsb47WLHy+uARPM+a22swCwrd2uCl1kwx0kQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
+Received: by mail.gandi.net (Postfix) with ESMTPSA id CF6071BF208;
+	Wed,  7 Aug 2024 15:39:45 +0000 (UTC)
+Message-ID: <a86fa1676c72005cd77faabf65f9553242ea7a45.camel@hadess.net>
+Subject: Re: [BlueZ 6/8] shared/gatt-db: Fix possible buffer overrun
+From: Bastien Nocera <hadess@hadess.net>
+To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: linux-bluetooth@vger.kernel.org
+Date: Wed, 07 Aug 2024 17:39:45 +0200
+In-Reply-To: <CABBYNZLeuUw5nO-nw65nccSCKXcf-KLMxqDfPTObk-S3NP+tTQ@mail.gmail.com>
+References: <20240805140840.1606239-1-hadess@hadess.net>
+	 <20240805140840.1606239-7-hadess@hadess.net>
+	 <CABBYNZLeuUw5nO-nw65nccSCKXcf-KLMxqDfPTObk-S3NP+tTQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.4 (3.52.4-1.fc40) 
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240731-hci_qca_fixes-v1-0-59dad830b243@linaro.org>
- <20240731-hci_qca_fixes-v1-3-59dad830b243@linaro.org> <1723fdc3-33b9-4518-8f25-161ab59ecf21@notapiano>
- <CAMRc=MdSH6n=QKwWnT9zNaBito34t+BpCufQDjnAOaeC5iuD+Q@mail.gmail.com>
-In-Reply-To: <CAMRc=MdSH6n=QKwWnT9zNaBito34t+BpCufQDjnAOaeC5iuD+Q@mail.gmail.com>
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Wed, 7 Aug 2024 11:03:09 -0400
-Message-ID: <CABBYNZ+1XpSDvt41zEYYQ4AraCucOM7FDSVhhkGNsCgr9-hc6g@mail.gmail.com>
-Subject: Re: [PATCH 3/3] Bluetooth: hci_qca: fix a NULL-pointer derefence at shutdown
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: =?UTF-8?B?TsOtY29sYXMgRi4gUi4gQS4gUHJhZG8=?= <nfraprado@collabora.com>, 
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>, Marcel Holtmann <marcel@holtmann.org>, 
-	Wren Turkal <wt@penguintechs.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-GND-Sasl: hadess@hadess.net
 
-Hi Bartosz, Nicolas,
-
-On Wed, Aug 7, 2024 at 3:53=E2=80=AFAM Bartosz Golaszewski <brgl@bgdev.pl> =
-wrote:
+On Tue, 2024-08-06 at 15:08 -0400, Luiz Augusto von Dentz wrote:
+> Hi Bastien,
+>=20
+> On Mon, Aug 5, 2024 at 10:09=E2=80=AFAM Bastien Nocera <hadess@hadess.net=
 >
-> On Wed, Aug 7, 2024 at 12:44=E2=80=AFAM N=C3=ADcolas F. R. A. Prado
-> <nfraprado@collabora.com> wrote:
-> >
-> > On Wed, Jul 31, 2024 at 05:20:50PM +0200, Bartosz Golaszewski wrote:
-> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > >
-> > > Unlike qca_regulator_init(), qca_power_shutdown() may be called for
-> > > QCA_ROME which does not have qcadev->bt_power assigned. Add a
-> > > NULL-pointer check before dereferencing the struct qca_power pointer.
-> > >
-> > > Fixes: eba1718717b0 ("Bluetooth: hci_qca: make pwrseq calls the defau=
-lt if available")
-> > > Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > Closes: https://lore.kernel.org/linux-bluetooth/su3wp6s44hrxf4ijvsdfz=
-bvv4unu4ycb7kkvwbx6ltdafkldir@4g7ydqm2ap5j/
-> > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >
-> > Hi,
-> >
-> > I just noticed we're still hitting this issue in mainline (saw it on th=
-e
-> > mt8183-juniper platform in KernelCI). I see this commit was merged 6 da=
-ys ago to
-> > bluetooth-next, but it seems there wasn't a pull request with this fix =
-yet to
-> > include it in 6.11. I'm wondering if it's still going to be sent.
-> >
-> > Thanks,
-> > N=C3=ADcolas
->
-> The patches are in next so I don't see why they wouldn't be sent upstream=
-.
->
-> Moving Luiz and Marcel to To: to make sure they see this message.
+> wrote:
+> >=20
+> > uuid_to_le() returns one of the possible values from bt_uuid_len().
+> > bt_uuid_len() returns "type / 8".
+> > type is a value between 0 and 128, but could be something else
+> > depending on the validity of the UUID that's parsed. So an invalid
+> > value of type between 128 and 256 would trigger an overrun.
+> >=20
+> > Add a check to make sure that an invalid type isn't used to
+> > calculate
+> > the length.
+> >=20
+> > Error: OVERRUN (CWE-119): [#def6] [important]
+> > bluez-5.77/src/shared/gatt-db.c:612:2: assignment: Assigning: "len"
+> > =3D "uuid_to_le(uuid, value)". The value of "len" is now between 0
+> > and 31 (inclusive).
+> > bluez-5.77/src/shared/gatt-db.c:614:2: overrun-buffer-arg:
+> > Overrunning array "value" of 16 bytes by passing it to a function
+> > which accesses it at byte offset 30 using argument "len" (which
+> > evaluates to 31).
+> > 612|=C2=A0=C2=A0=C2=A0 len =3D uuid_to_le(uuid, value);
+> > 613|
+> > 614|->=C2=A0 service->attributes[0] =3D new_attribute(service, handle,
+> > type, value,
+> > 615|=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0
+> > =C2=A0=C2=A0=C2=A0=C2=A0 len);
+> > 616|=C2=A0=C2=A0=C2=A0 if (!service->attributes[0]) {
+> > ---
+> > =C2=A0src/shared/gatt-db.c | 11 ++++++++---
+> > =C2=A01 file changed, 8 insertions(+), 3 deletions(-)
+> >=20
+> > diff --git a/src/shared/gatt-db.c b/src/shared/gatt-db.c
+> > index b35763410d17..cd0eba6bf1d0 100644
+> > --- a/src/shared/gatt-db.c
+> > +++ b/src/shared/gatt-db.c
+> > @@ -560,9 +560,14 @@ static int uuid_to_le(const bt_uuid_t *uuid,
+> > uint8_t *dst)
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 return bt_uuid_len(uuid);
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> >=20
+> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bt_uuid_to_uuid128(uuid, &uuid128=
+);
+> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bswap_128(&uuid128.value.u128, ds=
+t);
+> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return bt_uuid_len(&uuid128);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (uuid->type =3D=3D BT_UUID32 |=
+|
+>=20
+> BT_UUID32 is not really valid in LE, so Id leave this check to be:
+>=20
+> switch (uuid->type) {
+> case BT_UUID16:
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 put_le16(uuid->value.u16, dst)=
+;
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return bt_uuid_len(uuid);
+> case BT_UUID128:
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bt_uuid_to_uuid128(uuid,=
+ &uuid128);
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bswap_128(&uuid128.value=
+.u128, dst);
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return bt_uuid_len(&uuid=
+128);
+> }
+>=20
+> return 0;
+>=20
+> We do however have bt_uuid_to_le with the only difference being that
+> it is more generic and it doesn't return the actual bytes written to
+> the dst, anyway we could replace the code above with:
+>=20
+> diff --git a/src/shared/gatt-db.c b/src/shared/gatt-db.c
+> index b35763410d17..71976de48569 100644
+> --- a/src/shared/gatt-db.c
+> +++ b/src/shared/gatt-db.c
+> @@ -553,16 +553,9 @@ bool gatt_db_isempty(struct gatt_db *db)
+>=20
+> =C2=A0static int uuid_to_le(const bt_uuid_t *uuid, uint8_t *dst)
+> =C2=A0{
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bt_uuid_t uuid128;
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bt_uuid_to_le(uuid, dst);
+>=20
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (uuid->type =3D=3D BT_UUID16) {
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 put_le16(uuid->value.u16, dst);
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 return bt_uuid_len(uuid);
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> -
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bt_uuid_to_uuid128(uuid, &uuid128);
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bswap_128(&uuid128.value.u128, dst)=
+;
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return bt_uuid_len(&uuid128);
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return bt_uuid_len(uuid) =3D=3D 4 ?=
+ 16 : bt_uuid_len(uuid);
 
-I was on a business trip last week, will prepare the pull request later tod=
-ay.
+Or this with error checking?
 
---=20
-Luiz Augusto von Dentz
+static int uuid_to_le(const bt_uuid_t *uuid, uint8_t *dst)
+{
+        if (bt_uuid_to_le(uuid, dst) < 0)=20
+                return 0;
+        return bt_uuid_len(uuid) =3D=3D 4 ? 16 : bt_uuid_len(uuid);
+}
+
+> =C2=A0}
+>=20
+>=20
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uuid->typ=
+e =3D=3D BT_UUID128) {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 bt_uuid_to_uuid128(uuid, &uuid128);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 bswap_128(&uuid128.value.u128, dst);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 return bt_uuid_len(&uuid128);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> > +
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return 0;
+> > =C2=A0}
+> >=20
+> > =C2=A0static bool le_to_uuid(const uint8_t *src, size_t len, bt_uuid_t
+> > *uuid)
+> > --
+> > 2.45.2
+> >=20
+> >=20
+>=20
+>=20
+
 
