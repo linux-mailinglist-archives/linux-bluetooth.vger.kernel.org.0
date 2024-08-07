@@ -1,142 +1,125 @@
-Return-Path: <linux-bluetooth+bounces-6696-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-6699-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D00194AD9E
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  7 Aug 2024 18:07:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1277B94AFE7
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  7 Aug 2024 20:35:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 05085B2ED81
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  7 Aug 2024 15:35:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3896F1C21AB1
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  7 Aug 2024 18:35:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A63C85931;
-	Wed,  7 Aug 2024 15:35:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F5A714037F;
+	Wed,  7 Aug 2024 18:34:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=nfraprado@collabora.com header.b="JVsIirB4"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
+Received: from sender4-op-o14.zoho.com (sender4-op-o14.zoho.com [136.143.188.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010DF74E09
-	for <linux-bluetooth@vger.kernel.org>; Wed,  7 Aug 2024 15:35:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.199
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723044940; cv=none; b=kCR9VrPAkkYfxSiP9Wt0qgdavjzsbPfOWyXF6X8XQWHvBf1fe1oc8G+73vwEeBE0tw8fmF2pbeuybvEj2LbLtLJvKlcyiVHlk9okiiLk33YPoDr5atrKMi+PJpqL8SXEBwuYExqdyqSXl6aW7rARtUZ8ZhYCRIlS7Pt0KSuZVao=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723044940; c=relaxed/simple;
-	bh=DEBfnioy1SVl3ULKUhZOxM+iY1PAsqsihivKzQ5glsQ=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=CknlOCFocHRaZM1QNpLBuvRBLvSfFjN4z9syu9FEe/YiRb0m8JHfDiDwJFL5hl7BbAbBU2xKvb2M1vPyOW+ggvB+DWPlTiZOEVRlnmiN0rj5j//0Mb6ivQCfF+sY/Z9UQiq8JydTosk+TlbzFGgMZwBlsUe9SiPainaghoSmdU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 14D6DFF809;
-	Wed,  7 Aug 2024 15:35:35 +0000 (UTC)
-Message-ID: <0d5041dcd25e97775843db69cfc2e20be127f32f.camel@hadess.net>
-Subject: Re: [BlueZ 1/8] sdp: Ensure size doesn't overflow
-From: Bastien Nocera <hadess@hadess.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85E1C4653A;
+	Wed,  7 Aug 2024 18:34:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.14
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1723055694; cv=pass; b=AukP5S08MrJyqGNWKtOJsQwbptpUm+VV4gRNMshSfSSGMKMOZbKfqGQ2z4li9OKGCd6t6ht76SjQEJ+9s+rjYtbDew5cIHIYGvwtLafc9r8kqpsLXQZLJ+UptGs2nyX2OgCh3GJRdZD/TIvEMGtY590tlSZwmJEMMDS1kmGjwO4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1723055694; c=relaxed/simple;
+	bh=7CPrCPyCvu9hOYvUuJfwJyfglEWK7ECEaKNeYL08raQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rPMFowtzyEdwhz0AiVo5d4XQMZzjsDz5O8r1P7DfS7PTkOrCLwLCtczxKtjiymqQ92E3DZWhJkvzaV4XAWXEvQzxc21JMBuvRsWXhShL7ISvh5/y2aDx6NGCmYTIJkq8Ww+JpBK4O7hctFDYQqRgtKjiEzl2yW9YqdrWH60jZxU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=nfraprado@collabora.com header.b=JVsIirB4; arc=pass smtp.client-ip=136.143.188.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+ARC-Seal: i=1; a=rsa-sha256; t=1723055683; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=FAtws9c1nxJmLRqOR2TibflYOpj2ERAviXeqSlUmYVArM0nbv2aRNfh9DutL7y2o2A7d8l1NAzr+djGUZTqbfgiNy3dpKMWdtRLDg3LVzn7Am3vSWfj1HKXrn+A7lQHBLDYkBstOiU9C4KIfUr8YpAPk99aF5M5374ODRxoI8s0=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1723055683; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=kM62/z2qYeVqQKmIbUyDUVJPGPEXspmQtFXBCXxN16g=; 
+	b=f8G56NPJmd8JT8Ix93f7PkdQHt0hDfPfYXlfCR7IHpWQCBU+klIff5FTssTW70OvJy2oyn31mjqGc4qJRTmETRcvtdVvEDrxi/jARzvcD/XK0jv6S3PDR+XmOxCw9DFPWBd43+M/Xk39J9OLaeAlbu7ri7UL6Aed2UB577xsBjw=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=nfraprado@collabora.com;
+	dmarc=pass header.from=<nfraprado@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1723055683;
+	s=zohomail; d=collabora.com; i=nfraprado@collabora.com;
+	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:Content-Transfer-Encoding:In-Reply-To:Message-Id:Reply-To;
+	bh=kM62/z2qYeVqQKmIbUyDUVJPGPEXspmQtFXBCXxN16g=;
+	b=JVsIirB4uqsMsYXDNKdxEhz4Kh6VXT7mduUY41rTAx4pbX0Kzqf5amN5Qz5EevA2
+	AiopsCUrVLXGDnRr3f8keEijwPqJ+x4Tl+AnBaay3yLgZgQYU3w+K0Ihzz364umvEqM
+	zouBISzLPrP3jHaJ3zO2PeXhDbsPPxd4w8DperFc=
+Received: by mx.zohomail.com with SMTPS id 1723055682371358.71224001733015;
+	Wed, 7 Aug 2024 11:34:42 -0700 (PDT)
+Date: Wed, 7 Aug 2024 14:34:39 -0400
+From: =?utf-8?B?TsOtY29sYXMgRi4gUi4gQS4=?= Prado <nfraprado@collabora.com>
 To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: linux-bluetooth@vger.kernel.org
-Date: Wed, 07 Aug 2024 17:35:35 +0200
-In-Reply-To: <CABBYNZKVOpfAdsaCy4+ZS3v8KFwG8O0j2ZZJ7Fryx4JS+bnrWA@mail.gmail.com>
-References: <20240805140840.1606239-1-hadess@hadess.net>
-	 <20240805140840.1606239-2-hadess@hadess.net>
-	 <CABBYNZKVOpfAdsaCy4+ZS3v8KFwG8O0j2ZZJ7Fryx4JS+bnrWA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.4 (3.52.4-1.fc40) 
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Marcel Holtmann <marcel@holtmann.org>,
+	Wren Turkal <wt@penguintechs.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH 3/3] Bluetooth: hci_qca: fix a NULL-pointer derefence at
+ shutdown
+Message-ID: <54aba883-e0d7-4eaf-a9a8-72e37c120ef8@notapiano>
+References: <20240731-hci_qca_fixes-v1-0-59dad830b243@linaro.org>
+ <20240731-hci_qca_fixes-v1-3-59dad830b243@linaro.org>
+ <1723fdc3-33b9-4518-8f25-161ab59ecf21@notapiano>
+ <CAMRc=MdSH6n=QKwWnT9zNaBito34t+BpCufQDjnAOaeC5iuD+Q@mail.gmail.com>
+ <CABBYNZ+1XpSDvt41zEYYQ4AraCucOM7FDSVhhkGNsCgr9-hc6g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-GND-Sasl: hadess@hadess.net
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABBYNZ+1XpSDvt41zEYYQ4AraCucOM7FDSVhhkGNsCgr9-hc6g@mail.gmail.com>
+X-ZohoMailClient: External
 
-On Tue, 2024-08-06 at 14:38 -0400, Luiz Augusto von Dentz wrote:
-> Hi Bastien,
->=20
-> On Mon, Aug 5, 2024 at 10:09=E2=80=AFAM Bastien Nocera <hadess@hadess.net=
->
-> wrote:
-> >=20
-> > Error: INTEGER_OVERFLOW (CWE-190): [#def1] [important]
-> > bluez-5.77/lib/sdp.c:1685:2: tainted_data_argument: The check "sent
-> > < size" contains the tainted expression "sent" which causes "size"
-> > to be considered tainted.
-> > bluez-5.77/lib/sdp.c:1686:3: overflow: The expression "size - sent"
-> > is deemed overflowed because at least one of its arguments has
-> > overflowed.
-> > bluez-5.77/lib/sdp.c:1686:3: overflow_sink: "size - sent", which
-> > might have underflowed, is passed to "send(session->sock, buf +
-> > sent, size - sent, 0)".
-> > 1684|
-> > 1685|=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 while=
- (sent < size) {
-> > 1686|->=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 int n =3D send(session->sock, buf + sent,
-> > size - sent, 0);
-> > 1687|=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (n < 0)
-> > 1688|=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 return -1;
-> > ---
-> > =C2=A0lib/sdp.c | 6 +++---
-> > =C2=A01 file changed, 3 insertions(+), 3 deletions(-)
-> >=20
-> > diff --git a/lib/sdp.c b/lib/sdp.c
-> > index 411a95b8a7d3..8a15ad803db1 100644
-> > --- a/lib/sdp.c
-> > +++ b/lib/sdp.c
-> > @@ -1678,13 +1678,13 @@ sdp_data_t *sdp_data_get(const sdp_record_t
-> > *rec, uint16_t attrId)
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return NULL;
-> > =C2=A0}
-> >=20
-> > -static int sdp_send_req(sdp_session_t *session, uint8_t *buf,
-> > uint32_t size)
-> > +static int sdp_send_req(sdp_session_t *session, uint8_t *buf,
-> > size_t size)
-> > =C2=A0{
-> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uint32_t sent =3D 0;
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 size_t sent =3D 0;
-> >=20
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 while (sent < size) {
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 int n =3D send(session->sock, buf + sent, size -
-> > sent, 0);
-> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 if (n < 0)
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 if (n < 0 || sent > SIZE_MAX - n)
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 retur=
-n -1;
->=20
-> Not really following you here, it seems the problem is that sent + n
-> could overflow causing sent to loop around but if that happens don't
-> we get a problem with send syscall itself? Using size_t makes sense
-> but I guess we want n to also be ssize_t then, and perhap use if (n <
-> 0 || n > size - sent) logic if we cannot trust syscalls returns the
-> correct number of bytes.
+On Wed, Aug 07, 2024 at 11:03:09AM -0400, Luiz Augusto von Dentz wrote:
+> Hi Bartosz, Nicolas,
+> 
+> On Wed, Aug 7, 2024 at 3:53 AM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+> >
+> > On Wed, Aug 7, 2024 at 12:44 AM Nícolas F. R. A. Prado
+> > <nfraprado@collabora.com> wrote:
+> > >
+> > > On Wed, Jul 31, 2024 at 05:20:50PM +0200, Bartosz Golaszewski wrote:
+> > > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > > >
+> > > > Unlike qca_regulator_init(), qca_power_shutdown() may be called for
+> > > > QCA_ROME which does not have qcadev->bt_power assigned. Add a
+> > > > NULL-pointer check before dereferencing the struct qca_power pointer.
+> > > >
+> > > > Fixes: eba1718717b0 ("Bluetooth: hci_qca: make pwrseq calls the default if available")
+> > > > Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > Closes: https://lore.kernel.org/linux-bluetooth/su3wp6s44hrxf4ijvsdfzbvv4unu4ycb7kkvwbx6ltdafkldir@4g7ydqm2ap5j/
+> > > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > >
+> > > Hi,
+> > >
+> > > I just noticed we're still hitting this issue in mainline (saw it on the
+> > > mt8183-juniper platform in KernelCI). I see this commit was merged 6 days ago to
+> > > bluetooth-next, but it seems there wasn't a pull request with this fix yet to
+> > > include it in 6.11. I'm wondering if it's still going to be sent.
+> > >
+> > > Thanks,
+> > > Nícolas
+> >
+> > The patches are in next so I don't see why they wouldn't be sent upstream.
+> >
+> > Moving Luiz and Marcel to To: to make sure they see this message.
+> 
+> I was on a business trip last week, will prepare the pull request later today.
 
-I don't think that the static analysis is this clever, it just wants to
-make sure that bounds checking is done to avoid integer overflows.
+Sounds good. And sorry for bothering you about this, I just wanted to make sure
+the fix was headed to 6.11.
 
-I'm fine with quieting Coverity on my end, after fixing the data types
-if that's alright with you.
-
-Also goes for patch 8 of this series.
-
->=20
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 sent +=3D n;
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> > --
-> > 2.45.2
-> >=20
-> >=20
->=20
->=20
-
+Thanks,
+Nícolas
 
