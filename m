@@ -1,50 +1,71 @@
-Return-Path: <linux-bluetooth+bounces-7030-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-7032-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA4E2960625
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Aug 2024 11:47:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C95FB9607E5
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Aug 2024 12:53:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 57A43B24963
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Aug 2024 09:47:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7F7A01F2352F
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Aug 2024 10:53:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBB3119D08C;
-	Tue, 27 Aug 2024 09:47:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEC9F19E7FA;
+	Tue, 27 Aug 2024 10:53:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="VTqjvijg"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from szxga04-in.huawei.com (szxga04-in.huawei.com [45.249.212.190])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0EE51991D0
-	for <linux-bluetooth@vger.kernel.org>; Tue, 27 Aug 2024 09:47:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.190
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C260197A83
+	for <linux-bluetooth@vger.kernel.org>; Tue, 27 Aug 2024 10:53:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724752027; cv=none; b=W/dEF9hNzt51HtvIbgb/1gw3PnuMXujAIrbazTGT+utMbubMlzd0mVdHumafU98/VUgAb8ztsOHgjJUYTv33xTX0D7i+di6QlxlEFuRSPqRUn5eTCx8qzLjVVW2NrSVNAU+AY41cpLkreZjMFJTSBrxpbIGAngtpJHOedcAU5ZU=
+	t=1724755990; cv=none; b=Q9MsUIi77axUbXRxn1AsUh0GgDCpSD5OJg3JNypililJlWPCUeKjI+Ppi5BzFYoVjEqjcSOsNSeBXyIpM17wRsEGECo8BTBOvv7JfmQmKmG+okDPBd1HhC4dpEMD8HeZR9pXm/ksIY6tKPcYMMYfkWeRtgqKneYcmASVQwVPw8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724752027; c=relaxed/simple;
-	bh=e2R8NZUsSGDkEP2ps/K05pYbJKamSciq0avqmPpxl8s=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=NaRpFM9wuwGIyYiUNwVebd9fb+v/IT07qMMXGEK9StjP6B6CPjdajPgKBi8Wc3H7fIOxJtMMlpNA5EgYR8A+N+KrL26vDfeYlq1ezgIcGBRj4NveF7goMLPoJ5ADhzAhPbhPk3tVlV2RLxYAtV8hgtagTccFjJNDzwqBCNPLfIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.190
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.88.234])
-	by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4WtMyY4Wrtz20mkc;
-	Tue, 27 Aug 2024 17:42:13 +0800 (CST)
-Received: from dggpeml500022.china.huawei.com (unknown [7.185.36.66])
-	by mail.maildlp.com (Postfix) with ESMTPS id D0FC31401F4;
-	Tue, 27 Aug 2024 17:47:01 +0800 (CST)
-Received: from huawei.com (10.90.53.73) by dggpeml500022.china.huawei.com
- (7.185.36.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 27 Aug
- 2024 17:47:01 +0800
-From: Hongbo Li <lihongbo22@huawei.com>
-To: <marcel@holtmann.org>, <johan.hedberg@gmail.com>, <luiz.dentz@gmail.com>
-CC: <linux-bluetooth@vger.kernel.org>, <lihongbo22@huawei.com>
-Subject: [PATCH -next] net/bluetooth: make use of the helper macro LIST_HEAD()
-Date: Tue, 27 Aug 2024 17:55:00 +0800
-Message-ID: <20240827095500.3913638-1-lihongbo22@huawei.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1724755990; c=relaxed/simple;
+	bh=vhGFAKURRpGiLzdI/3d0EafP4TO+MvKjm+sOuc/Hq10=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OZo5EujYdlY2w6IlCkMXw9zSMj4QfhYvu5regG9bASNu2frzaznOscgTjd986vsZ1dXFcFPxUcLtuPiT2kJI8Udi01ggAdlGzYa2rnjfIDV9FBKivVdX/XoZUMIN1VRPWps+D4wjmrjdF7LqQKf0pgtLg0AIlLXTUSMXXdvXdCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=VTqjvijg; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1724755987;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=ZgYvxJxYadRu72QVbqiiBTAQxcLnOjms0OIyTFIa+gI=;
+	b=VTqjvijgVU17FEqNcN+VobdPYKbnVfRYO2qpCRhrqMwHLNYRvf1AUWydEQiB4k5AdKa13q
+	3HBq/aM0CfWOp7m46fVgjnJIobln+OxqYLMtYTrRrfAsQWR2ym4ELvDUSVuPdx8k9vVOBT
+	I4DqWixaXftkYrPm5IoPBCkIQOMPp6g=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-377-wQvwAnrlMsCTy8IQiO2-SA-1; Tue,
+ 27 Aug 2024 06:53:03 -0400
+X-MC-Unique: wQvwAnrlMsCTy8IQiO2-SA-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 6BD4E1954B32;
+	Tue, 27 Aug 2024 10:53:00 +0000 (UTC)
+Received: from localhost.localdomain (unknown [10.39.193.3])
+	by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id F0A4A1955DE4;
+	Tue, 27 Aug 2024 10:52:57 +0000 (UTC)
+From: Hans de Goede <hdegoede@redhat.com>
+To: Marcel Holtmann <marcel@holtmann.org>,
+	Johan Hedberg <johan.hedberg@gmail.com>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: Hans de Goede <hdegoede@redhat.com>,
+	Pavel Machek <pavel@ucw.cz>,
+	Lee Jones <lee@kernel.org>,
+	linux-leds@vger.kernel.org,
+	linux-bluetooth@vger.kernel.org
+Subject: [PATCH resend] Bluetooth: Use led_set_brightness() in LED trigger activate() callback
+Date: Tue, 27 Aug 2024 12:52:48 +0200
+Message-ID: <20240827105248.18177-1-hdegoede@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -52,63 +73,41 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
- dggpeml500022.china.huawei.com (7.185.36.66)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 
-list_head can be initialized automatically with LIST_HEAD()
-instead of calling INIT_LIST_HEAD(). Here we can simplify
-the code.
+A LED trigger's activate() callback gets called when the LED trigger
+gets activated for a specific LED, so that the trigger code can ensure
+the LED state matches the current state of the trigger condition
+(LED_FULL when HCI_UP is set in this case).
 
-Signed-off-by: Hongbo Li <lihongbo22@huawei.com>
+led_trigger_event() is intended for trigger condition state changes and
+iterates over _all_ LEDs which are controlled by this trigger changing
+the brightness of each of them.
+
+In the activate() case only the brightness of the LED which is being
+activated needs to change and that LED is passed as an argument to
+activate(), switch to led_set_brightness() to only change the brightness
+of the LED being activated.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 ---
- net/bluetooth/6lowpan.c | 8 ++------
- net/bluetooth/msft.c    | 4 +---
- 2 files changed, 3 insertions(+), 9 deletions(-)
+ net/bluetooth/leds.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
-index 50cfec8ccac4..e4b2fb771da3 100644
---- a/net/bluetooth/6lowpan.c
-+++ b/net/bluetooth/6lowpan.c
-@@ -988,9 +988,7 @@ static void disconnect_all_peers(void)
- {
- 	struct lowpan_btle_dev *entry;
- 	struct lowpan_peer *peer, *tmp_peer, *new_peer;
--	struct list_head peers;
--
--	INIT_LIST_HEAD(&peers);
-+	LIST_HEAD(peers);
+diff --git a/net/bluetooth/leds.c b/net/bluetooth/leds.c
+index f46847632ffa..6e349704efe4 100644
+--- a/net/bluetooth/leds.c
++++ b/net/bluetooth/leds.c
+@@ -48,7 +48,7 @@ static int power_activate(struct led_classdev *led_cdev)
+ 	htrig = to_hci_basic_led_trigger(led_cdev->trigger);
+ 	powered = test_bit(HCI_UP, &htrig->hdev->flags);
  
- 	/* We make a separate list of peers as the close_cb() will
- 	 * modify the device peers list so it is better not to mess
-@@ -1182,9 +1180,7 @@ static const struct file_operations lowpan_control_fops = {
- static void disconnect_devices(void)
- {
- 	struct lowpan_btle_dev *entry, *tmp, *new_dev;
--	struct list_head devices;
--
--	INIT_LIST_HEAD(&devices);
-+	LIST_HEAD(devices);
+-	led_trigger_event(led_cdev->trigger, powered ? LED_FULL : LED_OFF);
++	led_set_brightness(led_cdev, powered ? LED_FULL : LED_OFF);
  
- 	/* We make a separate list of devices because the unregister_netdev()
- 	 * will call device_event() which will also want to modify the same
-diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
-index 5a8ccc491b14..917de240df25 100644
---- a/net/bluetooth/msft.c
-+++ b/net/bluetooth/msft.c
-@@ -305,10 +305,8 @@ static void msft_remove_addr_filters_sync(struct hci_dev *hdev, u8 handle)
- 	struct msft_monitor_addr_filter_data *address_filter, *n;
- 	struct msft_cp_le_cancel_monitor_advertisement cp;
- 	struct msft_data *msft = hdev->msft_data;
--	struct list_head head;
- 	struct sk_buff *skb;
--
--	INIT_LIST_HEAD(&head);
-+	LIST_HEAD(head);
- 
- 	/* Cancel all corresponding address monitors */
- 	mutex_lock(&msft->filter_lock);
+ 	return 0;
+ }
 -- 
-2.34.1
+2.46.0
 
 
