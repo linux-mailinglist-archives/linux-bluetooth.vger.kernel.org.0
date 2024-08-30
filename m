@@ -1,48 +1,48 @@
-Return-Path: <linux-bluetooth+bounces-7133-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-7132-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75C789666EF
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Aug 2024 18:31:19 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DC259666F0
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Aug 2024 18:31:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2C34F2841AE
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Aug 2024 16:31:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D31D1B20E57
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Aug 2024 16:31:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45B881B9B29;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A32E1B9B27;
 	Fri, 30 Aug 2024 16:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rWh0PDbc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vP6eIvKm"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9461F1B5813;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D6D1B2EC5;
 	Fri, 30 Aug 2024 16:30:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725035429; cv=none; b=NWLt1Z/qo/9Yw3phz1WyG+Vb72zVYopTzj2hxMxVyUwdO7FvlI+ldmUGIU1Dk+t9NIbWPOCasDcGS8OWdcDT/KXg96GGfAM0PLMb36k/++1h62Tus8yY5bZCIQk+Funu9RkI4u1cJWMadTn/mWshXY5HSZB+4S1saEgqVZk7hnQ=
+	t=1725035429; cv=none; b=dcG8NymQFE/kqKmS8ujD/ss0OUab5vREqFNzxf2XhYNgpnFy/p5/XkQ2J0pYxZexeXYwBiNp3/XRw4mKNIf1slr9l7H9DIlYoR3kNyj1s95FYP8lI0eBUuc8jJ1AlbVLGazfoOahm1eV6iOFQOPTikdzfqlUtCk/bSgGw1h5XCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1725035429; c=relaxed/simple;
-	bh=C0OgOM07FRybLvkNQvLp9R8T9gl5CboYjbzmJ70HJA0=;
+	bh=kLwFn1Uc2Gr4pxTN+hSImb9jArLkR+hKmintZzt+71I=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=HcqqZWRaud8qiS5K/HmTG+MkVZM4y4sGYc0k7zCF69pnRPja5nHD5lMBi5hFkZ+UsOasGK5OalsiYfCd9cf0DzqBirpKnI8RS1D0yRxTOGCD71qc+te9Kb6HxfOhHBt8Opd1xp8tvhMhVqXdjDyr6vnGWInyOsB8r6C1jU9Ytrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rWh0PDbc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54751C4CECA;
+	 In-Reply-To:To:Cc; b=DDAC55kpF0MzYSqPeEA+cl6fs06kmvjiIJqAzqySZfUt6ZACfrKSnmfW8rO0A71n/qyz5wZCk4aq0LpJeNB5k/+o1riHx17jqRrjpd/iGkqEs0JGfX6EEEIyS0nhfrJT9rQblAsBOmCITYk13xf6du7M8caFWWhD+oSjulLZblU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vP6eIvKm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF9CC4CEC5;
 	Fri, 30 Aug 2024 16:30:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1725035429;
-	bh=C0OgOM07FRybLvkNQvLp9R8T9gl5CboYjbzmJ70HJA0=;
+	bh=kLwFn1Uc2Gr4pxTN+hSImb9jArLkR+hKmintZzt+71I=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=rWh0PDbc42koXVXOo5JufJl1wWaCXb50YU7gJksJ7iWZS4xEqf9XW00qkV+bFIbtF
-	 Z/wZzE8Pl2/kMgKqkGYsz+grKCbMuUurm/dv8Q8/RmbvgkyL31jjS0RE0sYrow1vYj
-	 H1a2AZK7hzoWZT2OY7SIKeykeZvI0W5XWdyMSAPUzYBSPLZluA6do8tY7iFhjLZfZm
-	 MmDgCLPBm7s6D5Y3zHGvRArstnDMoSuN8j97Fy9tfUu1VY1uW0rrLcykc9pMg6o3sO
-	 KHe6yVo9BHaT63EppRzvz+aRfm43igil+8BMkPw3J23q/EcOAdHtQCQN/ZfKSH8lJ0
-	 xhdO+ELaGmf1A==
+	b=vP6eIvKmeYoOIZw5Qsnd2+ILYw2CBUu+RTtIg9jDh0QOc0tmxVwglFW1bl8/xp49p
+	 5G8i6s6Qt9mUxDFgZN1B8gwTlzyflDAwbRGiK1pJMOz4zQsLJEnJv6g0TOaPao5DW7
+	 5w4+90Np/oKZB0nVKYS+afmTdf0weF9TK+LPnRbz/gOK+XAh7G0dXhw73lW0vtIfgA
+	 d4WGZavP641TQM4zISOWTcxizTZTPpUFhESKwRlaunR4+sDVgAPMA9gGd4gTVX+akQ
+	 WPwAoJzuGcgN+bfh7iFLHD3X5ejA1ZFnAOIph3X78GpB7QXSq0mhqYfW2QAsgeyKc0
+	 Pn7Y7gP0vFl6A==
 Received: from ip-10-30-226-235.us-west-2.compute.internal (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id D8B0D3809A84;
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id C25F93809A82;
 	Fri, 30 Aug 2024 16:30:30 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
@@ -52,14 +52,14 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v4] Bluetooth: btrtl: Set msft ext address filter quirk for
- RTL8852B
+Subject: Re: [PATCH V2 RESEND] Bluetooth: btrtl: Set MSFT_EXT_ADDRESS_FILTER quirk
+ for RTL8852B
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <172503543087.2648350.9477440172287065228.git-patchwork-notify@kernel.org>
+ <172503543079.2648350.6843292974799885307.git-patchwork-notify@kernel.org>
 Date: Fri, 30 Aug 2024 16:30:30 +0000
-References: <20240829084005.681732-1-hildawu@realtek.com>
-In-Reply-To: <20240829084005.681732-1-hildawu@realtek.com>
+References: <20240828095620.663466-1-hildawu@realtek.com>
+In-Reply-To: <20240828095620.663466-1-hildawu@realtek.com>
 To: Hilda Wu <hildawu@realtek.com>
 Cc: marcel@holtmann.org, luiz.dentz@gmail.com,
  linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
@@ -70,18 +70,21 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Thu, 29 Aug 2024 16:40:05 +0800 you wrote:
-> For tracking multiple devices concurrently with a condition.
-> The patch enables the HCI_QUIRK_USE_MSFT_EXT_ADDRESS_FILTER quirk
-> on RTL8852B controller.
+On Wed, 28 Aug 2024 17:56:20 +0800 you wrote:
+> Set HCI_QUIRK_USE_MSFT_EXT_ADDRESS_FILTER quirk for RTL8852B.
 > 
-> The quirk setting is based on commit 9e14606d8f38 ("Bluetooth: msft:
-> Extended monitor tracking by address filter")
+> The quirk to support tracking multiple devices concurrently.
+> Commit 9e14606d8f38 ("Bluetooth: msft: Extended monitor tracking by
+> address filter")
+> 
+> With this setting, when a pattern monitor detects the device, this
+> feature issues an address monitor for tracking that device. Let
+> pattern monitor can keep monitor new devices.
 > 
 > [...]
 
 Here is the summary with links:
-  - [v4] Bluetooth: btrtl: Set msft ext address filter quirk for RTL8852B
+  - [V2,RESEND] Bluetooth: btrtl: Set MSFT_EXT_ADDRESS_FILTER quirk for RTL8852B
     https://git.kernel.org/bluetooth/bluetooth-next/c/e278dcc0a237
 
 You are awesome, thank you!
