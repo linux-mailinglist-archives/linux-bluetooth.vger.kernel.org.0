@@ -1,50 +1,75 @@
-Return-Path: <linux-bluetooth+bounces-7131-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-7135-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F48D9666ED
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Aug 2024 18:31:18 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D59A2966B5B
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Aug 2024 23:38:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 424141F236B3
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Aug 2024 16:31:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 05DED1C223F0
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Aug 2024 21:38:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A6931B9B28;
-	Fri, 30 Aug 2024 16:30:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE924176AB6;
+	Fri, 30 Aug 2024 21:38:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ehLFRetI"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZbYxmHVJ"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D2114B949;
-	Fri, 30 Aug 2024 16:30:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A0115C153
+	for <linux-bluetooth@vger.kernel.org>; Fri, 30 Aug 2024 21:38:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725035429; cv=none; b=FjHcUhtvoDzpO2HveEPMNA69pNbNkBqu34CPgENA42jerlNAnmmrbPsyiAXAEoyRbBpwz46HNoYKD30KiKD648sARwigAVtSp3nbeoxAu1/seJ917h37N5EAZdJ4BfiQSri8ZtSm/0JWx+XDcZnmo4a+gfb5qPSCH+CmDokh1FU=
+	t=1725053921; cv=none; b=QC5XUbUn7qCp7jgKveR9bi3sMsE8PNQQpgks+ihvrIu0BAO/1NEjBZcA3xKnUfPBheD/84X8NFCmJTN63l0WLv6jsoWIe0PILb+/VQyhi9LAjOqxMDEV0w7lTeRaN4d+DkZJsBvBW873t4kKlcJp5TolPh39Dl1Bo1au/eo58lQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725035429; c=relaxed/simple;
-	bh=+XleoGvMIu7vWzlolqcvi3QD4HwPGFeNdxNXbuUZYgI=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=oOq4K7DxraqqfRptOtzm9Q+pznTnM1IvCSfAyvd3uvQ3gqHO27mT/oefqsXwrc2flmqtri5PegaySxiicJR4YlHDZyK9pKdpjXr2BXSAQN9bOtJvK7DwRPXrYB16pbSQGmsvB3YSIYwOn1dGPkwH/TxE3KbCfSI4QEitXahNSCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ehLFRetI; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22330C4CEC7;
-	Fri, 30 Aug 2024 16:30:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725035429;
-	bh=+XleoGvMIu7vWzlolqcvi3QD4HwPGFeNdxNXbuUZYgI=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=ehLFRetIbC0L7Td4IaFMtIB9+i/zmd0zoT9NOwEu8JeKELSMZez4hYSkv3rPzlG1V
-	 OYd7bDaIhelZWGdzzSXpTaUGVlNkfLZ93zcLfiGmV3b+NsUFklTc7WNx//GICgh1Lp
-	 p0oUbMTPLvynt6v/QvSB6kGIhT0Qnyp9LfS+dVpbM10VtWL3m2Un0sOqdDQJ11A3o8
-	 t3NUQPdjsCMxVpUHyZW0DbrQUIR+eoO2B6zMJ6dJyBfeyj5BxNXm2kkQVqQSjWhM2Y
-	 AoM/eTlhlMWjBKmtCcRJmw1nWKNTtJ5fVsrYpJI5GwOBLEK+5WCG8mlkwQOc5PxYZV
-	 lq/YLimUqP84w==
-Received: from ip-10-30-226-235.us-west-2.compute.internal (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id B72883809A81;
-	Fri, 30 Aug 2024 16:30:30 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1725053921; c=relaxed/simple;
+	bh=rSKhS+OfKqYLHIqgg3FhFuXa3o9CKBx3IR0eF03pDr8=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=Grnd+BhMTtfPmw/qxoVBN1YJJ0sLT1+6SSLXDapdq1J4n4ZP/13OD7bWccAEL3CUZ9Xn0PFRnEd8fAxelk+DT1PBMvIo/7CMHB61VlxweyBZ/P0iqQJAaiilhy37PI06k0K9OkIEmCoMZU1vEUkoIksqw52OsvFN8XBv26cgTtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZbYxmHVJ; arc=none smtp.client-ip=209.85.217.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-vs1-f52.google.com with SMTP id ada2fe7eead31-498d14b9b8cso702798137.3
+        for <linux-bluetooth@vger.kernel.org>; Fri, 30 Aug 2024 14:38:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1725053918; x=1725658718; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=JfqN8g2RhNNlL3l9BczxjqMnMpEauMRXob4BRTQzmgA=;
+        b=ZbYxmHVJf9K982R49L57vaQYyNTbkzjRYNcK7LWrs4ioWhB2fxx67OLelTLavfANe7
+         GqQxY5vq4m8IuLgODCGqOEXo5iOQF5MBMV1JLJ4dJPvNjQpAxkqeKTH0eQrxq2jTYqGn
+         6fLPw8Kv4mbHUFidef1z0oPstP4iODYI6ZL0eQ+oxqu843X2sVusuD2wU14WVv+28EXj
+         NAydZOH8Fg7UTt6jtuXVLu8+zpk/tFhPnZQ5h0hIZpHnwv/o5kMHgYFnlCc+I1vc38mN
+         NPCi3vEbrciqKrRC+X68KvPERD01+5zqeQzXijnnFzFw7kl4oAcsc7HV4/VNjGrKSrSg
+         e8Ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725053918; x=1725658718;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JfqN8g2RhNNlL3l9BczxjqMnMpEauMRXob4BRTQzmgA=;
+        b=weVqjTV8NutCfOb8+/Ne9NZBQXrJk4VKz9aqvfGM2eeXatpfSwPO7GHsM4HJKYvTgp
+         Cr4SDKCPpRyiaN0cH1fN6hUHJXOXoNmK5Q7xL67eMw3I9pJHPe3US2/99RhRrohFcRFu
+         dHQMkhZf/eW+eE9LhKsN5SvtXqaWNOf6StsyLNmfUHo7L82Tr3i5a4iQXlZeYJ/umu/j
+         eArZN7t0R1utwKVWI5N1lEvzWKOupHgJauYTT/N27EO9cLWCx8RDyRAeh/XIKppV+lot
+         thV2kzMYPhegUCKDpdO2q7VBveSfXfZUF/zcqPRaRkV5fY5NtxmExsc7yqL9PCE3HfiO
+         YcVA==
+X-Gm-Message-State: AOJu0Yxj8G0ehxC4tf7ygCyJ5bqz7WBDVArEfyJjCMfcXo/sstL4TOr5
+	UZw3YKNMHu0wW/af4RIe3+VxwU7HxYzBNkcI46Zh7Z8BJS29UhSKoyo7ilX7
+X-Google-Smtp-Source: AGHT+IGYAPoRgWSXOCKsQhitx02NQG2MfWZFHLDwgktJOrhvYAIdk/3BERqx6GdNxTLKOnbbmE1N0A==
+X-Received: by 2002:a05:6102:c0a:b0:498:f38a:2c8f with SMTP id ada2fe7eead31-49a5ae06830mr8057118137.3.1725053917646;
+        Fri, 30 Aug 2024 14:38:37 -0700 (PDT)
+Received: from lvondent-mobl5.. (syn-107-146-107-067.res.spectrum.com. [107.146.107.67])
+        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-49a5f2b8584sm681151137.0.2024.08.30.14.38.36
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Aug 2024 14:38:36 -0700 (PDT)
+From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+To: linux-bluetooth@vger.kernel.org
+Subject: [PATCH v1] Bluetooth: hci_core: Fix sending MGMT_EV_CONNECT_FAILED
+Date: Fri, 30 Aug 2024 17:38:35 -0400
+Message-ID: <20240830213835.1267643-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.46.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -52,44 +77,87 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH resend] Bluetooth: Use led_set_brightness() in LED trigger
- activate() callback
-From: patchwork-bot+bluetooth@kernel.org
-Message-Id: 
- <172503543072.2648350.9880242652165643665.git-patchwork-notify@kernel.org>
-Date: Fri, 30 Aug 2024 16:30:30 +0000
-References: <20240827105248.18177-1-hdegoede@redhat.com>
-In-Reply-To: <20240827105248.18177-1-hdegoede@redhat.com>
-To: Hans de Goede <hdegoede@redhat.com>
-Cc: marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
- pavel@ucw.cz, lee@kernel.org, linux-leds@vger.kernel.org,
- linux-bluetooth@vger.kernel.org
 
-Hello:
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+If HCI_CONN_MGMT_CONNECTED has been set then the event shall be
+HCI_CONN_MGMT_DISCONNECTED.
 
-On Tue, 27 Aug 2024 12:52:48 +0200 you wrote:
-> A LED trigger's activate() callback gets called when the LED trigger
-> gets activated for a specific LED, so that the trigger code can ensure
-> the LED state matches the current state of the trigger condition
-> (LED_FULL when HCI_UP is set in this case).
-> 
-> led_trigger_event() is intended for trigger condition state changes and
-> iterates over _all_ LEDs which are controlled by this trigger changing
-> the brightness of each of them.
-> 
-> [...]
+Fixes: b644ba336997 ("Bluetooth: Update device_connected and device_found events to latest API")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+---
+ include/net/bluetooth/hci_core.h |  4 ++--
+ net/bluetooth/hci_conn.c         |  6 ++----
+ net/bluetooth/mgmt.c             | 13 +++++++++----
+ 3 files changed, 13 insertions(+), 10 deletions(-)
 
-Here is the summary with links:
-  - [resend] Bluetooth: Use led_set_brightness() in LED trigger activate() callback
-    https://git.kernel.org/bluetooth/bluetooth-next/c/669e8c8b5663
-
-You are awesome, thank you!
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 1a32e602630e..88265d37aa72 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -2257,8 +2257,8 @@ void mgmt_device_disconnected(struct hci_dev *hdev, bdaddr_t *bdaddr,
+ 			      bool mgmt_connected);
+ void mgmt_disconnect_failed(struct hci_dev *hdev, bdaddr_t *bdaddr,
+ 			    u8 link_type, u8 addr_type, u8 status);
+-void mgmt_connect_failed(struct hci_dev *hdev, bdaddr_t *bdaddr, u8 link_type,
+-			 u8 addr_type, u8 status);
++void mgmt_connect_failed(struct hci_dev *hdev, struct hci_conn *conn,
++			 u8 status);
+ void mgmt_pin_code_request(struct hci_dev *hdev, bdaddr_t *bdaddr, u8 secure);
+ void mgmt_pin_code_reply_complete(struct hci_dev *hdev, bdaddr_t *bdaddr,
+ 				  u8 status);
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index 323d397b0e92..d083117ee36c 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -106,8 +106,7 @@ void hci_connect_le_scan_cleanup(struct hci_conn *conn, u8 status)
+ 	 * where a timeout + cancel does indicate an actual failure.
+ 	 */
+ 	if (status && status != HCI_ERROR_UNKNOWN_CONN_ID)
+-		mgmt_connect_failed(hdev, &conn->dst, conn->type,
+-				    conn->dst_type, status);
++		mgmt_connect_failed(hdev, conn, status);
+ 
+ 	/* The connection attempt was doing scan for new RPA, and is
+ 	 * in scan phase. If params are not associated with any other
+@@ -1249,8 +1248,7 @@ void hci_conn_failed(struct hci_conn *conn, u8 status)
+ 		hci_le_conn_failed(conn, status);
+ 		break;
+ 	case ACL_LINK:
+-		mgmt_connect_failed(hdev, &conn->dst, conn->type,
+-				    conn->dst_type, status);
++		mgmt_connect_failed(hdev, conn, status);
+ 		break;
+ 	}
+ 
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 279902e8bd8a..e4f564d6f6fb 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -9779,13 +9779,18 @@ void mgmt_disconnect_failed(struct hci_dev *hdev, bdaddr_t *bdaddr,
+ 	mgmt_pending_remove(cmd);
+ }
+ 
+-void mgmt_connect_failed(struct hci_dev *hdev, bdaddr_t *bdaddr, u8 link_type,
+-			 u8 addr_type, u8 status)
++void mgmt_connect_failed(struct hci_dev *hdev, struct hci_conn *conn, u8 status)
+ {
+ 	struct mgmt_ev_connect_failed ev;
+ 
+-	bacpy(&ev.addr.bdaddr, bdaddr);
+-	ev.addr.type = link_to_bdaddr(link_type, addr_type);
++	if (test_and_clear_bit(HCI_CONN_MGMT_CONNECTED, &conn->flags)) {
++		mgmt_device_disconnected(hdev, &conn->dst, conn->type,
++					 conn->dst_type, status, true);
++		return;
++	}
++
++	bacpy(&ev.addr.bdaddr, &conn->dst);
++	ev.addr.type = link_to_bdaddr(conn->type, conn->dst_type);
+ 	ev.status = mgmt_status(status);
+ 
+ 	mgmt_event(MGMT_EV_CONNECT_FAILED, hdev, &ev, sizeof(ev), NULL);
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.46.0
 
 
