@@ -1,81 +1,81 @@
-Return-Path: <linux-bluetooth+bounces-7173-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-7174-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3928E96C1C1
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Sep 2024 17:07:56 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id DDC7596C1F2
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Sep 2024 17:14:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5D8671C228E3
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Sep 2024 15:07:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 946D1285D94
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Sep 2024 15:14:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 023071DCB01;
-	Wed,  4 Sep 2024 15:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E88F1DCB0A;
+	Wed,  4 Sep 2024 15:14:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZczRxt4Z"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hv8gQtPT"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF821DC723
-	for <linux-bluetooth@vger.kernel.org>; Wed,  4 Sep 2024 15:07:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2691DA61A
+	for <linux-bluetooth@vger.kernel.org>; Wed,  4 Sep 2024 15:14:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725462466; cv=none; b=WDmBVNkUfuEwfIPeEaPA8ETak/CsxTUe9ZBNCsapOozIA/83z1LeL2HGDQnyeAqh1ooHx2Gf9DHtHq4k9lBuD6zQCa/UT56mMMXF0MduKl5MJhX+UDi17PywHI72i0kxhqNmUWWJc8u9UnVM19e7YOsTRehu4PadJ56zxlNF2LA=
+	t=1725462880; cv=none; b=HIIZ2+YH6wwmnR16wnNeoHRtn/XAX8kfmzNzTE2XZz1hQAsryP45OKvbW5F2vMJC/d5qSu9f+YAjsbAuV6hpOCCIOzPhrlVDnZJvViusv7srpkPz3vwf7p8UtbPPAm/6z82moCr4ngRcxTAQKPyc18XkAaNIMdVbC+UrPF4SJf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725462466; c=relaxed/simple;
-	bh=btPHVcon9YDMqNYfKwngWcxA0cQhn3eBU0q38HMpFXU=;
+	s=arc-20240116; t=1725462880; c=relaxed/simple;
+	bh=Y9MlyzdHBN/eFBezApL63VZ/Ye6Q3+sLU3ngho0d9G8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OfHJA0xSfua/CrW9m/7dalO+BiTIXhs0iSBpvnSk1kTqjLl89KUJEl5qGwNqMdUvfdMMxfhqFhKpQps7J9yNSe6adcLrvH7yaZqbi6UsCBNORJWzSNBgduyuSf8ME1O5G4s3Uyseq67Wn9QTOMndBRpXB6v0vBmmEyIqMI50JlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZczRxt4Z; arc=none smtp.client-ip=209.85.208.171
+	 To:Cc:Content-Type; b=BfHbfUw1kI0xVkjcVq85BeV3NPBNEo6Xwv1F43tyLBQhXU6FHgNpayT2bz5+qaRAOuXWvWIBPKsje20uXSltX1ZOp+e0xxTM1pWAAFToIbtiIUeHq9tMFK282bk/p0zTfgaHyvh0K859kWHM3y/ZgV2DDqEOyL0KPoi93pmqHxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hv8gQtPT; arc=none smtp.client-ip=209.85.167.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2f3f07ac2dcso74654721fa.2
-        for <linux-bluetooth@vger.kernel.org>; Wed, 04 Sep 2024 08:07:44 -0700 (PDT)
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-533521cd1c3so7943397e87.1
+        for <linux-bluetooth@vger.kernel.org>; Wed, 04 Sep 2024 08:14:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725462462; x=1726067262; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1725462876; x=1726067676; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8zruJ6SZ514YkU4YtSRS/cKRhklgyaoz5jEj/cbFjhE=;
-        b=ZczRxt4Z/l5MdVY9l7/Dok09pglLt/zX+TBqVeKxj+ADYo94Nh5zURCqUlfnymFQgI
-         pyFSj4duYCmisdTkdjl5tqFnKeGco/EaIUDrbIBVlLC53pgmfjo899qR08ZYFQ4FCQrc
-         8K7/+LSAzSnxHZQdn1yQjTE4cmjJedJiTESgLRm7OAEw4SRVhJv/Mlygv9hAEfbLT++/
-         YQZyGLOEy4ze8RB/CeKCVGwkLncHg+GlpcgzlFQXXtdT9cZE894v1ajkhVNq9tTZpq3O
-         O2g/FqayiPnDv3M2Ju+jrtAVV1ZODIE3bEyEntBWmr2SF1bujcBvsaagy2cD2zEWjq2/
-         Kwzg==
+        bh=1sVqbD3VnCTz9vCvyZwylDe+C5nWb+e7CJpG/rViEbU=;
+        b=Hv8gQtPTSWnSmREUQySZhYe3lBla6stLmNxhWMWvc94Qtshdgx4kSHBpX+tvUomKks
+         lwRv0U8QfQiSIET0pjOJbHL5DxRqh/0eO4gT1NXJx2OmyH18R9ffXwiBuwR8gJIhxigp
+         T9Ei8BoFPKENhskz5KgOxtn1ov5E4aYzHtpmwGBrIkwVNyoCbC8A108LIWPQXpz+wenv
+         iJEi0OXEMfDhCnsh4jyuW3RFm6BV5m6SdN514IxuWvTjEcJxG8ING2l/gr+zDieHiohU
+         z/3wmk7kavyw2w9nZHKR03RRcLFji5n42kKtEaUTCZuRO+m10g5YKDXwAwog4YPIGS3Y
+         pGxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725462462; x=1726067262;
+        d=1e100.net; s=20230601; t=1725462876; x=1726067676;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8zruJ6SZ514YkU4YtSRS/cKRhklgyaoz5jEj/cbFjhE=;
-        b=cfuhjo+dS/8ffY6RbfjWStsXAUyqnYP/ORyhIM4PiEAibaOzJtAOsyUQIEujeMjATu
-         f03LnBX5256O6EThq6N/Hg8WehyU4KR5gaqeGu0jjQPp5C9S8wOSKUaKnxL4BUx90AAC
-         R06ZmKM+CSNmd48g6LgMLjKcFNadNHsHhFpqYLNzRqcQSc1dgy5F8ePzqclGBgxhca95
-         lB5N1FfesOEa6tICffHCXYe3xbKME+Y3e0MWCtR7LyvCaBSGIgOXVAMoPZUY3G1Btzyk
-         7N2ptTmuhk8R+YQQgMTggnPNrocEMKIgdrROPXu5AY4dd9/jUqLe187oNL9G9YAwIgHm
-         iylg==
-X-Gm-Message-State: AOJu0Yxc4nXS45yeYzNOroMf8J67ifd34EOE+XDpOtwYAv5WG/cAbAql
-	W5g3rZEZyYxqI6JhHx9IRzhmrkksqqaumFsrdcd6RC+yNRKgWX6i/CABdL6pYNTnzU7Ve3sRgPS
-	l4UPO6KcsYdrQIH0Tu91rr575MWw=
-X-Google-Smtp-Source: AGHT+IFdRf9+X6ELiB5goINEtvBZKt4Szlr1+EeXEM62aCcEQSoI1DYDM7ypvWsH0JFU18v1sgk+XTW/s7/iwPFnJpw=
-X-Received: by 2002:a2e:1309:0:b0:2f3:91a1:596f with SMTP id
- 38308e7fff4ca-2f6103c847fmr107194641fa.23.1725462461389; Wed, 04 Sep 2024
- 08:07:41 -0700 (PDT)
+        bh=1sVqbD3VnCTz9vCvyZwylDe+C5nWb+e7CJpG/rViEbU=;
+        b=jvdikpcRNfjktmjd7WgeGh8jeOIBttF15QNgs3rmqCGLFXJVSue/Ps3Lj5HmLZvV+D
+         +xV7PnuHdNmaQtTVYkwytoTNytYghwoXDKVCM9OhZDWnMR+ZS485xOg2vID9hEyk19Ne
+         ZVU74hLHP0MR+df4pjS39zo7Nqo8FIRyK1eNPIaq1eHTxrETadEW02fo8ymhaG/kp/25
+         WPOSdnLzpsEU3yTzJuFtkR7N3rEAgQ+r4EFmLPDw7VlSe5BwyOukLWGVxI05bwAuJWDd
+         2ir0wsQWbOzvAYsp3dp0Ej2VgPJLqgmenxsndeTA796CRlaAWtGym1rkJGSrenyTyu+M
+         7PhA==
+X-Gm-Message-State: AOJu0YzMo2Dx5w4mHDTCaiaTFw0xluB2t0bzn0jCrytoPIexf69HR1jW
+	srzd2/lTW/ph8Jr0lp2ZQwb0oEZ9N1BKY90O4sGM2fTzz5tKiKn+0N+vJtychTzLuYxZBmRDRqp
+	eLK/Jx3VIHDwDGVXJWDEMZWbfFoL3ew==
+X-Google-Smtp-Source: AGHT+IGegqLymae1CXar6ex8RZCSE5tiXog8MerqI6rnCQIs5PjWmk+0uV9Yo7edDw7aXVmVzmlpFihB8VIbLQoqNv0=
+X-Received: by 2002:a2e:be2c:0:b0:2ee:52f4:266 with SMTP id
+ 38308e7fff4ca-2f6105c47e0mr205381521fa.3.1725462875336; Wed, 04 Sep 2024
+ 08:14:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240904140421.283166-1-frederic.danis@collabora.com> <20240904140421.283166-4-frederic.danis@collabora.com>
-In-Reply-To: <20240904140421.283166-4-frederic.danis@collabora.com>
+References: <20240904140421.283166-1-frederic.danis@collabora.com> <20240904140421.283166-3-frederic.danis@collabora.com>
+In-Reply-To: <20240904140421.283166-3-frederic.danis@collabora.com>
 From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Wed, 4 Sep 2024 11:07:05 -0400
-Message-ID: <CABBYNZKS501DW21KcjKVEhKV5CkvFdpb256=DQ=y6Xb87km=XA@mail.gmail.com>
-Subject: Re: [PATCH BlueZ 3/7] player: Add image handle support property
+Date: Wed, 4 Sep 2024 11:14:23 -0400
+Message-ID: <CABBYNZ+C6R7TSDtUj0kOwPPioBDx9u92TRSx1Je-UB4iS2jZqQ@mail.gmail.com>
+Subject: Re: [PATCH BlueZ 2/7] player: Add OBEX PSM port for cover art support
 To: =?UTF-8?B?RnLDqWTDqXJpYyBEYW5pcw==?= <frederic.danis@collabora.com>
 Cc: linux-bluetooth@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
@@ -83,134 +83,252 @@ Content-Transfer-Encoding: quoted-printable
 
 Hi Fr=C3=A9d=C3=A9ric,
 
-On Wed, Sep 4, 2024 at 10:04=E2=80=AFAM Fr=C3=A9d=C3=A9ric Danis
+On Wed, Sep 4, 2024 at 10:33=E2=80=AFAM Fr=C3=A9d=C3=A9ric Danis
 <frederic.danis@collabora.com> wrote:
 >
-> This is part of the metadata when the AVRCP target supports covert
-> art download and a OBEX BIP session is connected.
-> The image handle references the cover art associated to the track,
-> and is valid only during OBEX BIP session.
+> This parse the AVRCP Target SDP record for the L2CAP PSM to use with
+> the OBEX session to get the cover art.
 > ---
->  doc/org.bluez.MediaPlayer.rst | 4 ++++
->  monitor/avctp.c               | 3 +++
->  profiles/audio/avrcp.c        | 7 ++++++-
->  profiles/audio/avrcp.h        | 3 ++-
->  tools/parser/avrcp.c          | 3 +++
->  5 files changed, 18 insertions(+), 2 deletions(-)
+>  doc/org.bluez.MediaPlayer.rst |  6 +++++
+>  profiles/audio/avrcp.c        | 51 +++++++++++++++++++++++++++++++----
+>  profiles/audio/player.c       | 29 ++++++++++++++++++++
+>  profiles/audio/player.h       |  1 +
+>  4 files changed, 82 insertions(+), 5 deletions(-)
 >
 > diff --git a/doc/org.bluez.MediaPlayer.rst b/doc/org.bluez.MediaPlayer.rs=
 t
-> index f1e999bdf..5bb38e7c2 100644
+> index 60bd679bb..f1e999bdf 100644
 > --- a/doc/org.bluez.MediaPlayer.rst
 > +++ b/doc/org.bluez.MediaPlayer.rst
-> @@ -237,6 +237,10 @@ dict Track [readonly]
+> @@ -313,3 +313,9 @@ object Playlist
+>  ```````````````
 >
->                 Track duration in milliseconds
->
-> +       :string ImgHandle:
+>         Playlist object path.
 > +
-> +               Track image handle
+> +uint16 ObexPort [readonly]
+> +`````````````````````````````
+> +
+> +       If present indicates the player can get cover art using BIP over =
+OBEX
+> +       on this PSM port.
 
-I guess we want something more descriptive here, as ThumbnailURL or
-something .e.g obex://<handle>, that said I don't know if perhaps we
-could load it automatically via plugin.
+Id pass this via as part of URL e.g. obex://<address>/handle:[port]
 
->  object Device [readonly]
->  ````````````````````````
->
-> diff --git a/monitor/avctp.c b/monitor/avctp.c
-> index c59e93b20..4da448750 100644
-> --- a/monitor/avctp.c
-> +++ b/monitor/avctp.c
-> @@ -156,6 +156,7 @@
->  #define AVRCP_MEDIA_ATTRIBUTE_TOTAL    0x05
->  #define AVRCP_MEDIA_ATTRIBUTE_GENRE    0x06
->  #define AVRCP_MEDIA_ATTRIBUTE_DURATION 0x07
-> +#define AVRCP_MEDIA_ATTRIBUTE_IMG_HANDLE       0x08
->
->  /* play status */
->  #define AVRCP_PLAY_STATUS_STOPPED      0x00
-> @@ -582,6 +583,8 @@ static const char *mediattr2str(uint32_t attr)
->                 return "Genre";
->         case AVRCP_MEDIA_ATTRIBUTE_DURATION:
->                 return "Track duration";
-> +       case AVRCP_MEDIA_ATTRIBUTE_IMG_HANDLE:
-> +               return "Imaging handle";
->         default:
->                 return "Reserved";
->         }
+That said, like I mentioned in the other change, we could perhaps
+attempt to load it directly from bluetoothd since obexd registered its
+profile with it the daemon will know that BIP has been registered and
+we could allow bluetoothd to create sessions/transfer via that
+connection rather than using the session D-Bus, it is a little more
+work compared to doing bluetoothctl but then we don't have to
+reimplement as part of upper layers or force the system to run
+bluetoothctl which is more like a testing tool to validate our API's,
+etc.
+
 > diff --git a/profiles/audio/avrcp.c b/profiles/audio/avrcp.c
-> index 61558e492..fe24b5a92 100644
+> index 752e55be3..61558e492 100644
 > --- a/profiles/audio/avrcp.c
 > +++ b/profiles/audio/avrcp.c
-> @@ -417,7 +417,8 @@ static sdp_record_t *avrcp_ct_record(bool browsing)
->         uint16_t feat =3D ( AVRCP_FEATURE_CATEGORY_1 |
->                                                 AVRCP_FEATURE_CATEGORY_2 =
-|
->                                                 AVRCP_FEATURE_CATEGORY_3 =
-|
-> -                                               AVRCP_FEATURE_CATEGORY_4)=
+> @@ -118,8 +118,14 @@
+>  #define AVRCP_FEATURE_CATEGORY_2       0x0002
+>  #define AVRCP_FEATURE_CATEGORY_3       0x0004
+>  #define AVRCP_FEATURE_CATEGORY_4       0x0008
+> -#define AVRCP_FEATURE_PLAYER_SETTINGS  0x0010
+> -#define AVRCP_FEATURE_BROWSING                 0x0040
+> +#define AVRCP_FEATURE_TG_PLAYER_SETTINGS       0x0010
+> +#define AVRCP_FEATURE_TG_GROUP_NAVIGATION      0x0020
+> +#define AVRCP_FEATURE_BROWSING                         0x0040
+> +#define AVRCP_FEATURE_TG_MULTIPLE_PLAYER       0x0080
+> +#define AVRCP_FEATURE_TG_COVERT_ART                    0x0100
+> +#define AVRCP_FEATURE_CT_GET_IMAGE_PROP                0x0080
+> +#define AVRCP_FEATURE_CT_GET_IMAGE                     0x0100
+> +#define AVRCP_FEATURE_CT_GET_THUMBNAIL         0x0200
+>
+>  #define AVRCP_BATTERY_STATUS_NORMAL            0
+>  #define AVRCP_BATTERY_STATUS_WARNING           1
+> @@ -254,6 +260,7 @@ struct avrcp_data {
+>         struct avrcp_player *player;
+>         uint16_t version;
+>         int features;
+> +       uint16_t obex_port;
+>         GSList *players;
+>  };
+>
+> @@ -487,7 +494,7 @@ static sdp_record_t *avrcp_tg_record(bool browsing)
+>                                         AVRCP_FEATURE_CATEGORY_2 |
+>                                         AVRCP_FEATURE_CATEGORY_3 |
+>                                         AVRCP_FEATURE_CATEGORY_4 |
+> -                                       AVRCP_FEATURE_PLAYER_SETTINGS );
+> +                                       AVRCP_FEATURE_TG_PLAYER_SETTINGS)=
 ;
-> +                                               AVRCP_FEATURE_CATEGORY_4 =
-|
-> +                                               AVRCP_FEATURE_CT_GET_THUM=
-BNAIL);
 >
 >         record =3D sdp_record_alloc();
 >         if (!record)
-> @@ -883,6 +884,8 @@ static const char *metadata_to_str(uint32_t id)
->                 return "NumberOfTracks";
->         case AVRCP_MEDIA_ATTRIBUTE_DURATION:
->                 return "Duration";
-> +       case AVRCP_MEDIA_ATTRIBUTE_IMG_HANDLE:
-> +               return "ImgHandle";
+> @@ -3522,6 +3529,7 @@ static struct avrcp_player *create_ct_player(struct=
+ avrcp *session,
+>                 return NULL;
 >         }
 >
->         return NULL;
-> @@ -1197,6 +1200,8 @@ static uint32_t str_to_metadata(const char *str)
->                 return AVRCP_MEDIA_ATTRIBUTE_N_TRACKS;
->         else if (strcasecmp(str, "Duration") =3D=3D 0)
->                 return AVRCP_MEDIA_ATTRIBUTE_DURATION;
-> +       else if (strcasecmp(str, "ImgHandle") =3D=3D 0)
-> +               return AVRCP_MEDIA_ATTRIBUTE_IMG_HANDLE;
+> +       media_player_set_obex_port(mp, session->controller->obex_port);
+>         media_player_set_callbacks(mp, &ct_cbs, player);
+>         player->user_data =3D mp;
+>         player->destroy =3D (GDestroyNotify) media_player_destroy;
+> @@ -4006,7 +4014,8 @@ static gboolean avrcp_get_capabilities_resp(struct =
+avctp *conn, uint8_t code,
+>         if (events =3D=3D (1 << AVRCP_EVENT_VOLUME_CHANGED))
+>                 return FALSE;
 >
->         return 0;
+> -       if ((session->controller->features & AVRCP_FEATURE_PLAYER_SETTING=
+S) &&
+> +       if ((session->controller->features &
+> +                       AVRCP_FEATURE_TG_PLAYER_SETTINGS) &&
+>                         !(events & (1 << AVRCP_EVENT_SETTINGS_CHANGED)))
+>                 avrcp_list_player_attributes(session);
+>
+> @@ -4075,8 +4084,9 @@ static struct avrcp_data *data_init(struct avrcp *s=
+ession, const char *uuid)
+>  {
+>         struct avrcp_data *data;
+>         const sdp_record_t *rec;
+> -       sdp_list_t *list;
+> +       sdp_list_t *list, *protos;
+>         sdp_profile_desc_t *desc;
+> +       int port =3D 0;
+>
+>         data =3D g_new0(struct avrcp_data, 1);
+>
+> @@ -4092,6 +4102,35 @@ static struct avrcp_data *data_init(struct avrcp *=
+session, const char *uuid)
+>         sdp_get_int_attr(rec, SDP_ATTR_SUPPORTED_FEATURES, &data->feature=
+s);
+>         sdp_list_free(list, free);
+>
+> +       if ((g_strcmp0(uuid, AVRCP_TARGET_UUID) !=3D 0) ||
+> +                       !(data->features & AVRCP_FEATURE_TG_COVERT_ART) |=
+|
+> +                       (sdp_get_add_access_protos(rec, &protos) !=3D 0))
+> +               return data;
+> +
+> +       /* Get the PSM port from the Additional Protocol Descriptor list
+> +        * entry containing OBEX UUID
+> +        */
+> +       for (list =3D protos; list; list =3D list->next) {
+> +               sdp_list_t *p;
+> +
+> +               for (p =3D list->data; p; p =3D p->next) {
+> +                       sdp_data_t *seq =3D p->data;
+> +
+> +                       if ((sdp_uuid_to_proto(&seq->val.uuid) =3D=3D OBE=
+X_UUID) &&
+> +                                       SDP_IS_UUID(seq->dtd)) {
+> +                               port =3D sdp_get_proto_port(list, L2CAP_U=
+UID);
+> +                               goto done;
+> +                       }
+> +               }
+> +       }
+> +
+> +done:
+> +       if (port > 0)
+> +               data->obex_port =3D port;
+> +
+> +       sdp_list_foreach(protos, (sdp_list_func_t) sdp_list_free, NULL);
+> +       sdp_list_free(protos, NULL);
+> +
+>         return data;
 >  }
-> diff --git a/profiles/audio/avrcp.h b/profiles/audio/avrcp.h
-> index dcc580e37..59117e946 100644
-> --- a/profiles/audio/avrcp.h
-> +++ b/profiles/audio/avrcp.h
-> @@ -46,7 +46,8 @@
->  #define AVRCP_MEDIA_ATTRIBUTE_N_TRACKS 0x05
->  #define AVRCP_MEDIA_ATTRIBUTE_GENRE    0x06
->  #define AVRCP_MEDIA_ATTRIBUTE_DURATION 0x07
-> -#define AVRCP_MEDIA_ATTRIBUTE_LAST     AVRCP_MEDIA_ATTRIBUTE_DURATION
-> +#define AVRCP_MEDIA_ATTRIBUTE_IMG_HANDLE       0x08
-> +#define AVRCP_MEDIA_ATTRIBUTE_LAST     AVRCP_MEDIA_ATTRIBUTE_IMG_HANDLE
 >
->  /* play status */
->  #define AVRCP_PLAY_STATUS_STOPPED      0x00
-> diff --git a/tools/parser/avrcp.c b/tools/parser/avrcp.c
-> index e73a6317e..d574c7ee3 100644
-> --- a/tools/parser/avrcp.c
-> +++ b/tools/parser/avrcp.c
-> @@ -160,6 +160,7 @@
->  #define AVRCP_MEDIA_ATTRIBUTE_TOTAL    0x5
->  #define AVRCP_MEDIA_ATTRIBUTE_GENRE    0x6
->  #define AVRCP_MEDIA_ATTRIBUTE_DURATION 0x7
-> +#define AVRCP_MEDIA_ATTRIBUTE_IMG_HANDLE       0x08
+> @@ -4189,6 +4228,8 @@ static void controller_init(struct avrcp *session)
+>         session->controller =3D controller;
 >
->  /* play status */
->  #define AVRCP_PLAY_STATUS_STOPPED      0x00
-> @@ -933,6 +934,8 @@ static const char *mediattr2str(uint32_t attr)
->                 return "Genre";
->         case AVRCP_MEDIA_ATTRIBUTE_DURATION:
->                 return "Track duration";
-> +       case AVRCP_MEDIA_ATTRIBUTE_IMG_HANDLE:
-> +               return "Imaging handle";
->         default:
->                 return "Reserved";
->         }
+>         DBG("%p version 0x%04x", controller, controller->version);
+> +       if (controller->obex_port)
+> +               DBG("%p OBEX PSM 0x%04x", controller, controller->obex_po=
+rt);
+>
+>         service =3D btd_device_get_service(session->dev, AVRCP_TARGET_UUI=
+D);
+>         btd_service_connecting_complete(service, 0);
+> diff --git a/profiles/audio/player.c b/profiles/audio/player.c
+> index c995697fe..4e3de8047 100644
+> --- a/profiles/audio/player.c
+> +++ b/profiles/audio/player.c
+> @@ -88,6 +88,7 @@ struct media_player {
+>         struct player_callback  *cb;
+>         GSList                  *pending;
+>         GSList                  *folders;
+> +       uint16_t                obex_port;
+>  };
+>
+>  static void append_track(void *key, void *value, void *user_data)
+> @@ -437,6 +438,28 @@ static gboolean get_playlist(const GDBusPropertyTabl=
+e *property,
+>         return TRUE;
+>  }
+>
+> +static gboolean obexport_exists(const GDBusPropertyTable *property,
+> +                                                               void *dat=
+a)
+> +{
+> +       struct media_player *mp =3D data;
+> +
+> +       return mp->obex_port !=3D 0;
+> +}
+> +
+> +static gboolean get_obexport(const GDBusPropertyTable *property,
+> +                                       DBusMessageIter *iter, void *data=
+)
+> +{
+> +       struct media_player *mp =3D data;
+> +
+> +       if (mp->obex_port =3D=3D 0)
+> +               return FALSE;
+> +
+> +       dbus_message_iter_append_basic(iter, DBUS_TYPE_UINT16,
+> +                                                       &mp->obex_port);
+> +
+> +       return TRUE;
+> +}
+> +
+>  static DBusMessage *media_player_play(DBusConnection *conn, DBusMessage =
+*msg,
+>                                                                 void *dat=
+a)
+>  {
+> @@ -778,6 +801,7 @@ static const GDBusPropertyTable media_player_properti=
+es[] =3D {
+>         { "Browsable", "b", get_browsable, NULL, browsable_exists },
+>         { "Searchable", "b", get_searchable, NULL, searchable_exists },
+>         { "Playlist", "o", get_playlist, NULL, playlist_exists },
+> +       { "ObexPort", "q", get_obexport, NULL, obexport_exists },
+>         { }
+>  };
+>
+> @@ -1997,3 +2021,8 @@ struct media_item *media_player_set_playlist_item(s=
+truct media_player *mp,
+>
+>         return item;
+>  }
+> +
+> +void media_player_set_obex_port(struct media_player *mp, uint16_t port)
+> +{
+> +       mp->obex_port =3D port;
+> +}
+> diff --git a/profiles/audio/player.h b/profiles/audio/player.h
+> index 74fb7d771..0076c4641 100644
+> --- a/profiles/audio/player.h
+> +++ b/profiles/audio/player.h
+> @@ -86,6 +86,7 @@ void media_player_set_folder(struct media_player *mp, c=
+onst char *path,
+>  void media_player_set_playlist(struct media_player *mp, const char *name=
+);
+>  struct media_item *media_player_set_playlist_item(struct media_player *m=
+p,
+>                                                                 uint64_t =
+uid);
+> +void media_player_set_obex_port(struct media_player *mp, uint16_t port);
+>
+>  struct media_item *media_player_create_folder(struct media_player *mp,
+>                                                 const char *name,
 > --
 > 2.34.1
 >
