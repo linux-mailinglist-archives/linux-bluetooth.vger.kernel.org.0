@@ -1,207 +1,97 @@
-Return-Path: <linux-bluetooth+bounces-7168-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-7171-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC11796BF92
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Sep 2024 16:04:52 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id CB54796C184
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Sep 2024 16:58:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5C6911F21581
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Sep 2024 14:04:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 819251F29BA6
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Sep 2024 14:58:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2013A1DB536;
-	Wed,  4 Sep 2024 14:04:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C7101DCB27;
+	Wed,  4 Sep 2024 14:58:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="WflALX2U"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eUb6HpNa"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85621DAC4A
-	for <linux-bluetooth@vger.kernel.org>; Wed,  4 Sep 2024 14:04:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FAAC1DCB10
+	for <linux-bluetooth@vger.kernel.org>; Wed,  4 Sep 2024 14:58:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725458675; cv=none; b=MDnM2Vvdt1Bmcxd/UNbRboyQe3lAyV/Cw1zQEASSuJ4kAPT6j3ucicuAdsK8ZAO57OUxXb67IXBFMe+TzMwXYlGsTWdYkWg8edfHrelIFuPzGaIxgcOkw5mBU62co239WNuFI4xTn+NkU0tmZM5UOCo1Oaq+zhkp87eRSWUnwHg=
+	t=1725461894; cv=none; b=rMpe5JkLyk/r97J/HxfJKQAOHKd+t/zkyAye0VbDFhumJG2aAx+DNC5E6tfV7G6RdVsHgkLnB/c2zrkSeeWRzTNPh/EXw0OeImcN/X7zPkK0X7LkEFrK30C4ruvV41BhYj0SWLAzFqobm6orbMVQNoD6vkr9YUdW+pHGsUDigjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725458675; c=relaxed/simple;
-	bh=A8blzmq+E/iQiMBT2QXVr7kNSoQNuLnPaLeHK5dL2mk=;
-	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZzguVp2lH+4k8Rycar1GB0gZyphAQF6cqRogvmLr3aZNr5JAhYcs5LL1jcAhOWoCMk3d4iMIcXRVjDyi6QM4/L9ixN302FP/4u4Wv9kH4QDotRaMbyAVUgHyVL88X71mWFDJptshieZqgLDad8vN4o6kJxjL6lAlJ9AXs5P8D2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=WflALX2U; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1725458669;
-	bh=A8blzmq+E/iQiMBT2QXVr7kNSoQNuLnPaLeHK5dL2mk=;
+	s=arc-20240116; t=1725461894; c=relaxed/simple;
+	bh=LWFIjPg/7q9Gw3vnHQf1VV0gvn+cH4y9lKja7jhMaJI=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=gb+untnJNtsLN1hxcYoJRZev3yMAGxdaGDbazZ/tkM8kNlv5HnOQEljioyu3K6JXyMs0jJjSAbf28iud5MynwTFE6K5ekNj2mPeArOzwdcDnW+n1hP9DIGrRnPKA02hJgodz0LLWffxZoh3RRgWXg9JQq+BUFWxzU1bCRg5JKpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eUb6HpNa; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 3C099C4CECA
+	for <linux-bluetooth@vger.kernel.org>; Wed,  4 Sep 2024 14:58:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725461894;
+	bh=LWFIjPg/7q9Gw3vnHQf1VV0gvn+cH4y9lKja7jhMaJI=;
 	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=WflALX2UK4xr4XlWm0+mBAhelagFdPj5+FLoLfZb8utqX3bwz9H3LC1ZBQtOhgsTs
-	 f7CPxqNomYeqPZcrHVNk8Ell/k2FXmBDUCfQbH2OPTvcJCbB4WbI1jSwtPnHO0ZZDr
-	 mRy0KBm6Ke3epjJKbQ1zLi9h9SUvxKV+k9vMgf4xcRfSM64VSfpjl7EQvn5zD4pdNc
-	 MqFXQD7vyDD6b4Uv9ZEy1MmRhkSNxl7b+1Wjt1SEzMk0JS/51hA0SduHfSDQpRql57
-	 zl4uKcxTY9c1tblnXEND/4NYYxOdpfIDp//Nc+lW50m4fR9zM3nE5FJ6WFvh7czk7I
-	 A1fRngCT4rPig==
-Received: from fdanis-XPS-13-9370.. (67.227.121.78.rev.sfr.net [78.121.227.67])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: fdanis)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id CEA7E17E1166
-	for <linux-bluetooth@vger.kernel.org>; Wed,  4 Sep 2024 16:04:29 +0200 (CEST)
-From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
+	b=eUb6HpNazBp+xoZW6AFdTyUZ0AqanRLkb7+ZHipE31WGpkPz6cEPzLiQR5L+y8qvs
+	 YJzN5NWjE4QOOo7WHzTrU3zyoGi9+v4+MKOZGPwNExjJJ1qRS5Ukd1RgPP3nA6Tvj9
+	 uvGShCYjUJviAvCo5WRIR0Rdb9cwdsXCsD9te2gz6T6n8Mirig/JpAGKSwg+INJUdW
+	 thl931MKE/z+6kJk0ldI09SF1OLbp+xffbbAp4nva0vOJ++39R/FU6P+yAwkpooUgy
+	 8BhW6rMklb0btAg5BNoGWU6jdmCctf6KXzEIZLvde+JJ1iJq3p2AEJ63sGbOcqUIzx
+	 jEVeUlQ/m72aQ==
+Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
+	id 2DD0BC53BC3; Wed,  4 Sep 2024 14:58:14 +0000 (UTC)
+From: bugzilla-daemon@kernel.org
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 7/7] doc: Add description of org.bluez.obex.BipAvrcp
-Date: Wed,  4 Sep 2024 16:04:21 +0200
-Message-Id: <20240904140421.283166-8-frederic.danis@collabora.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240904140421.283166-1-frederic.danis@collabora.com>
-References: <20240904140421.283166-1-frederic.danis@collabora.com>
+Subject: [Bug 219233] Bluetooth: hci0: Failed to load Intel firmware file
+ intel/ibt-18-16-0.sfi (-2)
+Date: Wed, 04 Sep 2024 14:58:13 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: luiz.dentz@gmail.com
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P3
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: cc
+Message-ID: <bug-219233-62941-kXuff7vHpX@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-219233-62941@https.bugzilla.kernel.org/>
+References: <bug-219233-62941@https.bugzilla.kernel.org/>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
 
-This new interface allows to get the image referenced in the audio
-metadata ImgHandle available in org.bluez.MediaPlayer track properties.
-The image handle is only available in track info if an OBEX session is
-connected to the ObexPort port provided in  org.bluez.MediaPlayer
-properties.
----
- Makefile.am                     |  9 +++--
- doc/org.bluez.obex.BipAvrcp.rst | 72 +++++++++++++++++++++++++++++++++
- doc/org.bluez.obex.Client.rst   |  1 +
- 3 files changed, 79 insertions(+), 3 deletions(-)
- create mode 100644 doc/org.bluez.obex.BipAvrcp.rst
+https://bugzilla.kernel.org/show_bug.cgi?id=3D219233
 
-diff --git a/Makefile.am b/Makefile.am
-index 46a8cfb49..12c37329c 100644
---- a/Makefile.am
-+++ b/Makefile.am
-@@ -379,7 +379,8 @@ man_MANS += doc/org.bluez.obex.Client.5 doc/org.bluez.obex.Session.5 \
- 		doc/org.bluez.obex.PhonebookAccess.5 \
- 		doc/org.bluez.obex.MessageAccess.5 \
- 		doc/org.bluez.obex.Message.5 \
--		doc/org.bluez.obex.AgentManager.5 doc/org.bluez.obex.Agent.5
-+		doc/org.bluez.obex.AgentManager.5 doc/org.bluez.obex.Agent.5 \
-+		doc/org.bluez.obex.BipAvrcp.5
- endif
- manual_pages += src/bluetoothd.8
- manual_pages += doc/l2cap.7 doc/rfcomm.7
-@@ -412,7 +413,8 @@ manual_pages += doc/org.bluez.obex.Client.5 doc/org.bluez.obex.Session.5 \
- 		doc/org.bluez.obex.PhonebookAccess.5 \
- 		doc/org.bluez.obex.MessageAccess.5 \
- 		doc/org.bluez.obex.Message.5 \
--		doc/org.bluez.obex.AgentManager.5 doc/org.bluez.obex.Agent.5
-+		doc/org.bluez.obex.AgentManager.5 doc/org.bluez.obex.Agent.5 \
-+		doc/org.bluez.obex.BipAvrcp.5
- 
- EXTRA_DIST += src/genbuiltin src/bluetooth.conf \
- 			src/main.conf profiles/network/network.conf \
-@@ -494,7 +496,8 @@ EXTRA_DIST += doc/org.bluez.obex.Client.rst doc/org.bluez.obex.Session.rst \
- 		doc/org.bluez.obex.PhonebookAccess.rst \
- 		doc/org.bluez.obex.MessageAccess.rst \
- 		doc/org.bluez.obex.Message.rst \
--		doc/org.bluez.obex.AgentManager.rst doc/org.bluez.obex.Agent.rst
-+		doc/org.bluez.obex.AgentManager.rst doc/org.bluez.obex.Agent.rst \
-+		doc/org.bluez.obex.BipAvrcp.rst
- 
- EXTRA_DIST += doc/pics-opp.txt doc/pixit-opp.txt \
- 		doc/pts-opp.txt
-diff --git a/doc/org.bluez.obex.BipAvrcp.rst b/doc/org.bluez.obex.BipAvrcp.rst
-new file mode 100644
-index 000000000..0b6103969
---- /dev/null
-+++ b/doc/org.bluez.obex.BipAvrcp.rst
-@@ -0,0 +1,72 @@
-+=======================
-+org.bluez.obex.BipAvrcp
-+=======================
-+
-+--------------------------------------------------
-+BlueZ D-Bus OBEX BipAvrcp API documentation
-+--------------------------------------------------
-+
-+:Version: BlueZ
-+:Date: August 2024
-+:Manual section: 5
-+:Manual group: Linux System Administration
-+
-+Interface
-+=========
-+
-+:Service:	org.bluez.obex
-+:Interface:	org.bluez.obex.BipAvrcp1
-+:Object path:	[Session object path]
-+
-+Methods
-+-------
-+
-+object, dict GetImage(string targetfile, string handle, dict description)
-+`````````````````````````````````````````````````````````````````````````
-+
-+    Retrieves the image corresponding to the handle and the description, as
-+    one of the descriptions retrieved by GetImageProperties, and store it in
-+    a local file.
-+
-+    If the "transform" property description exists it should be set to one
-+    of the value listed by GetImageProperties for this description.
-+
-+    If description is an empty dict, the native image will be retrieved;
-+
-+	Possible errors:
-+
-+	:org.bluez.obex.Error.InvalidArguments:
-+	:org.bluez.obex.Error.Failed:
-+
-+array{dict} GetImageproperties(string handle)
-+`````````````````````````````````````````````
-+
-+    Retrieves the image properties corresponding to the handle.
-+
-+    The first dict entry is mandatory and correspond to 'handle' and 'name'
-+    of the image.
-+
-+    The second dict entry is mandatory and correspond to the native description
-+    ('type':'native') of the image.
-+
-+    The following dict entries are optional and correspond to variant
-+    descriptions of the image. If the 'transform' entry exists in the
-+    description, it lists the available possible image transformations and
-+    should be set to one of them before using the description as parameter
-+    to GetImage.
-+
-+	Possible errors:
-+
-+	:org.bluez.obex.Error.InvalidArguments:
-+	:org.bluez.obex.Error.Failed:
-+
-+object, dict GetImageThumbnail(string targetfile, string handle)
-+````````````````````````````````````````````````````````````````
-+
-+    Retrieves the image thumbnail corresponding to the handle and store it in
-+    a local file.
-+
-+	Possible errors:
-+
-+	:org.bluez.obex.Error.InvalidArguments:
-+	:org.bluez.obex.Error.Failed:
-diff --git a/doc/org.bluez.obex.Client.rst b/doc/org.bluez.obex.Client.rst
-index 5ae7cc5e8..f20dd5baa 100644
---- a/doc/org.bluez.obex.Client.rst
-+++ b/doc/org.bluez.obex.Client.rst
-@@ -43,6 +43,7 @@ object CreateSession(string destination, dict args)
- 		:"opp":
- 		:"pbap":
- 		:"sync":
-+		:"bip-avrcp":
- 
- 	:string Source:
- 
--- 
-2.34.1
+Luiz Von Dentz (luiz.dentz@gmail.com) changed:
 
+           What    |Removed                     |Added
+----------------------------------------------------------------------------
+                 CC|                            |luiz.dentz@gmail.com
+
+--- Comment #1 from Luiz Von Dentz (luiz.dentz@gmail.com) ---
+-2 is ENOENT so the firmware file is missing, perhaps you haven't installed
+linux-firmware package?
+
+--=20
+You may reply to this email to add a comment.
+
+You are receiving this mail because:
+You are the assignee for the bug.=
 
