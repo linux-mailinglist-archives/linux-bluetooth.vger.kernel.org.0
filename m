@@ -1,69 +1,69 @@
-Return-Path: <linux-bluetooth+bounces-7172-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-7173-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5549096C1DF
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Sep 2024 17:12:56 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3928E96C1C1
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Sep 2024 17:07:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 398E7B2319E
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Sep 2024 15:07:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5D8671C228E3
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Sep 2024 15:07:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3083C1DCB11;
-	Wed,  4 Sep 2024 15:07:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 023071DCB01;
+	Wed,  4 Sep 2024 15:07:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X0ag7gRt"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZczRxt4Z"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD63DDCD
-	for <linux-bluetooth@vger.kernel.org>; Wed,  4 Sep 2024 15:07:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF821DC723
+	for <linux-bluetooth@vger.kernel.org>; Wed,  4 Sep 2024 15:07:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725462456; cv=none; b=cYAzIkE3dvOakSn3aQ7dQhpsqW0nqa7xAYs4AdnbOwrpJarQGNQ4oTFejyK7NyA5lH/wc80iMfLtPvUYR9BUlG8tZffBkyZLW+DC3U8qmrBe/dzQSblSN/M/H10cuhtdcLDkK83jzwhwX/dgqre2B7cB4hWGtXHtnEllziLELwk=
+	t=1725462466; cv=none; b=WDmBVNkUfuEwfIPeEaPA8ETak/CsxTUe9ZBNCsapOozIA/83z1LeL2HGDQnyeAqh1ooHx2Gf9DHtHq4k9lBuD6zQCa/UT56mMMXF0MduKl5MJhX+UDi17PywHI72i0kxhqNmUWWJc8u9UnVM19e7YOsTRehu4PadJ56zxlNF2LA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725462456; c=relaxed/simple;
+	s=arc-20240116; t=1725462466; c=relaxed/simple;
 	bh=btPHVcon9YDMqNYfKwngWcxA0cQhn3eBU0q38HMpFXU=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YZ4a/oHBNVlF3o76s8Km3mKBKvq6g07L1XIOvFEIh5AEFul8v5dZSaOngSxYWzueSY5bjAC10gOil5f/SFcPz1Jf39SDBjf1KoohB9Agj3g+I8vSEEyVuL4xCADScRUtz58T/DXbawtXB9nauBlXK5XzL4djGeZitmjLS6YGloU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X0ag7gRt; arc=none smtp.client-ip=209.85.214.169
+	 To:Cc:Content-Type; b=OfHJA0xSfua/CrW9m/7dalO+BiTIXhs0iSBpvnSk1kTqjLl89KUJEl5qGwNqMdUvfdMMxfhqFhKpQps7J9yNSe6adcLrvH7yaZqbi6UsCBNORJWzSNBgduyuSf8ME1O5G4s3Uyseq67Wn9QTOMndBRpXB6v0vBmmEyIqMI50JlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZczRxt4Z; arc=none smtp.client-ip=209.85.208.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-20536dcc6e9so33023315ad.2
-        for <linux-bluetooth@vger.kernel.org>; Wed, 04 Sep 2024 08:07:34 -0700 (PDT)
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2f3f07ac2dcso74654721fa.2
+        for <linux-bluetooth@vger.kernel.org>; Wed, 04 Sep 2024 08:07:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725462454; x=1726067254; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1725462462; x=1726067262; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
         bh=8zruJ6SZ514YkU4YtSRS/cKRhklgyaoz5jEj/cbFjhE=;
-        b=X0ag7gRtHIWTF2N1EbDYQ/rEh4nB3Dlnzchg9NYXORt3HRDrYFHIgftrTvIBF43oZU
-         EaYXSpO5JrkW4VUVFrTFpAqG3WBAcVrzMkrQreesHNZx3z8e1JwD5Y9HoJ9XZxFVcDgw
-         pJGvSlJRBW3jFp9LoKWXaKpmaN8BRsDfTLa+OUFPQqqRC4Xh57HJG+e9bfLFo0fjWOTf
-         3TkR+ybP1bsvvvqknndPOAmQRgXFMJoyJprSEhQzASM8AUR/pRfmtP1+KNrNUZTvC2MK
-         yI0K2vO/zAl+pOM+VxR/KoxJCjp6LL+I+RGMx7FDkPv3FjXJXoTisMbnGVONTR5MZwPX
-         1DkA==
+        b=ZczRxt4Z/l5MdVY9l7/Dok09pglLt/zX+TBqVeKxj+ADYo94Nh5zURCqUlfnymFQgI
+         pyFSj4duYCmisdTkdjl5tqFnKeGco/EaIUDrbIBVlLC53pgmfjo899qR08ZYFQ4FCQrc
+         8K7/+LSAzSnxHZQdn1yQjTE4cmjJedJiTESgLRm7OAEw4SRVhJv/Mlygv9hAEfbLT++/
+         YQZyGLOEy4ze8RB/CeKCVGwkLncHg+GlpcgzlFQXXtdT9cZE894v1ajkhVNq9tTZpq3O
+         O2g/FqayiPnDv3M2Ju+jrtAVV1ZODIE3bEyEntBWmr2SF1bujcBvsaagy2cD2zEWjq2/
+         Kwzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725462454; x=1726067254;
+        d=1e100.net; s=20230601; t=1725462462; x=1726067262;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
         bh=8zruJ6SZ514YkU4YtSRS/cKRhklgyaoz5jEj/cbFjhE=;
-        b=JNio9ccEsAJse80Y68Cc7R5CkPYmNknBAEowUydB8ttlJRrqhZeeu2cKbEtaDGWNIV
-         e5+SDBVWvSGb5eDdZv0o7VgaHfXT7w8B3rI39h89UHzp+5LTh5N+HcQwIlCz7QLKU+s5
-         PWsHlX0zE3/il3Q2XjniEP7wFAIFF9FoIgCxAnLiQXRtBdGb7mzgW1Gd+9rwRHeBqsOi
-         Bx7NXfyqKsDumIICEvbK2LrP0FkdAOOhqlU/emr5yvXxICjOryG9cXdLE3dpN1Io4dXe
-         kX19nf9+VjQBeTk0d8WMO6GtHI/z8NIHgNwtocz/XCWQnA+43EWKQzrZqq23MCfpx5A9
-         NKUg==
-X-Gm-Message-State: AOJu0Yw+O2yUhuStBn5g0NO/UT+Mm8KRpDsOZEByhW0I57YBnGk1OMJZ
-	9GzEK/2ReBdbHsTAfC5R8gyZ+n+ghUScohIgwA232S30YA1IrBWal5rmQOu5+D3f9KiZ/Yhkvhb
-	Biut7p+NQUStWJH8NjBtsva6Wj6AxhA==
-X-Google-Smtp-Source: AGHT+IHFN6kilRyILjXabU0KDmhYmaMC9tNazEwG57fVM3jumakgrbHs1NA8FdY0wfZHNvH6kCBO3RhBFPnc7CflUdg=
-X-Received: by 2002:a17:902:ef0f:b0:1f7:1655:825c with SMTP id
- d9443c01a7336-2050c37b310mr176553745ad.36.1725462454155; Wed, 04 Sep 2024
- 08:07:34 -0700 (PDT)
+        b=cfuhjo+dS/8ffY6RbfjWStsXAUyqnYP/ORyhIM4PiEAibaOzJtAOsyUQIEujeMjATu
+         f03LnBX5256O6EThq6N/Hg8WehyU4KR5gaqeGu0jjQPp5C9S8wOSKUaKnxL4BUx90AAC
+         R06ZmKM+CSNmd48g6LgMLjKcFNadNHsHhFpqYLNzRqcQSc1dgy5F8ePzqclGBgxhca95
+         lB5N1FfesOEa6tICffHCXYe3xbKME+Y3e0MWCtR7LyvCaBSGIgOXVAMoPZUY3G1Btzyk
+         7N2ptTmuhk8R+YQQgMTggnPNrocEMKIgdrROPXu5AY4dd9/jUqLe187oNL9G9YAwIgHm
+         iylg==
+X-Gm-Message-State: AOJu0Yxc4nXS45yeYzNOroMf8J67ifd34EOE+XDpOtwYAv5WG/cAbAql
+	W5g3rZEZyYxqI6JhHx9IRzhmrkksqqaumFsrdcd6RC+yNRKgWX6i/CABdL6pYNTnzU7Ve3sRgPS
+	l4UPO6KcsYdrQIH0Tu91rr575MWw=
+X-Google-Smtp-Source: AGHT+IFdRf9+X6ELiB5goINEtvBZKt4Szlr1+EeXEM62aCcEQSoI1DYDM7ypvWsH0JFU18v1sgk+XTW/s7/iwPFnJpw=
+X-Received: by 2002:a2e:1309:0:b0:2f3:91a1:596f with SMTP id
+ 38308e7fff4ca-2f6103c847fmr107194641fa.23.1725462461389; Wed, 04 Sep 2024
+ 08:07:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
