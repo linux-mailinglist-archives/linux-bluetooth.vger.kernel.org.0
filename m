@@ -1,209 +1,129 @@
-Return-Path: <linux-bluetooth+bounces-7280-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-7282-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 94336976FCC
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 12 Sep 2024 19:50:16 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A7E99772D8
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 12 Sep 2024 22:45:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E9BD3B24175
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 12 Sep 2024 17:50:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7DA231C23FB0
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 12 Sep 2024 20:45:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E47B81C0DD3;
-	Thu, 12 Sep 2024 17:49:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C53921C230C;
+	Thu, 12 Sep 2024 20:45:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="m6U1swF6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kOFnZiQ/"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com [209.85.221.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B801BF816
-	for <linux-bluetooth@vger.kernel.org>; Thu, 12 Sep 2024 17:49:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27701C1AA7
+	for <linux-bluetooth@vger.kernel.org>; Thu, 12 Sep 2024 20:45:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726163375; cv=none; b=LLNgxcOArc+lJvDyKKaz7ZrcOSJ0mOQKy+4W3fN7ryxBf2O94X2VX65v9nsA6Jhj9lThcGu3oRGy+kvEseNKi08AzcNN9Ha2WrcUvNqz//1cq8nwB5qfOa7BJIWn5qRaOvkCII32YB7uZz28JJdjjo1mUIGN1Xb1/klBsfNFUnE=
+	t=1726173904; cv=none; b=PeeorORAqnSifB8UibVCHzB/Ps3fmpyIV6Nmw8y/BuIbVrQ28rZOh3gDvQR8Kf2g30lXwRS92JPvhzMFirnLdsJzcEdA6U3YcabSxVn01tOlzJb1XUYa7Z5rRE3VVosry0pJMmwG0+8uxMovi4kkQ2ADZGkyJ6B6KpGa920wCvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726163375; c=relaxed/simple;
-	bh=+2E/LBspo2lEbn9xn4wjGnU8xzAnWjQXYvtZIfdyxnk=;
-	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FUlx8MlnElz6vQpGnTyEEM2LjaKtS4OAnE5uIY0xsINqSih75nfy+PE48sFxV9MpkQe3rPk665vwxj4t5ZJssuU2TQca45kSoCheCgtVgaynsvN6jDosG2beXxjCAcYLWzs6OetzeKoy88DuuHnRnofzXcv4mMkuFF14WHaAfKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=m6U1swF6; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1726163369;
-	bh=+2E/LBspo2lEbn9xn4wjGnU8xzAnWjQXYvtZIfdyxnk=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=m6U1swF6LADtaKzLGcQ9894uUsdRJ+LZl1yBuKqQ7vSTrbt2Vljam00QK3s9xO5n+
-	 SOozNjPmZD0GkxI5NO7D9iGpj/8crYW+fLPtEIp969KT5aQfkL37r2FBcrygDbWPC4
-	 81okOnq5FimymbXvOAPWkTRK8dUGxj0EKIsOzLzgUlRfDri1agk+tdWxvouSNSvABo
-	 woUpKZRwWlZwd76ydyiooWcEZxlOriq+45OO0hSOHK641At+hva+O/rVWlM7NvI2Qk
-	 I00pDtV84sHlKH2gp0mz9cb1FiGXDHSWtcWvcWZ0WOc3EY4rZtKNBWzTQ9JbI208QD
-	 9en9F3Uv8aTvg==
-Received: from fdanis-XPS-13-9370.. (67.227.121.78.rev.sfr.net [78.121.227.67])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: fdanis)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 58B0B17E3607
-	for <linux-bluetooth@vger.kernel.org>; Thu, 12 Sep 2024 19:49:29 +0200 (CEST)
-From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
+	s=arc-20240116; t=1726173904; c=relaxed/simple;
+	bh=fS8darwhZEKjazmUr+SxaP2VL9LkgRmTDmMThlKIRT8=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=sQwlrY/Vxz/ffe5NsOZOgUC+8TEMEF4TexBxH6KJvUbkIngsUdKw9ZZ0bqWhn6qEjZl+FKigLyZuxJQRkFuVf3G4vx7sLKHHJyaKDjGQsJfOETQarcm+XrXnplYNtd4I7MAuHW767LdDEq22tNOAffi0g9zbLy8yuFSb7amDzEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kOFnZiQ/; arc=none smtp.client-ip=209.85.221.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-vk1-f178.google.com with SMTP id 71dfb90a1353d-5010861905bso1117383e0c.1
+        for <linux-bluetooth@vger.kernel.org>; Thu, 12 Sep 2024 13:45:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1726173901; x=1726778701; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=B3maRCkXriOwNRsToVGGBax0Q8NsC2y4XqJ7drQS+j4=;
+        b=kOFnZiQ/V0kyjuaWbMkjFmQB6q2npR88H/KprOTYOAflfMcL3PEm9VBcPYPLS2wf77
+         Z6fbwyrJBF0NwKj+4+YIW49b5ZtUBcMEU1tEdkSkcXAhh6v8JDu90WJoxdugpkclc3k9
+         Qvj+3bt19NOyZcCuNDyvoMdDUxr26Q6Kz0SE1ulcoODya0LoQRpWS71WnL235eYmqij7
+         kUechQ5U7Bt5bJp/GKK1S1o7e0/bdYsfnIhW2F6uKyRupl1cwOEuE6tPtss/yJTqS46K
+         8Wmi5oXqOOrmrVIS4BNGU7qmt16CNaq9i5CRfOSZfgktdgNG5s6I0hMu3Zm+qxkaISWE
+         cOUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726173901; x=1726778701;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=B3maRCkXriOwNRsToVGGBax0Q8NsC2y4XqJ7drQS+j4=;
+        b=cx3NpNMii8NafOHp8+eJV6rFgeV/96u+zlU3CGYEbY4vQVf7CrarYbJJ4paDwA/8mN
+         tCcoNiwvTUX7p9YrXgiwZ/uGEvURegkCQ3PPv2c/5xPYonhafoDH416cIkobmnRZZflf
+         6PNJhjGGPx1TG76HxKHAYZ0sTc/Yo6XTuhnY84Rn6eD7/QYKPJjALtszxtWwQQihzMVl
+         j9sWYtAKYivwk79gafCVG13+3GRYn+XxxcxZRayWxlq/kvzvcfddExIRf3hj00WSnM6N
+         twyW+H4Ab2PnoY0SIwWQIZpLYTMQsCUJG15P4Riym2q3dETeD7e5WbTfd73wKQzroib8
+         oLKA==
+X-Gm-Message-State: AOJu0Yy/Zg0fDODvzyAfwNxGRuoLpWDqV4re0Tz5zFkkT6fC+5ChFbGV
+	uVrR/K+p5lfNnxf78SP6n3vGQl6YXO6me3uYIvAGuoQ4D/t87ThsvvvNng==
+X-Google-Smtp-Source: AGHT+IGY/3krUv7sECnM6f06S9/bM69VqNw9qH5MJGp95J/SLoWqixjkIa+g80QSLpb7Q41gGmVX+Q==
+X-Received: by 2002:a05:6122:4584:b0:4f6:b302:5c50 with SMTP id 71dfb90a1353d-5032e3a8508mr3528444e0c.0.1726173900731;
+        Thu, 12 Sep 2024 13:45:00 -0700 (PDT)
+Received: from lvondent-mobl5.. (syn-107-146-107-067.res.spectrum.com. [107.146.107.67])
+        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-502f9a9a484sm795067e0c.23.2024.09.12.13.44.59
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Sep 2024 13:45:00 -0700 (PDT)
+From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v2 7/7] doc: Add description of org.bluez.obex.BipAvrcp
-Date: Thu, 12 Sep 2024 19:49:21 +0200
-Message-Id: <20240912174921.386856-8-frederic.danis@collabora.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240912174921.386856-1-frederic.danis@collabora.com>
-References: <20240912174921.386856-1-frederic.danis@collabora.com>
+Subject: [PATCH BlueZ v1] client: Print a warning when setting discoverable without a timeout
+Date: Thu, 12 Sep 2024 16:44:58 -0400
+Message-ID: <20240912204458.3037144-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.46.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-This new interface allows to get the image referenced in the audio
-metadata ImgHandle available in org.bluez.MediaPlayer track properties.
-The image handle is only available in track info if an OBEX session is
-connected to the ObexPort port provided in  org.bluez.MediaPlayer
-properties.
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+
+This makes command discoverable to print a warning if
+discoverable-timeout is not set(0):
+
+[bluetooth]# discoverable-timeout 0
+[bluetooth]# Changing discoverable-timeout 0 succeeded
+[bluetooth]# [CHG] Controller 4C:49:6C:44:F5:E7 DiscoverableTimeout: 0x00000000 (0)
+[bluetooth]# discoverable on
+Warning: setting discoverable while discoverable-timeout not set(0) is not recommended
 ---
-v1 -> v2: Set new interface as experimental
+ client/main.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
- Makefile.am                     |  9 +++--
- doc/org.bluez.obex.BipAvrcp.rst | 72 +++++++++++++++++++++++++++++++++
- doc/org.bluez.obex.Client.rst   |  1 +
- 3 files changed, 79 insertions(+), 3 deletions(-)
- create mode 100644 doc/org.bluez.obex.BipAvrcp.rst
-
-diff --git a/Makefile.am b/Makefile.am
-index 88044aa05..3a9728782 100644
---- a/Makefile.am
-+++ b/Makefile.am
-@@ -382,7 +382,8 @@ man_MANS += doc/org.bluez.obex.Client.5 doc/org.bluez.obex.Session.5 \
- 		doc/org.bluez.obex.PhonebookAccess.5 \
- 		doc/org.bluez.obex.MessageAccess.5 \
- 		doc/org.bluez.obex.Message.5 \
--		doc/org.bluez.obex.AgentManager.5 doc/org.bluez.obex.Agent.5
-+		doc/org.bluez.obex.AgentManager.5 doc/org.bluez.obex.Agent.5 \
-+		doc/org.bluez.obex.BipAvrcp.5
- endif
- manual_pages += src/bluetoothd.8
- manual_pages += doc/l2cap.7 doc/rfcomm.7
-@@ -415,7 +416,8 @@ manual_pages += doc/org.bluez.obex.Client.5 doc/org.bluez.obex.Session.5 \
- 		doc/org.bluez.obex.PhonebookAccess.5 \
- 		doc/org.bluez.obex.MessageAccess.5 \
- 		doc/org.bluez.obex.Message.5 \
--		doc/org.bluez.obex.AgentManager.5 doc/org.bluez.obex.Agent.5
-+		doc/org.bluez.obex.AgentManager.5 doc/org.bluez.obex.Agent.5 \
-+		doc/org.bluez.obex.BipAvrcp.5
+diff --git a/client/main.c b/client/main.c
+index a96a4263849d..2a5c7527bc6c 100644
+--- a/client/main.c
++++ b/client/main.c
+@@ -1095,6 +1095,7 @@ static void cmd_pairable(int argc, char *argv[])
  
- EXTRA_DIST += src/genbuiltin src/bluetooth.conf \
- 			src/main.conf profiles/network/network.conf \
-@@ -497,7 +499,8 @@ EXTRA_DIST += doc/org.bluez.obex.Client.rst doc/org.bluez.obex.Session.rst \
- 		doc/org.bluez.obex.PhonebookAccess.rst \
- 		doc/org.bluez.obex.MessageAccess.rst \
- 		doc/org.bluez.obex.Message.rst \
--		doc/org.bluez.obex.AgentManager.rst doc/org.bluez.obex.Agent.rst
-+		doc/org.bluez.obex.AgentManager.rst doc/org.bluez.obex.Agent.rst \
-+		doc/org.bluez.obex.BipAvrcp.rst
+ static void cmd_discoverable(int argc, char *argv[])
+ {
++	DBusMessageIter iter;
+ 	dbus_bool_t discoverable;
+ 	char *str;
  
- EXTRA_DIST += doc/pics-opp.txt doc/pixit-opp.txt \
- 		doc/pts-opp.txt
-diff --git a/doc/org.bluez.obex.BipAvrcp.rst b/doc/org.bluez.obex.BipAvrcp.rst
-new file mode 100644
-index 000000000..46b12f645
---- /dev/null
-+++ b/doc/org.bluez.obex.BipAvrcp.rst
-@@ -0,0 +1,72 @@
-+=======================
-+org.bluez.obex.BipAvrcp
-+=======================
-+
-+--------------------------------------------------
-+BlueZ D-Bus OBEX BipAvrcp API documentation
-+--------------------------------------------------
-+
-+:Version: BlueZ
-+:Date: August 2024
-+:Manual section: 5
-+:Manual group: Linux System Administration
-+
-+Interface
-+=========
-+
-+:Service:	org.bluez.obex
-+:Interface:	org.bluez.obex.BipAvrcp1 [experimental]
-+:Object path:	[Session object path]
-+
-+Methods
-+-------
-+
-+object, dict GetImage(string targetfile, string handle, dict description)
-+`````````````````````````````````````````````````````````````````````````
-+
-+    Retrieves the image corresponding to the handle and the description, as
-+    one of the descriptions retrieved by GetImageProperties, and store it in
-+    a local file.
-+
-+    If the "transform" property description exists it should be set to one
-+    of the value listed by GetImageProperties for this description.
-+
-+    If description is an empty dict, the native image will be retrieved;
-+
-+	Possible errors:
-+
-+	:org.bluez.obex.Error.InvalidArguments:
-+	:org.bluez.obex.Error.Failed:
-+
-+array{dict} GetImageproperties(string handle)
-+`````````````````````````````````````````````
-+
-+    Retrieves the image properties corresponding to the handle.
-+
-+    The first dict entry is mandatory and correspond to 'handle' and 'name'
-+    of the image.
-+
-+    The second dict entry is mandatory and correspond to the native description
-+    ('type':'native') of the image.
-+
-+    The following dict entries are optional and correspond to variant
-+    descriptions of the image. If the 'transform' entry exists in the
-+    description, it lists the available possible image transformations and
-+    should be set to one of them before using the description as parameter
-+    to GetImage.
-+
-+	Possible errors:
-+
-+	:org.bluez.obex.Error.InvalidArguments:
-+	:org.bluez.obex.Error.Failed:
-+
-+object, dict GetImageThumbnail(string targetfile, string handle)
-+````````````````````````````````````````````````````````````````
-+
-+    Retrieves the image thumbnail corresponding to the handle and store it in
-+    a local file.
-+
-+	Possible errors:
-+
-+	:org.bluez.obex.Error.InvalidArguments:
-+	:org.bluez.obex.Error.Failed:
-diff --git a/doc/org.bluez.obex.Client.rst b/doc/org.bluez.obex.Client.rst
-index 5ae7cc5e8..f20dd5baa 100644
---- a/doc/org.bluez.obex.Client.rst
-+++ b/doc/org.bluez.obex.Client.rst
-@@ -43,6 +43,7 @@ object CreateSession(string destination, dict args)
- 		:"opp":
- 		:"pbap":
- 		:"sync":
-+		:"bip-avrcp":
+@@ -1104,6 +1105,18 @@ static void cmd_discoverable(int argc, char *argv[])
+ 	if (check_default_ctrl() == FALSE)
+ 		return bt_shell_noninteractive_quit(EXIT_FAILURE);
  
- 	:string Source:
++	if (discoverable && g_dbus_proxy_get_property(default_ctrl->proxy,
++					"DiscoverableTimeout", &iter)) {
++		uint32_t value;
++
++		dbus_message_iter_get_basic(&iter, &value);
++
++		if (!value)
++			bt_shell_printf("Warning: setting discoverable while "
++					"discoverable-timeout not set(0) is not"
++					" recommended\n");
++	}
++
+ 	str = g_strdup_printf("discoverable %s",
+ 				discoverable == TRUE ? "on" : "off");
  
 -- 
-2.34.1
+2.46.0
 
 
