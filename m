@@ -1,58 +1,58 @@
-Return-Path: <linux-bluetooth+bounces-7321-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-7322-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A070897A2EE
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Sep 2024 15:28:53 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 14F6597A2EF
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Sep 2024 15:28:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3111AB24F07
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Sep 2024 13:28:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 39DEA1C21B1A
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Sep 2024 13:28:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6134C157A72;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA5A41581F0;
 	Mon, 16 Sep 2024 13:28:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="m5bTJimB"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="Aw9d/efQ"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F060155730
-	for <linux-bluetooth@vger.kernel.org>; Mon, 16 Sep 2024 13:28:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78562156F57
+	for <linux-bluetooth@vger.kernel.org>; Mon, 16 Sep 2024 13:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726493311; cv=none; b=Gf4yhVlmQugqjNKMg2BouLtE0EKCGJhW7F6IJ5X0L3PjenJXsvJUvirtUZObarXXEeCBXCsqUBn0LicFHl6ED0iRpwUR9bIuRDXaFX62jAKx14c3rbTTBJtc8ovC08pEVF84/53LM2+x5dtPz8AhPHLwxP06Q/sQOSU5Ob2U6Qc=
+	t=1726493312; cv=none; b=khqI6REebtWPlKj0gH6IrGicX6gq8nJcxR5Ef5A5gKOg5WzeBjnuOj16XGdJKGPKtrtFnHPktVuRNZ2Uo8AV28abW05DwXjljbV2iwlr8fOMMUdG34Khm/M6S24qdpbvAVHyqme4wHlNrUxiSVjdrSTYjMNkOfSjg2YgUFONN70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726493311; c=relaxed/simple;
-	bh=xfgCIiupl1IIWSNbxZ4zd48NLjvNMVHp8UG6XCfe7NI=;
+	s=arc-20240116; t=1726493312; c=relaxed/simple;
+	bh=Xws2x5vTC4bCXGRYndHuuAiGQVgXfiPyG+VzH86zf0Y=;
 	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K4bTMWFa/vgAPkE2b4E5KCbtmpo5M2mSou9xjV0YlbCyXeBsYTHERBtoXyzqTG7jZchTaxFZGoWjRagX95dTraHVzirmjfm4SRA2YamFeFXe50ivJf2UklTyLgKdfmeT/8NmEcpCZJyDp4pZwF7piAFFp9jB/awo8WVWIcssFic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=m5bTJimB; arc=none smtp.client-ip=148.251.105.195
+	 MIME-Version:Content-Type; b=C1hZFFZVJCTvz/IqMHK1D8cC3ghdKFEhING0iD2Rf3SQgpOAwaAP5NQA0jldXiyQ8V2MoVxTPmfPqHO/o4fB6Q7sWZpuFs61qCq4thwPdO+Hep91hI4y2ACQ9HB0KzpAHE6FzRSNDivJqqqVZ9jH5GkQsotPAuy8ioEtRUKGTzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=Aw9d/efQ; arc=none smtp.client-ip=148.251.105.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
 	s=mail; t=1726493300;
-	bh=xfgCIiupl1IIWSNbxZ4zd48NLjvNMVHp8UG6XCfe7NI=;
+	bh=Xws2x5vTC4bCXGRYndHuuAiGQVgXfiPyG+VzH86zf0Y=;
 	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=m5bTJimB00LSMYROMJNs2b3SBG1uNM/1/0efA3EqgdHCONAIl9f4qL3pn6eeU7wt+
-	 9PGBfwrakRUDvFBRBbDWBuzmHJyfedfepxvKMwejSMKshkrRhcMynD24QxuDjnSeQJ
-	 xSh5OG2W428TdPsBiL+NrAYoMR7at7vQ6Wk6X+Xz90X0vOy30w6KuC6XB2N9vNlhT/
-	 U4HRHoCLA2/9YIDxBkYkMy2Ix1PLivzh8o2MNnt8kagE19VfRE8+3bamfk5dqeVcGi
-	 Ylc8UVoarDauT7GIxLqjJL5H0ezdONG3mqj92RFulAlrb3yhniOXEE3WVrRAxJSdNZ
-	 NFrynfSOOGkrg==
+	b=Aw9d/efQQ8ouAB28LPxzs2iIG4PTiJSOZfricwk1xC826hBGNyu8awrvz1wWabLYj
+	 aUDumIMDMDA5M0zSjSIX9G3PyctIFR4Yh+CS8hZpe0uU5BBmPwyIfs4bX6jTrS0D/9
+	 +I5Vn6JYsSvcKJImRv007/TCFpGYnkPs0Y5p8xztsuWi2DoCaF4DVpREuIV4IanJ2I
+	 l2tvKNFJ84hQNcZT6fMewQdlN/ZoUzXgNtTqEUDhaW1Ig2zKHvmE+r1e5yQ3XBbp6T
+	 HVjw1dCDy29h+mpsZv/ciSzAQNKo6GVITwKJ+H6MGZvt4PSy0sO/Pq83AXMCfyc+V9
+	 L6LHuOa1Ak3ag==
 Received: from fdanis-XPS-13-9370.. (67.227.121.78.rev.sfr.net [78.121.227.67])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: fdanis)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 13CFC17E35CF
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 5177817E35D3
 	for <linux-bluetooth@vger.kernel.org>; Mon, 16 Sep 2024 15:28:20 +0200 (CEST)
 From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v3 8/9] avrcp: Update controller SDP record with cover art support
-Date: Mon, 16 Sep 2024 15:28:12 +0200
-Message-Id: <20240916132813.165731-9-frederic.danis@collabora.com>
+Subject: [PATCH BlueZ v3 9/9] doc: Add description of org.bluez.obex.BipAvrcp
+Date: Mon, 16 Sep 2024 15:28:13 +0200
+Message-Id: <20240916132813.165731-10-frederic.danis@collabora.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240916132813.165731-1-frederic.danis@collabora.com>
 References: <20240916132813.165731-1-frederic.danis@collabora.com>
@@ -65,34 +65,142 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
+This new interface allows to get the image referenced in the audio
+metadata ImgHandle available in org.bluez.MediaPlayer track properties.
+The image handle is only available in track info if an OBEX session is
+connected to the ObexPort port provided in  org.bluez.MediaPlayer
+properties.
 ---
- profiles/audio/avrcp.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ Makefile.am                     |  9 +++--
+ doc/org.bluez.obex.BipAvrcp.rst | 72 +++++++++++++++++++++++++++++++++
+ doc/org.bluez.obex.Client.rst   |  1 +
+ 3 files changed, 79 insertions(+), 3 deletions(-)
+ create mode 100644 doc/org.bluez.obex.BipAvrcp.rst
 
-diff --git a/profiles/audio/avrcp.c b/profiles/audio/avrcp.c
-index fe24b5a92..c2c901a65 100644
---- a/profiles/audio/avrcp.c
-+++ b/profiles/audio/avrcp.c
-@@ -413,12 +413,14 @@ static sdp_record_t *avrcp_ct_record(bool browsing)
- 	sdp_record_t *record;
- 	sdp_data_t *psm[2], *version, *features;
- 	uint16_t lp = AVCTP_CONTROL_PSM;
--	uint16_t avctp_ver = 0x0103;
-+	uint16_t avctp_ver = 0x0106;
- 	uint16_t feat = ( AVRCP_FEATURE_CATEGORY_1 |
--						AVRCP_FEATURE_CATEGORY_2 |
--						AVRCP_FEATURE_CATEGORY_3 |
--						AVRCP_FEATURE_CATEGORY_4 |
--						AVRCP_FEATURE_CT_GET_THUMBNAIL);
-+					AVRCP_FEATURE_CATEGORY_2 |
-+					AVRCP_FEATURE_CATEGORY_3 |
-+					AVRCP_FEATURE_CATEGORY_4 |
-+					AVRCP_FEATURE_CT_GET_IMAGE_PROP |
-+					AVRCP_FEATURE_CT_GET_IMAGE |
-+					AVRCP_FEATURE_CT_GET_THUMBNAIL);
+diff --git a/Makefile.am b/Makefile.am
+index 88044aa05..3a9728782 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -382,7 +382,8 @@ man_MANS += doc/org.bluez.obex.Client.5 doc/org.bluez.obex.Session.5 \
+ 		doc/org.bluez.obex.PhonebookAccess.5 \
+ 		doc/org.bluez.obex.MessageAccess.5 \
+ 		doc/org.bluez.obex.Message.5 \
+-		doc/org.bluez.obex.AgentManager.5 doc/org.bluez.obex.Agent.5
++		doc/org.bluez.obex.AgentManager.5 doc/org.bluez.obex.Agent.5 \
++		doc/org.bluez.obex.BipAvrcp.5
+ endif
+ manual_pages += src/bluetoothd.8
+ manual_pages += doc/l2cap.7 doc/rfcomm.7
+@@ -415,7 +416,8 @@ manual_pages += doc/org.bluez.obex.Client.5 doc/org.bluez.obex.Session.5 \
+ 		doc/org.bluez.obex.PhonebookAccess.5 \
+ 		doc/org.bluez.obex.MessageAccess.5 \
+ 		doc/org.bluez.obex.Message.5 \
+-		doc/org.bluez.obex.AgentManager.5 doc/org.bluez.obex.Agent.5
++		doc/org.bluez.obex.AgentManager.5 doc/org.bluez.obex.Agent.5 \
++		doc/org.bluez.obex.BipAvrcp.5
  
- 	record = sdp_record_alloc();
- 	if (!record)
+ EXTRA_DIST += src/genbuiltin src/bluetooth.conf \
+ 			src/main.conf profiles/network/network.conf \
+@@ -497,7 +499,8 @@ EXTRA_DIST += doc/org.bluez.obex.Client.rst doc/org.bluez.obex.Session.rst \
+ 		doc/org.bluez.obex.PhonebookAccess.rst \
+ 		doc/org.bluez.obex.MessageAccess.rst \
+ 		doc/org.bluez.obex.Message.rst \
+-		doc/org.bluez.obex.AgentManager.rst doc/org.bluez.obex.Agent.rst
++		doc/org.bluez.obex.AgentManager.rst doc/org.bluez.obex.Agent.rst \
++		doc/org.bluez.obex.BipAvrcp.rst
+ 
+ EXTRA_DIST += doc/pics-opp.txt doc/pixit-opp.txt \
+ 		doc/pts-opp.txt
+diff --git a/doc/org.bluez.obex.BipAvrcp.rst b/doc/org.bluez.obex.BipAvrcp.rst
+new file mode 100644
+index 000000000..46b12f645
+--- /dev/null
++++ b/doc/org.bluez.obex.BipAvrcp.rst
+@@ -0,0 +1,72 @@
++=======================
++org.bluez.obex.BipAvrcp
++=======================
++
++--------------------------------------------------
++BlueZ D-Bus OBEX BipAvrcp API documentation
++--------------------------------------------------
++
++:Version: BlueZ
++:Date: August 2024
++:Manual section: 5
++:Manual group: Linux System Administration
++
++Interface
++=========
++
++:Service:	org.bluez.obex
++:Interface:	org.bluez.obex.BipAvrcp1 [experimental]
++:Object path:	[Session object path]
++
++Methods
++-------
++
++object, dict GetImage(string targetfile, string handle, dict description)
++`````````````````````````````````````````````````````````````````````````
++
++    Retrieves the image corresponding to the handle and the description, as
++    one of the descriptions retrieved by GetImageProperties, and store it in
++    a local file.
++
++    If the "transform" property description exists it should be set to one
++    of the value listed by GetImageProperties for this description.
++
++    If description is an empty dict, the native image will be retrieved;
++
++	Possible errors:
++
++	:org.bluez.obex.Error.InvalidArguments:
++	:org.bluez.obex.Error.Failed:
++
++array{dict} GetImageproperties(string handle)
++`````````````````````````````````````````````
++
++    Retrieves the image properties corresponding to the handle.
++
++    The first dict entry is mandatory and correspond to 'handle' and 'name'
++    of the image.
++
++    The second dict entry is mandatory and correspond to the native description
++    ('type':'native') of the image.
++
++    The following dict entries are optional and correspond to variant
++    descriptions of the image. If the 'transform' entry exists in the
++    description, it lists the available possible image transformations and
++    should be set to one of them before using the description as parameter
++    to GetImage.
++
++	Possible errors:
++
++	:org.bluez.obex.Error.InvalidArguments:
++	:org.bluez.obex.Error.Failed:
++
++object, dict GetImageThumbnail(string targetfile, string handle)
++````````````````````````````````````````````````````````````````
++
++    Retrieves the image thumbnail corresponding to the handle and store it in
++    a local file.
++
++	Possible errors:
++
++	:org.bluez.obex.Error.InvalidArguments:
++	:org.bluez.obex.Error.Failed:
+diff --git a/doc/org.bluez.obex.Client.rst b/doc/org.bluez.obex.Client.rst
+index 5ae7cc5e8..f20dd5baa 100644
+--- a/doc/org.bluez.obex.Client.rst
++++ b/doc/org.bluez.obex.Client.rst
+@@ -43,6 +43,7 @@ object CreateSession(string destination, dict args)
+ 		:"opp":
+ 		:"pbap":
+ 		:"sync":
++		:"bip-avrcp":
+ 
+ 	:string Source:
+ 
 -- 
 2.34.1
 
