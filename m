@@ -1,207 +1,149 @@
-Return-Path: <linux-bluetooth+bounces-7322-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-7325-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14F6597A2EF
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Sep 2024 15:28:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A46EE97A484
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Sep 2024 16:53:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 39DEA1C21B1A
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Sep 2024 13:28:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D6F991C21D40
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Sep 2024 14:53:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA5A41581F0;
-	Mon, 16 Sep 2024 13:28:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4990515855C;
+	Mon, 16 Sep 2024 14:53:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="Aw9d/efQ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GVPXJP7q"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78562156F57
-	for <linux-bluetooth@vger.kernel.org>; Mon, 16 Sep 2024 13:28:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27DB8156880
+	for <linux-bluetooth@vger.kernel.org>; Mon, 16 Sep 2024 14:53:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726493312; cv=none; b=khqI6REebtWPlKj0gH6IrGicX6gq8nJcxR5Ef5A5gKOg5WzeBjnuOj16XGdJKGPKtrtFnHPktVuRNZ2Uo8AV28abW05DwXjljbV2iwlr8fOMMUdG34Khm/M6S24qdpbvAVHyqme4wHlNrUxiSVjdrSTYjMNkOfSjg2YgUFONN70=
+	t=1726498383; cv=none; b=RlBiUKdGHKqu+VWmKhDevwe1Tu7MATfa+YQsF03rmgljnAcVFXGBA01y6jXPlgJf95goA3ww5JA8eJ9BoEtE6HeF6jQWzTWvMvc9x+GBby5FHaMreINsgslQNkuppfu7iLXo3E/sDSLWoOjBOto5JefQR8TXSfJE8BO28p4maGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726493312; c=relaxed/simple;
-	bh=Xws2x5vTC4bCXGRYndHuuAiGQVgXfiPyG+VzH86zf0Y=;
-	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C1hZFFZVJCTvz/IqMHK1D8cC3ghdKFEhING0iD2Rf3SQgpOAwaAP5NQA0jldXiyQ8V2MoVxTPmfPqHO/o4fB6Q7sWZpuFs61qCq4thwPdO+Hep91hI4y2ACQ9HB0KzpAHE6FzRSNDivJqqqVZ9jH5GkQsotPAuy8ioEtRUKGTzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=Aw9d/efQ; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1726493300;
-	bh=Xws2x5vTC4bCXGRYndHuuAiGQVgXfiPyG+VzH86zf0Y=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=Aw9d/efQQ8ouAB28LPxzs2iIG4PTiJSOZfricwk1xC826hBGNyu8awrvz1wWabLYj
-	 aUDumIMDMDA5M0zSjSIX9G3PyctIFR4Yh+CS8hZpe0uU5BBmPwyIfs4bX6jTrS0D/9
-	 +I5Vn6JYsSvcKJImRv007/TCFpGYnkPs0Y5p8xztsuWi2DoCaF4DVpREuIV4IanJ2I
-	 l2tvKNFJ84hQNcZT6fMewQdlN/ZoUzXgNtTqEUDhaW1Ig2zKHvmE+r1e5yQ3XBbp6T
-	 HVjw1dCDy29h+mpsZv/ciSzAQNKo6GVITwKJ+H6MGZvt4PSy0sO/Pq83AXMCfyc+V9
-	 L6LHuOa1Ak3ag==
-Received: from fdanis-XPS-13-9370.. (67.227.121.78.rev.sfr.net [78.121.227.67])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: fdanis)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 5177817E35D3
-	for <linux-bluetooth@vger.kernel.org>; Mon, 16 Sep 2024 15:28:20 +0200 (CEST)
-From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
-To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v3 9/9] doc: Add description of org.bluez.obex.BipAvrcp
-Date: Mon, 16 Sep 2024 15:28:13 +0200
-Message-Id: <20240916132813.165731-10-frederic.danis@collabora.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240916132813.165731-1-frederic.danis@collabora.com>
-References: <20240916132813.165731-1-frederic.danis@collabora.com>
+	s=arc-20240116; t=1726498383; c=relaxed/simple;
+	bh=/hAMlWEyNFbtvb8r7KHWT3f67ST0Uv8vss+t79LGAbE=;
+	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
+	 In-Reply-To:References; b=Lonqi3jao2vXfhQgjHsWnxsWW0YYYSbVjZQM6LG48WgO0s59nbBumweowD3t/HVWOla3MIaO4ICsW9zdCcH9IIefLH+vzUp2cXb8BHBLclhKTeEb8fuEZYplTf0gqFM1XHbgYq3cfwD6MrPi3jeVPNyVYp8VekRv5uL+HbFvxVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GVPXJP7q; arc=none smtp.client-ip=209.85.222.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-7a9b3cd75e5so476386085a.0
+        for <linux-bluetooth@vger.kernel.org>; Mon, 16 Sep 2024 07:53:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1726498381; x=1727103181; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=C4x0ogAV7sg2GQzOTntaEk24bTCVjuT0uOH9rjwbZHM=;
+        b=GVPXJP7q/tIyl7eko7d2+N5+BeDqueKjMkvhDZQvcEgpf3eqdOvyjtA9DxQ4vguhC0
+         YGz0b2bTckVgWGIWAAObdtysUKcSzMujg/HVpeT4LKAh8oqyDBFWU0g5va89KolFpn4+
+         4sBOHtkR2GP1p+V3xsMjFvJT8gy0vMSAWShJeiV79zVPjdBQLKyY5RC/kSQE+GRr4S6b
+         mPHANQpNHXmg4XKbyRa34hAIo9ZBPlkXaG+our6HI7m126MqC0JaC4nXs62lRpC2tNSd
+         2Q+j1b8N9w7govqkVV3A2MgOT0IH7Ob1DXJ6TBZmAXz13TVafBD7Pg4lyU2/2tXHbkfV
+         Ml2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726498381; x=1727103181;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=C4x0ogAV7sg2GQzOTntaEk24bTCVjuT0uOH9rjwbZHM=;
+        b=eDxhxNMpsjntz4DWKi+dqIsNlWMsAGHvssavgdN/tn0VyZa67NygjlrzoRULWBTpDz
+         nSFeGLa4NNmleJmlgKRf1nHq9UC6hCNFOobWhhCXDsox3bT2u2p637Difo5MBO9nS+Ml
+         LN2/vi2YPO21Epc1lvLcn1EmNy8RUKUHPMoEoadFLkM72W7v4LulaZvAzkmNDKtr6XQ2
+         Au4nX23fbAOwNcSi9t8EFcaVWZRVX1InS+OYNblDimAnVDLlPSqcysAvxUuj8lGR+41u
+         gpv9ky51r4nv6+0j3kK/dft3SEzfz2eZFjqdT4kmeClehd9tr2VHNnunLxrinZfrVhi/
+         ylVA==
+X-Gm-Message-State: AOJu0YyzEN5bMLeqZ0LgOJ5XwbzyMd80ZyoWGZQwLPaSj8HJ51Dy7KH3
+	3Gh3uaEIZYK2algReHqEzkyUypavZ/A0qqLYMoqi2up0z5NIxhAsaePnUg==
+X-Google-Smtp-Source: AGHT+IF8E87bZzywssphBQwSjLmnzrbwOO9eNyj2OngnCfVHj2RfuW3Nozo1FDmsl75y/9Ek+ZvKFQ==
+X-Received: by 2002:a05:6214:449a:b0:6c3:5ae8:9e71 with SMTP id 6a1803df08f44-6c5735725bbmr230428796d6.41.1726498380613;
+        Mon, 16 Sep 2024 07:53:00 -0700 (PDT)
+Received: from [172.17.0.2] ([20.55.223.44])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6c58c7d9f0esm24908566d6.143.2024.09.16.07.52.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Sep 2024 07:53:00 -0700 (PDT)
+Message-ID: <66e8464c.d40a0220.1a1404.8022@mx.google.com>
+Date: Mon, 16 Sep 2024 07:53:00 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============1656702221373099636=="
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+From: bluez.test.bot@gmail.com
+To: linux-bluetooth@vger.kernel.org, ismael@iodev.co.uk
+Subject: RE: [v2] Replace the usage of non-standard GNU-basename with strrchr
+In-Reply-To: <20240916130824.11246-2-ismael@iodev.co.uk>
+References: <20240916130824.11246-2-ismael@iodev.co.uk>
+Reply-To: linux-bluetooth@vger.kernel.org
 
-This new interface allows to get the image referenced in the audio
-metadata ImgHandle available in org.bluez.MediaPlayer track properties.
-The image handle is only available in track info if an OBEX session is
-connected to the ObexPort port provided in  org.bluez.MediaPlayer
-properties.
+--===============1656702221373099636==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=890677
+
+---Test result---
+
+Test Summary:
+CheckPatch                    FAIL      0.68 seconds
+GitLint                       PASS      0.33 seconds
+BuildEll                      PASS      24.71 seconds
+BluezMake                     PASS      1744.38 seconds
+MakeCheck                     PASS      13.29 seconds
+MakeDistcheck                 PASS      179.14 seconds
+CheckValgrind                 PASS      254.61 seconds
+CheckSmatch                   WARNING   362.17 seconds
+bluezmakeextell               PASS      123.51 seconds
+IncrementalBuild              PASS      1574.25 seconds
+ScanBuild                     PASS      1021.39 seconds
+
+Details
+##############################
+Test: CheckPatch - FAIL
+Desc: Run checkpatch.pl script
+Output:
+[v2] Replace the usage of non-standard GNU-basename with strrchr
+WARNING:LINE_SPACING: Missing a blank line after declarations
+#100: FILE: tools/hex2hcd.c:307:
++		const char *bname = strrchr(pathname, '/');
++		if (!bname++)
+
+/github/workspace/src/src/13805416.patch total: 0 errors, 1 warnings, 31 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/github/workspace/src/src/13805416.patch has style problems, please review.
+
+NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+##############################
+Test: CheckSmatch - WARNING
+Desc: Run smatch tool with source
+Output:
+tools/hex2hcd.c:136:26: warning: Variable length array is used.
+
+
 ---
- Makefile.am                     |  9 +++--
- doc/org.bluez.obex.BipAvrcp.rst | 72 +++++++++++++++++++++++++++++++++
- doc/org.bluez.obex.Client.rst   |  1 +
- 3 files changed, 79 insertions(+), 3 deletions(-)
- create mode 100644 doc/org.bluez.obex.BipAvrcp.rst
+Regards,
+Linux Bluetooth
 
-diff --git a/Makefile.am b/Makefile.am
-index 88044aa05..3a9728782 100644
---- a/Makefile.am
-+++ b/Makefile.am
-@@ -382,7 +382,8 @@ man_MANS += doc/org.bluez.obex.Client.5 doc/org.bluez.obex.Session.5 \
- 		doc/org.bluez.obex.PhonebookAccess.5 \
- 		doc/org.bluez.obex.MessageAccess.5 \
- 		doc/org.bluez.obex.Message.5 \
--		doc/org.bluez.obex.AgentManager.5 doc/org.bluez.obex.Agent.5
-+		doc/org.bluez.obex.AgentManager.5 doc/org.bluez.obex.Agent.5 \
-+		doc/org.bluez.obex.BipAvrcp.5
- endif
- manual_pages += src/bluetoothd.8
- manual_pages += doc/l2cap.7 doc/rfcomm.7
-@@ -415,7 +416,8 @@ manual_pages += doc/org.bluez.obex.Client.5 doc/org.bluez.obex.Session.5 \
- 		doc/org.bluez.obex.PhonebookAccess.5 \
- 		doc/org.bluez.obex.MessageAccess.5 \
- 		doc/org.bluez.obex.Message.5 \
--		doc/org.bluez.obex.AgentManager.5 doc/org.bluez.obex.Agent.5
-+		doc/org.bluez.obex.AgentManager.5 doc/org.bluez.obex.Agent.5 \
-+		doc/org.bluez.obex.BipAvrcp.5
- 
- EXTRA_DIST += src/genbuiltin src/bluetooth.conf \
- 			src/main.conf profiles/network/network.conf \
-@@ -497,7 +499,8 @@ EXTRA_DIST += doc/org.bluez.obex.Client.rst doc/org.bluez.obex.Session.rst \
- 		doc/org.bluez.obex.PhonebookAccess.rst \
- 		doc/org.bluez.obex.MessageAccess.rst \
- 		doc/org.bluez.obex.Message.rst \
--		doc/org.bluez.obex.AgentManager.rst doc/org.bluez.obex.Agent.rst
-+		doc/org.bluez.obex.AgentManager.rst doc/org.bluez.obex.Agent.rst \
-+		doc/org.bluez.obex.BipAvrcp.rst
- 
- EXTRA_DIST += doc/pics-opp.txt doc/pixit-opp.txt \
- 		doc/pts-opp.txt
-diff --git a/doc/org.bluez.obex.BipAvrcp.rst b/doc/org.bluez.obex.BipAvrcp.rst
-new file mode 100644
-index 000000000..46b12f645
---- /dev/null
-+++ b/doc/org.bluez.obex.BipAvrcp.rst
-@@ -0,0 +1,72 @@
-+=======================
-+org.bluez.obex.BipAvrcp
-+=======================
-+
-+--------------------------------------------------
-+BlueZ D-Bus OBEX BipAvrcp API documentation
-+--------------------------------------------------
-+
-+:Version: BlueZ
-+:Date: August 2024
-+:Manual section: 5
-+:Manual group: Linux System Administration
-+
-+Interface
-+=========
-+
-+:Service:	org.bluez.obex
-+:Interface:	org.bluez.obex.BipAvrcp1 [experimental]
-+:Object path:	[Session object path]
-+
-+Methods
-+-------
-+
-+object, dict GetImage(string targetfile, string handle, dict description)
-+`````````````````````````````````````````````````````````````````````````
-+
-+    Retrieves the image corresponding to the handle and the description, as
-+    one of the descriptions retrieved by GetImageProperties, and store it in
-+    a local file.
-+
-+    If the "transform" property description exists it should be set to one
-+    of the value listed by GetImageProperties for this description.
-+
-+    If description is an empty dict, the native image will be retrieved;
-+
-+	Possible errors:
-+
-+	:org.bluez.obex.Error.InvalidArguments:
-+	:org.bluez.obex.Error.Failed:
-+
-+array{dict} GetImageproperties(string handle)
-+`````````````````````````````````````````````
-+
-+    Retrieves the image properties corresponding to the handle.
-+
-+    The first dict entry is mandatory and correspond to 'handle' and 'name'
-+    of the image.
-+
-+    The second dict entry is mandatory and correspond to the native description
-+    ('type':'native') of the image.
-+
-+    The following dict entries are optional and correspond to variant
-+    descriptions of the image. If the 'transform' entry exists in the
-+    description, it lists the available possible image transformations and
-+    should be set to one of them before using the description as parameter
-+    to GetImage.
-+
-+	Possible errors:
-+
-+	:org.bluez.obex.Error.InvalidArguments:
-+	:org.bluez.obex.Error.Failed:
-+
-+object, dict GetImageThumbnail(string targetfile, string handle)
-+````````````````````````````````````````````````````````````````
-+
-+    Retrieves the image thumbnail corresponding to the handle and store it in
-+    a local file.
-+
-+	Possible errors:
-+
-+	:org.bluez.obex.Error.InvalidArguments:
-+	:org.bluez.obex.Error.Failed:
-diff --git a/doc/org.bluez.obex.Client.rst b/doc/org.bluez.obex.Client.rst
-index 5ae7cc5e8..f20dd5baa 100644
---- a/doc/org.bluez.obex.Client.rst
-+++ b/doc/org.bluez.obex.Client.rst
-@@ -43,6 +43,7 @@ object CreateSession(string destination, dict args)
- 		:"opp":
- 		:"pbap":
- 		:"sync":
-+		:"bip-avrcp":
- 
- 	:string Source:
- 
--- 
-2.34.1
 
+--===============1656702221373099636==--
 
