@@ -1,120 +1,324 @@
-Return-Path: <linux-bluetooth+bounces-7354-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-7350-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15A0F97AC4E
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 17 Sep 2024 09:42:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9880397AC4A
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 17 Sep 2024 09:42:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B3F251F24DCB
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 17 Sep 2024 07:42:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 32F582847E1
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 17 Sep 2024 07:42:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 665E91531C2;
-	Tue, 17 Sep 2024 07:42:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89E1914BF8B;
+	Tue, 17 Sep 2024 07:42:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="G/E79eqT"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="PAIKT9At"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0009E1369B4
-	for <linux-bluetooth@vger.kernel.org>; Tue, 17 Sep 2024 07:42:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73D97BB15
+	for <linux-bluetooth@vger.kernel.org>; Tue, 17 Sep 2024 07:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726558949; cv=none; b=d30ZSh82rURbetl0dWnTxoJ+Hf2BIBI9QbzD+6w6W6jof8wKPs3gYvW968UHn3jv9tD7HY45dRdElO8fddY2kCJBGXpmgpK7e+Js6+veryKckxLX+k871b0Rde4NdKwfb5gSKUKsx8xSyFJtkGgSHmnjVDeZcy4xybSiO5Khtxo=
+	t=1726558949; cv=none; b=lKagBb4mYfQDRv3f6yUCEls5aR8+VnjOPVox335ZegXQ+iiTjoliMJqtflTUC3W71YRRkCNa6ZTF2BhGDU8LFwKG+TIMVHo8/mesy7Jnq4Z1dYJ7npqUBvyZoujzZAE7YdX3BblthFBRiV3sHjrcHXVUxn80Cg4ic4P5Rguwtxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1726558949; c=relaxed/simple;
-	bh=KyXHPQhbfxMjsY5nY7xzypclw3Ln+IpXPBFsSSOVa4M=;
-	h=From:To:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 Content-Type; b=i2+MqUNqQ+C9usKXOy9rNTywRAC4mDDKsVU1Ak+8jaOkY7jM9Z4KnjCWYg4LFMrNsRPZfMSOef+6YTE4qKKvbhyjtyCKBwoL1z18WJ1UdqNG91Xp9qco9C5xSe8s8Qvx3DBSer+TfROHsJye0u3MzyLbpp1y1Po4SdXepb7PK/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=G/E79eqT; arc=none smtp.client-ip=148.251.105.195
+	bh=p7qzDefy4KmvnMHlngGPsS8f648+E4Q2NNUAQa67wWo=;
+	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=EkqyN8E4S1J6zGg2eQ666YYJiAFP/Vf+DpBnUxRcqa0h6QF2VnwYc37doWY8YBbCiYJcPej9luDqVBdXjR+Oc0Md8bALe8fq3tiheyKDj/Lsdl9qLfjYczWjywpBsbNHEpDeBT4ca2ksS++hlhvbfj410pB0QOAJGQ7FieLBGIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=PAIKT9At; arc=none smtp.client-ip=148.251.105.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
 	s=mail; t=1726558944;
-	bh=KyXHPQhbfxMjsY5nY7xzypclw3Ln+IpXPBFsSSOVa4M=;
-	h=From:To:Subject:Date:From;
-	b=G/E79eqTCsubIr7rTk3BUEfhREgtOG9vWo88xXck4rxr9cmX/vBkKzUK2xecQBryh
-	 8H93ic6uqkPZw1yJW/BqfDtvOAawHy/GckIcLVmmzvLi4WgkAToyMbixeBWMWkoMen
-	 2GJDAgE9qMqJTRQDry31MpmKIHDcX1JqoSL/1wDTeiE9/AoRASCpLS8/Bq2t56MS95
-	 2FvDgFd2yezp1wB5iv6IrZwkEIKPq+jUZpbVXxw9DFpu8uW/23+JbW0f8tjVqiBxXK
-	 /3vmaa2nFfADNpnydn4oKVOkZvE+Inave55UIV9av2+qyfi0/DduatKb/lQ4yH1eNj
-	 8JdQJnl5czHTw==
+	bh=p7qzDefy4KmvnMHlngGPsS8f648+E4Q2NNUAQa67wWo=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=PAIKT9At7183ZvbmnuK1xFEb0Pr6neATEVJGjbQt0D7EvhAErcdAOHuM2hkrpWtso
+	 6hwV+r03uSspT2lcDjlGR0EbcQB9lG8euHefdKcLh0s+lh4aUoKkCEkwLoSnbTpe9m
+	 Uq7fAoL4dVIw3gUgksRc+HuWnqr8rghjxZA7WKLj/tC3pCD7Rfhb3rBUovgYmG8CHj
+	 ovuLq7qCdCz/ohrXgFq3A6QgSegwi61eD0TLUhq0BnZMthkuhBo6ZKwb703/lU50se
+	 S91K+VjA+gUm6EKsvMziMSvb9xVc+ShHzhVkMVBIvCsGhv0qCD4mKRcJeGoXsJx9b5
+	 oqK2t83H1bz0w==
 Received: from fdanis-XPS-13-9370.. (67.227.121.78.rev.sfr.net [78.121.227.67])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: fdanis)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 8DBAE17E0FD4
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id CEA6D17E0FD6
 	for <linux-bluetooth@vger.kernel.org>; Tue, 17 Sep 2024 09:42:24 +0200 (CEST)
 From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v4 0/5] Add BIP for AVRCP covert art OBEX client
-Date: Tue, 17 Sep 2024 09:42:12 +0200
-Message-Id: <20240917074217.231677-1-frederic.danis@collabora.com>
+Subject: [PATCH BlueZ v4 1/5] obexd: Add BIP client for AVRCP cover art download
+Date: Tue, 17 Sep 2024 09:42:13 +0200
+Message-Id: <20240917074217.231677-2-frederic.danis@collabora.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240917074217.231677-1-frederic.danis@collabora.com>
+References: <20240917074217.231677-1-frederic.danis@collabora.com>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-If AVRCP Target supports Cover Art download its SDP record contains an
-additional access protocol for OBEX with an LCAP PSM on which the OBEX
-client session should connect to, with the specific OBEX target header
-7163DD54-4A7E-11E2-B47C-0050C2490048.
+The cover art image handle is available in the metadata of the track
+when the OBEX BIP session is connected to the PSM port provided
+in AVRCP SDP record and available as org.bluez.MediaPlayer property.
 
-Once the OBEX session is connected, the AVRCP track metadata will contain
-an Image Handle which can be used to get the associated image using
-GetImageThumbnail or GetImage with one of the description property found
-with GetImageProperties.
-
-This has been tested with iPhone 14, iPhone 15 Pro and Samsung S23.
-
-v1 -> v2: Parse integer properties as integer instead of string
-          Return GetImageProperties values as aa{sv} instead of aa{ss}
-          Get properties for GetImage as a{sv} instead of a{ss}
-          Set new properties and interface as experimental
-v2 -> v3: Rename obexd/client/bip-avrcp.[ch] to obexd/client/bip.[ch]
-          Update the AVRCP Controller version in SDP to 1.6
-          Add commit to support for specific headers in obex transfer
-          Fix memory leaks
-v3 -> v4: Commits 1-4 has been merged
-          Change org.bluez.obex.BipAvrcp1 to org.bluez.obex.Image1
-          Change GetImageThumbnail to GetThumbnail
-          Change GetImageProperties to Properties
-          Change GetImage to Get
-          Add possible property values for the description dicts
-
-Frédéric Danis (5):
-  obexd: Add BIP client for AVRCP cover art download
-  obexd: Add Properties to org.bluez.obex.Image
-  obexd: Add Get to org.bluez.obex.Image
-  avrcp: Update controller SDP record with cover art support
-  doc: Add description of org.bluez.obex.Image
-
- Makefile.am                   |   9 +-
- Makefile.obexd                |   2 +
+This service allows to get the thumbnail.
+---
+ Makefile.obexd                |   1 +
  doc/org.bluez.obex.Client.rst |   1 +
- doc/org.bluez.obex.Image.rst  | 118 +++++
- obexd/client/bip-common.c     | 800 ++++++++++++++++++++++++++++++++++
- obexd/client/bip-common.h     |  24 +
- obexd/client/bip.c            | 440 +++++++++++++++++++
- obexd/client/bip.h            |  12 +
+ obexd/client/bip.c            | 171 ++++++++++++++++++++++++++++++++++
+ obexd/client/bip.h            |  12 +++
  obexd/client/manager.c        |   2 +
- profiles/audio/avrcp.c        |  12 +-
- 10 files changed, 1412 insertions(+), 8 deletions(-)
- create mode 100644 doc/org.bluez.obex.Image.rst
- create mode 100644 obexd/client/bip-common.c
- create mode 100644 obexd/client/bip-common.h
+ 5 files changed, 187 insertions(+)
  create mode 100644 obexd/client/bip.c
  create mode 100644 obexd/client/bip.h
 
+diff --git a/Makefile.obexd b/Makefile.obexd
+index 4cdce73af..866147dd1 100644
+--- a/Makefile.obexd
++++ b/Makefile.obexd
+@@ -81,6 +81,7 @@ obexd_src_obexd_SOURCES = $(btio_sources) $(gobex_sources) \
+ 			obexd/client/ftp.h obexd/client/ftp.c \
+ 			obexd/client/opp.h obexd/client/opp.c \
+ 			obexd/client/map.h obexd/client/map.c \
++			obexd/client/bip.h obexd/client/bip.c \
+ 			obexd/client/map-event.h obexd/client/map-event.c \
+ 			obexd/client/transfer.h obexd/client/transfer.c \
+ 			obexd/client/transport.h obexd/client/transport.c \
+diff --git a/doc/org.bluez.obex.Client.rst b/doc/org.bluez.obex.Client.rst
+index 5ae7cc5e8..f20dd5baa 100644
+--- a/doc/org.bluez.obex.Client.rst
++++ b/doc/org.bluez.obex.Client.rst
+@@ -43,6 +43,7 @@ object CreateSession(string destination, dict args)
+ 		:"opp":
+ 		:"pbap":
+ 		:"sync":
++		:"bip-avrcp":
+ 
+ 	:string Source:
+ 
+diff --git a/obexd/client/bip.c b/obexd/client/bip.c
+new file mode 100644
+index 000000000..252bc4cec
+--- /dev/null
++++ b/obexd/client/bip.c
+@@ -0,0 +1,171 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ *
++ *  OBEX Client
++ *
++ *  Copyright (C) 2024  Collabora Ltd.
++ *
++ *
++ */
++
++#define _GNU_SOURCE
++#include <errno.h>
++#include <stdlib.h>
++#include <string.h>
++
++#include "gdbus/gdbus.h"
++#include "gobex/gobex.h"
++
++#include "obexd/src/log.h"
++#include "transfer.h"
++#include "session.h"
++#include "driver.h"
++#include "bip.h"
++
++#define OBEX_BIP_AVRCP_UUID \
++	"\x71\x63\xDD\x54\x4A\x7E\x11\xE2\xB4\x7C\x00\x50\xC2\x49\x00\x48"
++#define OBEX_BIP_AVRCP_UUID_LEN 16
++
++#define IMAGE_INTERFACE "org.bluez.obex.Image1"
++#define ERROR_INTERFACE "org.bluez.obex.Error"
++#define IMAGE_UUID "0000111A-0000-1000-8000-00805f9b34fb"
++
++#define IMG_HANDLE_TAG  0x30
++
++static DBusConnection *conn;
++
++struct bip_avrcp_data {
++	struct obc_session *session;
++};
++
++static DBusMessage *get_thumbnail(DBusConnection *connection,
++					DBusMessage *message, void *user_data)
++{
++	struct bip_avrcp_data *bip_avrcp = user_data;
++	const char *handle = NULL, *image_path = NULL;
++	struct obc_transfer *transfer;
++	GObexHeader *header;
++	DBusMessage *reply = NULL;
++	GError *err = NULL;
++
++	DBG("");
++
++	if (dbus_message_get_args(message, NULL,
++				DBUS_TYPE_STRING, &image_path,
++				DBUS_TYPE_STRING, &handle,
++				DBUS_TYPE_INVALID) == FALSE) {
++		reply = g_dbus_create_error(message,
++				ERROR_INTERFACE ".InvalidArguments", NULL);
++		return reply;
++	}
++
++	transfer = obc_transfer_get("x-bt/img-thm", NULL, image_path, &err);
++	if (transfer == NULL)
++		goto fail;
++
++	header = g_obex_header_new_unicode(IMG_HANDLE_TAG, handle);
++	obc_transfer_add_header(transfer, header);
++
++	if (!obc_session_queue(bip_avrcp->session, transfer, NULL, NULL, &err))
++		goto fail;
++
++	return obc_transfer_create_dbus_reply(transfer, message);
++
++fail:
++	reply = g_dbus_create_error(message, ERROR_INTERFACE ".Failed", "%s",
++								err->message);
++	g_error_free(err);
++	return reply;
++}
++
++static const GDBusMethodTable bip_avrcp_methods[] = {
++	{ GDBUS_ASYNC_METHOD("GetThumbnail",
++		GDBUS_ARGS({ "file", "s" }, { "handle", "s"}),
++		GDBUS_ARGS({ "transfer", "o" }, { "properties", "a{sv}" }),
++		get_thumbnail) },
++	{ }
++};
++
++static void bip_avrcp_free(void *data)
++{
++	struct bip_avrcp_data *bip_avrcp = data;
++
++	obc_session_unref(bip_avrcp->session);
++	g_free(bip_avrcp);
++}
++
++static int bip_avrcp_probe(struct obc_session *session)
++{
++	struct bip_avrcp_data *bip_avrcp;
++	const char *path;
++
++	path = obc_session_get_path(session);
++
++	DBG("%s", path);
++
++	bip_avrcp = g_try_new0(struct bip_avrcp_data, 1);
++	if (!bip_avrcp)
++		return -ENOMEM;
++
++	bip_avrcp->session = obc_session_ref(session);
++
++	if (!g_dbus_register_interface(conn, path, IMAGE_INTERFACE,
++					bip_avrcp_methods,
++					NULL, NULL,
++					bip_avrcp, bip_avrcp_free)) {
++		bip_avrcp_free(bip_avrcp);
++		return -ENOMEM;
++	}
++
++	return 0;
++}
++
++static void bip_avrcp_remove(struct obc_session *session)
++{
++	const char *path = obc_session_get_path(session);
++
++	DBG("%s", path);
++
++	g_dbus_unregister_interface(conn, path, IMAGE_INTERFACE);
++}
++
++static struct obc_driver bip_avrcp = {
++	.service = "BIP-AVRCP",
++	.uuid = IMAGE_UUID,
++	.target = OBEX_BIP_AVRCP_UUID,
++	.target_len = OBEX_BIP_AVRCP_UUID_LEN,
++	.probe = bip_avrcp_probe,
++	.remove = bip_avrcp_remove
++};
++
++int bip_init(void)
++{
++	int err;
++
++	DBG("");
++
++	conn = dbus_bus_get(DBUS_BUS_SESSION, NULL);
++	if (!conn)
++		return -EIO;
++
++	err = obc_driver_register(&bip_avrcp);
++	if (err < 0)
++		goto failed;
++
++	return 0;
++
++failed:
++	dbus_connection_unref(conn);
++	conn = NULL;
++	return err;
++}
++
++void bip_exit(void)
++{
++	DBG("");
++
++	dbus_connection_unref(conn);
++	conn = NULL;
++
++	obc_driver_unregister(&bip_avrcp);
++}
+diff --git a/obexd/client/bip.h b/obexd/client/bip.h
+new file mode 100644
+index 000000000..18e3360f3
+--- /dev/null
++++ b/obexd/client/bip.h
+@@ -0,0 +1,12 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ *
++ *  OBEX Client
++ *
++ *  Copyright (C) 2024  Collabora Ltd.
++ *
++ *
++ */
++
++int bip_init(void);
++void bip_exit(void);
+diff --git a/obexd/client/manager.c b/obexd/client/manager.c
+index 52c00fb0c..52f4d0179 100644
+--- a/obexd/client/manager.c
++++ b/obexd/client/manager.c
+@@ -32,6 +32,7 @@
+ #include "pbap.h"
+ #include "sync.h"
+ #include "map.h"
++#include "bip.h"
+ #include "manager.h"
+ 
+ #define CLIENT_INTERFACE	"org.bluez.obex.Client1"
+@@ -258,6 +259,7 @@ static const struct obc_module {
+ 	{ "pbap", pbap_init, pbap_exit },
+ 	{ "sync", sync_init, sync_exit },
+ 	{ "map", map_init, map_exit },
++	{ "bip", bip_init, bip_exit },
+ 	{ }
+ };
+ 
 -- 
 2.34.1
 
