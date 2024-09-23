@@ -1,146 +1,130 @@
-Return-Path: <linux-bluetooth+bounces-7420-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-7422-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id ABAE297E7DB
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 23 Sep 2024 10:48:10 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1063597E81C
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 23 Sep 2024 11:05:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DC9E61C2137B
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 23 Sep 2024 08:48:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 415B91C213FF
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 23 Sep 2024 09:05:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47EB9194C88;
-	Mon, 23 Sep 2024 08:47:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BBB919412A;
+	Mon, 23 Sep 2024 09:05:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b="DyeporG7"
+	dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b="kWDnVxso"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mailgw01.mediatek.com (unknown [60.244.123.138])
+Received: from smtp-relay-canonical-0.canonical.com (smtp-relay-canonical-0.canonical.com [185.125.188.120])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3A81946C3;
-	Mon, 23 Sep 2024 08:47:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=60.244.123.138
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A387B19408A;
+	Mon, 23 Sep 2024 09:05:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.125.188.120
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727081239; cv=none; b=ORvJDmKLA1yx29b88uuYuIMesmSJS1zGenhQrVg2GBlYGq5eaROeK7qYhh5T3y5z3rY9FtM/zYBcFQUPRU6Y0t8bPlmC4uf2xiDig7axqHd8J9/mcm2JTLF9DkY4ErGyRoW0uHP0vfzQGVS02Dr14wJnshIS+PsMDH+/uVIvLZo=
+	t=1727082305; cv=none; b=V3nuTw1YaaUoSUVzZdvuj0uKStR7d8g0BEfk1IGhaj1MvjJAfFHik6AHAq46GjSOP3Q6TJlZNFsQNtFLlNuUzBboxKHmuUNdsJEz3hHETqgwE/JZCsWDL3VYxv+Ns9LO3SDr86CzwCDZhYV1AeBIQrVs1CeVnHuiFwhsVVTklKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727081239; c=relaxed/simple;
-	bh=87DFWcyTGo0dg4T24gjmMMC+4j98eVHTpdG4EfsnYcE=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eE3tOItnZcVVhKVcJyiGZqCcC4FA3dNRPRBTyEmChHuDZvqeBuyFiBLd5qbgLxsFuglvfpZRASuk6lXCdGvmCnOrGhrezau1Q0kseKs8IrZlh63U9wwWD2h4Y3v9+lK7+v7k7xpNeK/8w8HVUO4Z+H79hOwwwOxPNS6nouX8zoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com; spf=pass smtp.mailfrom=mediatek.com; dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b=DyeporG7; arc=none smtp.client-ip=60.244.123.138
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mediatek.com
-X-UUID: 6bbbcdd6798811efb66947d174671e26-20240923
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
-	h=Content-Type:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:CC:To:From; bh=zR2jZOmHoceMG6Tbb4ghEYfg8RYjnsIT6gWTP2zQppo=;
-	b=DyeporG74Wb+DWJB49RQCJL0sRzX3OU4sTfa7PCPFO14azOarUXf73kOW9ulkH3LA3mM6oLzwHP/uU4IEKJCtVRDbijqskV5dvDynndzIAgBSb8m2rRS+SZJKYlAorpGnY/zGDXkpb3MfPjDmn2a4RaKhaIURHsKQhtUCiLFkJs=;
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.1.41,REQID:723a3f42-847e-416a-aac7-f3000d50c851,IP:0,U
-	RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
-	release,TS:0
-X-CID-META: VersionHash:6dc6a47,CLOUDID:bdd31a18-b42d-49a6-94d2-a75fa0df01d2,B
-	ulkID:nil,BulkQuantity:0,Recheck:0,SF:102,TC:nil,Content:0,EDM:-3,IP:nil,U
-	RL:11|1,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES
-	:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 0,NGT
-X-CID-BAS: 0,NGT,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR,TF_CID_SPAM_ULN
-X-UUID: 6bbbcdd6798811efb66947d174671e26-20240923
-Received: from mtkmbs10n1.mediatek.inc [(172.21.101.34)] by mailgw01.mediatek.com
-	(envelope-from <chris.lu@mediatek.com>)
-	(Generic MTA with TLSv1.2 ECDHE-RSA-AES256-GCM-SHA384 256/256)
-	with ESMTP id 1305469166; Mon, 23 Sep 2024 16:47:10 +0800
-Received: from mtkmbs11n2.mediatek.inc (172.21.101.187) by
- mtkmbs11n2.mediatek.inc (172.21.101.187) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.26; Mon, 23 Sep 2024 16:47:08 +0800
-Received: from mtksdccf07.mediatek.inc (172.21.84.99) by
- mtkmbs11n2.mediatek.inc (172.21.101.73) with Microsoft SMTP Server id
- 15.2.1118.26 via Frontend Transport; Mon, 23 Sep 2024 16:47:08 +0800
-From: Chris Lu <chris.lu@mediatek.com>
-To: Marcel Holtmann <marcel@holtmann.org>, Johan Hedberg
-	<johan.hedberg@gmail.com>, Luiz Von Dentz <luiz.dentz@gmail.com>
-CC: Sean Wang <sean.wang@mediatek.com>, Aaron Hou <aaron.hou@mediatek.com>,
-	Steve Lee <steve.lee@mediatek.com>, linux-bluetooth
-	<linux-bluetooth@vger.kernel.org>, linux-kernel
-	<linux-kernel@vger.kernel.org>, linux-mediatek
-	<linux-mediatek@lists.infradead.org>, Chris Lu <chris.lu@mediatek.com>
-Subject: [PATCH v3 4/4] Bluetooth: btusb: mediatek: change the conditions for ISO interface
-Date: Mon, 23 Sep 2024 16:47:05 +0800
-Message-ID: <20240923084705.14123-5-chris.lu@mediatek.com>
-X-Mailer: git-send-email 2.18.0
-In-Reply-To: <20240923084705.14123-1-chris.lu@mediatek.com>
-References: <20240923084705.14123-1-chris.lu@mediatek.com>
+	s=arc-20240116; t=1727082305; c=relaxed/simple;
+	bh=k9xp4HT0KfmMEah7RTJzHOqd+Psq/6SKQaWSl+s9GHs=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=K/n1wVj5sZYRdiwzzIE52e3nQqHLwI2jx0NRriIqgitX8ZcNcoszkUNClcZdhKNDJWCbj2EVNxDz2k5vKg9IBEL6MnIcxKDnFZ0PS8Z+qsaIiD4OLe6WFWF+rWnEwbDmo+XkEmbTHeGqizfUUBTDjlfJr3Rwhe+Hcw5iU267r/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com; spf=pass smtp.mailfrom=canonical.com; dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b=kWDnVxso; arc=none smtp.client-ip=185.125.188.120
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
+Received: from localhost.localdomain (unknown [222.129.37.69])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-relay-canonical-0.canonical.com (Postfix) with ESMTPSA id EF3E43FAD1;
+	Mon, 23 Sep 2024 08:55:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1727081752;
+	bh=tFqbx20s3eVOndjh3nVrsPXEtwFY8lQ0VrYHujgxud4=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version;
+	b=kWDnVxso8qF6rJE89XoTgmCgElUCnv9OYMPFijvBAEHpUXWrONkbHogFsHSOEXG4O
+	 0DYwjGZzawg2eNqui3AElJ1BuB91jbnMNOdSxpbF2m03Pi4ZjvIOYbFbEN88IPZTKu
+	 cAMUH/1S4esij9bNXNluzTm/EVQsFtDzqiYssHHRK9rC1HZ/xEG9m/AHqt19CujUMP
+	 0jkcNE71STcPmMSGIfqMPIs+BqpA/PT83Kh0JuNTDnCPUOpuqKs+/2Ev/dBfQUwZPy
+	 HaGOWUqMoBCOiVJseZLfXyU29jWvJIovS6HHy2u90wb3qHKSkjmdA8kCuU0vbWJ/+L
+	 DKKxNU++ouqKA==
+From: Aaron Ma <aaron.ma@canonical.com>
+To: linux-kernel@vger.kernel.org,
+	linux-bluetooth@vger.kernel.org,
+	luiz.dentz@gmail.com,
+	marcel@holtmann.org,
+	aaron.ma@canonical.com
+Subject: [PATCH] Bluetooth: btusb: add Foxconn 0xe0fc for Qualcomm WCN785x
+Date: Mon, 23 Sep 2024 16:55:19 +0800
+Message-ID: <20240923085519.19074-1-aaron.ma@canonical.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Change conditions for Bluetooth driver claiming and releasing usb
-ISO interface for MediaTek ISO data transmission.
+Firmwares are already in upstream.
 
-Signed-off-by: Chris Lu <chris.lu@mediatek.com>
+kernel boot log as following:
+Bluetooth: hci0: using rampatch file: qca/rampatch_usb_00190200.bin
+Bluetooth: hci0: QCA: patch rome 0x190200 build 0x5656, firmware rome 0x190200 build 0x43fb
+Bluetooth: hci0: using NVM file: qca/nvm_usb_00190200.bin
+
+Paired BT headphone, output is good.
+
+T:  Bus=01 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#=  4 Spd=12   MxCh= 0
+D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0489 ProdID=e0fc Rev= 0.01
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:  If#= 1 Alt= 7 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  65 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  65 Ivl=1ms
+
+Signed-off-by: Aaron Ma <aaron.ma@canonical.com>
 ---
- drivers/bluetooth/btusb.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index a434aefe68f2..9affe4f81294 100644
+index 6c9c761d5b93..9a96a8e38f3e 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -2618,7 +2618,7 @@ static void btusb_mtk_release_iso_intf(struct hci_dev *hdev)
- {
- 	struct btmtk_data *btmtk_data = hci_get_priv(hdev);
+@@ -371,6 +371,8 @@ static const struct usb_device_id quirks_table[] = {
+ 	/* QCA WCN785x chipset */
+ 	{ USB_DEVICE(0x0cf3, 0xe700), .driver_info = BTUSB_QCA_WCN6855 |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0489, 0xe0fc), .driver_info = BTUSB_QCA_WCN6855 |
++						     BTUSB_WIDEBAND_SPEECH },
  
--	if (btmtk_data->isopkt_intf) {
-+	if (test_bit(BTMTK_ISOPKT_OVER_INTR, &btmtk_data->flags)) {
- 		usb_kill_anchored_urbs(&btmtk_data->isopkt_anchor);
- 		clear_bit(BTMTK_ISOPKT_RUNNING, &btmtk_data->flags);
- 
-@@ -2658,8 +2658,8 @@ static int btusb_mtk_reset(struct hci_dev *hdev, void *rst_data)
- 	if (err < 0)
- 		return err;
- 
--	if (test_bit(BTMTK_ISOPKT_RUNNING, &btmtk_data->flags))
--		btusb_mtk_release_iso_intf(hdev);
-+	/* Release MediaTek ISO data interface */
-+	btusb_mtk_release_iso_intf(hdev);
- 
- 	btusb_stop_traffic(data);
- 	usb_kill_anchored_urbs(&data->tx_anchor);
-@@ -2704,22 +2704,22 @@ static int btusb_mtk_setup(struct hci_dev *hdev)
- 	btmtk_data->reset_sync = btusb_mtk_reset;
- 
- 	/* Claim ISO data interface and endpoint */
--	btmtk_data->isopkt_intf = usb_ifnum_to_if(data->udev, MTK_ISO_IFNUM);
--	if (btmtk_data->isopkt_intf)
-+	if (!test_bit(BTMTK_ISOPKT_OVER_INTR, &btmtk_data->flags)) {
-+		btmtk_data->isopkt_intf = usb_ifnum_to_if(data->udev, MTK_ISO_IFNUM);
- 		btusb_mtk_claim_iso_intf(data);
-+	}
- 
- 	return btmtk_usb_setup(hdev);
- }
- 
- static int btusb_mtk_shutdown(struct hci_dev *hdev)
- {
--	struct btmtk_data *btmtk_data = hci_get_priv(hdev);
- 	int ret;
- 
- 	ret = btmtk_usb_shutdown(hdev);
- 
--	if (test_bit(BTMTK_ISOPKT_RUNNING, &btmtk_data->flags))
--		btusb_mtk_release_iso_intf(hdev);
-+	/* Release MediaTek iso interface after shutdown */
-+	btusb_mtk_release_iso_intf(hdev);
- 
- 	return ret;
- }
+ 	/* Broadcom BCM2035 */
+ 	{ USB_DEVICE(0x0a5c, 0x2009), .driver_info = BTUSB_BCM92035 },
 -- 
-2.18.0
+2.43.0
 
 
