@@ -1,49 +1,49 @@
-Return-Path: <linux-bluetooth+bounces-7458-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-7459-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 928FC986381
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 25 Sep 2024 17:29:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BE322986382
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 25 Sep 2024 17:29:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3DB5D1F2231B
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 25 Sep 2024 15:29:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8205828BB80
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 25 Sep 2024 15:29:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 608FA15B999;
-	Wed, 25 Sep 2024 15:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C565817A5A6;
+	Wed, 25 Sep 2024 15:20:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u48sMXmL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tNYDwLwe"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3CA914B950
-	for <linux-bluetooth@vger.kernel.org>; Wed, 25 Sep 2024 15:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3303F172BAE
+	for <linux-bluetooth@vger.kernel.org>; Wed, 25 Sep 2024 15:20:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727277633; cv=none; b=PnZkSKgdJff9corWS6ooLey3zpylZ+35YEfhw8Z7cKWrmyTxTDU1btP3ZupAlI4qs+aMDqxAplN+XiFsV/XPQ7d3E4s63u/YzfZc2SonDFVdHRYUKqvyupMm/D4FISel84BENuFhUpP3wBoakXDffA0UYK3Xy/JjavW7wEN/GyM=
+	t=1727277635; cv=none; b=YqOSom13MWnhPovvUdy4oI0KwEyVPeHYKBk4Qlv/1IVwcBkoj3/K4LP1uk5NPnX4X0c6Go3/q3x78/V8fVaBBTSWg/VKvEh9ZRy9g3fuMGXB8vMmu8hZM9gJ+OxQyfPt11t+q+PFdFvcPLaJ5tfgX8HQEClFBL+4FL8Wn7xvwoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727277633; c=relaxed/simple;
-	bh=A5G3XvvhpQExCs8fInX2CRrrvtROWXuuUxDZQX8xjMc=;
+	s=arc-20240116; t=1727277635; c=relaxed/simple;
+	bh=yy27AXw0IrQyNnFIjkdTZB6FxSwhs14p9tsUHx/7cwo=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=WwsDsk4BIgIPBlcwDyLVyFYUu0QZITmUmfR7cHj2BKR6D9GvHmbgNgd5sKzW1kNgDc3ap21b0KhaFaOySxcc2qBXPpvIjB9+bnpEbO32omz7PrNXQu/KRU99UEtKni7PhdrAnEwVnHkD+qP5B9mxnHNYWbMj2B7a8r1sEhDrPJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u48sMXmL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4489CC4CEC6;
-	Wed, 25 Sep 2024 15:20:33 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=uRz85wMhmHlf8y38vW9NQPxFBl9lGkaJh0uOE5IgMkaSxeLm7qAj2gW1jC0MzlQGjAhFfapsT2Xz7H8WXnely+q/rvjwPmAUYrlfjNMts3SV3mO879rAGsWSSq2OAiMv3M4fozporCS7peyw08+hr0l3xhG6xRTneEpS+/Jb9RM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tNYDwLwe; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6F0C4CEC6;
+	Wed, 25 Sep 2024 15:20:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727277633;
-	bh=A5G3XvvhpQExCs8fInX2CRrrvtROWXuuUxDZQX8xjMc=;
+	s=k20201202; t=1727277634;
+	bh=yy27AXw0IrQyNnFIjkdTZB6FxSwhs14p9tsUHx/7cwo=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=u48sMXmLPaPJxh6lUKJ1zkZZVzKLgH8A6VIosyZcojj5dvZJGj2gJDwNXv06YilAd
-	 H7/XYqIazBq2YYtqt+kjXHGvnIEDiuLRTNktQL6D8KYqAO7zVy/KGj77JbA196qbIO
-	 c+P0WzOrLBm6TJOBqncnqDJL8rxBmyqZ8i9cgz7TseuQadERfwY1aDrcplI6pElJFV
-	 OF4QWD1+FU+g1hEXek/5fGkfg0QwiwWgegrizsE/4vrQB5vO//y/og7KXYV+j+GukO
-	 tUThQ1adLzUHLWL6McCnfx7VGLFu7KV4XIUTZbPfiKybinUgRbvFAu1Nu3MC/bNUNk
-	 QPM0fdluaQr2A==
+	b=tNYDwLweRVISHWxTRezeJ2bkE3jgBvOWONpB3DEnz+mHx4KKpg4+b+cHmgC67QNkv
+	 4XIc+QRUklvR37yFF6QTS8A7Xn0JuZXv07Gn58yGwpyCxjDAS2i9ixVwFHCVTTCtyu
+	 a7M6ro/Auj4HENGhcFKxALl6dKwaaZaXXc8ddlAT98QeV/lbnBLv+2D8UIuzUd/sNF
+	 IivFaoZ7WkULvi2GECjGga7ZfFIZ3JrHWHki2SHH84ODUsWQDB3g5p7osy5bRmKq38
+	 k2YIXAJh7KBsxVD3XfMQArebcGIaWjt8edI7x2rBKGe8WWSMaFofUpGQ9X6/TNKusB
+	 BaFw1RlOVkKcw==
 Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id EAD853809A8F;
-	Wed, 25 Sep 2024 15:20:36 +0000 (UTC)
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 70C953809A8F;
+	Wed, 25 Sep 2024 15:20:38 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
@@ -52,13 +52,13 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v1] Bluetooth/L2CAP: Fix uaf in l2cap_connect
+Subject: Re: [PATCH v2] Bluetooth: L2CAP: Fix uaf in l2cap_connect
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <172727763545.630403.8450411112997127998.git-patchwork-notify@kernel.org>
-Date: Wed, 25 Sep 2024 15:20:35 +0000
-References: <20240923165116.1540227-1-luiz.dentz@gmail.com>
-In-Reply-To: <20240923165116.1540227-1-luiz.dentz@gmail.com>
+ <172727763699.630403.15935443908419707597.git-patchwork-notify@kernel.org>
+Date: Wed, 25 Sep 2024 15:20:36 +0000
+References: <20240924153237.1727485-1-luiz.dentz@gmail.com>
+In-Reply-To: <20240924153237.1727485-1-luiz.dentz@gmail.com>
 To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 Cc: linux-bluetooth@vger.kernel.org
 
@@ -67,7 +67,7 @@ Hello:
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Mon, 23 Sep 2024 12:51:16 -0400 you wrote:
+On Tue, 24 Sep 2024 11:32:37 -0400 you wrote:
 > From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 > 
 > [Syzbot reported]
@@ -103,7 +103,7 @@ On Mon, 23 Sep 2024 12:51:16 -0400 you wrote:
 > [...]
 
 Here is the summary with links:
-  - [v1] Bluetooth/L2CAP: Fix uaf in l2cap_connect
+  - [v2] Bluetooth: L2CAP: Fix uaf in l2cap_connect
     https://git.kernel.org/bluetooth/bluetooth-next/c/d93544ba0cd8
 
 You are awesome, thank you!
