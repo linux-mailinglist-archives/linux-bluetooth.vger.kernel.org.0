@@ -1,145 +1,100 @@
-Return-Path: <linux-bluetooth+bounces-7605-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-7608-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1BAC98FB8B
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  4 Oct 2024 02:31:59 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B2DF98FD69
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  4 Oct 2024 08:37:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4AB201F23633
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  4 Oct 2024 00:31:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 88EDB2814DC
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  4 Oct 2024 06:37:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E81F310A24;
-	Fri,  4 Oct 2024 00:31:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BF991311A7;
+	Fri,  4 Oct 2024 06:37:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=permerror (0-bit key) header.d=aaront.org header.i=@aaront.org header.b="BaUcvNxo";
-	dkim=pass (2048-bit key) header.d=aaront.org header.i=@aaront.org header.b="RYzUmZTC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Uw2vpVhS"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp-out0.aaront.org (smtp-out0.aaront.org [52.10.12.108])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB02A955;
-	Fri,  4 Oct 2024 00:31:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.10.12.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9759612BF02;
+	Fri,  4 Oct 2024 06:37:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728001899; cv=none; b=LXCPLqIpxvZZH/s28BY7pkvemPVA9Qt6by+DWlOyJ/KNUpITsPZhn/MO/R3yxfFOKy0g0V9R0MPPqgx9sgkaqpdmF9rv/RogyIZuLav4EupVZaSRwKYALadRSQu4TA+nLOnuHsU8Tvtd5qQWwHQZRJXuJVCzr+rL4gBfq0AnPlE=
+	t=1728023864; cv=none; b=ajYByd//yLwnnhHgIR6SW5d/V46ozDYk3VNlVvPg70vWBt9U0PGLVbRk7hpEEVi+dRrGvW+fUGlTEsQmaqmUet35NCTHkjuNLETcz44RSlLMZ2RdFjqcyH+ydsFE3Kt/AJA4XuUpPs8fSH6n8upl4gdozMsMOruZX2Kd3+cA0IQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728001899; c=relaxed/simple;
-	bh=f0FQOyiYq7FpaBC/Z+gvQXYwpERUJNHDeFsnskdp8kg=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=cIlx4MYu1Sj/6SzQKiJOqMb0F387i3Jc5bBUHcpfzCyOQbawOx2o2c/tlyt18FMWWy7plGpEmeC6NjHdJsBbCrIjySC8cZe8XavxB1scDZgLN7m4lt4A+YlxQou80JzCFmbGYoIuEJ8OZKQ9ZPe4jGq7YNJKicFJl+g2GodOlaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=aaront.org; spf=pass smtp.mailfrom=aaront.org; dkim=permerror (0-bit key) header.d=aaront.org header.i=@aaront.org header.b=BaUcvNxo; dkim=pass (2048-bit key) header.d=aaront.org header.i=@aaront.org header.b=RYzUmZTC; arc=none smtp.client-ip=52.10.12.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=aaront.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aaront.org
-Received: by smtp-out0.aaront.org (Postfix) with ESMTP id 4XKTxj0NhpzRj;
-	Fri,  4 Oct 2024 00:31:37 +0000 (UTC)
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/simple; d=aaront.org;
-    h=from:to:cc:subject:date:message-id:in-reply-to:references
-    :mime-version:content-transfer-encoding; s=bgzxjfijqntwovyv; bh=
-    f0FQOyiYq7FpaBC/Z+gvQXYwpERUJNHDeFsnskdp8kg=; b=BaUcvNxo9vK/8Y9J
-    +SKv7rgse3m3vjeAeGt0M451L15SmSrzYNnmkHl9RIZykMapV2JCcxUbDJpverVh
-    HBEwAA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aaront.org; h=
-    from:to:cc:subject:date:message-id:in-reply-to:references
-    :mime-version:content-transfer-encoding; s=elwxqanhxhag6erl; bh=
-    f0FQOyiYq7FpaBC/Z+gvQXYwpERUJNHDeFsnskdp8kg=; b=RYzUmZTCxYVdJUAq
-    FDkVjIAy2EyvrYyJgzVF3xozkaeMgRKz6Ht4J/hHAqQ3l4dRPKKZQM0phu011sU8
-    YZuYBNCSahCg9yR6l1zQNTfbW/ojBR2IrATVS6b9dqR4bNRb7RIw5SJREASVWcFo
-    ho1Lc3dP0kELPM04St0kpAZuwuQwM8P/wvas85DFp+VNEEPY2Z1GZKwlxKXo+ytr
-    0FACIeLA2VL+gU+oZr1sHQdwC3puUGDQ3G2Nyvp1CmoBgRQh4wG/0+IG4whKNte6
-    FC77CRtDVyfvKmWJKMn9KBxtLlhKpHfsY0MbbuFfh8L+HN7XDKnl+z2PrJSx6SlQ
-    mQryWA==
-From: Aaron Thompson <dev@aaront.org>
-To: Johan Hedberg <johan.hedberg@gmail.com>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	linux-bluetooth@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Aaron Thompson <dev@aaront.org>,
-	stable@vger.kernel.org
-Subject: [PATCH 3/3] Bluetooth: Remove debugfs directory on module init failure
-Date: Fri,  4 Oct 2024 00:30:30 +0000
-Message-Id: <20241004003030.160721-4-dev@aaront.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241004003030.160721-1-dev@aaront.org>
-References: <20241004003030.160721-1-dev@aaront.org>
+	s=arc-20240116; t=1728023864; c=relaxed/simple;
+	bh=fmiIz7ZGhk56W9CE6q0sAiRv9tksjwu8iHjEIe44L5o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=f2lJhOc/NRnGiJKXWPLmusQU3C9vdfC0Fu2zzBNw5NueCMJ+SEnUdLHS+SxpnSCk2ee/WQYSDKoTeq6xJzn05r/5gnF6mlXNeiMW3vCjXytu7PrhU2WYupnxl0JCLNhKBjTsySyck/o4eccwbgOaJoX4veCq4ySVZX4dExm2Kl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Uw2vpVhS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27A37C4CEC6;
+	Fri,  4 Oct 2024 06:37:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1728023864;
+	bh=fmiIz7ZGhk56W9CE6q0sAiRv9tksjwu8iHjEIe44L5o=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Uw2vpVhS+pyYwdKUhy2TNXi3zrnmY49Sk4EK16SlFWHZ0z4+GYPER1vEoGv8uT2Lk
+	 tJdx1rbpzb4vdEDt4U4qMnJ1/O1B/9XQPhN1hQEflrPLsRwKlyOAPjkiqQXGihn/qi
+	 6sWgURMIsCMTCTPUbbxZY6Ofh35pG2jAka6eRGzlYcPT+usq2DyrT9eKYBI/rSY4R9
+	 uqLZOE8VKOTTPJOZvEeAAn/a3EYhVoFKOmtePiVL7KBWu+0SmhcN0+Sg4mO8nCoywR
+	 8yggJG6qjJCRdOx2SbdC5VeeH3Z5iFPaIQ7QYvKGrL0hOe5IQEVmzT1O1P0bcV/kpY
+	 15XE0hH9U1o+Q==
+Date: Fri, 4 Oct 2024 08:37:40 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
+Cc: marcel@holtmann.org, luiz.dentz@gmail.com, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, linux-bluetooth@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, amitkumar.karwar@nxp.com, 
+	rohit.fule@nxp.com, sherry.sun@nxp.com, ziniu.wang_1@nxp.com, haibo.chen@nxp.com, 
+	LnxRevLi@nxp.com
+Subject: Re: [PATCH v2 1/2] dt-bindings: net: bluetooth: nxp: Add support for
+ power save feature using GPIO
+Message-ID: <sllfy6srzwlwemkesnrgbdegywy6llysrylq45xf7no7ox7uwt@4u25dxff2fyr>
+References: <20241003154507.537363-1-neeraj.sanjaykale@nxp.com>
+ <20241003154507.537363-2-neeraj.sanjaykale@nxp.com>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241003154507.537363-2-neeraj.sanjaykale@nxp.com>
 
-From: Aaron Thompson <dev@aaront.org>
+On Thu, Oct 03, 2024 at 09:15:06PM +0530, Neeraj Sanjay Kale wrote:
+> This adds a new optional device tree property h2c-ps-gpios, which specifies
+> the GPIO connected to BT_WAKE_IN pin of the NXP chipset.
+> 
+> If this property is defined, the driver will use this GPIO for driving chip
+> into sleep/wakeup state, else use the UART break signal by default.
+> 
+> Signed-off-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
+> ---
+> v2: Rephrase description and use "-gpios". (Krzysztof, Rob)
+> ---
+>  .../devicetree/bindings/net/bluetooth/nxp,88w8987-bt.yaml | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/net/bluetooth/nxp,88w8987-bt.yaml b/Documentation/devicetree/bindings/net/bluetooth/nxp,88w8987-bt.yaml
+> index 37a65badb448..cd8236eb31de 100644
+> --- a/Documentation/devicetree/bindings/net/bluetooth/nxp,88w8987-bt.yaml
+> +++ b/Documentation/devicetree/bindings/net/bluetooth/nxp,88w8987-bt.yaml
+> @@ -34,6 +34,12 @@ properties:
+>    firmware-name:
+>      maxItems: 1
+>  
+> +  h2c-ps-gpios:
+> +    maxItems: 1
+> +    description:
+> +      Host-To-Chip power save mechanism is driven by this GPIO
+> +      connected to BT_WAKE_IN pin of the NXP chipset.
 
-If bt_init() fails, the debugfs directory currently is not removed. If
-the module is loaded again after that, the debugfs directory is not set
-up properly due to the existing directory.
+So this should be wakeup-gpios or device-wakeup-gpios?
 
-  # modprobe bluetooth
-  # ls -laF /sys/kernel/debug/bluetooth
-  total 0
-  drwxr-xr-x  2 root root 0 Sep 27 14:26 ./
-  drwx------ 31 root root 0 Sep 27 14:25 ../
-  -r--r--r--  1 root root 0 Sep 27 14:26 l2cap
-  -r--r--r--  1 root root 0 Sep 27 14:26 sco
-  # modprobe -r bluetooth
-  # ls -laF /sys/kernel/debug/bluetooth
-  ls: cannot access '/sys/kernel/debug/bluetooth': No such file or directory
-  #
-
-  # modprobe bluetooth
-  modprobe: ERROR: could not insert 'bluetooth': Invalid argument
-  # dmesg | tail -n 6
-  Bluetooth: Core ver 2.22
-  NET: Registered PF_BLUETOOTH protocol family
-  Bluetooth: HCI device and connection manager initialized
-  Bluetooth: HCI socket layer initialized
-  Bluetooth: Faking l2cap_init() failure for testing
-  NET: Unregistered PF_BLUETOOTH protocol family
-  # ls -laF /sys/kernel/debug/bluetooth
-  total 0
-  drwxr-xr-x  2 root root 0 Sep 27 14:31 ./
-  drwx------ 31 root root 0 Sep 27 14:26 ../
-  #
-
-  # modprobe bluetooth
-  # dmesg | tail -n 7
-  Bluetooth: Core ver 2.22
-  debugfs: Directory 'bluetooth' with parent '/' already present!
-  NET: Registered PF_BLUETOOTH protocol family
-  Bluetooth: HCI device and connection manager initialized
-  Bluetooth: HCI socket layer initialized
-  Bluetooth: L2CAP socket layer initialized
-  Bluetooth: SCO socket layer initialized
-  # ls -laF /sys/kernel/debug/bluetooth
-  total 0
-  drwxr-xr-x  2 root root 0 Sep 27 14:31 ./
-  drwx------ 31 root root 0 Sep 27 14:26 ../
-  #
-
-Cc: stable@vger.kernel.org
-Fixes: ffcecac6a738 ("Bluetooth: Create root debugfs directory during module init")
-Signed-off-by: Aaron Thompson <dev@aaront.org>
----
- net/bluetooth/af_bluetooth.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/net/bluetooth/af_bluetooth.c b/net/bluetooth/af_bluetooth.c
-index 67604ccec2f4..0d4b171b939a 100644
---- a/net/bluetooth/af_bluetooth.c
-+++ b/net/bluetooth/af_bluetooth.c
-@@ -825,6 +825,7 @@ static int __init bt_init(void)
- 	bt_sysfs_cleanup();
- cleanup_led:
- 	bt_leds_cleanup();
-+	debugfs_remove_recursive(bt_debugfs);
- 	return err;
- }
- 
--- 
-2.39.5
+Best regards,
+Krzysztof
 
 
