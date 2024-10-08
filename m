@@ -1,194 +1,97 @@
-Return-Path: <linux-bluetooth+bounces-7720-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-7722-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FB98993A54
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Oct 2024 00:36:08 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79379993BA7
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Oct 2024 02:20:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C34111C23228
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Oct 2024 22:36:07 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 02BBBB238BF
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Oct 2024 00:20:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C91AB192B98;
-	Mon,  7 Oct 2024 22:35:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CF9BEADC;
+	Tue,  8 Oct 2024 00:20:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="e3VL5Ud8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Upa9NYTG"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689BD18CC13
-	for <linux-bluetooth@vger.kernel.org>; Mon,  7 Oct 2024 22:35:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A9EAD51;
+	Tue,  8 Oct 2024 00:20:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728340531; cv=none; b=YA2Mfa93FJjueXPqb9mdQb/wQpxGj/hT3DtoKtSJOtvj/jglVIYSRoBtAd871FjCueBZ/Tfq5FSLIjkeya6EtNwc9aee1uAO4aPF4Yd2nBA8aFmjtMW7nJ1AQwJ/YHzgG1SPCQlRzgxXqp9ngjM7uWQ2gz1nZoS8OyJRGU67Mc4=
+	t=1728346831; cv=none; b=teVeSS67rLDbOTMoAFLesNoej3lFlSIiy+ryWr58AtDWfbrYDkSW6Jmnn5MzsI71prmkyaw7zbY2gLA4I7H2kjQUN71SK1VfrI/svPb+gPFpcDkvK8UPSYNqXng41EMFAUNHi+VzDeMeOGLKeBAv9n1h2W9HtHbQYRxove/ETpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728340531; c=relaxed/simple;
-	bh=gesjil9Y0RZgbcjmX5qHd/S97rHztDCcedkOm+1cl0k=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Bu5AdPzC+HFly0hwh3yMhT3CE7IbdOl8/uD/k23dKZcOJl4eZyRStdFppLGy8flHl5xYxJty478Gc0/QL+UQq9ffo5Z1Ybvo/lxyTDurszvSnnGc2znfnnxTNy0ik0B9+v+BD6eF2PjZpTwFGOS1FBx9AOBH50wW9Ng2eJVR47s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=e3VL5Ud8; arc=none smtp.client-ip=209.85.219.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-e25d164854dso4139030276.2
-        for <linux-bluetooth@vger.kernel.org>; Mon, 07 Oct 2024 15:35:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728340526; x=1728945326; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=gesjil9Y0RZgbcjmX5qHd/S97rHztDCcedkOm+1cl0k=;
-        b=e3VL5Ud84GLI+E2x3bA8ztpqvuFMv57yd9aYEVQJXCzdGLPTTmXpQqv3Opq72bJmux
-         KBHMo3MVO1HOzdmTO8H+pcTCfVPqaiTDnPTpbQzl0qQR7IL44jHkwS4bzBufrjeR8qhe
-         DDLiaWivcex7UxcVlthWRdgNLBWzi+M8qTeDx57baSkDWFH1agIYPgvRPadbYLCLtjZu
-         06qTHbdte5aRDCOnGRwQe0feCJbqguEWevqetTaa5WoZI91EWlvvh0bLcBUS4nMqHsf9
-         D1KWrNcsh7YIcTiYbXUJhkPijHa5aKTMIfa20aY8luGYazLflzR5ecy/UydbOSAfiQM/
-         3TDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728340526; x=1728945326;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gesjil9Y0RZgbcjmX5qHd/S97rHztDCcedkOm+1cl0k=;
-        b=spw8swEdMbAvKXsvH09UjgxUAUzjFj0qlxqk/CIgVsePWQxO8UhIhymHsCMbl2OU8G
-         TbroOYR9QHaFYMMMUSy7MdADA31C2xCi43ZjR8rl+zJwFY/SVn85qF0ltHwy8vg07zbT
-         2jDu7EzdRcvmPW6Ire9dJX+p6hBQ/GKOgSmxoOc0Ds/EYWCU5kM1Nm9nrWErPsTfSezR
-         qefHfKJWQpK8lPGu4xoXOjWG5iw1olpt7RL9SwkgmHHLw69tbr0uTzRc+QEOF+zEc5GO
-         mwNRv/BjktHQCpoJGqspbpN/oo0nMuCPn7Uux0JZBiZHg3Wy+ZgS65UOfdZKsqk2tITn
-         IQLw==
-X-Forwarded-Encrypted: i=1; AJvYcCVGSNa+GNqUaMWwHBv9rfqU/hdJQ7PvOREGcT8xQ1s7tNO51Yuykd1hc+tjzD4FHJLoMeCcE8sgExW3DJWwPb0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwtGd2q9/hTNRB3HV25jG++JYesLMuv8vEJVj2iTnNgaJYYhYTX
-	VCnoHIKA1wKto54WqfRwaAIPvLbskQqcbFsLnVv0DBtD17defEkMt035ebc0zUBlAU0UbPjrpUB
-	PNPDYPBg6TfNTZJe84/W/gzpXH8MHIShWyo07wA==
-X-Google-Smtp-Source: AGHT+IGYLLRVc3CeXKReIUVnntYlZ+ULRb29gPUl3UTx4hoqAUGdx6q2aFDzdnacRWqcM/cOYseo4GoEdp7e3a8qLZE=
-X-Received: by 2002:a05:6902:2305:b0:e28:6ec7:4353 with SMTP id
- 3f1490d57ef6-e2893964043mr10612649276.54.1728340526338; Mon, 07 Oct 2024
- 15:35:26 -0700 (PDT)
+	s=arc-20240116; t=1728346831; c=relaxed/simple;
+	bh=/+6uaaMCh4sbJPAQbhHpA/CscaKM7TpXkjIak0yRLVM=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ANpiZcFlmMiMVIh7FsykRtUXSPpsHgxnWa0oQlGNRMVdNv59e20zim5rYDWbFWgIhnm0WoaO/thfzAZ2kWHtrTiqYR4nPZ3mH/30z1Z06ZsmPvDUyYtMX0aRJb2n3mYN7C7XICV9FMfuGGAqecBvihDd58KxehddIhf7TZISjws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Upa9NYTG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 509C2C4CEC6;
+	Tue,  8 Oct 2024 00:20:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1728346831;
+	bh=/+6uaaMCh4sbJPAQbhHpA/CscaKM7TpXkjIak0yRLVM=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=Upa9NYTGyJ/4HOqvJ+z6HZV4iVbewGaDD7R0rtxi+8+0YHO75QlapLO0hblRyH54r
+	 Okpwc3i4hN2fm2TTAMum4DWcA3PuxELXL4id91Pzdf4YJsZzHIjUUEB+9LlhojT8Ty
+	 pGySaM8AdRn14naMI97Tn0ZovOiyYQp1GagE9QMcHbaWoSqBSa6SoYKb0i4f5Zbdxp
+	 7HgOBehE6GDxIekWcBJp3b+Cwm+YSiuk8rN/6eKzV/d9o4LO0Uo3bT6RorAppQZr0c
+	 LKoOakFhsxPgKmA31UDLNyGce01uDRGwf3jdbvlLf4IgJESjf5WZE2UEKxthqjVGHK
+	 bB1zUXWGFN/Ng==
+Date: Mon, 7 Oct 2024 17:20:29 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: Ignat Korchagin <ignat@cloudflare.com>
+Cc: "David S. Miller" <davem@davemloft.net>, Eric Dumazet
+ <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org, Marcel Holtmann
+ <marcel@holtmann.org>, Johan Hedberg <johan.hedberg@gmail.com>, Luiz
+ Augusto von Dentz <luiz.dentz@gmail.com>, Oliver Hartkopp
+ <socketcan@hartkopp.net>, Marc Kleine-Budde <mkl@pengutronix.de>, Alexander
+ Aring <alex.aring@gmail.com>, Stefan Schmidt <stefan@datenfreihafen.org>,
+ Miquel Raynal <miquel.raynal@bootlin.com>, David Ahern
+ <dsahern@kernel.org>, Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+ linux-bluetooth@vger.kernel.org, linux-can@vger.kernel.org,
+ linux-wpan@vger.kernel.org, kernel-team@cloudflare.com, kuniyu@amazon.com,
+ alibuda@linux.alibaba.com, stable@vger.kernel.org
+Subject: Re: [PATCH v2 1/8] net: explicitly clear the sk pointer, when
+ pf->create fails
+Message-ID: <20241007172029.5d48ea32@kernel.org>
+In-Reply-To: <20241007213502.28183-2-ignat@cloudflare.com>
+References: <20241007213502.28183-1-ignat@cloudflare.com>
+	<20241007213502.28183-2-ignat@cloudflare.com>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241004094101.113349-1-sakari.ailus@linux.intel.com>
- <CAPDyKFp0N6UJhnHS164Tdf=xkWB0jzq65L9TdvYazeBQ-6WjeQ@mail.gmail.com>
- <20241007184924.GH14766@pendragon.ideasonboard.com> <CAPDyKFpQVnF7eQv3dup8k-3EijnMjuveCG9sZ=Rpey1Y6MBJEg@mail.gmail.com>
- <20241007222502.GG30699@pendragon.ideasonboard.com>
-In-Reply-To: <20241007222502.GG30699@pendragon.ideasonboard.com>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Tue, 8 Oct 2024 00:34:49 +0200
-Message-ID: <CAPDyKFrGNwna6Y2pqSRaBbRYHKRaD2ayqQHLtoqLPOu9Et7qTg@mail.gmail.com>
-Subject: Re: [PATCH 00/51] treewide: Switch to __pm_runtime_put_autosuspend()
-To: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Cc: Sakari Ailus <sakari.ailus@linux.intel.com>, dri-devel@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
-	linux-clk@vger.kernel.org, linux-crypto@vger.kernel.org, 
-	dmaengine@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	amd-gfx@lists.freedesktop.org, nouveau@lists.freedesktop.org, 
-	linux-stm32@st-md-mailman.stormreply.com, 
-	linux-arm-kernel@lists.infradead.org, linux-i2c@vger.kernel.org, 
-	linux-i3c@lists.infradead.org, linux-iio@vger.kernel.org, 
-	linux-input@vger.kernel.org, patches@opensource.cirrus.com, 
-	iommu@lists.linux.dev, imx@lists.linux.dev, 
-	linux-mediatek@lists.infradead.org, linux-media@vger.kernel.org, 
-	linux-mmc@vger.kernel.org, linux-mtd@lists.infradead.org, 
-	netdev@vger.kernel.org, linux-wireless@vger.kernel.org, 
-	linux-pci@vger.kernel.org, linux-phy@lists.infradead.org, 
-	linux-pwm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
-	linux-sound@vger.kernel.org, linux-spi@vger.kernel.org, 
-	linux-staging@lists.linux.dev, linux-usb@vger.kernel.org, 
-	linux-serial@vger.kernel.org, greybus-dev@lists.linaro.org, 
-	asahi@lists.linux.dev, rafael@kernel.org, 
-	Andy Shevchenko <andy.shevchenko@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-On Tue, 8 Oct 2024 at 00:25, Laurent Pinchart
-<laurent.pinchart@ideasonboard.com> wrote:
->
-> Hi Ulf,
->
-> On Tue, Oct 08, 2024 at 12:08:24AM +0200, Ulf Hansson wrote:
-> > On Mon, 7 Oct 2024 at 20:49, Laurent Pinchart wrote:
-> > > On Fri, Oct 04, 2024 at 04:38:36PM +0200, Ulf Hansson wrote:
-> > > > On Fri, 4 Oct 2024 at 11:41, Sakari Ailus wrote:
-> > > > >
-> > > > > Hello everyone,
-> > > > >
-> > > > > This set will switch the users of pm_runtime_put_autosuspend() to
-> > > > > __pm_runtime_put_autosuspend() while the former will soon be re-purposed
-> > > > > to include a call to pm_runtime_mark_last_busy(). The two are almost
-> > > > > always used together, apart from bugs which are likely common. Going
-> > > > > forward, most new users should be using pm_runtime_put_autosuspend().
-> > > > >
-> > > > > Once this conversion is done and pm_runtime_put_autosuspend() re-purposed,
-> > > > > I'll post another set to merge the calls to __pm_runtime_put_autosuspend()
-> > > > > and pm_runtime_mark_last_busy().
-> > > >
-> > > > That sounds like it could cause a lot of churns.
-> > > >
-> > > > Why not add a new helper function that does the
-> > > > pm_runtime_put_autosuspend() and the pm_runtime_mark_last_busy()
-> > > > things? Then we can start moving users over to this new interface,
-> > > > rather than having this intermediate step?
-> > >
-> > > I think the API would be nicer if we used the shortest and simplest
-> > > function names for the most common use cases. Following
-> > > pm_runtime_put_autosuspend() with pm_runtime_mark_last_busy() is that
-> > > most common use case. That's why I like Sakari's approach of repurposing
-> > > pm_runtime_put_autosuspend(), and introducing
-> > > __pm_runtime_put_autosuspend() for the odd cases where
-> > > pm_runtime_mark_last_busy() shouldn't be called.
-> >
-> > Okay, so the reason for this approach is because we couldn't find a
-> > short and descriptive name that could be used in favor of
-> > pm_runtime_put_autosuspend(). Let me throw some ideas at it and maybe
-> > you like it - or not. :-)
->
-> I like the idea at least :-)
->
-> > I don't know what options you guys discussed, but to me the entire
-> > "autosuspend"-suffix isn't really that necessary in my opinion. There
-> > are more ways than calling pm_runtime_put_autosuspend() that triggers
-> > us to use the RPM_AUTO flag for rpm_suspend(). For example, just
-> > calling pm_runtime_put() has the similar effect.
->
-> To be honest, I'm lost there. pm_runtime_put() calls
-> __pm_runtime_idle(RPM_GET_PUT | RPM_ASYNC), while
-> pm_runtime_put_autosuspend() calls __pm_runtime_suspend(RPM_GET_PUT |
-> RPM_ASYNC | RPM_AUTO).
+On Mon,  7 Oct 2024 22:34:55 +0100 Ignat Korchagin wrote:
+> diff --git a/net/socket.c b/net/socket.c
+> index 601ad74930ef..042451f01c65 100644
+> --- a/net/socket.c
+> +++ b/net/socket.c
+> @@ -1574,8 +1574,13 @@ int __sock_create(struct net *net, int family, int type, int protocol,
+>  	rcu_read_unlock();
+>  
+>  	err = pf->create(net, sock, protocol, kern);
+> -	if (err < 0)
+> +	if (err < 0) {
+> +		/* ->create should release the allocated sock->sk object on error
+> +		 * but it may leave the dangling pointer
+> +		 */
+> +		sock->sk = NULL;
+>  		goto out_module_put;
+> +	}
 
-__pm_runtime_idle() ends up calling rpm_idle(), which may call
-rpm_suspend() - if it succeeds to idle the device. In that case, it
-tags on the RPM_AUTO flag in the call to rpm_suspend(). Quite similar
-to what is happening when calling pm_runtime_put_autosuspend().
-
->
-> >
-> > Moreover, it's similar for pm_runtime_mark_last_busy(), it's called
-> > during rpm_resume() too, for example. So why bother about having
-> > "mark_last_busy" in the new name too.
-> >
-> > That said, my suggestion is simply "pm_runtime_put_suspend".
->
-> Can we do even better, and make pm_runtime_put() to handle autosuspend
-> automatically when autosuspend is enabled ?
-
-As stated above, this is already the case.
-
->
-> > If you don't like it, I will certainly not object to your current
-> > approach, even if I think it leads to unnecessary churns.
-> >
-> > [...]
-> >
-> > Kind regards
-> > Uffe
->
-> --
-> Regards,
->
-> Laurent Pinchart
-
-Kind regards
-Uffe
+This chunk is already in net, as part of the fix you posted earlier.
+Please resend the cleanup portion with the other patches for net-next
+on Friday (IOW after net -> net-next merge).
+-- 
+pw-bot: cr
 
