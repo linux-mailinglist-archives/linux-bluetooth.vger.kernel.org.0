@@ -1,53 +1,53 @@
-Return-Path: <linux-bluetooth+bounces-7788-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-7790-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E29B99740E
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  9 Oct 2024 20:06:40 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 509F79974B1
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  9 Oct 2024 20:16:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C008E1C24F98
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  9 Oct 2024 18:06:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0E5EE28AB86
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  9 Oct 2024 18:16:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8655A1E132A;
-	Wed,  9 Oct 2024 18:06:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E68071E1327;
+	Wed,  9 Oct 2024 18:14:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZszxDjIM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BomFLItj"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6FBE1E1302
-	for <linux-bluetooth@vger.kernel.org>; Wed,  9 Oct 2024 18:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52FCE1E0E18
+	for <linux-bluetooth@vger.kernel.org>; Wed,  9 Oct 2024 18:14:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728497172; cv=none; b=A7M3jAXkv9xubBWGjqRS7YeqbU0YSQ8W7j49/cpC+jvbwUa9uUnGKF0p60NNJwPLzIV8lFyd5Lm1bRLhhw4X8X19dH8cGFSc8bI8HQLnGcaR4PhcDUeSUNyihc6kCVTgPLBbCGCSmfy+RYtferArAdMzM/vFPnNGMsaItPeQFZ8=
+	t=1728497664; cv=none; b=edMbZ7V5Uzq0tEjp27ijklKs535W2DIr0uX2rafH1M32jbjlliSZN5p89OkaVWsN4/QsWtc3IXXrnMCKCRRYSOIFK+oVw1pspe4fYVN8X0h1iqcxE6/n1xcIiIHT3d3x7zVxuFbpPQsJSycy88FjC+xTKHEQqpIjDkKnoddXhrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728497172; c=relaxed/simple;
-	bh=RypJsBXHPG6cI6T9FAtZrnIOlPDvwp/pKRJtdeQDwdE=;
+	s=arc-20240116; t=1728497664; c=relaxed/simple;
+	bh=3QV8t10h6XvReGaW62ucRikvHmIOuwVUIjfNwLEUSco=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=WYppuJj7avb979MmwFZlSAgWbSzNounkY2Ffd/S/gdVkH55WuSo6YsZABei3K4xllfTYcHmdgMgkehqUurCtY5B2d1aBKTg+X7RctLj2p7PNMAsi64mURptv+hJ0sQB+yzJZ/6cSipcNzyFBQylIljCNNuJbHOh1wTBU3jKITjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZszxDjIM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 7FAC9C4CEC3
-	for <linux-bluetooth@vger.kernel.org>; Wed,  9 Oct 2024 18:06:11 +0000 (UTC)
+	 Content-Type:MIME-Version; b=dtWHE3dhqOi4YYL+AJOW1kychCF2jT0UBmM0CuzUaewBwR+mARyruVZqX7BVWwzGdU7Jo0bnlZoXSEHxB+BYZbWHd4f2Sy4pInyFjeI830VCcg3CK+/YNU9z7P98nefEYVxwyfHyUCAWQES+hywgzr9VIbuRQrFtCtPGROAjTKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BomFLItj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 0D692C4CECC
+	for <linux-bluetooth@vger.kernel.org>; Wed,  9 Oct 2024 18:14:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728497171;
-	bh=RypJsBXHPG6cI6T9FAtZrnIOlPDvwp/pKRJtdeQDwdE=;
+	s=k20201202; t=1728497664;
+	bh=3QV8t10h6XvReGaW62ucRikvHmIOuwVUIjfNwLEUSco=;
 	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=ZszxDjIMXXArOrGeP1sD1/Tb8zNeDl897np5TvPu53sS9V6dUCzs3wMcwjsSPx+sr
-	 Yj7MrEvTq5UlLGTB0wp+Qiym9yZssG4vn+h6ZtHyhQwiRS5JUD2p9X2y02ldKISzUf
-	 8BF6iVmkuFYmWOKFS/zlVeM7wyYKjwDpfbIo0aVsQVR4idwyzNAkXLe0sprnrp4oQU
-	 WzuDUOKrUvZTG4OeQHrrt0e6yQn9Qnvls53Nz8JatVZWLYLg72p4viir7B5z+Nmre9
-	 1EjeOFpvRVXy8IV1rtGR7VPHpuYMSvg2XV5EVspEMneVCWsKs/T+/lZ6aY7jpQVk6A
-	 jxmfbd0WbqHXQ==
+	b=BomFLItjvii5IgSDPBYxdLvH7MyOrfbvlP1UNTcRhoc6tmnGjS/fya5MVhl+aZUmY
+	 R5AKSAS5Fnv9Ky1E8GaVH3FsnfUQa8qE7yirW/izK80OD+D7OaiM15tt7ASU+1AUCT
+	 gAcC6yvpsPaOTHTxuXiuRHvKnxXtOupepQRBr5uUexQ7slEC2qLiRlmizzC5ZClSem
+	 4c/Tye/mEDY5kIWpp73cuP+zT4aFwV0yr1TRKfYs23H9IviM3AU2HhBk01qQHTZRRR
+	 6SvsTGSi2tB8brdfIGsDxeGcc2ArljUB29qVb5VSGccC9SauvhrY/4CxNnCFuwFmyP
+	 1phngh+9rf+DQ==
 Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-	id 70FCAC53BCA; Wed,  9 Oct 2024 18:06:11 +0000 (UTC)
+	id EF0F9C53BC7; Wed,  9 Oct 2024 18:14:23 +0000 (UTC)
 From: bugzilla-daemon@kernel.org
 To: linux-bluetooth@vger.kernel.org
 Subject: [Bug 219365] USB bluetooth dongle stop working after upgrade from
  6.11.1 to 6.11.2
-Date: Wed, 09 Oct 2024 18:06:11 +0000
+Date: Wed, 09 Oct 2024 18:14:23 +0000
 X-Bugzilla-Reason: AssignedTo
 X-Bugzilla-Type: changed
 X-Bugzilla-Watch-Reason: None
@@ -56,14 +56,14 @@ X-Bugzilla-Component: Bluetooth
 X-Bugzilla-Version: 2.5
 X-Bugzilla-Keywords: 
 X-Bugzilla-Severity: normal
-X-Bugzilla-Who: regressions@leemhuis.info
+X-Bugzilla-Who: adilson@adilson.net.br
 X-Bugzilla-Status: NEW
 X-Bugzilla-Resolution: 
 X-Bugzilla-Priority: P3
 X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
 X-Bugzilla-Flags: 
 X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-219365-62941-WTpgnMIOvb@https.bugzilla.kernel.org/>
+Message-ID: <bug-219365-62941-cN3DiP5KFV@https.bugzilla.kernel.org/>
 In-Reply-To: <bug-219365-62941@https.bugzilla.kernel.org/>
 References: <bug-219365-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
@@ -79,13 +79,17 @@ MIME-Version: 1.0
 
 https://bugzilla.kernel.org/show_bug.cgi?id=3D219365
 
---- Comment #3 from The Linux kernel's regression tracker (Thorsten Leemhui=
-s) (regressions@leemhuis.info) ---
-Thx for the bisection. As Paul mentioned earlier: "It=E2=80=99d be also goo=
-d to know,
-if it works with current Linux master branch, or 6.12-rc2." I'd say it's not
-only "good to know", it's requires, as that determines whom we need to cont=
-act.
+--- Comment #4 from Adilson Dantas (adilson@adilson.net.br) ---
+(In reply to The Linux kernel's regression tracker (Thorsten Leemhuis) from
+comment #3)
+> Thx for the bisection. As Paul mentioned earlier: "It=E2=80=99d be also g=
+ood to
+> know, if it works with current Linux master branch, or 6.12-rc2." I'd say
+> it's not only "good to know", it's requires, as that determines whom we n=
+eed
+> to contact.
+
+I also tested with 6.12-rc2 and it is affected by this regression.
 
 --=20
 You may reply to this email to add a comment.
