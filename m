@@ -1,144 +1,179 @@
-Return-Path: <linux-bluetooth+bounces-7787-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-7789-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F7DA9973CD
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  9 Oct 2024 19:53:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8AEC299740F
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  9 Oct 2024 20:06:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 34B5A1F23D48
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  9 Oct 2024 17:53:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1C8DA1F21231
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  9 Oct 2024 18:06:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 049451A265B;
-	Wed,  9 Oct 2024 17:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 284821E0481;
+	Wed,  9 Oct 2024 18:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="juG90MSz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EBRPVyAi"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65068152E1C
-	for <linux-bluetooth@vger.kernel.org>; Wed,  9 Oct 2024 17:53:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D348F1DF726
+	for <linux-bluetooth@vger.kernel.org>; Wed,  9 Oct 2024 18:06:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728496409; cv=none; b=IeEuVbXLucNv07zcVNyUvx0Id/BKt9sAG7Q1DmSIMk5M9GOhxJsoBMWXFSRugaPTCQk/ZaK6nGVsihUzt6H3gkxAq/VRiqJWlSPyihx7zf5QbdMdoHKgZnWgnK7TyVjjCgcy83kxjuHNoUFn66Y4kNybOcZbtozV3frB19JIOUo=
+	t=1728497185; cv=none; b=FB3Y9eFL+OtWsi6Y1Pimru8Ha+pmleGOew0KOU0sS8ennD1zNoVnWgsOxvBgWt+4+ucZnmTBkape8QjRANtZkgsgARQz+U6xa0rba2J+Ql3KuxOjAgha/OYrlOKqYLDOcTqtZalel6i5RFETvkdn/NPEkuycTMwr/tLbvAya3wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728496409; c=relaxed/simple;
-	bh=g4yq2IQZCDeawzaR+ZnWEmNfNCKeyCM9oGnrwXbLB+I=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=b51Q7yfMa8eU+VfBYfVwQAbbSZWwVQ1ZeZmU4Pu6z1XJzNIsvaL3tujtLun7+uwB6rV7FsZjmhp4oJy3+B1IkU9Eljt6/VbW5Y6oY4QcZWQAZAQsRKmw++kfC4N9QX2WGmge4boF+AiJzuVzWfMrt3edxGNHtL8b8B/isbP9IMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=juG90MSz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id E1347C4CECC
-	for <linux-bluetooth@vger.kernel.org>; Wed,  9 Oct 2024 17:53:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728496405;
-	bh=g4yq2IQZCDeawzaR+ZnWEmNfNCKeyCM9oGnrwXbLB+I=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=juG90MSzTDWUIvC51VqVklnjgJtECQK0LKVk/4DLh6Mlh9j2J/C23m0+nKUMSPLiG
-	 ejveALQyegcM4SvXsoCP+wkUKUV30ksQvj/D6DoFYivOcSCzv7NI99Gsnqq09gg1fV
-	 lCSt97Ch3A+Rx/aXhO6A6FVB5o2d8QAKrGd+5qkyTFqTaHvIxhSAwl0AQ6jFpC09fn
-	 ShE9O6qQpChpG+DeDm7/ym256mj5NVFbXnez6VHRT2k0XzTvafZ4RETTPoqMXq3RsV
-	 c9a4isiXzmYdsctjH01hPCbQiH6jB7tVS8g5LADcyxXw1xu2IWqC7c6/vo+Ps9KiS6
-	 pVzJ7kekMbHcw==
-Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-	id D511BC53BC7; Wed,  9 Oct 2024 17:53:25 +0000 (UTC)
-From: bugzilla-daemon@kernel.org
-To: linux-bluetooth@vger.kernel.org
-Subject: [Bug 219365] USB bluetooth dongle stop working after upgrade from
- 6.11.1 to 6.11.2
-Date: Wed, 09 Oct 2024 17:53:25 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: adilson@adilson.net.br
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P3
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-219365-62941-jYIq6avIdi@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-219365-62941@https.bugzilla.kernel.org/>
-References: <bug-219365-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+	s=arc-20240116; t=1728497185; c=relaxed/simple;
+	bh=O6Nj1GuG6MvYVoFYvVjzmR6PvL6jvcx88hyo7xxGx7w=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ej/XvnCOyDHoqsiYO/kDYYdwVNEh6/Ef1FE4lQZqCOoJwFlXedg7pQ2G+PP0lVY+SLnMTgfXOWhTpc5Iu+wAyxuGi9ViT+yw4WoCIKA6JlmlGoGnjXXx+0yqaOufsfDY+ciB27Hk56+USGwF5/vxkS8UNul9nUYcpoKYexqEPKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EBRPVyAi; arc=none smtp.client-ip=209.85.208.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2f75c56f16aso663651fa.0
+        for <linux-bluetooth@vger.kernel.org>; Wed, 09 Oct 2024 11:06:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728497182; x=1729101982; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CIT9zCsBLDtU+GOIo7xjKIub9PKryq4oK2MflqHLF50=;
+        b=EBRPVyAivIVl0bbzeUo1Wq/N+7VTnwPn+M5Tat8EzGtfiawjV6qwXyKx0KeT7Yh0sq
+         YGc06MI69MGLP8vnVI2tO6CJq0Gqu2jpkutDShjPr2iwcwfYOqJfBekJUE65w3vxkuJ3
+         zmAHAQh/8Pjca7lcma2YCyNrHSpK98HWXLnvxbfF1VX9E3+egIooxe/dNo6VuN/KvLZ1
+         RAkEchERJTv8eWRZAGHeQlTUo/eQFK+Xu0+yFim8dESb61IXvt1BkazcvIpLZLxyiZEq
+         iTkDcxMVTrAEY6D9urJyazgj332EX3Sylj9XXseLiqpDv/I8uMboeGKiKhxjSiaj0xbI
+         n3mQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728497182; x=1729101982;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=CIT9zCsBLDtU+GOIo7xjKIub9PKryq4oK2MflqHLF50=;
+        b=PALcXOtbyoGqCVClm6LHXVxfgYmeYNm3U8UTXWWcvoGrUlYZU6E1zV3Jt9xDKy63A7
+         DxtUVKeiZoTXdt3WEkAm1huqrDVgWwuflwYDuG/8W3KCkBRvWKZYZyurVDxFIL5H0sg+
+         dYmm2+lUiUxIU9RekDNm5FezIATwxU2US1CC9ixxPtG5z+PAnvKov42la4fKA9DHdGzv
+         +aB5czI/XrdimZ1muDDzKBnqKC2QEgVEbYmc2eW2mkFIGpne9z875pSO0d8KBgNFEqaS
+         nEuHg5d5t11lfoNB35D+hKLAFk/6l7hPHWGumb7y9GHQfaqm//1ObS87yQmmRcUJEsNs
+         bElA==
+X-Gm-Message-State: AOJu0YyF+Ew4ROYuf+0RWrmp5cvDalMNsr9yFYUhvQrOwFmQN8Q84XCM
+	U5s4TD2sAuvpG2RB+hjUk0guitlS1U2IgVAW+MVTElbCHKmOoOJXMU3cRbhcHJ6OdBqI3IpoJsO
+	CwUn0IFIK1EtBRUrwjyFZtUrtOos=
+X-Google-Smtp-Source: AGHT+IFqXGFtOdcNJuPNmhlF3X9oOGyU6dT74tXPSk8h1Pif/RSii1bRURpOtojjAFRUN1KQEc/1WoAJqcpkx2WGfjg=
+X-Received: by 2002:a2e:4609:0:b0:2fa:dc24:a374 with SMTP id
+ 38308e7fff4ca-2fb187fa02dmr17391141fa.37.1728497181640; Wed, 09 Oct 2024
+ 11:06:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+References: <20241005214321.84250-1-marijn.suijten@somainline.org>
+ <20241005214321.84250-4-marijn.suijten@somainline.org> <CABBYNZLQexGSfm_0B-0_EFi3MOSZDiGzEdLBWqqUAU6_jRwOZg@mail.gmail.com>
+ <brenpr5jeeivae4e2zqalqctcblyq3cvoeqqte36hnmyxh6v57@efpmjykxruj5>
+In-Reply-To: <brenpr5jeeivae4e2zqalqctcblyq3cvoeqqte36hnmyxh6v57@efpmjykxruj5>
+From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date: Wed, 9 Oct 2024 14:06:08 -0400
+Message-ID: <CABBYNZLQCX2u9yqDS-VDaHW3Z_d86NJdKiWyAHTDEcmOOu_+JA@mail.gmail.com>
+Subject: Re: [PATCH BlueZ v4 3/3] audio/avrcp: Determine Absolute Volume
+ support from feature category 2
+To: Marijn Suijten <marijn.suijten@somainline.org>
+Cc: linux-bluetooth@vger.kernel.org, Yu Liu <yudiliu@google.com>, 
+	Bartosz Fabianowski <bartosz@fabianowski.eu>, Pauli Virtanen <pav@iki.fi>, 
+	Marek Czerski <ma.czerski@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D219365
+Hi Marijn,
 
---- Comment #2 from Adilson Dantas (adilson@adilson.net.br) ---
-I tested each commit with 6.11.2 and 6.12-rc2 and I have isolated the
-regression at commit 8603daa4300b84abb3c68e48f3b607d7d5a2a207=20
+On Wed, Oct 9, 2024 at 6:30=E2=80=AFAM Marijn Suijten
+<marijn.suijten@somainline.org> wrote:
+>
+> On 2024-10-07 11:56:06, Luiz Augusto von Dentz wrote:
+> > Hi Marijn,
+> >
+> <snip>
+> > > diff --git a/src/main.conf b/src/main.conf
+> > > index fff13ed2f..b6b32a720 100644
+> > > --- a/src/main.conf
+> > > +++ b/src/main.conf
+> > > @@ -316,6 +316,15 @@
+> > >  # notifications.
+> > >  #VolumeCategory =3D true
+> > >
+> > > +# Require peer AVRCP controllers to have at least version 1.4 before
+> > > +# accessing category-2 (absolute volume) features (depending on the =
+value
+> > > +# of VolumeCategory above).  It is common for Android-powered device=
+s to not
+> > > +# signal the desired minimum version of 1.4 while still supporting a=
+bsolute
+> > > +# volume based on the feature category bit, as mentioned in this com=
+ment:
+> > > +# https://android.googlesource.com/platform/system/bt/+/android-12.0=
+.0_r1/bta/
+> > > +# av/bta_av_main.cc#621
+> > > +#VolumeVersion =3D false
+> >
+> > I'd change this to have the version e.g. #VolumeVersion =3D 1.4, so the
+> > user can switch to 1.3 or "any" in case he want to bypass version
+> > checking
+>
+> We can surely change this to parse a version which would override the ver=
+sion
+> of the remote CT, and rename it to CTVersion since it's no longer only af=
+fecting
+> volume?  Maybe add a TGVersion as well, and/or something else entirely?
+>
+> That would save the ugly combinatorial explosion.  Maybe the same works f=
+or
+> VolumeCategory introduced in the previous patch as well?
+
+Yeah, well we could do something to disable strict version check so we
+rely only on capabilities, anyway a good way to avoid interoperability
+problems is to be very strict to the spec to what we send but more
+relaxed to what we receive, the latter may not be possible if there
+are qualification tests that requires us to strict though.
+
+> > also perhaps we should create an issue for Android folks to
+> > fix their version, as it seems they do support browsing features
+> > channel for TG they should be able to do the same for CT.
+>
+> I don't think this patch aged particularly well as hinted by the testing
+> steps in the cover letter: on my Android 14 phone AVRCP 1.5 is the defaul=
+t in
+> developer settings, so they might have realized that this was a problem i=
+n the
+> past.  Don't think we need to report it anymore, and we should perhaps st=
+art
+> discussing whether this patch is still desired in the first place?  Eithe=
+r way
+> I'd appreciate to land the first and second patch.
+
+Oh, in that case why are we even bothering to change this? Or this is
+to allow working with Android when the user has set it to AVRCP 1.3,
+well that still sound like a bug if you ask me, even if it is not the
+default behavior that should have been 1.4.
+
+> - Marijn
+>
+> > > +
+> > >  [Policy]
+> > >  #
+> > >  # The ReconnectUUIDs defines the set of remote services that should =
+try
+> > > --
+> > > 2.46.2
+> > >
+> >
+> >
+> > --
+> > Luiz Augusto von Dentz
 
 
-    Bluetooth: btusb: Fix not handling ZPL/short-transfer
-
-    [ Upstream commit 7b05933340f4490ef5b09e84d644d12484b05fdf ]
-
-Reverting this commit fix the regression on my BT dongle.
-
-
-(In reply to Paul Menzel from comment #1)
-> Thank you for your report, and great that you can build the Linux kernel
-> yourself.
->=20
-> > Maybe is one or all commits has caused the regression on my BT dongle
->=20
-> It=E2=80=99d be great if you tested each of the three commits. (Normally,=
- `git
-> bisect start -- drivers/bluetooth/btusb.c net/bluetooth/`, and then `git
-> bisect good v6.11.1` and `git bisect bad v6.11.2`, would do that
-> automatically.)
->=20
-> If you already have git clone, then:
->=20
->     git remote add stable
-> git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
->     git fetch stable
->=20
-> or, if you do not,
->=20
->     git clone
-> git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
->=20
-> Then
->=20
->     git reset --hard f68f72d04b60d3af36b63b888fe084966bca07b9
->=20
-> build and test. If it does *not* work, it=E2=80=99s the fault commit.
->=20
-> Then
->=20
->     git reset --hard 846a6fc7860119ee72737391856497b3fcf7c2b5
->=20
-> If it does *not* work, it=E2=80=99s the fault commit.
->=20
-> Then
->=20
->     git reset --hard 8603daa4300b84abb3c68e48f3b607d7d5a2a207
->=20
-> If it does *not* work, it=E2=80=99s the fault commit.
->=20
-> It=E2=80=99d be also good to know, if it works with current Linux master =
-branch, or
-> 6.12-rc2.
 
 --=20
-You may reply to this email to add a comment.
-
-You are receiving this mail because:
-You are the assignee for the bug.=
+Luiz Augusto von Dentz
 
