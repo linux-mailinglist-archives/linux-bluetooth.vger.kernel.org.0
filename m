@@ -1,92 +1,123 @@
-Return-Path: <linux-bluetooth+bounces-7935-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-7936-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A386B9A0F36
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Oct 2024 18:00:36 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7F6FE9A11E0
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Oct 2024 20:51:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 689452861DB
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Oct 2024 16:00:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AFE2C1C22434
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Oct 2024 18:51:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8DB120F5CE;
-	Wed, 16 Oct 2024 16:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D454118D655;
+	Wed, 16 Oct 2024 18:51:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bv4IBREv"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f9EzXYRZ"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162CF3FBA5
-	for <linux-bluetooth@vger.kernel.org>; Wed, 16 Oct 2024 16:00:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A84B516E86F
+	for <linux-bluetooth@vger.kernel.org>; Wed, 16 Oct 2024 18:51:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729094428; cv=none; b=CfZn9QJDgBL0vB7GbVWkgkVkWpsO8qCCE8auI1dRFZv+cA2zS3CcuRLpEfzpW3s0aAEIvjOIxzAy3Mi0B+F2Hu+8eeVNS7cV1ogUIKQaSLz0zhEC2HVGYnfT1Y4l5of1AVbRw1iFKOIQB/Nr69nKztZMjDBMuJX15yEv63y5a9s=
+	t=1729104683; cv=none; b=LqeEbH8Jb9g5Xx/FVgDsoNGmDXwYNwJXC/yYpP5OiZgd5zOg7ZByq0B+rmPndduZnkFFinLC+jY9EcoKxJ0MFb+XRXkC8WSwvymspcMUwtSQOCD85tstI53KOBQF0tVvpMeqjbNwgwO6LQnrzNd5AK50RWRS7ljxVlkWhb7tJGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729094428; c=relaxed/simple;
-	bh=OMw+4nJl+tOTmM7RQ1EcBxtHSDrFmvGDhkYRK3Ld3oU=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=GijvTHdeBvgnyyvXzoxX5qYIZe99HKg/zks4OWsYp1F5bg1QQmpnfXLOp1LGcwt2X16msbNdaF/ssPdOmwbeSesg7gAIzGVMhItshQORetPqU5fU6Vi17kcq0d+dESsnB3thNBAwiKwU02u7ceZEAPYgcyfTmlhDz0i4ClD2r0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bv4IBREv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A317AC4CECE;
-	Wed, 16 Oct 2024 16:00:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729094427;
-	bh=OMw+4nJl+tOTmM7RQ1EcBxtHSDrFmvGDhkYRK3Ld3oU=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=bv4IBREvxMu/U8zjxEAFMAbeizfgd1hM3lmpEh+P4KZi8ujHeP2cQTu5/yN9P/pDE
-	 0P9svL7jsQNIqXWcgFIENUBN3hgSxjuZDRq4ojZPd8DGwQCyOmhTOD9Cmmom4L9s+H
-	 O+ZV/IU0dXiIHOvnw/GVXi4npLYb8mcBEvpV963mPUfMsbWMNa5ca//ImlZFO7c9ek
-	 Wx6bq8f84yniCr89tESdwXTG528eLLYNOjIwrg1WvPYCiw1vNUbmT3K2KScl2wtzun
-	 O4pD/PJi46pkXdemvNLij0rfW01X3PrdVZIItiG0PRPXjjO8U+69zhccbyw6gfUqKx
-	 b1clMA8R8C9Sw==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 33DCB3822D30;
-	Wed, 16 Oct 2024 16:00:34 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1729104683; c=relaxed/simple;
+	bh=OS6e+CjkI4NyGpW3tC62Mr63Mc7IIVLhDs9F9msjJbY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FJ30HrvIjD8j64jFblBK44Fw8cKiVDrV69msoAT5Yme1W6QEuah3g9CzrL6Si65Hl2iOK1bbKuHpHzYX7q2LMof5TUanrnO2IwF5aEM/yYY1dxK77YJ0/3kmb2lxcGTz64yJdKQU651ZxB8osyyUF8571GdJSXIyeTuRTiBtFDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f9EzXYRZ; arc=none smtp.client-ip=209.85.208.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2fabb837ddbso2730941fa.1
+        for <linux-bluetooth@vger.kernel.org>; Wed, 16 Oct 2024 11:51:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729104680; x=1729709480; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KdmqZ1gid2nrcqceKA2afnlwQTBt0CD1Z9NPEggCkx0=;
+        b=f9EzXYRZVgCLrfVDxEOtDkdFS4SOfnvw9r9/zAmyFHfDnmFa7PpuCcqycofYli0JjI
+         YnHV1CWGI1huK/fezcOMyojwMErZWepm1SjTtXKMqTE7YnVWuk24WyOGeSvdYoMo6S2W
+         Nu3j7lTHgNPHzpEYl601fcRjXQ8GXl4pCmXq85Fzlef1ZH+pdtW+u2ZZxYuKkxRxZz2q
+         8GBY4MB5P404lxYBrpv1YeFRgNDOScseWwwLs4t3pVH2RZpmJB+PXrG9Ej0LbtCOzrER
+         g2PxmeZFtGcR0GZeU6rmhmb7FaiqRIazcCpGaLGtXiTKAdQJOe56BLuCmAX3GvTGHTaf
+         TKuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729104680; x=1729709480;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KdmqZ1gid2nrcqceKA2afnlwQTBt0CD1Z9NPEggCkx0=;
+        b=ixoUg7mZEVuP5m2YlBSXEGxj9A1tchtdOpPBNciy5mn0bgTfsaBiqMaizkw+OUeHtL
+         kD7L9WUSGzvgsFcDlV5pBhyfHm3QadZKfa0uwkaZgJ1ezUMgmY7mXm5US88jq1gbODN0
+         mAQsS00i/x7bn5mWSwjz5m16kdyA3mymv/G9YNQ6Ea716naiJMOu4aTgth0TMf/iMvJp
+         aEueM3UB4UCU3MHBSbyNvnSAim4iYOLOfthExEwFJJCZxlGf3uWfcOQ4dJJrYTXmsG1h
+         J5wkqGz0fjfWAPRV45XOlVzw8tWEaxw0mGn4FLgfIJsbmC7RLvKi+O0lPx9txjdwxwb9
+         v29Q==
+X-Gm-Message-State: AOJu0YyOF9nKPgedKskdzR1WeWFEjaH5Apoj8gxODWymlJTujmk5mv93
+	GSIEm6bJZwhU5pxjYkVFXGDk47DtsvTMhw/5QRa2PDkq70ZQhVLilutfFYOQythPGw8wLAHwNT8
+	4UXKlEb25W8aRrLFpxhz4MVwLVuNeAX/rgjs=
+X-Google-Smtp-Source: AGHT+IHnsW/WrmGed+aZGS2xwAc++xTFrRDhA8itVumE7xAHjbKsfD1UOold50/Kz8ZkDxhzwL/yB5M7Z3l/yyYaHVc=
+X-Received: by 2002:a2e:be23:0:b0:2fa:fdd1:be23 with SMTP id
+ 38308e7fff4ca-2fb3f2c7269mr96104251fa.28.1729104679393; Wed, 16 Oct 2024
+ 11:51:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v1] Bluetooth: btintel: Add DSBR support for BlazarIW,
- BlazarU and GaP
-From: patchwork-bot+bluetooth@kernel.org
-Message-Id: 
- <172909443273.1863747.6160988229948048528.git-patchwork-notify@kernel.org>
-Date: Wed, 16 Oct 2024 16:00:32 +0000
-References: <20241015122707.720187-1-kiran.k@intel.com>
-In-Reply-To: <20241015122707.720187-1-kiran.k@intel.com>
-To: Kiran K <kiran.k@intel.com>
-Cc: linux-bluetooth@vger.kernel.org, ravishankar.srivatsa@intel.com,
- chethan.tumkur.narayan@intel.com, chandrashekar.devegowda@intel.com
+References: <CAAhaqxrW=0g9E2qWdEXTGkjv5cxZLAu-6UGDO5tGLxZDdQXvJg@mail.gmail.com>
+In-Reply-To: <CAAhaqxrW=0g9E2qWdEXTGkjv5cxZLAu-6UGDO5tGLxZDdQXvJg@mail.gmail.com>
+From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date: Wed, 16 Oct 2024 14:51:06 -0400
+Message-ID: <CABBYNZKu465GRDOCGepyckgrk4CZF4tOwbzUN6HQyG8ZKfg=8w@mail.gmail.com>
+Subject: Re: Bluetooth not working on 13d3:3585 IMC Networks Wireless_Device
+To: Grimoire April <aprilgrimoire@gmail.com>
+Cc: linux-bluetooth@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello:
+Hi Grimoire,
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+On Wed, Oct 16, 2024 at 3:28=E2=80=AFAM Grimoire April <aprilgrimoire@gmail=
+.com> wrote:
+>
+> Hi. I have a laptop with an integrated bluetooth adaptor recognized as
+> a usb device. However, it fails to initialize properly. Searching for
+> other instances on bugzilla, it seems others had success with
+> 13d3:3585 adaptors.
+>
+> (base) =E2=9E=9C  ~ sudo dmesg | grep Bluetooth
+> [    0.422244] Bluetooth: Core ver 2.22
+> [    0.422254] Bluetooth: HCI device and connection manager initialized
+> [    0.422257] Bluetooth: HCI socket layer initialized
+> [    0.422261] Bluetooth: L2CAP socket layer initialized
+> [    0.422265] Bluetooth: SCO socket layer initialized
+> [    0.530052] Bluetooth: HCI UART driver ver 2.3
+> [    0.535346] Bluetooth: HIDP (Human Interface Emulation) ver 1.2
+> [    0.535355] Bluetooth: HIDP socket layer initialized
+> [    3.556068] Bluetooth: hci0: Opcode 0x0c03 failed: -110
+>
+> https://bugzilla.kernel.org/show_bug.cgi?id=3D218472
+>
+> I updated to 6.11.1 and the issue persists.
 
-On Tue, 15 Oct 2024 17:57:07 +0530 you wrote:
-> Add DSBR support for BlazarIW, BlazarU and Gale Peak2 cores.
-> 
-> Refer commit eb9e749c0182 ("Bluetooth: btintel: Allow configuring drive
-> strength of BRI") for details about DSBR.
-> 
-> Signed-off-by: Kiran K <kiran.k@intel.com>
-> 
-> [...]
-
-Here is the summary with links:
-  - [v1] Bluetooth: btintel: Add DSBR support for BlazarIW, BlazarU and GaP
-    https://git.kernel.org/bluetooth/bluetooth-next/c/c3d1fd9e646d
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+Well it looks like the reset command is timing out, but the issue was
+originally the PID:VID was not supported in btusb so perhaps something
+else is happening, perhaps another manufacturer that don't support
+short-transfer which was introduced by 7b05933340f4 ("Bluetooth:
+btusb: Fix not handling ZPL/short-transfer") so try reverting that to
+see if it helps.
 
 
+> Thank you.
+>
+
+
+--=20
+Luiz Augusto von Dentz
 
