@@ -1,195 +1,97 @@
-Return-Path: <linux-bluetooth+bounces-7933-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-7934-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF3069A0F11
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Oct 2024 17:52:30 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C42F9A0F35
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Oct 2024 18:00:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0E9D11C22A6E
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Oct 2024 15:52:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 003A4286565
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Oct 2024 16:00:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AD0320CCE5;
-	Wed, 16 Oct 2024 15:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8D5820F5C6;
+	Wed, 16 Oct 2024 16:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PEqwvdTt"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Akb6Lfh4"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0876F1384B3
-	for <linux-bluetooth@vger.kernel.org>; Wed, 16 Oct 2024 15:52:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16349186E54
+	for <linux-bluetooth@vger.kernel.org>; Wed, 16 Oct 2024 16:00:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729093944; cv=none; b=dYgw6OjPY7rVM1UibRGPG8VKHNJc5B3QabPYJwPib25qgY648znpuObUcEmcjSp6lH2fBl1/m8PshO4HB1tN/VY5SdFoUnS60Lm8aANuVFPmtOiNbiH2mZZa5334tPKFGO/pKDS5ppzBIyXlLbSI5iD41HH1VJNWVVMJpICVfNY=
+	t=1729094428; cv=none; b=QKyYQnCgYCiMztTovWldeANbcOZCgyvXhGi1cOVE/8GmlIHCkR9TmY0zkjVJTjtYjFetXkB9S56+FvLhXMu9UlDMxmTyD5szkhMNO4NAD8K78vHuNw+MX/t9uoBQmpnMLFDuaBVj/xVDQ7gd34TKNPDvrWFHX0jByvhpAkwz0y0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729093944; c=relaxed/simple;
-	bh=2NDRH+TYAAY7I7X1yW81rj3IGQ3e83kpLYentzfSvAc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kat8kwE4RyjBLDCQpVtnXDa2ctaiAQxPNLPkzeoOeG7dX+Shkk/Rt9rRvF+A/1jfbIsyBim6R5Wj9tFBaVaLWfND9HfaU+POlCnQkJU49xCOMhdk86zYZRcTjz55E1qsmnNbJe9vVqB5Q687EZ85LS1jrM0Pq26gyhTgAQML0gM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PEqwvdTt; arc=none smtp.client-ip=209.85.208.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2fb4af0b6beso49993731fa.3
-        for <linux-bluetooth@vger.kernel.org>; Wed, 16 Oct 2024 08:52:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729093941; x=1729698741; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6DifIXuX1F/3Vv3DflyTxzu38Cos+BImnu6gDNN9EbM=;
-        b=PEqwvdTtNCbTCLXXVlx2D+Xv1mFdQ/0cRDm3qmw5SK7ga/FJaXFj7/IFk8oeGlIJB0
-         aNm4P9CFDh0dJLGipIPdx3qfKfwv60UqFThzBKp63jHqY2/QE82Ezit73+sLpwnwkVrB
-         +qUn3Pv9U1S3JaFlcDLkVU1KseMK1MTjU0NdlXoP+/El2IHu+5GO8AjlInd3ncZ9J3b2
-         wEqp4pF/lBxFfxmA/RUgZpq5gd65/lngvEKJ9g/IiYIySEn61MR/rCl4WpWclIyMU7lq
-         oQPAuis/dcmQXhQS7qXf1A5WPSBD8jEZhO+kmd/tkIZV2NSecmzqXZ9bNx8i3Xs16No3
-         5+CQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729093941; x=1729698741;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6DifIXuX1F/3Vv3DflyTxzu38Cos+BImnu6gDNN9EbM=;
-        b=ZnZ81TRyNOOX3xAROTPX4AKZt/safyVVoWXRct8G97zLW70Ii4gRjn6JGqq3Mt9Q0A
-         FhIXE2tlxkWdVLWtbvx/mVhae2cgh/a5klDUyBk3fAd7fDZQd7ZhP3qI3no8+A445/QS
-         le5jEsdkHQ7zwmYPSxXKNV9eQ+eVgXEx/Wb4lW8PxPuHWHv1jvlRMyG6Xq/zIhT+RUqM
-         5dXMQX7gmrTyIcgJ1BkNjFQS5Fa3EygpuRxCIl+zQVJ/bCrxB6xuRx72ubfvoXlGFb13
-         IsIWtmOi1lwTys4eRNTdWv5QY9ooEh4d6EwWEnENE0GSX6EOpJgFIwByIwkEdN7CMJwJ
-         xWvA==
-X-Gm-Message-State: AOJu0Yw7NGJ++LsbhB282oYTX/gHl+a4Y+umtr4+cuppJw/DXYJKza17
-	yR24o9JMh3K6Z2XD+xTjYRQG+vC5A3SderK8gO7a26uOI0tXENon+SUfFQ3ABcb+8AzEam0x4Hk
-	X5SjBphQ0hDrf9KDTaR32G6/+eAo=
-X-Google-Smtp-Source: AGHT+IFfa5My3HGKbHFuAFzsERssmHos0yv2zdD/Nnid299NZwpbFIMYrjfb4aQi3XdSCMv/Uf3jZPhZLie8+Il83BA=
-X-Received: by 2002:a05:651c:1987:b0:2fb:4f8e:efd with SMTP id
- 38308e7fff4ca-2fb4f8e10ebmr94154181fa.32.1729093940211; Wed, 16 Oct 2024
- 08:52:20 -0700 (PDT)
+	s=arc-20240116; t=1729094428; c=relaxed/simple;
+	bh=CYQIqXSapne0SrF8559hvBQJuvSxbQsowGJGBoilNwk=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=nL4n6yDFuBT0+KKN8y3ap+9Yz+0VAe73/oLJONOgkSa6THYNHPzR0h4Q4rbOXPXCWYh8oN3bty5ShhsgRIYt9gfEH+VHh/kUkM+C8vK+sdlxlZKz8ueGAwAxEK6GV+83fbF8XSSDtdzJG4SBeYam6zdNk+mP7XzKWb3RPPFiTRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Akb6Lfh4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36BC2C4CEC5;
+	Wed, 16 Oct 2024 16:00:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729094426;
+	bh=CYQIqXSapne0SrF8559hvBQJuvSxbQsowGJGBoilNwk=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=Akb6Lfh46Ik8yVzmjm3BxRCGVV1S4mw3gJ+35yQIUmd2j+k4ryfYMvwEtu2I5PopE
+	 pKMnJDGdZhLUE5tI69PWvqsZeinZXWwQr+V0n+jG/0M9VdfARKmG02ieKDHpg5i8Wr
+	 gscJJoaIwiLTVHqgQ4h62nblVnpxz05j1FHvKBjoZbsU/abXY5g+kaNzPPhDtML6IT
+	 zbFDl/dO+/EIZb6uYl+Vdm3Y6MfAFlRGDS7xtxSH4m0Bal9/wsFG6SwMp1xP00CXyu
+	 TInp2/V0TfwMlx5Io82vhyu4TjdJ6Ti4HfjyyjbWdWwhvYWUMwnO1kqbsnl1HGadvJ
+	 CCiGMMd2qlqIw==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id ADCE63822D30;
+	Wed, 16 Oct 2024 16:00:32 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241014085602.711258-1-kiran.k@intel.com>
-In-Reply-To: <20241014085602.711258-1-kiran.k@intel.com>
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Wed, 16 Oct 2024 11:52:07 -0400
-Message-ID: <CABBYNZJDsR8HjHb83x6bOZT0ZCoxLvHKcD+CqmFjK4Ct3mzpxQ@mail.gmail.com>
-Subject: Re: [PATCH v1] Bluetooth:btintel: Do no pass vendor events to stack
-To: Kiran K <kiran.k@intel.com>
-Cc: linux-bluetooth@vger.kernel.org, ravishankar.srivatsa@intel.com, 
-	chethan.tumkur.narayan@intel.com, chandrashekar.devegowda@intel.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH] Bluetooth: bnep: fix wild-memory-access in proto_unregister
+From: patchwork-bot+bluetooth@kernel.org
+Message-Id: 
+ <172909443152.1863747.16466588010493150746.git-patchwork-notify@kernel.org>
+Date: Wed, 16 Oct 2024 16:00:31 +0000
+References: <20241014090708.3818916-1-yebin@huaweicloud.com>
+In-Reply-To: <20241014090708.3818916-1-yebin@huaweicloud.com>
+To: Ye Bin <yebin@huaweicloud.com>
+Cc: marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+ ricardo@marliere.net, linux-bluetooth@vger.kernel.org,
+ viro@zeniv.linux.org.uk, yebin10@huawei.com, zhangxiaoxu5@huawei.com
 
-Hi Kiran,
+Hello:
 
-On Mon, Oct 14, 2024 at 4:41=E2=80=AFAM Kiran K <kiran.k@intel.com> wrote:
->
-> During firmware download, vendor specific events like boot up and
-> secure send result are generated. These events can be safely processed at
-> the driver level. Passing on these events to stack prints unnecessary
-> below warning log.
->
-> --
-> Bluetooth: hci0: Malformed MSFT vendor event: 0x02
-> --
->
-> Signed-off-by: Kiran K <kiran.k@intel.com>
+This patch was applied to bluetooth/bluetooth-next.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-We need the Fixes tag.
+On Mon, 14 Oct 2024 17:07:08 +0800 you wrote:
+> From: Ye Bin <yebin10@huawei.com>
+> 
+> There's issue as follows:
+>   KASAN: maybe wild-memory-access in range [0xdead...108-0xdead...10f]
+>   CPU: 3 UID: 0 PID: 2805 Comm: rmmod Tainted: G        W
+>   RIP: 0010:proto_unregister+0xee/0x400
+>   Call Trace:
+>    <TASK>
+>    __do_sys_delete_module+0x318/0x580
+>    do_syscall_64+0xc1/0x1d0
+>    entry_SYSCALL_64_after_hwframe+0x77/0x7f
+> 
+> [...]
 
-> ---
->  drivers/bluetooth/btintel.c      | 6 ++++--
->  drivers/bluetooth/btintel_pcie.c | 9 ++++++---
->  2 files changed, 10 insertions(+), 5 deletions(-)
->
-> diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-> index 432f723e3869..652a5595fb16 100644
-> --- a/drivers/bluetooth/btintel.c
-> +++ b/drivers/bluetooth/btintel.c
-> @@ -3383,7 +3383,8 @@ int btintel_recv_event(struct hci_dev *hdev, struct=
- sk_buff *skb)
->                                  * indicating that the bootup completed.
->                                  */
->                                 btintel_bootup(hdev, ptr, len);
-> -                               break;
-> +                               kfree_skb(skb);
-> +                               return 0;
->                         case 0x06:
->                                 /* When the firmware loading completes th=
-e
->                                  * device sends out a vendor specific eve=
-nt
-> @@ -3391,7 +3392,8 @@ int btintel_recv_event(struct hci_dev *hdev, struct=
- sk_buff *skb)
->                                  * loading.
->                                  */
->                                 btintel_secure_send_result(hdev, ptr, len=
-);
-> -                               break;
-> +                               kfree_skb(skb);
-> +                               return 0;
+Here is the summary with links:
+  - Bluetooth: bnep: fix wild-memory-access in proto_unregister
+    https://git.kernel.org/bluetooth/bluetooth-next/c/7902a76b54e3
 
-Perhaps we should have a common way to drop the skb e.g. goto drop.
-
->                         }
->                 }
->
-> diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel=
-_pcie.c
-> index d581a539d439..b2eeb6838247 100644
-> --- a/drivers/bluetooth/btintel_pcie.c
-> +++ b/drivers/bluetooth/btintel_pcie.c
-> @@ -551,7 +551,8 @@ static int btintel_pcie_recv_event(struct hci_dev *hd=
-ev, struct sk_buff *skb)
->                                 if (btintel_pcie_in_op(data)) {
->                                         btintel_pcie_wr_sleep_cntrl(data,=
- BTINTEL_PCIE_STATE_D0);
->                                         data->alive_intr_ctxt =3D BTINTEL=
-_PCIE_INTEL_HCI_RESET2;
-> -                                       break;
-> +                                       kfree_skb(skb);
-> +                                       return 0;
->                                 }
->
->                                 if (btintel_pcie_in_iml(data)) {
-> @@ -568,7 +569,8 @@ static int btintel_pcie_recv_event(struct hci_dev *hd=
-ev, struct sk_buff *skb)
->                                                 btintel_wake_up_flag(data=
-->hdev,
->                                                                      INTE=
-L_WAIT_FOR_D0);
->                                 }
-> -                               break;
-> +                               kfree_skb(skb);
-> +                               return 0;
->                         case 0x06:
->                                 /* When the firmware loading completes th=
-e
->                                  * device sends out a vendor specific eve=
-nt
-> @@ -576,7 +578,8 @@ static int btintel_pcie_recv_event(struct hci_dev *hd=
-ev, struct sk_buff *skb)
->                                  * loading.
->                                  */
->                                 btintel_secure_send_result(hdev, ptr, len=
-);
-> -                               break;
-> +                               kfree_skb(skb);
-> +                               return 0;
-
-Ditto.
-
->                         }
->                 }
->
-> --
-> 2.40.1
->
->
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
---=20
-Luiz Augusto von Dentz
 
