@@ -1,71 +1,71 @@
-Return-Path: <linux-bluetooth+bounces-8028-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-8030-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 026459A6859
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 21 Oct 2024 14:28:13 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 629CE9A685C
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 21 Oct 2024 14:28:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 977F8B27A30
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 21 Oct 2024 12:28:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1AD492847C9
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 21 Oct 2024 12:28:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E53441F8927;
-	Mon, 21 Oct 2024 12:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED9881F8937;
+	Mon, 21 Oct 2024 12:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AGDzc66H"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IxqS2y5w"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A05B1F1300
-	for <linux-bluetooth@vger.kernel.org>; Mon, 21 Oct 2024 12:25:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6037A1F6695
+	for <linux-bluetooth@vger.kernel.org>; Mon, 21 Oct 2024 12:25:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729513531; cv=none; b=RVeH5iO/f+xdQ5g0zTu4eMbtRj7UDmA71fgXj1lbheTK0ecUO/qdh2z4dLQkFQ46qhIB/ZSPS0QjrVZTHYNngTVrb3P64WJhYPjrUgizXMyEbGDxfQl4iMKTRPIK0DieBQ3I3/p9bBU2wvGAYyiMTh99hQ9d6sNY4hc+6Oa8A9g=
+	t=1729513553; cv=none; b=Az675W50WtV/l6mhfQ1jD8oXXrTfth5SmDWNl/wTskwNayLc1rEvePZ9UY8M+p8xeCYQqu6JhZJgyMaGaGI+omLU9WBbgzH4G1CUFgOnBEgMSR9uEcMwuHXEEx21hPZobv9JDWFdxaIiUvsD+mxXNzHTGxhFYMqfGCviJL0LrAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729513531; c=relaxed/simple;
-	bh=nkmqn4efxHj5i/+TRFAoOvi1Og9DVd8FDufwvFPiDk8=;
+	s=arc-20240116; t=1729513553; c=relaxed/simple;
+	bh=pN6iwQ8rrAa16RpqTV5wySvw3c8HXFhur+2WDNzT7Oc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UUjRdrGK1Q6yDuywfE0Mr/TRyn9atXOG7ZW7Z0Wr/CBZg0YIs26zWF99XvXc8/OowEOUdl5aFS/+KwC72Mnyl0V19MnfgtBwzk9WcUKqMziJ2MHR8+xPGCDpJEveHIE3yvaRBtAkgoBdlJS2t3fpgKkbCxRvFq5erQlqiWl6qLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AGDzc66H; arc=none smtp.client-ip=209.85.167.47
+	 MIME-Version; b=GwpcLXgEGBmuy1jdX6G6ug2SFjtoogZ5iN67Tm8s2XPA6CogrcTMJEbVnsKjvecfB34QDL1K83eJUSJHqhggKyva7AZEfBwO6UvASmvS6jvMhfQ6A0neELM7O9q2KHrJTPWR55fvTTogbxvY5k36aYCGHi59bdawN/HSJ1Imh/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IxqS2y5w; arc=none smtp.client-ip=209.85.167.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-539eb97f26aso4882767e87.2
-        for <linux-bluetooth@vger.kernel.org>; Mon, 21 Oct 2024 05:25:28 -0700 (PDT)
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-539f6e1f756so5075361e87.0
+        for <linux-bluetooth@vger.kernel.org>; Mon, 21 Oct 2024 05:25:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729513527; x=1730118327; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1729513549; x=1730118349; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=D7wijC3SR4+mgvDEZEUCC/DXA2u96faSspEMVqCVdB4=;
-        b=AGDzc66Hi0ALQSEVm45ynv/IRqo/oyrYQgUy8caziAOuqTv+VDzdYB9ZV2PfKltY8R
-         ytcVekOT0C7K6vu5XkY0sXRlYjbD7UDYc1cohaW5L3YwnQqIfms06qAknw2SzvHqhr49
-         R8S16VQ1DiS+LasGdRfEK0fdznOULveaedP4Zy9lis5Vkgk7gwPVFXzu8bFUPU07ZGIX
-         aZHG0M5AJCY10VITftEg2IdkJl7NpG8qJ9eh97nzifETtYml9HcopjF/fL7OOp+dRFgx
-         nhfj5o+eNtscVA9a1UR1+RkLnnZkIie5SlDjiyI7lTav+WJ1r1BDpfnCJCf4O6fwnJMM
-         lhXg==
+        bh=QBO5EpvMGaOIjapAVQEA8TCLKFaLwRBTYf1umN1QslU=;
+        b=IxqS2y5waGFXFVTaiO9+41TqiRRUwFEHD+7VxdQSNzX5m2ecsT8qsg7iraFLrPIY2Y
+         iNb4xcxDA82vbH43KtC18jk1VVT9i5ULVLY5UMfVZET1acmkplgjpyC1ft/QSP2uLMzm
+         ThfjUYU4XaShBeY+4wU1ixD2IUB8DVyQvk0LpFrT7u21rOroMH6LoCK/Pfe3rkJP18Ta
+         q3GSjqqlC7LgS7ei7ZX4OUN5OWQS21w2GMyCgDar1FbFTUXPY8PHVJzX2G3358oT+BnS
+         FryOz/TJewVNbqoWVe3cDG29AGFCuhzzRT5dPyMbKM1J6A7dvhV7AMFFv1cQx76i+J09
+         KDWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729513527; x=1730118327;
+        d=1e100.net; s=20230601; t=1729513549; x=1730118349;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=D7wijC3SR4+mgvDEZEUCC/DXA2u96faSspEMVqCVdB4=;
-        b=e+KPtWqtvJ4w6jfzM0UtUxUDnEg03GAZATPtxNNzkUhcKkVQYeMVx5hOIXnPlL6xi1
-         qcjaJ/sv0LtazTCNmP1oKc0U1jsMrF8CV2Yu9DJhXdUv7eQ6CESIldaSl3Q23GP81RJ5
-         tHlGW5kcLUiR9Bg1TrhaZ6R7UJKp1QMi/F7QqmllenAhe+aMp3asgbH7SE9NTfXtaxfA
-         0Y1bNNA8/rWPOjHqZGBMMS+FqYo+ZO9FeGfC6CUJMSpHFiW84C15T34bH9Pfx7r8x0BV
-         BfA1xpEOFGIO0ImkVCnRNrlzb6HJezjSDOYx0PaZhGbCdjtSqLrOJEc4rNMNXrUt2BZa
-         +W3w==
-X-Gm-Message-State: AOJu0Yy9GetSEQpu7ga4eo4xdKwUbAnMA5s5XypLW87KK4htpdGK/zsq
-	HIZh3qLxHXd2gGzvj/Ob+tRfG+p8ML0jXUk8iGlajc1u5WdhYvmpvTMNn5j5924=
-X-Google-Smtp-Source: AGHT+IFr0RAVDUyJgmoQrEpZi5N63qpPoE6QkQxeu/TAq9yG4mBYT9ZbM8XVoKYdsGBTGJVXJU0vtQ==
-X-Received: by 2002:a05:6512:31d3:b0:539:e232:e436 with SMTP id 2adb3069b0e04-53a15218a32mr5009736e87.24.1729513527021;
-        Mon, 21 Oct 2024 05:25:27 -0700 (PDT)
+        bh=QBO5EpvMGaOIjapAVQEA8TCLKFaLwRBTYf1umN1QslU=;
+        b=f/leAoKJzdTazP6IC+n3D7jEj68wCHUs8LNkNWNok7qY7skLtphw43YMzdvBRKmCYM
+         YaAVC9TnucH8P50lpOpYO+sl3+cVe3E5ETdAJMx50pA+j4dbbncfRXhDoYm9676zaESo
+         xjmLXPLT1eY8zqFd2jSbGbPRG6QXbsMpfW+RJSkxgbDQmIMJp3t794w2xSZ6D27Ohej5
+         eyqdUDENzh9mE3mcbIVDU0gBBTs88jWHDMYcV59aSWk7gjnGZdI4bCP4pP3ZVPWqd/zw
+         sWx/bgVdln8P8NzMXXrdAeifphFVDyi4kvPZm/ODrTHrwF13G82ysq00rva70oZ/OZrv
+         Szng==
+X-Gm-Message-State: AOJu0Yy0KFdpIrupnYf6h3lc6sdoPK8Vh2N+2uL+loNiErNqXrO/ekD/
+	C7gu3itFrwDoqLafU+oQII5DcUIYkgx1JDD/M2UmE/wiFPsyOzh4CS11efAfO0o=
+X-Google-Smtp-Source: AGHT+IE+C7VRACpBMiyAehANCxJN2HDChru249TpqLd8e96nnaOsCaUptpGR1CxjGbsGtac6R9HPUg==
+X-Received: by 2002:a05:6512:350e:b0:539:fc42:e5ee with SMTP id 2adb3069b0e04-53a15229cf4mr4956278e87.29.1729513549268;
+        Mon, 21 Oct 2024 05:25:49 -0700 (PDT)
 Received: from ha.lan ([185.52.141.89])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a223f02c1sm464015e87.111.2024.10.21.05.25.23
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a223f02c1sm464015e87.111.2024.10.21.05.25.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Oct 2024 05:25:25 -0700 (PDT)
+        Mon, 21 Oct 2024 05:25:47 -0700 (PDT)
 From: Danil Pylaev <danstiv404@gmail.com>
 To: linux-bluetooth@vger.kernel.org
 Cc: uhrmar@gmail.com,
@@ -74,9 +74,9 @@ Cc: uhrmar@gmail.com,
 	luiz.dentz@gmail.com,
 	marcel@holtmann.org,
 	Danil Pylaev <danstiv404@gmail.com>
-Subject: [PATCH 2/3] Bluetooth: Support new quirks for ATS2851
-Date: Mon, 21 Oct 2024 12:22:45 +0000
-Message-ID: <20241021122246.1569235-3-danstiv404@gmail.com>
+Subject: [PATCH 3/3] Bluetooth: Set quirks for ATS2851
+Date: Mon, 21 Oct 2024 12:22:46 +0000
+Message-ID: <20241021122246.1569235-4-danstiv404@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241021122246.1569235-1-danstiv404@gmail.com>
 References: <20241021122246.1569235-1-danstiv404@gmail.com>
@@ -88,60 +88,26 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This adds support for quirks for broken extended create connection,
-and write auth payload timeout.
+This adds quirks for broken ats2851 features.
 
 Signed-off-by: Danil Pylaev <danstiv404@gmail.com>
 ---
- net/bluetooth/hci_event.c | 7 +++++++
- net/bluetooth/hci_sync.c  | 9 ++++++++-
- 2 files changed, 15 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 0bbad90ddd6f..65f5ed2ded70 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -3626,6 +3626,13 @@ static void hci_encrypt_change_evt(struct hci_dev *hdev, void *data,
- 		goto unlock;
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 0317d27d5365..9970470c9d15 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -3930,6 +3930,8 @@ static int btusb_probe(struct usb_interface *intf,
+ 		set_bit(HCI_QUIRK_BROKEN_SET_RPA_TIMEOUT, &hdev->quirks);
+ 		set_bit(HCI_QUIRK_BROKEN_EXT_SCAN, &hdev->quirks);
+ 		set_bit(HCI_QUIRK_BROKEN_READ_ENC_KEY_SIZE, &hdev->quirks);
++		set_bit(HCI_QUIRK_BROKEN_EXT_CREATE_CONN, &hdev->quirks);
++		set_bit(HCI_QUIRK_BROKEN_WRITE_AUTH_PAYLOAD_TIMEOUT, &hdev->quirks);
  	}
  
-+	/* We skip the WRITE_AUTH_PAYLOAD_TIMEOUT for ATS2851 based controllers
-+	 * to avoid unexpected SMP command errors when pairing.
-+	 */
-+	if (test_bit(HCI_QUIRK_BROKEN_WRITE_AUTH_PAYLOAD_TIMEOUT,
-+		     &hdev->quirks))
-+		goto notify;
-+
- 	/* Set the default Authenticated Payload Timeout after
- 	 * an LE Link is established. As per Core Spec v5.0, Vol 2, Part B
- 	 * Section 3.3, the HCI command WRITE_AUTH_PAYLOAD_TIMEOUT should be
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 40ccdef168d7..cde96debef3f 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -4838,6 +4838,13 @@ static const struct {
- 	HCI_QUIRK_BROKEN(SET_RPA_TIMEOUT,
- 			 "HCI LE Set Random Private Address Timeout command is "
- 			 "advertised, but not supported."),
-+	HCI_QUIRK_BROKEN(EXT_CREATE_CONN,
-+			 "HCI LE Extended Create Connection command is "
-+			 "advertised, but not supported."),
-+	HCI_QUIRK_BROKEN(WRITE_AUTH_PAYLOAD_TIMEOUT,
-+			 "HCI WRITE AUTH PAYLOAD TIMEOUT command leads "
-+			 "to unexpected SMP errors when pairing "
-+			 "and will not be used."),
- 	HCI_QUIRK_BROKEN(LE_CODED,
- 			 "HCI LE Coded PHY feature bit is set, "
- 			 "but its usage is not supported.")
-@@ -6467,7 +6474,7 @@ static int hci_le_create_conn_sync(struct hci_dev *hdev, void *data)
- 					     &own_addr_type);
- 	if (err)
- 		goto done;
--
-+	/* Send command LE Extended Create Connection if supported */
- 	if (use_ext_conn(hdev)) {
- 		err = hci_le_ext_create_conn_sync(hdev, conn, own_addr_type);
- 		goto done;
+ 	if (!reset)
 -- 
 2.43.0
 
