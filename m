@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-8071-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-8074-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6731D9AA19E
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 14:01:14 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2AF369AA1A0
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 14:01:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E6ADDB217B1
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 12:01:11 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 94879B2184B
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 12:01:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E54DD199246;
-	Tue, 22 Oct 2024 12:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71F77199938;
+	Tue, 22 Oct 2024 12:01:02 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EDC9199252
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43155155352
 	for <linux-bluetooth@vger.kernel.org>; Tue, 22 Oct 2024 12:00:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729598461; cv=none; b=A7Fgco+kastSeZ14jSsFly+/Rm64wMSsk/t4TirDOQWH86uJkKnsDHp3ca84BhV5OseAnBBKv2QdgcpgVA7hFINTrRMvfZMBxFv08L9hik9L/y6+xDEJKrbKDfREF7ilrM38USOak/XvsLHUU0lK+RtR/fvbTBHv6X+GaGkQtAc=
+	t=1729598462; cv=none; b=hRO+q5A7V51lrUZ6aPE9f0cbu6bY7mQ21WvdlANYWDJVrqNJpy1p5o7MZc/j5s6iB++T11TMusD/ZWRNt1S59vGc/fgnYuNs89U38aW0tUbxNyyftUjlj6mZhIZFJh8wBGn/9c4yb4ufRnzSpqj8iGyNLbR2h2eTxoVo4EM9QVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729598461; c=relaxed/simple;
-	bh=stdfC0w+a9QqvorW0UmHP3AKTvUwMz74Z/gkoW1AZao=;
+	s=arc-20240116; t=1729598462; c=relaxed/simple;
+	bh=ivGxwW/lpgwihxo7ubC3MEhED5seqUJwhIqCvXtGme0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pTwV84zdB7oGQ5Qv/KR5hHbt8iaGZeU0khHUB1h+Du+nd1bV2y2VfjiIH32T9PA3ysTeNkoHA7zSDFpR7wwnffxkXMxbOwQHG4dN3f0q8KHpOJ7gaqh6c/L+RSByDy0vnWRGaySI6s6KSMCmxNKexYdGm99SoQFd4vt9JxIBz3I=
+	 MIME-Version; b=TPv0y/hk1bH6NkVBhMzC61wcF2FcRxDY7V68VYf8xK9s49w3fb793Kll2Fm6Duden7COK1LiTOiCcKCfhgsInBTCltdydEMnIFwynEjfTpguJvI1MQPLoA+8qlFtULvNi/ktCAMkaRv1E/P6aSQ0QpmeBwwWOGaw6MUOq7Fn5Jg=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 525851C0021;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id A20F51C0023;
 	Tue, 22 Oct 2024 12:00:52 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ v2 2/7] client: Use g_clear_pointer() to clean up menus
-Date: Tue, 22 Oct 2024 13:58:32 +0200
-Message-ID: <20241022120051.123888-3-hadess@hadess.net>
+Subject: [BlueZ v2 3/7] client: Split installing submenu and doing I/O
+Date: Tue, 22 Oct 2024 13:58:33 +0200
+Message-ID: <20241022120051.123888-4-hadess@hadess.net>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241022120051.123888-1-hadess@hadess.net>
 References: <20241022120051.123888-1-hadess@hadess.net>
@@ -49,77 +49,171 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-This would avoid warnings should the client be NULL.
+Split off installing the command's submenu and contacting the management
+socket or the bluez daemon.
 ---
- client/admin.c     | 5 ++---
- client/assistant.c | 5 ++---
- client/player.c    | 4 ++--
- 3 files changed, 6 insertions(+), 8 deletions(-)
+ client/admin.c     |  3 +++
+ client/admin.h     |  1 +
+ client/assistant.c |  3 +++
+ client/assistant.h |  1 +
+ client/main.c      |  4 ++++
+ client/mgmt.c      | 11 +++++++----
+ client/mgmt.h      |  3 ++-
+ client/player.c    |  3 +++
+ client/player.h    |  1 +
+ tools/btmgmt.c     |  3 ++-
+ 10 files changed, 27 insertions(+), 6 deletions(-)
 
 diff --git a/client/admin.c b/client/admin.c
-index cd9af6f955da..9d48867bc1d7 100644
+index 9d48867bc1d7..15759ba0291a 100644
 --- a/client/admin.c
 +++ b/client/admin.c
-@@ -191,7 +191,7 @@ static void proxy_removed(GDBusProxy *proxy, void *user_data)
- 		admin_policy_status_removed(proxy);
- }
- 
--static GDBusClient *client;
-+static GDBusClient *client = NULL;
- 
- static void disconnect_handler(DBusConnection *connection, void *user_data)
+@@ -202,7 +202,10 @@ static void disconnect_handler(DBusConnection *connection, void *user_data)
+ void admin_add_submenu(void)
  {
-@@ -215,6 +215,5 @@ void admin_add_submenu(void)
+ 	bt_shell_add_submenu(&admin_menu);
++}
  
- void admin_remove_submenu(void)
- {
--	g_dbus_client_unref(client);
--	client = NULL;
-+	g_clear_pointer(&client, g_dbus_client_unref);
- }
++void admin_enable_submenu(void)
++{
+ 	dbus_conn = bt_shell_get_env("DBUS_CONNECTION");
+ 	if (!dbus_conn || client)
+ 		return;
+diff --git a/client/admin.h b/client/admin.h
+index 4da83e4e36ba..68a497971f66 100644
+--- a/client/admin.h
++++ b/client/admin.h
+@@ -18,4 +18,5 @@
+  */
+ 
+ void admin_add_submenu(void);
++void admin_enable_submenu(void);
+ void admin_remove_submenu(void);
 diff --git a/client/assistant.c b/client/assistant.c
-index 16e94664a5c3..94052e26fd59 100644
+index 94052e26fd59..ceade046be68 100644
 --- a/client/assistant.c
 +++ b/client/assistant.c
-@@ -390,7 +390,7 @@ static const struct bt_shell_menu assistant_menu = {
- 	{} },
- };
- 
--static GDBusClient * client;
-+static GDBusClient * client = NULL;
- 
+@@ -395,7 +395,10 @@ static GDBusClient * client = NULL;
  void assistant_add_submenu(void)
  {
-@@ -409,7 +409,6 @@ void assistant_add_submenu(void)
+ 	bt_shell_add_submenu(&assistant_menu);
++}
  
- void assistant_remove_submenu(void)
- {
--	g_dbus_client_unref(client);
--	client = NULL;
-+	g_clear_pointer(&client, g_dbus_client_unref);
++void assistant_enable_submenu(void)
++{
+ 	dbus_conn = bt_shell_get_env("DBUS_CONNECTION");
+ 	if (!dbus_conn || client)
+ 		return;
+diff --git a/client/assistant.h b/client/assistant.h
+index 418b0b84031f..c304abea0515 100644
+--- a/client/assistant.h
++++ b/client/assistant.h
+@@ -9,5 +9,6 @@
+  */
+ 
+ void assistant_add_submenu(void);
++void assistant_enable_submenu(void);
+ void assistant_remove_submenu(void);
+ 
+diff --git a/client/main.c b/client/main.c
+index 50aa3e7a6cbe..4ae6f121d424 100644
+--- a/client/main.c
++++ b/client/main.c
+@@ -3204,9 +3204,13 @@ int main(int argc, char *argv[])
+ 					(void *)endpoint_option);
+ 
+ 	admin_add_submenu();
++	admin_enable_submenu();
+ 	player_add_submenu();
++	player_enable_submenu();
+ 	mgmt_add_submenu();
++	mgmt_enable_submenu();
+ 	assistant_add_submenu();
++	assistant_enable_submenu();
+ 
+ 	client = g_dbus_client_new(dbus_conn, "org.bluez", "/org/bluez");
+ 
+diff --git a/client/mgmt.c b/client/mgmt.c
+index fba409f823ef..ef795f5e86fa 100644
+--- a/client/mgmt.c
++++ b/client/mgmt.c
+@@ -6028,7 +6028,13 @@ static void mgmt_debug(const char *str, void *user_data)
+ 	print("%s%s", prefix, str);
  }
  
+-bool mgmt_add_submenu(void)
++void mgmt_add_submenu(void)
++{
++	bt_shell_add_submenu(&mgmt_menu);
++	bt_shell_add_submenu(&monitor_menu);
++}
++
++bool mgmt_enable_submenu(void)
+ {
+ 	mgmt = mgmt_new_default();
+ 	if (!mgmt) {
+@@ -6036,9 +6042,6 @@ bool mgmt_add_submenu(void)
+ 		return false;
+ 	}
+ 
+-	bt_shell_add_submenu(&mgmt_menu);
+-	bt_shell_add_submenu(&monitor_menu);
+-
+ 	if (getenv("MGMT_DEBUG"))
+ 		mgmt_set_debug(mgmt, mgmt_debug, "mgmt: ", NULL);
+ 
+diff --git a/client/mgmt.h b/client/mgmt.h
+index 5a2026eab6a2..b0f3cafd0777 100644
+--- a/client/mgmt.h
++++ b/client/mgmt.h
+@@ -8,6 +8,7 @@
+  *
+  */
+ 
+-bool mgmt_add_submenu(void);
++void mgmt_add_submenu(void);
++bool mgmt_enable_submenu(void);
+ void mgmt_remove_submenu(void);
+ void mgmt_set_index(const char *arg);
 diff --git a/client/player.c b/client/player.c
-index 188378175486..dea5922d56db 100644
+index dea5922d56db..3189e0575798 100644
 --- a/client/player.c
 +++ b/client/player.c
-@@ -5694,7 +5694,7 @@ static const struct bt_shell_menu transport_menu = {
- 	{} },
- };
+@@ -5701,7 +5701,10 @@ void player_add_submenu(void)
+ 	bt_shell_add_submenu(&player_menu);
+ 	bt_shell_add_submenu(&endpoint_menu);
+ 	bt_shell_add_submenu(&transport_menu);
++}
  
--static GDBusClient *client;
-+static GDBusClient *client = NULL;
++void player_enable_submenu(void)
++{
+ 	dbus_conn = bt_shell_get_env("DBUS_CONNECTION");
+ 	if (!dbus_conn || client)
+ 		return;
+diff --git a/client/player.h b/client/player.h
+index e7778cb1efd9..c09ffa94cbff 100644
+--- a/client/player.h
++++ b/client/player.h
+@@ -9,4 +9,5 @@
+  */
  
- void player_add_submenu(void)
- {
-@@ -5715,6 +5715,6 @@ void player_add_submenu(void)
+ void player_add_submenu(void);
++void player_enable_submenu(void);
+ void player_remove_submenu(void);
+diff --git a/tools/btmgmt.c b/tools/btmgmt.c
+index 436c2bb21f10..0f6051d5befe 100644
+--- a/tools/btmgmt.c
++++ b/tools/btmgmt.c
+@@ -46,7 +46,8 @@ int main(int argc, char *argv[])
  
- void player_remove_submenu(void)
- {
--	g_dbus_client_unref(client);
-+	g_clear_pointer(&client, g_dbus_client_unref);
- 	queue_destroy(ios, transport_free);
- }
+ 	bt_shell_init(argc, argv, &opt);
+ 
+-	if (!mgmt_add_submenu()) {
++	mgmt_add_submenu();
++	if (!mgmt_enable_submenu()) {
+ 		fprintf(stderr, "Unable to open mgmt_socket\n");
+ 		return EXIT_FAILURE;
+ 	}
 -- 
 2.47.0
 
