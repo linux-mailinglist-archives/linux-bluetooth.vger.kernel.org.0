@@ -1,42 +1,45 @@
-Return-Path: <linux-bluetooth+bounces-8090-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-8089-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B806B9AB079
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 16:11:50 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1BBA49AB07A
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 16:11:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 78FC72838D7
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 14:11:49 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9E70CB21EA5
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 14:11:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B500819F110;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90F431A08C6;
 	Tue, 22 Oct 2024 14:11:24 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay1-d.mail.gandi.net (relay1-d.mail.gandi.net [217.70.183.193])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C176119E96A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17BA19F110
 	for <linux-bluetooth@vger.kernel.org>; Tue, 22 Oct 2024 14:11:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729606284; cv=none; b=ekyyTRzUB4EtIwhmuHm4RqmzMjOxc64F5zp5I/J8tuYFvR8Ga1SA4hQl9rjALV1GNmFJc/mXOurz51hn91zO0kGXbddALeCjPbuY34NE4e5r3kx1jrH5qoimLmh9qZsFnubZlKNzbGF8GT5C9dz1JFCImT5uW5VJqafOjOVRc6Y=
+	t=1729606284; cv=none; b=DAzbxu0HEP0EHY2Wq0F/IQqnHR/sIHaVdl5nkZX2EBMxDBIWFbEeBybIF/+8zIiTh4cRT0jfFKjFFeKVisxjTdmqRA+TgszGf95XY0qvn6ofCxi0SFlon517VAviE5xNL5xOaqWBWRSQNL8OhHw/yFQ9fGEJ7J9UjzFph90wSvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1729606284; c=relaxed/simple;
-	bh=iiENksnMjE/ZH+Ad9ApiUkPgroJpulk47djEin3noR4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rh7PVAzV/+GFD2MJ8JWTi5Sph0lTuXtu/TllE2i5Dq8ZNbbR1ZhL2zT9Euni0BXvwgIRpMNBraE7JAb2Lh5wpAU/gt2gI3DGiz7HuHmyTr9Y/n3qhGye9NECsUNltBqpJ54FVOxhnj9oEC1jBHEKkI1AtQY0l4bylvxyABrjLkM=
+	bh=8TYtxj8RCuYcQ+6mpbMkTfqD/80RbkhK9oPnRW/Hk+Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=tVO33MCBtF7xL2w/FRayut+kkzI9dM58YdVPXfqQaKZQZKPCD45zdD1c6Yo4VeNNzYSUWNiyY/QGDGbWxLHjEJ5+dBjBSa7kG0a80stGe8ozzkclwyHzZF+rqtGfi67zkoFpg8b1Svr4whiJ2JQxhUjtAC0dbKuju4otwwUk0xo=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.193
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id A9FFE24000E;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id EC826240002;
 	Tue, 22 Oct 2024 14:11:18 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ v3 0/7] Fix bluetoothctl --help hanging if daemon isn't running
-Date: Tue, 22 Oct 2024 16:10:31 +0200
-Message-ID: <20241022141118.150143-1-hadess@hadess.net>
+Subject: [BlueZ v3 1/7] configure.ac: Update requirement to glib 2.34
+Date: Tue, 22 Oct 2024 16:10:32 +0200
+Message-ID: <20241022141118.150143-2-hadess@hadess.net>
 X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20241022141118.150143-1-hadess@hadess.net>
+References: <20241022141118.150143-1-hadess@hadess.net>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -46,34 +49,41 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-Changes from v2:
-- rebased against latest upstream
+Update build requirements from 2011's glib 2.28 all the way up to 2012's
+glib 2.34. This will allow us to use g_clear_pointer().
+---
+ acinclude.m4 | 4 ++--
+ configure.ac | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-Bastien Nocera (7):
-  configure.ac: Update requirement to glib 2.34
-  client: Use g_clear_pointer() to clean up menus
-  client: Split installing submenu and doing I/O
-  client: Install submenus before contacting bluez daemon
-  shell: Document "mode" variable
-  shared/shell: Add function to handle early help calls
-  client: Fix --help hanging if bluetoothd is not running
-
- acinclude.m4       |  4 ++--
- client/admin.c     |  8 +++++---
- client/admin.h     |  1 +
- client/assistant.c |  8 +++++---
- client/assistant.h |  1 +
- client/main.c      | 14 ++++++++++----
- client/mgmt.c      | 11 +++++++----
- client/mgmt.h      |  3 ++-
- client/player.c    |  7 +++++--
- client/player.h    |  1 +
- configure.ac       |  2 +-
- src/shared/shell.c | 12 +++++++++++-
- src/shared/shell.h |  2 ++
- tools/btmgmt.c     |  3 ++-
- 14 files changed, 55 insertions(+), 22 deletions(-)
-
+diff --git a/acinclude.m4 b/acinclude.m4
+index 4b73a5bfc38f..d0bfe6ccb2fa 100644
+--- a/acinclude.m4
++++ b/acinclude.m4
+@@ -62,8 +62,8 @@ AC_DEFUN([COMPILER_FLAGS], [
+ 		with_cflags="$with_cflags -Wswitch-enum"
+ 		with_cflags="$with_cflags -Wformat -Wformat-security"
+ 		with_cflags="$with_cflags -DG_DISABLE_DEPRECATED"
+-		with_cflags="$with_cflags -DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_28"
+-		with_cflags="$with_cflags -DGLIB_VERSION_MAX_ALLOWED=GLIB_VERSION_2_32"
++		with_cflags="$with_cflags -DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_34"
++		with_cflags="$with_cflags -DGLIB_VERSION_MAX_ALLOWED=GLIB_VERSION_2_34"
+ 	fi
+ 	AC_SUBST([WARNING_CFLAGS], $with_cflags)
+ ])
+diff --git a/configure.ac b/configure.ac
+index 7093e41ff714..14bd15293918 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -81,7 +81,7 @@ AC_CHECK_DECLS([basename], [],
+ 				 ])
+ 
+ 
+-PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.28)
++PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.34)
+ 
+ if (test "${enable_threads}" = "yes"); then
+ 	AC_DEFINE(NEED_THREADS, 1, [Define if threading support is required])
 -- 
 2.47.0
 
