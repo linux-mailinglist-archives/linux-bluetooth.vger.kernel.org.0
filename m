@@ -1,118 +1,177 @@
-Return-Path: <linux-bluetooth+bounces-8058-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-8060-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A7789A9C85
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 10:28:15 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D4E7A9A9DF3
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 11:08:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C8A051F23058
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 08:28:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 017671C21690
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 09:08:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 657211714A1;
-	Tue, 22 Oct 2024 08:28:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0BC7194AFE;
+	Tue, 22 Oct 2024 09:08:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="do9DrUH3"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cl8RBXMO"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E8315CD4A
-	for <linux-bluetooth@vger.kernel.org>; Tue, 22 Oct 2024 08:28:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5AE22083
+	for <linux-bluetooth@vger.kernel.org>; Tue, 22 Oct 2024 09:08:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729585688; cv=none; b=hP6Fi2mkVx8PKwKUxM+5oVIIgO2SocN2UMi5HZ24NqLbJh7y6/5QnB+RMrAfUeUDP7uCS5kOXAVcTCDDCWRYXPL8cYF1bU28QlETfQS4xw9BiPNiemVk4gimZkhZEiS8iXdkFQxunREViHMCJtHqpssCcQCtt6zNpriuMTLdDb0=
+	t=1729588118; cv=none; b=AyjjEddKQLM0CBB32iNDy769CX56oxWCEvzcHd8YUrSBaM+wegqrL5Cy/w9jd+7ZrPkpNwgyJZlCbxVFXhaYLD8hT/eT7or76y/bMcSc8tNlIilNKqaWGaHihQzrz/gn/Ov+zhDb9v2XaKeYOZuZHDUA59zDNh+aAo5rj3kB8DI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729585688; c=relaxed/simple;
-	bh=c4QH6kpzKLNeWvJM4NbcSM4DkSDG2BtINJkInosImtU=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=CLy7CINpnW+POimsWSgR22UtJ0JztAhW2Ga6wb3a63chSuVIhDo6gnn7vwTm51JZvsGCtaNrFCWNUojGu6hIT7k1RNPpYrF8+Fo5W+DwSJiq1SOwMBqZJ74bZF1t9GOqSppN+WtfbMX/hQg/1GEo/5n7tshRjtuRk6+Jq9pkaic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=do9DrUH3; arc=none smtp.client-ip=192.198.163.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1729585687; x=1761121687;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=c4QH6kpzKLNeWvJM4NbcSM4DkSDG2BtINJkInosImtU=;
-  b=do9DrUH36pMzZJTEwe2Z83M+ThQsGj9ssLrsO0kPzllV4wy9vkrVqR6f
-   dAfaChjewKC/eah5oIx+sHsfABcOXWbQONWJWasXg44ax9qM1woVCzJXn
-   Q9kTFUPWUfHnOYU0Np3sEMxL9dUReWzfUrnGRgu9+hTWndom5I2EAfv1I
-   tZSdKt5JzQD31rnygsdi8GeZPg/LcSuWQ/LrDUQ9RratJETs0+QN8xHqu
-   cKR54rM+I1wgGj6n24fQqCOuftj4CMUpKHYOrp4SRUWqHojPDOiu/9APC
-   q5Y5DllvejKPo4VG2hz7NarL5GhF+HK5UtO2pDTbRTwySyzphS/E7ZTa6
-   Q==;
-X-CSE-ConnectionGUID: TYnZkun4STOGXtYK3pQsCQ==
-X-CSE-MsgGUID: 03Hxf3B/RQ6a8AJKuFH4Iw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11232"; a="28995329"
-X-IronPort-AV: E=Sophos;i="6.11,222,1725346800"; 
-   d="scan'208";a="28995329"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2024 01:28:06 -0700
-X-CSE-ConnectionGUID: kS3yug4aQHC5t0XualzuLg==
-X-CSE-MsgGUID: oh2Zsu4qRmKVo2WhfCB8wA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,222,1725346800"; 
-   d="scan'208";a="84386115"
-Received: from intel-lenovo-legion-y540-15irh-pg0.iind.intel.com ([10.224.186.95])
-  by fmviesa005.fm.intel.com with ESMTP; 22 Oct 2024 01:28:05 -0700
-From: Kiran K <kiran.k@intel.com>
-To: linux-bluetooth@vger.kernel.org
-Cc: ravishankar.srivatsa@intel.com,
-	chethan.tumkur.narayan@intel.com,
-	chandrashekar.devegowda@intel.com,
-	vijay.satija@intel.com,
-	Kiran K <kiran.k@intel.com>
-Subject: [PATCH v1] Bluetooth: btintel: Direct exception event to bluetooth stack
-Date: Tue, 22 Oct 2024 14:13:05 +0530
-Message-Id: <20241022084305.790330-1-kiran.k@intel.com>
-X-Mailer: git-send-email 2.40.1
+	s=arc-20240116; t=1729588118; c=relaxed/simple;
+	bh=T3fmbUsoxTEqgHGPEt/+oVhAu63jcuB+bKm75xi6L90=;
+	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
+	 In-Reply-To:References; b=tHv9MADcmPHGcoXZCRUeCxCXrHHDf2vl5yCuuQzGlhTAlKhB+7QubBw2QM3kM9oE1AUTvFNshTxpmqoHuHJT2z+DSUG0XSkmh6ZEk+ozORXaD1zHq5MKRiINDij+R41bJpZWd45e1NpI8xz/qT49rV4tngadd973Qq82n1LYpbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cl8RBXMO; arc=none smtp.client-ip=209.85.167.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-3e5fcf464ecso2829688b6e.0
+        for <linux-bluetooth@vger.kernel.org>; Tue, 22 Oct 2024 02:08:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729588115; x=1730192915; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=tYLbEE0UwbHtyu1W++7DJKsryBKxX1ftL+hnqFquV4M=;
+        b=cl8RBXMO9BFGMNGn9WdgqWF7p0j+ijdGeADftEtYxxnauOo3F2yJYnXSE4WUXfWcFZ
+         AXqoaNYRdtYu7YjGG2uOe1i/npyUGOOuHx7JCwDiemzUAyVHUbBXTIHxZNO5gdXSpnw6
+         RLz0oh1257PULlpqoTZshcPx9IohU6dUEgXxOsrwpbvvFQ3wicAyVTx+HOoNPW4gOewV
+         I+2/MecswTqZZxFoh0SYg1MvxEmEFxCiKg8kykG4nth7VwEG8BOdn4/A2lgFz+gaNWQ9
+         YTMwE2D9OhCn4bqHk7AxgojqzlzsfEP2XId5f5WqlWxNcT0O/d/Vsagf0bhhdTnZXF0s
+         /1Iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729588115; x=1730192915;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tYLbEE0UwbHtyu1W++7DJKsryBKxX1ftL+hnqFquV4M=;
+        b=U/sQoKVPrRqhjmtdj7VkAplI5XIoPJcoyPCx2uROHPHZBjHkXnlljvQCqsvgt/e0fj
+         xB+mSLyhThXNx6PH5OSv605mpEYDHU+Anggv6LkCUQH2Ff+LrRTLNjI2tDrEPqSW84sZ
+         39Bw+8mNqYgQ7ug9Rk0a27upZAa/CwHxoCdcNWjASwLJWoNZOIT2sLGGuFJXPbb0P6Io
+         /npD+3QpHUDgGet5AyBN9ckA3Bo31tk49OKlorylRYeTQZFb+i7TFMsmzAJuP6qNuGv+
+         COCWymHCKGAom4X8B4tVNoBQ1AVfiPc7p20taoFueG/io8tANEzyG/I3n7BRBZJrDv4a
+         sL7w==
+X-Gm-Message-State: AOJu0Yyi8MEKrS+Fm9judL7gyqnwC793NEKuLVWpIphirZA2dPoxnPOP
+	eiSTAYIjv7SkOZb79GdTn5UnRTpBwfBsnW6PX/E7MYUZHTyCyf+C2h1lBA==
+X-Google-Smtp-Source: AGHT+IGeOEwyT4pUCYRPSgefMsb1vxWktOjBa6j3zfVWzu4YT5V4Bum/JmZGgktsSDPxhZNAn+KHWg==
+X-Received: by 2002:a05:6808:192a:b0:3e3:e713:b293 with SMTP id 5614622812f47-3e602c882a4mr12370903b6e.16.1729588115235;
+        Tue, 22 Oct 2024 02:08:35 -0700 (PDT)
+Received: from [172.17.0.2] ([13.91.68.148])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7eaeabb9e6fsm4515622a12.66.2024.10.22.02.08.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Oct 2024 02:08:34 -0700 (PDT)
+Message-ID: <67176b92.630a0220.62a0.d6a2@mx.google.com>
+Date: Tue, 22 Oct 2024 02:08:34 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============6206246032408472002=="
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: bluez.test.bot@gmail.com
+To: linux-bluetooth@vger.kernel.org, quic_amisjain@quicinc.com
+Subject: RE: [v1] obex: Resolve SRM issue for PTS testcases
+In-Reply-To: <20241022072423.4080043-1-quic_amisjain@quicinc.com>
+References: <20241022072423.4080043-1-quic_amisjain@quicinc.com>
+Reply-To: linux-bluetooth@vger.kernel.org
 
-Have exception event part of HCI traces which helps for debug.
+--===============6206246032408472002==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-snoop traces:
-> HCI Event: Vendor (0xff) plen 79
-        Vendor Prefix (0x8780)
-      Intel Extended Telemetry (0x03)
-        Unknown extended telemetry event type (0xde)
-        01 01 de
-        Unknown extended subevent 0x07
-        01 01 de 07 01 de 06 1c ef be ad de ef be ad de
-        ef be ad de ef be ad de ef be ad de ef be ad de
-        ef be ad de 05 14 ef be ad de ef be ad de ef be
-        ad de ef be ad de ef be ad de 43 10 ef be ad de
-        ef be ad de ef be ad de ef be ad de
+This is automated email and please do not reply to this email!
 
-Fixes: af395330abed ("Bluetooth: btintel: Add Intel devcoredump support")
-Signed-off-by: Kiran K <kiran.k@intel.com>
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=901706
+
+---Test result---
+
+Test Summary:
+CheckPatch                    FAIL      0.55 seconds
+GitLint                       FAIL      0.45 seconds
+BuildEll                      PASS      24.59 seconds
+BluezMake                     PASS      1718.68 seconds
+MakeCheck                     PASS      13.73 seconds
+MakeDistcheck                 PASS      180.60 seconds
+CheckValgrind                 PASS      256.27 seconds
+CheckSmatch                   PASS      358.60 seconds
+bluezmakeextell               PASS      121.28 seconds
+IncrementalBuild              PASS      1516.97 seconds
+ScanBuild                     PASS      1026.16 seconds
+
+Details
+##############################
+Test: CheckPatch - FAIL
+Desc: Run checkpatch.pl script
+Output:
+[v1] obex: Resolve SRM issue for PTS testcases
+WARNING:COMMIT_LOG_LONG_LINE: Possible unwrapped commit description (prefer a maximum 75 chars per line)
+#102: 
+value in the PUT/GET request and carries on with the PUT/GET operation with SRM disabled.
+
+WARNING:TYPO_SPELLING: 'recieving' may be misspelled - perhaps 'receiving'?
+#105: 
+though recieving the unknown SRM value.
+       ^^^^^^^^^
+
+ERROR:GERRIT_CHANGE_ID: Remove Gerrit Change-Id's before submitting upstream
+#110: 
+Change-Id: I399b1daacdcfa118137dc9798529514d36fd78ed
+
+WARNING:LONG_LINE: line length of 95 exceeds 80 columns
+#123: FILE: gobex/gobex.c:320:
++	if(srm != G_OBEX_SRM_DISABLE && srm != G_OBEX_SRM_ENABLE && srm != G_OBEX_SRM_INDICATE)
+
+WARNING:SUSPECT_CODE_INDENT: suspect code indent for conditional statements (8, 14)
+#123: FILE: gobex/gobex.c:320:
++	if(srm != G_OBEX_SRM_DISABLE && srm != G_OBEX_SRM_ENABLE && srm != G_OBEX_SRM_INDICATE)
++	      return; //unknown srm value
+
+ERROR:SPACING: space required before the open parenthesis '('
+#123: FILE: gobex/gobex.c:320:
++	if(srm != G_OBEX_SRM_DISABLE && srm != G_OBEX_SRM_ENABLE && srm != G_OBEX_SRM_INDICATE)
+
+WARNING:TABSTOP: Statements should start on a tabstop
+#124: FILE: gobex/gobex.c:321:
++	      return; //unknown srm value
+
+/github/workspace/src/src/13845233.patch total: 2 errors, 5 warnings, 9 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/github/workspace/src/src/13845233.patch has style problems, please review.
+
+NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.
+
+
+##############################
+Test: GitLint - FAIL
+Desc: Run gitlint
+Output:
+[v1] obex: Resolve SRM issue for PTS testcases
+
+WARNING: I3 - ignore-body-lines: gitlint will be switching from using Python regex 'match' (match beginning) to 'search' (match anywhere) semantics. Please review your ignore-body-lines.regex option accordingly. To remove this warning, set general.regex-style-search=True. More details: https://jorisroovers.github.io/gitlint/configuration/#regex-style-search
+11: B1 Line exceeds max length (89>80): "value in the PUT/GET request and carries on with the PUT/GET operation with SRM disabled."
+
+
 ---
- drivers/bluetooth/btintel.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index e122dff855ba..e9cd7efd6853 100644
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -3365,9 +3365,8 @@ int btintel_diagnostics(struct hci_dev *hdev, struct sk_buff *skb)
- 			hci_devcd_complete(hdev);
- 		} else {
- 			bt_dev_err(hdev, "Failed to generate devcoredump");
--			kfree_skb(skb);
- 		}
--		return 0;
-+	break;
- 	default:
- 		bt_dev_err(hdev, "Invalid exception type %02X", tlv->val[0]);
- 	}
--- 
-2.40.1
 
+--===============6206246032408472002==--
 
