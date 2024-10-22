@@ -1,123 +1,94 @@
-Return-Path: <linux-bluetooth+bounces-8059-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-8061-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 354EA9A9DA6
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 10:58:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 50CA79A9E52
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 11:20:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 519B02838D9
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 08:58:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EED541F21EA4
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 09:20:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81882198E63;
-	Tue, 22 Oct 2024 08:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34C76175D35;
+	Tue, 22 Oct 2024 09:20:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cYPjZQk/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CEx3pmfP"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F7C155330
-	for <linux-bluetooth@vger.kernel.org>; Tue, 22 Oct 2024 08:56:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D45312D75C
+	for <linux-bluetooth@vger.kernel.org>; Tue, 22 Oct 2024 09:20:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729587420; cv=none; b=jbpsUd/ohN9ZHUFq5Dr3w9y2AHbcY7dAO4LvqyB50n58C+M7hdzRvRZM7n0Pd/g0/SKTK/qXiHvdwwnmnIiMKpRtxvSEO2yP33+21YAGWVZ1Quo67kTusLl6/ehm7zxZJ+e46wKWWNZDnmTcCouDI6a+601v5XO2C+sUHrrq/JQ=
+	t=1729588850; cv=none; b=WKkv0g6UzZr26hiS+StlloZSXB1hM1LEvD1h23Qzgwsq4FgmaglS4AhQSqa3BsYfpLtTNGqX/Aru5DO4cmk7nh4OdkJGPUqCF6YWPqwF/qauNo2a3lKcjLfqyF96C+Pt6sqL5m0w2B4wg19dz75q8Zbf34hNkXFyq+Y9CD7HXPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729587420; c=relaxed/simple;
-	bh=2W1ZxsePxU5bjrWvkagbbbQ6cTVCGr+W4Yzmfnf3dHo=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=XnF9cy/FAap3oco9x++pKXPz89jOnz8QCT+pUqHT4Oq7WHMsefOR948qC4a/fv1CQd8kgPP687lzWBeYpupFdTe+uGMOzKH0V3TZfnOq3wZuJaOcsyvLCR3fYwIL0U3T82j2F1ikLuOigCyO1DnlHWbHuKgSsRjPM8Pm/DeZBS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cYPjZQk/; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1729587418; x=1761123418;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=2W1ZxsePxU5bjrWvkagbbbQ6cTVCGr+W4Yzmfnf3dHo=;
-  b=cYPjZQk/5OYuaPpOwfQVeF3p1Nr/bnkIVSXklXaIUwA0AW9mAtx2WY8r
-   QQaL0E5a66PDW6JJzTECMSVhv0wlC10hGtvUbbINmtuNsRa1nPO2XGJwj
-   /rYSTQlZX4/23HqkXuJ4QvHnIWJVGNHJnb/hor8GHEyNwjVgQ7hdOoihP
-   vYZVxUFY8pMWzZJVKzPzeNgQxeeEIbsjjIf+WLgRe5sjcSnUCdfe3Vle2
-   DL13oSxtqXysU0+0L71HdSFwbLGRbnAurCxAUa7oNu2Whj69XcpHbZjD4
-   MDeWqvopyyHWIhqZCSadu7XfG8/OHCwNRhYK0NmtDoij7PSxK0pZR4m3Z
-   Q==;
-X-CSE-ConnectionGUID: hFTIZpfQQDCwbIFdORCU0g==
-X-CSE-MsgGUID: Yie3GfluRtyL7aV5rUh+Hg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="40230514"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; 
-   d="scan'208";a="40230514"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2024 01:56:57 -0700
-X-CSE-ConnectionGUID: bhBoAHPkRU26t2wR8h2ugg==
-X-CSE-MsgGUID: c3oGQsd1T6WrU+bFtK12SA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,222,1725346800"; 
-   d="scan'208";a="79968781"
-Received: from intel-lenovo-legion-y540-15irh-pg0.iind.intel.com ([10.224.186.95])
-  by orviesa006.jf.intel.com with ESMTP; 22 Oct 2024 01:56:56 -0700
-From: Kiran K <kiran.k@intel.com>
+	s=arc-20240116; t=1729588850; c=relaxed/simple;
+	bh=IzXBu4+ewmyM8fGoKk2L7UyWY7FdMHYnNtkXIW0Jn3U=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=h5Cj0tH9+U0WhnFBVlVvoIP128CnRbwOEzAfhXTIVd4CVho+jdzQZvVQqrIrSKMP0/B8AEAgzFFJCHmXd9ag0KxSuwQQmyD7K4excyAJXdYME545kVz/ixTwYeQorR4GwOB5QSNbea0vqFs9Hv/SPyy6yOliND0i0gi6kQFg8eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CEx3pmfP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 2EC8BC4CEC3
+	for <linux-bluetooth@vger.kernel.org>; Tue, 22 Oct 2024 09:20:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729588850;
+	bh=IzXBu4+ewmyM8fGoKk2L7UyWY7FdMHYnNtkXIW0Jn3U=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=CEx3pmfPoqmiTswFsdg/Ysb6LnUbQk92f5jIdnJ+LiEO3CA5IjCwho/CnyoN6Xina
+	 n8tdppbBHcv9b85r9Eh9MLjOlOzPvR29oGXSIHeAR/LQaJdKw+QxQKxobU0Ci2zWWO
+	 bRyevGJ2jiYLcJ0wXD21ktXUBWDiR1FiyjVEonKBXCB+HZzSBzxBJkwa7yn3kFI0d0
+	 PvDZRuDuU8uiba9KWY+YGLsHmeYGTTDzdvs+67JRoIEPBXSWYvlbN93/j/Yi4V5ukC
+	 m9jmAs8KHS8yQMKBMEjdtLSXaMLtIz12y2WVAeYoG15qlj59Qw18jLzLC7tAlkKLnG
+	 HF8/LIjDRc8FA==
+Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
+	id 1D5E9C53BBF; Tue, 22 Oct 2024 09:20:50 +0000 (UTC)
+From: bugzilla-daemon@kernel.org
 To: linux-bluetooth@vger.kernel.org
-Cc: ravishankar.srivatsa@intel.com,
-	chethan.tumkur.narayan@intel.com,
-	chandrashekar.devegowda@intel.com,
-	vijay.satija@intel.com,
-	Kiran K <kiran.k@intel.com>
-Subject: [PATCH v2] Bluetooth: btintel: Direct exception event to bluetooth stack
-Date: Tue, 22 Oct 2024 14:41:34 +0530
-Message-Id: <20241022091134.791527-1-kiran.k@intel.com>
-X-Mailer: git-send-email 2.40.1
+Subject: [Bug 219405] [regression] mt7922 bluetooth scanning does not work in
+ 6.11.4
+Date: Tue, 22 Oct 2024 09:20:49 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: normal
+X-Bugzilla-Who: eugene.shalygin@gmail.com
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P3
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: cf_kernel_version cf_regression
+Message-ID: <bug-219405-62941-cUvlRmLTzg@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-219405-62941@https.bugzilla.kernel.org/>
+References: <bug-219405-62941@https.bugzilla.kernel.org/>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Have exception event part of HCI traces which helps for debug.
+https://bugzilla.kernel.org/show_bug.cgi?id=3D219405
 
-snoop traces:
-> HCI Event: Vendor (0xff) plen 79
-        Vendor Prefix (0x8780)
-      Intel Extended Telemetry (0x03)
-        Unknown extended telemetry event type (0xde)
-        01 01 de
-        Unknown extended subevent 0x07
-        01 01 de 07 01 de 06 1c ef be ad de ef be ad de
-        ef be ad de ef be ad de ef be ad de ef be ad de
-        ef be ad de 05 14 ef be ad de ef be ad de ef be
-        ad de ef be ad de ef be ad de 43 10 ef be ad de
-        ef be ad de ef be ad de ef be ad de
+Eugene Shalygin (eugene.shalygin@gmail.com) changed:
 
-Fixes: af395330abed ("Bluetooth: btintel: Add Intel devcoredump support")
-Signed-off-by: Kiran K <kiran.k@intel.com>
----
- drivers/bluetooth/btintel.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+           What    |Removed                     |Added
+----------------------------------------------------------------------------
+     Kernel Version|                            |6.11.4
+         Regression|No                          |Yes
 
-diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index e122dff855ba..d496cf2c3411 100644
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -3361,13 +3361,12 @@ int btintel_diagnostics(struct hci_dev *hdev, struct sk_buff *skb)
- 	case INTEL_TLV_TEST_EXCEPTION:
- 		/* Generate devcoredump from exception */
- 		if (!hci_devcd_init(hdev, skb->len)) {
--			hci_devcd_append(hdev, skb);
-+			hci_devcd_append(hdev, skb_clone(skb, GFP_ATOMIC));
- 			hci_devcd_complete(hdev);
- 		} else {
- 			bt_dev_err(hdev, "Failed to generate devcoredump");
--			kfree_skb(skb);
- 		}
--		return 0;
-+	break;
- 	default:
- 		bt_dev_err(hdev, "Invalid exception type %02X", tlv->val[0]);
- 	}
--- 
-2.40.1
+--=20
+You may reply to this email to add a comment.
 
+You are receiving this mail because:
+You are the assignee for the bug.=
 
