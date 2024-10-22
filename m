@@ -1,80 +1,80 @@
-Return-Path: <linux-bluetooth+bounces-8082-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-8090-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B31A49AA24A
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 14:40:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B806B9AB079
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 16:11:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7D853281AC8
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 12:40:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 78FC72838D7
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 14:11:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F39D19D880;
-	Tue, 22 Oct 2024 12:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B500819F110;
+	Tue, 22 Oct 2024 14:11:24 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
+Received: from relay1-d.mail.gandi.net (relay1-d.mail.gandi.net [217.70.183.193])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C96651537D9
-	for <linux-bluetooth@vger.kernel.org>; Tue, 22 Oct 2024 12:40:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C176119E96A
+	for <linux-bluetooth@vger.kernel.org>; Tue, 22 Oct 2024 14:11:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729600848; cv=none; b=CWtD7fUWSGxxr17VlVTXpOylJjt28L8+6ygsbIpLrbVWVvnaWTmxVV+FpbM1+6akziPoGGYcISoYPRC1OthaaNtX//+0q4FavUA1goGotn9LFsEoOEr4Q4tyt77pBhieSAs/u4CN6SR/EUgAN6cTpYXWETlZwj6C+KezFGZvYT8=
+	t=1729606284; cv=none; b=ekyyTRzUB4EtIwhmuHm4RqmzMjOxc64F5zp5I/J8tuYFvR8Ga1SA4hQl9rjALV1GNmFJc/mXOurz51hn91zO0kGXbddALeCjPbuY34NE4e5r3kx1jrH5qoimLmh9qZsFnubZlKNzbGF8GT5C9dz1JFCImT5uW5VJqafOjOVRc6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729600848; c=relaxed/simple;
-	bh=kI1+uZOioEPRSX/vdG9LZAi3pENhri2kR4tftDIcnRY=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=XxpBJaQXU/c2td3ReEty7qxFyPfO9HQLaj0TodTic5qk6P8tQwJZdKoVCId//gBppOFAARdSqsPwxH8WRAgBq9qGOwu8pqzQAiY5Z8e6vfMOPoFUJ2dUMEEDKe+rgJ6F2x7hZbgJOVHezk0q+fYFbAjzw56XnJ/xz2pZ7YxrLpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.197
+	s=arc-20240116; t=1729606284; c=relaxed/simple;
+	bh=iiENksnMjE/ZH+Ad9ApiUkPgroJpulk47djEin3noR4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rh7PVAzV/+GFD2MJ8JWTi5Sph0lTuXtu/TllE2i5Dq8ZNbbR1ZhL2zT9Euni0BXvwgIRpMNBraE7JAb2Lh5wpAU/gt2gI3DGiz7HuHmyTr9Y/n3qhGye9NECsUNltBqpJ54FVOxhnj9oEC1jBHEKkI1AtQY0l4bylvxyABrjLkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.193
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 275B61C000B
-	for <linux-bluetooth@vger.kernel.org>; Tue, 22 Oct 2024 12:40:44 +0000 (UTC)
-Message-ID: <013c686bccaeed4984d9f102d9849926dc1df811.camel@hadess.net>
-Subject: Re: Fix bluetoothctl --help hanging if daemon isn't running
+Received: by mail.gandi.net (Postfix) with ESMTPSA id A9FFE24000E;
+	Tue, 22 Oct 2024 14:11:18 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
-Date: Tue, 22 Oct 2024 14:40:43 +0200
-In-Reply-To: <67179b3a.c80a0220.2e9cba.83c8@mx.google.com>
-References: <20241022120051.123888-2-hadess@hadess.net>
-	 <67179b3a.c80a0220.2e9cba.83c8@mx.google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.4 (3.52.4-1.fc40) 
+Cc: Bastien Nocera <hadess@hadess.net>
+Subject: [BlueZ v3 0/7] Fix bluetoothctl --help hanging if daemon isn't running
+Date: Tue, 22 Oct 2024 16:10:31 +0200
+Message-ID: <20241022141118.150143-1-hadess@hadess.net>
+X-Mailer: git-send-email 2.47.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-On Tue, 2024-10-22 at 05:31 -0700, bluez.test.bot@gmail.com wrote:
-> This is an automated email and please do not reply to this email.
->=20
-> Dear Submitter,
->=20
-> Thank you for submitting the patches to the linux bluetooth mailing
-> list.
-> While preparing the CI tests, the patches you submitted couldn't be
-> applied to the current HEAD of the repository.
->=20
-> ----- Output -----
->=20
-> error: patch failed: client/main.c:3187
-> error: client/main.c: patch does not apply
-> hint: Use 'git am --show-current-patch' to see the failed patch
->=20
-> Please resolve the issue and submit the patches again.
+Changes from v2:
+- rebased against latest upstream
 
-Which patch is that for? The error message doesn't say.
+Bastien Nocera (7):
+  configure.ac: Update requirement to glib 2.34
+  client: Use g_clear_pointer() to clean up menus
+  client: Split installing submenu and doing I/O
+  client: Install submenus before contacting bluez daemon
+  shell: Document "mode" variable
+  shared/shell: Add function to handle early help calls
+  client: Fix --help hanging if bluetoothd is not running
 
->=20
->=20
-> ---
-> Regards,
-> Linux Bluetooth
->=20
+ acinclude.m4       |  4 ++--
+ client/admin.c     |  8 +++++---
+ client/admin.h     |  1 +
+ client/assistant.c |  8 +++++---
+ client/assistant.h |  1 +
+ client/main.c      | 14 ++++++++++----
+ client/mgmt.c      | 11 +++++++----
+ client/mgmt.h      |  3 ++-
+ client/player.c    |  7 +++++--
+ client/player.h    |  1 +
+ configure.ac       |  2 +-
+ src/shared/shell.c | 12 +++++++++++-
+ src/shared/shell.h |  2 ++
+ tools/btmgmt.c     |  3 ++-
+ 14 files changed, 55 insertions(+), 22 deletions(-)
+
+-- 
+2.47.0
 
 
