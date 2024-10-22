@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-8075-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-8073-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F99D9AA1A1
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 14:01:21 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 102DE9AA19F
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 14:01:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 400FC28387A
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 12:01:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C5C4728288F
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 12:01:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8D8619D881;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 484C119D08F;
 	Tue, 22 Oct 2024 12:01:02 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4995419B3C5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49902199938
 	for <linux-bluetooth@vger.kernel.org>; Tue, 22 Oct 2024 12:01:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729598462; cv=none; b=eKXDihi7wxhp7atu4+DDMejcHKGlQlndyDstGOX2IcTtkLfZXUUhmHEa8mmGZDB9/LehLgv1odR8V9cBKfCVmalfDw6lpn3aIcR9gVHHPXBu9xxKjggfD3PwpzrHssbj+zhstdlX4bCdgdEHPhPgi6q86Dw60HnpYtOT403yFKI=
+	t=1729598461; cv=none; b=mXbuduVIwU4Bn9L7nKdlarRUYDB1FI6sYdT83rnXih8zi/2CeVLeAsOP5KiEy6WXUHRrqbuPTxXBYDJwnB8QXDtklSzMIzZR4MN9Cxn3syDkJ2U4/tdmx5GJK9TybSzxwo1OUJa1BvHShhK6I61Q+FMwUU3PODEHL3YhGt4DoQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729598462; c=relaxed/simple;
-	bh=ejRH2MiZ1eZIklxRoMOTeEhvvwndTs9rocDCNpLyj4I=;
+	s=arc-20240116; t=1729598461; c=relaxed/simple;
+	bh=9Y/CFdXkR3Dh+SAzeb5OqTJ5CDE0EEUzMDxPlk94g00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K5Be5IviwFy+0zv/GrFVAqTI2F8t774VqRSGxmbPY5z1kTDNfaoZ6+fFiQ8LWbIug3KVIeJZvwZRAFvhAdNimd9l6dg3JBArg8UsPTgmZa+kWh1ARjVUUjr0A+um4mbNHVnlnPwWlVwHVThpchOxuLhSbRTroQLOGYEK3Tz0bIE=
+	 MIME-Version; b=OkWoQrOMj5QGQOkI3GHWw8kIQ8Ba2GbZ29/iRjOcD8TsCZslc1smf+zIX2GOoz46CYwPDSei2ulL8BEvnC/30jb3L4w1+slPRmiDci2BlgRUiseO6nHLG1YElipKNGiNWPb8XJ3H5PDldSXbrD0uppqzIEqOueKtlXEHUMQrP6g=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id EEB2F1C0026;
-	Tue, 22 Oct 2024 12:00:52 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 43BB41C0024;
+	Tue, 22 Oct 2024 12:00:53 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ v2 4/7] client: Install submenus before contacting bluez daemon
-Date: Tue, 22 Oct 2024 13:58:34 +0200
-Message-ID: <20241022120051.123888-5-hadess@hadess.net>
+Subject: [BlueZ v2 5/7] shell: Document "mode" variable
+Date: Tue, 22 Oct 2024 13:58:35 +0200
+Message-ID: <20241022120051.123888-6-hadess@hadess.net>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241022120051.123888-1-hadess@hadess.net>
 References: <20241022120051.123888-1-hadess@hadess.net>
@@ -49,40 +49,25 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-So that the submenus are installed even if bluez isn't available.
+It's unclear what it does, could probably do with being replaced with an
+enum to make its possible values and meaning clearer.
 ---
- client/main.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ src/shared/shell.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/client/main.c b/client/main.c
-index 4ae6f121d424..144e17622e95 100644
---- a/client/main.c
-+++ b/client/main.c
-@@ -3187,6 +3187,10 @@ int main(int argc, char *argv[])
- 	bt_shell_add_submenu(&advertise_monitor_menu);
- 	bt_shell_add_submenu(&scan_menu);
- 	bt_shell_add_submenu(&gatt_menu);
-+	admin_add_submenu();
-+	player_add_submenu();
-+	mgmt_add_submenu();
-+	assistant_add_submenu();
- 	bt_shell_set_prompt(PROMPT_OFF);
- 
- 	if (agent_option)
-@@ -3203,13 +3207,9 @@ int main(int argc, char *argv[])
- 		bt_shell_set_env("AUTO_REGISTER_ENDPOINT",
- 					(void *)endpoint_option);
- 
--	admin_add_submenu();
- 	admin_enable_submenu();
--	player_add_submenu();
- 	player_enable_submenu();
--	mgmt_add_submenu();
- 	mgmt_enable_submenu();
--	assistant_add_submenu();
- 	assistant_enable_submenu();
- 
- 	client = g_dbus_client_new(dbus_conn, "org.bluez", "/org/bluez");
+diff --git a/src/shared/shell.c b/src/shared/shell.c
+index 2100434f6b15..9ff774fe43a2 100644
+--- a/src/shared/shell.c
++++ b/src/shared/shell.c
+@@ -71,7 +71,7 @@ static struct {
+ 	char history[256];
+ 	int argc;
+ 	char **argv;
+-	bool mode;
++	bool mode; /* whether non-interactive */
+ 	bool zsh;
+ 	bool monitor;
+ 	int timeout;
 -- 
 2.47.0
 
