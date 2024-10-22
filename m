@@ -1,199 +1,95 @@
-Return-Path: <linux-bluetooth+bounces-8069-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-8078-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19F299AA089
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 12:56:19 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B1AA79AA1AB
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 14:02:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CAB532839E8
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 10:56:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 692FE282A80
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 12:02:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E0FC19B3CB;
-	Tue, 22 Oct 2024 10:55:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 382D719C553;
+	Tue, 22 Oct 2024 12:02:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="qN5VJWqU";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="kKINBKKU";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="qN5VJWqU";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="kKINBKKU"
+	dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b="HC6e1dGu"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from forward203d.mail.yandex.net (forward203d.mail.yandex.net [178.154.239.218])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E8FF19924A;
-	Tue, 22 Oct 2024 10:55:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A169A199938
+	for <linux-bluetooth@vger.kernel.org>; Tue, 22 Oct 2024 12:02:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.154.239.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729594525; cv=none; b=aFjowi9bk1O0296RKL/h4/OPF9ck+g9ubl4Zd3U7nO3Pwcr/NQObNS2+uQoAp8DWqer+MZeqhSWFPA/BvLp3HU5z9v5z+eOqegkGEUvWNNsE3/hAbz7F+JjyiZOL1lNFN2Kq2uFOOW01LLmKeOvDmwtB9cSgqM/P27MCCzmjuYY=
+	t=1729598567; cv=none; b=p9UG+2YAJ524ZvB1GOpR65zHc+SF6EKNnMkzge2s5tDpqa+gmEW902r/jAV4R3pcJgZCmCTAY2OSZ2vhbYMe1fzFa/E/l9jJGYxubvtLJaM+OF7olB6oG9KK4eLHgOXnXoctMO16NwElv3pQ8rkBya5xku5RfLaXDXTZjiPCiUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729594525; c=relaxed/simple;
-	bh=ZutgxfYWu007tyr81o9qTOUfRHXWns04G0vwIgAPdD4=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iDI5g+yU9R8Rw/MJpi7G7QoqH0qTqc5bimX913xNYhM1J2E9ShetG4+3TSS/y+WLs66gs1lAC1ZbqFNi8mDtXnSHEzG1AAHjYEjvRRU7x66EExbowLYny9nK52u7TlDFz4TqqxASEsA8StP0n7Nx9fXNgNdw21cOBWbCu5GYXes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=qN5VJWqU; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=kKINBKKU; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=qN5VJWqU; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=kKINBKKU; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 5176621ED2;
-	Tue, 22 Oct 2024 10:55:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1729594522; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=iIVthrBRayCR9P3OzqnXu2rlaXyTF5KOjNEVPFTU07o=;
-	b=qN5VJWqUEJsDLYzBoAbtorm9JDXhQuHw3KD8+gAwVY7bz2O5dst/QOkwUlZcLXOFXB6Ut+
-	5NpT5FcoeC0pBe3u1hzMME58fl5bXMbpo5h8fcHIb1RAe82DPl4mz8YiMciO/IEpjmkBvU
-	dvmvhQTrVHhcLUTp4goKeL7ekUZ/0cQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1729594522;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=iIVthrBRayCR9P3OzqnXu2rlaXyTF5KOjNEVPFTU07o=;
-	b=kKINBKKUFp5/X+oOBmO5GK/Bw281blSB7U0xpcNBfP9A7DYYG3+iJAT1f3EADt+WQ88MzH
-	0bTdcgAwteMM3iBg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1729594522; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=iIVthrBRayCR9P3OzqnXu2rlaXyTF5KOjNEVPFTU07o=;
-	b=qN5VJWqUEJsDLYzBoAbtorm9JDXhQuHw3KD8+gAwVY7bz2O5dst/QOkwUlZcLXOFXB6Ut+
-	5NpT5FcoeC0pBe3u1hzMME58fl5bXMbpo5h8fcHIb1RAe82DPl4mz8YiMciO/IEpjmkBvU
-	dvmvhQTrVHhcLUTp4goKeL7ekUZ/0cQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1729594522;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=iIVthrBRayCR9P3OzqnXu2rlaXyTF5KOjNEVPFTU07o=;
-	b=kKINBKKUFp5/X+oOBmO5GK/Bw281blSB7U0xpcNBfP9A7DYYG3+iJAT1f3EADt+WQ88MzH
-	0bTdcgAwteMM3iBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 15F3813894;
-	Tue, 22 Oct 2024 10:55:22 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id QaNABJqEF2coLAAAD6G6ig
-	(envelope-from <tiwai@suse.de>); Tue, 22 Oct 2024 10:55:22 +0000
-Date: Tue, 22 Oct 2024 12:56:22 +0200
-Message-ID: <87iktk4d9l.wl-tiwai@suse.de>
-From: Takashi Iwai <tiwai@suse.de>
-To: Linux regressions mailing list <regressions@lists.linux.dev>,
-	"Linux regression tracking (Thorsten Leemhuis)"
- <regressions@leemhuis.info>
-Cc: =?ISO-2022-JP?B?IkNocmlzIEx1ICgbJEJOJkNVXXcbKEIpIg==?=
- <Chris.Lu@mediatek.com>,	"luiz.dentz@gmail.com" <luiz.dentz@gmail.com>,
-	"marc.payne@mdpsys.co.uk" <marc.payne@mdpsys.co.uk>,	"marcel@holtmann.org"
- <marcel@holtmann.org>,	"linux-mediatek@lists.infradead.org"
- <linux-mediatek@lists.infradead.org>,	"linux-kernel@vger.kernel.org"
- <linux-kernel@vger.kernel.org>,	"linux-bluetooth@vger.kernel.org"
- <linux-bluetooth@vger.kernel.org>,	=?EUC-KR?B?IkRlcmVuIFd1ICjZ69Ps7NIp?=
- =?EUC-KR?B?Ig==?= <Deren.Wu@mediatek.com>,	"johan.hedberg@gmail.com"
- <johan.hedberg@gmail.com>,	=?ISO-2022-JP?B?IlN0ZXZlIExlZSAoGyRCTXsbKEI=?=
- =?ISO-2022-JP?B?GyRCO2tAPxsoQiki?= <steve.lee@mediatek.com>,	Sean Wang
- <Sean.Wang@mediatek.com>,	=?ISO-2022-JP?B?IkFhcm9uIEhvdSAoGyRCOHQbKEI=?=
- =?ISO-2022-JP?B?GyRCPVM2RBsoQiki?= <Aaron.Hou@mediatek.com>,
-	=?ISO-2022-JP?B?IkhhbyBRaW4gKBskQj9BOUAbKEIpIg==?= <Hao.Qin@mediatek.com>
-Subject: Re: [PATCH] Bluetooth: btmtk: Remove resetting mt7921 before downloading the fw
-In-Reply-To: <ff502f63-2d87-4dee-a893-cce53353df8b@leemhuis.info>
-References: <20240822052310.25220-1-hao.qin@mediatek.com>
-	<ZuB3omUkdUHLggYu@mdpsys.co.uk>
-	<790e542aa9d08c7efeee6ef298fce2a87d8035e4.camel@mediatek.com>
-	<ZuneSM4SvyUFX86j@mdpsys.co.uk>
-	<9bfbbf24ac2480d94d3455f7e33e4b5502b38ced.camel@mediatek.com>
-	<CABBYNZKYsL9jcF2n9TsA1BjU-CjXOdXu7MDLP9Sz_Ly8hBAf1w@mail.gmail.com>
-	<c01e6dfa730dd10a7d4dba60fe31e82b9c296b37.camel@mediatek.com>
-	<Zuyk1c6Gkxx3G0PB@mdpsys.co.uk>
-	<f9e8688ebe559e10c019d0cbab4e8b1f5a7d2339.camel@mediatek.com>
-	<ff502f63-2d87-4dee-a893-cce53353df8b@leemhuis.info>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
+	s=arc-20240116; t=1729598567; c=relaxed/simple;
+	bh=0ABQQaIokHrzw+GWMCkVMwocgnAKqddBpsZiMYKnFvI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=d24eJhK/XYYkroj/q9QCqNXWP34HnGR23X5RY8hL7tPFpgrGrBk06jA7Xzy3WZAvpDzxqUw7Kv0W1Ph3PX3jHxJIGPZ5b2MW3E0SRP5fYSqNezQfB/pgIyBEto03H4MwC9y9beWwxA+x5aspyiXYgAF9EoZQRNrf6WbWEwC3j4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yandex.ru; spf=pass smtp.mailfrom=yandex.ru; dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b=HC6e1dGu; arc=none smtp.client-ip=178.154.239.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yandex.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yandex.ru
+Received: from forward101d.mail.yandex.net (forward101d.mail.yandex.net [IPv6:2a02:6b8:c41:1300:1:45:d181:d101])
+	by forward203d.mail.yandex.net (Yandex) with ESMTPS id A8DA763C10
+	for <linux-bluetooth@vger.kernel.org>; Tue, 22 Oct 2024 14:54:50 +0300 (MSK)
+Received: from mail-nwsmtp-smtp-production-main-45.klg.yp-c.yandex.net (mail-nwsmtp-smtp-production-main-45.klg.yp-c.yandex.net [IPv6:2a02:6b8:c42:37a1:0:640:203:0])
+	by forward101d.mail.yandex.net (Yandex) with ESMTPS id 5F860608D9;
+	Tue, 22 Oct 2024 14:54:43 +0300 (MSK)
+Received: by mail-nwsmtp-smtp-production-main-45.klg.yp-c.yandex.net (smtp/Yandex) with ESMTPSA id dsQCj21bua60-069g8wdi;
+	Tue, 22 Oct 2024 14:54:42 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
+	t=1729598082; bh=5oP5CtucFgYv4yWifb7NXwsFN72lZwI0HP4iemvSSa4=;
+	h=Message-ID:Date:Cc:Subject:To:From;
+	b=HC6e1dGuYz0j7HPpj8nBlwdqD+vAqPE/KhaQAKCu7UKZb+HMKju/KVl7IBYW1O+/j
+	 gLxjaeyGq0mu0WaoVUC47w4EtJ+qDBioV8vL9O9Cbz3Ilri0NRjzcSoYu5NdZLGNeV
+	 Z35Fp8Xiti1oiWGXl41GHYo5zdsyvbQNjjRr0yfg=
+Authentication-Results: mail-nwsmtp-smtp-production-main-45.klg.yp-c.yandex.net; dkim=pass header.i=@yandex.ru
+From: Dmitry Antipov <dmantipov@yandex.ru>
+To: Manish Mandlik <mmandlik@google.com>
+Cc: Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Johan Hedberg <johan.hedberg@gmail.com>,
+	Marcel Holtmann <marcel@holtmann.org>,
+	linux-bluetooth@vger.kernel.org,
+	lvc-project@linuxtesting.org,
+	Dmitry Antipov <dmantipov@yandex.ru>
+Subject: [PATCH] Bluetooth: fix error handling path in __add_adv_patterns_monitor()
+Date: Tue, 22 Oct 2024 14:54:34 +0300
+Message-ID: <20241022115434.1513930-1-dmantipov@yandex.ru>
+X-Mailer: git-send-email 2.47.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=ISO-2022-JP
-X-Spam-Score: -1.80
-X-Spamd-Result: default: False [-1.80 / 50.00];
-	BAYES_HAM(-3.00)[99.99%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	TAGGED_RCPT(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_EQ_ADDR_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[15];
-	RCVD_TLS_ALL(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[mediatek.com,gmail.com,mdpsys.co.uk,holtmann.org,lists.infradead.org,vger.kernel.org];
-	TO_DN_SOME(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:url,suse.de:mid]
-X-Spam-Flag: NO
-X-Spam-Level: 
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Yandex-Filter: 1
 
-On Mon, 14 Oct 2024 11:29:40 +0200,
-Linux regression tracking (Thorsten Leemhuis) wrote:
-> 
-> On 20.09.24 08:27, Chris Lu (陸稚泓) wrote:
-> > On Thu, 2024-09-19 at 23:25 +0100, marc.payne@mdpsys.co.uk wrote:
-> >>  	 
-> >> External email : Please do not click links or open attachments until
-> >> you have verified the sender or the content.
-> >>  Hi Chris and Luiz,
-> >>
-> >> What were your thoughts on the findings in my email dated 18th
-> >> September?
-> > 
-> > Thanks for your suggestion.
-> > 
-> > I've prepared the same environment (Kernel v6.11 + MT7921AUN dongle) to
-> > reproduce the issue, collected necessary logs locally and also
-> > initiated an internal discussion to clarify the root cause of this
-> > symptom. We'll review the changes between two firmware
-> > (20230526/20231109) if it's a bug or not.
-> > 
-> > It may take some time to investigate. I'll let you know if there is any
-> > progress.
-> 
-> Just wondering: Chris Lu, and Marc, what's the status here? From here it
-> looks like there was no progress to fix this regression for a while, but
-> it's easy to miss something, that's why I ask.
-> 
-> Ciao, Thorsten
+Add missing call to 'mgmt_pending_remove()' on 'hci_cmd_sync_queue()'
+error handling path in '__add_adv_patterns_monitor()'. Compile tested
+only.
 
-FWIW, the similar bug was reported for the recent 6.11.x kernel on
-openSUSE Tumbleweed, and this patch was confirmed to work around the
-crash at boot:
-  https://bugzilla.suse.com/show_bug.cgi?id=1231599
+Fixes: b747a83690c8 ("Bluetooth: hci_sync: Refactor add Adv Monitor")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+---
+ net/bluetooth/mgmt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-It'd be great if you can go ahead and merge the proper fix to the
-upstream.
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index a429661b676a..92c9808e419b 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -5301,6 +5301,7 @@ static int __add_adv_patterns_monitor(struct sock *sk, struct hci_dev *hdev,
+ 		else
+ 			status = MGMT_STATUS_FAILED;
+ 
++		mgmt_pending_remove(cmd);
+ 		goto unlock;
+ 	}
+ 
+-- 
+2.47.0
 
-Let me know if you have another patch to test.  Then I can create a
-test kernel package and ask the bug reporter for testing.
-
-
-thanks,
-
-Takashi
 
