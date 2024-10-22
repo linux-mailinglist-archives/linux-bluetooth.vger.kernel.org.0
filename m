@@ -1,73 +1,120 @@
-Return-Path: <linux-bluetooth+bounces-8076-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-8079-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23C0C9AA1A2
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 14:01:26 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B4279AA1DF
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 14:10:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CE48F1F2293F
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 12:01:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A0E58B23A90
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 12:10:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6725A19D898;
-	Tue, 22 Oct 2024 12:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BABC219DF9A;
+	Tue, 22 Oct 2024 12:07:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QqkHXxj0"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D4D19C553
-	for <linux-bluetooth@vger.kernel.org>; Tue, 22 Oct 2024 12:01:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A354619DF8E
+	for <linux-bluetooth@vger.kernel.org>; Tue, 22 Oct 2024 12:07:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729598463; cv=none; b=IsAfzFgZxIBps5rCVztcMrHTW+eEfhfz+OUq7nV/Agr+XC/zBnv2LOV+3te2GwlVCgSUIPjZvHbrqUiNKiMzZYJ2sVEkEiDBCQdPqj7fyG3a9d43I3h46LMnkzjvwUZRez4x6X6fof3hu6jb/UnXiFbh7vWI2TZPYcIXXTXY/VM=
+	t=1729598857; cv=none; b=RKL7zf+X2rX4c0FS1BSPkUt5FwuQzRKfPfO7G4R9bhVA9g0SiNmS/BswhSBi4wPxdKB+6eU92Y0RDZuMJvQvLbPhaegiFoVsoTLuUZIlYJqJp5g1Ur4V0nOUWBNBMcyAICGmt9HLJLea70mY8O43EcGWjX09E1xFLyMwoEBlvHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729598463; c=relaxed/simple;
-	bh=cVssVKnGPA4PcuDBwv+YjYR1Myp1n+85YewD7ncPBvA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dnKxae5bRqjuERtTRqcIlGp0J7SXL+rWYJbtxF5q3AmRcuMwJ5XabBuRJD8gg6zqIwRhWac4XoVEFDWDqI4JZbGxUck2CWawje0TOqUJDkcZ5DtZFMpZ1ckfsFp+8p2FVDYJSr/AqKQpwduF/6HaPckSYB9evUwICevFSxEHfYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id E6BC71C002A;
-	Tue, 22 Oct 2024 12:00:53 +0000 (UTC)
-From: Bastien Nocera <hadess@hadess.net>
-To: linux-bluetooth@vger.kernel.org
-Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ v2 7/7] client: Fix --help hanging if bluetoothd is not running
-Date: Tue, 22 Oct 2024 13:58:37 +0200
-Message-ID: <20241022120051.123888-8-hadess@hadess.net>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241022120051.123888-1-hadess@hadess.net>
-References: <20241022120051.123888-1-hadess@hadess.net>
+	s=arc-20240116; t=1729598857; c=relaxed/simple;
+	bh=qghP9xxaMp5hzSUv7bdHlp69tks/o4eZn9WUFnx3fsk=;
+	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
+	 In-Reply-To:References; b=DLFxWdoq8ZN6DgNZpXyJl9norgsLxyovbTAYGGjUjTupO6tJ82Y8Lm7jI2BlVFY5JOkaVB6QsgVFEadyQXJyzM7OH8ezVIINtxqBsMHHLxoLm0fXw9rdxm8jfYoyAE39PM04E1vsYbgIkLfKWXzFEOsp5LbEWbo77wJs/VV6nQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QqkHXxj0; arc=none smtp.client-ip=209.85.222.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-7b14df8f821so475502285a.2
+        for <linux-bluetooth@vger.kernel.org>; Tue, 22 Oct 2024 05:07:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729598854; x=1730203654; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=rwA4JU7oSOH0lZRtsZyD+yav94NL5hiVglF6GcmovGw=;
+        b=QqkHXxj00304jtHNd5vFch+a4Jqih4Mk4eJK1AV5H6QLGgnzaHJ/vqmacvBejkbL6F
+         nAM88tOIpDEHNy0c+Wq2I0nSX02F+mwlDxQLAwziq1z2v4llPSViorl8DkGo1WBvxeOf
+         bPTADSzP2wjWlO22Icp1+9J6oO6G9RfBduS2XBzFHqh4TPP6GQ78o+WLLjy5qDPeto8O
+         9N+X03z/2uMW05exhriElR+HbdMXaTfu1pX8xMPeQrv3qSTAPIgZ3wDRfSDuKWcZz4eL
+         z2Of4UHgat1d1aBa6Ju7zxZkrveIwdhe1v95FNLPlVtd8jgnAI6ryk7xytOq9Sp6JemC
+         VD5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729598854; x=1730203654;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rwA4JU7oSOH0lZRtsZyD+yav94NL5hiVglF6GcmovGw=;
+        b=lG+ZbFYD/Jn8rx5OcpU8AKfIonEYdRF050l9jLTMry9Lgbh5i7pjT/GnFmsD8/0oS4
+         7PVbydI5flA75+5SLLFcgT+cpLE+IXZbZBwfPc9vuyLyty3ZaQ8iObGOtF4tC3yK5SQZ
+         qcSU7EpnWjLEU1NGsqYpp86S33kfyNmPQIcmsTsifYKDeFwRmAH7EDNXBCquzbWZKiyu
+         8arHo4Af/GsctrVEKFODVCZll5ZLsp4U4n78sV63UiBDZ+b9vJiU86+i/YTfdfzMC2IB
+         1YQZYM4UqwDvi9kHlfInY3eQuAImdpK8hZ2OI1+yGffpZd3CQr14xZyuwiFdyJ7rxBnK
+         7aJg==
+X-Gm-Message-State: AOJu0YxMs86BQi9HtuNa5pHjycqr/7n7/uaRdyeB1JbuqRA32TZ8+D09
+	lVAzJpvebSjofRfESjcokYFPe++0TprE99QItpfpuY0ElMSI3i5wCl7QFA==
+X-Google-Smtp-Source: AGHT+IEqA9To7Ud0BpGvcYkxzn4HXlZEIcVCI/nwEKbfZtYMbAG2zCMv7R/3BrYElkc/ngjhnBTsSQ==
+X-Received: by 2002:a05:620a:1710:b0:7b1:4fab:4418 with SMTP id af79cd13be357-7b157be08d6mr1952103985a.49.1729598854218;
+        Tue, 22 Oct 2024 05:07:34 -0700 (PDT)
+Received: from [172.17.0.2] ([172.183.53.34])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6ce0099c337sm28216736d6.97.2024.10.22.05.07.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Oct 2024 05:07:33 -0700 (PDT)
+Message-ID: <67179585.0c0a0220.439e0.7eb4@mx.google.com>
+Date: Tue, 22 Oct 2024 05:07:33 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============3092079153029372041=="
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: hadess@hadess.net
+From: bluez.test.bot@gmail.com
+To: linux-bluetooth@vger.kernel.org, quic_amisjain@quicinc.com
+Subject: RE: [v2] obex: Resolve SRM issue for PTS testcases
+In-Reply-To: <20241022102222.279614-1-quic_amisjain@quicinc.com>
+References: <20241022102222.279614-1-quic_amisjain@quicinc.com>
+Reply-To: linux-bluetooth@vger.kernel.org
 
-Exit after printing all the main and submenu commands.
+--===============3092079153029372041==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=901785
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PASS      0.39 seconds
+GitLint                       PASS      0.28 seconds
+BuildEll                      PASS      25.15 seconds
+BluezMake                     PASS      1662.17 seconds
+MakeCheck                     PASS      13.12 seconds
+MakeDistcheck                 PASS      181.06 seconds
+CheckValgrind                 PASS      255.14 seconds
+CheckSmatch                   PASS      358.32 seconds
+bluezmakeextell               PASS      120.60 seconds
+IncrementalBuild              PASS      1454.48 seconds
+ScanBuild                     PASS      1047.25 seconds
+
+
+
 ---
- client/main.c | 2 ++
- 1 file changed, 2 insertions(+)
+Regards,
+Linux Bluetooth
 
-diff --git a/client/main.c b/client/main.c
-index 144e17622e95..798472ba2660 100644
---- a/client/main.c
-+++ b/client/main.c
-@@ -3193,6 +3193,8 @@ int main(int argc, char *argv[])
- 	assistant_add_submenu();
- 	bt_shell_set_prompt(PROMPT_OFF);
- 
-+	bt_shell_handle_non_interactive_help();
-+
- 	if (agent_option)
- 		auto_register_agent = g_strdup(agent_option);
- 	else
--- 
-2.47.0
 
+--===============3092079153029372041==--
 
