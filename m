@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-8073-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-8077-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 102DE9AA19F
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 14:01:17 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE4709AA1A3
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 14:01:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C5C4728288F
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 12:01:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 623C81F229DA
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 22 Oct 2024 12:01:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 484C119D08F;
-	Tue, 22 Oct 2024 12:01:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 676E619D89B;
+	Tue, 22 Oct 2024 12:01:03 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49902199938
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620BA19CC33
 	for <linux-bluetooth@vger.kernel.org>; Tue, 22 Oct 2024 12:01:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729598461; cv=none; b=mXbuduVIwU4Bn9L7nKdlarRUYDB1FI6sYdT83rnXih8zi/2CeVLeAsOP5KiEy6WXUHRrqbuPTxXBYDJwnB8QXDtklSzMIzZR4MN9Cxn3syDkJ2U4/tdmx5GJK9TybSzxwo1OUJa1BvHShhK6I61Q+FMwUU3PODEHL3YhGt4DoQ4=
+	t=1729598463; cv=none; b=PntSX7IfXQsvrr057EfDdPpNx8jqy9gh8tUKR8X+RwVlW93IDe+pumZPo/+1fzC9vBZQjLevUSTnlNqdbaQanUnmaLCbtsnDlD0IIVXVKsAX3zt7wvA/YYXgK2or3T6qzwytovQ/LfJ8pk6Ni2Gp3q7CZxFJFeztybmKQOW9PC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729598461; c=relaxed/simple;
-	bh=9Y/CFdXkR3Dh+SAzeb5OqTJ5CDE0EEUzMDxPlk94g00=;
+	s=arc-20240116; t=1729598463; c=relaxed/simple;
+	bh=Tw5voPPuH/WUlwtUebJj2x7JUskyqTEq+0bS5xxzoyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OkWoQrOMj5QGQOkI3GHWw8kIQ8Ba2GbZ29/iRjOcD8TsCZslc1smf+zIX2GOoz46CYwPDSei2ulL8BEvnC/30jb3L4w1+slPRmiDci2BlgRUiseO6nHLG1YElipKNGiNWPb8XJ3H5PDldSXbrD0uppqzIEqOueKtlXEHUMQrP6g=
+	 MIME-Version; b=AsYaHQlqniE13WeRYoCmZuu6k/gM+JX05J4gwpJ/FH0v541LDV2W37VrTyAm4DVx37/ZTNPrW5I61tETNgPUDnFxfD4jakHF6z8dGfcvYA30dAf6d4r9b7esKCTVMQf2MxyoZ0DdncCvitBtqauGb+GfR6VqfuhLcyCxgaMQHEs=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 43BB41C0024;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 9A7E81C0028;
 	Tue, 22 Oct 2024 12:00:53 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ v2 5/7] shell: Document "mode" variable
-Date: Tue, 22 Oct 2024 13:58:35 +0200
-Message-ID: <20241022120051.123888-6-hadess@hadess.net>
+Subject: [BlueZ v2 6/7] shared/shell: Add function to handle early help calls
+Date: Tue, 22 Oct 2024 13:58:36 +0200
+Message-ID: <20241022120051.123888-7-hadess@hadess.net>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241022120051.123888-1-hadess@hadess.net>
 References: <20241022120051.123888-1-hadess@hadess.net>
@@ -49,25 +49,45 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-It's unclear what it does, could probably do with being replaced with an
-enum to make its possible values and meaning clearer.
+Add a function that would allow tools to exit after handling --help, so
+as to avoid the daemon waiting to communicate with a D-Bus service that
+might not be running.
 ---
- src/shared/shell.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ src/shared/shell.c | 10 ++++++++++
+ src/shared/shell.h |  2 ++
+ 2 files changed, 12 insertions(+)
 
 diff --git a/src/shared/shell.c b/src/shared/shell.c
-index 2100434f6b15..9ff774fe43a2 100644
+index 9ff774fe43a2..7107fb4c7776 100644
 --- a/src/shared/shell.c
 +++ b/src/shared/shell.c
-@@ -71,7 +71,7 @@ static struct {
- 	char history[256];
- 	int argc;
- 	char **argv;
--	bool mode;
-+	bool mode; /* whether non-interactive */
- 	bool zsh;
- 	bool monitor;
- 	int timeout;
+@@ -1694,3 +1694,13 @@ int bt_shell_get_timeout(void)
+ {
+ 	return data.timeout;
+ }
++
++void bt_shell_handle_non_interactive_help(void)
++{
++	if (!data.mode)
++		return;
++	if (data.argv[0] != cmplt)
++		return;
++	print_cmds();
++	exit(EXIT_SUCCESS);
++}
+diff --git a/src/shared/shell.h b/src/shared/shell.h
+index b03250cac80f..17277a601d3e 100644
+--- a/src/shared/shell.h
++++ b/src/shared/shell.h
+@@ -60,6 +60,8 @@ int bt_shell_exec(const char *input);
+ void bt_shell_quit(int status);
+ void bt_shell_noninteractive_quit(int status);
+ 
++void bt_shell_handle_non_interactive_help(void);
++
+ bool bt_shell_set_menu(const struct bt_shell_menu *menu);
+ 
+ bool bt_shell_add_submenu(const struct bt_shell_menu *menu);
 -- 
 2.47.0
 
