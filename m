@@ -1,61 +1,61 @@
-Return-Path: <linux-bluetooth+bounces-8185-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-8187-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F2E39B0222
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 25 Oct 2024 14:22:41 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 052A89B0224
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 25 Oct 2024 14:22:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 82EEE1C213C4
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 25 Oct 2024 12:22:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5B9B5B224A8
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 25 Oct 2024 12:22:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4309202F80;
-	Fri, 25 Oct 2024 12:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36EA02036EF;
+	Fri, 25 Oct 2024 12:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="H0USWKtJ"
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="JvlozHbg"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from EUR02-DB5-obe.outbound.protection.outlook.com (mail-db5eur02on2066.outbound.protection.outlook.com [40.107.249.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7DC1F80DB
-	for <linux-bluetooth@vger.kernel.org>; Fri, 25 Oct 2024 12:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F802010EA
+	for <linux-bluetooth@vger.kernel.org>; Fri, 25 Oct 2024 12:22:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.249.66
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729858958; cv=fail; b=J0j3ain2Mg26ZCpwEJHyGcX/YKRSfvL41gBxl1VAs3YowNWpfR41jehqg4vj39Z+T9r1S9+Ifj8qpi22/Zo1RzUaQkwvEL3qxEpF2E7t69Vxv8RXzCLx8l+hqtUnHq0BNdsQGDByS/zfO6mKTPEFqJK2tKW3C3FkBniQFqsI3RM=
+	t=1729858960; cv=fail; b=auPD7cED93RVgOcZGuGJF6Q+s96tksm2m8roMiy2Y0Su8U4TZkABInzf8RZtSZAs0wbsOaT5az13az0Bk00Eqdfc7edLmpsRx/GQK2KdnOlVqTPMVmhmzeevKlbwYIKO/dKDtdWbXs4TsILJ3Ny1m793mL9EVNcy8baBS6rlHBo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729858958; c=relaxed/simple;
-	bh=ZFFXxRCSf9Jx4GbQa2m//6EfaqXcj+5DDEi+eCi7Slo=;
+	s=arc-20240116; t=1729858960; c=relaxed/simple;
+	bh=JGUqzxPfsYUr9BVao+ZnnBylRBbvw/737OpD0MrOp9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=lKjEGetfOBuxhangKC8G9Vo8GdOQNDrvEJROuAceWt3yDcD8lM1lN+uZwwzDJGtqsFAmTlcYT7TeoLASesVJqbg0GMVDei/ZNMsW8fAKpkIH2a/LMISDGBWq6u044etMj0rNsm/oMxg1m2R6TokfqPzaGECTw6M7SzD/A9uNCJw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=H0USWKtJ; arc=fail smtp.client-ip=40.107.249.66
+	 Content-Type:MIME-Version; b=e5Zz1ViDwPICDrcBqVR44Ttcei26JMtjKOxwEiHM1byFhJiSQY5XN9cgsrWZumVNEP6Z6KfZIKqD4OG11HLLIwPm46ekw+KWhBPFFnzT0oXsyjJHE93eHYLrEV57xtDZiHMz0LXcCR8YQ7SlL3EWYlNaPZ85gN0YejIRB9QTuAc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=JvlozHbg; arc=fail smtp.client-ip=40.107.249.66
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=j5Gb6sjCgztQZ/Fh77uM9jbz3TN4zZKBN7W4ogCKfv7zDNeR4Mj9IniqA9W3PsJiMhIUI6DdHdlO+VEq7zzqkxktA5IXeG2CADycQBgEL0tZb5ZsKu8Q79OeYgCk060yKdTf2nSsG6ljMZvGdahZmKsjNZ60suOLSL5h7Ge/8t9R4Q5mnT+nDvI6/NbGJ46FWMXlaH3yyHdqZSXvPuUPpRl7bqgRqB/6H3nhAAOR+vDMln/6BH2O50bofqBSUmySTyg/ifpYW1mQUuJ0k4NYBy7IvTvHN5An5Fcv+vnQT16pJYfJUdqoSTFj98ATWJYiBWe2s4vG/Y3GkPhEOnYx1g==
+ b=Q0U+9a492ODGwoZ8swe1oAd5FfhbWY9q51/iUpeQMvyTWCqiLO71DG44+EogIQL3ihj+IFeCr2wmhqTylP/s6NXFhuqxT7xHt4IfQV8Kqv8t29skkm5LV8goEJ7DSvsWe3Iere2+FGbl2e43b0jDah7lKPWpF7k3DA6ImE0kVEY56rC6Fe9sfIDBNOJzvD4WsJOmuDmeNwg8AwOo/a+cqRU0dSpwgLijcdn0lDCKQAttW6spGhuo69An5mtA4cmhPWui6dkfK5slZM/IF8BXzO03+0l2EMjk1aOkaYWv0i28R8nNggmT5+nyMTLLL+8dj9Txq2aigWK/d/2O9SZmPQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=E/70KQ7Y2mqGgTXupXPGpsWqexp8myFutK+mNYzAWdU=;
- b=fkOoDmfp/YPD/5r/YLZ6vjasYVs24esz0ycEluEns0hG8WxBPaZZcovrFaGBZQMjHO1SNJatOt9NM8h133Q0n3z5NjrM2ljCNWrClR2VrNgoGKPtJy0kNCOWqXouyepOtFg/azU5PpyWCgZPLBAnCxxiNLG+9DGte3SJj5va++euP6qChS1GkQg4eP8o9xrbZ1dhpeJU3n1HwZaHVFipLUtMnxa39qhk+IICarA0Ya2HJNoJ9se4OVWmfz1UoVPIZvFMiGHQZ3NdoGzrpX30MN8vZnveHFUpI/umJI0stGLvXH5l/2g+C/c8OOwVxvMBa4B13Y51xSG20llrvdxBgA==
+ bh=EG0JfFcPMjt3WfSlLtm8E/r4ZqzeMtHRX3RPWtzPRnY=;
+ b=oVoiIvP44pHgTWmbtWbXDhO4PvtSizQalSiRZ78zEUd7d1KLg+NZOl81Fh8B5L0Xr5qrh4fh5mBHupwQwojOpHhZtgK5tL9Gv8bT4hQCSyQN/ktyeJNGfR2RIP/d1o1u/fxATal44IzWlAsdTuLWMNe+47JIW3ctpP/ijN4BJcetsoa1vV7f86YolxKXwbIkj5ZMlrrQSyJuRzhDjVAPGnOnJ1MjE9CSuHAv6ehSbu2CtWvIJp2p+0jYT9uuiwr8srSK/qAVscDnFa1cKwgGx4NCT43pUym76/K/9YNuhiEyAn874ioU5vFjnAdn0hrmAW8XIUE+xI3ual8OhooFzg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
  header.d=nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=E/70KQ7Y2mqGgTXupXPGpsWqexp8myFutK+mNYzAWdU=;
- b=H0USWKtJjdySc7W5c4V1i7LucXK7V24+tojCEktnicgIN+zFBXGfy4nqMDheF3vMeddQAgFYfxaBWVFrqq9Fi7XUZIg91WNTAtyDT1EeHrcaZbAE7GQR5C5SPRLlIrWfTRVQDHqaiAjdqcL6YuoyyqSUkr0nqAucDfNYsyyCDy1z5gXVDuQGmHrrXGf6xreR61mJUoEpO1SyntDS7fJSMvl64+OC8vghOZMUg9iCjqKmtSdTa/PgjvtjTjISQAG7Oi7tJpJQfgz5osRwSXY2XjQ+rPRBQaOTiLTXdeoxkVANyD1n/6QRknPPynCh9QcZD3g+hCJvSGi670ZHgpDecw==
+ bh=EG0JfFcPMjt3WfSlLtm8E/r4ZqzeMtHRX3RPWtzPRnY=;
+ b=JvlozHbgaJp39zo9Wp/kR14Gm+8Q4zxoaXMONt6MS9BLy/s3lVWv2+umCseDayJVzRL7/vJUHUIfkdfdkW9IRm5ejRRuIjc7sGRSqRhCxZPEAfvmntuEjF/cjmBfviuQovgz0ZEohbbqQV+A1jcf5DpJzhvOpPzViLRJ+xi+cUHQrWQl4LBeKEG4tapWZgEWDxWAJIRKFAlcmENrp0yKFpFO5Na+GGzq8kAMekLRjUwobHYeGSUiZd1FIL1A9gIiBSCMimFCXAuum0VLzUnG2WpMf1P172O68WFOA3tyQLS4Idh+j79ohEgVCXg2VpiadmQyGoEzUoXDe6VMWJymPw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nxp.com;
 Received: from AS8PR04MB8898.eurprd04.prod.outlook.com (2603:10a6:20b:42d::15)
  by VI2PR04MB11052.eurprd04.prod.outlook.com (2603:10a6:800:272::19) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8093.17; Fri, 25 Oct
- 2024 12:22:28 +0000
+ 2024 12:22:30 +0000
 Received: from AS8PR04MB8898.eurprd04.prod.outlook.com
  ([fe80::5e22:869c:33c:9654]) by AS8PR04MB8898.eurprd04.prod.outlook.com
  ([fe80::5e22:869c:33c:9654%4]) with mapi id 15.20.8093.014; Fri, 25 Oct 2024
- 12:22:28 +0000
+ 12:22:30 +0000
 From: Iulia Tanasescu <iulia.tanasescu@nxp.com>
 To: linux-bluetooth@vger.kernel.org
 Cc: claudia.rosu@nxp.com,
@@ -63,9 +63,9 @@ Cc: claudia.rosu@nxp.com,
 	andrei.istodorescu@nxp.com,
 	luiz.dentz@gmail.com,
 	Iulia Tanasescu <iulia.tanasescu@nxp.com>
-Subject: [PATCH BlueZ v2 08/14] transport: Add Links property for broadcast transports
-Date: Fri, 25 Oct 2024 15:21:40 +0300
-Message-ID: <20241025122146.17925-9-iulia.tanasescu@nxp.com>
+Subject: [PATCH BlueZ v2 09/14] doc/media: Document Links property for broadcast
+Date: Fri, 25 Oct 2024 15:21:41 +0300
+Message-ID: <20241025122146.17925-10-iulia.tanasescu@nxp.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241025122146.17925-1-iulia.tanasescu@nxp.com>
 References: <20241025122146.17925-1-iulia.tanasescu@nxp.com>
@@ -82,172 +82,116 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: AS8PR04MB8898:EE_|VI2PR04MB11052:EE_
-X-MS-Office365-Filtering-Correlation-Id: 61b96eff-ea75-4bdf-ada4-08dcf4efb123
+X-MS-Office365-Filtering-Correlation-Id: ed22403d-cbc4-4ac2-14b0-08dcf4efb239
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|52116014|1800799024|376014|366016|38350700014;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?qjTGMfVBVkLDjiLgbFOPmBDtkabalivQT4toZcd4HmYESwhRokIEsDDCsaTx?=
- =?us-ascii?Q?q8cSWEKdspWOOYDB83YGEkMF7tAC/TXFLmQETT8eeW2cfRfKnzII4IdCo0S7?=
- =?us-ascii?Q?HVH6NmNCGi3r3d4sAI4rfpAcFWLSMDuTVZdIKH2/L+1K3ICXzRLOJwEhIOIQ?=
- =?us-ascii?Q?8q5Pxl7fqGO23bioDa826ogquHmJN6XY4qT8m03BcYw2ZRmDa6yBNf1K1HW9?=
- =?us-ascii?Q?CJzF8ebYOpJNHhdW/v73I6atucZk3S9yxAXJx91NuCYilsOARM29iM3TyiaN?=
- =?us-ascii?Q?rqOmlpYqJHHFuUyTVO8YLgdS/HhLB3UQsj97C6rWUi4756gYzxB5Bx7Tgmwf?=
- =?us-ascii?Q?J7nf6XmzYxpRr9gKdcGSrP2PLKcqyGRgNNHfF0ICfZfXrsFPOsuWHGI3I9cR?=
- =?us-ascii?Q?11f3v6rcwBmxQdFivFdCpdrnD4Be+ZFJkV72Y+0J8i5BIKzb1zFdLnKW/B+T?=
- =?us-ascii?Q?iGkkgCMwJrT8x2pWyevd2RCPlMV2ICNEeg231H14v9KWnZ6mZ/optia0pCIi?=
- =?us-ascii?Q?Z6q+QTiQSaUi05yXRXSJxAC0+naFL0DhJxV9vLIsvzGFPCd54r2TAB2RwDL5?=
- =?us-ascii?Q?a6QExGBsHJ5YcmffiUr0b01SH0HnE6ejKV2J5S0suYLagftWnBoLLTmlfsfq?=
- =?us-ascii?Q?KM2VQAXWCsebtLuicPKxZb1oc0l+rq9AaGe2Cp2hCCQ9ZJaf9Dg45V9XN1dE?=
- =?us-ascii?Q?w90h3CwOz1jr0JpOWsWtszw9Hi/OxZN2E22bCKi8gztg0z0hbNIoHP20EedV?=
- =?us-ascii?Q?RkMtrADvCPKLpsiwgM+E1dtYFb2BKu5pEBZw4SfnETwLizsnUVvOPOCoL/aG?=
- =?us-ascii?Q?x6//CHSRZCBHGrWWxmkTAjvbxPl0IivNbBEPH3MHKKSidrvdpToVo2LIGxcy?=
- =?us-ascii?Q?1XMJV0ktJKhNYMvmoIu5aAfr+heySvWCR+HNjE4oZiSUbK4arolHzY+OZ9M2?=
- =?us-ascii?Q?Q69RPdnKBFQFYTa4nKaPEnL/myJrDeov4IvNdXM4xs6R1Gy2f9WlH8XT/EcR?=
- =?us-ascii?Q?D8O/+3akXidbZxwrYSGbIgX/eMfUhDM8m91/EwIY24k5xZg7y6OI2w6G9Ih3?=
- =?us-ascii?Q?bnTxtpHEXHL5ylmT2G6xOHYyWAUtemjjkcZCVEy1DM1qLWfwUh7E3R4TcJFq?=
- =?us-ascii?Q?az1Isrrj0QMxMoxt1AjrwX4DmJaxrC9ObrB/V2/ioZ/N7lZfbVfSaribB4sX?=
- =?us-ascii?Q?7rckWXTUGVAsDY4twIe9MxcOVeXnU/EIPSdL3eIxkm5q3nnMBw2dXaTOH4w+?=
- =?us-ascii?Q?fx2BVoudd5HP9ckkloSgAoIrzmBiLrRPFNG3KYgGJXn7WadSvy0huMiSELvZ?=
- =?us-ascii?Q?tDCAaMeZrJSo02SMVquuxZ9zkPbVs2ZJ0cjlAl9MC5FrJ9A+Q6GixMYlqc98?=
- =?us-ascii?Q?6M8nlGQ=3D?=
+	=?us-ascii?Q?L5aygQdI2IoOffQfDb6SKZgofhUWg37ZTEpNnZfKuksifuw+Iu5Gz7RzOdVl?=
+ =?us-ascii?Q?j/5sXrsvYAPkC9xOc3UWhACGYOp7ugn0FquaCBgavn3/fLg0YtAaUz77L2us?=
+ =?us-ascii?Q?obpV8fQXmYdCv2wYyCmI0zluTij2LMqVGZn6T3f7PjSPZ2jRQ/ayBNJAPmoK?=
+ =?us-ascii?Q?R3iVo6gggDh4dDDMpPLNtLpGSmUcwGh7EXenQ9xLjbH8iVL4yalAR3N9SyJ8?=
+ =?us-ascii?Q?NnE3xgzhcSU+k1OEKO7k225pkJRPqa4TZtsXrA9Q7ZdDD7/Bd+iIlHJ4XYUc?=
+ =?us-ascii?Q?TfgG7QIH3rJ1Rc9PZm4+3ry/QURlrYxsp1oeHuaJfNFMjei64XZtKDJ76Qni?=
+ =?us-ascii?Q?Jj7+1k3XbhQnUkUJQZnGnuzrNt2b0JT3ZWFznqrNdChuJA6gecp77P9MPKim?=
+ =?us-ascii?Q?xA3pk1FtfjfzlyRI2gtzfIQ+i1Mz5sD4hdzc2iXtCW6x/akUWiELaPkS4HP6?=
+ =?us-ascii?Q?kBNYI5dFAfsK3v6OYqQn22z0fNLDd7PhcJ2YYRWI4DKejrP/Rn45g6Z1A7Yp?=
+ =?us-ascii?Q?v9+5qgPlhRmwVq9M5XTGBoEooontk8lcCH3b9ly0bsIyUrxUwhhjplfkcyG+?=
+ =?us-ascii?Q?tvqEtLU8PfbE1+QDPjUoGLyrEfgaYuvdcDdzUkCT+pc8YUgC9lvtdLlz//oj?=
+ =?us-ascii?Q?8TO3xGt+1zwhKHp6MHmELy8zktKpX4Pch/00khyO6eAgV+pzanDP+IVPLv73?=
+ =?us-ascii?Q?jLUey1hH01YgPj7lInjtB+MsePmAR4Iqfr1FJ7Td93iF3JSt+0zeZOLMZLum?=
+ =?us-ascii?Q?OJHBlm+HVZnvehcc51bDKia3RzhRvIZUinUeAaON/yof+Ytwdo6y/R9+BL5J?=
+ =?us-ascii?Q?AR4yXVUeTmislEUh00BZC59j4VMfNbDBKyHc9yk0lOycDFs5YslnmItZqi+g?=
+ =?us-ascii?Q?wCV7UzGyd6qfP5lTJzIBc/67xa4oPhn9qyyS+w2uNcJuJoPlb386tWzgowXk?=
+ =?us-ascii?Q?theJhony0NrsjY50o7yp/pBKMlwOlkQKYhdAfxl1tZFOLzy2obWRakRQyOFK?=
+ =?us-ascii?Q?2W5TjhHWRYy5CbTaHf9eL9Awu0Mhd/z8rdwlCLnnt3yGew1DRLhK6WPvFrXf?=
+ =?us-ascii?Q?OVynGX/HPbU3C/qL/0GS32V5cQmgoPEOVE5saYQUMUDthJXNoFrkXrY7phDx?=
+ =?us-ascii?Q?86//GPw9cJSGKgzDm6O9Tek+QHOwDb+9W8D6tVjS/xEFm+5Jn7+CetB3Rd2H?=
+ =?us-ascii?Q?vHQubtUES7H5ZestHARbjooLUtcwOsTA7wF3BmkLf4eGwfqY4vt1QGa+3kE1?=
+ =?us-ascii?Q?B5oOjI79KsD89HgCCtQOSocjDXPQz6k2t3Dgiwsro+hw3JxwRSx4+2cqgRJ+?=
+ =?us-ascii?Q?i1dnv5+I81d4mglebnBGvdmBtkD2hdOnsHbP1tlqqw53kdMtEKac6JU1hAXB?=
+ =?us-ascii?Q?uMzp8vo=3D?=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8PR04MB8898.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(52116014)(1800799024)(376014)(366016)(38350700014);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?NSO71gRPQP6+uLQvb8GNegQw7vV04OhcTqFXnkqxeWQ69y20KRvg2TTA01yP?=
- =?us-ascii?Q?ifZv1relQAQWvrrva5oWnSur2MGOGIt15dz9JJcCox7CCb/IEUNcNh7y6+OO?=
- =?us-ascii?Q?v6ZF/bDLRk7J5wSGHfOvo8+PB96LrRoXOeu+5SqOekZS0k89b31turzs9pK3?=
- =?us-ascii?Q?yQmO+qRy1CpVZvo7Re8U7Dih4Ezc/FnC6YJ+PJGJFFDir4f9gw+5QqX4IbJ/?=
- =?us-ascii?Q?AJLHVXBJEWrq2ZAw3YYMexAHbvnll3nL/J9KrFAOhP7pM5AlUWeTibgGIZ2/?=
- =?us-ascii?Q?fXNcigyTdqEii3IQzDBo/BGTqT3Dc77FDt2PdqMVHV5a91jEmlicVCMfG2e0?=
- =?us-ascii?Q?oabxfYe2A/AmF6Ou23jp9bCuxH/u/8JAuxYbwflpu+Js5MWKKRP44+SHTqca?=
- =?us-ascii?Q?mE2oTxwZwkHGQ3SuNNI0Z1k4xgsKYLdkuUe0C+w2kOI4zfXkrA1YWEFkgyzX?=
- =?us-ascii?Q?pmBX7l9HuFsKdWekCe9KiFG2Xkv55wo2yiTecShHjr9U0q4enkaXegYJfL8M?=
- =?us-ascii?Q?9pwPQLlU4sOWdDSzwRtsxJnC3Nxb/QsnL6YmlZglYWXu5SX2rc0WNydtoTe6?=
- =?us-ascii?Q?9wNXQJrpwKZl71z35WzjgllT9vmT2QwFXj7yXUZmDchwRVtZolZWUlKoVbuv?=
- =?us-ascii?Q?PCbJwCfqdapnQv2oQFqX9s3bQLq8aW8mHsPkGfs7JTblevzCj5dqr8RUVby+?=
- =?us-ascii?Q?yGuL9rlDdBthOVjP+Pjh+/25bLycg04mHZ2VEJFlrh30f7MF8I4kHMcxk3Yl?=
- =?us-ascii?Q?+pwQ7H8RuD+OekjCe6kHocCZ97GHNA11gO1yoQP0o5HTv90bsHcr0AxjucNC?=
- =?us-ascii?Q?dkyhhTAHVHmIJpu2HOifXxrYtRfyWin4YSfba5gdrxfZaF2ROkpL8Wsp0j/g?=
- =?us-ascii?Q?7NH2J71rTxTKcrIL23yfYbTWkiQ892t4k42PEoII8dbD6bzLCVODLk+7SEJF?=
- =?us-ascii?Q?rA3dsGw0xDH1oNcM7x6Dy7w8hUFW0NPKkYxqQeNy/PDtImhTu91qaYxGlKWo?=
- =?us-ascii?Q?HCfQvaJVBEg77+t09SLotFBXnjNYvfJgtmvpQNH2nSxg9oxxgN+/02T2MHY/?=
- =?us-ascii?Q?cqz+cHxf+DIFiQr86Ys6LtX142A2IqEADQ3vrrLIwTWlLhM9JWPE3KX45CZi?=
- =?us-ascii?Q?v/SEtMmMIek9HYcBWkiodgq93cFGqkA1LofbYLTPVZ6kitmcxg/7WOjEu5H4?=
- =?us-ascii?Q?feiDKhXWc6T4vTAzR5ebR+IX5bCS2DcUgvsH7N7xG5715kGx4hK3xh2lYnH7?=
- =?us-ascii?Q?nCkPPqGnn+ujW17oV+AG4mm32+LnsSeToXzGi6VyEmgnlbi1CMSpZn39AEhP?=
- =?us-ascii?Q?WN1yP8h6vYA3uSCoFh8xo+vIpcEaR8didxn10IGasvy+MDunx8FtWUvk4mFj?=
- =?us-ascii?Q?u0qHtKZ9ZTHZe6spWtInz6hWVDN+VZw4dJYwDYlGeB53/Vu+0+ElraXdQLYY?=
- =?us-ascii?Q?+1qVAk4oxrSkXC7SfOUwJnNIw30tYfNXJ6lvN+I2ey7vtNYq/fOvqZ4XC/Ka?=
- =?us-ascii?Q?UyOp0Hn1qYJRB1fnqTMUuI0ggvQgakTFBTlKRTma8i3prtQUPOqxwi7J+ANn?=
- =?us-ascii?Q?XLpoQOo39cAXmPbBj7AeXB27poThr8LOVFw/7WQoLu4XPePe5rTXVY4JKQL7?=
- =?us-ascii?Q?tQ=3D=3D?=
+	=?us-ascii?Q?Jux2qclDwYaIk4BXCBpBwdTvxD6bOPELI2wBECuvWL82msTP0hBDdrcnzzP+?=
+ =?us-ascii?Q?LFmPOkmRYPURBFGtgEjlGkqrQsPXbhMnObbzPiJOhbji6p+bl6m0aQRDlOF5?=
+ =?us-ascii?Q?GCb9gDE3sxjDd/xN/fS5DwgOTBm8Ty1a6Gn+rKlzvLXYBhHtGgEtkOY1RUbp?=
+ =?us-ascii?Q?aMdz+U0rXE6GIsP2OWrFni96fx4/nd48KpKh5OKLKoBakB+asLoARRVYo2Gh?=
+ =?us-ascii?Q?7D3t2Ck2rHyDkyOw7SylAPQw4J/PNckh5561NZm0iBuHm78LqBXotY76NXlt?=
+ =?us-ascii?Q?WvQz0SKTjNNxBSlhHmVwIVliV6DePpQQlHJxtfm3WQviiEDvLqvGLeDsZuBV?=
+ =?us-ascii?Q?tVb8yzUfinrNIfFBxqDONhq4VEwWEaBVmD2Y97ZVJGEMJzI3HX23hDTEZiIP?=
+ =?us-ascii?Q?N4uoIibLOSa4WJ4eFIEKi1WdEYchHg2UxALpxdoS8wbCRl0JLxDM0EYS3Wp0?=
+ =?us-ascii?Q?IdX9LpBqoaCcFhdQTP5EYDCFg9JdZKCDFPzdIvfuHJPqxqzSX09FmQTO9F1s?=
+ =?us-ascii?Q?rsoZWH8HcGIaPHSmIVLQ5KfOof+11CbJK13VXZqhSGK1Et9A5UynG95RwCZw?=
+ =?us-ascii?Q?iYEvpeUU5yn+sdk5ynixKBi2CaVQk6nNnfyTGL1c7AHWgBTUhgDssqekUq7z?=
+ =?us-ascii?Q?gEf9bXnrTWaUMCGHpzSXtqjeSTyg7yADHnZtu52h6DmNAAmLzstoTNFpyVPS?=
+ =?us-ascii?Q?BIBpvnBZ5g+ko3q5WLKPhGEzQt6tMLObHkvsnIuwgcwS4MSj4jncq9m86YbG?=
+ =?us-ascii?Q?iJOpWFmcU0fAp0kSMwouCjwkHcxwt6TqVL4KL429MIDEW5rFujG2ROOdWgmm?=
+ =?us-ascii?Q?ugSGVcF2Sjyck/Mn/IXzGLQFr6eRzd1dEUzalrB+Rw3Zj/grObaU3teNrA1i?=
+ =?us-ascii?Q?IlZVkbRkZX7jLq+QrQeyA60iwgnivjP+gtOrgqmXgSwBQ/gsSRqBFZjhdj+9?=
+ =?us-ascii?Q?qtlBdJUvfFRzr5N5O0EyTD8tSVGi2cV+ZhHGOTZH/xYdnwHABOAxBvnukWVp?=
+ =?us-ascii?Q?WFy+jHq+utvamGZgVhvbUSNmCHLiv9lw66STUROK6R0aFhYP/8f3CTnlcRMk?=
+ =?us-ascii?Q?qdmbqsuzFEmSy8liW0gvgoTqB8cstmTBKVRN4iAklpXTCBVToyju27IyVIUF?=
+ =?us-ascii?Q?xnxZDX7vIg0bAfIJxTdQjAG8jjWES8knvKeYBS6VaCf2lOz4kcNrqXroW5We?=
+ =?us-ascii?Q?df4oi2uagrZxqRf5hIypLb0iGiPijxlZsmfRYWOQ60aJ0VM+qUFy/GssCAd7?=
+ =?us-ascii?Q?mid3kOf8qaZ+4s4Grs8m5CSRV9c0npE6re59AHt/qbpbuk9DOyMPOD3Mf/4r?=
+ =?us-ascii?Q?J/ilscnaNti2boHDwXCBpwK6S29UrM1Z+50Ayz0I6NLnQvXpc1vqP3Eh8Gsv?=
+ =?us-ascii?Q?yiu0iMOKYRzbzsVkXwgRkC1SfbfC/fkkyaH9neISeCnjNrQYQ/3jbm+uFxgZ?=
+ =?us-ascii?Q?xa6Zfr0kwtmMM6y3aQHCgdI6wRdOVHASOVcVam68MTOTePZwhI879MIBiFmo?=
+ =?us-ascii?Q?vWNqF88/wEIEvEFIXX6N0cfgrd5KwhLgmD8b4ZdbRJFpjDVok22HHvfesdPT?=
+ =?us-ascii?Q?G/Mtt6U//t2aEFaOlY2f1uOCoZQg0fKlYx/uCtMvaBERwnU/EhNuFRPqgawq?=
+ =?us-ascii?Q?NQ=3D=3D?=
 X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 61b96eff-ea75-4bdf-ada4-08dcf4efb123
+X-MS-Exchange-CrossTenant-Network-Message-Id: ed22403d-cbc4-4ac2-14b0-08dcf4efb239
 X-MS-Exchange-CrossTenant-AuthSource: AS8PR04MB8898.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Oct 2024 12:22:28.7341
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Oct 2024 12:22:30.5026
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: VjXZG8vLxi5Iyur3aZP15qNAii0QK/vLngn0JGI3GSPJ1PQmtbbOFphVVSDjDrfaYZAXqZRUqJXGIfGjdJgmUQ==
+X-MS-Exchange-CrossTenant-UserPrincipalName: O2BPisKo5HwNGlPYfj5Oema6OWBB1D3U04GPp7Dp7m6UWo4HXpvn8dIrTBOIBgGWdjaixkhMcFrUKceQppS7RQ==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI2PR04MB11052
 
-This adds the "Links" property for broadcast transports, which allows
-upper layer applications to write and link transports together.
+This adds the "Links" property for broadcast.
 ---
- profiles/audio/transport.c | 62 +++++++++++++++++++++++++++++++++++++-
- 1 file changed, 61 insertions(+), 1 deletion(-)
+ doc/org.bluez.MediaTransport.rst | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/profiles/audio/transport.c b/profiles/audio/transport.c
-index dafd1c471..b3bcbaa19 100644
---- a/profiles/audio/transport.c
-+++ b/profiles/audio/transport.c
-@@ -183,7 +183,8 @@ find_transport_by_bap_stream(const struct bt_bap_stream *stream)
- 		struct bap_transport *bap;
+diff --git a/doc/org.bluez.MediaTransport.rst b/doc/org.bluez.MediaTransport.rst
+index 4d998b2a8..4838d69d0 100644
+--- a/doc/org.bluez.MediaTransport.rst
++++ b/doc/org.bluez.MediaTransport.rst
+@@ -144,11 +144,26 @@ array{byte} Metadata [readwrite, ISO Only, experimental]
  
- 		if (strcasecmp(uuid, PAC_SINK_UUID) &&
--				strcasecmp(uuid, PAC_SOURCE_UUID))
-+				strcasecmp(uuid, PAC_SOURCE_UUID) &&
-+				strcasecmp(uuid, BAA_SERVICE_UUID))
- 			continue;
+ 	Indicates transport Metadata.
  
- 		bap = transport->data;
-@@ -1142,6 +1143,64 @@ static gboolean get_links(const GDBusPropertyTable *property,
- 	return TRUE;
- }
+-array{object} Links [readonly, optional, ISO only, experimental]
++array{object} Links [readonly, optional, CIS only, experimental]
+ ````````````````````````````````````````````````````````````````
  
-+static struct media_transport *find_transport_by_path(const char *path)
-+{
-+	GSList *l;
+ 	Linked transport objects which the transport is associated with.
+ 
++array{object} Links [readwrite, BIS only, experimental]
++```````````````````````````````````````````````````````
 +
-+	for (l = transports; l; l = g_slist_next(l)) {
-+		struct media_transport *transport = l->data;
++	For a Broadcast Sink, the BIG sync procedure requires all
++	desired streams to be enumerated from the start and it cannot
++	be later reconfigured by adding or removing BISes. To avoid
++	terminating and recreating the BIG sync everytime a new
++	transport is selected for acquire, all transports selected via
++	Transport.Select need to be linked together. When the first
++	transport is acquired via Transport.Acquire, all links are
++	included in the BIG sync command. An acquired transport will
++	create and set fds for all its links. Then, each link needs
++	to be acquired separately, to get the fd and start receiving
++	audio.
 +
-+		if (g_str_equal(path, transport->path))
-+			return transport;
-+	}
-+
-+	return NULL;
-+}
-+
-+static void set_links(const GDBusPropertyTable *property,
-+				DBusMessageIter *iter,
-+				GDBusPendingPropertySet id, void *user_data)
-+{
-+	struct media_transport *transport = user_data;
-+	struct bap_transport *bap = transport->data;
-+	DBusMessageIter array;
-+
-+	if (dbus_message_iter_get_arg_type(iter) != DBUS_TYPE_ARRAY) {
-+		g_dbus_pending_property_error(id,
-+					ERROR_INTERFACE ".InvalidArguments",
-+					"Invalid arguments in method call");
-+		return;
-+	}
-+
-+	dbus_message_iter_recurse(iter, &array);
-+
-+	while (dbus_message_iter_get_arg_type(&array) ==
-+						DBUS_TYPE_OBJECT_PATH) {
-+		struct media_transport *link;
-+		struct bap_transport *bap_link;
-+		const char *path;
-+
-+		dbus_message_iter_get_basic(&array, &path);
-+
-+		link = find_transport_by_path(path);
-+		if (!link) {
-+			g_dbus_pending_property_error(id,
-+				ERROR_INTERFACE ".InvalidArguments",
-+				"Invalid arguments in method call");
-+			return;
-+		}
-+
-+		bap_link = link->data;
-+
-+		/* Link stream */
-+		bt_bap_stream_io_link(bap->stream, bap_link->stream);
-+
-+		dbus_message_iter_next(&array);
-+	}
-+
-+	g_dbus_pending_property_success(id);
-+}
-+
- static gboolean qos_ucast_exists(const GDBusPropertyTable *property, void *data)
- {
- 	struct media_transport *transport = data;
-@@ -1295,6 +1354,7 @@ static const GDBusPropertyTable transport_bap_bc_properties[] = {
- 	{ "Endpoint", "o", get_endpoint, NULL, endpoint_exists },
- 	{ "Location", "u", get_location },
- 	{ "Metadata", "ay", get_metadata },
-+	{ "Links", "ao", get_links, set_links, NULL },
- 	{ }
- };
+ dict QoS [readwrite, optional, ISO only, experimental]
+ ``````````````````````````````````````````````````````
  
 -- 
 2.43.0
