@@ -1,138 +1,123 @@
-Return-Path: <linux-bluetooth+bounces-8437-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-8439-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDB2E9BB848
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  4 Nov 2024 15:52:04 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 570B29BB88A
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  4 Nov 2024 16:06:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 631A7B235CF
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  4 Nov 2024 14:52:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 87D9B1C21AEB
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  4 Nov 2024 15:06:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1552C1B85CA;
-	Mon,  4 Nov 2024 14:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D226D1AC88B;
+	Mon,  4 Nov 2024 15:06:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wv+lvNPh"
+	dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b="XChvexbB"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from forward501b.mail.yandex.net (forward501b.mail.yandex.net [178.154.239.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2A8469D
-	for <linux-bluetooth@vger.kernel.org>; Mon,  4 Nov 2024 14:51:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C602B9A2
+	for <linux-bluetooth@vger.kernel.org>; Mon,  4 Nov 2024 15:06:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.154.239.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1730731916; cv=none; b=nOcn0WSJl6sBhIJJFH2MQCV526a4w6T/glzln+Z+C0t8mMhLDdI78+xKuXOlGK0AL9v6ItB7ygNxcxxvIoty6YHWNDyqDNvmhFXzgyUJ6jmXZcQuXNhcpF1Lz75zfzwsNYX3WxEl2V9NKb5qNik4B+j9HkWSAhDljHgI7n6fW0c=
+	t=1730732780; cv=none; b=ShbdWIteMLbPkbV6WwQDh5lbQk6JUOEhowGaA+WTIwAOgQTubSacmiOXFNjqYx6RaD6PjQ+BwTeSe/miZN8fS4rUui1d+2Hmk+imEVFfjWGCtg1fLfjAzZWnfq3NHSK6f2OrDiCsj8NBx7BhGVqEG7ODJXM25aLkGG/KXQLn3d4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1730731916; c=relaxed/simple;
-	bh=O2ieQHZzE+gR8D4EGMN4YSQaFrBGDCfMm/6e4bOgvsI=;
-	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
-	 In-Reply-To:References; b=Kz+Pfmy8lniycw6QrZy2oOAYD/2KzN188hodzkk60BgoAeT0NWJJQ6wl9LPjVmlJKlAK18DWrCq0zpupiRzn7LGVRycQp+1VTKgVEmydFiI4JL/G7XTVWz5hhIyWr5EA9mz7gjZgbDQnMxyHEDEyc1yTQ2nT9oW9hZj6peKwOT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wv+lvNPh; arc=none smtp.client-ip=209.85.167.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oi1-f178.google.com with SMTP id 5614622812f47-3e601b6a33aso2367710b6e.0
-        for <linux-bluetooth@vger.kernel.org>; Mon, 04 Nov 2024 06:51:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1730731914; x=1731336714; darn=vger.kernel.org;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=e0hUY3njOYd0o7h5PbdhRUA66PYtepghzRiQHUrtmWg=;
-        b=Wv+lvNPhj0UrYUd09U2lsDOmLirTJwSJNKOPFx4e4185xu5I223pQfjW//t+iA71xK
-         ETNfSz4PH7utK4PASEqF07RTVCi53pmTy5DrjctViKyPPt9QxpbebNzS8sLjIvYclcot
-         MAduO8bZs55SwcJb2DuSRSIwIYbeI1I3PeU0gaFzuSb8/vn5eAuDWma+kAHwM/QkfCgk
-         xMka79j2pZX0BKmWzw91u49saeU+aaHB1dW3i3BysPGhWI31eW+jvWM75tEtKR/6TtBb
-         NPY3BbdXlAWXauQDOTvzAI7Z9+F83/5vTT12uTltVUe5XIpbD8OZ4CwtSDb9f//k9wj1
-         Qafg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1730731914; x=1731336714;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=e0hUY3njOYd0o7h5PbdhRUA66PYtepghzRiQHUrtmWg=;
-        b=v51G2VXvGtNEqzXqUubduHX6ctxLJjIp8nWyEPnrcTV543rVKIndfl9Rd7+KfZvvqG
-         p/pZWfHQ16qMYy5MRoAZ6lMv9kQfmm3IVb+W56Ip3ilaKoCqi1IQtS65ucNpwrcCzJY/
-         FWb5u+CPKHT0q7mMY1jP26BOzUXyopDnZXRvdDD6CSPoYwRvjUQWADdUpenvUr2/2Wig
-         E6GaLJLi9U/dgob6s8wsYUtwj2UDgIJSsaYxTrnrtt0FeWYK0s+z84ivNb8ZVHRjQbhq
-         kt7oHlT0/gjG5cLJnmOlSqNl7MSFD9tawXO+Wk18MDNQ2kDkkuugGNI/lh1hswKz0q2q
-         Dk1g==
-X-Gm-Message-State: AOJu0YxmGGAtrPAcD/+qq2J1j5GQlpZflyllSsTVF9iYBsnrHpegxqxD
-	/LqL7zjOPu0eLWHv1sl0u0X/vyZwkMdG4mNawEfiTxFBif5uNXz2A3HbWg==
-X-Google-Smtp-Source: AGHT+IFaiZIu1n9++wf4t4p9t9qyab8QJN8tEUxq4n6dP5VBI15/oNJ9HnvvdfN4DKbK0XRmRNXNxw==
-X-Received: by 2002:a05:6808:14d6:b0:3e6:5522:b333 with SMTP id 5614622812f47-3e6608d3252mr11323006b6e.22.1730731913961;
-        Mon, 04 Nov 2024 06:51:53 -0800 (PST)
-Received: from [172.17.0.2] ([172.190.111.173])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6d367e69bc8sm25972826d6.71.2024.11.04.06.51.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Nov 2024 06:51:53 -0800 (PST)
-Message-ID: <6728df89.0c0a0220.192da7.7d4a@mx.google.com>
-Date: Mon, 04 Nov 2024 06:51:53 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============4911044520201471999=="
+	s=arc-20240116; t=1730732780; c=relaxed/simple;
+	bh=/tAZam5iT/Dsg0tX6WmMEp86stSzYRfU7ge1d4t6XLs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tfwg8GYi5Ntsyos0KlOfNCue1gmcki8UxTkpVLf4rJfVAHRhm7UzMy4dPehFbmmir8JdIBL+lT0bTiHtWm0IJU4jkAgOl+Ks6DQOAFOVkjJc0Lo/qzZg4QrZtsFCd8DtNQkKQ7Zj5CTGOo2rtnDi9RpMUlLI/f5v/MPILRQQ2x8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yandex.ru; spf=pass smtp.mailfrom=yandex.ru; dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b=XChvexbB; arc=none smtp.client-ip=178.154.239.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yandex.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yandex.ru
+Received: from mail-nwsmtp-smtp-production-main-45.sas.yp-c.yandex.net (mail-nwsmtp-smtp-production-main-45.sas.yp-c.yandex.net [IPv6:2a02:6b8:c16:179d:0:640:38f5:0])
+	by forward501b.mail.yandex.net (Yandex) with ESMTPS id AEE3160FE1;
+	Mon,  4 Nov 2024 17:58:56 +0300 (MSK)
+Received: by mail-nwsmtp-smtp-production-main-45.sas.yp-c.yandex.net (smtp/Yandex) with ESMTPSA id swgo7o8rQeA0-1NTz01hA;
+	Mon, 04 Nov 2024 17:58:56 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
+	t=1730732336; bh=NN+kr6H/hZdk2bpQWTs1F8GnJm5Hr3gPm293Ny+1QTE=;
+	h=In-Reply-To:To:From:Cc:Date:References:Subject:Message-ID;
+	b=XChvexbBD7UUc9dvWJb6JU0uwpboidrQeVYoyNserP8t+X2D9X29afarddqn5MjjF
+	 qcyk9KAQhkuG7/yrRSRAc3fjA/dy2ilVwtqo2+xb70V6xel6qSAIMQpq2QsLgjYSlE
+	 LbS7pUsOPKzkjpJYN3AzFlr8NF8/U4ft+QFmsp3U=
+Authentication-Results: mail-nwsmtp-smtp-production-main-45.sas.yp-c.yandex.net; dkim=pass header.i=@yandex.ru
+Message-ID: <75c7867e-b733-4f8e-a4a0-1792a15393a7@yandex.ru>
+Date: Mon, 4 Nov 2024 17:58:54 +0300
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: bluez.test.bot@gmail.com
-To: linux-bluetooth@vger.kernel.org, quic_dgangire@quicinc.com
-Subject: RE: [BlueZ,v3] obexd: Add system bus support for obexd
-In-Reply-To: <20241104124517.4112676-1-quic_dgangire@quicinc.com>
-References: <20241104124517.4112676-1-quic_dgangire@quicinc.com>
-Reply-To: linux-bluetooth@vger.kernel.org
-
---===============4911044520201471999==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] Bluetooth: fix use-after-free in
+ device_for_each_child()
+To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: Marcel Holtmann <marcel@holtmann.org>,
+ Johan Hedberg <johan.hedberg@gmail.com>, linux-bluetooth@vger.kernel.org,
+ lvc-project@linuxtesting.org,
+ syzbot+6cf5652d3df49fae2e3f@syzkaller.appspotmail.com
+References: <20241101114410.234311-1-dmantipov@yandex.ru>
+ <CABBYNZK=H9JtzaQudQ1b7TGU5VaJ_qX_bbSJhKSwWKh+5_1uUQ@mail.gmail.com>
+ <5cc24ab9-80c0-4280-8c4c-d8b052524e1d@yandex.ru>
+ <CABBYNZKvP3u+7juqNNUHOS0PTb=QVzxob+rC3PVq-XXu9vGU+A@mail.gmail.com>
+ <fe1588ee-1f00-429c-a917-d1c5e08f3831@yandex.ru>
+ <CABBYNZJiYHWgtBExZ2jbuemJdyo6inpiYMGF7qc9Xbjqu__L7w@mail.gmail.com>
+ <CABBYNZJXMyJ0bjVAe=sY+zonvFwS2Eh2wiSuzGd+a6U-3-8=fg@mail.gmail.com>
+ <2554961e-37b3-477a-8a78-724dfb092c02@yandex.ru>
+ <CABBYNZKNzVyKS7Fb4hnSf7xJmaXRzQxqHqc-7GtfKa7X=g_KBw@mail.gmail.com>
+Content-Language: en-MW
+From: Dmitry Antipov <dmantipov@yandex.ru>
+Autocrypt: addr=dmantipov@yandex.ru; keydata=
+ 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
+ A/UwwXBRuvydGV0=
+In-Reply-To: <CABBYNZKNzVyKS7Fb4hnSf7xJmaXRzQxqHqc-7GtfKa7X=g_KBw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-This is automated email and please do not reply to this email!
+On 11/4/24 5:06 PM, Luiz Augusto von Dentz wrote:
 
-Dear submitter,
+> Weird, this was not reproduced by syzbot when I asked it to test, how
+> are you reproducing this? 
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=906048
+This is not regular, looks like a race, and I'm not sure how many runs
+are required to reproduce. Anyway we can't blame syzbot just because
+it was unable to reproduce some weird thing.
 
----Test result---
+Dmitry
 
-Test Summary:
-CheckPatch                    PASS      0.54 seconds
-GitLint                       FAIL      0.51 seconds
-BuildEll                      PASS      24.76 seconds
-BluezMake                     PASS      1718.51 seconds
-MakeCheck                     PASS      13.67 seconds
-MakeDistcheck                 PASS      181.53 seconds
-CheckValgrind                 PASS      256.28 seconds
-CheckSmatch                   PASS      359.14 seconds
-bluezmakeextell               PASS      121.55 seconds
-IncrementalBuild              PASS      1448.49 seconds
-ScanBuild                     WARNING   1020.13 seconds
-
-Details
-##############################
-Test: GitLint - FAIL
-Desc: Run gitlint
-Output:
-[BlueZ,v3] obexd: Add system bus support for obexd
-
-WARNING: I3 - ignore-body-lines: gitlint will be switching from using Python regex 'match' (match beginning) to 'search' (match anywhere) semantics. Please review your ignore-body-lines.regex option accordingly. To remove this warning, set general.regex-style-search=True. More details: https://jorisroovers.github.io/gitlint/configuration/#regex-style-search
-12: B3 Line contains hard tab characters (\t): "				"Use System bus "},"
-##############################
-Test: ScanBuild - WARNING
-Desc: Run Scan Build
-Output:
-obexd/src/main.c:286:6: warning: Array access (from variable 'option_root') results in a null pointer dereference
-        if (option_root[0] != '/') {
-            ^~~~~~~~~~~~~~
-1 warning generated.
-
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============4911044520201471999==--
 
