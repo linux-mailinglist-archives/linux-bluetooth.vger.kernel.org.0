@@ -1,179 +1,172 @@
-Return-Path: <linux-bluetooth+bounces-8505-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-8507-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5FB7C9C12E7
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Nov 2024 01:09:22 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D5E79C17E4
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Nov 2024 09:26:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E5B241F230B7
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Nov 2024 00:09:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2C5A01F21B17
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Nov 2024 08:26:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9B5428EB;
-	Fri,  8 Nov 2024 00:09:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E68341DE3BD;
+	Fri,  8 Nov 2024 08:26:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cYQb5nQz"
+	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="GWcHLQdo"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD9B064A
-	for <linux-bluetooth@vger.kernel.org>; Fri,  8 Nov 2024 00:09:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257D51DDA32;
+	Fri,  8 Nov 2024 08:26:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.19.206
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731024551; cv=none; b=Ywl6gcKo1wXydE0TOjnjzEdor9EzFzk90xvtL0j3cyti+PdzoWt9T9+decEv50QJ4UFKVRgcm0lmej8pxJ7xBG2ifOVWhxr2hW8WPh8K6X4R8henTOGP5kWQ9k2tQxFi0oMpxbHAdbQYHdaieG1ScwvEgb9uyd5pU5D/tzuEpcY=
+	t=1731054405; cv=none; b=Km/ZfEwO0mqBcMlXZnquYGfHGTpsjPMRhIiNOpQyOnfDCzB7NsGrM5NNEceZP9AkIYj5NXcTtuzNj82wlRECA6Xuv1xBRk3abKo68lRo6tMXTCEdctPNnuZHAsYsNPT1CKM2/v/UK+K8Y7WFV8aCxmvYpF3rnNpJWY3/D8bjZFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731024551; c=relaxed/simple;
-	bh=SIGGu7mIblRmp9C0R7PjIpixCMFg0fAidIgtcQxiq80=;
-	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
-	 In-Reply-To:References; b=hig7r5bWbiu4qPsJo5bX+4TVQ7yAjQm2kMjYQqXmveVGj6vYnOrOrCvAHxx4REvTKGkXLDP/OPg668+8ZCpfjg9B5VjJvM9zg8iZfpfVSsD/HA9VM7lVfdd3FF10zt7e1IjsSdOwOMwnIhe1CePtcmgOD40Xw5oeqglveT/4uQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cYQb5nQz; arc=none smtp.client-ip=209.85.219.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6cbe53a68b5so9820086d6.1
-        for <linux-bluetooth@vger.kernel.org>; Thu, 07 Nov 2024 16:09:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731024548; x=1731629348; darn=vger.kernel.org;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ywv9KEiGxQzCKJfxwF/PZ1QI1apyJhxdT/5LjKpaZ8M=;
-        b=cYQb5nQzmDGIrMAQEnmj5OSOxEg4wIxOnf7hcBEw/O0DiwZFEnT6DfGsPBPbQu1hKy
-         JU9L2aoDcZXyyRXjqV1Kby3EIm9/L/ftdQWmUMQt4djF56rTwmWfymgks9u1xiSm5XaA
-         QcbE1/3woEPdgOvnVViNZDxTz/s8jb/r93gnWPaigAL/n0k+I312v1AezFvaJyFCdrTw
-         p2PRqliKWzGshddKsif45APeUCNeyuFQgak6ysfgN3wdCCkoDVBi6xm4d8IsQt37jB/x
-         nwL4spkIXyQi+kUW1ldOWRarQ9ljm/D4MLmLrwqwxd4l9FtpJN4a/8gA7S1gGg5Dp64H
-         Ni+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731024548; x=1731629348;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ywv9KEiGxQzCKJfxwF/PZ1QI1apyJhxdT/5LjKpaZ8M=;
-        b=Z/w03S7/tC95EJ0+j4AWTOHAsAYUklWx+91kiVzCCv6lujaMQ9fBixy+xLKHnLlmrQ
-         3RRrpcTHzD7c7GF+D6nnDfYm46yuPaEZA1OyBMVJKdvqjxomF4pvkAzHxaqKUuAb11bP
-         37DeqKFrZDptgEPYcTLyMH7Ss6sfWDXALXeJYSxhoyuorRrysi6P1zKkM/Qd/iV0DLCy
-         +r44M8fDvtw5Nn4JjChzWJ/QUGqIPU0TaVVgGm5txocHPwKr5KxydIs4hbYNV034jW6f
-         dTWNozc34iNl+2p6l9qeZYkbvlqbY08gp1Y+lRqZwZ9xu4d5kepv9/RY7WFmms0Owz2Y
-         UZlg==
-X-Gm-Message-State: AOJu0YzLnjKAaSMgkthkV+cmWMxtB1nP6bCeTaKynEVFgfW1Mj/w3PUD
-	g0b38WRX3OQ9ZmWwDaYN3AW/7lY2GbnONDNOloniPVGuvsqoeh0yUf98qQ==
-X-Google-Smtp-Source: AGHT+IHWXj6ukAisPI6SEO0EmZzyqpxmk/rKQIozXIaFw8UTM4duof0Q0tufaWNYwV6/RSYSYzmLww==
-X-Received: by 2002:a05:6214:3217:b0:6cb:edd7:ac32 with SMTP id 6a1803df08f44-6d39e11eb49mr13522286d6.12.1731024548508;
-        Thu, 07 Nov 2024 16:09:08 -0800 (PST)
-Received: from [172.17.0.2] ([172.183.122.145])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6d3961ed253sm12837556d6.37.2024.11.07.16.09.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Nov 2024 16:09:08 -0800 (PST)
-Message-ID: <672d56a4.d40a0220.386e38.514f@mx.google.com>
-Date: Thu, 07 Nov 2024 16:09:08 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============2535069450455730901=="
+	s=arc-20240116; t=1731054405; c=relaxed/simple;
+	bh=p7aOmeH0xqQlUfwVSjhboFtAPEuCdmRdgFkOHzLT4ug=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=kELqryDI/A5Vxp6Sv6JeQThvXwQWAJsFfb4mKLuG+rTqI5O01D4XLJDB8NHo1SCmxypAwcH05BAyRj5M9yjEkhLNWgU9L7gt7g6lzJuDe6FOaxiTgMevksWomkHrluOydhhCP3+uEXVIu8SPtkSvJT+Agsvw4uhwfTPeN/8O7Fw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=GWcHLQdo; arc=none smtp.client-ip=54.207.19.206
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
+	s=onoh2408; t=1731054318;
+	bh=Y5aZ+Qr7uBJihwHSMM10XcZFpa18UKc4xjfgChU2A0Q=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version;
+	b=GWcHLQdo69wBfPUeDpF095h/U0zijx7IcChhxevxkH4mc1wr1OJKCglNZXlASpe0U
+	 KKn3lI9BR4Yzgc2+1T9L7QKenjkeZxnFgInExC+eSgaeTGviUKjuVAyv2F7b9qQEZp
+	 YrpLy4gNnsbGiRSZJckKz0ckjeHqaMVYcHex2zmo=
+X-QQ-mid: bizesmtpsz12t1731054281tg0oin
+X-QQ-Originating-IP: Sx0xA5UTm3rmnPoQf4T0Y5NJKNDLks94XZpHSFSsZpo=
+Received: from localhost.localdomain ( [113.57.152.160])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 08 Nov 2024 16:24:39 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 1
+X-BIZMAIL-ID: 12830856679117254942
+From: WangYuli <wangyuli@uniontech.com>
+To: marcel@holtmann.org,
+	luiz.dentz@gmail.com,
+	johan.hedberg@gmail.com,
+	matthias.bgg@gmail.com,
+	hello@felixjara.me,
+	wangyuli@uniontech.com
+Cc: linux-bluetooth@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org,
+	guanwentao@uniontech.com,
+	zhanjun@uniontech.com,
+	aaron.ma@canonical.com
+Subject: [PATCH v3] Bluetooth: btusb: Add MT7925 support for ID 0x13d3:0x3608
+Date: Fri,  8 Nov 2024 16:24:18 +0800
+Message-ID: <D3E1285F7DBFAB3E+20241108082418.187499-1-wangyuli@uniontech.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: bluez.test.bot@gmail.com
-To: linux-bluetooth@vger.kernel.org, VAnPushkarev@salutedevices.com
-Subject: RE: Introduce option to limit A2DP channels
-In-Reply-To: <20241107220121.97417-2-VAnPushkarev@salutedevices.com>
-References: <20241107220121.97417-2-VAnPushkarev@salutedevices.com>
-Reply-To: linux-bluetooth@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: bizesmtpsz:uniontech.com:qybglogicsvrgz:qybglogicsvrgz8a-1
+X-QQ-XMAILINFO: MRPQukou9wBmtIoxkX4J6YWKSNjospfUU4eivDK7LT8qv3nUNqNWqIJG
+	+6ttL/xTmvSMAAOSI0Q/R3BrBowjhIU8+S6MybpV0/9Bz0L7n2Oj80bC0CIzbGzWGpItlT9
+	rql5web14XTGDzl04pqou9LBK9E/EIbgjh9ugvrDprpn/u52kIAonJ1ZDRJ8z75J3xN8cJA
+	Qb/imEcyXz6DnaJrnTPg0EKkdbMuQ9JF4KdVQ8tZNKBRJA03TCz8upUPZWS0+IDsxcfcP9G
+	dZpf28roZ5ZpzjVN1xoMO82K/PIkUz48xTqLnqkPBLVqUDb7yKSWJZ5L8NgMrfWPjaNZklG
+	xmABN8FzFemipuIsfdiuBf9XhLRlegGFgV+GTcClFov/JCFQUWnvOPFhmttP2kMDOicJE0a
+	pubgeqwTmAcixu085F715xPX997qP2dt5hf48K0LWXY4gAypJinHRa5dDyrwEg1SZQYR4j1
+	nVuHoebZGNUaXC1z8XzHqeYJk4RaT1h9eqGRtdpoqwICTLfAXr4tRxu5306hgP92UjEJVgH
+	rrvUdQMsBoh1T4XeRROHvEXfcajJzBIeLdL3QzkL0x0Jx8RowSdjKTKAV4ebo/ieapxGnfm
+	VfId54Xpl5n4oaYchIKyQ+r11tv20Vdn1S5fG/JCg+8bcz5dvZW1KMm1eXGjuFQUvVrrtvo
+	9D8XfaymkQlLi5egl7qPY3fuKLdk/xJgndECOfvm5W9T30tomSf/tI9fNOqx9zJXxhbs7ZR
+	QAtKNJmChlGqwyvzl6LXrfvhKziL7EV+1NCJclZ0Ak8mjLqsRrcDNL/PWA19EI4RnOKD7rP
+	uebLfSvS0lw0hzA5rtz7rhpbMM+hP2w9JMqyT2UW/iO4knoRp+J66WbUFE/P5qsVP23xrrP
+	ATFuRcKKQGGv8y2vyYmH4ihs45CG1/FkvXrgIyXhh+IJYNDxQzw0v12PnmEgqTjpGiBlVSZ
+	Ks4vr1RD+PrsSNWKte/9AslWsicBvicDgSGYhXr85cztq4gzHp07U/EytGFtja/CKJbneHE
+	tv2MYVGUcq4yaiTW16
+X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
+X-QQ-RECHKSPAM: 0
 
---===============2535069450455730901==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+From: Félix Jara <hello@felixjara.me>
 
-This is automated email and please do not reply to this email!
+Add compatibility Bluetooth device MT7925 for Asus UM5606 with
+ID 13d3:3608.
 
-Dear submitter,
+The device info from /sys/kernel/debug/usb/devices as below.
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=907547
+T:  Bus=03 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=13d3 ProdID=3608 Rev= 1.00
+S:  Manufacturer=MediaTek Inc.
+S:  Product=Wireless_Device
+S:  SerialNumber=000000000
+C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
+A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+I:  If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
 
----Test result---
+Tested in Asus Zenbook S 16 UM5606XA
 
-Test Summary:
-CheckPatch                    FAIL      1.02 seconds
-GitLint                       PASS      0.63 seconds
-BuildEll                      PASS      25.51 seconds
-BluezMake                     PASS      1739.17 seconds
-MakeCheck                     PASS      12.98 seconds
-MakeDistcheck                 PASS      178.52 seconds
-CheckValgrind                 PASS      252.44 seconds
-CheckSmatch                   PASS      356.62 seconds
-bluezmakeextell               PASS      122.75 seconds
-IncrementalBuild              PASS      3101.50 seconds
-ScanBuild                     WARNING   1008.31 seconds
-
-Details
-##############################
-Test: CheckPatch - FAIL
-Desc: Run checkpatch.pl script
-Output:
-[BlueZ,1/2] main.conf: Introduce option to limit A2DP channels
-WARNING:STATIC_CONST_CHAR_ARRAY: static const char * array should probably be static const char * const
-#140: FILE: src/main.c:173:
-+static const char *a2dp_options[] = {
-
-/github/workspace/src/src/13867230.patch total: 0 errors, 1 warnings, 74 lines checked
-
-NOTE: For some of the reported defects, checkpatch may be able to
-      mechanically convert to the typical style using --fix or --fix-inplace.
-
-/github/workspace/src/src/13867230.patch has style problems, please review.
-
-NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
-
-NOTE: If any of the errors are false positives, please report
-      them to the maintainer, see CHECKPATCH in MAINTAINERS.
-
-
-[BlueZ,2/2] a2dp: Reject incoming connection when channel limit is exceeded
-WARNING:BLOCK_COMMENT_STYLE: Block comments should align the * on each line
-#116: FILE: profiles/audio/a2dp.c:721:
-+			/* Reject connection from SEP
-+			* and clear configuration.
-
-WARNING:LONG_LINE: line length of 95 exceeds 80 columns
-#118: FILE: profiles/audio/a2dp.c:723:
-+			DBG("Reject connection from %s", device_get_path(setup->chan->device));
-
-WARNING:LONG_LINE: line length of 95 exceeds 80 columns
-#119: FILE: profiles/audio/a2dp.c:724:
-+			a2dp_sep->endpoint->clear_configuration(a2dp_sep, a2dp_sep->user_data);
-
-/github/workspace/src/src/13867231.patch total: 0 errors, 3 warnings, 50 lines checked
-
-NOTE: For some of the reported defects, checkpatch may be able to
-      mechanically convert to the typical style using --fix or --fix-inplace.
-
-/github/workspace/src/src/13867231.patch has style problems, please review.
-
-NOTE: Ignored message types: COMMIT_MESSAGE COMPLEX_MACRO CONST_STRUCT FILE_PATH_CHANGES MISSING_SIGN_OFF PREFER_PACKED SPDX_LICENSE_TAG SPLIT_STRING SSCANF_TO_KSTRTO
-
-NOTE: If any of the errors are false positives, please report
-      them to the maintainer, see CHECKPATCH in MAINTAINERS.
-
-
-##############################
-Test: ScanBuild - WARNING
-Desc: Run Scan Build
-Output:
-profiles/audio/media.c:1059:7: warning: Use of memory after it is freed
-                if (req->cb != pac_select_cb) {
-                    ^~~~~~~
-1 warning generated.
-
-
-
+Co-developed-by: Félix Jara <hello@felixjara.me>
+Signed-off-by: Félix Jara <hello@felixjara.me>
+Tested-by: Félix Jara <hello@felixjara.me>
+Link: https://github.com/openSUSE/kernel/pull/10
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
 ---
-Regards,
-Linux Bluetooth
+ drivers/bluetooth/btusb.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index e9534fbc92e3..2175a09e21be 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -645,6 +645,11 @@ static const struct usb_device_id quirks_table[] = {
+ 	{ USB_DEVICE(0x13d3, 0x3608), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 
++	/* MediaTek MT7925 Bluetooth devices */
++	{ USB_DEVICE(0x13d3, 0x3608), .driver_info = BTUSB_MEDIATEK |
++						     BTUSB_WIDEBAND_SPEECH |
++						     BTUSB_VALID_LE_STATES },
++
+ 	/* Additional Realtek 8723AE Bluetooth devices */
+ 	{ USB_DEVICE(0x0930, 0x021d), .driver_info = BTUSB_REALTEK },
+ 	{ USB_DEVICE(0x13d3, 0x3394), .driver_info = BTUSB_REALTEK },
+-- 
+2.45.2
 
---===============2535069450455730901==--
 
