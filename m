@@ -1,199 +1,163 @@
-Return-Path: <linux-bluetooth+bounces-8647-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-8649-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D0439CD9C5
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 15 Nov 2024 08:18:08 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id D42209CDA81
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 15 Nov 2024 09:32:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 10AEE1F21688
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 15 Nov 2024 07:18:08 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 656DAB23A2A
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 15 Nov 2024 08:32:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 705EA188713;
-	Fri, 15 Nov 2024 07:17:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7787618B492;
+	Fri, 15 Nov 2024 08:32:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b="FQ66pPrH"
+	dkim=pass (2048-bit key) header.d=rbox.co header.i=@rbox.co header.b="GvOBUsev"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2030514A82
-	for <linux-bluetooth@vger.kernel.org>; Fri, 15 Nov 2024 07:17:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772E24317C;
+	Fri, 15 Nov 2024 08:32:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731655077; cv=none; b=qZCCxEQ46N7NcJ+6gqmIvhA6HHJNPp2l3PBz+Htkh5TYWkIjb6zM7ksGRp7LASidDzgYuOhFAKlfpKoH7ogcRaM1DSQigF89uTh1ufmIn6lrYzpLLYKLTGf5XODDLRCGjgB50jvvkKEr5o+i5aXj6BjO3MZ29wgFTjuhEbkFDQU=
+	t=1731659529; cv=none; b=TJQH2CYMl+me2lsvpsZavCT9TShbTSse9mkF5iD4+78JWKjB9scu1NOvd0LZEo0HoUcLvVmYGD3DrlaYZIwgK7OW5lkkt8chBo+mkKM7Fovn/9JVVcwE1+itYGftvEh445gSUnXy8JiYXDsboVKOa1Ew8xbyrzMH0kc5v7DGnmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731655077; c=relaxed/simple;
-	bh=c0OikLP5KfrRTZUUlwM+WZ5rK7n22AmpV6gjQI3Stxs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oWR9py0gr1V6tQLKIvnx/7NjyXvklbodCXKZlhTqSgHg2ahAB/kRWEjA7LtzxzESDW2TIYobfYXzfggXgYwpEecwQ7K+I8UfaJi4UfsitY7cT/I9FvWutx95ejcopPDnSOdmvPYROqSIKnkChg4Ez9N/2d+QmnN/UqjMxpRo5Wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org; spf=pass smtp.mailfrom=kali.org; dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b=FQ66pPrH; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kali.org
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5cf872ecce7so1159292a12.1
-        for <linux-bluetooth@vger.kernel.org>; Thu, 14 Nov 2024 23:17:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google; t=1731655074; x=1732259874; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fqPkE9Jgflda7qvILTY5c7eIVr7knIqXFVoTmH6bIGo=;
-        b=FQ66pPrHWmpGeyr/Jnv/loFmRfH6pI+YHPqqNe45MBW8whl/eHgp7K+UdvPnd51GUX
-         Z1PZgcgFPfRHw+qTmyfNaz/RW7k1sBoSD4PmAud47eAg+KII2+e42h4mKBEE4GYy3j3C
-         EJdcBtbZ5d+ZZ94J/A5ZJlGlkQYQO6nlEAbxnXtqoiI4cTyPi6e7pDUBTQFbpeuE/YjJ
-         Jize7HNwG+JwXfJPdY1Q3U9j5kR3rgxP7a0UdNvttme09sxdyuTb4gecTEhzNVJ3ZAMs
-         xupasiOs7QOi3A6rsBPG3/LblXXFfWSWz2wppu/aJK1KyUbxrYVvL2sCNUXG5d3gVgKA
-         XfRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731655074; x=1732259874;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fqPkE9Jgflda7qvILTY5c7eIVr7knIqXFVoTmH6bIGo=;
-        b=KFKSodwIdvXit+7j5TBXnqLY/t58ifZ0OQZ39n3yTiWFA15zBF5GM1oG3lwd0Q81t7
-         HhN9UKUvB0sfgavesOOwNuyWaGIzZstCOW7UfM4B1Hrb1x6fj8CsG/B9yXXLr8liNoGJ
-         1cRruOKPqCnuPRy7kKjEtNwL3Uk+8VRxV7Ngutf6t5JEIfmtCH+RPHhrAusgu3MP4O34
-         4A6Eu7XbFPZn1Gyj2EuQlsAipgSzJHGDA+nEZTIPFUIWnghL9/jYoSU4ST+TPFmOn62h
-         nztiCzteOGNvSt8Tps2Sk94nPj19zTdGnnqXucXygumtRhaWxV3UkHt81df1EdDnachM
-         9m1Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXk5FkJ7LQ0EpQDMcYIjBdhZb0CRlYZahQIC7atQxaBsdn4tAqcAS8vEymLfpKCaNw8BiA0iNofSkWobcyBdO8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxOh5YSX1GXLq1EPRAC+zk1VmhsoQVyo6MGxbofnakGSX9Qa9tr
-	7HCE1q3rrbUMDmQLfU2WpfTprUXnaAtyqnS1BW9Y/8z+X5agaKLdrBg2JAkHqBHVwN2/hdkhNHr
-	wGiG6Tbsc28lWHwnA98+RlISE2kUvuaRMQ39imw==
-X-Google-Smtp-Source: AGHT+IHSdLSdda1MpRCy6eQDKdG2cEsNjhbCjStFwK3+8voLxnI7c2NWbDSJsVLzgJHVJAYHe/CAO2DGad6LzgaUYsY=
-X-Received: by 2002:a05:6402:3594:b0:5ce:dfee:7926 with SMTP id
- 4fb4d7f45d1cf-5cf8fceab7cmr1011083a12.24.1731655074282; Thu, 14 Nov 2024
- 23:17:54 -0800 (PST)
+	s=arc-20240116; t=1731659529; c=relaxed/simple;
+	bh=Ft9o+8IN3dR7zbe+yx515zUiuduyfuQwiMP4dzTo3io=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NPjOe9gqz0tlzEkp+CH1q7VijHdf5FdR6N0NNUwSoe6muTlaZDtc0sSFmmUj+8vdDk9if84Qs6SGNLYwE8pU9rC+Er6QnbHGvBh6qm3amldRtdq9MkZYSnzBzMmKkHo6EMmEKEiGxvqmtO4qGm5og0/gTdJRquo66O+TAq1iAXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rbox.co; spf=pass smtp.mailfrom=rbox.co; dkim=pass (2048-bit key) header.d=rbox.co header.i=@rbox.co header.b=GvOBUsev; arc=none smtp.client-ip=185.226.149.38
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rbox.co
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rbox.co
+Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
+	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.93)
+	(envelope-from <mhal@rbox.co>)
+	id 1tBrkD-0077UP-P2; Fri, 15 Nov 2024 09:31:57 +0100
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rbox.co;
+	s=selector2; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID;
+	bh=yqG1zxisn2LWsL+t6aF9uz0Ph7aK0bj7aXBWlAlzRag=; b=GvOBUsevAtuNwWJLpWYNk68lL4
+	EnEbylUdWFK8pvtoofV+DW2e0g5qGMM4h0wdq0xa8vWyg+ZNTEyaUB1xJ7+K5mTnlx2ki9OOm1F4S
+	RH1gv+d+xw7CA2ImPjL2Djcqd7jqskE6gTjTwqySSv8oqV1B7AGYO/IxAnexJHqgbs2+GgDtxKgKS
+	EuCoBXrg+cK/pdIKCdrUwhPLKNoOCcWBjlchBIg291UqoP96BBvtyVOr1UmQvmc0mBT+YfL20lPtw
+	8nHPnykyWXXqNWHyPk/CRlpMIC8U9wEm2W2UEcgEo6aAHH2Q+V6I5m7HcxHTkFgVXHkfmk1r7V62V
+	jDF+kJ+w==;
+Received: from [10.9.9.74] (helo=submission03.runbox)
+	by mailtransmit03.runbox with esmtp (Exim 4.86_2)
+	(envelope-from <mhal@rbox.co>)
+	id 1tBrkC-0004eG-8g; Fri, 15 Nov 2024 09:31:56 +0100
+Received: by submission03.runbox with esmtpsa  [Authenticated ID (604044)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.93)
+	id 1tBrju-00AATW-SW; Fri, 15 Nov 2024 09:31:38 +0100
+Message-ID: <02c01b54-ad82-4ae0-b4fd-db1b7687efa0@rbox.co>
+Date: Fri, 15 Nov 2024 09:31:37 +0100
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241113-x13s_wcn6855_fix-v1-1-15af0aa2549c@quicinc.com>
-In-Reply-To: <20241113-x13s_wcn6855_fix-v1-1-15af0aa2549c@quicinc.com>
-From: Steev Klimaszewski <steev@kali.org>
-Date: Fri, 15 Nov 2024 01:17:43 -0600
-Message-ID: <CAKXuJqg0SSLYW_XaY+vRGko33nR+Tt9BUcGaAvQt0QMAJjYzrw@mail.gmail.com>
-Subject: Re: [PATCH] Bluetooth: qca: Support downloading board id specific NVM
- for WCN6855
-To: Zijun Hu <quic_zijuhu@quicinc.com>
-Cc: Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	Zijun Hu <zijun_hu@icloud.com>, linux-bluetooth@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Bjorn Andersson <bjorande@quicinc.com>, 
-	"Aiqun Yu (Maria)" <quic_aiquny@quicinc.com>, Cheng Jiang <quic_chejiang@quicinc.com>, 
-	Johan Hovold <johan@kernel.org>, Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net 1/4] bluetooth: Improve setsockopt() handling of
+ malformed user input
+To: David Wei <dw@davidwei.uk>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: Marcel Holtmann <marcel@holtmann.org>,
+ Johan Hedberg <johan.hedberg@gmail.com>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Paolo Abeni <pabeni@redhat.com>, Simon Horman <horms@kernel.org>,
+ David Howells <dhowells@redhat.com>, Marc Dionne <marc.dionne@auristor.com>,
+ Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+ linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+ linux-afs@lists.infradead.org, Jakub Kicinski <kuba@kernel.org>
+References: <20241115-sockptr-copy-fixes-v1-0-d183c87fcbd5@rbox.co>
+ <20241115-sockptr-copy-fixes-v1-1-d183c87fcbd5@rbox.co>
+ <156ce25b-4344-40cd-9c72-1a45e8f77b38@davidwei.uk>
+ <CABBYNZLbR22cWaXA4YNwtE8=+VfdGYR5oN6TSJ-MwXCuP3=6hw@mail.gmail.com>
+ <970c7945-3dc4-4f07-94d5-19080efb2f21@davidwei.uk>
+ <CABBYNZL_awaZOKpsAyOaAbtnJLobJ1bQpF_9JNxpiyQg5P5q1Q@mail.gmail.com>
+ <4292b59f-7956-4c37-8909-ecb2261687b1@davidwei.uk>
+Content-Language: pl-PL, en-GB
+From: Michal Luczaj <mhal@rbox.co>
+In-Reply-To: <4292b59f-7956-4c37-8909-ecb2261687b1@davidwei.uk>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi Zijun,
+On 11/15/24 04:04, David Wei wrote:
+> On 2024-11-14 18:50, Luiz Augusto von Dentz wrote:
+>> Hi David,
+>> On Thu, Nov 14, 2024 at 9:30 PM David Wei <dw@davidwei.uk> wrote:
+>>> On 2024-11-14 18:15, Luiz Augusto von Dentz wrote:
+>>>> Hi David,
+>>>> On Thu, Nov 14, 2024 at 7:42 PM David Wei <dw@davidwei.uk> wrote:
+>>>>> On 2024-11-14 15:27, Michal Luczaj wrote:
+>>>>> ...
+>>>>>> diff --git a/net/bluetooth/rfcomm/sock.c b/net/bluetooth/rfcomm/sock.c
+>>>>>> index f48250e3f2e103c75d5937e1608e43c123aa3297..1001fb4cc21c0ecc7bcdd3ea9041770ede4f27b8 100644
+>>>>>> --- a/net/bluetooth/rfcomm/sock.c
+>>>>>> +++ b/net/bluetooth/rfcomm/sock.c
+>>>>>> @@ -629,10 +629,9 @@ static int rfcomm_sock_setsockopt_old(struct socket *sock, int optname,
+>>>>>>
+>>>>>>       switch (optname) {
+>>>>>>       case RFCOMM_LM:
+>>>>>> -             if (bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen)) {
+>>>>>> -                     err = -EFAULT;
+>>>>>> +             err = copy_safe_from_sockptr(&opt, sizeof(opt), optval, optlen);
+>>>>>> +             if (err)
+>>>>>>                       break;
+>>>>>> -             }
+>>>>>
+>>>>> This will return a positive integer if copy_safe_from_sockptr() fails.
+>>>>
+>>>> What are you talking about copy_safe_from_sockptr never returns a
+>>>> positive value:
+>>>>
+>>>>  * Returns:
+>>>>  *  * -EINVAL: @optlen < @ksize
+>>>>  *  * -EFAULT: access to userspace failed.
+>>>>  *  * 0 : @ksize bytes were copied
+>>>
+>>> Isn't this what this series is about? copy_from_sockptr() returns 0 on
+>>> success, or a positive integer for number of bytes NOT copied on error.
+>>> Patch 4 even updates the docs for copy_from_sockptr().
+>>>
+>>> copy_safe_from_sockptr()
+>>>         -> copy_from_sockptr()
+>>>         -> copy_from_sockptr_offset()
+>>>         -> memcpy() for kernel to kernel OR
+>>>         -> copy_from_user() otherwise
+>>
+>> Well except the safe version does check what would otherwise cause a
+>> positive return by the likes of copy_from_user and returns -EINVAL
+>> instead, otherwise the documentation of copy_safe_from_sockptr is just
+>> wrong and shall state that it could return positive as well but I
+>> guess that would just make it as inconvenient so we might as well
+>> detect when a positive value would be returned just return -EFAULT
+>> instead.
+> 
+> Yes it checks and returns EINVAL, but not EFAULT which is what my
+> comment on the original patch is about. Most of the calls to
+> bt_copy_from_sockptr() that Michal replaced with
+> copy_safe_from_sockptr() remain incorrect because it is assumed that
+> EFAULT is returned. Only rfcomm_sock_setsockopt_old() was vaguely doing
+> the right thing and the patch changed it back to the incorrect pattern:
+> 
+> err = copy_safe_from_sockptr(...);
+> if (err)
+> 	break;
+> 
+> But I do agree that making copy_safe_from_sockptr() do the right thing
+> and EFAULT will be easier and prevent future problems given that
+> copy_from_sockptr() is meant to be deprecated anyhow.
 
-On Thu, Nov 14, 2024 at 12:27=E2=80=AFAM Zijun Hu <quic_zijuhu@quicinc.com>=
- wrote:
->
-> Download board id specific NVM instead of default for WCN6855 if board
-> id is available, and that is required by Lenovo ThinkPad X13s.
->
-> Cc: Bjorn Andersson <bjorande@quicinc.com>
-> Cc: Aiqun Yu (Maria) <quic_aiquny@quicinc.com>
-> Cc: Cheng Jiang <quic_chejiang@quicinc.com>
-> Cc: Johan Hovold <johan@kernel.org>
-> Cc: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-> Cc: Steev Klimaszewski <steev@kali.org>
-> Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-> ---
->  drivers/bluetooth/btqca.c | 35 ++++++++++++++++++++++++++++++++---
->  1 file changed, 32 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-> index dfbbac92242a..4f8576cbbab9 100644
-> --- a/drivers/bluetooth/btqca.c
-> +++ b/drivers/bluetooth/btqca.c
-> @@ -717,6 +717,29 @@ static void qca_generate_hsp_nvm_name(char *fwname, =
-size_t max_size,
->                 snprintf(fwname, max_size, "qca/hpnv%02x%s.%x", rom_ver, =
-variant, bid);
->  }
->
-> +static void qca_get_hsp_nvm_name_generic(struct qca_fw_config *cfg,
-> +                                        struct qca_btsoc_version ver,
-> +                                        u8 rom_ver, u16 bid)
-> +{
-> +       const char *variant;
-> +
-> +       /* hsp gf chip */
-> +       if ((le32_to_cpu(ver.soc_id) & QCA_HSP_GF_SOC_MASK) =3D=3D QCA_HS=
-P_GF_SOC_ID)
-> +               variant =3D "g";
-> +       else
-> +               variant =3D "";
-> +
-> +       if (bid =3D=3D 0x0)
-> +               snprintf(cfg->fwname, sizeof(cfg->fwname), "qca/hpnv%02x%=
-s.bin",
-> +                        rom_ver, variant);
-> +       else if (bid & 0xff00)
-> +               snprintf(cfg->fwname, sizeof(cfg->fwname), "qca/hpnv%02x%=
-s.b%x",
-> +                        rom_ver, variant, bid);
-> +       else
-> +               snprintf(cfg->fwname, sizeof(cfg->fwname), "qca/hpnv%02x%=
-s.b%02x",
-> +                        rom_ver, variant, bid);
-> +}
-> +
->  static inline void qca_get_nvm_name_generic(struct qca_fw_config *cfg,
->                                             const char *stem, u8 rom_ver,=
- u16 bid)
->  {
-> @@ -810,8 +833,15 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t bau=
-drate,
->         /* Give the controller some time to get ready to receive the NVM =
-*/
->         msleep(10);
->
-> -       if (soc_type =3D=3D QCA_QCA2066 || soc_type =3D=3D QCA_WCN7850)
-> +       switch (soc_type) {
-> +       case QCA_QCA2066:
-> +       case QCA_WCN6855:
-> +       case QCA_WCN7850:
->                 qca_read_fw_board_id(hdev, &boardid);
-> +               break;
-> +       default:
-> +               break;
-> +       }
->
->         /* Download NVM configuration */
->         config.type =3D TLV_TYPE_NVM;
-> @@ -848,8 +878,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baud=
-rate,
->                                  "qca/msnv%02x.bin", rom_ver);
->                         break;
->                 case QCA_WCN6855:
-> -                       snprintf(config.fwname, sizeof(config.fwname),
-> -                                "qca/hpnv%02x.bin", rom_ver);
-> +                       qca_get_hsp_nvm_name_generic(&config, ver, rom_ve=
-r, boardid);
->                         break;
->                 case QCA_WCN7850:
->                         qca_get_nvm_name_generic(&config, "hmt", rom_ver,=
- boardid);
->
-> ---
-> base-commit: e88b020190bf5bc3e7ce5bd8003fc39b23cc95fe
-> change-id: 20241113-x13s_wcn6855_fix-53c573ff7878
->
-> Best regards,
-> --
-> Zijun Hu <quic_zijuhu@quicinc.com>
->
+Just to be clear: copy_safe_from_sockptr() was recently fixed to return
+EFAULT:
+https://git.kernel.org/pub/scm/linux/kernel/git/netdev/net.git/commit/?id=eb94b7bb1010
+Sorry, I should have mentioned this series is a follow up to that patch.
 
-Thank you for this, I'd had something similar written, so it's nice to
-see I was kind of on the right track!  I tested this on my Thinkpad
-X13s with an H2GO bluetooth Speaker and the range I can get is far
-greater when it properly loads the b8c file (with this patch), than
-with the .bin (without this patch).  Thanks again!
+Thanks,
+Michal
 
-Tested-by: Steev Klimaszewski <steev@kali.org>
 
