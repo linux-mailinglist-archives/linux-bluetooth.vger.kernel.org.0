@@ -1,136 +1,125 @@
-Return-Path: <linux-bluetooth+bounces-8664-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-8669-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D1BA9CDD95
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 15 Nov 2024 12:38:30 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 45AEC9CDFD4
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 15 Nov 2024 14:24:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C9FB9B244D8
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 15 Nov 2024 11:38:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0B30C283E63
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 15 Nov 2024 13:24:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A7E51B6D00;
-	Fri, 15 Nov 2024 11:38:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A34371C07D2;
+	Fri, 15 Nov 2024 13:23:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZuSmC7lz"
+	dkim=pass (2048-bit key) header.d=rbox.co header.i=@rbox.co header.b="JBvNZuKW"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailtransmit04.runbox.com (mailtransmit04.runbox.com [185.226.149.37])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 663AD18FC84
-	for <linux-bluetooth@vger.kernel.org>; Fri, 15 Nov 2024 11:38:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC281B85EC;
+	Fri, 15 Nov 2024 13:23:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.37
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1731670699; cv=none; b=UUs8WrjywLzDKqORWxXoqdwSpAIgk+ToaJbN+82rcDVH+YOguLEgYEcKvB4UZiX/xuzBjDZjbVBp7iJh+Piqs/EjlgEUkAc3xRiqqQ4wr3RAcSE4wdRs6QOyObFGourvmjpqExb9OEcnYI2EfdoF5mkdBv1KZ+lvoCt5z88odZo=
+	t=1731677003; cv=none; b=JRZMRNKXy5LmyhCed2RWxXTnHsyY1n1SDeWmSJacKJ6ZIhcyDmKaxooMRcy/BrAucHEQAcAPXWAuVlSY7jbgRnn6O9lzqPqMaI4B6/DfGcbGUGp98HxiCFir6VZZKn16TtT7CIiDH/v6Qy035oNw5F/n43pzBs6fKrfDyJUWJXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1731670699; c=relaxed/simple;
-	bh=BeoGXbyEjAQXs/tRBcZIlzrYjSNFv/RBHDFi9IP1lHI=;
-	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
-	 In-Reply-To:References; b=qPukFUJGDrlRCS8unjo1f9APA3uAvDZz1J1xzw9yVNeXNrOQxhqZkpIr+SlVzEhftMiTvs4ke0qRwrra9c8pS9bDzIocd1P4mIDZsVwPRJcvclPxe8UbFvX9QwAgxqlSNif5qZfSRlDVnSVpxb5SsD/2YvPcbvTl8Buu/zHwkx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZuSmC7lz; arc=none smtp.client-ip=209.85.160.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-460b16d4534so9342351cf.3
-        for <linux-bluetooth@vger.kernel.org>; Fri, 15 Nov 2024 03:38:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1731670697; x=1732275497; darn=vger.kernel.org;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=CzfQk7o4gYpj8Pc8GMXyRW8Z4vOI3CcHIfCnLUniMtM=;
-        b=ZuSmC7lz9BVlb9oNQJBb/C++EQykgF5EFRMK/gDP2IOrvcacBpzO+MTAGxvNK3cquP
-         mCk7OG/AXht43pASV26n66H1H/3GxA9+bcTEKW1bFv5DE6Iu+t0qE4JUTXR5WXPwzpUP
-         HtVjXH4zrROV2y3AqJ/zcAxCSm/8nfcG748Wqb60MpPr5iCgMvmmYyDsrN6ZJ6sL68aK
-         R5mYCzip8rlePBFLPt8P6+An23eu4Uh43MSzSSgONnCpTjQZsA+zm6JusPaBqejDJz6s
-         O5hQwyzaWgCfmxxeKusGXY/7ful79usFrM2Zetyjrcw8pX2edN2ABN/DxIuIKJ6672Ei
-         E9rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1731670697; x=1732275497;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CzfQk7o4gYpj8Pc8GMXyRW8Z4vOI3CcHIfCnLUniMtM=;
-        b=sNZOzX0VVsZD/3UdYrfAHFCZCdbWTfkcYc67vTuXyVZfeplSQKeZ6fmpjV3HlT2ai+
-         WPO4JzUv0hXOm9wC5XQvBHDqjSJnfWoxb4jinL+c4asOF9QZ2uI1LbvfDkPldJZMa96K
-         GYoFdgvm2Li5lPceZRYMjHVChvHpNgitPNcFO3xY/kGukOyBD1ApaiTAYkxknT+aLava
-         T5oJoS6kaDUs25dlBD87t42vBgnABFDG2Jwbe8jFZdsRv9sIQns4UQQeMNq9/h0GzqBF
-         GPrSn372VptzNpynmhr8joVgHcqU88cmADTGZwIRPQkAfBevX/kB/Y4yibDUCszwaxV4
-         hTsA==
-X-Gm-Message-State: AOJu0Yyx/E3jYW+EFnu0yNXce/a1SIpJninrJq9yfd/gVQvGF+aEVV53
-	LPMFjUdN8qypUiWTKCdYTAj5p2fF7HDNyU4SgnyUK/QkfBnpBiTs1asREA==
-X-Google-Smtp-Source: AGHT+IGHUqYTf3OLZvhrrV5w6RVwLXAEjqzAAO4eRGBllcHq27eWr1wFukyda5NaRTE/J9nuqRxGAA==
-X-Received: by 2002:a05:622a:148d:b0:460:8fa0:5acf with SMTP id d75a77b69052e-46363e0cbb6mr31471591cf.13.1731670696894;
-        Fri, 15 Nov 2024 03:38:16 -0800 (PST)
-Received: from [172.17.0.2] ([20.161.77.197])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4635aa35dadsm17806861cf.52.2024.11.15.03.38.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Nov 2024 03:38:16 -0800 (PST)
-Message-ID: <673732a8.c80a0220.78873.5d1f@mx.google.com>
-Date: Fri, 15 Nov 2024 03:38:16 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============4466291135584881684=="
+	s=arc-20240116; t=1731677003; c=relaxed/simple;
+	bh=Qrkypyn6oLcQyux/FiD+FNhRfG3YNrtpoe3KECqQWpk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=TYkWA+V2cg8GXXUvcZvp4Hb2zsx3cBaE469JxDEojXAHTqJ/1Q49CKrHSXSm977cmQX9YeocehDRzuKmefizQJPjer+gbrwt6o9vCtCGUvU0sQsPLYkrgaIY/s1VgEo/997OTbds0Ui3tNdS3GrY2ty0yItrEHzQ1DzbOVzxL60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rbox.co; spf=pass smtp.mailfrom=rbox.co; dkim=pass (2048-bit key) header.d=rbox.co header.i=@rbox.co header.b=JBvNZuKW; arc=none smtp.client-ip=185.226.149.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rbox.co
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rbox.co
+Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
+	by mailtransmit04.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.93)
+	(envelope-from <mhal@rbox.co>)
+	id 1tBwHw-007sYD-Pr; Fri, 15 Nov 2024 14:23:04 +0100
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rbox.co;
+	s=selector2; h=Cc:To:Content-Transfer-Encoding:Content-Type:MIME-Version:
+	Message-Id:Date:Subject:From; bh=BTb5bnxrLGEwgrcrSvx3sXPxwvSsd+znqfFVwgZLS/4=
+	; b=JBvNZuKWOWLoFvHjz1R1mJhxdBH3A/4SKIyS7qq6yjhuWRywSgPdTa8oTE2+ws7xrnYMYH6Q6
+	c9GCEgx28yuob1wrnzhULTudPc7yWp1q29v3dNLFjyqoa+FqrQRmiVWkRmqHQF7wPiBhC/Kkko9FZ
+	wvtjvqCGVI9VzOLHMvUN3Yxujo8ZS27D0pg4diUNF4p9Tb710ISN2jtD+BT0f80zDtGjlXgtlLthJ
+	eCg2X08xbM0yquSWoMnJvs6pDMywtOc6YmHjBQ2cLM+cXeRFvicSIJASKg+KEQs13gyg0AVQaIdTU
+	3LxWB17EuuhVeXC6KWEVjMsvl3THPLQURcsE4g==;
+Received: from [10.9.9.74] (helo=submission03.runbox)
+	by mailtransmit03.runbox with esmtp (Exim 4.86_2)
+	(envelope-from <mhal@rbox.co>)
+	id 1tBwHw-0003oo-Aa; Fri, 15 Nov 2024 14:23:04 +0100
+Received: by submission03.runbox with esmtpsa  [Authenticated ID (604044)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.93)
+	id 1tBwHh-00BIK5-EG; Fri, 15 Nov 2024 14:22:49 +0100
+From: Michal Luczaj <mhal@rbox.co>
+Subject: [PATCH net v2 0/4] net: Fix some callers of copy_from_sockptr()
+Date: Fri, 15 Nov 2024 14:21:39 +0100
+Message-Id: <20241115-sockptr-copy-fixes-v2-0-9b1254c18b7a@rbox.co>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: bluez.test.bot@gmail.com
-To: linux-bluetooth@vger.kernel.org, iulia.tanasescu@nxp.com
-Subject: RE: bass: Rework Scan Delegator
-In-Reply-To: <20241115103825.19761-2-iulia.tanasescu@nxp.com>
-References: <20241115103825.19761-2-iulia.tanasescu@nxp.com>
-Reply-To: linux-bluetooth@vger.kernel.org
-
---===============4466291135584881684==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAONKN2cC/22NzQqDMBCEX0X23C2uPzTpyfcoHmKy1lAwkkhQJ
+ O/eEHrs8ZthvrkgsLcc4Fld4DnaYN2aoblVoBe1vhmtyQxN3XRE1GFw+rPtHrXbTpztwQFbKSU
+ rJUgpgjzcPJci716w8g5jDhcbdufPchSpVD9n/88ZCWs0JFotHrOeTD/4yR137WBMKX0BD8Pjk
+ 7cAAAA=
+X-Change-ID: 20241114-sockptr-copy-fixes-3999eaa81aa1
+To: Marcel Holtmann <marcel@holtmann.org>, 
+ Johan Hedberg <johan.hedberg@gmail.com>, 
+ Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+ Paolo Abeni <pabeni@redhat.com>, Simon Horman <horms@kernel.org>, 
+ David Howells <dhowells@redhat.com>, Marc Dionne <marc.dionne@auristor.com>
+Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>, 
+ linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org, 
+ linux-afs@lists.infradead.org, Jakub Kicinski <kuba@kernel.org>, 
+ Michal Luczaj <mhal@rbox.co>
+X-Mailer: b4 0.14.2
 
-This is automated email and please do not reply to this email!
+Some callers misinterpret copy_from_sockptr()'s return value. The function
+follows copy_from_user(), i.e. returns 0 for success, or the number of
+bytes not copied on error. Simply returning the result in a non-zero case
+isn't usually what was intended.
 
-Dear submitter,
+Compile tested with CONFIG_LLC, CONFIG_AF_RXRPC, CONFIG_BT enabled.
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=909927
+Last patch probably belongs more to net-next, if any. Here as a RFC.
 
----Test result---
-
-Test Summary:
-CheckPatch                    PENDING   0.20 seconds
-GitLint                       PENDING   0.23 seconds
-BuildEll                      PASS      20.94 seconds
-BluezMake                     PASS      1609.42 seconds
-MakeCheck                     PASS      13.61 seconds
-MakeDistcheck                 PASS      163.07 seconds
-CheckValgrind                 PASS      215.70 seconds
-CheckSmatch                   PASS      280.57 seconds
-bluezmakeextell               PASS      100.12 seconds
-IncrementalBuild              PENDING   0.26 seconds
-ScanBuild                     PASS      846.73 seconds
-
-Details
-##############################
-Test: CheckPatch - PENDING
-Desc: Run checkpatch.pl script
-Output:
-
-##############################
-Test: GitLint - PENDING
-Desc: Run gitlint
-Output:
-
-##############################
-Test: IncrementalBuild - PENDING
-Desc: Incremental build with the patches in the series
-Output:
-
-
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+---
+Changes in v2:
+- Fix the fix of llc_ui_setsockopt()
+- Switch "bluetooth:" to "Bluetooth:" [bluez.test.bot]
+- Collect Reviewed-by [Luiz Augusto von Dentz]
+- Link to v1: https://lore.kernel.org/r/20241115-sockptr-copy-fixes-v1-0-d183c87fcbd5@rbox.co
 
 ---
-Regards,
-Linux Bluetooth
+Michal Luczaj (4):
+      Bluetooth: Improve setsockopt() handling of malformed user input
+      llc: Improve setsockopt() handling of malformed user input
+      rxrpc: Improve setsockopt() handling of malformed user input
+      net: Comment copy_from_sockptr() explaining its behaviour
 
+ include/linux/sockptr.h           |  2 ++
+ include/net/bluetooth/bluetooth.h |  9 ---------
+ net/bluetooth/hci_sock.c          | 14 +++++++-------
+ net/bluetooth/iso.c               | 10 +++++-----
+ net/bluetooth/l2cap_sock.c        | 20 +++++++++++---------
+ net/bluetooth/rfcomm/sock.c       |  9 ++++-----
+ net/bluetooth/sco.c               | 11 ++++++-----
+ net/llc/af_llc.c                  |  8 ++++----
+ net/rxrpc/af_rxrpc.c              |  8 ++++----
+ 9 files changed, 43 insertions(+), 48 deletions(-)
+---
+base-commit: ea301aec8bb718b02b68761d2229fc12c9fefa29
+change-id: 20241114-sockptr-copy-fixes-3999eaa81aa1
 
---===============4466291135584881684==--
+Best regards,
+-- 
+Michal Luczaj <mhal@rbox.co>
+
 
