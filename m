@@ -1,288 +1,157 @@
-Return-Path: <linux-bluetooth+bounces-9149-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-9151-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF3D49E4E11
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 Dec 2024 08:18:14 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC8899E4F02
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 Dec 2024 08:56:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7CB72188179B
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 Dec 2024 07:18:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CC1F9161894
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  5 Dec 2024 07:56:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 848601A0700;
-	Thu,  5 Dec 2024 07:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A89381C1F19;
+	Thu,  5 Dec 2024 07:56:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b="Idxzssr0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RmbSBmaL"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2974E1B0F29
-	for <linux-bluetooth@vger.kernel.org>; Thu,  5 Dec 2024 07:17:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.125.188.122
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B6641917EE
+	for <linux-bluetooth@vger.kernel.org>; Thu,  5 Dec 2024 07:56:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1733383068; cv=none; b=q+4iKilFEXhUCKEl6a+5VW5kQJTmVSmEa6uAHhY+q4HEHZFg5me3BTq7y4MkIUkZ4MuWPeWrpPGBHcBm/b+Zi9D9g7VSeByQQ8G+rAnzzdB7m+CVaHgclv1xcV1axrUuJgE3kAX8/8l/OrcKJZZ4OLurE2BxRpAPPD3Wox28PHg=
+	t=1733385381; cv=none; b=AD0V8XJesOIexWW4rp767IrDpulhkcNwVc1xJiDL/aPKCNrUDSOb68gxrj9Y/XaDNNrI5wRolQVDI2MF6mGI/U3ncm/09OwNdjBMdNW7t+uvVKh/AfUUWa4hu8yEkGWTvXWPCOUiZVPc8tE4vAkntYYcohHjso7u7cMYhrbJaRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1733383068; c=relaxed/simple;
-	bh=DUk6KztYOuWCHkF2w3Ail7VTXEtKfUcqVezNhB/cCVs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G7KiFhSioKN8aD/avfD3d5sqVhURLIPzMKPqCZOUD+M7nEA0+4YKOouLjIpLEaypXjxnqEnbbwsHP+PpcSQ6DawaWTDrIHlIAu0qSHpmxbO+kxqvRfnTxKSu8JFKcQvvccX0dByUdjFZenxTrDf+9NCe7UGdxrTo5DfTPoX8aAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com; spf=pass smtp.mailfrom=canonical.com; dkim=pass (2048-bit key) header.d=canonical.com header.i=@canonical.com header.b=Idxzssr0; arc=none smtp.client-ip=185.125.188.122
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=canonical.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 5312940C4B
-	for <linux-bluetooth@vger.kernel.org>; Thu,  5 Dec 2024 07:17:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1733383059;
-	bh=veChOtHywlqJWRuy07dGfiMiZy6FsscGgp0bVfweBmw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version;
-	b=Idxzssr0tP3giLCBg5x6H9NiXbBHDHWrSpiquSth371BqdtF5u98js4pPYxLp/+0f
-	 Do+xTUMpzD6sF8KlETTV49YYptgR2F5RU2fGZEufSHxvJNL55YU8Q0f4ik+vXQU2MX
-	 uhigUr+VY6bK5Mw2ugg8G+WntJF5/sqk8Yr30v6ZmGgEIoWOzHrHjmO5plpi1/otd2
-	 vIaB4o4KZgZ/BQznaHCVbrIq4rpdMymFbjZjjItrzjKzSXKN6eyP3FCpBqDU0bbBal
-	 5lS8GCLe0qUBS0sBzMLb1W4oN2DYgIucHjUDQkRL8Wqx7kRTWnYtUoY+wHxUIojds1
-	 Fbl7Ulz6J/nsA==
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-7fbd38074f4so296129a12.1
-        for <linux-bluetooth@vger.kernel.org>; Wed, 04 Dec 2024 23:17:39 -0800 (PST)
+	s=arc-20240116; t=1733385381; c=relaxed/simple;
+	bh=uxWpfG/NXHBm4ssiM3/LOhpBg8la1lGhxcwYXX0bBKc=;
+	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
+	 In-Reply-To:References; b=o1fk5sR1QdaB0y997So8oHLtQ2QI6CZ5EcZ+pmOul4Tza0qcY9UZRVu7XA2QMjZ+w8yKKw3kHOgBuLneofYElSVefTVC47Q9g9bL7KofCXILj4MxqeoRg77emYVvDZIPZbZ0vH3NwmgIpF4Yq53p/gwKR+XGhk4XmSPbz3faUTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RmbSBmaL; arc=none smtp.client-ip=209.85.222.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-7b66d08d529so60242085a.1
+        for <linux-bluetooth@vger.kernel.org>; Wed, 04 Dec 2024 23:56:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1733385378; x=1733990178; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=fVMKeG2BU1k+f8hZOsNmEcpXp9HT7LYkGQByxGZdszQ=;
+        b=RmbSBmaLCM6TnUsWEdHvHJJr9rEznSnnu26KAGQlhOt06Lp+40teC+JmKxv3Ut60AI
+         qNr+UCC6AMP61XuFCNDiEvCppQqVkW3mNjlFAsezCWRNtsV7BnCS6+b76++aVofzc/M+
+         1/PuTKPo4AN2ehciYmcVs+c4wOF8Lc7DKg0Ajju5fH4A4DisjFHmFUhd+UyPIpB2Xlf8
+         yEQFCFL4hL4VKc3Do3y7gV6BRjlVY7DIQzZ80G7cteGjjZy2thtmQUMleBia7z4zuxMK
+         rUafbQp9PhvRWSj0XE7HF38TlDhjvgZ1OnnwxqyDCUW2N4Od73S4/GoneKHMjkmk+uiv
+         Axfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1733383058; x=1733987858;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=veChOtHywlqJWRuy07dGfiMiZy6FsscGgp0bVfweBmw=;
-        b=UlNgh85l01IGuWRXvKYvmVRB760gbbaT+bH9V3ZNESNvSfL72XYOBXVFhx+VmO3Uj7
-         F7ZkATGHqdOCaSCWFC9c9dV8gqcFbHUUiozQi+Cf7QcDBQqiGR0epaVVUq9ha6/gbtGd
-         R48YRsZmScwnJ0WCTDLK6ytkaV31IkxUod4Gv2aad6PFAJJy5i3OIsy9evI6AmtERyA/
-         OGDikU27HItGBUcl+poi9bUnKsx15qBVT1bzVnBlDzMxnPKiyyS3H6dlKzqI+NETbql/
-         KVuNdx5TFZ2J8E/dbiWQ+/z3x5hn4yg7IBTSwHlFkTjtu9DdZ1dMxumzj7sPbI/QeNAs
-         w+HA==
-X-Forwarded-Encrypted: i=1; AJvYcCWxXhyTfdavc4wnVKutDmwyt2BPYcXrJFZJARyDP/ENCL5Od8f4uG12iX95TUcpxqmaMHVRzn/R+5bHOmng/mA=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw69XUUSP9/6cqdxNV7csC9vj0e2WmLLjX+xUSvxktZFu2WqRP/
-	Ek74anzIui/qXmoK4Jl9I19y4gIiWgEk2ECIERDdNz5QaEuDJwDvZdCtK4DdKPJys+LU7Dz4o44
-	SbClVCVxgO/RwLeF61I0ZAXX5I+r7065YY//gdfrFuIqsqHMwIiwqCtPd3NaJPw/QYfSqFja2ij
-	1rUgLK3Q==
-X-Gm-Gg: ASbGncsHH8wXauRmUA7HlcmUENvqFghevMHnniYKQCFX1iSt8MVFIOVZViIM35BddUF
-	rhWQM/RZI2/2Mpx9HK32zatEpsYa0IeX93TbcFaebiTgVKsMvYczmZA5DcGQ9ByApfNtDuPsxic
-	fJ9+5mRPdNg1GFOeNVUjxhUWDrRrgpZXNd8SaX5xMlqYI0IzvXaQD2hAIO4B+LFUeuCgIbUq7Cm
-	JiJLyMnneSsfNah71s2ptl53a+SK4SyyiWgbUrPqDIl/q9gdoyFIz0bLwqJfXOITvsfZSieNNDA
-	mBiUg0kZ+zgQJcf03ZKKp1OyC/DD26sMJmJG9TaB8U72mfzrS3xi
-X-Received: by 2002:a05:6a21:330b:b0:1e0:d837:c929 with SMTP id adf61e73a8af0-1e16bdd32cemr11192499637.9.1733383057942;
-        Wed, 04 Dec 2024 23:17:37 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHgzsr7JcfsegoUdP6GY5G8iGsXuJUVNjVey+/PZYj54eOigRoJ8F45T7xC4maZMzZD7dP8lQ==
-X-Received: by 2002:a05:6a21:330b:b0:1e0:d837:c929 with SMTP id adf61e73a8af0-1e16bdd32cemr11192479637.9.1733383057640;
-        Wed, 04 Dec 2024 23:17:37 -0800 (PST)
-Received: from rickywu0421-ThinkPad-X1-Carbon-Gen-11.. (118-163-61-247.hinet-ip.hinet.net. [118.163.61.247])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7fd156fb8fcsm573909a12.40.2024.12.04.23.17.35
+        d=1e100.net; s=20230601; t=1733385378; x=1733990178;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fVMKeG2BU1k+f8hZOsNmEcpXp9HT7LYkGQByxGZdszQ=;
+        b=Wc8DSqAK3ElucMPcH6rNf59NIkTas+NQtAxK4rjKWEUgHzKtCK0BDxduZq7UdwfDZm
+         c8wDmwZIu0vl7DzlILuF8l5Kjm1ef860ZYlCvrbEGoWvqVaWWJ96og6iagWvci5DwK3z
+         9L2ojkfiHA9lZrfIG3EKJ3adqFMLtzd2eesz/fSR/5NFWwxU1MBpj8Vk9nCkIY7fgmNg
+         GOWm1bWkxApEctIKEDOqfuFXg0X49q/DKTM+JxzEPm+eG80F7Q6Cjrsu+PU9HiCJeMt9
+         qQhTQdqp0DZXD70ahOL1k2Tr6wTII4eRqqtcNVpAdxW0GHZCBlwKXR7Ch0310ii9WNFN
+         V7CQ==
+X-Gm-Message-State: AOJu0YwR5NhubF7NBM2zYjB24Od+I8lMTpwFHCcvaIh4FlEBCc/fg/iq
+	p/fvDtxAq8tx7bvUEpXr+mK8USXMebaeuUIDT8jJujNq5oMuB1fHl2feIg==
+X-Gm-Gg: ASbGncsgYkxWBOLm2DT4XWiGMZnSxXKJr1xgkusrpxITG9HElM8tUK6wuOFAgS2ILAa
+	ZNjNxYzEHtMW139FqavNZyglG0II3DkNrU4H+IfCr42tFcYQNSzADNJLb4Ra6TFlWo7zij9ySPh
+	e74ZIx3M07GPrAJZD+HdNhi8urJlD8eq8y082ut9cMqkpk3qoayctImECFEiqUb/AIYfQKUurnj
+	Uw8SGhCInM2Du0BbJ9bZ51O4TzKGTpjuOw1iB/viekfRV7L6tgdzaMd
+X-Google-Smtp-Source: AGHT+IHYRL10on5SzE4++kyXOXd3z+HVORIKOaaZvOTUPh4DimzzC76bgufEJw5lNF2KTBw/Qxx3dQ==
+X-Received: by 2002:a05:620a:3188:b0:7a6:75e6:3c21 with SMTP id af79cd13be357-7b6b414c1d4mr330688285a.1.1733385377996;
+        Wed, 04 Dec 2024 23:56:17 -0800 (PST)
+Received: from [172.17.0.2] ([20.97.191.134])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-46729793741sm5271221cf.61.2024.12.04.23.56.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Dec 2024 23:17:37 -0800 (PST)
-From: En-Wei Wu <en-wei.wu@canonical.com>
-To: marcel@holtmann.org,
-	luiz.dentz@gmail.com,
-	linux-bluetooth@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	pmenzel@molgen.mpg.de
-Cc: quic_tjiang@quicinc.com,
-	kuan-ying.lee@canonical.com,
-	anthony.wong@canonical.com
-Subject: [PATCH v3 2/2] Bluetooth: btusb: Improve SKB safety in QCA dump packet handling
-Date: Thu,  5 Dec 2024 15:17:27 +0800
-Message-ID: <20241205071727.36710-3-en-wei.wu@canonical.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241205071727.36710-1-en-wei.wu@canonical.com>
-References: <20241205071727.36710-1-en-wei.wu@canonical.com>
+        Wed, 04 Dec 2024 23:56:17 -0800 (PST)
+Message-ID: <67515ca1.c80a0220.2d1dc2.139e@mx.google.com>
+Date: Wed, 04 Dec 2024 23:56:17 -0800 (PST)
+Content-Type: multipart/mixed; boundary="===============0403561784702348346=="
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: bluez.test.bot@gmail.com
+To: linux-bluetooth@vger.kernel.org, en-wei.wu@canonical.com
+Subject: RE: Bluetooth: btusb: Fix QCA dump packet handling and improve SKB safety
+In-Reply-To: <20241205071727.36710-2-en-wei.wu@canonical.com>
+References: <20241205071727.36710-2-en-wei.wu@canonical.com>
+Reply-To: linux-bluetooth@vger.kernel.org
 
-Replace direct buffer access and manual pointer arithmetic in QCA dump
-packet handling with safer skb_pull_data() calls. This ensures proper
-bounds checking when accessing packet headers and adds proper restoration
-of SKB data pointer and length on error paths.
+--===============0403561784702348346==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-The changes include:
-- Replacing manual pointer arithmetic with skb_pull_data() for 
-  safer packet header access
-- Adding SKB state restoration in error paths
+This is automated email and please do not reply to this email!
 
-This prevents potential buffer overflows and ensures SKB state remains
-consistent even when packet validation fails.
+Dear submitter,
 
-Signed-off-by: En-Wei Wu <en-wei.wu@canonical.com>
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=914799
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PENDING   0.26 seconds
+GitLint                       PENDING   0.19 seconds
+SubjectPrefix                 PASS      0.22 seconds
+BuildKernel                   PASS      25.86 seconds
+CheckAllWarning               PASS      27.05 seconds
+CheckSparse                   PASS      30.47 seconds
+BuildKernel32                 PASS      24.19 seconds
+TestRunnerSetup               PASS      434.56 seconds
+TestRunner_l2cap-tester       PASS      20.49 seconds
+TestRunner_iso-tester         FAIL      34.54 seconds
+TestRunner_bnep-tester        PASS      4.87 seconds
+TestRunner_mgmt-tester        PASS      121.33 seconds
+TestRunner_rfcomm-tester      PASS      7.74 seconds
+TestRunner_sco-tester         PASS      9.38 seconds
+TestRunner_ioctl-tester       PASS      8.20 seconds
+TestRunner_mesh-tester        PASS      6.11 seconds
+TestRunner_smp-tester         PASS      6.94 seconds
+TestRunner_userchan-tester    PASS      5.06 seconds
+IncrementalBuild              PENDING   0.39 seconds
+
+Details
+##############################
+Test: CheckPatch - PENDING
+Desc: Run checkpatch.pl script
+Output:
+
+##############################
+Test: GitLint - PENDING
+Desc: Run gitlint
+Output:
+
+##############################
+Test: TestRunner_iso-tester - FAIL
+Desc: Run iso-tester with test-runner
+Output:
+WARNING: possible circular locking dependency detected
+Total: 125, Passed: 120 (96.0%), Failed: 1, Not Run: 4
+
+Failed Test Cases
+ISO Connect2 Suspend - Success                       Failed       4.258 seconds
+##############################
+Test: IncrementalBuild - PENDING
+Desc: Incremental build with the patches in the series
+Output:
+
+
+
 ---
- drivers/bluetooth/btusb.c | 95 +++++++++++++++++----------------------
- 1 file changed, 41 insertions(+), 54 deletions(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 2bfb915062cf..cbeb1cec790a 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -2935,8 +2935,6 @@ static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
- {
- 	int ret = 0;
- 	u8 pkt_type;
--	u8 *sk_ptr;
--	unsigned int sk_len;
- 	u16 seqno;
- 	u32 dump_size;
- 
-@@ -2945,18 +2943,8 @@ static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
- 	struct usb_device *udev = btdata->udev;
- 
- 	pkt_type = hci_skb_pkt_type(skb);
--	sk_ptr = skb->data;
--	sk_len = skb->len;
-+	dump_hdr = (struct qca_dump_hdr *)skb->data;
- 
--	if (pkt_type == HCI_ACLDATA_PKT) {
--		sk_ptr += HCI_ACL_HDR_SIZE;
--		sk_len -= HCI_ACL_HDR_SIZE;
--	}
--
--	sk_ptr += HCI_EVENT_HDR_SIZE;
--	sk_len -= HCI_EVENT_HDR_SIZE;
--
--	dump_hdr = (struct qca_dump_hdr *)sk_ptr;
- 	seqno = le16_to_cpu(dump_hdr->seqno);
- 	if (seqno == 0) {
- 		set_bit(BTUSB_HW_SSR_ACTIVE, &btdata->flags);
-@@ -2976,16 +2964,15 @@ static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
- 
- 		btdata->qca_dump.ram_dump_size = dump_size;
- 		btdata->qca_dump.ram_dump_seqno = 0;
--		sk_ptr += offsetof(struct qca_dump_hdr, data0);
--		sk_len -= offsetof(struct qca_dump_hdr, data0);
-+
-+		skb_pull(skb, offsetof(struct qca_dump_hdr, data0));
- 
- 		usb_disable_autosuspend(udev);
- 		bt_dev_info(hdev, "%s memdump size(%u)\n",
- 			    (pkt_type == HCI_ACLDATA_PKT) ? "ACL" : "event",
- 			    dump_size);
- 	} else {
--		sk_ptr += offsetof(struct qca_dump_hdr, data);
--		sk_len -= offsetof(struct qca_dump_hdr, data);
-+		skb_pull(skb, offsetof(struct qca_dump_hdr, data));
- 	}
- 
- 	if (!btdata->qca_dump.ram_dump_size) {
-@@ -3005,7 +2992,6 @@ static int handle_dump_pkt_qca(struct hci_dev *hdev, struct sk_buff *skb)
- 		return ret;
- 	}
- 
--	skb_pull(skb, skb->len - sk_len);
- 	hci_devcd_append(hdev, skb);
- 	btdata->qca_dump.ram_dump_seqno++;
- 	if (seqno == QCA_LAST_SEQUENCE_NUM) {
-@@ -3036,61 +3022,62 @@ static bool btqca_acl_pkt_is_dump(struct hci_dev *hdev, struct sk_buff *skb)
- 	struct hci_event_hdr *event_hdr;
- 	struct hci_acl_hdr *acl_hdr;
- 	struct qca_dump_hdr *dump_hdr;
-+	void *orig_data;
-+	unsigned int orig_len;
- 
--	sk_ptr = skb->data;
--	sk_len = skb->len;
-+	orig_data = skb->data;
-+	orig_len = skb->len;
- 
--	acl_hdr = hci_acl_hdr(skb);
--	if (le16_to_cpu(acl_hdr->handle) != QCA_MEMDUMP_ACL_HANDLE)
--		return false;
--	sk_ptr += HCI_ACL_HDR_SIZE;
--	sk_len -= HCI_ACL_HDR_SIZE;
--	event_hdr = (struct hci_event_hdr *)sk_ptr;
--
--	if ((event_hdr->evt != HCI_VENDOR_PKT)
--		|| (event_hdr->plen != (sk_len - HCI_EVENT_HDR_SIZE)))
--		return false;
-+	acl_hdr = skb_pull_data(skb, sizeof(*acl_hdr));
-+	if (!acl_hdr || (le16_to_cpu(acl_hdr->handle) != QCA_MEMDUMP_ACL_HANDLE))
-+		goto restore_return;
- 
--	sk_ptr += HCI_EVENT_HDR_SIZE;
--	sk_len -= HCI_EVENT_HDR_SIZE;
-+	event_hdr = skb_pull_data(skb, sizeof(*event_hdr));
-+	if (!event_hdr || (event_hdr->evt != HCI_VENDOR_PKT))
-+		goto restore_return;
- 
--	dump_hdr = (struct qca_dump_hdr *)sk_ptr;
--	if ((sk_len < offsetof(struct qca_dump_hdr, data))
--		|| (dump_hdr->vse_class != QCA_MEMDUMP_VSE_CLASS)
--	    || (dump_hdr->msg_type != QCA_MEMDUMP_MSG_TYPE))
--		return false;
-+	dump_hdr = (struct qca_dump_hdr *)skb->data;
-+	if ((skb->len < sizeof(*dump_hdr)) ||
-+	   (dump_hdr->vse_class != QCA_MEMDUMP_VSE_CLASS) ||
-+	   (dump_hdr->msg_type != QCA_MEMDUMP_MSG_TYPE))
-+		goto restore_return;
- 
- 	return true;
-+
-+restore_return:
-+	skb->data = orig_data;
-+	skb->len = orig_len;
-+	return false;
- }
- 
- /* Return: true if the event packet is a dump packet, false otherwise. */
- static bool btqca_event_pkt_is_dump(struct hci_dev *hdev, struct sk_buff *skb)
- {
--	u8 *sk_ptr;
--	unsigned int sk_len;
--
- 	struct hci_event_hdr *event_hdr;
- 	struct qca_dump_hdr *dump_hdr;
-+	void *orig_data;
-+	unsigned int orig_len;
- 
--	sk_ptr = skb->data;
--	sk_len = skb->len;
-+	orig_data = skb->data;
-+	orig_len = skb->len;
- 
--	event_hdr = hci_event_hdr(skb);
-+	event_hdr = skb_pull_data(skb, sizeof(*event_hdr));
-+	if (!event_hdr || (event_hdr->evt != HCI_VENDOR_PKT))
-+		goto restore_return;
- 
--	if ((event_hdr->evt != HCI_VENDOR_PKT)
--		|| (event_hdr->plen != (sk_len - HCI_EVENT_HDR_SIZE)))
--		return false;
-+	dump_hdr = (struct qca_dump_hdr *)skb->data;
-+	if ((skb->len < sizeof(*dump_hdr)) ||
-+	   (dump_hdr->vse_class != QCA_MEMDUMP_VSE_CLASS) ||
-+	   (dump_hdr->msg_type != QCA_MEMDUMP_MSG_TYPE))
-+		goto restore_return;
- 
--	sk_ptr += HCI_EVENT_HDR_SIZE;
--	sk_len -= HCI_EVENT_HDR_SIZE;
-+	return true;
- 
--	dump_hdr = (struct qca_dump_hdr *)sk_ptr;
--	if ((sk_len < offsetof(struct qca_dump_hdr, data))
--		|| (dump_hdr->vse_class != QCA_MEMDUMP_VSE_CLASS)
--	    || (dump_hdr->msg_type != QCA_MEMDUMP_MSG_TYPE))
--		return false;
-+restore_return:
-+	skb->data = orig_data;
-+	skb->len = orig_len;
-+	return false;
- 
--	return true;
- }
- 
- static int btusb_recv_acl_qca(struct hci_dev *hdev, struct sk_buff *skb)
--- 
-2.43.0
 
+--===============0403561784702348346==--
 
