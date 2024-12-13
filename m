@@ -1,87 +1,157 @@
-Return-Path: <linux-bluetooth+bounces-9350-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-9348-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EA7D9F055C
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 13 Dec 2024 08:19:09 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC7109F03D9
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 13 Dec 2024 05:35:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 60A36168EF6
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 13 Dec 2024 07:19:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3210E1883B2D
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 13 Dec 2024 04:35:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B194918DF8D;
-	Fri, 13 Dec 2024 07:19:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 376FE16BE20;
+	Fri, 13 Dec 2024 04:35:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mGOOKso1"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from arara2.ipen.br (arara2.ipen.br [200.136.52.33])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 540F41372
-	for <linux-bluetooth@vger.kernel.org>; Fri, 13 Dec 2024 07:19:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=200.136.52.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EA6E2F43
+	for <linux-bluetooth@vger.kernel.org>; Fri, 13 Dec 2024 04:35:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734074344; cv=none; b=h8+MXzqnjg6UE+tp9zeTuEBiHDAlQ5ZJN2h8oMc26Aual9jQwkFvLu864OeCHb2eZANrupav86BZG7z7O/urZV0zd661PZ7/yrYiktfIblxxAOYkpOX+YK6t6m/XiE9vtc9O7dpAh0X8f/klI8ImcXia8bX6uNQK5VE92n/66YA=
+	t=1734064524; cv=none; b=bzHex2UZeuw7EEbSkxIpG5TjVRYZCQMjKT4xNVZtCCOd8Jjef3SFMmMEgurar+JrB8E19UuavIzE/Yhd4Gz7kAFB05/Lhk9lFT7HQ945JGa7Hr1NjeiCdqKz+v7v3uhO7sJxttyEFx7AAILZDUqINGEAvSf4XW3Xgscc/3vbdh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734074344; c=relaxed/simple;
-	bh=Cgr97JBiSX1QIcd2ZZZsKVChGTY1ZlWJ/4AhaVFA7Wc=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=hum+XlAX+1PtSRXkuZOINntYEinetwkxbupzGnHEV9ykwHhRHbEOMDob9bCyfh9tXtbwKDMZxKGYqjhuTT6WtSpzMP7wr5EAtTTegjN+9dK9fNTFzdQVDMT82Ym19gaqCYAv+fvO3rWEsFHPXqt3xQtO5kosLOeSM3vVuWSNbRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ipen.br; spf=pass smtp.mailfrom=ipen.br; arc=none smtp.client-ip=200.136.52.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ipen.br
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ipen.br
-X-ASG-Debug-ID: 1734074318-055fc729eb14908b000f-Y6scnF
-Received: from arara.ipen.br (webmail.ip.ipen.br [10.0.10.11]) by arara2.ipen.br with ESMTP id gmbdbyXMjdVotpyg for <linux-bluetooth@vger.kernel.org>; Fri, 13 Dec 2024 04:18:58 -0300 (BRT)
-X-Barracuda-Envelope-From: TCWM178520@ipen.br
-X-Barracuda-RBL-Trusted-Forwarder: 10.0.10.11
-Received: from ipen.br (unknown [102.129.145.191])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by arara.ipen.br (Postfix) with ESMTPSA id BCE9EFAA563
-	for <linux-bluetooth@vger.kernel.org>; Fri, 13 Dec 2024 01:24:26 -0300 (-03)
-Reply-To: t.mazowieckie@mazowieckie.org
-X-Barracuda-Effective-Source-IP: UNKNOWN[102.129.145.191]
-X-Barracuda-Apparent-Source-IP: 102.129.145.191
-X-Barracuda-RBL-IP: 102.129.145.191
-From: <TCWM178520@ipen.br>
-To: linux-bluetooth@vger.kernel.org
-Subject:  I urge you to understand my viewpoint accurately.
-Date: 13 Dec 2024 12:24:26 +0800
-X-ASG-Orig-Subj: I urge you to understand my viewpoint accurately.
-Message-ID: <20241213122426.CD2CBF3C9C7B4B56@ipen.br>
+	s=arc-20240116; t=1734064524; c=relaxed/simple;
+	bh=lzUi4NUPjdtNQMVPjDKlf7r4vDS8FObDM/Zd7sBGvTY=;
+	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
+	 In-Reply-To:References; b=dEIWQN5flX9eLa7o7XRcdYbLsT2D0VSG+4mfcYiJZA6Iiz1HaC4YJyLYOyvOTDup0t09K59PSc8gv8vmpOj2eMMwQYYmdJ0VCCMPmiPEXJGazN035eJ0y2CqKOiOwBRkhUiHtiyxf/gPCJiBkNX5iYP/eNnJKvmzQvjFu7735EM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mGOOKso1; arc=none smtp.client-ip=209.85.222.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7b15467f383so125757185a.3
+        for <linux-bluetooth@vger.kernel.org>; Thu, 12 Dec 2024 20:35:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1734064522; x=1734669322; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=/H1yskqsgwPiKjhCX1LYZTaBkYj2YWZsDbqE0aMtVqA=;
+        b=mGOOKso11X5tE6z9D9+vODPPPzFqTmaSeFXAxFzSdhMjnrJxJ2wH8f1rDmgNEdZLYC
+         VCqBRX+FAAV/x20JjL/bX2irUU81xLXTQwDy/tHXIOdmQcmoS6mWctGPMOXAqEIPjnSj
+         nsopKBF4B8hrJL42S8kdDb7w7G5gHPXRQ4Hr7OKL5iNk3DRPE+YcQ0OEqpPqAFrDK3Fj
+         7u3/PD2pvQrnzQsf2pgSxkPhvA/qlEjZE+A/8kg6XK8PFFUAwRiaMt45GHv43uu3vEvj
+         wlqKhaupl2Q69DYGLzqfDWzdG7uiv5xI+4flLUyTCXeUTVcRB7mN70+2YQt0CfhbivF+
+         immg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1734064522; x=1734669322;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/H1yskqsgwPiKjhCX1LYZTaBkYj2YWZsDbqE0aMtVqA=;
+        b=TzTERLjSZKWjfe/TOA7+Zsn3SZDrqKzTFn06RLS97yE3SHbSSZXRi9CILZKn71ixQ0
+         C8hVS+0vwEYb8eHlCYMrwdmwafVX7Uze2Smyk3788IN18uhKPOQMZ520O8bnvHJsvsYF
+         qdniobm6PTOli27X2/CkPTvbu+JTvqDGvF3KjI2HMjO+PnDK5Rg13XVhB3XzdHPI2xDe
+         M9zT5b5p0tBXL9GrcZS+LUY9W4LVSVTlmN7tFJ15zmx7HnerdRzP7EnR51lSk/ZZqSa9
+         1is9K5BUVqR7mqd4q/3uiGUYchmkx0i33ID+6ERwQvXv+opCzhcO1Lukuy3Ga4cXW07V
+         Jb4A==
+X-Gm-Message-State: AOJu0Yz+Mcf6DSfFoYnGQtaQ6BCoosEgWCOrJF4GVSYrnL52h/I7cUzN
+	A66s884hIi7T3YnJE2hovFDMgZHWX6htDCgkIFUExEyUVBmpbFansDbQYQ==
+X-Gm-Gg: ASbGncsT/w6Cj0MgrZGr33szPIc5mROQVtdEfpOXVXKEYvmCDqg0NsSgFmJRQX4HFMn
+	6fMBaWTq/XV18Izz23PQUDkvQvZOWE7ZTmR0Q2T4oHW6/ct7wyyOGyzhxDvkaqT6Og4Yj7CLS/u
+	zT3LC0LoPuhYarGyHIS4HxDLswEB24bOZnLZ34OudYw6oJQayMa3UhlhCj1GqJcX3ccTo8oTGFK
+	6XHweJ3hoLZ9ADPjryNn1aOG0hM0OobZfVXncsTMnXRIQHPHdGkiRfpz4Ge1yNN
+X-Google-Smtp-Source: AGHT+IEvU+m5pTmKg0XVgNP7hQfqgXFkfq4t0USOCgYBfqgE6IBidZHp/yG7imxqK3yR+zi2j/1zhA==
+X-Received: by 2002:a05:620a:2729:b0:7b6:670f:b91a with SMTP id af79cd13be357-7b6fbf3a7camr182163085a.43.1734064521987;
+        Thu, 12 Dec 2024 20:35:21 -0800 (PST)
+Received: from [172.17.0.2] ([172.183.132.84])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-467a9cdb836sm823701cf.27.2024.12.12.20.35.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Dec 2024 20:35:21 -0800 (PST)
+Message-ID: <675bb989.c80a0220.55725.032f@mx.google.com>
+Date: Thu, 12 Dec 2024 20:35:21 -0800 (PST)
+Content-Type: multipart/mixed; boundary="===============5904953454850431455=="
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Barracuda-Connect: webmail.ip.ipen.br[10.0.10.11]
-X-Barracuda-Start-Time: 1734074338
-X-Barracuda-URL: https://10.40.40.18:443/cgi-mod/mark.cgi
-X-Barracuda-Scan-Msg-Size: 512
-X-Virus-Scanned: by bsmtpd at ipen.br
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-BRTS-Evidence: 34fbb5788938ad5710ad28835fd12206-499-txt
-X-Barracuda-Spam-Score: 0.00
-X-Barracuda-Spam-Status: No, SCORE=0.00 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=1000.0 tests=NO_REAL_NAME
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.45577
-	Rule breakdown below
-	 pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	0.00 NO_REAL_NAME           From: does not include a real name
+From: bluez.test.bot@gmail.com
+To: linux-bluetooth@vger.kernel.org, yinghsu@chromium.org
+Subject: RE: [v2] Bluetooth: btusb: add sysfs attribute to control USB alt setting
+In-Reply-To: <20241213120420.v2.1.Ifc708cc471a8834b344c26fce1ce2fe3e5992cad@changeid>
+References: <20241213120420.v2.1.Ifc708cc471a8834b344c26fce1ce2fe3e5992cad@changeid>
+Reply-To: linux-bluetooth@vger.kernel.org
 
-I am Tomasz Chmielewski, a Portfolio Manager and Chartered=20
-Financial Analyst affiliated with Iwoca Poland Sp. Z OO in=20
-Poland. I have the privilege of working with distinguished=20
-investors who are eager to support your company's current=20
-initiatives, thereby broadening their investment portfolios. If=20
-this proposal aligns with your interests, I invite you to=20
-respond, and I will gladly share more information to assist you.
+--===============5904953454850431455==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-=20
-Yours sincerely,=20
-Tomasz Chmielewski Warsaw, Mazowieckie,
-=20
-Poland.
+This is automated email and please do not reply to this email!
+
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=917446
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PENDING   0.24 seconds
+GitLint                       PENDING   0.24 seconds
+SubjectPrefix                 PASS      0.09 seconds
+BuildKernel                   PASS      24.52 seconds
+CheckAllWarning               PASS      28.65 seconds
+CheckSparse                   PASS      30.25 seconds
+BuildKernel32                 PASS      24.18 seconds
+TestRunnerSetup               PASS      430.44 seconds
+TestRunner_l2cap-tester       PASS      20.19 seconds
+TestRunner_iso-tester         PASS      29.42 seconds
+TestRunner_bnep-tester        PASS      4.76 seconds
+TestRunner_mgmt-tester        FAIL      119.16 seconds
+TestRunner_rfcomm-tester      PASS      7.52 seconds
+TestRunner_sco-tester         PASS      9.32 seconds
+TestRunner_ioctl-tester       PASS      8.02 seconds
+TestRunner_mesh-tester        PASS      5.86 seconds
+TestRunner_smp-tester         PASS      6.91 seconds
+TestRunner_userchan-tester    PASS      5.02 seconds
+IncrementalBuild              PENDING   0.61 seconds
+
+Details
+##############################
+Test: CheckPatch - PENDING
+Desc: Run checkpatch.pl script
+Output:
+
+##############################
+Test: GitLint - PENDING
+Desc: Run gitlint
+Output:
+
+##############################
+Test: TestRunner_mgmt-tester - FAIL
+Desc: Run mgmt-tester with test-runner
+Output:
+Total: 490, Passed: 484 (98.8%), Failed: 2, Not Run: 4
+
+Failed Test Cases
+LL Privacy - Start Discovery 2 (Disable RL)          Failed       0.190 seconds
+LL Privacy - Set Device Flag 1 (Device Privacy)      Failed       0.153 seconds
+##############################
+Test: IncrementalBuild - PENDING
+Desc: Incremental build with the patches in the series
+Output:
+
+
+
+---
+Regards,
+Linux Bluetooth
+
+
+--===============5904953454850431455==--
 
