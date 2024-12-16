@@ -1,140 +1,100 @@
-Return-Path: <linux-bluetooth+bounces-9385-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-9387-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C93629F3633
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Dec 2024 17:37:02 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 059C39F392E
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Dec 2024 19:46:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 16194165D8D
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Dec 2024 16:37:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2FD76168F6D
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Dec 2024 18:46:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68DFB1494CF;
-	Mon, 16 Dec 2024 16:36:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E2FE207669;
+	Mon, 16 Dec 2024 18:46:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xd9p/I5N"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="gVd7Ul0q"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D58175BF
-	for <linux-bluetooth@vger.kernel.org>; Mon, 16 Dec 2024 16:36:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D852AD11
+	for <linux-bluetooth@vger.kernel.org>; Mon, 16 Dec 2024 18:46:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1734367013; cv=none; b=RG/QVKO6ZFc8y//d0+DZSxIW1o7Nv2eqhnsVTxFdEFkkuERiB7grXjtzhfU/A99qv0fomQ4ytwTi4m0ZyHL0jjdd58xPMol+YioQGl3S2e0aj6OcGHimQeWAEETo2DSc0rRNJPItbLV/4QPjN26qC9w5CHJgCvjXC4dXt3kpwiQ=
+	t=1734374784; cv=none; b=CzLZtjv7KTcrNfvhAtxUNLxYHSV/nxvZffndZB+litqRJ33YK8iMD+7QiJnqzdRUyHCsNZIIgDcpME157x2OaZBowtRIs4yiJCYzSfxK/Bmj+R6JtVFIXJJCWm43Q9AnJlIXppdOZal9kiVja5VmjzcjTPrSpx8U2yypJ7RnLlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1734367013; c=relaxed/simple;
-	bh=AldaW4E5eS17rQfh/mWJoMr0p15UhdGR+mcQakRkvkM=;
-	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
-	 In-Reply-To:References; b=RZYnx/cEtF7CmBzIjlW+4ZZIGRVZ7Q3COj8hWVVCWkLjMxhOIm51h5iETCC+860QnnJYOmcTUr+ZFJOArnXDiGTq8ZVd1l9yH+jL9V6Ua0lfpRS++qCzLwuoldwEM5n6HicLJ6skDvfG9yv6l/E2OGzoTLaHVgFxR/xwPTad+/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xd9p/I5N; arc=none smtp.client-ip=209.85.222.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-7b6edb82f85so547193085a.3
-        for <linux-bluetooth@vger.kernel.org>; Mon, 16 Dec 2024 08:36:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1734367011; x=1734971811; darn=vger.kernel.org;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ONuFOCzKb3AcNL/vSaZfklDH96k5VnTO+j1kK9Jf35c=;
-        b=Xd9p/I5NUtp/e+Ce4Uhvjt9E381sbP+kCxDhxKLbiuMFQQ2C1jm6tC297k5r9V0B4+
-         PjrfW86VKz8DT9OPKa2r59amRDM6wYYbtxSo+LlcTpihm24caXzkADNv+SFx4/hWZT4z
-         5VB580sJAiP20E+13KqwvRc1U43N+j0CsqDRrifgg8e1dzde/YbzNTDOD6MbaJg9ZsAF
-         TuvRlwX2l/pZ1pxiaz8RGuxaRtGHZvPsLyG2pEnYqNx918UFW6hpw5zGMfFpWxarJL+n
-         P1h90Tv0T7gKOOUXL/EiDSt/BE4yUkEbOl2e8HusRQv+WOnKBUgoDmNCKUJnlUZeP+A3
-         KehQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1734367011; x=1734971811;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ONuFOCzKb3AcNL/vSaZfklDH96k5VnTO+j1kK9Jf35c=;
-        b=iJT67Y5miAU5drepRF9VXUq8OpgGCwV2QhR4/xqnYI9I771QrhlCtx8ZW+9vwEnJeb
-         txG6f0CboYUNWtDF3LMcl6TbcgIYdh0+hPJg2bZ3SfMnAazveXpIv0cvdS7jf4TkctXa
-         pOfeZ0R7SSf0DTEo9F3NiFI1qBl47cH8UCSsSJoto1zkp4BXweQe7bg/fYehq8Wp0Lp+
-         64EQkg8iWJ5HVwmvESNiVZ6391kRsz89H19pzm5R3oe4cUtdu2Iz6XBj+sJ+IfCRJg1Y
-         ypqmFajidacQ9AfHgYeRUA8u+j4vWqgrYUWBjt7xjvXYaE6uzI2P4Wk3dc/PDSqkPlpI
-         WsYQ==
-X-Gm-Message-State: AOJu0Yx1NuLcMSKXw/ZmkUsZqrmyNfear9rwy0NQdzBfVMQdAF1UqNwm
-	P/YfqMK2vCVUqfz0UCHxDoeCaAqfbediqGZAQIsuMvP+zh7XlxGQG/HBkQ==
-X-Gm-Gg: ASbGnctXvtE654hF/ujpelNAArUfKkYWBZRy8ZV84eXgaHcmZYL6aSEv+G8tmoDGuKX
-	ER3IkIYwkPx0H3UAs6TpyEqKjPMhqnKahaW8IYz/1Z1DoKJ09Fx+WcGGn4ekF3nG1DrDeK2Jq/j
-	dufBqGDNJwVsrckL9wrG2oEcLPe81HJ/n3qRjN6kfNwwTz5pr+AOdFYEhQ8/fsyAi4PNygwVOkf
-	hHiJUMmZPIURthH6LY1Sd/Rw0pHAmIxPnY0DqUYBMP1Kmspmc/rQvIQlt6hsGdC
-X-Google-Smtp-Source: AGHT+IEfgRfkIaNR4tyVdq6wOLfOJCDmfVSRWhv4vyozRpAzFuas0sp/xRGP8Bh5E4B+n/kLsBEB4g==
-X-Received: by 2002:a05:6214:4002:b0:6d8:9062:6616 with SMTP id 6a1803df08f44-6dc8ca3e1d2mr235340536d6.7.1734367000500;
-        Mon, 16 Dec 2024 08:36:40 -0800 (PST)
-Received: from [172.17.0.2] ([172.183.77.254])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6dccd37bc36sm28803496d6.101.2024.12.16.08.36.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Dec 2024 08:36:40 -0800 (PST)
-Message-ID: <67605718.0c0a0220.36e66.8e27@mx.google.com>
-Date: Mon, 16 Dec 2024 08:36:40 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============2550421457739535910=="
+	s=arc-20240116; t=1734374784; c=relaxed/simple;
+	bh=yh+o4OD6KUnRWXsQWFM81m2+re3iLiCxDKpg4nQRkEM=;
+	h=From:To:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 Content-Type; b=PCQPFMn3pzwHOkMsVh9of4EcYXU3c8MQpnRZu5ESzXyZf7E+h/HGq7k2tmHjD4rVGOI5z/3bVfEr9WZTGRlmtNYShXXscismkcwjalH0QvIp/GNxErkOVxxxsWN5w9kpP2y8ihbEzbl2HJqSeSS4YmNyejK5Rj9ihZInOY6Ve9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=gVd7Ul0q; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1734374778;
+	bh=yh+o4OD6KUnRWXsQWFM81m2+re3iLiCxDKpg4nQRkEM=;
+	h=From:To:Subject:Date:From;
+	b=gVd7Ul0qNIJsx7QQ07F1f+bEttKnuFGKgYEvFnE0d8dbCB4EzAjO2i1WRMLbYgIXW
+	 j7tecbHkkwW3lcb3JgsY62tYsJgWg1zK6cEL1Qi7vmg9QWdhKCY/AcLl82mH1atnq4
+	 AT8ykGJo/7gIna3O8AvVsMdOtyLLQ1Lhg/LjmaHOIPgn7UQhWK99mJ+22jidi8PDon
+	 pHMj3kZ9wwUQJBQND1fxF5FoChgy64oFqG/4P46NIvaZyliWeK5uA5jmrUN8ET1E//
+	 0IIB1xKvezYI/XCTE7MnrSAhYPJ1VVSe8Wl0jwbqfYOmrgsnlziPjxxwx8SYJimgic
+	 IBdqYqPrVUKtw==
+Received: from fdanis-XPS-13-9370.. (67.227.121.78.rev.sfr.net [78.121.227.67])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: fdanis)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 9F3E017E37E4
+	for <linux-bluetooth@vger.kernel.org>; Mon, 16 Dec 2024 19:46:18 +0100 (CET)
+From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
+To: linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ v2 0/2] Add constant for 16 bits transparent voice
+Date: Mon, 16 Dec 2024 19:46:11 +0100
+Message-Id: <20241216184613.135538-1-frederic.danis@collabora.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: bluez.test.bot@gmail.com
-To: linux-bluetooth@vger.kernel.org, quic_amisjain@quicinc.com
-Subject: RE: [v2] obexctl: Enable Map folderlisting operation from obexctl
-In-Reply-To: <20241216152330.2579138-1-quic_amisjain@quicinc.com>
-References: <20241216152330.2579138-1-quic_amisjain@quicinc.com>
-Reply-To: linux-bluetooth@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
---===============2550421457739535910==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Add 16 bits, 2s complement, transparent air coding format for mSBC.
+Corresponding commit implements functionality on kernel side.
 
-This is automated email and please do not reply to this email!
+The voice setting is used by sco_connect() or sco_conn_defer_accept()
+after being set by sco_sock_setsockopt().
 
-Dear submitter,
+The PCM part of the voice setting is used for offload mode through PCM
+chipset port.
+This commits add support for mSBC 16 bits offloading, i.e. audio data
+not transported over HCI.
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=918257
+The BCM4349B1 supports 16 bits transparent data on its I2S port.
+If BT_VOICE_TRANSPARENT is used when accepting a SCO connection, this
+gives only garbage audio while using BT_VOICE_TRANSPARENT_16BIT gives
+correct audio.
+This has been tested with connection to iPhone 14 and Samsung S24.
 
----Test result---
+This also adds a test to checks that BT_VOICE_TRANSPARENT_16BIT voice
+settings can be set and get using [set|get]sockopt().
 
-Test Summary:
-CheckPatch                    PENDING   0.24 seconds
-GitLint                       PENDING   0.23 seconds
-BuildEll                      PASS      20.41 seconds
-BluezMake                     PASS      1600.92 seconds
-MakeCheck                     PASS      13.09 seconds
-MakeDistcheck                 PASS      163.65 seconds
-CheckValgrind                 PASS      220.84 seconds
-CheckSmatch                   PASS      276.15 seconds
-bluezmakeextell               PASS      99.11 seconds
-IncrementalBuild              PENDING   0.31 seconds
-ScanBuild                     PASS      860.07 seconds
+v1 -> v2: Add test to tools/sco-tester
 
-Details
-##############################
-Test: CheckPatch - PENDING
-Desc: Run checkpatch.pl script
-Output:
+Frédéric Danis (2):
+  lib: Add constant for 16 bits transparent voice setting
+  sco-tester: Add test for BT_VOICE_TRANSPARENT_16BIT constant
 
-##############################
-Test: GitLint - PENDING
-Desc: Run gitlint
-Output:
+ lib/bluetooth.h    |  1 +
+ tools/sco-tester.c | 28 ++++++++++++++++++++++++++++
+ 2 files changed, 29 insertions(+)
 
-##############################
-Test: IncrementalBuild - PENDING
-Desc: Incremental build with the patches in the series
-Output:
+-- 
+2.34.1
 
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============2550421457739535910==--
 
