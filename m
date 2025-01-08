@@ -1,49 +1,49 @@
-Return-Path: <linux-bluetooth+bounces-9631-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-9632-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34A56A06559
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Jan 2025 20:30:23 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7CB75A0655A
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Jan 2025 20:30:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3268B168330
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Jan 2025 19:30:21 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 63CB47A3A32
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Jan 2025 19:30:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A9892036E2;
-	Wed,  8 Jan 2025 19:30:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FE01203703;
+	Wed,  8 Jan 2025 19:30:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FDUzYr3u"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c8aImZvC"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4B5202F8F
-	for <linux-bluetooth@vger.kernel.org>; Wed,  8 Jan 2025 19:30:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF0B2036F5
+	for <linux-bluetooth@vger.kernel.org>; Wed,  8 Jan 2025 19:30:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736364614; cv=none; b=B+UrO89+LljWIO5+2NWSIDOj4QIxH1DTJuiNPrtwkJ7PifrFWlJVEWjsNr3sCWchxZ461pQH/lIAkq/mSa5C4eIdiOZXAxgrOiCsbCabRjXIPpMJtlxOb18VSSaBWzMEs75zBH+7AAATF0YQVzMkzt5qG+MpIvUv5uXCB5xb/2o=
+	t=1736364615; cv=none; b=RF33cUmyT1bM+sATG/DTiH7pFJkvIK8enmpNGTUD6ooUFcwdN3Ba69eDXbuE+8pmsD6vtGy7syrv56yeHP8mX+B5UMhWCVKPz3W4Ai/uI4FqxiD2Q0CAEkPg12c6lYFpV2zFTpEpmiZV914WcI2ez/JhaJ4k3WEsNOARbMoILzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736364614; c=relaxed/simple;
-	bh=crpKHDBXad1HU/UzRBXwe5SUcuCcgMVnvmhho68XyCM=;
+	s=arc-20240116; t=1736364615; c=relaxed/simple;
+	bh=rFd9UtL99Nq/dDzVNG4JWFZ8PONScvh5M7SUHTeHUwo=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=ZDt+002dQ9c1fuu4FVPZBUWcjp7pf4IJj/RdxBH5WSZ1yr9bicZHakZ8v4SZekNkJzsXhFJcikU9al+mrZ8igmby9eBo4TIOLZbx7Kdcgki0BroBYFVGkMNIZRW+wUL57VzbMB8BXOhUSsEeeSOEG+drc05pIWQ5hFMb1Kx61lU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FDUzYr3u; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17D1C4CED3;
-	Wed,  8 Jan 2025 19:30:13 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=LARPS5aEvzsvlqpGOO1rJniOKQh3pkZSO86XZ7emuQ/lvFxyxNa/KIKiBUS85Hh9Ib7V6gAs1L4XEMLUWy2joDrebJWLxpnzJ4r5w81Z7HnTFkrHgdKpKS5kPdsEnCWHtrKr2+xZ3cj0AadmBfqnTHQqtzHu9x9IwfgodlGNSM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c8aImZvC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D2F2C4CED3;
+	Wed,  8 Jan 2025 19:30:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1736364613;
-	bh=crpKHDBXad1HU/UzRBXwe5SUcuCcgMVnvmhho68XyCM=;
+	s=k20201202; t=1736364615;
+	bh=rFd9UtL99Nq/dDzVNG4JWFZ8PONScvh5M7SUHTeHUwo=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=FDUzYr3uToxplf4HGuP8DyaGXaYPmXwUIfo+y5GKsX89xFVkjBoeIBaJUtVr3LzQt
-	 yK8sCBYfXy57l3rMExg/faUjtl476pk2zP8yvS+6RjnyJmvGfWFGsStRWPKcmfyuaX
-	 r8iPJei1Q5NVMp3VUeADE1iBHSbhBdXitOdNeGLxmhR9sExMe+UYwZbE0a+Ljl06Bn
-	 3sp51zVgZRjpzIn+WmgIH57QraoyiEvC0+yDMNlLuIgkaH1niLZyN02HWWZprh0irU
-	 2D3x8/wmZwtg/o7czypopvpQL1FKJO/KBRvo6BoA2aDg8sZ1y1fRUu4dunxVRFbZKr
-	 UdzhWp8xW9uPg==
+	b=c8aImZvCj7HyFAqXX+W65fiHvqQ8CxHrykDZZ5ijc7pul86VGjaXQpJbThUezddoF
+	 rvq/jJNd0/vn6G9dGNB6r986E6N71VE/JoDNz4UD1VsyHU7oD3iGf48pMqlLVT3QZQ
+	 XzxkvUOrrqjgUkpqd1RLnwHq6MgaWMIveuFBMEWU0JphHnS27N/MzWp9OeImZC6QaG
+	 BITrMvmKxfc8OXRJpGeDH66aqz7dTbNVjIIrvZTmOv9DkmMlsvF7B2LwUTPrEECyL0
+	 2m3vThBV88qgHj1qTsHc42gJwJyyY6Ae7UyVJ29G7/YJuLmANVvtms9GNVzpOippre
+	 3h9MGnjNrlVow==
 Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id ADB39380A965;
-	Wed,  8 Jan 2025 19:30:36 +0000 (UTC)
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 33E7A380A965;
+	Wed,  8 Jan 2025 19:30:38 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
@@ -52,13 +52,14 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ v1] monitor: Make BTSNOOP_PRIORITY_DEBUG the default
+Subject: Re: [PATCH BlueZ v1] input: Switch back to kernel hidp if uhid cannot be
+ initialized
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <173636463548.754812.480434901029471908.git-patchwork-notify@kernel.org>
-Date: Wed, 08 Jan 2025 19:30:35 +0000
-References: <20250107173542.1449444-1-luiz.dentz@gmail.com>
-In-Reply-To: <20250107173542.1449444-1-luiz.dentz@gmail.com>
+ <173636463673.754812.9467624000955406010.git-patchwork-notify@kernel.org>
+Date: Wed, 08 Jan 2025 19:30:36 +0000
+References: <20250107203056.1470303-1-luiz.dentz@gmail.com>
+In-Reply-To: <20250107203056.1470303-1-luiz.dentz@gmail.com>
 To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 Cc: linux-bluetooth@vger.kernel.org
 
@@ -67,19 +68,19 @@ Hello:
 This patch was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Tue,  7 Jan 2025 12:35:42 -0500 you wrote:
+On Tue,  7 Jan 2025 15:30:56 -0500 you wrote:
 > From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 > 
-> This makes BTSNOOP_PRIORITY_DEBUG the default so it captures debug logs
-> from the likes of bluetoothd which is very handy when debugging problems
-> as otherwise the logs have to entered separately making it hard to
-> figure out the ordering of the messages.
-> 
-> [...]
+> If bt_uhid_new_default doesn't work it is likely that the underline
+> kernel doesn't support it so this attempts to switch back to kernel
+> mode (hidp).
+> ---
+>  profiles/input/device.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 
 Here is the summary with links:
-  - [BlueZ,v1] monitor: Make BTSNOOP_PRIORITY_DEBUG the default
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=4fa24e6583a3
+  - [BlueZ,v1] input: Switch back to kernel hidp if uhid cannot be initialized
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=8f853903bdf4
 
 You are awesome, thank you!
 -- 
