@@ -1,62 +1,62 @@
-Return-Path: <linux-bluetooth+bounces-9802-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-9804-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79AA3A157A0
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Jan 2025 19:53:46 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 23073A1581D
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Jan 2025 20:27:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BA1CE188CCB5
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Jan 2025 18:53:49 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1CB427A3D62
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 17 Jan 2025 19:27:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 222B91A23B1;
-	Fri, 17 Jan 2025 18:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 588CB1A83E8;
+	Fri, 17 Jan 2025 19:27:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="zHJelnrD";
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="ehpuL3R4";
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="fxPc1NGo"
+	dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="lUIkzahV";
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="sqcaqaoV";
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b="CmJ1hZmo"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from fallback23.i.mail.ru (fallback23.i.mail.ru [79.137.243.77])
+Received: from fallback13.i.mail.ru (fallback13.i.mail.ru [79.137.243.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7239125A63C
-	for <linux-bluetooth@vger.kernel.org>; Fri, 17 Jan 2025 18:53:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.137.243.77
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E4B725A62F
+	for <linux-bluetooth@vger.kernel.org>; Fri, 17 Jan 2025 19:27:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.137.243.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737140019; cv=none; b=NC2dIuxdKiYv7yaObflHp2q7hxY7RQ8w7crN7/WJZmGhFVtqdmzaNuSpWU7rTm6epuEgVx9MP2wh/QnoPfp4bdvdXDs1EA43pkoiey8t1gnyKl1y85U5zhSMt0CcZpxX3K597wtbXYadv6rlTIAt7LukgHi3flWKWQaNoe6jbSE=
+	t=1737142061; cv=none; b=GWsMWyjf4OqfY1hHLWyKjCn3jn1gTBlqjuCC+50uoVr/o09Ii+Y4OGt2+aY0wxzlXFNWUvlvNPv7VIXzoOnPHsBSrUYdmlUGUPdVz4OMGeBGagJDfqGkZlNiiNCK62/cnKTeYCF5DEzlTnM/tuNbArqmMTkRhBhYtxWw63IXuww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737140019; c=relaxed/simple;
-	bh=2ImhPY8N1P409emTS7giUuQFOiO6WQwOJZ/bREPYMjg=;
+	s=arc-20240116; t=1737142061; c=relaxed/simple;
+	bh=Ymas41G9AUQM/3md0dB8ILMIv520vkq2KGRUUufRruI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OvfI5cKrc5deg4t1T58K4AQj8t8K34vtChPsZblWj06cTEe2+KZHJccopkDPRTJQ00w7kJfOvm/OfCzQEJiVNoqO10ibEq/VoD55t32m80g6zTIBnBsk3GqPil6WUllM7bv2/hBpGeDRgvdqOUCKlC1EwfUl5UEvS/PfjJVq068=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru; spf=pass smtp.mailfrom=mail.ru; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=zHJelnrD; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=ehpuL3R4; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=fxPc1NGo; arc=none smtp.client-ip=79.137.243.77
+	 Content-Type:Content-Disposition:In-Reply-To; b=hoWZJ/ZwEMXo+3E3i6ZRV58ZMSaXO9Pg1dXkrdq6usvxrEBWVueSE915qBD/3rPkThInTd57dNVytvsLis8vkAyEfoPq0jqNWy/SP1rOEh8iKE9kqPpdoYdvBPv8xh+p3mURiWWuwG9ZDzOXrI9EnHkTysVM6iu4zWv62HefFN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru; spf=pass smtp.mailfrom=mail.ru; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=lUIkzahV; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=sqcaqaoV; dkim=pass (2048-bit key) header.d=mail.ru header.i=@mail.ru header.b=CmJ1hZmo; arc=none smtp.client-ip=79.137.243.65
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mail.ru
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mail.ru
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail4;
-	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=2ImhPY8N1P409emTS7giUuQFOiO6WQwOJZ/bREPYMjg=;
-	t=1737140015;x=1737230015; 
-	b=zHJelnrDBgoA+ocZOfp0awive+kZ6dljaZJ/z7wHUPSCUEaqtAd036xwX7d6sNM3OXgHEMd7vbqVjn8WALqfPgfOmj80FvU1D2zQy9cYig+sN0eM9kqNOKe9XbWt6RzcqwNdM7rrlrfHow8qoraXjSz/CJWE+FHsaT05qf2e79HUBc8jGpkeC5LxhE9JnKONrWe62UkdBNOOkY9MoO3qiQlC92behtX67oLomFshB3JS0MtZs8jWM4m7H5knwLwc2EOKDTQRv8YXL4oiUu9tnKxYsUt6pp8HQH/nhRUCjOQW2zRB+hauUihAsgAzxdjP1aeWf89xIWZt0j0TJ+E0KA==;
-Received: from [10.113.196.133] (port=54536 helo=send55.i.mail.ru)
-	by fallback23.i.mail.ru with esmtp (envelope-from <hitechshell@mail.ru>)
-	id 1tYrTI-00AAyH-7V
-	for linux-bluetooth@vger.kernel.org; Fri, 17 Jan 2025 21:53:32 +0300
+	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=Ymas41G9AUQM/3md0dB8ILMIv520vkq2KGRUUufRruI=;
+	t=1737142057;x=1737232057; 
+	b=lUIkzahVMuJyunJjSzcunlLGwwa2zX9lIbuQLj6JSUA7cOl/dFaiZF1jOyQrUGEDZeOAhfVfG/0B0EET0ECOjkfzIeEPjSv/LVe0DJxcDFYoweyPl/shy75b4Z0N6ePvRT0yCWY2PlR0Ouc0ZQOWIZZYF/Y1qEPWbP5vQ858v2VFMHIFb+PkivxVD0kCRqEO/ul8KkO5AfqzSVm3dNt/mdt2GihJ4PoegvmAkJSJKqpJRhtsWds2jtyTobuTW+qrQ2zk+ch2b4lEnBTwhI+3Jh2/Dkj+ITZdMtkwjUCrh0jvsYmq/oCk/+vBF4zvmi/C3GxXRPt5Fi6+qTh8rf3xbA==;
+Received: from [10.113.252.125] (port=55478 helo=send239.i.mail.ru)
+	by fallback13.i.mail.ru with esmtp (envelope-from <hitechshell@mail.ru>)
+	id 1tYqwT-001KXd-QL
+	for linux-bluetooth@vger.kernel.org; Fri, 17 Jan 2025 21:19:37 +0300
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
 	s=mail4; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
 	Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
 	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
 	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
 	List-Post:List-Owner:List-Archive:X-Cloud-Ids;
-	bh=2ImhPY8N1P409emTS7giUuQFOiO6WQwOJZ/bREPYMjg=; t=1737140012; x=1737230012; 
-	b=ehpuL3R4RAg5grJS5Q3Z4JEnUyjnmw5wrb+Fq8AC6Lf4S+U9RATSXhTzZa4DV7AR2k5Z6gXWQOb
-	M8JVk9UX6OVL6+HUjWbo+JhebSN6C6hZIb5Ue0zfKwYkBt+xbFQ0RLA9rZBIC2rF/8S6EAXmNydy6
-	pvTXZoyBCxxLokKOuB/XFvr6LZHUyXIKQnhvowbF0Xhg3CJm20ZfKHL1KuQ+EIlfsA7UI7qjrBcXO
-	NgrLaOm9zMg9awqjJ1mGZmYrKhBzUOfmH5M7J7Yi99hzE+YKHLY4OvbS2VysaAVKId4UDU3eX+Ui9
-	c8EFSruLoMjvr0ZD9lDBiKdgBdATec5PTezw==;
-Received: from [10.113.53.52] (port=51798 helo=send127.i.mail.ru)
-	by exim-fallback-55f48b6675-znffc with esmtp (envelope-from <hitechshell@mail.ru>)
-	id 1tYrT9-00000000G3X-3omz
-	for linux-bluetooth@vger.kernel.org; Fri, 17 Jan 2025 21:53:24 +0300
+	bh=Ymas41G9AUQM/3md0dB8ILMIv520vkq2KGRUUufRruI=; t=1737137977; x=1737227977; 
+	b=sqcaqaoVAHAxyUqbuQMpQRnS9HuU7hXhlDUAg7X3CSwH6uaEKER3xwsVmRniGc47GAl+u5yBVVf
+	+cfwQvWOjCPTwWyB7fhicyZIYBE5dNEeunMhu9ihL8KmCCKNU/EuJ5e8Iz/GpXxQsa1wTNpu00yiM
+	ENlayfIXCxiFN/Yk+AJPuK+Etu6co0L61tcx99onLPlagLVTWxUkXrCRz9YWaJpK7xrwCI+pfHmxg
+	dVL59eUIA+Et+YMIAPBz3wZeD/D1K/kugWY16dHb61ec12qFxzqCXpcRPzMWipsoRrqHJbCE6/7ar
+	wTrLTMdO/Su97lLafc+xVVi7UizOyg0D6o+A==;
+Received: from [10.113.61.27] (port=43362 helo=send106.i.mail.ru)
+	by exim-fallback-55f48b6675-spn75 with esmtp (envelope-from <hitechshell@mail.ru>)
+	id 1tYqwL-000000001yf-1R71
+	for linux-bluetooth@vger.kernel.org; Fri, 17 Jan 2025 21:19:29 +0300
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
 	s=mail4; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
 	Subject:Cc:To:From:Date:From:Sender:Reply-To:To:Cc:Content-Type:
@@ -64,23 +64,22 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru;
 	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
 	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
 	X-Cloud-Ids:Disposition-Notification-To;
-	bh=2ImhPY8N1P409emTS7giUuQFOiO6WQwOJZ/bREPYMjg=; t=1737140003; x=1737230003; 
-	b=fxPc1NGo7qhj1Y3/kU4xFx9Jbtk5byqM9mKBjYwXqIeJ5AKhccDXHmMrG0rLRxygJCBUDVXlpi3
-	qyZMweQKmXEdcu4XzZa4uZxQY+6dqRG3Qpd+4RUE87RNl+B9MnVeVpaWuomIzDlgx6IR4Sun7OfxJ
-	XsW7PrN1yTjNesIVzQAhTMJnbApjIELZPGg63EJnHDAIjvCXbqoNCFHxPtqL5HemFXtlnmy0MUBH6
-	l4mxzg/UUnZBBdQ8UWFb0mRrvN1cyEvw4rxYcLxL/TRvajY1ft1O9qZNFyLF2tgJ9RNcRGf9h4F2J
-	nFsGO/bCPkDKS4MKMpJBWGM11rpCiXr+j4uw==;
-Received: by exim-smtp-6758d5575c-cjkqz with esmtpa (envelope-from <hitechshell@mail.ru>)
-	id 1tYrT1-000000002KV-1lYs; Fri, 17 Jan 2025 21:53:15 +0300
-Date: Fri, 17 Jan 2025 23:51:02 +0500
+	bh=Ymas41G9AUQM/3md0dB8ILMIv520vkq2KGRUUufRruI=; t=1737137969; x=1737227969; 
+	b=CmJ1hZmokOF4F48Oc2rZ91kNa7746uT0GCZFz6OsefgWPfyv7HekgqGczgiHxKBTM8DMgfPU6S+
+	EM4qOnQff6usCzD5aANAZwxjngUQ7SRS5buuS6wFEsWCOsN1gaILLMAi41mcpD3nJNZiKv1hdgiQU
+	gxr2A6iA6w9Bpswz3NLsH5NHg8wjq+okng0F5vPaKTy6FIi4smc55JSaiMQZ4LUd10wEqlmDIznRT
+	F4aMd9DvPAOzH9bxFAotyx8fHUkSkkawtZ+ks8S7Z2Z+cb1E1XHDEDHqRuWj0Bc12/JDoZ0/OKdqM
+	gL22jn0xq4FYf0WB9GhsdbVGl2L96gq8r/7g==;
+Received: by exim-smtp-6758d5575c-g2tp8 with esmtpa (envelope-from <hitechshell@mail.ru>)
+	id 1tYqwC-000000008wC-27zj; Fri, 17 Jan 2025 21:19:20 +0300
+Date: Fri, 17 Jan 2025 23:17:07 +0500
 From: Denis Burkov <hitechshell@mail.ru>
-To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: linux-bluetooth@vger.kernel.org
+To: linux-bluetooth@vger.kernel.org
+Cc: Denis Burkov <hitechshell@mail.ru>
 Subject: Re: [PATCH BlueZ] shared/shell: add proper line clean to
  bt_shell_printf
-Message-ID: <hau5k6onzla7yzhygzoz64dga5wzhnwwebxtaxrxfndeowezzy@k3wfz3vi2tpy>
+Message-ID: <jjjs76es4fmqn4mrvo2u5hwjwvrg5nqi4xczh5rmr73pqzfrk6@m236ffom7olo>
 References: <20250117180611.14869-1-hitechshell@mail.ru>
- <CABBYNZLK4hAmUXp-yZVDXUJ6M8_faDYPN2i6kccdbvc945f0fA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -89,36 +88,38 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CABBYNZLK4hAmUXp-yZVDXUJ6M8_faDYPN2i6kccdbvc945f0fA@mail.gmail.com>
+In-Reply-To: <20250117180611.14869-1-hitechshell@mail.ru>
 X-Mailru-Src: smtp
-X-4EC0790: 10
 X-7564579A: 646B95376F6C166E
-X-77F55803: 4F1203BC0FB41BD9F92BE5667526BA91771AC702472B402285C611E5AAF235A4182A05F5380850405510752860C21F7A3DE06ABAFEAF670585DB2E7C8784BB04349EF95A134DB3DD19AD13A5913A5F63
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7B9D6DADD6B53929DEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637EEA194BB48C104EF8638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D8695D5F30218F14E4D1F293AA401F2E95419C0C34BA2E1F9320879F7C8C5043D14489FFFB0AA5F4BF176DF2183F8FC7C06030C3405640F6718941B15DA834481FA18204E546F3947CB861051D4BA689FCF6B57BC7E64490618DEB871D839B7333395957E7521B51C2DFABB839C843B9C08941B15DA834481F8AA50765F790063767B9C6E70FBE8DD8389733CBF5DBD5E9B5C8C57E37DE458BD9DD9810294C998ED8FC6C240DEA76428AA50765F79006379E66999697786A0FD81D268191BDAD3DBD4B6F7A4D31EC0BE2F48590F00D11D6D81D268191BDAD3D78DA827A17800CE7582D06489A00BB5AEC76A7562686271ED91E3A1F190DE8FD2E808ACE2090B5E14AD6D5ED66289B5278DA827A17800CE76631511D42670FFE2EB15956EA79C166176DF2183F8FC7C0E4A630A5B664A4FF725E5C173C3A84C308899E12ACF764CD35872C767BF85DA2F004C90652538430E4A6367B16DE6309
-X-B7AD71C0: F8D540627A99B4FB7DB86BB5CA128351461DD7A0A9FF8BE1E8F7B195E1C978311F160DC9883BA6C1BC778C3F84A8D0C8
-X-C1DE0DAB: 0D63561A33F958A5CB81FDC6FE886CEA5002B1117B3ED696D52C55FF59DA1CB8B91D2EB2DEE3878C823CB91A9FED034534781492E4B8EEAD85CCBA673D36D1A4BDAD6C7F3747799A
-X-C8649E89: 1C3962B70DF3F0ADBF74143AD284FC71106E36FF2641B7B8424CF958EAFF5D571004E42C50DC4CA955A7F0CF078B5EC49A30900B95165D349320586B19AD2C72277B600982697474799975A28512BFA5D8BED55C22050708F8670BBA59969F731D7E09C32AA3244C8C1B4AD46F32A84777DD89D51EBB7742CB6E72052DABEABEEA455F16B58544A2557BDE0DD54B3590B8B5179048F486F0F8ED7FEBB3D2F69ABF0F826D30A442AE37E69C174A41D00C
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojWtbQUE8gyFw4RZw4FkpBvw==
-X-Mailru-Sender: 7219FA8B682B638D72A16E3FD9953F6302980B8DB596F077B4F4BF0E7EF3B544D48A73EB96638A38DD7143E30D734E3D46315093CA775BF3554C0F224C5326CDBE1FA5EEA7DC04A0851DE5097B8401C6C89D8AF824B716EB5DB38D7CCF7198FF1D0BEC28C16373053DDE9B364B0DF289AE208404248635DF
+X-77F55803: 4F1203BC0FB41BD9F92BE5667526BA91E9F58B327A747C8346DFDDD45EE0D99E182A05F538085040C43F47A63428F1ED3DE06ABAFEAF6705C37DF09158E22B51A955C7343EF89551DE81258B7D5E2227
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7BF6702EC5472AA0FEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637040380BD28C1B15C8638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D8818068BBA4A79AD489D5074AA622005776FCD2144A08941220879F7C8C5043D14489FFFB0AA5F4BFA417C69337E82CC2CC7F00164DA146DAFE8445B8C89999728AA50765F7900637F3E38EE449E3E2AE389733CBF5DBD5E9C8A9BA7A39EFB766F5D81C698A659EA7CC7F00164DA146DA9985D098DBDEAEC8D2DCF9CF1F528DBCF6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA73AA81AA40904B5D9A18204E546F3947C1B3F1E879BC1E2F1BA3038C0950A5D36C8A9BA7A39EFB766D91E3A1F190DE8FDBA3038C0950A5D36D5E8D9A59859A8B61E7D461CEF46D5073AA81AA40904B5D99C9F4D5AE37F343AD1F44FA8B9022EA23BBE47FD9DD3FB595F5C1EE8F4F765FCF1175FABE1C0F9B6E2021AF6380DFAD18AA50765F7900637F09814068C508CC822CA9DD8327EE4931C1080093C09B8365705F49E3A860CEDC4224003CC83647689D4C264860C145E
+X-C1DE0DAB: 0D63561A33F958A59BE7E5DE4C55A3F35002B1117B3ED696385E734DBBE67A09108A05421C070DB8823CB91A9FED034534781492E4B8EEAD69BF13FED57427F1BDAD6C7F3747799A
+X-C8649E89: 1C3962B70DF3F0ADBF74143AD284FC7177DD89D51EBB7742DC8270968E61249B1004E42C50DC4CA955A7F0CF078B5EC49A30900B95165D3454E98140CCACB5B3629796C2CF4167A02DF39A04C776757F46C56E40C29C94FF2F751139C303B5EF1D7E09C32AA3244C309506BFF8927DA177DD89D51EBB77429EDA331B464AAF02EA455F16B58544A2E30DDF7C44BCB90DB8B5179048F486F0F8ED7FEBB3D2F69ABF0F826D30A442AE37E69C174A41D00C
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojWtbQUE8gyFwJo38aqui/PQ==
+X-Mailru-Sender: 7219FA8B682B638D72A16E3FD9953F635D999836DCA614E367744F1CEDD0CF3F4753C85A0B364B32DD7143E30D734E3D46315093CA775BF3554C0F224C5326CDBE1FA5EEA7DC04A0851DE5097B8401C6C89D8AF824B716EB5DB38D7CCF7198FF1D0BEC28C16373053DDE9B364B0DF289AE208404248635DF
 X-Mras: Ok
 X-Mailru-Src: fallback
 X-7564579A: 646B95376F6C166E
-X-77F55803: 6242723A09DB00B4E321808EBFEFE579B5B131811C2E9C30BA4E4D1D460E1F5A049FFFDB7839CE9ED5E581D7620AC4EB77D8AD260FAE1322F9B9F81CC9E09631D42D680C63CEBA458FF39D4549A2E417
-X-7FA49CB5: 0D63561A33F958A506A1F34022DADE665002B1117B3ED69665D3D3E5B51F781A4E82D2634811542802ED4CEA229C1FA827C277FBC8AE2E8B54F520D093A0DF28
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5+wYjsrrSY/u6NqYXWMR0/V85CnFjCYTu9APdQH0PvpnP5qz8aO2mjTJzjHGC4ogvVuzB3zfVUBtENeZ6b5av1fnCBE34JUDkWdM6QxE+Ga5d8voMtmXfSo17Yhm31sDTbRFuIOw5Q1i
+X-77F55803: 6242723A09DB00B4E321808EBFEFE579B5B131811C2E9C30BA4E4D1D460E1F5A049FFFDB7839CE9ED5E581D7620AC4EBACE62DF9C0DD901B26ABD077F9082D60FB8ED4A9343E79D893E7A0542FC327DD
+X-7FA49CB5: 0D63561A33F958A5AA5C202C57A778745002B1117B3ED6962F9F548F9364EBD73E359E1F9564EB4B02ED4CEA229C1FA827C277FBC8AE2E8B54F520D093A0DF28
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5+wYjsrrSY/u6NqYXWMR0/V85CnFjCYTu9APdQH0PvpnP5qz8aO2mjTJzjHGC4ogvVuzB3zfVUBtENeZ6b5av1fnCBE34JUDkWdM6QxE+Ga5d8voMtmXfSpdsWEEWWYWWTqYQ0PEDyTA
 X-Mras: Ok
-X-7564579A: 646B95376F6C166E
-X-77F55803: 6242723A09DB00B4E321808EBFEFE579B5B131811C2E9C30720BC3AD2A41786C049FFFDB7839CE9ED5E581D7620AC4EBAD8B01D3C9F89961C6A5670B6F786E644228B720314808CC
-X-7FA49CB5: 0D63561A33F958A551964473BCC4BF1FDE5FE24F511079F39FE18F7CC0E9CBECCACD7DF95DA8FC8BD5E8D9A59859A8B68E6A4215806F4BA1
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5+wYjsrrSY/u6NqYXWMR0/V85CnFjCYTu9APdQH0PvpnP5qz8aO2mjTJzjHGC4ogvVuzB3zfVUBtENeZ6b5av1fnCBE34JUDkWdM6QxE+Ga5d8voMtmXfSoKNdUUzT8mQgyxHfUpwjuv
+X-7564579A: B8F34718100C35BD
+X-77F55803: 6242723A09DB00B4E321808EBFEFE579B5B131811C2E9C30FFAA9B46F1D56B4C049FFFDB7839CE9ED5E581D7620AC4EB777D6865313A48243CB72750B23DDC8326198D05A65908B4
+X-7FA49CB5: 0D63561A33F958A54543C52088F2DD9EB3F086E263CAEC0DCB382660EECF292BCACD7DF95DA8FC8BD5E8D9A59859A8B6A096F61ED9298604
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5+wYjsrrSY/u6NqYXWMR0/V85CnFjCYTu9APdQH0PvpnP5qz8aO2mjTJzjHGC4ogvVuzB3zfVUBtENeZ6b5av1fnCBE34JUDkWdM6QxE+Ga5d8voMtmXfSqf5aW7er5knZzUdJfQ/bjz
 X-Mailru-MI: 20000000000000800
 X-Mras: Ok
 
-Issue was reporduced on:
-PostmarketOS (gnome-terminal)
-Archlinux (konsole, alacritty)
-Gentoo (simple terminal, alacritty)
+in some terminals (or all?) the line is not cleared before a new one is output
+(for example, if you turn on scanning and then try to write something to the terminal,
+the output will be mixed - you will get something like this
 
-(this list is not complete - only those systems/terminals that I had
-quick access to)
+[JBL T450BT]# h[NEW] Device ****
+[JBL T450BT]# he[NEW] Device ****
+[JBL T450BT]# hell[NEW] Device ****
+[JBL T450BT]# hello[NEW] Device ****
+[JBL T450BT]# hello[NEW] Device ****
+
+where "Device ****" is the line that was actually fed to bt_shell_printf
 
