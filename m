@@ -1,115 +1,104 @@
-Return-Path: <linux-bluetooth+bounces-9995-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-9998-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6DA3DA20004
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 27 Jan 2025 22:38:48 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E8B86A2004E
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 27 Jan 2025 23:13:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 949D3161182
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 27 Jan 2025 21:38:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0A9431887146
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 27 Jan 2025 22:13:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 105E51D8DE1;
-	Mon, 27 Jan 2025 21:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 598281DAC97;
+	Mon, 27 Jan 2025 22:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DiuGM90p"
+	dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b="t8fQFgKR"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+Received: from sonic308-2.consmr.mail.bf2.yahoo.com (sonic308-2.consmr.mail.bf2.yahoo.com [74.6.130.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92EC81A83E7
-	for <linux-bluetooth@vger.kernel.org>; Mon, 27 Jan 2025 21:38:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441A41B4F0C
+	for <linux-bluetooth@vger.kernel.org>; Mon, 27 Jan 2025 22:12:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.6.130.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738013918; cv=none; b=oEm4EcXRDkM2uzz4dQ9iZfFjsJRuZEQZR/hZjrAdaFvVjf8MN50LkNfm/uGpxLv/q3wTDWcHEzMile82N1oL1pWJ8pVFWse1ZoZqBQl6F5TLWo0QIVFLHjS7P+DhVWnG2uDHzcNDOwWKa1HEE2yzxPFQu8wfHxtjoyAn5aroXJA=
+	t=1738015978; cv=none; b=RUmGiIajVQ44uDgkI2Xv0PGst8JPGU7CJmc6MgrD43O4Ow8dJkfEwNyPOjRo6ZQ55hhtZ50h3rf0jdsbXhvAdG5O5pQJ4VrENZokH6OEo1GdYnZ5UGD1Y0SnfU+Gxi1YBt4WYbJoZV8sRg48kCk84TgbO8hWpCIi5BP0MsdJSy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738013918; c=relaxed/simple;
-	bh=NJV4hkXTRM3mkSl4bOZR2JIrUR8FynpLGq/T/n3Qniw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=q/GVN8HpMxACy3UVmQZ1qNmjbPZgIFVtdzza9uXmlCy4SiEDxheoPxXiFCXh+LX7PXUPz7JpS5mPd94UcD+1/8PZG3BKHq8CrgFr+TEccQno7hZ74EfA1wtI5fIgYl2HbEcM26BvDUWYImBsZ5pDVMMnhfY1l9nq17GUc58NlEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DiuGM90p; arc=none smtp.client-ip=209.85.208.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-30613802a6bso53165831fa.1
-        for <linux-bluetooth@vger.kernel.org>; Mon, 27 Jan 2025 13:38:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738013914; x=1738618714; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NJV4hkXTRM3mkSl4bOZR2JIrUR8FynpLGq/T/n3Qniw=;
-        b=DiuGM90p1I2t+QFtK2OJrjlhu5jUmJhUpdIAcbxuDACzP+v67SAhUsFSCDCB3v8FKS
-         nUckfpewNFtr9FJCZeDUGOJd8+Q/wzPQuuDyakuySyOjjWP13NaZSFCjdq5LTX6bfhq9
-         rVjhyMr61ZT/zbIiap0As4eInCDGfbyCBuvsO2wUA3SB5UZNFxUMcqIOf60azkXxvyJY
-         Ys8AsrK5ztTlFIJNFL9PUk0q9MOnYc/5FUYA7xVfr+msDN8G4eTEmE2YQDpG6/YMReX9
-         vQBUpBOSAV8C3gxDUGrki4bpl5x6io2Yy1EabUKtalE4GWETcNkCjt4pp2cm5I+fwawP
-         DcIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738013914; x=1738618714;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NJV4hkXTRM3mkSl4bOZR2JIrUR8FynpLGq/T/n3Qniw=;
-        b=PdAwZ2PUMMsdlagXyWySCLRlCJDmxnCWJKQhUifE805xVkeK9gYSZAsWM0qVs38a4g
-         DuLgXNtxktN97DOh4maR2f56XLQs+rzM4BXt3HTMck4oontj9kPfTHNYmZV1E9ONYLe/
-         IYm4vPlRSCgUWC5W9WB33K3tnzh8hKFvFElsUZHcrW0z9PEOZ6J8BcuQqBP5eX9NvWEV
-         iJ38ViiWl5uEAvFmgld/lJfUTO40b73j3pLSIyejXqo3TPzoe8fRyFPnoHjYwkQSC8Lj
-         vDVsvdjAkqWNf6n+mS38wJLm8Mf6ZjtdD3F+ZCTLgrwRdSKfp1kkF1G71SHSm+rsqtAB
-         0f1w==
-X-Forwarded-Encrypted: i=1; AJvYcCWESGN9kfORqohXjjbwJ68NRH1emR8o1bgnsB9X1d2PCDye5mV8+2JgtNQ/skHtkwcf5twBwBgf/mgUtv2OKvw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YynTHDV7nHkVP00LqFuK8AYjd80OrSkVQf9wfmpkk2MrsvEOljW
-	By+qPw7z2aGieTAEcF24N8mUm1C/TweJBAM41CmJ0WowCRePFd8LhsE2MfeGoTw0CNZr2PlgV0n
-	88lLcZoQRZUVVbkSLtSI2L4l5nqg=
-X-Gm-Gg: ASbGnctp++ciCqx8V7Tx/ckQOLYvOxJjnHSnJpJ/m5kKmv4xSE3S1kXJOACFpbw0MFv
-	DhRtDgWoLQ33MUDcOMvjNSbQBkZTxj85AIzRb5FavcKmQ3c3K3YfTnVbxQCBTgtikTSTBc1lSIw
-	==
-X-Google-Smtp-Source: AGHT+IHMwkDbeoKGmmY/4P958+3BjOo1w2uFBUoDDLbvBDODYkClVWpja5fQT2nkqPVyRVntx8nuFLTvJ+CiPB1mLj8=
-X-Received: by 2002:a2e:bd84:0:b0:302:350c:7e9f with SMTP id
- 38308e7fff4ca-3072c995303mr168130001fa.0.1738013914287; Mon, 27 Jan 2025
- 13:38:34 -0800 (PST)
+	s=arc-20240116; t=1738015978; c=relaxed/simple;
+	bh=9DX6gHNh1jUxz43LTsiTJ2dcvuCXJphH0wO8tPfQZUs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KiFtb8Cc/efriW1+t2YrVSTNQb58L2j03LWpj4j2Cp+kVOi/jtJxITsSeCve05XakRaohS173UcLOOKQdGrVkX4Lp07ewjFwDpzFjk4K77qeIhCp7nQo7R5PWGpcFtG/dOYDbtLP34yqXg+3n9GJx9vIyorVUiyj0z8/E221AxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com; spf=pass smtp.mailfrom=yahoo.com; dkim=pass (2048-bit key) header.d=yahoo.com header.i=@yahoo.com header.b=t8fQFgKR; arc=none smtp.client-ip=74.6.130.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1738015975; bh=9DX6gHNh1jUxz43LTsiTJ2dcvuCXJphH0wO8tPfQZUs=; h=Date:From:To:Cc:Subject:References:In-Reply-To:From:Subject:Reply-To; b=t8fQFgKRzLhSBFncGco+2cYTsTK/MwWKC9UO0VSMOL43dVqpT23qmY15aBw+oO72U/boWklXVRKOtivckq/qsjd5lfgXaL79lUJZOOBJLdxA8nfeAsaefE54hQo9cQxq9tdLVuBRorHuSoi3p0FPtfBkhxHGwqSC44CKLHwLW+p2066TSjArGeYjnLSvjjmYoX3MKIoLT0avsFeI+BnpwURxa6vlvdQa/TVN6NzSMEC8LXd3H4zRDsUzQRS4Ksqt58+mdsUtV8kTAZWKJRo2aA6OgVbzMQLrocQoWL86fKs1htr6gTbGp1nm3ykGdJlnlWllZjFihdV+DKcqzV6pmw==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1738015975; bh=hKKz0PMF/c6OupbBVxpTcuLzS3X5U2FPOZMZxuXzg6i=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=NhGTG//aF6vbmVdIxtCGH4jFiUelSCmLsZuFIc0+QsB4yV2dfAVEjq6SG39L8PLT+XsDWTpdgasYwMK1J1Tf9EUWDFyyzeF0jFqd22RY2pv/PXH2syNyQoji0fobqlpPiSyQr/MzE+QCPwrgqoBRv++zBhnNJoE+huflfOFYW9xPffVgEMsBcjMVkDtHdUfhX6kbUsaB1LFzxn1mJt0aoFOmsoS4QJtoeofNA5cYzsaImgdUCYxYoadSfnKZPD3hsFoYMCNDkdRvZsKozhFwqven7Bf0uwsOtOqun9o5a/y4/klygGJtw75OaM++MKcG8OdAqJl0wG6wYb/yfBiE5w==
+X-YMail-OSG: y5OgX.UVM1nDFG_z8_cAV.8O__tGE5Wns3CP91GWa83BxD4Fjv20VTbO1_I3fPr
+ tkf4XppDvMBicPQH2Q8MJHXf8UuM_pOXyN6j40keh6FgXAkjG4l8IyU_E7GZ.fR19GmAhMuESats
+ hzijLYtekj6Rha5fm5cKOvkR1GDDmIDNma.ZOCpeeYb_YNx6M7_ipwSdEhJBaHunAzNbLXr80Aba
+ vBRrdZwlrMlCxl9mUbxeLozu99GEstbx6kF4X5lDklIDsM9QOoXbkOpZM48swxpDAbn5Iu0eaGij
+ tlFPJ1sI8d6j4r0LkztcIJXgG1qCZi4cJHyydleurC1_u4FGmeERn59pweBxmxUzEDIHiscBsVI3
+ z8crHllK3l0Ca90xIczBs3QzfQYZ9SpCipYQUiAopfGvT_NRfOSFKASlFyu5U9xFUJXNysfxoS7_
+ YimAwQWR2jFSaKI0mLyBnLH8.fc7jRLkExGqMySdx_lLIZPjL1XYIuMfw0mGrXbQXsOuXzUemjJ_
+ TnntgDH1yG6YGePEpqvkwd2MBbwLUK0NfrWDXGTQfVo2wj.HXiBNRzn5EJ8t68B5e8dV6a2ghVIs
+ qV9gHhXQlOhz8fkw7ow3gopoeSgLVGhIvG2xQnGo6eE3D.NBTP05I.ms.y3wNOjSDALwPiYobV.U
+ mxxuOnK6yLygOZ9xtZOCwizAZPKF7_HOaeKv96Y47rC2tLn._L6ajYk6dbzHQBSCzFKKgwm5v6eA
+ 5Sxp.vXeL0ZrWEO1atzD3Ma8T1IiOPyfqL2WArVKVlWKsf9M5JHGKYW1d51FdNjlZVffmTcUr5Ew
+ jwXGiqlDwq6uY0eZZngnLfCLD9xM00XqYhLGqbisu5Yc.kjVEWEKW3W5BF58Ee1jBZ7GyHl5Qm1p
+ VbwNskhdtD9b1SjGukOmZlC8i3HrVTFbb8jIr0gLK.NfwsxeH6sWZ5eW0AoeRAULgZg0WxiQHiRR
+ wNMRddklTQBfRaszrqTtVTHczNhklhHlKdUppsE.doszm9u.UeRMLuzlVHQiiDYpfodVxhENnP1R
+ f5ebtfV52uZUp3L8Q8jWAl9ykxILTKfOE2cWYiwe2yj3ozDuG5P0xuliki5GFl1_zX8BByP5NcJE
+ LeD0JSPcb4hl69WEkYYPULsZLmDUvu1LkB2uI56kBIRfSF2vk7jxlJ_LSG.kJgL_H4kJYK2q7ANM
+ aeuD5GRa6x_TEME768CZLyfPMl_oveDnqPVTXDMKMDYLdHaZprW3UCGGemirLqj1W7z2MXadbiMd
+ 3QM0oftFBa0z6ihggiU7t3vsMx1lHrNLOZNkNZVOXJoEfQG80pePm..wM1A1Sfc7BPjITKlshLMx
+ RLnttwc1h5nam04pM7jdNqJgP7k.MUotELx3008fIO5pjrQdmrzCeH8CI048vdxhbC8iT3e6D8YL
+ oYPF8yDMoTzVMe4P8Wcof3tQvK8UYqB7M80255LsX0WRjo6Iw3DPlGf1CHg4kSIMldXN7l959l8T
+ E03fGjESGWBR_flMx0hZ1f.1hjdWDAAZttRTcDZ3ROQ.n9U4ZfIGW.af20gd_QZwXHp_PSX.pLOn
+ wbIsGX.B1GeVb0YwqgbNJqUGRHZSapwkd_Wx8KbrW3ufBrNGBLoKUv6XbD6G0PKdH.CC0C9js1Br
+ tfK0CIhQX9VUMzYbhziybI2Jzgx4Bx3bK3PvyFpvoIMlDw8.JgcBpSijb1SiAgcCWkmWdDQKUyrA
+ dMRbWtc9f0J9Sw5U8Mwg04DP_OeG8UKDTw2X.QHuDthYCyRgflIRBrSaYQmu2qSHke0AhcvLY3Mg
+ GsGYUFK9etXN4.9I9Ob8AqpCdALRcn9bwpJaBfEQZJcRk9YRRdBV8G1OowaCto.u6qCv36cvWTF4
+ Uvk2dubeFhFW6SZhkDiknnFohz4k9Ojp6zcI7lnu9eFhtMTk0w9MxoOwiraPilo.NZX2eBFqF6u0
+ dZcPLyVyb_f.DaZ_QFmWU9JHkvzk5V1i2Vb_ZDElxxxvAy7KgKRvqUXJVK_4T6T_xnzMZPOqeFUQ
+ 6Ic3249jJ8uvN7yQF4AEXrSvz98jlot_8LEeYQr_y.Uv5Ui0xDtXJI9vKZuooMb5VG5idqC10baP
+ ssSLPVqhRwms.kEkx7Be.QU3kqEbu_PJGiK5E85.2ytSZZ.wAvUw7kVGv.DXlyz916Sk7h5rKmZh
+ y5Mp9L_z.So5n6xCLgZWkDRuCz_ljJupfyHbVIIA7zUVcUVjtU5XWgsyFXm.L5KCjsGzL_JMggaB
+ lipc71yIw53iNmF.joUosxIPvDeRJO3oWz.7ZfWwRJjPoByDnmRU3yw--
+X-Sonic-MF: <deaner92@yahoo.com>
+X-Sonic-ID: c44999c9-2a2a-40fa-8bb8-72653ad7c6a3
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic308.consmr.mail.bf2.yahoo.com with HTTP; Mon, 27 Jan 2025 22:12:55 +0000
+Received: by hermes--production-ir2-c694d79d9-mr45v (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID 6a4cbe09f41ba2e327cf52594d733ec8;
+          Mon, 27 Jan 2025 21:52:39 +0000 (UTC)
+Date: Mon, 27 Jan 2025 22:52:37 +0100
+From: Jeremy Dean <deaner92@yahoo.com>
+To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: markus.elfring@web.de, marcel@holtmann.org,
+	linux-bluetooth@vger.kernel.org
+Subject: Re: Bluetooth: Remove unnecessary braces around single line statement
+Message-ID: <Z5gAJboUiYtDWdSr@vmi2410184.contaboserver.net>
+References: <Z5aMrXwnmEXxKWkC@vmi2410184.contaboserver.net>
+ <452f118f-2a0d-4b54-9285-063ccbe6e5ab@web.de>
+ <Z5f7BcSERmImx0_H@vmi2410184.contaboserver.net>
+ <CABBYNZKxhq33FXEb_8LMLV4whhX0jc100tUPYCAs9t1q9_5MBA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <Z5aMrXwnmEXxKWkC@vmi2410184.contaboserver.net>
- <452f118f-2a0d-4b54-9285-063ccbe6e5ab@web.de> <Z5f7BcSERmImx0_H@vmi2410184.contaboserver.net>
-In-Reply-To: <Z5f7BcSERmImx0_H@vmi2410184.contaboserver.net>
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Mon, 27 Jan 2025 16:38:22 -0500
-X-Gm-Features: AWEUYZlPqU95kgtv6gVeUjpLGU3G6M2N4VtYCXwK2p_iZEmNl07_0-_GxkLOjyQ
-Message-ID: <CABBYNZKxhq33FXEb_8LMLV4whhX0jc100tUPYCAs9t1q9_5MBA@mail.gmail.com>
-Subject: Re: Bluetooth: Remove unnecessary braces around single line statement
-To: Jeremy Dean <deaner92@yahoo.com>
-Cc: Markus Elfring <Markus.Elfring@web.de>, linux-bluetooth@vger.kernel.org, 
-	marcel@holtmann.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABBYNZKxhq33FXEb_8LMLV4whhX0jc100tUPYCAs9t1q9_5MBA@mail.gmail.com>
+X-Mailer: WebService/1.1.23187 mail.backend.jedi.jws.acl:role.jedi.acl.token.atz.jws.hermes.yahoo
 
-Hi Jeremy,
+On Mon, Jan 27, 2025 at 04:38:22PM -0500, Luiz Augusto von Dentz wrote:
+Luiz,
 
-On Mon, Jan 27, 2025 at 4:30=E2=80=AFPM Jeremy Dean <deaner92@yahoo.com> wr=
-ote:
->
-> On Mon, Jan 27, 2025 at 05:17:20PM +0100, Markus Elfring wrote:
-> > See also once more:
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree=
-/Documentation/process/submitting-patches.rst?h=3Dv6.13#n145
->
-> I read it.
->
-> > Is such a tag really relevant for a coding style adjustment?
-> Is it? I think it would work. So before I submit my patch I'll need to ad=
-d
-> a Fixes: line. I have already edited my commit message. How can I find
-> the SHA-1code of my commit from 1-25
+> I normally don't require Fixes tag for coding style adjustments
+> submitted to bluetooth-next, these are not typically backported since
+> there is no change on the logic or final binary.
 
-I normally don't require Fixes tag for coding style adjustments
-submitted to bluetooth-next, these are not typically backported since
-there is no change on the logic or final binary.
+And so the only thing you need is the subject/title rewritten?
 
---=20
-Luiz Augusto von Dentz
+Regards, Jeremy
 
