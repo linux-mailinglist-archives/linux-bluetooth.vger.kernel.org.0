@@ -1,53 +1,53 @@
-Return-Path: <linux-bluetooth+bounces-9988-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-9989-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52632A1DC66
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 27 Jan 2025 20:03:01 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 10DB7A1DC72
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 27 Jan 2025 20:09:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8004D3A7F33
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 27 Jan 2025 19:02:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 374B77A1A6C
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 27 Jan 2025 19:09:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE30818E351;
-	Mon, 27 Jan 2025 19:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FE9718FDD5;
+	Mon, 27 Jan 2025 19:09:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qfflL2eQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sJggk0Ae"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5605919006B
-	for <linux-bluetooth@vger.kernel.org>; Mon, 27 Jan 2025 19:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF56218D65F
+	for <linux-bluetooth@vger.kernel.org>; Mon, 27 Jan 2025 19:09:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738004543; cv=none; b=TK4iUGvuBw0FWSfzKrprvH4QLLoqLvT7qE1xafnjphXGRHsvneMwTTgloNpCLm/OdwlY1SwumVGHMwfDA9Emt8QR+pKr/i+1pI+h+WLYLKdVXy4K95fHQz8kn3+Rri/QTXhGmM674u03EqKaUICQd/PpITebX4Jy3XeAQWiw2mc=
+	t=1738004950; cv=none; b=UrltgJqaxjeN79fiknCXkWkMWTB1UtVeK9OOppX0M4+IFnb/f3I30MtO/ZyvuGLzn6NXDss/wA8lHtEenm9E39VUjhEw/TzV/wzIUVfJ4v8/7FzM2BpLRCdpD8Rwac0SZ4G+1py+HQJIQ7yk1hw1LpuRlH7nZK6ep8FddPWeVSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738004543; c=relaxed/simple;
-	bh=E3iPGB2pYCwokt9u2IkYkCbNvAwaVS4t/pg433sBJLo=;
+	s=arc-20240116; t=1738004950; c=relaxed/simple;
+	bh=6GUNZdSVaHMSMzvmmIjA2x5ga4Tg7bOwmvGKeIQ6d/g=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=TT5TfRTWFzFYIzcIp02A3Trg9YfIHM1XQ72u9XYQ9Nu/E58aXBztxYBKOiPq4etG4pTqDjxXbxziHro2uJdEdJdc136uWQ+F1qJKtiDhreZC1WrXBmxjGfF+g1IYmw/11SfeTnPoWUPJ5SmFCvuR9lC0SkOnwWiEkeEQtYRu40s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qfflL2eQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C6769C4CEE4
-	for <linux-bluetooth@vger.kernel.org>; Mon, 27 Jan 2025 19:02:22 +0000 (UTC)
+	 Content-Type:MIME-Version; b=qlIDKgeXw6AvaAKJEG6RUcfT87qVXtsxQdj8j+QXzAS9lwUAWFvnvdTJ8rTWOywbnXaX0teKLjIi88UHYKeHjM1GjPYNfZNxUzxg65dvZTxga4BWpckx5QWRbtrxmSBh078Yt88mCI0bXF6g0PKT6TlCpMNzJqOBIkMRG9fqQ+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sJggk0Ae; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 39267C4CEE3
+	for <linux-bluetooth@vger.kernel.org>; Mon, 27 Jan 2025 19:09:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1738004542;
-	bh=E3iPGB2pYCwokt9u2IkYkCbNvAwaVS4t/pg433sBJLo=;
+	s=k20201202; t=1738004949;
+	bh=6GUNZdSVaHMSMzvmmIjA2x5ga4Tg7bOwmvGKeIQ6d/g=;
 	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=qfflL2eQ2sSuaBzsBMjCl6kfVOUp1dLJ2/696zPk0FV6vY6zyGoL6t9MfOKiMqBnT
-	 9dvg1vvrfX802Aim6ggPOGdjFkMxVHP0FOBrb7RdI1+aRQd2ly6Y+xmutywonowtZY
-	 QaxyOa8ixkEhF4/a7a9ytrXwsyq/tVnsb8HMNvo1o9c39gie+vRqmjPFipwQTPAczh
-	 775KPrnT1BM8MaFa/2NR5GebGawwRrF9N+c5O3Zp0nau8qmHElFRjt//NvTq2hc/xu
-	 q9uhy1B5HHkykHdHI/hSBjo7xeswQeI4Q8ZsssPaKAbTo81ZSOjPVfq15aVZEWKAtF
-	 7IxezVO2L9IEw==
+	b=sJggk0AeR7YJTXN+xCWIRRJoh4d2GDazvxRAcsk6uKX8jBv5EIz1N1kswH3zEdCL1
+	 upDSmN0p1zv3l9CJ4pWgBZze4TWgNeDIgC042FGr13mHhlIsDhHKGNK/tLYeRWU4Fv
+	 fDCwmcVPEjVCEKi/G2Lu/2FQbSnRFYJgKS2BqiS1bTDvhZ+OjuEf8V7Ap36xhc0b7H
+	 7OOFA+l4aDy15AeJCKQ0deJ1g2BOb2Z8cBp6D7ZjWn67u5j5h7leCO52dCKYiXMYq3
+	 //IMIxR9lQO5rl96XYja9dNBLT8s/8BwUAmCsuoQ9FYVgsH+EABckvaYXy5FjiIT8B
+	 3bYehD/UQyfAQ==
 Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-	id B6DCCC41606; Mon, 27 Jan 2025 19:02:22 +0000 (UTC)
+	id 25D29C41615; Mon, 27 Jan 2025 19:09:09 +0000 (UTC)
 From: bugzilla-daemon@kernel.org
 To: linux-bluetooth@vger.kernel.org
 Subject: [Bug 219387] Bluetooth: hci0: Reading supported features failed
  (-16)
-Date: Mon, 27 Jan 2025 19:02:22 +0000
+Date: Mon, 27 Jan 2025 19:09:08 +0000
 X-Bugzilla-Reason: AssignedTo
 X-Bugzilla-Type: changed
 X-Bugzilla-Watch-Reason: None
@@ -56,14 +56,14 @@ X-Bugzilla-Component: Bluetooth
 X-Bugzilla-Version: 2.5
 X-Bugzilla-Keywords: 
 X-Bugzilla-Severity: normal
-X-Bugzilla-Who: alexknoptech@protonmail.com
+X-Bugzilla-Who: luiz.dentz@gmail.com
 X-Bugzilla-Status: NEW
 X-Bugzilla-Resolution: 
 X-Bugzilla-Priority: P3
 X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
 X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-219387-62941-yS7cmNH5Ti@https.bugzilla.kernel.org/>
+X-Bugzilla-Changed-Fields: cc
+Message-ID: <bug-219387-62941-54zub48t4q@https.bugzilla.kernel.org/>
 In-Reply-To: <bug-219387-62941@https.bugzilla.kernel.org/>
 References: <bug-219387-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
@@ -79,13 +79,23 @@ MIME-Version: 1.0
 
 https://bugzilla.kernel.org/show_bug.cgi?id=3D219387
 
---- Comment #9 from alexknoptech@protonmail.com ---
-If this is normal can we change the log level to a debugging level instead =
-of
-an error?
+Luiz Von Dentz (luiz.dentz@gmail.com) changed:
 
+           What    |Removed                     |Added
+----------------------------------------------------------------------------
+                 CC|                            |luiz.dentz@gmail.com
 
-If not, can it be fixed?
+--- Comment #10 from Luiz Von Dentz (luiz.dentz@gmail.com) ---
+(In reply to alexknoptech from comment #9)
+> If this is normal can we change the log level to a debugging level instead
+> of an error?
+>=20
+>=20
+> If not, can it be fixed?
+
+Well without that information the whole firmware loading is sort of impossi=
+ble
+since we don't have enough information regarding what firmware file to load.
 
 --=20
 You may reply to this email to add a comment.
