@@ -1,162 +1,115 @@
-Return-Path: <linux-bluetooth+bounces-9993-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-9995-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9CCBFA1FFFD
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 27 Jan 2025 22:37:45 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DA3DA20004
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 27 Jan 2025 22:38:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AC7EA1887C8C
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 27 Jan 2025 21:37:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 949D3161182
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 27 Jan 2025 21:38:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 650251D934D;
-	Mon, 27 Jan 2025 21:37:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 105E51D8DE1;
+	Mon, 27 Jan 2025 21:38:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=treblig.org header.i=@treblig.org header.b="H/MX8uMX"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DiuGM90p"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mx.treblig.org (mx.treblig.org [46.235.229.95])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127AD1D7E47;
-	Mon, 27 Jan 2025 21:37:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.229.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92EC81A83E7
+	for <linux-bluetooth@vger.kernel.org>; Mon, 27 Jan 2025 21:38:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738013846; cv=none; b=cIo/5OmmQgEaE1/cmRenZLTGImuLx+ZMKIoJ0WCH7nNxXf10eeq54ID3J3fCa5Ols9+DXkYc46V2DbpLvOURySVtEsPatW3KaVIXoY3wl2V8sa8zGCD3Y58dFHboFydXlRt3LiAKtIRF+D72BUBvRSBNyUSJ64fph3BgpXxAZ0U=
+	t=1738013918; cv=none; b=oEm4EcXRDkM2uzz4dQ9iZfFjsJRuZEQZR/hZjrAdaFvVjf8MN50LkNfm/uGpxLv/q3wTDWcHEzMile82N1oL1pWJ8pVFWse1ZoZqBQl6F5TLWo0QIVFLHjS7P+DhVWnG2uDHzcNDOwWKa1HEE2yzxPFQu8wfHxtjoyAn5aroXJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738013846; c=relaxed/simple;
-	bh=ud1EoghHPONQvTg+/ZBFUPpQ5VF+GOAO6G9iW/s/QIQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fc5Rahxpdv9VvNz8MjzqJH38F8lLgzirFVWAu8yw8fufZ49/6JNoshb7glFYsNzP5Z2bdfwx5zUXC4t9YHysshM3+4nNKY5pBAI7fSgJOsxqABUZdukeiVv94Pz14uh6eXu8A8dJ+DbXMPOLjP+3wWF0NaZteXkFWXLxwalYOIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=treblig.org; spf=pass smtp.mailfrom=treblig.org; dkim=pass (2048-bit key) header.d=treblig.org header.i=@treblig.org header.b=H/MX8uMX; arc=none smtp.client-ip=46.235.229.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=treblig.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=treblig.org
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
-	; s=bytemarkmx; h=MIME-Version:Message-ID:Date:Subject:From:Content-Type:From
-	:Subject; bh=t1/PWq3W3jycJ6pu6roZnq585fZAq85K5WbfAwoVbGE=; b=H/MX8uMXQK+EDcW4
-	cE1EE+KR4ZNX7KVuiXqjVQxy0E3U1iUxtN+W+HLd+dpyhtm5stpb8uNQuZlyjKPV3ktEC44A1TJPf
-	Ayga9Gtw9jvElhvnV1/gUwohvEL3n5fBPRvGe7+4VnnqsRWefsbV4NUvGFEA9qvg66caqttnfssqX
-	Ek98DC40KIXrJfnMTtxMB0WdxVA/fuQWcX1nk8M0eogkTXY6xFwE8qYcYr5kv5KQXmRzjMgyb55s0
-	Lte3lq8I8BQ1jb6g/MwIeK3Mcw59lMHVSfXuLH+FsiT7EGzgSRcNbN+BN/YfdWc6dammKkumKlm3S
-	RLikH14GhcobtdZJGQ==;
-Received: from localhost ([127.0.0.1] helo=dalek.home.treblig.org)
-	by mx.treblig.org with esmtp (Exim 4.96)
-	(envelope-from <linux@treblig.org>)
-	id 1tcWnG-00CMm7-1E;
-	Mon, 27 Jan 2025 21:37:18 +0000
-From: linux@treblig.org
-To: marcel@holtmann.org,
-	johan.hedberg@gmail.com,
-	luiz.dentz@gmail.com
-Cc: davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	pabeni@redhat.com,
-	horms@kernel.org,
-	linux-bluetooth@vger.kernel.org,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	"Dr. David Alan Gilbert" <linux@treblig.org>
-Subject: [PATCH 2/2] Bluetooth: MGMT: Remove unused mgmt_*_discovery_complete
-Date: Mon, 27 Jan 2025 21:37:16 +0000
-Message-ID: <20250127213716.232551-3-linux@treblig.org>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250127213716.232551-1-linux@treblig.org>
-References: <20250127213716.232551-1-linux@treblig.org>
+	s=arc-20240116; t=1738013918; c=relaxed/simple;
+	bh=NJV4hkXTRM3mkSl4bOZR2JIrUR8FynpLGq/T/n3Qniw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=q/GVN8HpMxACy3UVmQZ1qNmjbPZgIFVtdzza9uXmlCy4SiEDxheoPxXiFCXh+LX7PXUPz7JpS5mPd94UcD+1/8PZG3BKHq8CrgFr+TEccQno7hZ74EfA1wtI5fIgYl2HbEcM26BvDUWYImBsZ5pDVMMnhfY1l9nq17GUc58NlEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DiuGM90p; arc=none smtp.client-ip=209.85.208.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-30613802a6bso53165831fa.1
+        for <linux-bluetooth@vger.kernel.org>; Mon, 27 Jan 2025 13:38:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738013914; x=1738618714; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NJV4hkXTRM3mkSl4bOZR2JIrUR8FynpLGq/T/n3Qniw=;
+        b=DiuGM90p1I2t+QFtK2OJrjlhu5jUmJhUpdIAcbxuDACzP+v67SAhUsFSCDCB3v8FKS
+         nUckfpewNFtr9FJCZeDUGOJd8+Q/wzPQuuDyakuySyOjjWP13NaZSFCjdq5LTX6bfhq9
+         rVjhyMr61ZT/zbIiap0As4eInCDGfbyCBuvsO2wUA3SB5UZNFxUMcqIOf60azkXxvyJY
+         Ys8AsrK5ztTlFIJNFL9PUk0q9MOnYc/5FUYA7xVfr+msDN8G4eTEmE2YQDpG6/YMReX9
+         vQBUpBOSAV8C3gxDUGrki4bpl5x6io2Yy1EabUKtalE4GWETcNkCjt4pp2cm5I+fwawP
+         DcIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738013914; x=1738618714;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NJV4hkXTRM3mkSl4bOZR2JIrUR8FynpLGq/T/n3Qniw=;
+        b=PdAwZ2PUMMsdlagXyWySCLRlCJDmxnCWJKQhUifE805xVkeK9gYSZAsWM0qVs38a4g
+         DuLgXNtxktN97DOh4maR2f56XLQs+rzM4BXt3HTMck4oontj9kPfTHNYmZV1E9ONYLe/
+         IYm4vPlRSCgUWC5W9WB33K3tnzh8hKFvFElsUZHcrW0z9PEOZ6J8BcuQqBP5eX9NvWEV
+         iJ38ViiWl5uEAvFmgld/lJfUTO40b73j3pLSIyejXqo3TPzoe8fRyFPnoHjYwkQSC8Lj
+         vDVsvdjAkqWNf6n+mS38wJLm8Mf6ZjtdD3F+ZCTLgrwRdSKfp1kkF1G71SHSm+rsqtAB
+         0f1w==
+X-Forwarded-Encrypted: i=1; AJvYcCWESGN9kfORqohXjjbwJ68NRH1emR8o1bgnsB9X1d2PCDye5mV8+2JgtNQ/skHtkwcf5twBwBgf/mgUtv2OKvw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YynTHDV7nHkVP00LqFuK8AYjd80OrSkVQf9wfmpkk2MrsvEOljW
+	By+qPw7z2aGieTAEcF24N8mUm1C/TweJBAM41CmJ0WowCRePFd8LhsE2MfeGoTw0CNZr2PlgV0n
+	88lLcZoQRZUVVbkSLtSI2L4l5nqg=
+X-Gm-Gg: ASbGnctp++ciCqx8V7Tx/ckQOLYvOxJjnHSnJpJ/m5kKmv4xSE3S1kXJOACFpbw0MFv
+	DhRtDgWoLQ33MUDcOMvjNSbQBkZTxj85AIzRb5FavcKmQ3c3K3YfTnVbxQCBTgtikTSTBc1lSIw
+	==
+X-Google-Smtp-Source: AGHT+IHMwkDbeoKGmmY/4P958+3BjOo1w2uFBUoDDLbvBDODYkClVWpja5fQT2nkqPVyRVntx8nuFLTvJ+CiPB1mLj8=
+X-Received: by 2002:a2e:bd84:0:b0:302:350c:7e9f with SMTP id
+ 38308e7fff4ca-3072c995303mr168130001fa.0.1738013914287; Mon, 27 Jan 2025
+ 13:38:34 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <Z5aMrXwnmEXxKWkC@vmi2410184.contaboserver.net>
+ <452f118f-2a0d-4b54-9285-063ccbe6e5ab@web.de> <Z5f7BcSERmImx0_H@vmi2410184.contaboserver.net>
+In-Reply-To: <Z5f7BcSERmImx0_H@vmi2410184.contaboserver.net>
+From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date: Mon, 27 Jan 2025 16:38:22 -0500
+X-Gm-Features: AWEUYZlPqU95kgtv6gVeUjpLGU3G6M2N4VtYCXwK2p_iZEmNl07_0-_GxkLOjyQ
+Message-ID: <CABBYNZKxhq33FXEb_8LMLV4whhX0jc100tUPYCAs9t1q9_5MBA@mail.gmail.com>
+Subject: Re: Bluetooth: Remove unnecessary braces around single line statement
+To: Jeremy Dean <deaner92@yahoo.com>
+Cc: Markus Elfring <Markus.Elfring@web.de>, linux-bluetooth@vger.kernel.org, 
+	marcel@holtmann.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: "Dr. David Alan Gilbert" <linux@treblig.org>
+Hi Jeremy,
 
-mgmt_start_discovery_complete() and mgmt_stop_discovery_complete() last
-uses were removed in 2022 by
-commit ec2904c259c5 ("Bluetooth: Remove dead code from hci_request.c")
+On Mon, Jan 27, 2025 at 4:30=E2=80=AFPM Jeremy Dean <deaner92@yahoo.com> wr=
+ote:
+>
+> On Mon, Jan 27, 2025 at 05:17:20PM +0100, Markus Elfring wrote:
+> > See also once more:
+> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree=
+/Documentation/process/submitting-patches.rst?h=3Dv6.13#n145
+>
+> I read it.
+>
+> > Is such a tag really relevant for a coding style adjustment?
+> Is it? I think it would work. So before I submit my patch I'll need to ad=
+d
+> a Fixes: line. I have already edited my commit message. How can I find
+> the SHA-1code of my commit from 1-25
 
-Remove them.
+I normally don't require Fixes tag for coding style adjustments
+submitted to bluetooth-next, these are not typically backported since
+there is no change on the logic or final binary.
 
-Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
----
- include/net/bluetooth/hci_core.h |  2 --
- net/bluetooth/mgmt.c             | 40 --------------------------------
- 2 files changed, 42 deletions(-)
-
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index f756fac95488..05919848ea95 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -2386,8 +2386,6 @@ void mgmt_auth_enable_complete(struct hci_dev *hdev, u8 status);
- void mgmt_set_class_of_dev_complete(struct hci_dev *hdev, u8 *dev_class,
- 				    u8 status);
- void mgmt_set_local_name_complete(struct hci_dev *hdev, u8 *name, u8 status);
--void mgmt_start_discovery_complete(struct hci_dev *hdev, u8 status);
--void mgmt_stop_discovery_complete(struct hci_dev *hdev, u8 status);
- void mgmt_device_found(struct hci_dev *hdev, bdaddr_t *bdaddr, u8 link_type,
- 		       u8 addr_type, u8 *dev_class, s8 rssi, u32 flags,
- 		       u8 *eir, u16 eir_len, u8 *scan_rsp, u8 scan_rsp_len,
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index f53304cb09db..e8533167aa88 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -5743,29 +5743,6 @@ static int remove_remote_oob_data(struct sock *sk, struct hci_dev *hdev,
- 	return err;
- }
- 
--void mgmt_start_discovery_complete(struct hci_dev *hdev, u8 status)
--{
--	struct mgmt_pending_cmd *cmd;
--
--	bt_dev_dbg(hdev, "status %u", status);
--
--	hci_dev_lock(hdev);
--
--	cmd = pending_find(MGMT_OP_START_DISCOVERY, hdev);
--	if (!cmd)
--		cmd = pending_find(MGMT_OP_START_SERVICE_DISCOVERY, hdev);
--
--	if (!cmd)
--		cmd = pending_find(MGMT_OP_START_LIMITED_DISCOVERY, hdev);
--
--	if (cmd) {
--		cmd->cmd_complete(cmd, mgmt_status(status));
--		mgmt_pending_remove(cmd);
--	}
--
--	hci_dev_unlock(hdev);
--}
--
- static bool discovery_type_is_valid(struct hci_dev *hdev, uint8_t type,
- 				    uint8_t *mgmt_status)
- {
-@@ -6018,23 +5995,6 @@ static int start_service_discovery(struct sock *sk, struct hci_dev *hdev,
- 	return err;
- }
- 
--void mgmt_stop_discovery_complete(struct hci_dev *hdev, u8 status)
--{
--	struct mgmt_pending_cmd *cmd;
--
--	bt_dev_dbg(hdev, "status %u", status);
--
--	hci_dev_lock(hdev);
--
--	cmd = pending_find(MGMT_OP_STOP_DISCOVERY, hdev);
--	if (cmd) {
--		cmd->cmd_complete(cmd, mgmt_status(status));
--		mgmt_pending_remove(cmd);
--	}
--
--	hci_dev_unlock(hdev);
--}
--
- static void stop_discovery_complete(struct hci_dev *hdev, void *data, int err)
- {
- 	struct mgmt_pending_cmd *cmd = data;
--- 
-2.48.1
-
+--=20
+Luiz Augusto von Dentz
 
