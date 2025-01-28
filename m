@@ -1,161 +1,159 @@
-Return-Path: <linux-bluetooth+bounces-10025-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-10026-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C61EA21327
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Jan 2025 21:34:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CEEF9A21374
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Jan 2025 22:04:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C723A1883AF0
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Jan 2025 20:34:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 29A331884E2E
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Jan 2025 21:04:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34B601DE4E0;
-	Tue, 28 Jan 2025 20:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 571361E3DF8;
+	Tue, 28 Jan 2025 21:04:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="crXDmzKj"
+	dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b="UlWZm3IE"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.ispras.ru (mail.ispras.ru [83.149.199.84])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E21914C8E
-	for <linux-bluetooth@vger.kernel.org>; Tue, 28 Jan 2025 20:34:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D8F1DE4E0
+	for <linux-bluetooth@vger.kernel.org>; Tue, 28 Jan 2025 21:04:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.149.199.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738096444; cv=none; b=rBJAPxmDi/Loa5yew0nS0c16sLgpQ4Uz3E9tMaPi0cQ2/nd29C3RnPP5hvneNrOgvKqvbJ9Mr4EmVU2k0CJaTHK/Ms/u/UTc/bXBTWZ/meeXLOXa6K39glBkT2/pI0AFu1OuUiPqHgppTgjsIjXRiwGTf8SRMLPM9/nnKVsMkfs=
+	t=1738098267; cv=none; b=eFPhgWFA2QFYmGg1SfH0Ld38WJuvxKAQvkxP9ARv7depJRtnQ20BNdSmbsq/rEstLEYj2O0uwhJEp/fTuQk/lP2E1ICQsMFjb16z/uA+Up+4KM3tXonz/j0b/kFttJiJ9i+RaQR7xyF+7O42hlVlC7aNVK4Ne72q0MtZV0RmuM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738096444; c=relaxed/simple;
-	bh=LcG6RmxLzFIylSNbEUMhaudpLMZp8H1oQP0EYNv1PCw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=obhoRSmn6/fsaoxk6gAL9GpYNE2gKAUp0Bqz6N2i6+2COSKyXy54w9zktURjel80BDProOGycxemPmxursWDGAv6NcbveNh/4lYAfGbXKEF4bUiZdvPwosHmd1ryu/IAFTGIgzBzkj9MsY1Kr/Z45y+ZOMshh029dPvjoI/jheQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=crXDmzKj; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5426fcb3c69so5044089e87.3
-        for <linux-bluetooth@vger.kernel.org>; Tue, 28 Jan 2025 12:34:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738096441; x=1738701241; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=G8btvaydnPfzUyuIDK4m8O0kOplkehjETNVtlsv1ZzE=;
-        b=crXDmzKjZhCXhz4wl7+9w5kEA4q/IFVRKE8AsP32PM38BkUmgHFWHNTcLgzaqLxX9g
-         j15AD9Z1q26fLZ5cPwYH7UY+FxLDpJ7FuQTWDsglBtAx080OaNBPT1SQVkJET532qen9
-         hjQmTTH4XbRx2szgFJIZ90BKqw09GwyZdqJwajCIdIUsBbeSp/j2V7fXxL6AnnKo9xMS
-         0mrwbMAzY9MgKoFRAiXIzmOA8f71zRNIHMpMpkyfuusHbR1xN1rLcoUsSYf0UenGlAMY
-         TI4v65MwfWPrk7GlgzjBSfqshDlTsbZlPVFRNadvK22uUm80Pyh7/ls9H/b3OOiP5SUc
-         HVQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738096441; x=1738701241;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=G8btvaydnPfzUyuIDK4m8O0kOplkehjETNVtlsv1ZzE=;
-        b=ofumg1TJ344y1+KBDtA+2La3Omqi4wS09pXqDSMdOclbgkdk+NNKhrBgkcOR4ndlzu
-         rOpHk8wqPhicfB3AqadlSST+YpUEuXrkJxBsbDJ3fw5owA//2p+YJ8sTO1fo2VnJKQje
-         JOtv4N+6wp4Q3rlozL3RWP9Hr0aKIgFzPGzCDEDLZPhll296/ed67/xdcxL797Uk1edy
-         NRePjzADC4QFDXMpDN2YBo9wdx7u9pPZK5lb45Dj24wNmgNf0GzsjNE3dSWKd/smpCbQ
-         re4odSZUpaA8QGwf2LrF2MkfnUuJl/iJXTmVTxpEpPXy4wbJEFGhqzHhML7rLmtdFnU0
-         EKjw==
-X-Gm-Message-State: AOJu0Yz/Y9sEld98ok/HlkJbPMnRlVQ4v0RIjDnBsUsZ1IkxbZ69syzO
-	xK/F+jRjiJRcHxaxTftvwrNGu9WhtLOsmasWEQ4UAT6qYXG0u0NRzFhR/mu3G+ns/t5S/LOeqiT
-	AUovzFGb9CTcH4HtM3Thbzk9j+SmskTdX
-X-Gm-Gg: ASbGnctvZ/IhECQAspFwy5ATbpBBn9X8wK2jFmJ0ndO4pfxtedV802uizH67sLlod9b
-	p+yKCcIlCrBrSlaVqa8xsCtW5NSjYMsgvRsiVB1b0TGIqW6eBkcAUfOBGdn8mSgwLJXEsWdofmg
-	==
-X-Google-Smtp-Source: AGHT+IEANFwUD3SV+Eyz16Pxx5I84QKUwZniJea7lOXhtNUmPP7NEEh7jc28K7aoTI2ZVWjsf1cHRY64Os++D9vrEYA=
-X-Received: by 2002:a05:6512:3b99:b0:542:2a8b:d56f with SMTP id
- 2adb3069b0e04-543e4be0021mr125283e87.4.1738096440794; Tue, 28 Jan 2025
- 12:34:00 -0800 (PST)
+	s=arc-20240116; t=1738098267; c=relaxed/simple;
+	bh=j43/ZBCAaYSgLuPfIKJDLbIOU2L/NydPxL9F/Hu6jsc=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Tz5gXaryrhHAs4tN0nuPi6399O/LBtnleC9WI1ariQ6vSmtl+hZqX/IpSgL6lOMho4Q2iepzx+9EIPUIql5j0XTMkR0RvDaxRl9A0iO4r7/rGFBEjxFeYhVhc7e/VPfdJfjjBKgeFxi33ztdhoCJUX5Nc0uv96qRJVmNGFkY18g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru; spf=pass smtp.mailfrom=ispras.ru; dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b=UlWZm3IE; arc=none smtp.client-ip=83.149.199.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ispras.ru
+Received: from localhost.localdomain (unknown [5.228.116.177])
+	by mail.ispras.ru (Postfix) with ESMTPSA id EBACD40777C4;
+	Tue, 28 Jan 2025 21:04:14 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru EBACD40777C4
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
+	s=default; t=1738098255;
+	bh=CdNkfwRkR3DNjt9v6isI/9YKQo9XjSiqnKA8b5Db5z4=;
+	h=From:To:Cc:Subject:Date:From;
+	b=UlWZm3IERPpKzJ7Uh1rlSaL1XmZNMKLuLu/BQ9owOTlEYE7/VaBdoirW6hkl+yjtB
+	 0wufj3PqpDtLT9vfcvjR390/zuwMLdg0LD0HJnnhE88pugIMs/N78JozbxC7eFTqzD
+	 heBA2xeFP4pXLsc11cbv0HJYlr0SODkERDmBnuiM=
+From: Fedor Pchelkin <pchelkin@ispras.ru>
+To: linux-bluetooth@vger.kernel.org
+Cc: Fedor Pchelkin <pchelkin@ispras.ru>,
+	lvc-project@linuxtesting.org
+Subject: [PATCH BlueZ 1/2] audio: actually try to enable MTU auto-tuning
+Date: Wed, 29 Jan 2025 00:03:53 +0300
+Message-Id: <20250128210354.73732-1-pchelkin@ispras.ru>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250128102937.16215-1-ludovico.denittis@collabora.com>
-In-Reply-To: <20250128102937.16215-1-ludovico.denittis@collabora.com>
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Tue, 28 Jan 2025 15:33:48 -0500
-X-Gm-Features: AWEUYZkNSYcxY9NUXKWkMYw9Mb7zs39bZN-XGKYgLBZop64Ytv2ZpHryX_z6QSY
-Message-ID: <CABBYNZJ8NUAGpmmaezy=4KJD4uM8f7J1pkMgZnDoOoFkdRSRqA@mail.gmail.com>
-Subject: Re: [PATCH BlueZ] adapter: Include pending flags in device_flags_changed_callback
-To: Ludovico de Nittis <ludovico.denittis@collabora.com>
-Cc: linux-bluetooth@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Ludovico,
+A "0" for the input MTU passed to the underlying socket is supposed to
+indicate that its value should be determined by the L2CAP layer.
+However, the current code treats a zero imtu just as if there is
+nothing to change.
 
-On Tue, Jan 28, 2025 at 5:30=E2=80=AFAM Ludovico de Nittis
-<ludovico.denittis@collabora.com> wrote:
->
-> When signalling the new device flags, we need to include the pending
-> ones. Otherwise, the eventual non-zero `pending_flags` will be wiped out
-> in `btd_device_flags_changed()`, and we'll lose the pending changed
-> flags.
->
-> Fixes https://github.com/bluez/bluez/issues/1076
-> ---
->  src/adapter.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/src/adapter.c b/src/adapter.c
-> index 5d4117a49..cbc0f678f 100644
-> --- a/src/adapter.c
-> +++ b/src/adapter.c
-> @@ -5727,6 +5727,7 @@ static void device_flags_changed_callback(uint16_t =
-index, uint16_t length,
->         struct btd_adapter *adapter =3D user_data;
->         struct btd_device *dev;
->         char addr[18];
-> +       uint32_t changed_flags =3D 0;
->
->         if (length < sizeof(*ev)) {
->                 btd_error(adapter->dev_id,
-> @@ -5744,7 +5745,9 @@ static void device_flags_changed_callback(uint16_t =
-index, uint16_t length,
->                 return;
->         }
->
-> -       btd_device_flags_changed(dev, ev->supported_flags, ev->current_fl=
-ags);
-> +       changed_flags =3D ev->current_flags | btd_device_get_pending_flag=
-s(dev);
-> +
-> +       btd_device_flags_changed(dev, ev->supported_flags, changed_flags)=
-;
+Introduce an additional flag to indicate that the zero imtu is
+explicitly requested by the caller for the purpose of auto-tuning.
+Otherwise, the similar behavior remains.
 
-This doesn't sound right, it would be as if the pending flags always
-succeed which I don't think it is always the case, perhaps we should
-something like the following:
+Found by Linux Verification Center (linuxtesting.org).
 
-diff --git a/src/device.c b/src/device.c
-index e8bff718c201..4959f36542fb 100644
---- a/src/device.c
-+++ b/src/device.c
-@@ -7413,7 +7413,7 @@ void btd_device_flags_changed(struct btd_device
-*dev, uint32_t supported_flags,
+Fixes: ae5be371a9f5 ("avdtp: Enable MTU auto tunning")
+---
+ btio/btio.c | 23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
-        dev->supported_flags =3D supported_flags;
-        dev->current_flags =3D current_flags;
--       dev->pending_flags =3D 0;
-+       dev->pending_flags &=3D ~changed_flags;
-
-        if (!changed_flags)
-                return;
-
-That way we clear pending_flags based on the changed_flags.
-
->  }
->
->
-> --
-> 2.48.1
->
->
-
-
---=20
-Luiz Augusto von Dentz
+diff --git a/btio/btio.c b/btio/btio.c
+index 2d277e409..74a4003b6 100644
+--- a/btio/btio.c
++++ b/btio/btio.c
+@@ -66,6 +66,7 @@ struct set_opts {
+ 	uint16_t imtu;
+ 	uint16_t omtu;
+ 	int central;
++	uint8_t auto_mtu;
+ 	uint8_t mode;
+ 	int flushable;
+ 	uint32_t priority;
+@@ -610,7 +611,7 @@ static uint8_t mode_l2mode(uint8_t mode)
+ }
+ 
+ static gboolean set_l2opts(int sock, uint16_t imtu, uint16_t omtu,
+-						uint8_t mode, GError **err)
++				uint8_t auto_mtu, uint8_t mode, GError **err)
+ {
+ 	struct l2cap_options l2o;
+ 	socklen_t len;
+@@ -622,7 +623,7 @@ static gboolean set_l2opts(int sock, uint16_t imtu, uint16_t omtu,
+ 		return FALSE;
+ 	}
+ 
+-	if (imtu)
++	if (imtu || auto_mtu)
+ 		l2o.imtu = imtu;
+ 	if (omtu)
+ 		l2o.omtu = omtu;
+@@ -666,17 +667,17 @@ static gboolean set_le_mode(int sock, uint8_t mode, GError **err)
+ }
+ 
+ static gboolean l2cap_set(int sock, uint8_t src_type, int sec_level,
+-				uint16_t imtu, uint16_t omtu, uint8_t mode,
+-				int central, int flushable, uint32_t priority,
+-				GError **err)
++				uint16_t imtu, uint16_t omtu, uint8_t auto_mtu,
++				uint8_t mode, int central, int flushable,
++				uint32_t priority, GError **err)
+ {
+-	if (imtu || omtu || mode) {
++	if (imtu || omtu || auto_mtu || mode) {
+ 		gboolean ret = FALSE;
+ 
+ 		if (src_type == BDADDR_BREDR)
+-			ret = set_l2opts(sock, imtu, omtu, mode, err);
++			ret = set_l2opts(sock, imtu, omtu, auto_mtu, mode, err);
+ 		else {
+-			if (imtu)
++			if (imtu || auto_mtu)
+ 				ret = set_le_imtu(sock, imtu, err);
+ 
+ 			if (ret && mode)
+@@ -986,6 +987,8 @@ static gboolean parse_set_opts(struct set_opts *opts, GError **err,
+ 			opts->imtu = va_arg(args, int);
+ 			if (!opts->mtu)
+ 				opts->mtu = opts->imtu;
++			if (!opts->imtu)
++				opts->auto_mtu = 1;
+ 			break;
+ 		case BT_IO_OPT_CENTRAL:
+ 			opts->central = va_arg(args, gboolean);
+@@ -1890,7 +1893,7 @@ gboolean bt_io_set(GIOChannel *io, GError **err, BtIOOption opt1, ...)
+ 	switch (type) {
+ 	case BT_IO_L2CAP:
+ 		return l2cap_set(sock, opts.src_type, opts.sec_level, opts.imtu,
+-					opts.omtu, opts.mode, opts.central,
++					opts.omtu, opts.auto_mtu, opts.mode, opts.central,
+ 					opts.flushable, opts.priority, err);
+ 	case BT_IO_RFCOMM:
+ 		return rfcomm_set(sock, opts.sec_level, opts.central, err);
+@@ -1941,7 +1944,7 @@ static GIOChannel *create_io(gboolean server, struct set_opts *opts,
+ 				server ? opts->psm : 0, opts->cid, err) < 0)
+ 			goto failed;
+ 		if (!l2cap_set(sock, opts->src_type, opts->sec_level,
+-				opts->imtu, opts->omtu, opts->mode,
++				opts->imtu, opts->omtu, opts->auto_mtu, opts->mode,
+ 				opts->central, opts->flushable, opts->priority,
+ 				err))
+ 			goto failed;
+-- 
+2.39.5
 
