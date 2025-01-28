@@ -1,57 +1,59 @@
-Return-Path: <linux-bluetooth+bounces-10027-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-10028-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2C5C9A21375
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Jan 2025 22:04:36 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 82391A2137B
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Jan 2025 22:08:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 85F811884DC2
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Jan 2025 21:04:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D033F18857F9
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Jan 2025 21:08:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 571FE1E6DC5;
-	Tue, 28 Jan 2025 21:04:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85F441E98ED;
+	Tue, 28 Jan 2025 21:08:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b="IqX5XqZR"
+	dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b="KdByt2Sd"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from mail.ispras.ru (mail.ispras.ru [83.149.199.84])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C108D1DED6B
-	for <linux-bluetooth@vger.kernel.org>; Tue, 28 Jan 2025 21:04:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA3E1DE4E0;
+	Tue, 28 Jan 2025 21:08:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.149.199.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738098267; cv=none; b=YNZlMZKTojargA5EQBiO2B7XCcUrRoeFR+wYo8kbObXTE992AjWdMc7eFYupE27pFGt+ceaypAE8Wtgh4gd2w2k6+AJ/FY3MbxGZM4/kDqpEoItJOhYGnWRb1FuyLcz8dHsz8v1G+scilP1mVYNXd28wmyQsk/0ZQMGSVvGHeUA=
+	t=1738098511; cv=none; b=BdKYIH4JnazDs1AJ6OmUYueZphdJSy5sPEoDoimw7HmB20SjlY4cfxaDyORjBPPTcmpzhIc6BVexf9PzLz1WNFoJXLfbycPGh5G1jbEcipx0ui20NGXHqpb9zC1yfdzB1lUz+ao1QSIdWge0MjRluqNWG96mavg4Mhy8gqkLhFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738098267; c=relaxed/simple;
-	bh=oMPnq0+Qe5fSLo+WSJ9sjrMrpV1bGwTMsuVNIH0GJoY=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=lRdUc98sxQoR4vsBGhzGw+coCW94eOicH/ejZz8bT2VB3X7yYVc2uBZ3DTxHI+F4ZjHfGN30/hZJQ5tFnFrzDDZJGolDCxvFNc/c2LLpVUhQIHI/fZlWNoz2T6jkMxrkhOgJj7kNNxQvP2lPK2vCTobEdK5u1T84nvF9Nm+VwLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru; spf=pass smtp.mailfrom=ispras.ru; dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b=IqX5XqZR; arc=none smtp.client-ip=83.149.199.84
+	s=arc-20240116; t=1738098511; c=relaxed/simple;
+	bh=1WAfUZypPU5Sv9+N2pCHJbqOmPXgv8u++eozdGIHbh4=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=VuqIYpZvjYhdZTUWAiR+tt0IYo8KBHnGt5rHBgnuvT7/ws5a6HmNOe23HnmyAXLTSxZOO+aBeRji4OWMxgjTgS11Ei2D9JGq6gfsWKKBAEbQSLRiUQLhFcCVVlAchkCBCJYkn2Or5k1s7cF61xID7xEYM3bJTl69qgkCm1IMZu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru; spf=pass smtp.mailfrom=ispras.ru; dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b=KdByt2Sd; arc=none smtp.client-ip=83.149.199.84
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ispras.ru
 Received: from localhost.localdomain (unknown [5.228.116.177])
-	by mail.ispras.ru (Postfix) with ESMTPSA id D23634078508;
-	Tue, 28 Jan 2025 21:04:16 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru D23634078508
+	by mail.ispras.ru (Postfix) with ESMTPSA id C400940777C4;
+	Tue, 28 Jan 2025 21:08:25 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru C400940777C4
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
-	s=default; t=1738098256;
-	bh=P8iXNQ7IQswExgxbXFXqGUmjiF03DUoFzsSQSVqaebY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IqX5XqZRwW5JeqESlIfwD0w803Tt8B+pjHXdud1bdna3RSt6W1d40WLYdfvXKllgS
-	 pdzxTeDCzCEZFC/czlAZibIfQS17m92/xxRKXELNbGktgn0eobQPMbpGwo7CTl232w
-	 ot+D6iIrIPeHjCjT5SHWU45YdoSEaInVk6ErzP5w=
+	s=default; t=1738098505;
+	bh=fVNhuvRBwi7LipVeQQAxSGExIb2oIhiRBE03sQnVxes=;
+	h=From:To:Cc:Subject:Date:From;
+	b=KdByt2Sd6+0D6C8bBbIDgbAjVtKtIo0MMGN4wtzjSfdRM0yTOrgpeLsqCrDpvkTQh
+	 L4iTg5wvRAha31bTbwoDqVAzDHhI1AhlQEg+CvBxmyFCzVEdzKJF3e6hUxPlu1FieD
+	 C701spO6m+/bkPxvLEjKgJVMrpeP32enDeJuXCAU=
 From: Fedor Pchelkin <pchelkin@ispras.ru>
-To: linux-bluetooth@vger.kernel.org
+To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	linux-bluetooth@vger.kernel.org
 Cc: Fedor Pchelkin <pchelkin@ispras.ru>,
-	lvc-project@linuxtesting.org
-Subject: [PATCH BlueZ 2/2] a2dp: enable input MTU auto-tuning for the server
-Date: Wed, 29 Jan 2025 00:03:54 +0300
-Message-Id: <20250128210354.73732-2-pchelkin@ispras.ru>
+	Marcel Holtmann <marcel@holtmann.org>,
+	Johan Hedberg <johan.hedberg@gmail.com>,
+	linux-kernel@vger.kernel.org,
+	lvc-project@linuxtesting.org,
+	stable@vger.kernel.org
+Subject: [PATCH] Bluetooth: L2CAP: accept zero as a special value for MTU auto-selection
+Date: Wed, 29 Jan 2025 00:08:14 +0300
+Message-Id: <20250128210814.74476-1-pchelkin@ispras.ru>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250128210354.73732-1-pchelkin@ispras.ru>
-References: <20250128210354.73732-1-pchelkin@ispras.ru>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -60,30 +62,45 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-L2CAP frames are lost while utilizing some exotic A2DP transports
-usually coming up with weird custom MTU sizes so take advantage of
-auto-tuning it for such cases.
+One of the possible ways to enable the input MTU auto-selection for L2CAP
+connections is supposed to be through passing a special "0" value for it
+as a socket option. Commit [1] added one of those into avdtp. However, it
+simply wouldn't work because the kernel still treats the specified value
+as invalid and denies the setting attempt. Recorded BlueZ logs include the
+following: 
+
+  bluetoothd[496]: profiles/audio/avdtp.c:l2cap_connect() setsockopt(L2CAP_OPTIONS): Invalid argument (22)
+
+[1]: https://github.com/bluez/bluez/commit/ae5be371a9f53fed33d2b34748a95a5498fd4b77
 
 Found by Linux Verification Center (linuxtesting.org).
 
-Fixes: https://github.com/bluez/bluez/issues/1080
+Fixes: 4b6e228e297b ("Bluetooth: Auto tune if input MTU is set to 0")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
 ---
- profiles/audio/a2dp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/l2cap_sock.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/profiles/audio/a2dp.c b/profiles/audio/a2dp.c
-index c97bd6e89..05a2e2e80 100644
---- a/profiles/audio/a2dp.c
-+++ b/profiles/audio/a2dp.c
-@@ -2592,6 +2592,8 @@ static bool a2dp_server_listen(struct a2dp_server *server)
- 				BT_IO_OPT_MODE, mode,
- 				BT_IO_OPT_SEC_LEVEL, BT_IO_SEC_MEDIUM,
- 				BT_IO_OPT_CENTRAL, true,
-+				/* Set Input MTU to 0 to auto-tune */
-+				BT_IO_OPT_IMTU, 0,
- 				BT_IO_OPT_INVALID);
- 	if (server->io)
- 		return true;
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index 49f97d4138ea..46ea0bee2259 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -710,12 +710,12 @@ static bool l2cap_valid_mtu(struct l2cap_chan *chan, u16 mtu)
+ {
+ 	switch (chan->scid) {
+ 	case L2CAP_CID_ATT:
+-		if (mtu < L2CAP_LE_MIN_MTU)
++		if (mtu && mtu < L2CAP_LE_MIN_MTU)
+ 			return false;
+ 		break;
+ 
+ 	default:
+-		if (mtu < L2CAP_DEFAULT_MIN_MTU)
++		if (mtu && mtu < L2CAP_DEFAULT_MIN_MTU)
+ 			return false;
+ 	}
+ 
 -- 
 2.39.5
 
