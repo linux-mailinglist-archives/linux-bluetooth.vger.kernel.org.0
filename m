@@ -1,134 +1,180 @@
-Return-Path: <linux-bluetooth+bounces-10065-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-10067-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF399A23374
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 Jan 2025 18:51:42 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E2767A233D2
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 Jan 2025 19:35:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2D30E1888B45
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 Jan 2025 17:51:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 079CC164D95
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 Jan 2025 18:35:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDE891EEA3C;
-	Thu, 30 Jan 2025 17:51:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE7BC1F0E5F;
+	Thu, 30 Jan 2025 18:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eCZX/JZ5"
+	dkim=pass (2048-bit key) header.d=salutedevices.com header.i=@salutedevices.com header.b="tSHLTJPX"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx1.sberdevices.ru (mx2.sberdevices.ru [45.89.224.132])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB2E1EB9E1
-	for <linux-bluetooth@vger.kernel.org>; Thu, 30 Jan 2025 17:51:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09701482E1;
+	Thu, 30 Jan 2025 18:35:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.89.224.132
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738259496; cv=none; b=VvXdbhbcmP2MV8B3e03ZrXASpV0IzEHdgLfezHcOu/2mz0iyJPIfypksxD5+b7SVAyWPq3yqStWo7Q2r0H82u8atRcfEIZcQB1Od8UpNfgeE8Sg0sAyztjD5UF/ziwDSzZztqy/avVzqmBc0rxZvnVvV8dtPzmOYdovlMHPp24U=
+	t=1738262115; cv=none; b=r7P/d3oy5pLG1nSSveIgfFVsTSIQqe3n5wfzirdpV3oJTZuHcA1g+7x24rCfJrZ9RPftHsV/Mie22tyh8rx5weTFgqOjnVmxVQM97UFDN9BFQgDXCFD8PIJhS1fPwIZ79CyGXycpjJnTTX7JNxrwWQ+krM9a9czM20vb0nIRIns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738259496; c=relaxed/simple;
-	bh=rf6qBCFx84nRSiTwB8P1w4vSydz5AXBEEAlIc/cZfxw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MvMopSXwDMEYJCyz+30VjfxTpKVIuUje/o0U6tmiJ/oE/i4Ka8H+DDX6Ua3WAKQc/AgiemKqtO5Fw7g5NN32OJWjvqLGc+SHyV2KehmQvUVOw3gtG2o/4vK03MWvRHLumWzEfBl0v0Xu8Iuq5ntWqzG1M2CmVd/0d7nilUjwohA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eCZX/JZ5; arc=none smtp.client-ip=209.85.208.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-3022484d4e4so12994891fa.1
-        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Jan 2025 09:51:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738259492; x=1738864292; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BiteQLsp2T/DspkN6bz5fxZwcClJcuKzIw5KqQawDSM=;
-        b=eCZX/JZ5qNJnhBr+ScvZ9sdM8g7LKV8YCbRfP2q393kRAKo4DGNynw2zpFPvY1HTh7
-         /aOmI/CxEbW5BC9WdFVvHGBiE6Y/1Y051afoMqA9CYfnoxPiFFWTXEP1T0hArjhO7Bgg
-         LFZJskYhHF/L94lxmmDNNwGRpvEgZocYpr03AEqcNIiXbSudTEOYDBIoguIEWC4b3OEH
-         UVhgG/3T60IfHCR7nXH+xejWeqEaafxE/AST/H6cjcOEjnxcvMVgDk6/mB1l3ayjqWHV
-         SKXG26IvpdSSRwbl+pU1ENn03SbEFHWRlbFkfExSWiPAw3fjGMLvT7l8kXYW5jOOrdpp
-         x1cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738259492; x=1738864292;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BiteQLsp2T/DspkN6bz5fxZwcClJcuKzIw5KqQawDSM=;
-        b=tHDGUS5q1icGP9I7qvGF/BxNdyw3zhoss9aCu7dOSuRFZDTkrQpJPbC3EqxPbbh45R
-         GPCwK+trjV+IlfwZhkMvUyLK8WQ17dc0iWyCrjf77jUs9YuGJs1cpomFp1BpUkHC6F5a
-         UYT4L/g6YEBAo4ydVUkWjzqN2v6n02Q86uWIq1RwF+NsOMj6Y8MoKXh7rVumC0dEItrf
-         u1eq70/k4lqZl5S2GpFW4vYnPdu40hbM0Vnpl+r0FxTK83JqcKadKAwj4hHEWfCBajXD
-         pSSD72Q4/lKBSz568eyCePcIy3psOHxzpRXeOe/zhJah++vLwemAnk6rrYyZaCHkJvcX
-         BBeQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW09jQIDzlDWsT+SHgYCtea3NURW6GRKapY1RPPHz52dmcWmJmr8T56c3wpE8yBWsQwDZvCZ6N+FWG4xzeLrAs=@vger.kernel.org
-X-Gm-Message-State: AOJu0YznCp7iWZzXDiDz/8CwcCmHqJ6yhZJxkJSz/k4ZHPln5en4DkPs
-	potcRpdnj2trCStl/CU4j6dh7qXDVretGx8iOUpa2bbEwHluYfrtK1RXsu5Uj0DlpK1l5utzHgE
-	SiuIXUOD5ITH8UY+Vd6e8+xhccgFdcRA9
-X-Gm-Gg: ASbGncvedbKu2P4o5/3g8mmDrUGycWL8Ox02wRVNdshwpNnD7BPD9/M5BLBXilQXV1P
-	RSAC4cuPHz336zt+3BrQVkC7IPQbsC6pihXQSp7VbLXUBowSkdC4irrg2k2puU3/Ysq7PRSY=
-X-Google-Smtp-Source: AGHT+IEQN/gwoI2EyLiLIRV81LmMDXc5wN4lRBrfhsUfArzb7Nxg+b5ybsJ9s2bczNUVjd3uJqRZ2MKoCAqtIb5p4ts=
-X-Received: by 2002:a2e:a909:0:b0:300:3bcd:8d05 with SMTP id
- 38308e7fff4ca-307968da703mr34683861fa.15.1738259490987; Thu, 30 Jan 2025
- 09:51:30 -0800 (PST)
+	s=arc-20240116; t=1738262115; c=relaxed/simple;
+	bh=TwAAoJer/FPnpvBQxGFZ60k7H5CAyYtl65JkhxpM9DA=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
+	 In-Reply-To:Content-Type; b=KsxekG9viljW8KNClK396iMgfGslVjFxJnGK1Q80e0LOpyWXfLUsHAjMHTPuHqckZG/p6VcDtcztuLsszrLNYVidAzbVVM6BDckR5Tj4JyuYd/lpfeBk3kdPE+c8uM+CA0AH25yf0WEu/hS5uq5CnxoZERx8hF5dnSc+rzZ5sQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=salutedevices.com; spf=pass smtp.mailfrom=salutedevices.com; dkim=pass (2048-bit key) header.d=salutedevices.com header.i=@salutedevices.com header.b=tSHLTJPX; arc=none smtp.client-ip=45.89.224.132
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=salutedevices.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=salutedevices.com
+Received: from p-infra-ksmg-sc-msk02.sberdevices.ru (localhost [127.0.0.1])
+	by mx1.sberdevices.ru (Postfix) with ESMTP id 4D9AB120006;
+	Thu, 30 Jan 2025 21:34:55 +0300 (MSK)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.sberdevices.ru 4D9AB120006
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=salutedevices.com;
+	s=mail; t=1738262095;
+	bh=pDRf5BLR0/0IYmafaREu9IPC4OM9eMc7Mv+ojVZWcio=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Content-Type:From;
+	b=tSHLTJPXbbJ2xABGU65bbxvB48O+kwGMCL5OJs1D+1r77mgxpB5ZTGaImZM57n3B7
+	 wu9H3RSsqbLaIBa5h/awhMXClDcgxAKDMLQbCCrZQI8vWGsp7G8lz/gJ5CAjl2PnYp
+	 qBuwSNVBscCa3YExK622Dt9eKGczmTrRjqWl2hDdyft0jJXSCFUf/X8tLZZeSfNgUk
+	 yj2uvuAkawxE2fXb63PlFBqLYm41sQeRMh7egziUyLPZBxuHn0OSLVdZn2/DbFTCfb
+	 WmZviYDflcQrWeBKa5C/PA3X/7hThnJU2tISCM5GHpzI7pZcaz9nZTqJcEucnGx1DQ
+	 133LI6Q+jCCNw==
+Received: from smtp.sberdevices.ru (p-exch-cas-a-m1.sberdevices.ru [172.24.201.216])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mx1.sberdevices.ru (Postfix) with ESMTPS;
+	Thu, 30 Jan 2025 21:34:55 +0300 (MSK)
+Message-ID: <95904850-fe5c-4866-3da6-3e021c6becf8@salutedevices.com>
+Date: Thu, 30 Jan 2025 21:34:10 +0300
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250129084950.41987-1-pchelkin@ispras.ru> <173825823449.1027237.5797702882442522177.git-patchwork-notify@kernel.org>
-In-Reply-To: <173825823449.1027237.5797702882442522177.git-patchwork-notify@kernel.org>
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Thu, 30 Jan 2025 12:51:17 -0500
-X-Gm-Features: AWEUYZniCAxmLPQxUgJMAhkXb72T1Kor3u0_eGXlS4QeWfbZ0R562Uy337VZkFg
-Message-ID: <CABBYNZKm+xj4wmuzBgCjJq4genR73a6Gj-C1uvGHW3MiNdHNSw@mail.gmail.com>
-Subject: Re: [PATCH BlueZ v2 1/2] audio: actually try to enable MTU auto-tuning
-To: patchwork-bot+bluetooth@kernel.org
-Cc: Fedor Pchelkin <pchelkin@ispras.ru>, linux-bluetooth@vger.kernel.org, 
-	lvc-project@linuxtesting.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v2] Bluetooth: hci_uart: fix race during initialization
+From: Arseniy Krasnov <avkrasnov@salutedevices.com>
+To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+CC: Marcel Holtmann <marcel@holtmann.org>, <oxffffaa@gmail.com>,
+	<linux-bluetooth@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+	<kernel@salutedevices.com>
+References: <d159c57f-8490-4c26-79da-6ad3612c4a14@salutedevices.com>
+ <CABBYNZLa9amkcQzqRyiCK7acKeXiPLkfX8thMonQhXN+5PnmmQ@mail.gmail.com>
+ <e0b77a36-2d2b-735c-7a23-bbaab5adeba7@salutedevices.com>
+ <a2a239f1-5697-cb09-5e4f-83c024fd5ea6@salutedevices.com>
+Content-Language: en-US
+In-Reply-To: <a2a239f1-5697-cb09-5e4f-83c024fd5ea6@salutedevices.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: p-i-exch-a-m2.sberdevices.ru (172.24.196.120) To
+ p-exch-cas-a-m1.sberdevices.ru (172.24.201.216)
+X-KSMG-Rule-ID: 1
+X-KSMG-Message-Action: clean
+X-KSMG-AntiSpam-Lua-Profiles: 190694 [Jan 30 2025]
+X-KSMG-AntiSpam-Version: 6.1.1.7
+X-KSMG-AntiSpam-Envelope-From: avkrasnov@salutedevices.com
+X-KSMG-AntiSpam-Rate: 0
+X-KSMG-AntiSpam-Status: not_detected
+X-KSMG-AntiSpam-Method: none
+X-KSMG-AntiSpam-Auth: dkim=none
+X-KSMG-AntiSpam-Info: LuaCore: 50 0.3.50 df4aeb250ed63fd3baa80a493fa6caee5dd9e10f, {Tracking_from_domain_doesnt_match_to}, salutedevices.com:7.1.1;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1;smtp.sberdevices.ru:5.0.1,7.1.1;127.0.0.199:7.1.2, FromAlignment: s
+X-MS-Exchange-Organization-SCL: -1
+X-KSMG-AntiSpam-Interceptor-Info: scan successful
+X-KSMG-AntiPhishing: Clean
+X-KSMG-LinksScanning: Clean
+X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 2.0.1.6960, bases: 2025/01/30 12:39:00 #27158825
+X-KSMG-AntiVirus-Status: Clean, skipped
 
-Hi Fedor,
+Hi, sorry ping
 
-On Thu, Jan 30, 2025 at 12:30=E2=80=AFPM <patchwork-bot+bluetooth@kernel.or=
-g> wrote:
->
-> Hello:
->
-> This series was applied to bluetooth/bluez.git (master)
-> by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
->
-> On Wed, 29 Jan 2025 11:49:49 +0300 you wrote:
-> > A "0" for the input MTU passed to the underlying socket is supposed to
-> > indicate that its value should be determined by the L2CAP layer.
-> > However, the current code treats a zero imtu just as if there is
-> > nothing to change.
-> >
-> > Introduce an additional flag to indicate that the zero imtu is
-> > explicitly requested by the caller for the purpose of auto-tuning.
-> > Otherwise, the similar behavior remains.
-> >
-> > [...]
->
-> Here is the summary with links:
->   - [BlueZ,v2,1/2] audio: actually try to enable MTU auto-tuning
->     (no matching commit)
+Thanks
 
-Ive done quite a few modifications to the above change, so instead of
-using a auto_mtu it now checks if -1 for not set, Ive checked with a
-couple headsets I have and it seem to work fine but perhaps you want
-to check as well just to make sure I didn't screw something up.
-
->   - [BlueZ,v2,2/2] a2dp: enable input MTU auto-tuning for the server
->     https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=3D252a32ac0b3f
->
-> You are awesome, thank you!
-> --
-> Deet-doot-dot, I am a bot.
-> https://korg.docs.kernel.org/patchwork/pwbot.html
->
->
->
-
-
---=20
-Luiz Augusto von Dentz
+On 08.01.2025 15:39, Arseniy Krasnov wrote:
+> 
+> 
+> On 19.12.2024 23:07, Arseniy Krasnov wrote:
+>>
+>>
+>> On 19.12.2024 22:18, Luiz Augusto von Dentz wrote:
+>>> Hi Arseniy,
+>>>
+>>> On Tue, Dec 17, 2024 at 3:12 AM Arseniy Krasnov
+>>> <avkrasnov@salutedevices.com> wrote:
+>>>>
+>>>> 'hci_register_dev()' calls power up function, which is executed by
+>>>> kworker - 'hci_power_on()'. This function does access to bluetooth chip
+>>>> using callbacks from 'hci_ldisc.c', for example 'hci_uart_send_frame()'.
+>>>> Now 'hci_uart_send_frame()' checks 'HCI_UART_PROTO_READY' bit set, and
+>>>> if not - it fails. Problem is that 'HCI_UART_PROTO_READY' is set after
+>>>> 'hci_register_dev()', and there is tiny chance that 'hci_power_on()' will
+>>>> be executed before setting this bit. In that case HCI init logic fails.
+>>>>
+>>>> Patch moves setting of 'HCI_UART_PROTO_READY' before calling function
+>>>> 'hci_uart_register_dev()'.
+>>>>
+>>>> Signed-off-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
+>>>> ---
+>>>>  Changelog v1->v2:
+>>>>  * Move 'set_bit()' before 'hci_uart_register_dev()' instead of
+>>>>    adding new bit 'HCI_UART_PROTO_INIT'.
+>>>
+>>> What drivers/controllers this was tested with? I want to make sure
+>>> this doesn't cause regressions to other drivers if there are perhaps
+>>> some drivers assuming HCI_UART_PROTO_READY was set in a certain order.
+>>
+>> Hi,
+>>
+>> I tested this on:
+>>
+>> CONFIG_BT=y
+>> CONFIG_BT_HCIUART=y
+>> CONFIG_BT_HCIUART_H4=y
+> 
+> Hi, sorry, but is this enough info about my test env ?
+> 
+> Thanks
+> 
+>>
+>> Yes, my v1 patchset with extra INIT bit was targeted to keep
+>> original behaviour - e.g. PROTO_READY bit usage still the same,
+>> just adding extra bit to handle this specific case.
+>>
+>> Thanks
+>>
+>>>
+>>>>  drivers/bluetooth/hci_ldisc.c | 3 ++-
+>>>>  1 file changed, 2 insertions(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/drivers/bluetooth/hci_ldisc.c b/drivers/bluetooth/hci_ldisc.c
+>>>> index 30192bb083549..07b9aa09bbe2e 100644
+>>>> --- a/drivers/bluetooth/hci_ldisc.c
+>>>> +++ b/drivers/bluetooth/hci_ldisc.c
+>>>> @@ -704,12 +704,13 @@ static int hci_uart_set_proto(struct hci_uart *hu, int id)
+>>>>
+>>>>         hu->proto = p;
+>>>>
+>>>> +       set_bit(HCI_UART_PROTO_READY, &hu->flags);
+>>>> +
+>>>>         err = hci_uart_register_dev(hu);
+>>>>         if (err) {
+>>>>                 return err;
+>>>>         }
+>>>>
+>>>> -       set_bit(HCI_UART_PROTO_READY, &hu->flags);
+>>>>         return 0;
+>>>>  }
+>>>>
+>>>> --
+>>>> 2.30.1
+>>>
+>>>
+>>>
 
