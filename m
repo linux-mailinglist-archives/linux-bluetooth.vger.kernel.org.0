@@ -1,120 +1,118 @@
-Return-Path: <linux-bluetooth+bounces-10254-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-10257-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B26EA302F7
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 11 Feb 2025 06:40:43 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F0A2A30895
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 11 Feb 2025 11:34:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 62A753A74F6
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 11 Feb 2025 05:40:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0F7181882756
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 11 Feb 2025 10:34:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 859721E3DD8;
-	Tue, 11 Feb 2025 05:40:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GPFfmJLH"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9168B1F4611;
+	Tue, 11 Feb 2025 10:34:17 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5101C1E3DE3;
-	Tue, 11 Feb 2025 05:40:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C4E126BD90;
+	Tue, 11 Feb 2025 10:34:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=141.14.17.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739252437; cv=none; b=t2i3mSlsQNhS5JDs9005IlqSncTgqCSAMCMA7OsVMs3a6uxK8FXKbOny/EcZdJg9IkZMf2Zr7HgzXN63k0478SJSMPdzrqy+Kg59jyLJtbCW/NWfzIoCYowNvEfdnscH8TZr2u9ETgbPx421YzROUheVYyjuK5RjKtjdR+MhH0Y=
+	t=1739270057; cv=none; b=YiVqK6KK+lO5c6M5ZQ9LQrEg8eWiKLbXFJPpuGczNrmG1zsmtuxhEnS9CeN1ecQFvZ+TGAozejNPimMsZnjeKIBQgRbBy/IWEWNdMGTuyA24bN/Q98z9Gk8Ji+i32N7JeaOegiX5HJUrWnM3g08swQJRHi4zUPma6qC2SYepuTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739252437; c=relaxed/simple;
-	bh=c8+ckSUvQXLwAoq8ykRNNN44zqYBMhIqQSqUq/M0HUE=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=K7CovT8h3Vi7e95rj/kMbDm4PZ46ViTzT8UlI/4rS0IqzV7EWvVVFgLb3hjSCNiyxg49nEd/o0gMyrlhMPR78DfPO2GIeb6twToLp4tFYGbXwWZS+02bwQmFtLk2XOi0uFp0ea6O/D2OZfSAelrFHamyzNpB7Sj9JaxPVMXcCaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GPFfmJLH; arc=none smtp.client-ip=192.198.163.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1739252436; x=1770788436;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=c8+ckSUvQXLwAoq8ykRNNN44zqYBMhIqQSqUq/M0HUE=;
-  b=GPFfmJLHCUaS+Pob/HZQJdeH44DT/7Qqf+16ubF1lvZU0MX6893l/ssG
-   JCFAy1n8cdqK9YqptKgtM9BusVu6vgH06FDDHX81kpCf4H7hgB7tUvrkH
-   92Vanaj8emSgz/aGMX457LKWDRGGbRb9e2oRfI0kFQs8TGqoNVshGHFRY
-   21ejAyTiytJmSNvVUo3G8nfQXjnPiLUgWQUh2n6GYisaeZ5HDvLXXM+ZY
-   pUYsJXKg1FqGgvmkYNnJz1K6SAfkEjOrR09x659fk4z2CTjhbvUb4c+CN
-   OpuijU2W/DY3NzyjJgFfMN3RPcpI/lU1+9S1MPoESloj6oKTMroFi1+4S
-   Q==;
-X-CSE-ConnectionGUID: ZecMz/TtRtCMpefF+7TuLQ==
-X-CSE-MsgGUID: g5uhO9RMSI+5k6B2Pe9t+Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11341"; a="50492922"
-X-IronPort-AV: E=Sophos;i="6.13,276,1732608000"; 
-   d="scan'208";a="50492922"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Feb 2025 21:40:34 -0800
-X-CSE-ConnectionGUID: 1S4crYqBRre37LxdSnMxtA==
-X-CSE-MsgGUID: KrtMxJ+VQs6zaB40G6VVJg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
-   d="scan'208";a="117023568"
-Received: from unknown (HELO BSINU234.iind.intel.com) ([10.66.226.146])
-  by fmviesa005.fm.intel.com with ESMTP; 10 Feb 2025 21:40:31 -0800
-From: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
-To: linux-bluetooth@vger.kernel.org
-Cc: linux-pci@vger.kernel.org,
-	bhelgaas@google.com,
-	ravishankar.srivatsa@intel.com,
-	chethan.tumkur.narayan@intel.com,
-	Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>,
-	Kiran K <kiran.k@intel.com>
-Subject: [PATCH v1] Support BT remote wake.
-Date: Tue, 11 Feb 2025 13:26:19 +0200
-Message-Id: <20250211112619.1901277-1-chandrashekar.devegowda@intel.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1739270057; c=relaxed/simple;
+	bh=/3jS/aifha0R+pmTp79dZcWCEn3BMWmxixJ6k8dX6P4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Cpw0fGP4wHFxKoiaozz8jPnXKSc4HVYunAueegFKdY8/qh2DQlrepzvPqIC+0g6oQR/YWH5PGsA9ZzB6GsweoivSMRSS1mPa0O1n+cnjcxoSn/LwsU6CRUAhZq7lKI5ikFM3P/X6lWfAzrRTdaB3RPlOpQa47tIhoYpFpuqD4wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de; spf=pass smtp.mailfrom=molgen.mpg.de; arc=none smtp.client-ip=141.14.17.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=molgen.mpg.de
+Received: from [141.14.220.45] (g45.guest.molgen.mpg.de [141.14.220.45])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: pmenzel)
+	by mx.molgen.mpg.de (Postfix) with ESMTPSA id 86EE561EA1BE9;
+	Tue, 11 Feb 2025 11:33:51 +0100 (CET)
+Message-ID: <6115a459-60b9-4880-b392-1b57f435a1a9@molgen.mpg.de>
+Date: Tue, 11 Feb 2025 11:33:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] Support BT remote wake.
+To: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
+Cc: linux-bluetooth@vger.kernel.org, linux-pci@vger.kernel.org,
+ bhelgaas@google.com, ravishankar.srivatsa@intel.com,
+ chethan.tumkur.narayan@intel.com, Kiran K <kiran.k@intel.com>
+References: <20250211112619.1901277-1-chandrashekar.devegowda@intel.com>
+Content-Language: en-US
+From: Paul Menzel <pmenzel@molgen.mpg.de>
+In-Reply-To: <20250211112619.1901277-1-chandrashekar.devegowda@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Changes to add hdev->wakeup call to support wake on BT feature.
+Dear Chandrashekar,
 
-Signed-off-by: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
-Signed-off-by: Kiran K <kiran.k@intel.com>
----
-changes in v1:
-    - support for BT remote wake.
 
- drivers/bluetooth/btintel_pcie.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Thank you for your patch. Several comments on formal things.
 
-diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
-index b8b241a92bf9..e0633fab55a0 100644
---- a/drivers/bluetooth/btintel_pcie.c
-+++ b/drivers/bluetooth/btintel_pcie.c
-@@ -1509,6 +1509,13 @@ static int btintel_pcie_setup(struct hci_dev *hdev)
- 	return err;
- }
- 
-+static bool btintel_pcie_wakeup(struct hci_dev *hdev)
-+{
-+	struct btintel_pcie_data *data = hci_get_drvdata(hdev);
-+
-+	return device_may_wakeup(&data->pdev->dev);
-+}
-+
- static int btintel_pcie_setup_hdev(struct btintel_pcie_data *data)
- {
- 	int err;
-@@ -1533,6 +1540,7 @@ static int btintel_pcie_setup_hdev(struct btintel_pcie_data *data)
- 	hdev->hw_error = btintel_hw_error;
- 	hdev->set_diag = btintel_set_diag;
- 	hdev->set_bdaddr = btintel_set_bdaddr;
-+	hdev->wakeup = btintel_pcie_wakeup;
- 
- 	err = hci_register_dev(hdev);
- 	if (err < 0) {
--- 
-2.34.1
 
+Am 11.02.25 um 12:26 schrieb Chandrashekar Devegowda:
+
+Your system time is set incorrectly and set to the future.
+
+> Changes to add hdev->wakeup call to support wake on BT feature.
+
+Please elaborate. What is the problem? How is it solved? How is it tested?
+
+> Signed-off-by: Chandrashekar Devegowda <chandrashekar.devegowda@intel.com>
+> Signed-off-by: Kiran K <kiran.k@intel.com>
+> ---
+> changes in v1:
+>      - support for BT remote wake.
+
+Not necessary to note v1 changes.
+
+>   drivers/bluetooth/btintel_pcie.c | 8 ++++++++
+>   1 file changed, 8 insertions(+)
+> 
+> diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
+> index b8b241a92bf9..e0633fab55a0 100644
+> --- a/drivers/bluetooth/btintel_pcie.c
+> +++ b/drivers/bluetooth/btintel_pcie.c
+> @@ -1509,6 +1509,13 @@ static int btintel_pcie_setup(struct hci_dev *hdev)
+>   	return err;
+>   }
+>   
+> +static bool btintel_pcie_wakeup(struct hci_dev *hdev)
+> +{
+> +	struct btintel_pcie_data *data = hci_get_drvdata(hdev);
+> +
+> +	return device_may_wakeup(&data->pdev->dev);
+> +}
+> +
+>   static int btintel_pcie_setup_hdev(struct btintel_pcie_data *data)
+>   {
+>   	int err;
+> @@ -1533,6 +1540,7 @@ static int btintel_pcie_setup_hdev(struct btintel_pcie_data *data)
+>   	hdev->hw_error = btintel_hw_error;
+>   	hdev->set_diag = btintel_set_diag;
+>   	hdev->set_bdaddr = btintel_set_bdaddr;
+> +	hdev->wakeup = btintel_pcie_wakeup;
+>   
+>   	err = hci_register_dev(hdev);
+>   	if (err < 0) {
+
+The diff looks good.
+
+
+Kind regards,
+
+Paul
 
