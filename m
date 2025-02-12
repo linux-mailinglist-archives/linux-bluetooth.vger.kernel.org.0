@@ -1,256 +1,174 @@
-Return-Path: <linux-bluetooth+bounces-10285-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-10287-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68590A329DD
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 12 Feb 2025 16:24:38 +0100 (CET)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 39DE8A32A72
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 12 Feb 2025 16:48:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DA9FB166BF0
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 12 Feb 2025 15:24:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 167EE7A2878
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 12 Feb 2025 15:47:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AD1B21772B;
-	Wed, 12 Feb 2025 15:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C4AD212B05;
+	Wed, 12 Feb 2025 15:47:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="arzrMdsh"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="PLkMLkwv"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [217.70.183.194])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77B6211712
-	for <linux-bluetooth@vger.kernel.org>; Wed, 12 Feb 2025 15:23:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 781E6271814;
+	Wed, 12 Feb 2025 15:47:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739373840; cv=none; b=Psdwye0iCHGIt2myYd1rXg/dXt+nnsSWMNkrieqidJ9JLKQktIbBTiUxCtXvau6YoK29uSR3DWlhY+uTxzF0mCcAiw+vPaAODrX7oNoAX/4W+7q+oGMWXJyxbLwk+quaz8E1rzE9qcOExVRlS8sZaEwUJIk76sXoa/vDLFOvIq0=
+	t=1739375271; cv=none; b=olGUqWVzt658od/lySWSWJZj3MmYCsWSFRLclPj9PF20z9QK6mqfyAAey7oxFc7Vt9Jb1xpDiUBSlvVuTve2Za4TyIzIR09c96OBcfP0ZPjXAVLSQUHn8kf79JhS96dFroe8mXWXWBFcPK8yRkNDS9eHB+2/E8JkO7KoAmL6+SU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739373840; c=relaxed/simple;
-	bh=DkWm7B5pWGxVonZzwpy19tuK3gxJhVZ+c7kxKV5lFU4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dEN6crXtmHowgaCIkjC0WfIUVYboZ+p2ejvAKBeTx8aGsp21jVUHThso0vUUaB+PJF0/XxpKeHZM9TlUcZbBFuIp6O2psLgnKXvddDl6J3aHyqo9E3yBoMYhUEGTkTcqrNTlpqr3egma9txtxOFwx7aSHLIMi7AE3GQ2KUFgzA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=arzrMdsh; arc=none smtp.client-ip=209.85.208.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-307325f2436so64347981fa.0
-        for <linux-bluetooth@vger.kernel.org>; Wed, 12 Feb 2025 07:23:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739373837; x=1739978637; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mlP2slLBqEIYL7sTJwr26Ht5fhDpsz7XrW5f7Kvgpkw=;
-        b=arzrMdsh0/GzCIxytIzt9RWwPgAyxRK+OiOtZL/E+XpvzZx9apLnYysJlpz5ls6zMM
-         NEIY9wxmQf2aeFQHHb4eVADR7RJBPX0A3KGx9uqe85E7cyHSyTSIjfrZs18DLk9QVHTu
-         LDvwoFXSf1BrKOG1aRmWhSpomnBq4PAC2vQdYxcJYCPXGXGegnf9hCyHdPDn7g6yuvgh
-         Ds40hCvEvUlsJeOeK6GsEYdDMWOzESmBxkChuCulRRCEifHc65U6Z/2G2U9A8dlU2s/K
-         T1QTqrmodhOLfm8Q+bwAwuYPHUHkp7ewLiqf6ER5yUge3G/x14e6YFDn+nKA73oHkVWh
-         Kb7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739373837; x=1739978637;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mlP2slLBqEIYL7sTJwr26Ht5fhDpsz7XrW5f7Kvgpkw=;
-        b=wss9CVaBaf4K/EWIk0V4TdgvwZ9W7SJnn2muTfqtLmY//ekwfrQGHSB7fBPtgHPXP7
-         EGDHaXoBNI0bRTxQxXRM7MKMBLeN5plnpCKb3sJJ4949UouKs5fdIxJNXNO+u5vN//Fq
-         TrvSbwa/f+D3bisbnhpY3LrOF/awJWLuxNA4NK44/Ldo1MazymkLSPzkDd8jVTr0+d94
-         nV/BpzXGLUy2gzwbwaWL81XemEa17+HFLMbmCPjSl8oAQ3e2Don2acLb2yGazPBEP/8T
-         63ajpGw09ZtvFVmtM9wcnk5Tds3wfFDfczhbVonDnc6SN0WdJiBTNOecW+kNUZnPfnjX
-         3Ufw==
-X-Forwarded-Encrypted: i=1; AJvYcCVYb09UXku95O695aWnCghJGdh1haWbJ5MHHEuaKfVUYpxFdhUk8SRTIvFlDoPjYFjd9FcpXNKb7K36zoCXItc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzxpEEZOZo+HE5CaKmNVnyzYCw+Fk2hm9r8Y+QIxWUaadXH1WnK
-	zIPPL3BbXcFPLXa89NIJ7CljTtz3AOzkBgjqxg1ntO29bLkec2kn1edLA0a2kWwUjoIhGjhS3LU
-	D9ljwYKEjFZ54GtbrRWd624A3HN4=
-X-Gm-Gg: ASbGnctG9HYxVMRGQRKgp4wRuSN7cPSPUIPTwJ7hfR5VxFzhylckQmI7wqKF8Tfulz8
-	/lxqN4ewmex1LfvllFHaNqXI/XjmSpTD/SQiXHRvdTKq6/pN10oJoGsEPHupf3caXkkspjGo=
-X-Google-Smtp-Source: AGHT+IFkKiUL2fMxLlKi07FxryhG9n8DcHKlcQ4Lfu7qNNArjM0V9Ls1asIuDU17yDa/AKNKDmjd7MEGDyaYWAjbQlE=
-X-Received: by 2002:a05:651c:b0b:b0:308:eb58:6571 with SMTP id
- 38308e7fff4ca-3090373a8d9mr13543261fa.26.1739373836704; Wed, 12 Feb 2025
- 07:23:56 -0800 (PST)
+	s=arc-20240116; t=1739375271; c=relaxed/simple;
+	bh=evqjBDuFvQvZNlaBbpp360TMcXxjhw1F9NMB4b5lJuQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=KeKwzXd/MaZQpmuPg6CUDHQTQkXsetLoz7uoJV2P7xg3s67Rk0kGmFmlfXggFx/nQUzoR2B/GGF2Ry7ItrxXlq1ZbaNR3PftQvlcCPqvuQ0mIdLXU/5B2uNOnRnBfo/cewmPtDwTU2nktvC5ZjO9ULRnoWnNHnhpvKgwLl+Ru9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=PLkMLkwv; arc=none smtp.client-ip=217.70.183.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id BF86F440F3;
+	Wed, 12 Feb 2025 15:47:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1739375266;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=39musMyRvQZFJGCAwDo09lJ3EVHHEkzlG1spNgpkZ4Q=;
+	b=PLkMLkwv0wm/8HRgZPKQsHL3sSziak3cusMU+bcFX6+IVkHZS6TEd3k+KrY2dIywTHU+oU
+	k5K+Pu8maSlm//NBsxq+mli1fn7ynFCbmeyrr0OVipl4XgwpYFpZ71V/Tp26rgvyeW/VtT
+	aNGFCrDp4Mqnl16E8Td75hPikhyv5T09yR9oqeNnvaN21zbx63n7R28RguxaBHArhg2815
+	Oel1IDy2h8N8RZ3QHT5Fgs+AY/odjSZySHn09TSgSRb+URe2tF0+6rKCsiewXEfGGijI3M
+	GhwVdz8aXHvMXC6DNX2aI1tobo5yil3SxE8scKqWRZZ4MU149UC2siFA9xrlAQ==
+From: =?utf-8?q?Alexis_Lothor=C3=A9?= <alexis.lothore@bootlin.com>
+Subject: [PATCH 00/12] bluetooth: hci_wilc: add new bluetooth driver
+Date: Wed, 12 Feb 2025 16:46:19 +0100
+Message-Id: <20250212-wilc3000_bt-v1-0-9609b784874e@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <4d3fd31a-7289-44d1-919d-92f1da4355ca@stanley.mountain>
-In-Reply-To: <4d3fd31a-7289-44d1-919d-92f1da4355ca@stanley.mountain>
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Wed, 12 Feb 2025 10:23:43 -0500
-X-Gm-Features: AWEUYZnolSw4t9K_MWHgnVux9qRA6qT7MHuSoJSCzeNuU0PpdAhk-6lNnvwDF-8
-Message-ID: <CABBYNZL5B_fyij4T-Kzm_0ayzFVhWbaOYbzdD4tVz89WtmPfZg@mail.gmail.com>
-Subject: Re: [bug report] Bluetooth: L2CAP: Fix corrupted list in hci_chan_del
-To: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>, linux-bluetooth@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAEvCrGcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDCyML3fLMnGRjAwOD+KQS3bREE1OjNKNES+PEFCWgjoKi1LTMCrBp0bG
+ 1tQDQShcmXQAAAA==
+X-Change-ID: 20240828-wilc3000_bt-fa452f2a93ad
+To: =?utf-8?q?Alexis_Lothor=C3=A9?= <alexis.lothore@bootlin.com>, 
+ Marcel Holtmann <marcel@holtmann.org>, 
+ Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Ajay Singh <ajay.kathat@microchip.com>, 
+ Claudiu Beznea <claudiu.beznea@tuxon.dev>, Kalle Valo <kvalo@kernel.org>, 
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+ Simon Horman <horms@kernel.org>, 
+ Nicolas Ferre <nicolas.ferre@microchip.com>, 
+ Alexandre Belloni <alexandre.belloni@bootlin.com>
+Cc: Marek Vasut <marex@denx.de>, 
+ Thomas Petazzoni <thomas.petazzoni@bootlin.com>, 
+ linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-wireless@vger.kernel.org, 
+ netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+X-Mailer: b4 0.14.2
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeggedvkecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffufffkgggtgffvvefosehtkeertdertdejnecuhfhrohhmpeetlhgvgihishcunfhothhhohhrrocuoegrlhgvgihishdrlhhothhhohhrvgessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepgeevffetudegfedukeelhffgjeefteevgeejjeffkeekudejhedvfedufeefvedtnecuffhomhgrihhnpehmihgtrhhotghhihhprdgtohhmpdhkvghrnhgvlhdrohhrghdpghhithhhuhgsrdgtohhmpdgsohhothhlihhnrdgtohhmnecukfhppedvrgdtvdemkeegvdekmehfleegtgemvgdttdemmehfkeehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddvmeekgedvkeemfhelgegtmegvtddtmeemfhekhedphhgvlhhopegludelvddrudeikedruddrudeljegnpdhmrghilhhfrhhomheprghlvgigihhsrdhlohhthhhorhgvsegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopedvgedprhgtphhtthhopegtohhnohhrodgutheskhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprhhosghhsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdhkvghrn
+ hgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopeguvghvihgtvghtrhgvvgesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrhiikhdoughtsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehkuhgsrgeskhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqrghrmhdqkhgvrhhnvghlsehlihhsthhsrdhinhhfrhgruggvrggurdhorhhgpdhrtghpthhtoheplhhuihiirdguvghnthiisehgmhgrihhlrdgtohhm
+X-GND-Sasl: alexis.lothore@bootlin.com
 
-Hi Dan,
+Hello,
 
-On Wed, Feb 12, 2025 at 10:19=E2=80=AFAM Dan Carpenter <dan.carpenter@linar=
-o.org> wrote:
->
-> Hello Luiz Augusto von Dentz,
->
-> Commit dd6367916d2d ("Bluetooth: L2CAP: Fix corrupted list in
-> hci_chan_del") from Feb 6, 2025 (linux-next), leads to the following
-> Smatch static checker warning:
->
->         net/bluetooth/l2cap_core.c:7555 l2cap_recv_acldata()
->         error: we previously assumed 'conn' could be null (see line 7459)
->
-> net/bluetooth/l2cap_core.c
->     7442 void l2cap_recv_acldata(struct hci_conn *hcon, struct sk_buff *s=
-kb, u16 flags)
->     7443 {
->     7444         struct l2cap_conn *conn;
->     7445         int len;
->     7446
->     7447         /* Lock hdev to access l2cap_data to avoid race with l2c=
-ap_conn_del */
->     7448         hci_dev_lock(hcon->hdev);
->     7449
->     7450         conn =3D hcon->l2cap_data;
->     7451
->     7452         if (!conn)
->     7453                 conn =3D l2cap_conn_add(hcon);
->     7454
->     7455         conn =3D l2cap_conn_hold_unless_zero(conn);
->     7456
->     7457         hci_dev_unlock(hcon->hdev);
->     7458
->     7459         if (!conn)
->     7460                 goto drop;
->
-> Do you want to move drop after the unlock: or do you want to make this
-> a direct return?  Choices, choices...
->
->         if (!conn) {
->                 kfree_skb(skb);
->                 return;
->         }
+WILC3000 ([1]) is a combo chip exposing 802.11b/g/n and Bluetooth 5.
+Support for the wlan part has recently been integrated upstream ([2]) in
+the existing wilc1000 driver. This new series aims to bring support for
+the bluetooth side.
 
-Ouch, yeah it seems like we should be doing this instead of drop, do
-you care to spin a patch for it or shall I do it myself?
+The WILC3000 chip is controlled through a SDIO or SPI bus for the wlan
+part (similarly to wilc1000), and uses standard HCI commands over a UART
+bus for the bluetooth operations. This work is based on the code
+available in the vendor kernel ([3]), in which bluetooth is managed
+directly in the wireless driver, and relies on user to trigger the
+hardware configuration (chardev manipulations + hciattach). The series
+brings a new dedicated bluetooth driver to support the bluetooth feature
+from the chip, without relying on the user to perform the device
+bringup. However, getting completely rid of the wlan driver dependency
+is not possible: it is still needed for early BT CPU configuration and
+BT firmware download, so the new driver still have a dependency of the
+wlan one, with an approach similar to the one used by the rsi driver.
 
->     7461
->     7462         BT_DBG("conn %p len %u flags 0x%x", conn, skb->len, flag=
-s);
->     7463
->     7464         mutex_lock(&conn->lock);
->     7465
->     7466         switch (flags) {
->     7467         case ACL_START:
->     7468         case ACL_START_NO_FLUSH:
->     7469         case ACL_COMPLETE:
->     7470                 if (conn->rx_skb) {
->     7471                         BT_ERR("Unexpected start frame (len %d)"=
-, skb->len);
->     7472                         l2cap_recv_reset(conn);
->     7473                         l2cap_conn_unreliable(conn, ECOMM);
->     7474                 }
->     7475
->     7476                 /* Start fragment may not contain the L2CAP leng=
-th so just
->     7477                  * copy the initial byte when that happens and u=
-se conn->mtu as
->     7478                  * expected length.
->     7479                  */
->     7480                 if (skb->len < L2CAP_LEN_SIZE) {
->     7481                         l2cap_recv_frag(conn, skb, conn->mtu);
->     7482                         break;
->     7483                 }
->     7484
->     7485                 len =3D get_unaligned_le16(skb->data) + L2CAP_HD=
-R_SIZE;
->     7486
->     7487                 if (len =3D=3D skb->len) {
->     7488                         /* Complete frame received */
->     7489                         l2cap_recv_frame(conn, skb);
->     7490                         goto unlock;
->     7491                 }
->     7492
->     7493                 BT_DBG("Start: total len %d, frag len %u", len, =
-skb->len);
->     7494
->     7495                 if (skb->len > len) {
->     7496                         BT_ERR("Frame is too long (len %u, expec=
-ted len %d)",
->     7497                                skb->len, len);
->     7498                         l2cap_conn_unreliable(conn, ECOMM);
->     7499                         goto drop;
->     7500                 }
->     7501
->     7502                 /* Append fragment into frame (with header) */
->     7503                 if (l2cap_recv_frag(conn, skb, len) < 0)
->     7504                         goto drop;
->     7505
->     7506                 break;
->     7507
->     7508         case ACL_CONT:
->     7509                 BT_DBG("Cont: frag len %u (expecting %u)", skb->=
-len, conn->rx_len);
->     7510
->     7511                 if (!conn->rx_skb) {
->     7512                         BT_ERR("Unexpected continuation frame (l=
-en %d)", skb->len);
->     7513                         l2cap_conn_unreliable(conn, ECOMM);
->     7514                         goto drop;
->     7515                 }
->     7516
->     7517                 /* Complete the L2CAP length if it has not been =
-read */
->     7518                 if (conn->rx_skb->len < L2CAP_LEN_SIZE) {
->     7519                         if (l2cap_recv_len(conn, skb) < 0) {
->     7520                                 l2cap_conn_unreliable(conn, ECOM=
-M);
->     7521                                 goto drop;
->     7522                         }
->     7523
->     7524                         /* Header still could not be read just c=
-ontinue */
->     7525                         if (conn->rx_skb->len < L2CAP_LEN_SIZE)
->     7526                                 break;
->     7527                 }
->     7528
->     7529                 if (skb->len > conn->rx_len) {
->     7530                         BT_ERR("Fragment is too long (len %u, ex=
-pected %u)",
->     7531                                skb->len, conn->rx_len);
->     7532                         l2cap_recv_reset(conn);
->     7533                         l2cap_conn_unreliable(conn, ECOMM);
->     7534                         goto drop;
->     7535                 }
->     7536
->     7537                 /* Append fragment into frame (with header) */
->     7538                 l2cap_recv_frag(conn, skb, skb->len);
->     7539
->     7540                 if (!conn->rx_len) {
->     7541                         /* Complete frame received. l2cap_recv_f=
-rame
->     7542                          * takes ownership of the skb so set the=
- global
->     7543                          * rx_skb pointer to NULL first.
->     7544                          */
->     7545                         struct sk_buff *rx_skb =3D conn->rx_skb;
->     7546                         conn->rx_skb =3D NULL;
->     7547                         l2cap_recv_frame(conn, rx_skb);
->     7548                 }
->     7549                 break;
->     7550         }
->     7551
->     7552 drop:
->     7553         kfree_skb(skb);
->     7554 unlock:
-> --> 7555         mutex_unlock(&conn->lock);
->     7556         l2cap_conn_put(conn);
->     7557 }
->
-> regards,
-> dan carpenter
->
+- Patch 1 brings the new dt binding
+- Patch 2-9 prepares the wlan side, either by exposing the needed
+  functions to initialize BT, or by mitigating behavior which would
+  prevent BT and WLAN from runnning in parallel
+- Patch 10 brings the new bluetooth driver
+- Patch 11 updates the device tree description for sama5d27_wlsom1_ek
+  board (which I used to validate this series) to use the new driver
+- Patch 12 adds a new entry for this driver in the MAINTAINERS files
 
+This series has been tested with WILC3000 both in SDIO mode (with the
+chip embedded on the sama5d27_wlsom1_ek) and SPI mode (custom wiring on
+an SPI on the same eval board, with a WILC3000-SD).
 
---=20
-Luiz Augusto von Dentz
+Since this works needs new code in both the existing wlan driver and the
+new driver, I have included both linux-wireless and bluetooth mailing
+lists, while keeping the entire series for clarity, but let me know if
+you want to proceed differently.
+
+[1] https://www.microchip.com/en-us/product/atwilc3000
+[2] https://lore.kernel.org/linux-wireless/20241004114551.40236-1-marex@denx.de/
+[3] https://github.com/linux4microchip/linux/tree/linux-6.6-mchp/drivers/net/wireless/microchip/wilc1000
+
+---
+Alexis Lothoré (12):
+      dt-bindings: bluetooth: describe wilc 3000 bluetooth chip
+      wifi: wilc1000: add a read-modify-write API for registers accesses
+      wifi: wilc1000: add lock to prevent concurrent firmware startup
+      wifi: wilc1000: allow to use acquire/release bus in other parts of driver
+      wifi: wilc1000: do not depend on power save flag to wake up chip
+      wifi: wilc1000: remove timeout parameter from set_power_mgmt
+      wifi: wilc1000: reorganize makefile objs into sorted list
+      wifi: wilc1000: add basic functions to allow bluetooth bringup
+      wifi: wilc1000: disable firmware power save if bluetooth is in use
+      bluetooth: hci_wilc: add wilc hci driver
+      ARM: dts: at91-sama5d27_wlsom1: update bluetooth chip description
+      MAINTAINERS: add entry for new wilc3000 bluetooth driver
+
+ .../net/bluetooth/microchip,wilc3000-bt.yaml       |  41 +++
+ MAINTAINERS                                        |   7 +
+ .../boot/dts/microchip/at91-sama5d27_wlsom1.dtsi   |   8 +
+ .../boot/dts/microchip/at91-sama5d27_wlsom1_ek.dts |  10 -
+ drivers/bluetooth/Kconfig                          |  13 +
+ drivers/bluetooth/Makefile                         |   3 +-
+ drivers/bluetooth/hci_uart.h                       |   1 +
+ drivers/bluetooth/hci_wilc.c                       | 333 ++++++++++++++++++++
+ drivers/net/wireless/microchip/wilc1000/Kconfig    |   3 +
+ drivers/net/wireless/microchip/wilc1000/Makefile   |  11 +-
+ drivers/net/wireless/microchip/wilc1000/bt.c       | 345 +++++++++++++++++++++
+ drivers/net/wireless/microchip/wilc1000/cfg80211.c |   7 +-
+ drivers/net/wireless/microchip/wilc1000/hif.c      |   2 +-
+ drivers/net/wireless/microchip/wilc1000/hif.h      |   2 +-
+ drivers/net/wireless/microchip/wilc1000/netdev.c   |  14 +
+ drivers/net/wireless/microchip/wilc1000/netdev.h   |   5 +
+ drivers/net/wireless/microchip/wilc1000/sdio.c     | 101 ++++--
+ drivers/net/wireless/microchip/wilc1000/spi.c      |  43 +++
+ drivers/net/wireless/microchip/wilc1000/wlan.c     | 154 ++++-----
+ drivers/net/wireless/microchip/wilc1000/wlan.h     |  23 ++
+ include/net/wilc.h                                 |  19 ++
+ 21 files changed, 996 insertions(+), 149 deletions(-)
+---
+base-commit: 95f6f2d73dc40ab53a94756689ce5cfd2f23361a
+change-id: 20240828-wilc3000_bt-fa452f2a93ad
+
+Best regards,
+-- 
+Alexis Lothoré, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
+
 
