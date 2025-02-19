@@ -1,84 +1,67 @@
-Return-Path: <linux-bluetooth+bounces-10484-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-10486-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B97E9A3C728
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Feb 2025 19:16:08 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DBC5A3C7EC
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Feb 2025 19:49:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 69A70178A42
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Feb 2025 18:14:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D3E1316C863
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Feb 2025 18:48:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8641215163;
-	Wed, 19 Feb 2025 18:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CEC3214A7F;
+	Wed, 19 Feb 2025 18:48:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="HUiu4XHP"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FUyE10n7"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CEDD215052;
-	Wed, 19 Feb 2025 18:13:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739988839; cv=pass; b=g3AlqvU5ux7ivIfe8b3FE8P3eTIsB/8QyQaP9LG40gGCQzTM307TzIK1C2dTCc/EHhWY3E46iLUDXaLI3UOa0rmzxm/+ws1rGrkxzWJF2uCWWM4S1btP+P+/6VQxJjaNRp6MlxKSZtXH5VH2FZr2ZVD/mk/d0xSMjg/+Mrsgk5Y=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739988839; c=relaxed/simple;
-	bh=tFjxQ4xwKJ5WYk4VHccCnN0hp6U7ni1nBRfMdKbhUR8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RmTfn/H5mTZ4tqB/ablm9Z6fhAua0/RsTRJmhJsM10kuePI5QVOPbF6uHFigJVXeAUYvIsSNbIdp2pZAIP7+0IKmtiPqfm0ca8wHZMMnZtdt/zl1gfDoMdwGuFfAbOnOc5+e2jfIF7FFVr7kpHun5eOZ9amblyw7CeuVvzRx2Ro=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=HUiu4XHP; arc=pass smtp.client-ip=195.140.195.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
-Received: from monolith.lan (unknown [193.138.7.178])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: pav)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4Yykzj3Tndz10DN;
-	Wed, 19 Feb 2025 20:13:53 +0200 (EET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
-	t=1739988834;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vJNzXI82cDFYIUX+q6pOVmeAvH8m6xfO5n99kk/kpC8=;
-	b=HUiu4XHPcHn17HK/B5oEjc8D9KvnDdDYG0zGhZc8xb2hz91DXZVPC1gIvyzEL8w0UApV6z
-	yv5QlDNzrnedYiqfLAu70TvJKa7cI+Avq3lhk0TLazYZEKl1dtMyIFMAJTzTXJDR3zloXp
-	MkW3ySAqwAJllPiTPCHrHPIuzuD/VI0=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=meesny; t=1739988834;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vJNzXI82cDFYIUX+q6pOVmeAvH8m6xfO5n99kk/kpC8=;
-	b=ZPBUqBC//+XBvrBL32pwhdVDOb2gY02YQM161pmwUlqqHAI+UHWxrZ9Dscq+e+sg6SRoQN
-	2OS58sS91/90kswqTZNpmjeWt6K2yL0d7kMwm9UJDhvxIxFkoMUFHzmPPztGDhtHqT0JEN
-	4C24jXoofi4/Y+Lhmlh9l9SoQPv7PXA=
-ARC-Authentication-Results: i=1;
-	ORIGINATING;
-	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
-ARC-Seal: i=1; s=meesny; d=iki.fi; t=1739988834; a=rsa-sha256; cv=none;
-	b=ZDaoMVt1ov3YWhawEjeE0Hyb9ffuzB4V+8LFIx8Yw2RigOjdrpNDBperOw5Vnk/KatgiSa
-	jkcdefYMIiUT7BLxyON7UvcqklPAJyoqxBlzxJ94habarC5bh+wwEFySHqX8BHluR7f9fx
-	YGHV68LpKDDJcCOI71Yk3TUU1CEv1NE=
-From: Pauli Virtanen <pav@iki.fi>
-To: linux-bluetooth@vger.kernel.org
-Cc: Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	netdev@vger.kernel.org,
-	davem@davemloft.net,
-	kuba@kernel.org,
-	willemdebruijn.kernel@gmail.com
-Subject: [PATCH v4 5/5] Bluetooth: SCO: add TX timestamping socket-level mechanism
-Date: Wed, 19 Feb 2025 20:13:37 +0200
-Message-ID: <79a6ebae9e43c390a9d06278a38f00c8d3af81b6.1739988644.git.pav@iki.fi>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <cover.1739988644.git.pav@iki.fi>
-References: <cover.1739988644.git.pav@iki.fi>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39EF0214A73
+	for <linux-bluetooth@vger.kernel.org>; Wed, 19 Feb 2025 18:48:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1739990899; cv=none; b=qhqpD7Su/2EbOwb6uKQaXgqsHcIBaAvXJcI1kVpNvWXIQ6P9rZPVpbf7WY58l4qeuppNV7M3pYfhyzIOOOy8iDanT7BGFNmmIFG2Nfklg2uPlVyP32q0/tcUrPHwXLym/uHn0yATXaKK5640Rv/9xWXQ6prtjIS8nSvrW8StyrU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1739990899; c=relaxed/simple;
+	bh=fCr3pdiMZWMD3xPTG1WN/fQn0w9SVg0TG4fRoFqqUnw=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=hx6c8/f6+quxBmqxrOSYZz/ylBwgXzrWNaTZiY+5WFG5lFew+itdOmNdPZQxDeKRxAsvCNEDxAY+9Zbl+HWT2NVFgD+U8G5yv+8scoMt3NmU7X+KUQkC2QkDvp/LOXg/D0kcbcCKCm9xqfSSHSxqHDOnecGAl9r5mtGvLvXHXaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FUyE10n7; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 51JH2MrC008355
+	for <linux-bluetooth@vger.kernel.org>; Wed, 19 Feb 2025 18:48:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=9oChOyzL+q+Y3SyZKpcMpy
+	ORYuaWrXJdTYacBihUEyU=; b=FUyE10n74CWpjmSV9NOVPcyldzANiUJo3VWrBG
+	rWUZKoNYDYJLm6LqrnkLMA+E19uLFjY9ki7KRNo2qU1oZDhuL13Au7K5Ljy6Tk1F
+	d/aZn/kV7PuT8jRBNlHp0gmOKFIDL7loAfEevxVduAMyKrQLi9+1+LmRxn/oLV7R
+	iud5XFUchMiV/u8ll5VNM1zZm9Ld72FMiaaokXvGRGx0CUnkijYUJ5borF8ggv0f
+	26ZnFxzd5aYfAsuHr1EDBKgBq6kb+NmIDJjXwKhbORLpp+xqnyehAvmODO0dBIXq
+	9c/4yv/Cr/yW+48qRgWd2Sir746yXQkF0zTFOKmJ6ZbQva/g==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 44vyy3bnvv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <linux-bluetooth@vger.kernel.org>; Wed, 19 Feb 2025 18:48:14 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 51JImDbN013786
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <linux-bluetooth@vger.kernel.org>; Wed, 19 Feb 2025 18:48:13 GMT
+Received: from hu-amisjain-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 19 Feb 2025 10:48:12 -0800
+From: Amisha Jain <quic_amisjain@quicinc.com>
+To: <linux-bluetooth@vger.kernel.org>
+CC: <quic_mohamull@quicinc.com>, <quic_hbandi@quicinc.com>,
+        <quic_anubhavg@quicinc.com>
+Subject: [PATCH v1] obex: Add messages_get_message() implementation for MAP plugin
+Date: Thu, 20 Feb 2025 00:17:58 +0530
+Message-ID: <20250219184758.115316-1-quic_amisjain@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -86,86 +69,104 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: VDDDRq8_Eprwm8USDAY3tilIRpOg5fpZ
+X-Proofpoint-GUID: VDDDRq8_Eprwm8USDAY3tilIRpOg5fpZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-19_08,2025-02-19_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1015
+ phishscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0
+ priorityscore=1501 malwarescore=0 spamscore=0 mlxlogscore=940 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2502100000
+ definitions=main-2502190146
 
-Support TX timestamping in SCO sockets.
+GET Message() operation should be supported for passing below PTS
+testcases -
+1.MAP/MSE/MMB/BV-12-C
+Verify that the MSE can return an email message to the MCE.
+2.MAP/MSE/MMB/BV-13-C
+Verify that the MSE can return a SMS message in native format to the MCE.
+3.MAP/MSE/MMB/BV-14-C
+Verify that the MSE can return a SMS message with text trans-coded to UTF-8
+to the MCE.
 
-Support MSG_ERRQUEUE in SCO recvmsg.
+Currently get message operation is not implemented, hence above
+testcases are failing.
+Added code to send the complete bmessage in response
+to the get request for the requested message handle.
 
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
 ---
+ obexd/plugins/mas.c            |  4 ++--
+ obexd/plugins/messages-dummy.c | 32 +++++++++++++++++++++++++++++++-
+ 2 files changed, 33 insertions(+), 3 deletions(-)
 
-Notes:
-    v4: no changes
-
- net/bluetooth/sco.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
-
-diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
-index aa7bfe26cb40..f39c57ac594f 100644
---- a/net/bluetooth/sco.c
-+++ b/net/bluetooth/sco.c
-@@ -370,7 +370,8 @@ static int sco_connect(struct sock *sk)
- 	return err;
- }
+diff --git a/obexd/plugins/mas.c b/obexd/plugins/mas.c
+index 10b972d65..f63fcf6c6 100644
+--- a/obexd/plugins/mas.c
++++ b/obexd/plugins/mas.c
+@@ -612,11 +612,11 @@ static void *message_open(const char *name, int oflag, mode_t mode,
+ 		return NULL;
+ 	}
  
--static int sco_send_frame(struct sock *sk, struct sk_buff *skb)
-+static int sco_send_frame(struct sock *sk, struct sk_buff *skb,
-+			  const struct sockcm_cookie *sockc)
- {
- 	struct sco_conn *conn = sco_pi(sk)->conn;
- 	int len = skb->len;
-@@ -381,6 +382,7 @@ static int sco_send_frame(struct sock *sk, struct sk_buff *skb)
- 
- 	BT_DBG("sk %p len %d", sk, len);
- 
-+	hci_setup_tx_timestamp(skb, 1, sockc);
- 	hci_send_sco(conn->hcon, skb);
- 
- 	return len;
-@@ -776,6 +778,7 @@ static int sco_sock_sendmsg(struct socket *sock, struct msghdr *msg,
- {
- 	struct sock *sk = sock->sk;
- 	struct sk_buff *skb;
-+	struct sockcm_cookie sockc;
- 	int err;
- 
- 	BT_DBG("sock %p, sk %p", sock, sk);
-@@ -787,6 +790,14 @@ static int sco_sock_sendmsg(struct socket *sock, struct msghdr *msg,
- 	if (msg->msg_flags & MSG_OOB)
- 		return -EOPNOTSUPP;
- 
-+	sockcm_init(&sockc, sk);
++	mas->buffer = g_string_new("");
 +
-+	if (msg->msg_controllen) {
-+		err = sock_cmsg_send(sk, msg, &sockc);
-+		if (err)
-+			return err;
+ 	*err = messages_get_message(mas->backend_data, name, 0,
+ 			get_message_cb, mas);
+ 
+-	mas->buffer = g_string_new("");
+-
+ 	if (*err < 0)
+ 		return NULL;
+ 	else
+diff --git a/obexd/plugins/messages-dummy.c b/obexd/plugins/messages-dummy.c
+index e313c6163..93648831a 100644
+--- a/obexd/plugins/messages-dummy.c
++++ b/obexd/plugins/messages-dummy.c
+@@ -516,7 +516,37 @@ int messages_get_message(void *session, const char *handle,
+ 					messages_get_message_cb callback,
+ 					void *user_data)
+ {
+-	return -ENOSYS;
++	struct session *s =  session;
++	FILE *fp;
++	char *path;
++	char buffer[1024];
++
++	DBG(" ");
++	path = g_build_filename(s->cwd_absolute, handle, NULL);
++	fp = fopen(path, "r");
++	if (fp == NULL)
++	{
++		DBG("fopen() failed");
++		return -EBADR;
 +	}
 +
- 	skb = bt_skb_sendmsg(sk, msg, len, len, 0, 0);
- 	if (IS_ERR(skb))
- 		return PTR_ERR(skb);
-@@ -794,7 +805,7 @@ static int sco_sock_sendmsg(struct socket *sock, struct msghdr *msg,
- 	lock_sock(sk);
- 
- 	if (sk->sk_state == BT_CONNECTED)
--		err = sco_send_frame(sk, skb);
-+		err = sco_send_frame(sk, skb, &sockc);
- 	else
- 		err = -ENOTCONN;
- 
-@@ -860,6 +871,10 @@ static int sco_sock_recvmsg(struct socket *sock, struct msghdr *msg,
- 	struct sock *sk = sock->sk;
- 	struct sco_pinfo *pi = sco_pi(sk);
- 
-+	if (unlikely(flags & MSG_ERRQUEUE))
-+		return sock_recv_errqueue(sk, msg, len, SOL_BLUETOOTH,
-+					  BT_SCM_ERROR);
++	/* 1024 is the maximum size of the line which is calculated to be more
++	 * sufficient*/
++	while (fgets(buffer, 1024, fp)) {
++		if (callback)
++		{
++			callback(session, 0, 0, (const char*)buffer, user_data);
++		}
++	}
 +
- 	lock_sock(sk);
++	if (callback)
++	{
++		callback(session, 0, 0, NULL, user_data);
++	}
++
++	g_free(path);
++	fclose(fp);
++	return 0;
+ }
  
- 	if (sk->sk_state == BT_CONNECT2 &&
+ int messages_update_inbox(void *session, messages_status_cb callback,
 -- 
-2.48.1
+2.34.1
 
 
