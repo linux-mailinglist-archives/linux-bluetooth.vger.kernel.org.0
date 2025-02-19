@@ -1,119 +1,157 @@
-Return-Path: <linux-bluetooth+bounces-10499-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-10501-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80FE5A3CCBC
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Feb 2025 23:55:00 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D01F2A3CDA1
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Feb 2025 00:31:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 662533B6FF5
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Feb 2025 22:52:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A1E1E177131
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Feb 2025 23:31:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CBC025EFB2;
-	Wed, 19 Feb 2025 22:51:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF6BE25EFA4;
+	Wed, 19 Feb 2025 23:31:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="Y2DN8i2U"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RCa83Cyj"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79AD925B673;
-	Wed, 19 Feb 2025 22:51:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B244C260A3A
+	for <linux-bluetooth@vger.kernel.org>; Wed, 19 Feb 2025 23:31:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740005492; cv=none; b=XIm2WHy0oklTaiIpDXjWcxZo31ijFJxAmw9F5yCY0fxk1pqzK315DpcetfzDHzz/+Y92y5waE06CT/B2Z9i0bM7S/OMiQa51EAWei8dczWCBJVDO10W+tlPFrYLcca2wOFv6N47RGhtFL0o1xQQ+CFjfTobDJayRziEr1cO59xg=
+	t=1740007889; cv=none; b=umRI8Dpu6gWBUds7Tt29bSvliX/qhhax0rBP7+uLN44WOBpU6v0Hu9y+BdfzXXOatMiVU5T9unK8wvCZpByfWkGFVUnZtWHumzIeAdQoLEllXMyFA0A8ZeZtXx1GES9cx9VggtmSyXiSv7N9ihuGfV7SL9v4JO3uPHuDF+QPEYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740005492; c=relaxed/simple;
-	bh=PBRXF9armMwgta/H3/VUaDSYrb+lremo3eCzpe0UShA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=G/pV9/vjqEJuDSTaryC3FoYbP6aqxDGDW8QQADORPRSC938wSOqHgGjfrIX6/d8HZPFwzoWe8D0C5pATQAIBWJU4ETrrZf4bz/B1+xEt+TGhJU3hqfC64BmqjfqPeQxh6QH2O0X5drDm3DIUke1OUHtPe3gOUEjNcHua6bRNEnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=Y2DN8i2U; arc=none smtp.client-ip=13.77.154.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
-Received: from eahariha-devbox.internal.cloudapp.net (unknown [40.91.112.99])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 1A3002043DF1;
-	Wed, 19 Feb 2025 14:51:31 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 1A3002043DF1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1740005491;
-	bh=rjHqqoVAzbNhdmiRuBxyTe/4zXmj+hrF7l9thmBLfyY=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=Y2DN8i2UgkKldcLp26BsQd2v12X64B14cuMRJbdsKXjM3PQX3kOpTVwmct/Ap6DI0
-	 HnGdsLkEIBxW42PXorqUBLNQLfV86qruIWHwrr1NUVrhWQwYHpK3CqA+vKs97PC5OD
-	 8hE5S+KDdg1W+9gWRQyTJ1o3HjM7CJZgR4mZNEuw=
-From: Easwar Hariharan <eahariha@linux.microsoft.com>
-Date: Wed, 19 Feb 2025 22:51:32 +0000
-Subject: [PATCH 4/4] Bluetooth: L2CAP: convert timeouts to
- secs_to_jiffies()
+	s=arc-20240116; t=1740007889; c=relaxed/simple;
+	bh=xebNdWYCBlcN1OxLvycFBt+/1EecgA8W3hCyqeFRyPM=;
+	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
+	 In-Reply-To:References; b=oy38oRxc8/vjS1K7CJY+r/NOvbyORzNAwrgbE1PAiNQQC00insE93qwL1dmU1I2YmohCt/pJirCKDmjk2xkQQp6wgKbi1bkprtTfaZcy4AX5nmnZJ2NTj2ik4oe9XBl1WRu06s3D1CqmyzD/lNPFQMZxZBO7/AW0AIkUbub6COI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RCa83Cyj; arc=none smtp.client-ip=209.85.219.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-6e41e18137bso2372066d6.1
+        for <linux-bluetooth@vger.kernel.org>; Wed, 19 Feb 2025 15:31:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740007886; x=1740612686; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=3HjMr8nwzw06pUEduxwnN8P0cBNT98BAzA21zMPWNrY=;
+        b=RCa83CyjTuBDtZ5zUFI3qKnRuiuDUfT7IqE6Eg97JsaavVjcjSewWzA3VbffrGYg3v
+         EWbjmXJe5EFoZIsv1m0MDDxLzp0ElOxeY4y5jdTO4fg0GKcxWklKrt4+CAxTqUqWkV7j
+         zXNG/iwnrL159QXz6Tz9sR3MRxO7q3Bc4ewlNGh9EL/ijM49l2x/e9L1xHvC4gkxTXlQ
+         b1oSQTvJEufWo6NHkOCQtZVbVtuUvyl2lFAC3RYeu9oo6RbcdJKI6cY69NxYgUJztgxZ
+         CD8QTCV3iAqHu8QzVjC2C/+ldwOhEW/A7vuPr50Z9otoZ4Mu+BO4RNEIFpZu6W9qvVGC
+         NwOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740007886; x=1740612686;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3HjMr8nwzw06pUEduxwnN8P0cBNT98BAzA21zMPWNrY=;
+        b=dSdldCsu8l80N5VLydeovU97hpXm4QoWHNbF6iZ4ovYPR2clg0rhfNNKZfAJq4RjTr
+         dDCQVnjBqntdn8CwuWnNlsX8/I5cmN40Ag9d3sbDZge0claYxxBUW2cH+nX/AWlpbFKI
+         ewh4kuGDd9LdFS2SSEy4MDb5NDsJaSZx6lSC53PRfUET4EP04vn4ldxiN8Jk/GSjrKxI
+         yeoqvicZgzJBJNUdLE1Cu4yKQ0F6Nqu6SBcGGyoEwig0R6jqr4wqPa4w50YzL9/rzliJ
+         k3zYk0y8yb1bPhhI0S75imBevUKDgjKJjerTyDVO56VZWsauf5aOyGtToEVkX8BqYCH7
+         GE3Q==
+X-Gm-Message-State: AOJu0Yxpgvw+jqtmrfB0FxNfZgREQdTLQ4LTvsZxBJOJJ204KpE8BlGJ
+	srEj0neGjeDMS5QQNHrENaHWbvnZ7lSh8hKC0rNxmzDglSZTVMGlHRpmLA==
+X-Gm-Gg: ASbGncuR7w0pf9h2y/bvLRoCzj3QOXyIY5MyL0rLURa2yGL5LhnUVPxLhBZ7aWd0YnE
+	oyLDs1fNR7aASSLIz10EMjhs6GarLsG1jfrJdFuAbxTnWhkTchSTsintgViM1BSCo5ef2iC0UjV
+	0ZxG80mJER0tZhjp+AMEP17M2vkasDUNA/7eHkLli5LploUNQQbSvEOd3EoNihL/Hls48JQy5eY
+	XIqePDsWUOdFf+voOsnOJQ284jZuFOKKE8sqzJ3/F7TJaVh9YMYwnVWl/sluY+wgdqzj36uwKTU
+	I+K1M3COwdxsMybeZgQ=
+X-Google-Smtp-Source: AGHT+IFrJmO2wsjOdt4L6bIvUSJ/cxl6odJkNcC55dRf8lM28t+6l1d5JfwLkgFs1U7XRbNe5+7pUA==
+X-Received: by 2002:a05:6214:dc6:b0:6e4:4484:f35b with SMTP id 6a1803df08f44-6e66cceb6a0mr287786786d6.30.1740007886253;
+        Wed, 19 Feb 2025 15:31:26 -0800 (PST)
+Received: from [172.17.0.2] ([20.42.17.64])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6e664c6be4csm68278726d6.80.2025.02.19.15.31.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Feb 2025 15:31:25 -0800 (PST)
+Message-ID: <67b669cd.0c0a0220.18e13b.e489@mx.google.com>
+Date: Wed, 19 Feb 2025 15:31:25 -0800 (PST)
+Content-Type: multipart/mixed; boundary="===============5607159368501334025=="
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+From: bluez.test.bot@gmail.com
+To: linux-bluetooth@vger.kernel.org, eahariha@linux.microsoft.com
+Subject: RE: Bluetooth: Converge on using secs_to_jiffies()
+In-Reply-To: <20250219-bluetooth-converge-secs-to-jiffies-v1-1-6ab896f5fdd4@linux.microsoft.com>
+References: <20250219-bluetooth-converge-secs-to-jiffies-v1-1-6ab896f5fdd4@linux.microsoft.com>
+Reply-To: linux-bluetooth@vger.kernel.org
+
+--===============5607159368501334025==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250219-bluetooth-converge-secs-to-jiffies-v1-4-6ab896f5fdd4@linux.microsoft.com>
-References: <20250219-bluetooth-converge-secs-to-jiffies-v1-0-6ab896f5fdd4@linux.microsoft.com>
-In-Reply-To: <20250219-bluetooth-converge-secs-to-jiffies-v1-0-6ab896f5fdd4@linux.microsoft.com>
-To: Marcel Holtmann <marcel@holtmann.org>, 
- Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
- Johan Hedberg <johan.hedberg@gmail.com>, 
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
- Simon Horman <horms@kernel.org>
-Cc: linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org, 
- netdev@vger.kernel.org, Easwar Hariharan <eahariha@linux.microsoft.com>
-X-Mailer: b4 0.14.2
 
-Commit b35108a51cf7 ("jiffies: Define secs_to_jiffies()") introduced
-secs_to_jiffies().  As the value here is a multiple of 1000, use
-secs_to_jiffies() instead of msecs_to_jiffies() for readability.
+This is automated email and please do not reply to this email!
 
-Signed-off-by: Easwar Hariharan <eahariha@linux.microsoft.com>
+Dear submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=935772
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PENDING   0.23 seconds
+GitLint                       PENDING   0.48 seconds
+SubjectPrefix                 PASS      0.51 seconds
+BuildKernel                   PASS      24.76 seconds
+CheckAllWarning               PASS      27.89 seconds
+CheckSparse                   PASS      30.85 seconds
+BuildKernel32                 PASS      24.45 seconds
+TestRunnerSetup               PASS      433.52 seconds
+TestRunner_l2cap-tester       PASS      20.94 seconds
+TestRunner_iso-tester         PASS      32.02 seconds
+TestRunner_bnep-tester        PASS      4.83 seconds
+TestRunner_mgmt-tester        FAIL      120.59 seconds
+TestRunner_rfcomm-tester      PASS      8.00 seconds
+TestRunner_sco-tester         PASS      9.65 seconds
+TestRunner_ioctl-tester       PASS      11.85 seconds
+TestRunner_mesh-tester        PASS      7.79 seconds
+TestRunner_smp-tester         PASS      8.92 seconds
+TestRunner_userchan-tester    PASS      5.22 seconds
+IncrementalBuild              PENDING   0.65 seconds
+
+Details
+##############################
+Test: CheckPatch - PENDING
+Desc: Run checkpatch.pl script
+Output:
+
+##############################
+Test: GitLint - PENDING
+Desc: Run gitlint
+Output:
+
+##############################
+Test: TestRunner_mgmt-tester - FAIL
+Desc: Run mgmt-tester with test-runner
+Output:
+Total: 490, Passed: 485 (99.0%), Failed: 1, Not Run: 4
+
+Failed Test Cases
+LL Privacy - Add Device 3 (AL is full)               Failed       0.201 seconds
+##############################
+Test: IncrementalBuild - PENDING
+Desc: Incremental build with the patches in the series
+Output:
+
+
+
 ---
- include/net/bluetooth/l2cap.h | 4 ++--
- net/bluetooth/l2cap_core.c    | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/include/net/bluetooth/l2cap.h b/include/net/bluetooth/l2cap.h
-index 9189354c568f442ccd55efa37d639a613be470ce..0bf8cb17a6e864793f84a4bc8620414a7a396b2f 100644
---- a/include/net/bluetooth/l2cap.h
-+++ b/include/net/bluetooth/l2cap.h
-@@ -38,8 +38,8 @@
- #define L2CAP_DEFAULT_TX_WINDOW		63
- #define L2CAP_DEFAULT_EXT_WINDOW	0x3FFF
- #define L2CAP_DEFAULT_MAX_TX		3
--#define L2CAP_DEFAULT_RETRANS_TO	2000    /* 2 seconds */
--#define L2CAP_DEFAULT_MONITOR_TO	12000   /* 12 seconds */
-+#define L2CAP_DEFAULT_RETRANS_TO	2    /* seconds */
-+#define L2CAP_DEFAULT_MONITOR_TO	12   /* seconds */
- #define L2CAP_DEFAULT_MAX_PDU_SIZE	1492    /* Sized for AMP packet */
- #define L2CAP_DEFAULT_ACK_TO		200
- #define L2CAP_DEFAULT_MAX_SDU_SIZE	0xFFFF
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index fec11e576f310cda115c924245458368a663528a..bc820958cb9230545d99a942a73ba53eaccba14b 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -282,7 +282,7 @@ static void __set_retrans_timer(struct l2cap_chan *chan)
- 	if (!delayed_work_pending(&chan->monitor_timer) &&
- 	    chan->retrans_timeout) {
- 		l2cap_set_timer(chan, &chan->retrans_timer,
--				msecs_to_jiffies(chan->retrans_timeout));
-+				secs_to_jiffies(chan->retrans_timeout));
- 	}
- }
- 
-@@ -291,7 +291,7 @@ static void __set_monitor_timer(struct l2cap_chan *chan)
- 	__clear_retrans_timer(chan);
- 	if (chan->monitor_timeout) {
- 		l2cap_set_timer(chan, &chan->monitor_timer,
--				msecs_to_jiffies(chan->monitor_timeout));
-+				secs_to_jiffies(chan->monitor_timeout));
- 	}
- }
- 
 
--- 
-2.43.0
-
+--===============5607159368501334025==--
 
