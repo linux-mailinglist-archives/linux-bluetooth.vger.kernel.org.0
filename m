@@ -1,189 +1,246 @@
-Return-Path: <linux-bluetooth+bounces-10479-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-10481-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98A5BA3C503
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Feb 2025 17:29:34 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 92E08A3C71C
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Feb 2025 19:14:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0670D3B2BBE
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Feb 2025 16:27:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7D1FB1889C96
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Feb 2025 18:14:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A2691FDE39;
-	Wed, 19 Feb 2025 16:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4124214A91;
+	Wed, 19 Feb 2025 18:13:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TWYJ1ne+"
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="RFZU5qVH"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
+Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B2E1FA267
-	for <linux-bluetooth@vger.kernel.org>; Wed, 19 Feb 2025 16:27:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739982462; cv=none; b=uSpmQ6ne1JBs++JZoSVKL122YsPndPFFRA3SjxQJ3CRdtVhFbKHURUPym+TpG5axiO9P2Qs+hGEinPQSEvN43avPwzA4lomvaEVaDN3eRrFq/kJwAvhB+qqDCWv5VVr5kA//0+EA/4HK/I2JUAo0OcddHkgDXHuKlpuSD2pwwHc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739982462; c=relaxed/simple;
-	bh=bIjmutvveQSIwl1PIBOhsJYuso7/gwl51/VdwKL0oYg=;
-	h=Date:From:To:Cc:Subject:Message-ID; b=EPPtz91rbU3ssZIb5frqe0ORQoLa/jA6gjpi5Tl3lbg4OdNLl6Yad7GHKEBBZRc5wuS6TBzNz/bJXyhtatR4Kmwo+vOheNEoL7ElAR8svVpHI0Gvd1YeROGvVSaSkL55JfcacsfaJIHr1+ur5Eb/iv3TSXqRGjb4dQebBG93Fjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TWYJ1ne+; arc=none smtp.client-ip=192.198.163.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1739982461; x=1771518461;
-  h=date:from:to:cc:subject:message-id;
-  bh=bIjmutvveQSIwl1PIBOhsJYuso7/gwl51/VdwKL0oYg=;
-  b=TWYJ1ne+eaXw8BFgTTfK8nuijg1bjOeAbA7OPBdemkf2083LYvyKFYS1
-   8hzi1YuB5FG1EnRorwrrtAM0CLh65AU2GgqOb9cphJFP237kyEVmz04ON
-   ZS6pYOdHFwdI+qa5W+sE198KXkJ+gk1zWkM5FHchkgV0lYQNOEU2HUjU8
-   Y5Ar5gRkoU67AWOYBvK0MHzVVYueC4sVgVSYDA6dxuo/Kume5xL+OJeHp
-   mTC31R2qHQR0Zj0ocZd/PLZDmNi/OHVf3c9eVGT27AIrpdJND6YgmHtDr
-   Iv1TNCwxJDbC+6xsYKsBK4mM8hGh4OIb1oMG62XM2fzwh2BhoaNeFyUuZ
-   g==;
-X-CSE-ConnectionGUID: Ex/vcURpRjGwbcpxkkltvw==
-X-CSE-MsgGUID: fCSgGEKeS9qOyXG6PLHBkw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11350"; a="39961907"
-X-IronPort-AV: E=Sophos;i="6.13,299,1732608000"; 
-   d="scan'208";a="39961907"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Feb 2025 08:27:40 -0800
-X-CSE-ConnectionGUID: uoGGGdcRRQyzhiddwfTtrw==
-X-CSE-MsgGUID: 3hHRlMuLQMuMb74fwIi/eA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.13,299,1732608000"; 
-   d="scan'208";a="115287400"
-Received: from lkp-server02.sh.intel.com (HELO 76cde6cc1f07) ([10.239.97.151])
-  by fmviesa010.fm.intel.com with ESMTP; 19 Feb 2025 08:17:35 -0800
-Received: from kbuild by 76cde6cc1f07 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1tkmlD-00039N-2V;
-	Wed, 19 Feb 2025 16:17:22 +0000
-Date: Thu, 20 Feb 2025 00:16:57 +0800
-From: kernel test robot <lkp@intel.com>
-To: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Cc: linux-bluetooth@vger.kernel.org
-Subject: [bluetooth-next:master] BUILD SUCCESS
- e2040fe3b82b6c9b430a5b272e5924e8ace9a8f0
-Message-ID: <202502200051.gEf88PIK-lkp@intel.com>
-User-Agent: s-nail v14.9.24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1041A7264;
+	Wed, 19 Feb 2025 18:13:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1739988836; cv=pass; b=FwOTDlBfRaliUSr1rrVMq3bjm1bDCajAZQ+77dyigKaXOOy+sQbe6ESQoHK7O3B+a2QilrbVCKEGpdbY1kMTWnHHrhz3qTBc18UjuPVkfnsBJeNZvcAAFVqrTDU+FP+fwwEWiuog/t6mdzOoa9OH+wdukA24Ti7nyHsiZd2JzXo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1739988836; c=relaxed/simple;
+	bh=H3WFiZ6Lg19AdQqBFHLqhRqZsA/ZRyzUZwtPyPfU6BU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EU/uTO+wkX3QCKxRahvIBtY37bWg1/0vGHWMHZnTFypvvW2YsCc5A4oKQkI0CNFr6EFB9EPIuHviq60DDfVTaH9LUyuJN8cul3NE/mDQemYOveR+SVgzgksyy474TlhgofjJD34wO0UjZSitaXxDQznUulOQHM3ncHn9paeeDp8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=RFZU5qVH; arc=pass smtp.client-ip=195.140.195.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
+Received: from monolith.lan (unknown [193.138.7.178])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: pav)
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4YykzW3cCvzyQQ;
+	Wed, 19 Feb 2025 20:13:43 +0200 (EET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
+	t=1739988826;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=hOkm928FH1MXpDJcxJZjAaAV4tVx2mcqhCypx8RXFKo=;
+	b=RFZU5qVHVP7l6n//421bwYECDfZx7wSxoigACfkpE7YUWchicIImxE82CGnpke1AciWj10
+	+qPggQi/TbLADK/2zhfkmT22whWflD57ESu0tZnteOJypH/+ZuKBMbAe8zcpjUz6E1CMSN
+	A463+0Anepsi6TqpJyaFXD7RdSyM/Co=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
+	s=meesny; t=1739988826;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=hOkm928FH1MXpDJcxJZjAaAV4tVx2mcqhCypx8RXFKo=;
+	b=oPUNjtQsW1AFibX6fSlgcigzFZFdXlBGarcDDE7dI2bS0vRRERki0C8wbkOZ5/ERnZ7kKb
+	EDOzSapB84e283tnCD1FvyMNPEYJ2lfEBZFrmaHh9Qra2YdOgjUQtcy8pDnBHVEJENN/Rg
+	Fnr2GlBN3APsq4segiFDR1dSsQL4d6M=
+ARC-Authentication-Results: i=1;
+	ORIGINATING;
+	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
+ARC-Seal: i=1; s=meesny; d=iki.fi; t=1739988826; a=rsa-sha256; cv=none;
+	b=QOvH79VUMMuz8bj+8ZIAE09MBNXRBOmkc90nxaWIoVUwebqVV178TIidCWXRfA6+c47gDk
+	Shv7u5U+s6TDrxMGmZIUwFD++0IARIH2X4ykm7YE9m6uzL1wSAJVzvPzhcaScKj/WAIGP9
+	sGDnJUPx1FqZF6CJGj1XLX7h9yMKbI8=
+From: Pauli Virtanen <pav@iki.fi>
+To: linux-bluetooth@vger.kernel.org
+Cc: Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	netdev@vger.kernel.org,
+	davem@davemloft.net,
+	kuba@kernel.org,
+	willemdebruijn.kernel@gmail.com
+Subject: [PATCH v4 0/5] net: Bluetooth: add TX timestamping for ISO/L2CAP/SCO
+Date: Wed, 19 Feb 2025 20:13:32 +0200
+Message-ID: <cover.1739988644.git.pav@iki.fi>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/bluetooth/bluetooth-next.git master
-branch HEAD: e2040fe3b82b6c9b430a5b272e5924e8ace9a8f0  Bluetooth: hci_uart: fix race during initialization
+Add support for TX timestamping in Bluetooth ISO/L2CAP/SCO sockets.
 
-elapsed time: 1444m
+Add new COMPLETION timestamp type, to report a software timestamp when
+the hardware reports a packet completed. (Cc netdev for this)
 
-configs tested: 96
-configs skipped: 1
+Previous discussions:
+https://lore.kernel.org/linux-bluetooth/cover.1739097311.git.pav@iki.fi/
+https://lore.kernel.org/all/6642c7f3427b5_20539c2949a@willemb.c.googlers.com.notmuch/
+https://lore.kernel.org/all/cover.1710440392.git.pav@iki.fi/
 
-The following configs have been built successfully.
-More configs may be tested in the coming days.
+Changes
+=======
+v4:
+- Change meaning of SOF_TIMESTAMPING_TX_COMPLETION, to save a bit in
+  skb_shared_info.tx_flags:
 
-tested configs:
-alpha                            allyesconfig    gcc-14.2.0
-arc                              allmodconfig    gcc-13.2.0
-arc                              allyesconfig    gcc-13.2.0
-arc                   randconfig-001-20250219    gcc-13.2.0
-arc                   randconfig-002-20250219    gcc-13.2.0
-arm                              allmodconfig    gcc-14.2.0
-arm                              allyesconfig    gcc-14.2.0
-arm                   randconfig-001-20250219    gcc-14.2.0
-arm                   randconfig-002-20250219    clang-17
-arm                   randconfig-003-20250219    clang-15
-arm                   randconfig-004-20250219    gcc-14.2.0
-arm64                            allmodconfig    clang-18
-arm64                 randconfig-001-20250219    clang-21
-arm64                 randconfig-002-20250219    gcc-14.2.0
-arm64                 randconfig-003-20250219    gcc-14.2.0
-arm64                 randconfig-004-20250219    gcc-14.2.0
-csky                  randconfig-001-20250219    gcc-14.2.0
-csky                  randconfig-002-20250219    gcc-14.2.0
-hexagon                          allmodconfig    clang-21
-hexagon                          allyesconfig    clang-18
-hexagon               randconfig-001-20250219    clang-14
-hexagon               randconfig-002-20250219    clang-21
-i386                             allmodconfig    gcc-12
-i386                              allnoconfig    gcc-12
-i386                             allyesconfig    gcc-12
-i386        buildonly-randconfig-001-20250219    clang-19
-i386        buildonly-randconfig-002-20250219    clang-19
-i386        buildonly-randconfig-003-20250219    gcc-12
-i386        buildonly-randconfig-004-20250219    clang-19
-i386        buildonly-randconfig-005-20250219    clang-19
-i386        buildonly-randconfig-006-20250219    gcc-12
-i386                                defconfig    clang-19
-loongarch                        allmodconfig    gcc-14.2.0
-loongarch             randconfig-001-20250219    gcc-14.2.0
-loongarch             randconfig-002-20250219    gcc-14.2.0
-m68k                             allmodconfig    gcc-14.2.0
-m68k                              allnoconfig    gcc-14.2.0
-m68k                             allyesconfig    gcc-14.2.0
-microblaze                        allnoconfig    gcc-14.2.0
-mips                              allnoconfig    gcc-14.2.0
-nios2                             allnoconfig    gcc-14.2.0
-nios2                 randconfig-001-20250219    gcc-14.2.0
-nios2                 randconfig-002-20250219    gcc-14.2.0
-openrisc                          allnoconfig    gcc-14.2.0
-openrisc                         allyesconfig    gcc-14.2.0
-parisc                           allmodconfig    gcc-14.2.0
-parisc                            allnoconfig    gcc-14.2.0
-parisc                           allyesconfig    gcc-14.2.0
-parisc                randconfig-001-20250219    gcc-14.2.0
-parisc                randconfig-002-20250219    gcc-14.2.0
-powerpc                           allnoconfig    gcc-14.2.0
-powerpc                          allyesconfig    clang-16
-powerpc               randconfig-001-20250219    clang-15
-powerpc               randconfig-002-20250219    clang-17
-powerpc               randconfig-003-20250219    gcc-14.2.0
-powerpc64             randconfig-001-20250219    gcc-14.2.0
-powerpc64             randconfig-002-20250219    gcc-14.2.0
-powerpc64             randconfig-003-20250219    gcc-14.2.0
-riscv                            allmodconfig    clang-21
-riscv                             allnoconfig    gcc-14.2.0
-riscv                            allyesconfig    clang-21
-riscv                 randconfig-001-20250219    clang-21
-riscv                 randconfig-002-20250219    gcc-14.2.0
-s390                             allmodconfig    clang-19
-s390                              allnoconfig    clang-21
-s390                             allyesconfig    gcc-14.2.0
-s390                  randconfig-001-20250219    clang-18
-s390                  randconfig-002-20250219    clang-21
-sh                               allmodconfig    gcc-14.2.0
-sh                                allnoconfig    gcc-14.2.0
-sh                               allyesconfig    gcc-14.2.0
-sh                    randconfig-001-20250219    gcc-14.2.0
-sh                    randconfig-002-20250219    gcc-14.2.0
-sparc                            allmodconfig    gcc-14.2.0
-sparc                             allnoconfig    gcc-14.2.0
-sparc                 randconfig-001-20250219    gcc-14.2.0
-sparc                 randconfig-002-20250219    gcc-14.2.0
-sparc64               randconfig-001-20250219    gcc-14.2.0
-sparc64               randconfig-002-20250219    gcc-14.2.0
-um                               allmodconfig    clang-21
-um                                allnoconfig    clang-18
-um                               allyesconfig    gcc-12
-um                    randconfig-001-20250219    clang-21
-um                    randconfig-002-20250219    clang-21
-x86_64                            allnoconfig    clang-19
-x86_64                           allyesconfig    clang-19
-x86_64      buildonly-randconfig-001-20250219    gcc-12
-x86_64      buildonly-randconfig-002-20250219    clang-19
-x86_64      buildonly-randconfig-003-20250219    gcc-12
-x86_64      buildonly-randconfig-004-20250219    clang-19
-x86_64      buildonly-randconfig-005-20250219    gcc-12
-x86_64      buildonly-randconfig-006-20250219    clang-19
-x86_64                              defconfig    gcc-11
-xtensa                            allnoconfig    gcc-14.2.0
-xtensa                randconfig-001-20250219    gcc-14.2.0
-xtensa                randconfig-002-20250219    gcc-14.2.0
+  It now enables COMPLETION only for packets that also have software SND
+  enabled.  The flag can now be enabled only via a socket option, but
+  coupling with SND allows user to still choose for which packets
+  SND+COMPLETION should be generated.  This choice maybe is OK for
+  applications which can skip SND if they're not interested.
 
---
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+  However, this would make the timestamping API not uniform, as the
+  other TX flags can be enabled via CMSG.
+
+  IIUC, sizeof skb_shared_info cannot be easily changed and I'm not sure
+  there is somewhere else in general skb info, where one could safely
+  put the extra separate flag bit for COMPLETION. So here's alternative
+  suggestion.
+
+- Better name in sof_timestamping_names
+
+- I decided to keep using sockcm_init(), to avoid open coding READ_ONCE
+  and since it's passed to sock_cmsg_send() which anyway also may init
+  such fields.
+
+v3:
+- Add new COMPLETION timestamp type, and emit it in HCI completion.
+- Emit SND instead of SCHED, when sending to driver.
+- Do not emit SCHED timestamps.
+- Don't safeguard tx_q length explicitly. Now that hci_sched_acl_blk()
+  is no more, the scheduler flow control is guaranteed to keep it
+  bounded.
+- Fix L2CAP stream sockets to use the bytestream timestamp conventions.
+
+Overview
+========
+
+The packet flow in Bluetooth is the following. Timestamps added here
+indicated:
+
+user sendmsg() generates skbs
+|
+* skb waits in net/bluetooth queue for a free HW packet slot
+|
+* orphan skb, send to driver -> TSTAMP_SND
+|
+* driver: send packet data to transport (eg. USB)
+|
+* wait for transport completion
+|
+* driver: transport tx completion, free skb (some do this immediately)
+|
+* packet waits in HW side queue
+|
+* HCI report for packet completion -> TSTAMP_COMPLETION (for non-SCO)
+
+In addition, we may want to do the following in future (but not
+implemented in this series as we don't have ISO sequence number
+synchronization yet which is needed first, moreover e.g. Intel
+controllers return only zeros in timestamps):
+
+* if packet is ISO, send HCI LE Read ISO TX Sync
+|
+* HCI response -> hardware TSTAMP_SND for the packet the response
+  corresponds to if it was waiting for one, might not be possible
+  to get a tstamp for every packet
+
+Bluetooth does not have tx timestamps in the completion reports from
+hardware, and only for ISO packets there are HCI commands in
+specification for querying timestamps afterward.
+
+The drivers do not provide ways to get timestamps either, I'm also not
+aware if some devices would have vendor-specific commands to get them.
+
+Driver-side timestamps
+======================
+
+Generating SND on driver side may be slightly more accurate, but that
+requires changing the BT driver API to not orphan skbs first.  In theory
+this probably won't cause problems, but it is not done in this patchset.
+
+For some of the drivers it won't gain much. E.g. btusb immediately
+submits the URB, so if one would emit SND just before submit (as
+drivers/net/usb/usbnet.c does), it is essentially identical to emitting
+before sending to driver.  btintel_pcie looks like it does synchronous
+send, so looks the same.  hci_serdev has internal queue, iiuc flushing
+as fast as data can be transferred, but it shouldn't be waiting for
+hardware slots due to HCI flow control.
+
+Unless HW buffers are full, packets mostly wait on the HW side.  E.g.
+with btusb (non-SCO) median time from sendmsg() to URB generation is
+~0.1 ms, to USB completion ~0.5 ms, and HCI completion report at ~5 ms.
+
+The exception is SCO, for which HCI flow control is disabled, so they do
+not get completion events so it's possible to build up queues inside the
+driver. For SCO, COMPLETION needs to be generated from driver side, eg.
+for btusb maybe at URB completion.  This could be useful for SCO PCM
+modes (but which are more or less obsolete nowadays), where USB isoc
+data rate matches audio data rate, so queues on USB side may build up.
+
+Use cases
+=========
+
+In audio use cases we want to track and avoid queues building up, to
+control latency, especially in cases like ISO where the controller has a
+fixed schedule that the sending application must match.  E.g.
+application can aim to keep 1 packet in HW queue, so it has 2*7.5ms of
+slack for being woken up too late.
+
+Applications can use SND & COMPLETION timestamps to track in-kernel and
+in-HW packet queues separately.  This can matter for ISO, where the
+specification allows HW to use the timings when it gets packets to
+determine what packets are synchronized together. Applications can use
+SND to track that.
+
+Tests
+=====
+
+See
+https://lore.kernel.org/linux-bluetooth/cover.1739026302.git.pav@iki.fi/
+
+Pauli Virtanen (5):
+  net-timestamp: COMPLETION timestamp on packet tx completion
+  Bluetooth: add support for skb TX SND/COMPLETION timestamping
+  Bluetooth: ISO: add TX timestamping
+  Bluetooth: L2CAP: add TX timestamping
+  Bluetooth: SCO: add TX timestamping socket-level mechanism
+
+ Documentation/networking/timestamping.rst |   9 ++
+ include/net/bluetooth/bluetooth.h         |   1 +
+ include/net/bluetooth/hci_core.h          |  13 +++
+ include/net/bluetooth/l2cap.h             |   3 +-
+ include/uapi/linux/errqueue.h             |   1 +
+ include/uapi/linux/net_tstamp.h           |   6 +-
+ net/bluetooth/6lowpan.c                   |   2 +-
+ net/bluetooth/hci_conn.c                  | 118 ++++++++++++++++++++++
+ net/bluetooth/hci_core.c                  |  17 +++-
+ net/bluetooth/hci_event.c                 |   4 +
+ net/bluetooth/iso.c                       |  24 ++++-
+ net/bluetooth/l2cap_core.c                |  41 +++++++-
+ net/bluetooth/l2cap_sock.c                |  15 ++-
+ net/bluetooth/sco.c                       |  19 +++-
+ net/bluetooth/smp.c                       |   2 +-
+ net/core/sock.c                           |   2 +
+ net/ethtool/common.c                      |   1 +
+ 17 files changed, 258 insertions(+), 20 deletions(-)
+
+-- 
+2.48.1
+
 
