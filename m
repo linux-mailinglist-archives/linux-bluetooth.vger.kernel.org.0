@@ -1,162 +1,107 @@
-Return-Path: <linux-bluetooth+bounces-10495-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-10497-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8977BA3CC54
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Feb 2025 23:31:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EBD52A3CCB7
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Feb 2025 23:54:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 542983AF379
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Feb 2025 22:31:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B771C3B62A0
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Feb 2025 22:51:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46F0D2580D3;
-	Wed, 19 Feb 2025 22:31:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40AC025E476;
+	Wed, 19 Feb 2025 22:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m2GJ63AC"
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="ckcgofDE"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3359117CA12
-	for <linux-bluetooth@vger.kernel.org>; Wed, 19 Feb 2025 22:31:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3644E23C8CC;
+	Wed, 19 Feb 2025 22:51:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740004280; cv=none; b=Q87sb/GYuND2yAZNdOwLvpy4pc/1jMIlX0Ts39Y+NlXT2O9ZoXhTZR7jZdgsvaYVAHU1wZhliG2BNhUrHyenSgtTxpN5itjtH5/ZtBSGQdITIJqfL+iNd7HHEnjTfLHOPr7nhptgzyNpI5GOmRAtpJVJ+fcUWwTNrLpmEXs53AE=
+	t=1740005492; cv=none; b=MCtWpS0bzr3bBFFQ8XriaJ82ADX3cC140agz5UJT6AejoP3YtsXW+4t/b/F3IjsHYyntckN/NcDlcWY61qz1DLiQoqrjZzFoYygoILMTQ2QvOFpjkSytLu1wMPAjEde0I0aBwPwhH4TQnOqHGeDF8G6KyjPAqraxxWh+ChQNtpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740004280; c=relaxed/simple;
-	bh=LO6J8HDfqofuHo+61krMex4/H/OLnhcJ/aAVMQsyyNU=;
-	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
-	 In-Reply-To:References; b=XAjSO5S3gYLj9SfYm92n7AlNxp7WCUfCo9h5tuSYMBvD9TarHCb5ykvNanM27KfWSxW0WN7F2zB5a7vEHEhLlofMxo96Z9b7i3ZwYV8j86JlJXEbdBKYfgZ/j2n6s6FyGYUXclMpPfRWGMtWPRhNYiya+y9qOHCZBaa6CV2pRnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m2GJ63AC; arc=none smtp.client-ip=209.85.222.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-7c0a5aa0f84so33055985a.1
-        for <linux-bluetooth@vger.kernel.org>; Wed, 19 Feb 2025 14:31:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740004278; x=1740609078; darn=vger.kernel.org;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Red0/sr9tekjSjaH5e7cQ2ojh/D5dB3Smj4/CMiuoiA=;
-        b=m2GJ63ACv2eN8kyBNdlA6KSbVS84T/c+ojD1EozFQvcrIATnihBtV70khMgI0uQ8w1
-         FpdnfFhNGcKddMR0PWoTXfKxZb4b1eE7UrdQGKGyoa8XxeufX23qA++Nc1spnoembWzE
-         pDrU61Gd8KrB9Z0GrnTpSSFQ6wv6xbnPwEqG85iakKn1MEdfUZKaExSCY4w9+B5QWvow
-         CW0Ib2qCc4MqQD59f0+xJQfHV0tSNLq9+92LPL33YTfhjYoETb8JhMTLmFqm2PjIl0u+
-         CkpGyyU1C/u7Ho60SCvyP42p263bUYYYQK/r9RZ7ljkhqxs4FW3r0GuVal20poSOmVYH
-         +Yew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740004278; x=1740609078;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Red0/sr9tekjSjaH5e7cQ2ojh/D5dB3Smj4/CMiuoiA=;
-        b=ZwH3N0077SG/N8ALkv9WoSci5xYnKoLhD1sVcv0BdFByMr+8LpG8pY837Yn5U375pd
-         swhbFUnSELhbwaYn3RZ62bD3cUuBICNj76FAQKcgEEzTm8e4p7Pd4RYjHbiEMuMs/nZC
-         xS1c1oPtacpmotNPFahVsQVTkRnAN8cK8czj1mkJvdaAqjQhQ8mgJMidDDTraaCmY467
-         nScDOoE15GqqbjbVfjIue3QL3Hf7mAGRlg+wYci3amnu9MAtjCY8Ih1nfinB5xBjPaGY
-         siltChv9/EFAiAP8QBnC+HVz1pGgsN577yQbqCR6LUZsS7Cvyk2WncLMs+priL5As9gN
-         oYUQ==
-X-Gm-Message-State: AOJu0YzqsiwT1+AXmurAgOk+qubRmuwT4gpUCumNZtAdOIFdnWAfdDdF
-	pdekcAAiroLO4W1ylN2oE1dssi37TX+//UsYUBicfFvMkT1DZLezWt4LtA==
-X-Gm-Gg: ASbGncsxrL/pWPfBjvO5F5mcwTquW2pOE50YzrQOnORWYyYDOCzXP0TXbhgZQA+Jtj0
-	TvSIVsyNIpyDYWye1GNmmfAh3KT56vgG6eB7IilU/CTfN5amhlyT9LGXTQ+g35VCl+fkHezSihg
-	HLqn2ZfCMwVxPXPJqZiY595gQ8Og9V3/C6p5MjGuwnceVxv8tWGpNJARlBNeCbaAtzSYM4Xfkdv
-	uufTNe+81tAZZSubWUHu0geHzMy8E/KdEeCCoqsKPCXMiiqpGYn1kHdPMXrMyumzHjt/vY9nDqO
-	qKq63KGGYkz8VJzXYK4=
-X-Google-Smtp-Source: AGHT+IHL5HvMtFeaSpqjCGC1diDXXPzV4Qfnhx40TbanA+24djc6HwRPeCjffwLWQgPywuQMsysI5w==
-X-Received: by 2002:a05:620a:4687:b0:7c0:729c:6487 with SMTP id af79cd13be357-7c0c226a31emr130548985a.23.1740004277808;
-        Wed, 19 Feb 2025 14:31:17 -0800 (PST)
-Received: from [172.17.0.2] ([20.42.14.30])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7c0a45585f3sm344338185a.93.2025.02.19.14.31.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Feb 2025 14:31:17 -0800 (PST)
-Message-ID: <67b65bb5.050a0220.17f488.1bfb@mx.google.com>
-Date: Wed, 19 Feb 2025 14:31:17 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============2363593945434253921=="
+	s=arc-20240116; t=1740005492; c=relaxed/simple;
+	bh=pZjpSlTU9Gu1+mrJmipjqNGPZ19IIS+zBmhe//BAogQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=LGQZt/No/3UZLtpAiABcszOyRSp98T5lIVx1T5KszJkamNVmOyX7voUwnzZGtj+siR7g+Emlj0oWRn2hWg+h+BUy+OpJQzIkNOiumMUOxP7TBRG9yRniHs8wP+pESIliJHu6utHt70Z2lpAwvMjdS02QsNCuTZEnEXLJW7wK3lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=ckcgofDE; arc=none smtp.client-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
+Received: from eahariha-devbox.internal.cloudapp.net (unknown [40.91.112.99])
+	by linux.microsoft.com (Postfix) with ESMTPSA id A6D112043DEB;
+	Wed, 19 Feb 2025 14:51:30 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com A6D112043DEB
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1740005490;
+	bh=kOHh9LYrSJLeelyupZnwHRYiV4YeXv4E28YqBvlGdQU=;
+	h=From:Subject:Date:To:Cc:From;
+	b=ckcgofDESTqrDjkAKYJcGMCKIwRyKk0HKgG5MUVCq+D6CYywX7jzELu1NqWGeTLAj
+	 IJe8BcCAT/TeJF+kEr+38Sye4i2lh44uIoYFdvfVfAb9P/0HibbhiHf1CbkmdLCnrV
+	 sjUfr2b18T1uNMJ2fdb2Zv0wJJoKI87uaxFKdRjs=
+From: Easwar Hariharan <eahariha@linux.microsoft.com>
+Subject: [PATCH 0/4] Bluetooth: Converge on using secs_to_jiffies()
+Date: Wed, 19 Feb 2025 22:51:28 +0000
+Message-Id: <20250219-bluetooth-converge-secs-to-jiffies-v1-0-6ab896f5fdd4@linux.microsoft.com>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: bluez.test.bot@gmail.com
-To: linux-bluetooth@vger.kernel.org, nishiyama.pedro@gmail.com
-Subject: RE: bluetooth: btusb: Fix regression in the initialization of fake Bluetooth controllers
-In-Reply-To: <20250219215352.15605-1-nishiyama.pedro@gmail.com>
-References: <20250219215352.15605-1-nishiyama.pedro@gmail.com>
-Reply-To: linux-bluetooth@vger.kernel.org
-
---===============2363593945434253921==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHBgtmcC/x2NQQqDQAwAvyI5N7CGFrVfkR7aNVsjZSObVQri3
+ xt6HBhmDjAuwgb35oDCu5hodmgvDcT5md+MMjkDBboFagd8fTauqnXGqHnn4oZxNKyKi6TkLST
+ qr10cwpS4Aw+thZN8/5PxcZ4/GwAfiHQAAAA=
+X-Change-ID: 20250219-bluetooth-converge-secs-to-jiffies-22847c90dfe7
+To: Marcel Holtmann <marcel@holtmann.org>, 
+ Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+ Johan Hedberg <johan.hedberg@gmail.com>, 
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+ Simon Horman <horms@kernel.org>
+Cc: linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ netdev@vger.kernel.org, Easwar Hariharan <eahariha@linux.microsoft.com>
+X-Mailer: b4 0.14.2
 
-This is automated email and please do not reply to this email!
+This series converts users of msecs_to_jiffies() that either use the
+multiply pattern of either of:
+- msecs_to_jiffies(N*1000) or
+- msecs_to_jiffies(N*MSEC_PER_SEC)
 
-Dear submitter,
+where N is a constant or an expression, to avoid the multiplication.
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=935756
+The conversion is made with Coccinelle with the secs_to_jiffies() script
+in scripts/coccinelle/misc. Attention is paid to what the best change
+can be rather than restricting to what the tool provides.
 
----Test result---
+While here, convert a couple instances where the timeouts are
+denominated in seconds manually.
 
-Test Summary:
-CheckPatch                    PENDING   0.33 seconds
-GitLint                       PENDING   0.20 seconds
-SubjectPrefix                 FAIL      4.19 seconds
-BuildKernel                   PASS      24.41 seconds
-CheckAllWarning               PASS      26.56 seconds
-CheckSparse                   PASS      30.47 seconds
-BuildKernel32                 PASS      23.82 seconds
-TestRunnerSetup               PASS      427.42 seconds
-TestRunner_l2cap-tester       PASS      24.18 seconds
-TestRunner_iso-tester         PASS      34.97 seconds
-TestRunner_bnep-tester        PASS      4.74 seconds
-TestRunner_mgmt-tester        FAIL      119.57 seconds
-TestRunner_rfcomm-tester      PASS      7.78 seconds
-TestRunner_sco-tester         PASS      9.62 seconds
-TestRunner_ioctl-tester       PASS      8.36 seconds
-TestRunner_mesh-tester        PASS      5.82 seconds
-TestRunner_smp-tester         PASS      7.23 seconds
-TestRunner_userchan-tester    PASS      5.04 seconds
-IncrementalBuild              PENDING   0.68 seconds
+This series is based on next-20250219
 
-Details
-##############################
-Test: CheckPatch - PENDING
-Desc: Run checkpatch.pl script
-Output:
-
-##############################
-Test: GitLint - PENDING
-Desc: Run gitlint
-Output:
-
-##############################
-Test: SubjectPrefix - FAIL
-Desc: Check subject contains "Bluetooth" prefix
-Output:
-"Bluetooth: " prefix is not specified in the subject
-##############################
-Test: TestRunner_mgmt-tester - FAIL
-Desc: Run mgmt-tester with test-runner
-Output:
-Total: 490, Passed: 485 (99.0%), Failed: 1, Not Run: 4
-
-Failed Test Cases
-LL Privacy - Set Flags 3 (2 Devices to RL)           Failed       0.167 seconds
-##############################
-Test: IncrementalBuild - PENDING
-Desc: Incremental build with the patches in the series
-Output:
-
-
-
+Signed-off-by: Easwar Hariharan <eahariha@linux.microsoft.com>
 ---
-Regards,
-Linux Bluetooth
+Easwar Hariharan (4):
+      Bluetooth: hci_vhci: convert timeouts to secs_to_jiffies()
+      Bluetooth: MGMT: convert timeouts to secs_to_jiffies()
+      Bluetooth: SMP: convert timeouts to secs_to_jiffies()
+      Bluetooth: L2CAP: convert timeouts to secs_to_jiffies()
 
+ drivers/bluetooth/hci_vhci.c  | 4 ++--
+ include/net/bluetooth/l2cap.h | 4 ++--
+ net/bluetooth/hci_sync.c      | 2 +-
+ net/bluetooth/l2cap_core.c    | 4 ++--
+ net/bluetooth/mgmt.c          | 6 +++---
+ net/bluetooth/smp.c           | 2 +-
+ 6 files changed, 11 insertions(+), 11 deletions(-)
+---
+base-commit: 8936cec5cb6e27649b86fabf383d7ce4113bba49
+change-id: 20250219-bluetooth-converge-secs-to-jiffies-22847c90dfe7
 
---===============2363593945434253921==--
+Best regards,
+-- 
+Easwar Hariharan <eahariha@linux.microsoft.com>
+
 
