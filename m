@@ -1,57 +1,57 @@
-Return-Path: <linux-bluetooth+bounces-10508-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-10510-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A1171A3D221
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Feb 2025 08:24:28 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A27F3A3D22F
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Feb 2025 08:27:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 54F5C7A7EEA
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Feb 2025 07:22:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 07C23189E87B
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Feb 2025 07:25:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D95CE1E9B39;
-	Thu, 20 Feb 2025 07:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 668341E5B9F;
+	Thu, 20 Feb 2025 07:24:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="QmbhWQ4e"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="qhs0GiuW"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA241E9907
-	for <linux-bluetooth@vger.kernel.org>; Thu, 20 Feb 2025 07:22:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0628E15A85E
+	for <linux-bluetooth@vger.kernel.org>; Thu, 20 Feb 2025 07:24:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740036166; cv=none; b=SCSlRZdq2HY8pGmzl2CGtKpJeMZjTko3i0qdnKAEcV1Fs9Fc5eyi3p24Hs4k0nqbOkDYHkzSAYpqzJryA6+RlHud4Ib5vEgjRE7OyJUdydHWaFRw1PTl1ekpnWf7tf80ZU165iZFTyoDrUblnrhi8vXpuiQkZMCh/X78W2+9D0E=
+	t=1740036297; cv=none; b=Y5KZC9B59lnrAIHGMSaqp26yOsBV5PRyse92YkfR6hdS/8dH+Km2pOTpQdV18NjAK4DIMBX2erVDHn6IFWmFZniPOwPIhIoU8KFdvihzzhdUaPGw4V8m6UffNWSLmGCb1nQ2Y4TwcBMgtrsZsdPYC3UfW66+JrWJ9hb1IQ38EuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740036166; c=relaxed/simple;
-	bh=Z98/CUiwRsJ+LUORJ1OUEAgC2g8ZpQGCFDJnKEJUl2Q=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Tijsffd7HQBviTMNkK0VcgKJ1L0yMTC+LECpxFdi2dVvRukWYisdDqRWXk/prjOMtYEprw+l6WW0cGyeg2q4UjlGHDlw5kqvQgr5qF7Hf8SRuiFAhXgRYZppXlHKAmqOiGIfcKy1ag4ArYYK6iacSvWWgLbvmj6Ce2jqbFFEUyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=QmbhWQ4e; arc=none smtp.client-ip=148.251.105.195
+	s=arc-20240116; t=1740036297; c=relaxed/simple;
+	bh=NVM1StJa1UKiqlIJAYv2u35CH4SdfEwwoIx565awZmI=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=oZJXWlBecCdfSOOR8ZCfVC7fHL3BkdNSwFPIgSVF2lz9g1fcYxfN0xLrzBTJIWurysCXhIYZ4Sg5O8MLQBs24D/nLy2Qtwbob1hJAJKhfZeRisoEdFCfeg2Ii6EJ720pKn8wrLJJMfjTKQJwF4TApH2yTaZ/WFEFHso4Pt7RBLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=qhs0GiuW; arc=none smtp.client-ip=148.251.105.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1740036161;
-	bh=Z98/CUiwRsJ+LUORJ1OUEAgC2g8ZpQGCFDJnKEJUl2Q=;
+	s=mail; t=1740036294;
+	bh=NVM1StJa1UKiqlIJAYv2u35CH4SdfEwwoIx565awZmI=;
 	h=From:To:Subject:Date:From;
-	b=QmbhWQ4eXnu6kttkLNDXH1/98NyOUSu76UXrdTOt0PFZgPV7+1hD8TacpMcWv4ZTN
-	 DXOZTFGPWFyAm69aCVg4XNjI9kYh0YS7FPGx0uBaTciKEaW5gF89wbqHnHJ1IjL5rt
-	 I/fy+tPscztZ/I1EmNHetzF6cDvn1008CTT+wYM3zKXC7vabnLpmd9sUbX+mGraj3Y
-	 DEJmTu9uBx/N2xsj96MV5cJ38SFIausQlqnfdaXVzF9JMWpDp6Am/myzgkB9lJGm33
-	 OnHnWSD4zFdubi2bsarGbAHmHyHhlmq2q9kxkfR6/pHd3oBv3d2G8hCBGDNr7Bjv5t
-	 A6rVeI+Nwo9/Q==
-Received: from fdanis-XPS-13-9370.. (2A02-8428-aF44-1001-98FD-0e9A-Da79-5443.rev.sfr.net [IPv6:2a02:8428:af44:1001:98fd:e9a:da79:5443])
+	b=qhs0GiuWV1vy1HVfkSHCtloTJvB6dFWPREm9LZnR89tyuppiHtmC+dEjgPR7H2Jsf
+	 464+VQPfB4b98mTpkdXp9CJRiqFxNLCPclku73sRjvwvgCn5xEtNL+BmlpSd1m5ELc
+	 wAFGQmI8+yoMTA6re0/QJPBuvSgq3yiX78vyWuhnbeGvL9V2smX53r0SFBjWYco+gr
+	 75BwJbWNTfXRU/2lo4GYwzsN6+pk+GFqFt3Cu/kU1FYDtVHKTY5nIClYD/HKOM7cpx
+	 Xg6wsH+HTnvNgwIiARAtHJnESDhlcTSzBz2MxHb7ZYeOwq8XocO1P9FKct5+Mj1IiN
+	 jHgJJ2uZ3AJAA==
+Received: from fdanis-XPS-13-9370.. (2A02-8428-aF44-1001-98Fd-0e9A-da79-5443.rev.sfr.net [IPv6:2a02:8428:af44:1001:98fd:e9a:da79:5443])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: fdanis)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id A827F17E1560
-	for <linux-bluetooth@vger.kernel.org>; Thu, 20 Feb 2025 08:22:41 +0100 (CET)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id E823E17E1558
+	for <linux-bluetooth@vger.kernel.org>; Thu, 20 Feb 2025 08:24:53 +0100 (CET)
 From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ] tools/avtest: Add AAC configuration
-Date: Thu, 20 Feb 2025 08:22:35 +0100
-Message-ID: <20250220072235.189814-1-frederic.danis@collabora.com>
+Subject: [PATCH BlueZ 1/2] obexd/client/map: Add SupportedTypes property to MessageAccess1
+Date: Thu, 20 Feb 2025 08:24:45 +0100
+Message-ID: <20250220072446.190256-1-frederic.danis@collabora.com>
 X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
@@ -62,145 +62,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-The tests A2DP/SNK/AVP/BI-01-C, A2DP/SNK/AVP/BI-02-C,
-A2DP/SNK/AVP/BI-05-C and  A2DP/SNK/AVP/BI-07-C expect the IUT to
-provide an AAC configuration.
+This lists the message types supported the remote MSE.
+Possible values are: EMAIL, SMS_GSM, SMS_CDMA, MMS and IM.
 
-This can be used by adding '--aac' to the avtest command, e.g. for
-A2DP/SNK/AVP/BI-01-C test:
- tools/avtest --aac --reject setconf --reject-code 214
+Those values can be used as message type when sending a message
+using PushMessage method.
 ---
- tools/avtest.c | 49 +++++++++++++++++++++++++++++++++++++------------
- 1 file changed, 37 insertions(+), 12 deletions(-)
+ obexd/client/map.c | 47 +++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 46 insertions(+), 1 deletion(-)
 
-diff --git a/tools/avtest.c b/tools/avtest.c
-index 5ac3418aa..a52662d80 100644
---- a/tools/avtest.c
-+++ b/tools/avtest.c
-@@ -151,7 +151,7 @@ struct avctp_header {
+diff --git a/obexd/client/map.c b/obexd/client/map.c
+index b8820335b..7ca33cfe0 100644
+--- a/obexd/client/map.c
++++ b/obexd/client/map.c
+@@ -51,6 +51,12 @@
+ #define CHARSET_NATIVE 0
+ #define CHARSET_UTF8 1
  
- #define AVCTP_PACKET_SINGLE	0
- 
--static const unsigned char media_transport[] = {
-+static const unsigned char media_transport_sbc[] = {
- 		0x01,	/* Media transport category */
- 		0x00,
- 		0x07,	/* Media codec category */
-@@ -164,6 +164,24 @@ static const unsigned char media_transport[] = {
- 		0x33,
++#define SDP_MESSAGE_TYPE_EMAIL		0x01
++#define SDP_MESSAGE_TYPE_SMS_GSM	0x02
++#define SDP_MESSAGE_TYPE_SMS_CDMA	0x04
++#define SDP_MESSAGE_TYPE_MMS		0x08
++#define SDP_MESSAGE_TYPE_IM		0x10
++
+ static const char * const filter_list[] = {
+ 	"subject",
+ 	"timestamp",
+@@ -1992,6 +1998,45 @@ static const GDBusMethodTable map_methods[] = {
+ 	{ }
  };
  
-+static const unsigned char media_transport_aac[] = {
-+		0x01,	/* Media transport category */
-+		0x00,
-+		0x07,	/* Media codec category */
-+		0x08,
-+		0x00,	/* Media type audio */
-+		0x02,	/* Codec MPEG2,4 AAC */
-+		0x80,	/* Codec MPEG-2 AAC LC */
-+		0x01,	/* 44100 */
-+		0x8C,	/* 48000, 1 and 2 channels */
-+		0x84,	/* VBR supported, Max peak rate 320000 */
-+		0xE2,
-+		0x00
++static gboolean get_supported_types(const GDBusPropertyTable *property,
++					DBusMessageIter *iter, void *user_data)
++{
++	struct map_data *map = user_data;
++	DBusMessageIter entry;
++	const char *str;
++
++	dbus_message_iter_open_container(iter, DBUS_TYPE_ARRAY,
++					DBUS_TYPE_STRING_AS_STRING, &entry);
++	if (map->supported_message_types & SDP_MESSAGE_TYPE_EMAIL) {
++		str = "EMAIL";
++		dbus_message_iter_append_basic(&entry, DBUS_TYPE_STRING, &str);
++	}
++	if (map->supported_message_types & SDP_MESSAGE_TYPE_SMS_GSM) {
++		str = "SMS_GSM";
++		dbus_message_iter_append_basic(&entry, DBUS_TYPE_STRING, &str);
++	}
++	if (map->supported_message_types & SDP_MESSAGE_TYPE_SMS_CDMA) {
++		str = "SMS_CDMA";
++		dbus_message_iter_append_basic(&entry, DBUS_TYPE_STRING, &str);
++	}
++	if (map->supported_message_types & SDP_MESSAGE_TYPE_MMS) {
++		str = "MMS";
++		dbus_message_iter_append_basic(&entry, DBUS_TYPE_STRING, &str);
++	}
++	if (map->supported_message_types & SDP_MESSAGE_TYPE_IM) {
++		str = "IM";
++		dbus_message_iter_append_basic(&entry, DBUS_TYPE_STRING, &str);
++	}
++	dbus_message_iter_close_container(iter, &entry);
++
++	return TRUE;
++}
++
++static const GDBusPropertyTable map_properties[] = {
++	{ "SupportedTypes", "as", get_supported_types },
++	{ }
 +};
 +
-+static const unsigned char *media_transport = media_transport_sbc;
-+static size_t media_transport_size = sizeof(media_transport_sbc);
-+
- static int media_sock = -1;
+ static void map_msg_remove(void *data)
+ {
+ 	struct map_msg *msg = data;
+@@ -2201,7 +2246,7 @@ static int map_probe(struct obc_session *session)
+ 	set_notification_registration(map, true);
  
- static void dump_avctp_header(struct avctp_header *hdr)
-@@ -254,30 +272,30 @@ static void process_avdtp(int srv_sk, int sk, unsigned char reject,
- 				start->signal_id = AVDTP_GET_CAPABILITIES;
- 				start->no_of_packets = 3;
- 				memcpy(&buf[3], media_transport,
--						sizeof(media_transport));
-+						media_transport_size);
- 				len = write(sk, buf,
- 						3 + sizeof(media_transport));
+ 	if (!g_dbus_register_interface(conn, path, MAP_INTERFACE, map_methods,
+-					NULL, NULL, map, map_free)) {
++					NULL, map_properties, map, map_free)) {
+ 		map_free(map);
  
- 				/* Continue packet */
- 				hdr->packet_type = AVDTP_PKT_TYPE_CONTINUE;
- 				memcpy(&buf[1], media_transport,
--						sizeof(media_transport));
-+						media_transport_size);
- 				len = write(sk, buf,
--						1 + sizeof(media_transport));
-+						1 + media_transport_size);
- 
- 				/* End packet */
- 				hdr->packet_type = AVDTP_PKT_TYPE_END;
- 				memcpy(&buf[1], media_transport,
--						sizeof(media_transport));
-+						media_transport_size);
- 				len = write(sk, buf,
--						1 + sizeof(media_transport));
-+						1 + media_transport_size);
- 			} else {
- 				hdr->message_type = AVDTP_MSG_TYPE_ACCEPT;
- 				memcpy(&buf[2], media_transport,
--						sizeof(media_transport));
-+						media_transport_size);
- 				printf("Accepting get capabilities command\n");
- 				len = write(sk, buf,
--						2 + sizeof(media_transport));
-+						2 + media_transport_size);
- 			}
- 			break;
- 
-@@ -578,10 +596,10 @@ static void do_avdtp_send(int sk, const bdaddr_t *src, const bdaddr_t *dst,
- 		hdr->signal_id = AVDTP_SET_CONFIGURATION;
- 		buf[2] = 1 << 2; /* ACP SEID */
- 		buf[3] = 1 << 2; /* INT SEID */
--		memcpy(&buf[4], media_transport, sizeof(media_transport));
-+		memcpy(&buf[4], media_transport, media_transport_size);
- 		if (invalid)
- 			buf[5] = 0x01; /* LOSC != 0 */
--		len = write(sk, buf, 4 + sizeof(media_transport));
-+		len = write(sk, buf, 4 + media_transport_size);
- 		break;
- 
- 	case AVDTP_GET_CONFIGURATION:
-@@ -717,7 +735,8 @@ static void usage(void)
- 		"\t--preconf            Configure stream before actual command\n"
- 		"\t--wait <N>           Wait N seconds before exiting\n"
- 		"\t--fragment           Use minimum MTU and fragmented messages\n"
--		"\t--invalid <command>  Send invalid command\n");
-+		"\t--invalid <command>  Send invalid command\n"
-+		"\t--aac                MPEG2,4 AAC LC\n");
- }
- 
- static struct option main_options[] = {
-@@ -731,6 +750,7 @@ static struct option main_options[] = {
- 	{ "fragment",   0, 0, 'F' },
- 	{ "avctp",	0, 0, 'C' },
- 	{ "wait",	1, 0, 'w' },
-+	{ "aac",	0, 0, 'a' },
- 	{ 0, 0, 0, 0 }
- };
- 
-@@ -774,7 +794,7 @@ int main(int argc, char *argv[])
- 	bacpy(&src, BDADDR_ANY);
- 	bacpy(&dst, BDADDR_ANY);
- 
--	while ((opt = getopt_long(argc, argv, "+i:r:s:f:hcFCw:R:",
-+	while ((opt = getopt_long(argc, argv, "+i:r:s:f:hcFCw:R:a",
- 						main_options, NULL)) != EOF) {
- 		switch (opt) {
- 		case 'i':
-@@ -818,6 +838,11 @@ int main(int argc, char *argv[])
- 			reject_code = atoi(optarg);
- 			break;
- 
-+		case 'a':
-+			media_transport = media_transport_aac;
-+			media_transport_size = sizeof(media_transport_aac);
-+			break;
-+
- 		case 'h':
- 		default:
- 			usage();
+ 		return -ENOMEM;
 -- 
 2.43.0
 
