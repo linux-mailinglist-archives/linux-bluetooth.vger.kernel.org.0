@@ -1,210 +1,129 @@
-Return-Path: <linux-bluetooth+bounces-10653-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-10655-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5CB8BA4450C
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 25 Feb 2025 16:55:26 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ACFEFA44597
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 25 Feb 2025 17:13:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 78B4B3A9DC9
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 25 Feb 2025 15:55:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3094F86269E
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 25 Feb 2025 16:11:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07BD01624D4;
-	Tue, 25 Feb 2025 15:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3392118DB2C;
+	Tue, 25 Feb 2025 16:05:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NCrX/VAK"
+	dkim=pass (2048-bit key) header.d=o2.pl header.i=@o2.pl header.b="UWnZVUMZ"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx-out.tlen.pl (mx-out.tlen.pl [193.222.135.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D522B13CFA6
-	for <linux-bluetooth@vger.kernel.org>; Tue, 25 Feb 2025 15:55:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7BB183CB0
+	for <linux-bluetooth@vger.kernel.org>; Tue, 25 Feb 2025 16:05:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.222.135.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740498920; cv=none; b=oomqWUoQtxOtoYV1guEWP+wIpUNz9Tty3dw2QlqaGiZbbm3aRTrDSe1GwDphzL24pN6ULlECep7aOlomH/ZJX+tPkKN7sP2cTVjhJdNyXciXeENc8uD/vip5DYMS3VkWQ0Z+Z5y9uG6Oc6H/3ZNBilPRc1FuAPojKUh2QQowgh8=
+	t=1740499525; cv=none; b=tradPuJX1QXAZoV6R5Y1g19B7LYgZxJa8tn+OPBNi8CyKpFLkE1xScsX1a6A4k0s+0NMd97fyXGOelZeAR1w2TPgEG0R+RQIWyQYY1Tyi5UvxxlPOi0wg6pQL2lPwjA1GveNtXgKB9bUQ2Hs2eTtRLiU4J1kyo4e9PDH0guZq9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740498920; c=relaxed/simple;
-	bh=ny6prnD7gE53OHF2Cpyxc6rhK4xf+SVaa6JsTJAYs7E=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nHmq5xvOSfO/zjcbXhRU46DXW+JJizACbGsScAPv1yyEVAsM2fV6Jei4UUCiHGKp6pwVukjvedX56p7vgN2LCueDpiUvmzNJXnRJh5xp36N6EHENePwacE8I61xgKF4w9dgjrIWIpu+0iVkKzbFwOjJe35ovKoaF3oRZ7AjTFvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NCrX/VAK; arc=none smtp.client-ip=209.85.208.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-30a29f4bd43so51712521fa.0
-        for <linux-bluetooth@vger.kernel.org>; Tue, 25 Feb 2025 07:55:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740498917; x=1741103717; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JIpdDvrxx+VeLnYeV2akmD6/+PA136xAIkm267GiExk=;
-        b=NCrX/VAKwVcAQIzDffzNBcw7N1x61YBCclKySGAVxmEETWXyBqpC5h/nts7Aw1AsSz
-         XmzTazh9sFWR745H+J71tu/b41V5J6CCD+SDA2UHL3CSc9TiQ6M2nnO/OHaebeSSzWSH
-         8VCBw6TIO8X1wpuXzVPkC9IH7rBbvovEPIDKXnByZ5BVMYPrJtUjzrL3b/JNN80N7AdE
-         kWbS36x5xwr5SvbiCNAAyYZaJA0178mF5t4JKeO2OvWwczpKtdcMsbhgi9wpIYAVbEZ3
-         HEulsVymwKBU3MxvjJSWxxHDvolvMsECKTBKQFAw9xmTXrd9zHvug7jbUMundeV9s/QA
-         M+Dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740498917; x=1741103717;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JIpdDvrxx+VeLnYeV2akmD6/+PA136xAIkm267GiExk=;
-        b=Dxmu2H2Pm7SndeK47rTA5ujt+94MhGOmUi6l8NPI1/A+xkq5MtQ4vMuRntLdsiFANR
-         f3JiVasyp1qQTxd9YAh9fiQ9hNnnhB0qwO2lV1fm8uogh09ppxE/+JGquAkyAIaf4n3A
-         h+FE3KrjysYPRLajSp/oR8UBhRmvs6wbNDkx6hHH0ZCXFpg8rxA80Nz+mRjbTvFVTdel
-         X8ms2kXw+AZf7im5AO1PW/oWNB/Z7AJ3OKNhrymGS5e2sYPP2PImnQ4NZ3xyaDmydYJW
-         358k/fXssTSxqhe7S0amQhgoK74CSVuKZh5PmxCxmCJIzrCjH643VfU4LNQPkUtPFgq+
-         l70g==
-X-Gm-Message-State: AOJu0YyW0ii/wNUvO6PW4eceYeqPAwWqELA1meIVoNwEP3urTvWTno4V
-	WZviJFrh0dtzV8DGzfIU9r22PZ5gDFicQ54SZ7yW5Rrqrn1xC8UUf+F7VfmcZe3c0uj335I9txh
-	JEZQfxs1xAvcf35bTNBsYIQeYn2w=
-X-Gm-Gg: ASbGnctTHpMr3n+S+QoDSvvwphTp8dntOY5ABeKW4rtXjV9S+bDAyQceC9gyOszQ92t
-	AaddwYuHNUdjQfinVHTHW3J00UVh4ZEXwQ6fUDZFBHIyb+BCnmA69LH/2G4K1USjTVkn5Rr+g7l
-	NU1WKqYQ==
-X-Google-Smtp-Source: AGHT+IHvfOSBvailzxoLPH8MY3O2q23sCvs+ApzqZ0TC8gFtEOTbHq9xLGJzRjBC6ZIfnRsyl/nsniz1RXibUwXPQtw=
-X-Received: by 2002:a2e:a9a6:0:b0:308:f860:7e8 with SMTP id
- 38308e7fff4ca-30b79184c47mr692221fa.20.1740498916640; Tue, 25 Feb 2025
- 07:55:16 -0800 (PST)
+	s=arc-20240116; t=1740499525; c=relaxed/simple;
+	bh=XK1zkzaCikUXtEYmYx2k7/oNH03FbT61gtjPhljYPkg=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=ffuPou9eWqKzrNxWfqLqm6mFDs/i/6Ff3PhFUUP4JXb8vR97+2qMbaX5p3v2Wf2Z5hgkhB8MAJ3qUEwHmXAvNEVYSPxJgJd4PINPXaAu74L4j1kJhBdSY007iAOvileE7CYYJGU9SUoL9YBN2+mkixOtDJY8558+Z2fBT+3gbLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=o2.pl; spf=pass smtp.mailfrom=o2.pl; dkim=pass (2048-bit key) header.d=o2.pl header.i=@o2.pl header.b=UWnZVUMZ; arc=none smtp.client-ip=193.222.135.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=o2.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=o2.pl
+Received: (wp-smtpd smtp.tlen.pl 24648 invoked from network); 25 Feb 2025 16:58:40 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=o2.pl; s=20241105;
+          t=1740499120; bh=Hj7qAEgiQ50fp7uhcmsq7NZfp8iIKRdHrawCOPWVFaQ=;
+          h=From:To:Cc:Subject;
+          b=UWnZVUMZfiARyp73UoCOgpAM09aKIAYMW2srVFZsG7NEHuGXbEUzd6xB4NJSgybhX
+           wgr/OzibQBxJJeaYOxRU11iaPHl8ruXXN4yQRubRaQWIdjFTnhB1/uwZLlH1IeCh9e
+           B4QIdxkj3yv8/2ZCTgEeHEpiyEd3rrBPAmEJjV8Km7v388dJezu1hIQuiGPZs0YDXC
+           ipYODhWwdeInT3Gz/i5IviIHg+Jl+3/+r2diLYAzi0wS5gLmnFPI/RyrX1QtsBtJSI
+           YA6u3oelgMKAgLw4PwIt4P6sx3mxoAmkpreh5WUioIcltJYTEoZeNKdgIchNh9Dkbs
+           l71Y9H1gY5atw==
+Received: from public-gprs689392.centertel.pl (HELO M73..) (mprnk@o2.pl@[5.184.236.49])
+          (envelope-sender <mprnk@o2.pl>)
+          by smtp.tlen.pl (WP-SMTPD) with ECDHE-RSA-AES256-GCM-SHA384 encrypted SMTP
+          for <marcel@holtmann.org>; 25 Feb 2025 16:58:40 +0100
+From: Michal Piernik <mprnk@o2.pl>
+To: Marcel Holtmann <marcel@holtmann.org>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: Michal Piernik <mprnk@o2.pl>,
+	linux-bluetooth@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] Bluetooth: btusb: Add Mercusys MA530 HWID 0x2c4e/0x0115 for Realtek 8761BUV
+Date: Tue, 25 Feb 2025 16:58:25 +0100
+Message-Id: <20250225155825.1504841-1-mprnk@o2.pl>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250224205439.18672-1-nishiyama.pedro@gmail.com>
- <20250224205439.18672-2-nishiyama.pedro@gmail.com> <CABBYNZKLPh48LqZjYboJ=6wEvRvdaEqu7Aykb5a_ONF1t0GCOw@mail.gmail.com>
- <CANoxumidPyvgUB5mKVmy0AAjU2AQOAXnbHByeZ5=RPK7pSoFDQ@mail.gmail.com>
-In-Reply-To: <CANoxumidPyvgUB5mKVmy0AAjU2AQOAXnbHByeZ5=RPK7pSoFDQ@mail.gmail.com>
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Tue, 25 Feb 2025 10:55:03 -0500
-X-Gm-Features: AQ5f1Jo5AXZaJkwyJb1zablEhVwSQp7YL-54IelLZuWSXZrW2oEagTcmSqmtfXE
-Message-ID: <CABBYNZKvXUzwTNVu97y72dEBMrFWALD8ksFQumLVWgjhKyeQ0Q@mail.gmail.com>
-Subject: Re: [V3 1/2] Bluetooth: Add new quirks for fake Bluetooth dongles
-To: Pedro Nishiyama <nishiyama.pedro@gmail.com>
-Cc: linux-bluetooth@vger.kernel.org, Marcel Holtmann <marcel@holtmann.org>, 
-	Johan Hedberg <johan.hedberg@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-WP-MailID: 400995f43b953aaecd84dd38b06430a3
+X-WP-AV: skaner antywirusowy Poczty o2
+X-WP-SPAM: NO 0000000 [gTPE]                               
 
-Hi Pedro,
+/sys/kernel/debug/usb/devices:
+T:  Bus=03 Lev=01 Prnt=01 Port=05 Cnt=03 Dev#=  4 Spd=12   MxCh= 0
+D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=2c4e ProdID=0115 Rev= 2.00
+S:  Manufacturer=
+S:  Product=Mercusys MA530 Adapter
+S:  SerialNumber=30169D905719
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
 
-On Mon, Feb 24, 2025 at 7:27=E2=80=AFPM Pedro Nishiyama
-<nishiyama.pedro@gmail.com> wrote:
->
-> Hi Luiz,
->
-> On Mon, Feb 24, 2025 at 6:36=E2=80=AFPM Luiz Augusto von Dentz
-> <luiz.dentz@gmail.com> wrote:
-> >
-> > Hi Pedro,
-> >
-> > On Mon, Feb 24, 2025 at 3:54=E2=80=AFPM Pedro Nishiyama
-> > <nishiyama.pedro@gmail.com> wrote:
-> > >
-> > > This adds quirks for broken READ_VOICE_SETTING and READ_PAGE_SCAN_TYP=
-E.
-> > >
-> > > Signed-off-by: Pedro Nishiyama <nishiyama.pedro@gmail.com>
-> > > ---
-> > >  include/net/bluetooth/hci.h | 16 ++++++++++++++++
-> > >  net/bluetooth/hci_sync.c    |  6 ++++++
-> > >  2 files changed, 22 insertions(+)
-> > >
-> > > diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.=
-h
-> > > index 0d51970d809f..b99818df8ee7 100644
-> > > --- a/include/net/bluetooth/hci.h
-> > > +++ b/include/net/bluetooth/hci.h
-> > > @@ -354,6 +354,22 @@ enum {
-> > >          * during the hdev->setup vendor callback.
-> > >          */
-> > >         HCI_QUIRK_FIXUP_LE_EXT_ADV_REPORT_PHY,
-> > > +
-> > > +       /* When this quirk is set, the HCI_OP_READ_VOICE_SETTING comm=
-and is
-> > > +        * skipped. This is required for a subset of the CSR controll=
-er clones
-> > > +        * which erroneously claim to support it.
-> > > +        *
-> > > +        * This quirk must be set before hci_register_dev is called.
-> > > +        */
-> > > +       HCI_QUIRK_BROKEN_READ_VOICE_SETTING,
-> >
-> > Lets split this in 2 parts, one for voice setting and another for page
-> > scan type.
-> >
-> > > +       /* When this quirk is set, the HCI_OP_READ_PAGE_SCAN_TYPE com=
-mand is
-> > > +        * skipped. This is required for a subset of the CSR controll=
-er clones
-> > > +        * which erroneously claim to support it.
-> > > +        *
-> > > +        * This quirk must be set before hci_register_dev is called.
-> > > +        */
-> > > +       HCI_QUIRK_BROKEN_READ_PAGE_SCAN_TYPE,
-> > >  };
-> > >
-> > >  /* HCI device flags */
-> > > diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-> > > index dd770ef5ec36..e76012956020 100644
-> > > --- a/net/bluetooth/hci_sync.c
-> > > +++ b/net/bluetooth/hci_sync.c
-> > > @@ -3696,6 +3696,9 @@ static int hci_read_local_name_sync(struct hci_=
-dev *hdev)
-> > >  /* Read Voice Setting */
-> > >  static int hci_read_voice_setting_sync(struct hci_dev *hdev)
-> > >  {
-> > > +       if (test_bit(HCI_QUIRK_BROKEN_READ_VOICE_SETTING, &hdev->quir=
-ks))
-> > > +               return 0;
-> >
-> > While at it I'd add the checking for the bit as well, that said
-> > perhaps we need to disable SCO link if voice settings cannot be read,
-> > is the controller able to create SCO connections?
->
-> I did some tests on the version before the regression and with the patche=
-s.
-> It is possible to create an SCO connection, but the connection is not usa=
-ble.
-> Before the regression there is no sound, and with the patches, dmesg
-> is spammed with "Bluetooth: hci0: corrupted SCO packet".
+dmesg:
+[11106.761376] Bluetooth: hci0: RTL: examining hci_ver=0a hci_rev=000b lmp_ver=0a lmp_subver=8761
+[11106.762370] Bluetooth: hci0: RTL: rom_version status=0 version=1
+[11106.762374] Bluetooth: hci0: RTL: loading rtl_bt/rtl8761bu_fw.bin
+[11106.762554] Bluetooth: hci0: RTL: loading rtl_bt/rtl8761bu_config.bin
+[11106.762579] Bluetooth: hci0: RTL: cfg_sz 6, total sz 30210
+[11106.910393] Bluetooth: hci0: RTL: fw version 0xdfc6d922
+[11106.977569] Bluetooth: MGMT ver 1.22
 
-Then perhaps we should disable SCO support if it doesn't support read
-voice settings.
+Signed-off-by: Michal Piernik <mprnk@o2.pl>
+---
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-> >
-> > >         return __hci_cmd_sync_status(hdev, HCI_OP_READ_VOICE_SETTING,
-> > >                                      0, NULL, HCI_CMD_TIMEOUT);
-> > >  }
-> > > @@ -4132,6 +4135,9 @@ static int hci_read_page_scan_type_sync(struct =
-hci_dev *hdev)
-> > >         if (!(hdev->commands[13] & 0x01))
-> > >                 return 0;
-> > >
-> > > +       if (test_bit(HCI_QUIRK_BROKEN_READ_PAGE_SCAN_TYPE, &hdev->qui=
-rks))
-> > > +               return 0;
-> > > +
-> > >         return __hci_cmd_sync_status(hdev, HCI_OP_READ_PAGE_SCAN_TYPE=
-,
-> > >                                      0, NULL, HCI_CMD_TIMEOUT);
-> > >  }
-> > > --
-> > > 2.48.1
-> > >
-> >
-> >
-> > --
-> > Luiz Augusto von Dentz
->
->
-> --
-> Pedro Nishiyama
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index f5609110f..0fc1dde8f 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -739,6 +739,8 @@ static const struct usb_device_id quirks_table[] = {
+ 	{ USB_DEVICE(0x2ff8, 0xb011), .driver_info = BTUSB_REALTEK },
+ 
+ 	/* Additional Realtek 8761BUV Bluetooth devices */
++	{ USB_DEVICE(0x2c4e, 0x0115), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x2357, 0x0604), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0b05, 0x190e), .driver_info = BTUSB_REALTEK |
+-- 
+2.34.1
 
-
-
---=20
-Luiz Augusto von Dentz
 
