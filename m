@@ -1,49 +1,49 @@
-Return-Path: <linux-bluetooth+bounces-10758-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-10759-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC2D5A4A459
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Feb 2025 21:40:10 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 39BACA4A45A
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Feb 2025 21:40:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8C3A4189A1E7
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Feb 2025 20:40:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ABAA73B905B
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Feb 2025 20:40:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA5FD1BC9FB;
-	Fri, 28 Feb 2025 20:40:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B1F523F396;
+	Fri, 28 Feb 2025 20:40:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mMaQrxjb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bb2iV5p2"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 425C823F36A
-	for <linux-bluetooth@vger.kernel.org>; Fri, 28 Feb 2025 20:40:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE0C23F36A
+	for <linux-bluetooth@vger.kernel.org>; Fri, 28 Feb 2025 20:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740775205; cv=none; b=l81hHmDvhO4nRJk0TNi9CjofSRdsoezSZqUqIkV87AF4u6N4CElDN21wxqLfpcmQoZ0H9MivszAZa8MHzoVtR5Qh1sTQrZCmyzjkJZ+XEz4gwgxVYPih8gysy4cN+Be4UQYocgpGDNtdKao5Lyj+nt98/Ebhfp/Lc7wpTi3CsS0=
+	t=1740775206; cv=none; b=eR7iKO0ghCOG2Jh4LlBEC+SiadEXbf5/gYuTCtc+o6nChbpuaaReeQKag8ZOsx4jGkRI6FJJ/yrqyG7dnEJIbXhZU1/rZm/Uzn/NwJM1y2gaJ23FXBPU0zV4Akg98hq7wCrY8ZhtUwtdNtmvJ8Sgb8cx4neOj9d1dbwngcduGZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740775205; c=relaxed/simple;
-	bh=Goz0n9q/43PX+jK82QouYHIjAZ7xOaCZt20LF0A1DHo=;
+	s=arc-20240116; t=1740775206; c=relaxed/simple;
+	bh=1jblbtq63Gn0SK5C3pFh2uCP0H/PJN4lElwF7VfDdnY=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=A2zJWvihPWAAu+4Q06WEBoMf98sM2Iwe+oj5xwACXtUfhI4khRR0Md39XsA68UMJAkMZ9WCspNx3xOwQ4yln9Zzg2sgPaVMUjeod4w/a1/YFmF3AMmoGtltbxEaBsGqsJzxZuseZ1pzKGe3CwbajxQBQ4qSHpA246LSnwiN7Qro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mMaQrxjb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCFF6C4CED6;
-	Fri, 28 Feb 2025 20:40:04 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=c/t0GqmFcG+AMsuAt6UuWGUMp3vgUlpAwTVLIDXSMMj/ZTA/OjKaCSXHEZc+ia+PRjCvNOKo1LGnhT3eSro/zaKz4UgYHIn2L990vNJPWPinDfdIfHiQC7i/7Riux5SJHATmgG9LnTdqoeptYjsBW1pp5SMZpMF3bl73RI7jok0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bb2iV5p2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DB6FC4CEE2;
+	Fri, 28 Feb 2025 20:40:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740775204;
-	bh=Goz0n9q/43PX+jK82QouYHIjAZ7xOaCZt20LF0A1DHo=;
+	s=k20201202; t=1740775206;
+	bh=1jblbtq63Gn0SK5C3pFh2uCP0H/PJN4lElwF7VfDdnY=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=mMaQrxjb4Bdl1px0aPL1L4TRAefCbVLjFFIxM2ZJJ/ycOfUDT5JevT7c9SulOHTCi
-	 76RBOa4/7WDOcwN6SoeYPUPBavvIWDk1FnK3S36IxUjM/SVAcOHFgFE//IYBQ1F8s8
-	 gf02LtQ/2Ppdw/1YMOTdA2T9C9/2slT6HUaKaYWB2X2jrNHBUdupIAvMLWL5H48uAE
-	 deQbO1iKN1vyqIhQqrHsunapKH6mj9OFfvFJ9WTEDpfZcobUfJJ4oUIJRS7dmgoMud
-	 /DAA7B6ea2FF18vWMINVp8JXUuAVCKfMz3K/jOtk8NHfVATYeN02DD7XzbXisHo6od
-	 11agnI97ObbKA==
+	b=Bb2iV5p2DFPpBIAqSY29/78OKJROXFuY113fBbxprKTm3skbLeLURwSmrC18mGA9q
+	 XTVohjJ6TlP3GFhSAgidc5BMGLxMMoFFp4hV/gO2ZoIBFwOEMG7zMw4szvnOyjlJD9
+	 rDu7H2KYXXzMgUY9rqyXvWys6adb2pVMDE54+AHhoBS9ReO1kWEOmrG8j2XM5xnMv1
+	 z9xkg1I/f0a0JX+JHDs5ZYvqqHXYI0rAOXThBs9Vx5SE5OSLUTnE8KBx9QCsFN0Act
+	 Pty1tG+SqlUneZcIukeFmP+H32I7kIT+JrHp72nX141qK7OaDuZ7+FBETUpNDn4Afq
+	 nqWnQ48eq5Asw==
 Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 33B60380CFF1;
-	Fri, 28 Feb 2025 20:40:38 +0000 (UTC)
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id AE00F380CFF1;
+	Fri, 28 Feb 2025 20:40:39 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
@@ -52,38 +52,36 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ] sco-tester: add test for disconnecting SCO
+Subject: Re: [PATCH BlueZ v1] shared/bap: Fix state transition of sink for disable
+ operation
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <174077523698.2271257.7126713020529646195.git-patchwork-notify@kernel.org>
-Date: Fri, 28 Feb 2025 20:40:36 +0000
-References: <b3bf384b8e710156dd2a0f7ee2c21b98da9f4c79.1740684902.git.pav@iki.fi>
-In-Reply-To: <b3bf384b8e710156dd2a0f7ee2c21b98da9f4c79.1740684902.git.pav@iki.fi>
-To: Pauli Virtanen <pav@iki.fi>
-Cc: linux-bluetooth@vger.kernel.org, eadavis@qq.com, luiz.von.dentz@intel.com
+ <174077523823.2271257.2250324465664049393.git-patchwork-notify@kernel.org>
+Date: Fri, 28 Feb 2025 20:40:38 +0000
+References: <20250228175048.3471469-1-luiz.dentz@gmail.com>
+In-Reply-To: <20250228175048.3471469-1-luiz.dentz@gmail.com>
+To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: linux-bluetooth@vger.kernel.org
 
 Hello:
 
 This patch was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Thu, 27 Feb 2025 21:36:42 +0200 you wrote:
-> Add test that checks that shutdown(sk) results to
-> HCI_Disconnection_Complete for the SCO handle:
+On Fri, 28 Feb 2025 12:50:48 -0500 you wrote:
+> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 > 
-> SCO Disconnect - Success
-> ---
-> 
-> Notes:
->     It seems after the following commit closing SCO connections no longer
->     works, as kernel does not seem to be sending HCI Disconnect after the
->     SCO socket is shutdown & closed:
+> This fixes a regression introduced by 173045553c15
+> ("bap: Fix not generating releasing state") where the Disable operation
+> no long caused the transition to QoS configured for Sink, as per ASCS spec
+> Table 3.2: ASE state machine transitions that state transition is
+> required.
 > 
 > [...]
 
 Here is the summary with links:
-  - [BlueZ] sco-tester: add test for disconnecting SCO
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=711424319562
+  - [BlueZ,v1] shared/bap: Fix state transition of sink for disable operation
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=9efc138e9808
 
 You are awesome, thank you!
 -- 
