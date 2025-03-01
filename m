@@ -1,34 +1,34 @@
-Return-Path: <linux-bluetooth+bounces-10770-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-10772-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B9D67A4ACB2
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  1 Mar 2025 16:58:09 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30220A4ACB3
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  1 Mar 2025 16:58:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 71A513AF803
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  1 Mar 2025 15:57:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 534C31897CA2
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  1 Mar 2025 15:58:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FE461E47C5;
-	Sat,  1 Mar 2025 15:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 539601E2616;
+	Sat,  1 Mar 2025 15:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="HwAINF0I"
+	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="tFoFtToa"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [185.185.170.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832761E2614
-	for <linux-bluetooth@vger.kernel.org>; Sat,  1 Mar 2025 15:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1CF31E285A
+	for <linux-bluetooth@vger.kernel.org>; Sat,  1 Mar 2025 15:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=185.185.170.37
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740844677; cv=pass; b=OOFaMg44qQJjDqMSDRuixLWKDbwNGi0n38+8CpWVcSYrCj8ZM0izxyzPyu6Ku9EcLZyIR1GoMn4yhs0IbOX9bUKzclWi00DWftXxGgnqwvgVogi8UvFKp/yJ+GTFtMtmGNlLG18WnCVhzePkvt7d5fHZDuiq9qsRT5jthyXoTos=
+	t=1740844678; cv=pass; b=Rcmuxl9EiGGnBuu2PVuUywkONt0+wkzu/93fl8AYq9lIAe3LmvGS5aO4WM1m9x5aUFE3xpgr92FoqeMNByNJ+hWiogLwsIC45zcFHsNmnmZJjkx3ZMyEgzjPfXAHucQylOhJk4loAjoyR+J1nEXkFO6Il6jpkbootzR1x2rooGE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740844677; c=relaxed/simple;
-	bh=krzWgWBaRgzESrX8FAllhCFWCdRgM3n3/CTwsJMG3uE=;
+	s=arc-20240116; t=1740844678; c=relaxed/simple;
+	bh=4Fnm2JP/45UAwEEJfuUAjSAvc6A9AiXOIz6y3NQKTVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d8Tw7l0bT7UemktyoVOzgUq0gW7Ki8LTtudGWVxmmxZXrZauoRffLfK0Loq70Ts2XpSYhUgvfx7NlrGJAAgQb/0fIxpig+51YXB9CYP3n+nXbYXx1nYEgKKhts/MJbCzv3gFGDaiQ8yp1Xc8TGIuUzroBXdGpICAhIgozQ2o/N4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=HwAINF0I; arc=pass smtp.client-ip=185.185.170.37
+	 MIME-Version; b=VuxciEv0vwtTIE5rbu3lhtaAU/WeS5v/brgCaj+3PiR9odH/dHI0/8QC8CbF+0BpyAAcJIdod1kiwOZk5cdgD4RKOPwZn2Oodum5Fi4aAw06oWP8775znhDSSQhIXTUslzUahWmJH8JY2G1yAPfzMCm01UlO3pk4TBNBe9ZkrM0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=tFoFtToa; arc=pass smtp.client-ip=185.185.170.37
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [193.138.7.158])
@@ -36,48 +36,48 @@ Received: from monolith.lan (unknown [193.138.7.158])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4Z4qV40lNFz4BKHY;
-	Sat,  1 Mar 2025 17:57:47 +0200 (EET)
+	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4Z4qV45rQwz4BKHn;
+	Sat,  1 Mar 2025 17:57:48 +0200 (EET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
-	t=1740844668;
+	t=1740844669;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=6da2jtaZhWuDX7JVWwBQJce5gdOKNslhErD2wiZ14EM=;
-	b=HwAINF0IKqO1kotPB/Q6tJsTGZBrKxtvAUsfghGqhzVC+Gw/DoicBdFD2QUaCvle1uBz2d
-	wc4Y0vT3uqavAvOkwMiMNna9kZDSFvSbknavaCAG5LIxnKUJsa1vrAE4EV0PcOT9+CQVqM
-	ovLFrD0ZdAifohA944vy64L0dFOuQyUp/5a/LDNIQktRcucuJy7VhFrJVHPpj0v2W/+lSY
-	3JvQVL+W+Uft4zzY8RORKF8duV/3H2qHZJznCSFTrZaez+GMh10+ZLrxmrCbOMOepSd+Lv
-	gJkCNm6HkI3IP8/KZqQZZZdgrLRIiSEaruUkK4DhnejzxluFCWA2qb+MJm8DSQ==
-ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1740844668; a=rsa-sha256;
+	bh=NrLVNcNBbcKQ1SxqJACUSBtWsdC70xec3EeqVspDAR8=;
+	b=tFoFtToaADkNzSBq3pUhXv/itBWrN1fx+Df5nVSN9aj65vv7Zgo6cu/UYfbtodiWKq+XYc
+	/0dwQm080dSM0iOYu2KkB8yAxge70B1RmNOcW37tJlWNdHsXWJL4wDt6rGocM+IBZmeAxw
+	ouA82KDbALVN91O4rhFbk57GWpvR3KsKzauHdUswt9P7KeaDPVSH0ztTBzDPBoIFYNzz7e
+	x0CRp/GF68sEmFH1Rgb8BZwAo2EVPKqnsHW/rsO2nH9TIchzKxQpXkSNPaftRUvF0cXQBv
+	Is2V+pjkpdzX+NPMDISxMhLhVGoTFSHKm38ITRRQxf7rbTPCyEb3uzJ9kVFhmA==
+ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1740844669; a=rsa-sha256;
 	cv=none;
-	b=vbEj34D6YF0REh7O5Ct+k+nhNyj9k1xhGESrODsuC8uOMRCdylcxjtz3lwqifkCm3kSfAV
-	VgX0TX/hW4iB+eErAzbtXom4ek/wORfKribQkEqbQNEQkqTFRg+/K5glZlAgq6BDDfgs6/
-	eB+fHJcnZMD9rHy02hyH6iL5fi4njMQSRtBsHhNl7aVybDOOAwUz8RNkusvUfmuvlX/VFy
-	J/L04+MLMkBHZVjWKLMKDjimaVLuymNJen9JtaxQly8g/VkiU/bDdjaE5qSmrnQZvWOdFT
-	sJ9w4EjcTQvYfNKso/tKLhfLtGrG9KwhdGbMB+/xfYFlYl8IqHTvuk77RnyvgQ==
+	b=oG+ElgA5DYJOrSXLHGK0sofn7Bj8/9UbfAoY4O4mvlczt0yYauKUR+TZTi8N+ajnx2WtUP
+	EpWLFUdpGMspx4P6qrIhJo9C3rSiWcOSYJo3lbUSpUXrMBaOCLmYfZV54XoKU6x11Z93jA
+	zqQGqF1yK0B04oK5rwqG2PUbiYWWYcedXN/nwBJ9f0zV7wRvU8RwwQExfsK4c9wFBM5w2D
+	hoG4UH2GAd4XSnhSoOidhFa+3wzb2DKkClxDQXLOZ0JXOnlTSuLB41K/ktWRRt0/T2OOPC
+	iu6cIUbrcftmD1OAdhyf+uZkh+JJfYQcQuQYM6LhMoBgBcaX0XxIAwrv6TDhjw==
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=lahtoruutu; t=1740844668;
+	s=lahtoruutu; t=1740844669;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=6da2jtaZhWuDX7JVWwBQJce5gdOKNslhErD2wiZ14EM=;
-	b=lvtquKQJiFPWeriDMrj8vnbduQuP17IkwOolo4AbGGVhtAjVRPGdD8WVcA25tIiBaMm7Wv
-	5PQHLzoOvRTtE+fq5l+4QDcfzEPJKpGAS5+CODdiETCRZ0LwxBcnq8OPYBsGcWgjLB03Uh
-	h/ZkZtdVTffwC9qgQGoE417ubfoONIyjVetL4cUIZy932fMb/Pyi4Eb4FuDqWvUXnC7HSL
-	ZT7HVFj8sPaRNDHtvudvUrAjBI7mrQb5xiB4mPlTCU6Y80oEqrB+xEoQv0Bl2Ez8CqRTIn
-	4npoLq1VBoVOV3VMAqLp1QjOaSwS8o7EvsAFtqq6IGEViZI+dJujmMvAPRC87w==
+	bh=NrLVNcNBbcKQ1SxqJACUSBtWsdC70xec3EeqVspDAR8=;
+	b=Qs5Io/FENcg4WDD+WhQlM2XllyRCIcjy72LCrhJPVL244fEC6A0iMmvWucco0GyLzP8Wxs
+	S0/ObWaXQlyc/oqFaZTLda8g8NLjNXrWbTYLkfwhmwAxKP56wfWsKZWjNpCANSZR2y5b7F
+	DXiR1uF2HXyTQGnYm9C6DbA883wN9nzd3bSth4kDjGLV7b2AbAtdnH2Xpuj+tzpmq+16pl
+	M7bFyKz889X/Q+vEmZakqgznHTNvPMs/gwUcU/RzzjGd1n8emhL8bpYVaewcxjjxF9lsez
+	iQtBrjHViY+SNllbmYUKKOzQl5SgEFcCmiyYnqeTS7H2JcmSORMVdiagH6+iFg==
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [RFC PATCH BlueZ 3/9] bap: add and use chainable future abstraction
-Date: Sat,  1 Mar 2025 17:57:34 +0200
-Message-ID: <5aff62c90e7e313b42f28cbc3c8c81788f74c8ce.1740844616.git.pav@iki.fi>
+Subject: [RFC PATCH BlueZ 4/9] bap: use futures for select operation
+Date: Sat,  1 Mar 2025 17:57:35 +0200
+Message-ID: <53008159e52e92871039f94677f3b469eea83cfe.1740844616.git.pav@iki.fi>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <cover.1740844616.git.pav@iki.fi>
 References: <cover.1740844616.git.pav@iki.fi>
@@ -89,221 +89,186 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Multi-part operations will need to postpone things like DBus replies
-until all parts are complete. Make this a bit simpler with a chainable
-future.
+Change select operation to use futures.
+
+Remove spurious bap_config for bcast streams, it does not even run if
+there are only bcast PACs, and bcast streams are created differently.
 ---
- profiles/audio/bap.c | 136 +++++++++++++++++++++++++++++++++----------
- 1 file changed, 105 insertions(+), 31 deletions(-)
+ profiles/audio/bap.c | 74 ++++++++++++++++++++++++++++++++------------
+ 1 file changed, 55 insertions(+), 19 deletions(-)
 
 diff --git a/profiles/audio/bap.c b/profiles/audio/bap.c
-index 37168e58c..8b9b89c70 100644
+index 8b9b89c70..39484c74a 100644
 --- a/profiles/audio/bap.c
 +++ b/profiles/audio/bap.c
-@@ -80,7 +80,7 @@ struct bap_setup {
- 	struct iovec *metadata;
- 	unsigned int id;
- 	struct iovec *base;
--	DBusMessage *msg;
-+	struct future *qos_done;
- 	void (*destroy)(struct bap_setup *setup);
+@@ -93,6 +93,8 @@ struct bap_ep {
+ 	uint16_t supported_context;
+ 	uint16_t context;
+ 	struct queue *setups;
++	struct future *select_done;
++	int selecting;
  };
  
-@@ -114,6 +114,17 @@ struct bap_data {
+ struct bap_data {
+@@ -110,7 +112,6 @@ struct bap_data {
+ 	struct queue *streams;
+ 	GIOChannel *listen_io;
+ 	unsigned int io_id;
+-	int selecting;
  	void *user_data;
  };
  
-+typedef void (*future_func_t)(int err, const char *err_msg, void *data);
-+
-+struct future {
-+	unsigned int step, steps;
-+	const char *name;
-+	future_func_t func;
-+	void *data;
-+	int err;
-+	const char *err_msg;
-+};
-+
- static struct queue *sessions;
- 
- /* Structure holding the parameters for Periodic Advertisement create sync.
-@@ -155,6 +166,94 @@ struct bt_iso_qos bap_sink_pa_qos = {
+@@ -166,6 +167,8 @@ struct bt_iso_qos bap_sink_pa_qos = {
  	}
  };
  
-+static void future_clear(struct future **p, int err, const char *err_msg)
-+{
-+	struct future *h = *p;
++static void pac_select_all(struct bap_data *data);
 +
-+	if (!h)
-+		return;
-+
-+	DBG("future %p (%s) 0x%02x (%s) step %u/%u", h, h->name ? h->name : "",
-+		err, (err && err_msg) ? err_msg : "", h->step + 1, h->steps);
-+
-+	*p = NULL;
-+
-+	if (err && !h->err) {
-+		h->err = err;
-+		h->err_msg = err_msg;
-+	}
-+
-+	if (++h->step < h->steps)
-+		return;
-+
-+	h->func(h->err, h->err_msg, h->data);
-+	free(h);
-+}
-+
-+static void future_dbus_callback_func(int err, const char *err_msg, void *data)
-+{
-+	DBusMessage *msg = data;
-+	DBusMessage *reply;
-+
-+	if (err && !err_msg)
-+		err_msg = strerror(err);
-+
-+	switch (err) {
-+	case 0:
-+		reply = dbus_message_new_method_return(msg);
-+		break;
-+	case EINVAL:
-+		reply = btd_error_invalid_args_str(msg, err_msg);
-+		break;
-+	default:
-+		reply = btd_error_failed(msg, err_msg);
-+		break;
-+	}
-+
-+	g_dbus_send_message(btd_get_dbus_connection(), reply);
-+
-+	dbus_message_unref(msg);
-+}
-+
-+static void future_init(struct future **p, const char *name, future_func_t func,
-+								void *data)
-+{
-+	struct future *h;
-+
-+	future_clear(p, ECANCELED, NULL);
-+
-+	h = new0(struct future, 1);
-+	h->steps = 1;
-+	h->name = name;
-+	h->func = func;
-+	h->data = data;
-+
-+	DBG("future %p (%s) init", h, h->name ? h->name : "");
-+
-+	*p = h;
-+}
-+
-+static void future_init_dbus_reply(struct future **p, const char *name,
-+							DBusMessage *msg)
-+{
-+	future_init(p, name, future_dbus_callback_func, dbus_message_ref(msg));
-+}
-+
-+__attribute__((unused))
-+static void future_init_chain(struct future **p, struct future *h)
-+{
-+	future_clear(p, ECANCELED, NULL);
-+
-+	if (h) {
-+		h->steps++;
-+
-+		DBG("future %p (%s) init step %u", h, h->name ? h->name : "",
-+								h->steps);
-+	}
-+
-+	*p = h;
-+}
-+
- static bool bap_data_set_user_data(struct bap_data *data, void *user_data)
+ static void future_clear(struct future **p, int err, const char *err_msg)
  {
- 	if (!data)
-@@ -740,24 +839,12 @@ static void qos_cb(struct bt_bap_stream *stream, uint8_t code, uint8_t reason,
- 					void *user_data)
- {
- 	struct bap_setup *setup = user_data;
--	DBusMessage *reply;
- 
- 	DBG("stream %p code 0x%02x reason 0x%02x", stream, code, reason);
- 
- 	setup->id = 0;
- 
--	if (!setup->msg)
--		return;
--
--	if (!code)
--		reply = dbus_message_new_method_return(setup->msg);
--	else
--		reply = btd_error_failed(setup->msg, "Unable to configure");
--
--	g_dbus_send_message(btd_get_dbus_connection(), reply);
--
--	dbus_message_unref(setup->msg);
--	setup->msg = NULL;
-+	future_clear(&setup->qos_done, code ? EIO : 0, "Unable to configure");
+ 	struct future *h = *p;
+@@ -239,7 +242,6 @@ static void future_init_dbus_reply(struct future **p, const char *name,
+ 	future_init(p, name, future_dbus_callback_func, dbus_message_ref(msg));
  }
  
- static void config_cb(struct bt_bap_stream *stream,
-@@ -765,7 +852,6 @@ static void config_cb(struct bt_bap_stream *stream,
- 					void *user_data)
+-__attribute__((unused))
+ static void future_init_chain(struct future **p, struct future *h)
  {
- 	struct bap_setup *setup = user_data;
--	DBusMessage *reply;
+ 	future_clear(p, ECANCELED, NULL);
+@@ -1595,7 +1597,6 @@ static void select_cb(struct bt_bap_pac *pac, int err, struct iovec *caps,
  
- 	DBG("stream %p code 0x%02x reason 0x%02x", stream, code, reason);
- 
-@@ -786,14 +872,7 @@ static void config_cb(struct bt_bap_stream *stream,
- 		return;
+ 	if (err) {
+ 		error("err %d", err);
+-		ep->data->selecting--;
+ 		goto done;
  	}
  
--	if (!setup->msg)
+@@ -1604,16 +1605,12 @@ static void select_cb(struct bt_bap_pac *pac, int err, struct iovec *caps,
+ 	setup->metadata = util_iov_dup(metadata, 1);
+ 	setup->qos = *qos;
+ 
+-	DBG("selecting %d", ep->data->selecting);
+-	ep->data->selecting--;
+-
+ done:
+-	if (ep->data->selecting)
 -		return;
--
--	reply = btd_error_failed(setup->msg, "Unable to configure");
--	g_dbus_send_message(btd_get_dbus_connection(), reply);
--
--	dbus_message_unref(setup->msg);
--	setup->msg = NULL;
-+	future_clear(&setup->qos_done, EIO, "Unable to configure");
++	DBG("ep %p selecting %d", ep, ep->selecting);
+ 
+-	queue_foreach(ep->data->srcs, bap_config, NULL);
+-	queue_foreach(ep->data->snks, bap_config, NULL);
+-	queue_foreach(ep->data->bcast, bap_config, NULL);
++	ep->selecting--;
++	if (!ep->selecting)
++		future_clear(&ep->select_done, 0, NULL);
  }
  
- static void setup_io_close(void *data, void *user_data)
-@@ -872,7 +951,6 @@ static struct bap_setup *setup_new(struct bap_ep *ep)
- static void setup_free(void *data)
+ static bool pac_register(struct bt_bap_pac *lpac, struct bt_bap_pac *rpac,
+@@ -1631,11 +1628,17 @@ static bool pac_register(struct bt_bap_pac *lpac, struct bt_bap_pac *rpac,
+ 	return true;
+ }
+ 
++struct pac_select_data {
++	struct bap_data *data;
++	struct future *select_done;
++};
++
+ static bool pac_select(struct bt_bap_pac *lpac, struct bt_bap_pac *rpac,
+ 							void *user_data)
  {
- 	struct bap_setup *setup = data;
--	DBusMessage *reply;
- 
- 	DBG("%p", setup);
- 
-@@ -881,12 +959,7 @@ static void setup_free(void *data)
- 		setup->id = 0;
+-	struct btd_service *service = user_data;
+-	struct bap_data *data = btd_service_get_user_data(service);
++	struct pac_select_data *select_data = user_data;
++	struct bap_data *data = select_data->data;
++	struct btd_service *service = data->service;
+ 	struct match_ep match = { lpac, rpac };
+ 	struct queue *queue;
+ 	struct bap_ep *ep;
+@@ -1658,8 +1661,12 @@ static bool pac_select(struct bt_bap_pac *lpac, struct bt_bap_pac *rpac,
  	}
  
--	if (setup->msg) {
--		reply = btd_error_failed(setup->msg, "Canceled");
--		g_dbus_send_message(btd_get_dbus_connection(), reply);
--		dbus_message_unref(setup->msg);
--		setup->msg = NULL;
--	}
-+	future_clear(&setup->qos_done, ECANCELED, NULL);
+ 	/* TODO: Cache LRU? */
+-	if (btd_service_is_initiator(service))
+-		bt_bap_select(lpac, rpac, &ep->data->selecting, select_cb, ep);
++	if (btd_service_is_initiator(service)) {
++		bt_bap_select(lpac, rpac, &ep->selecting, select_cb, ep);
++		if (ep->selecting)
++			future_init_chain(&ep->select_done,
++						select_data->select_done);
++	}
  
- 	if (setup->ep)
- 		queue_remove(setup->ep->setups, setup);
-@@ -1038,7 +1111,8 @@ static DBusMessage *set_configuration(DBusConnection *conn, DBusMessage *msg,
+ 	return true;
+ }
+@@ -1678,8 +1685,12 @@ static void ep_cancel_select(struct bap_ep *ep)
+ {
+ 	struct bt_bap *bap = ep->data->bap;
  
- 	switch (bt_bap_stream_get_type(setup->stream)) {
- 	case BT_BAP_STREAM_TYPE_UCAST:
--		setup->msg = dbus_message_ref(msg);
-+		future_init_dbus_reply(&setup->qos_done, "set_configuration",
-+									msg);
- 		break;
- 	case BT_BAP_STREAM_TYPE_BCAST:
- 		/* No message sent over the air for broadcast */
++	future_clear(&ep->select_done, ECANCELED, NULL);
++
+ 	bt_bap_foreach_pac(bap, BT_BAP_SOURCE, pac_cancel_select, ep);
+ 	bt_bap_foreach_pac(bap, BT_BAP_SINK, pac_cancel_select, ep);
++
++	ep->selecting = 0;
+ }
+ 
+ static bool pac_found_bcast(struct bt_bap_pac *lpac, struct bt_bap_pac *rpac,
+@@ -1703,9 +1714,36 @@ static bool pac_found_bcast(struct bt_bap_pac *lpac, struct bt_bap_pac *rpac,
+ 	return true;
+ }
+ 
++static void select_complete_cb(int err, const char *err_msg, void *user_data)
++{
++	struct bap_data *data = user_data;
++
++	if (err == ECANCELED)
++		return;
++
++	queue_foreach(data->srcs, bap_config, NULL);
++	queue_foreach(data->snks, bap_config, NULL);
++}
++
++static void pac_select_all(struct bap_data *data)
++{
++	struct pac_select_data select_data = {
++		.data = data,
++	};
++
++	future_init(&select_data.select_done, "pac_select_all",
++						select_complete_cb, data);
++
++	bt_bap_foreach_pac(data->bap, BT_BAP_SOURCE, pac_select, &select_data);
++	bt_bap_foreach_pac(data->bap, BT_BAP_SINK, pac_select, &select_data);
++
++	future_clear(&select_data.select_done, 0, NULL);
++}
++
+ static void bap_ready(struct bt_bap *bap, void *user_data)
+ {
+ 	struct btd_service *service = user_data;
++	struct bap_data *data = btd_service_get_user_data(service);
+ 
+ 	DBG("bap %p", bap);
+ 
+@@ -1715,8 +1753,7 @@ static void bap_ready(struct bt_bap *bap, void *user_data)
+ 	bt_bap_foreach_pac(bap, BT_BAP_SOURCE, pac_register, service);
+ 	bt_bap_foreach_pac(bap, BT_BAP_SINK, pac_register, service);
+ 
+-	bt_bap_foreach_pac(bap, BT_BAP_SOURCE, pac_select, service);
+-	bt_bap_foreach_pac(bap, BT_BAP_SINK, pac_select, service);
++	pac_select_all(data);
+ }
+ 
+ static bool match_setup_stream(const void *data, const void *user_data)
+@@ -2684,8 +2721,7 @@ static void pac_added(struct bt_bap_pac *pac, void *user_data)
+ 	bt_bap_foreach_pac(data->bap, BT_BAP_SOURCE, pac_register, service);
+ 	bt_bap_foreach_pac(data->bap, BT_BAP_SINK, pac_register, service);
+ 
+-	bt_bap_foreach_pac(data->bap, BT_BAP_SOURCE, pac_select, service);
+-	bt_bap_foreach_pac(data->bap, BT_BAP_SINK, pac_select, service);
++	pac_select_all(data);
+ }
+ 
+ static void pac_added_broadcast(struct bt_bap_pac *pac, void *user_data)
 -- 
 2.48.1
 
