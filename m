@@ -1,33 +1,34 @@
-Return-Path: <linux-bluetooth+bounces-10923-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-10920-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28FB2A5567A
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Mar 2025 20:24:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E2A63A55679
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Mar 2025 20:23:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 48AD03B3FB7
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Mar 2025 19:23:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0E55A3B3F60
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Mar 2025 19:23:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A718E270EA4;
-	Thu,  6 Mar 2025 19:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B395C2702B3;
+	Thu,  6 Mar 2025 19:23:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="RgFwBghE"
+	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="FVZEOalp"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [185.185.170.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AB6B26E655
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ABCF26E96F
 	for <linux-bluetooth@vger.kernel.org>; Thu,  6 Mar 2025 19:23:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=185.185.170.37
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741289021; cv=pass; b=j5QOYSEB7dmTaGGRvrQiZvahp8HusANvuCuUKQoysSACSLDzEYyEOyXmbwFYCoRK7qNFaJILvPGXupRU7agriDlQEOlGmk07p/ZlUOlDSvjFhfmsSzDVMqmC1xa9kL3bi21RjfPnhrcLYWNtXS1fDCEsrNNPG4OHdAipqSOBiAY=
+	t=1741289020; cv=pass; b=NF2Mx8uX46guKx+JfIr2tYdasOBByYkbr5HUb/9rBTfHpGlMG7eJiNtUGBL2H7P2LPtYFawUE5iXADEClXonYZI7sXomX7MQdN4+Pb8LhYtD8gxyRiYHL79+oHAJ1FKIUsHVe88z4qKXRzhRgjpGODE1r4BvRJsdakVZnkm/4Po=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741289021; c=relaxed/simple;
-	bh=PljnouekeveuTof1Nrr2RxdvLW2WUW73t7pglHwvP4g=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=iJkCfZD/IJlgwqQ/IG5tmQD0nooLdfwcYE/2MGTYfu/6fb3tca5AWflGlXxGlWjX3Vx/5QnvOSVnLD7vpc9NrdH3nVJwFSnMUjQxJ73pWRdz1RWd9PEz8cCWbMnbPMcLAXruRy/14xYB9yzYwemRPxkJS/fLbRZ1RKXvMz8rk+U=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=RgFwBghE; arc=pass smtp.client-ip=185.185.170.37
+	s=arc-20240116; t=1741289020; c=relaxed/simple;
+	bh=W5a8F5HNlBiuiPXzc/epgOQKIZbMjH5XVHitdO8H+vI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=R01+UH0zYSVSFuwywfXjJWT3Y9/ISDvza+CPLCJg2T1b/WBAJ5dj6kCPY2tWWYsKA1kb32wFeP1q7PaQBa+UZywDrhMDTbaQAhQminRUXa93/fzOFid3HcsaTYC+kdghjhKpBUTBZNbW2fQwLN03hV3pYdtzGzRdM0mHI65UTv4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=FVZEOalp; arc=pass smtp.client-ip=185.185.170.37
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [193.138.7.178])
@@ -35,47 +36,51 @@ Received: from monolith.lan (unknown [193.138.7.178])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4Z7zqC53jGz49Q3S;
-	Thu,  6 Mar 2025 21:23:35 +0200 (EET)
+	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4Z7zqD1Zlrz49Q47;
+	Thu,  6 Mar 2025 21:23:36 +0200 (EET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
-	t=1741289015;
+	t=1741289016;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=5F8lP7qMDyK1Fdy9BgP50276riXEwGataBoK2OMynf8=;
-	b=RgFwBghEzducNDRmjp7QBx9stHvRaJ5bmbSRifZk9PPzrqv8ig2hMpvFoAdUZCmNjzaCij
-	VDozQjYsa6kioxjcgm65+qFUjeBdmbuR5RiL5wXKexFNn3QWkx7Rma2+aQwGb8TNg2a2Ao
-	UoKIaNTQZwTHLTyYbkYULxan6j2opdLajeg3BAQfTPVzXIt7q3sN22nKXzXe+CA65STsxr
-	VysYkr7RCydxLnRbgWYucTHu8afNPl4gZVOWsVeZJrHYdIRuukEylna47QRK0GR25bP4ba
-	W4XKWjfnok5NyFuB5VBG+Srh9W3NGn8Q6YTHr00t6aMTWUEtFoPCwnCFqtPTLw==
-ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1741289015; a=rsa-sha256;
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=mwh6UqcG+jhVY1HsM9XalcRjs8/srX4OCt8aHBIoTMM=;
+	b=FVZEOalpTaM356QIM2R6gkx3/qlMZEEzgwzFa7eXFxAIHQK9BfNhzpTk8X9GJTECSZMr5j
+	zrfpVo2LtvxOMFMl/q/2llAn3SimqOAhEbNdS4CTwtBXDMkvx7FKw/lneuQddXWuFjjCTC
+	q6vETdYhbx10g1cbiKl+z37xcF0N8fiuzqdLNhblpW0yT6JikQRE4FzwDQ/TRu/YJVtQlD
+	pye1fdq1WmAECwC7mDRWNeBBzpMHmWkvwnul0W9Jzzp3NQzNlaSdaUL5kJe5xZBy4+L8Hk
+	qxjqZ7nQ4qY5LiOS4lwpAdH8fFqiHHuGnWS0F7QHZTnUfge0l0GBt801gy1kBA==
+ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1741289016; a=rsa-sha256;
 	cv=none;
-	b=lnKrAswoCQ5VVzKoEYX8Av1DzmmEGl9TtB3zebPi23Z+p48okoWKNEEdYt+IBlTnhr3E8t
-	n9Sdjjg0wP4FCm5NFWyP+SAuCAYLlGeWqWLMSD4y8JpmQMLfkhQ9j5cYXOumS4uNzuMhWl
-	DgMIjFisIvdRUFYiIBzrtwe5TDSYoED1ry2s0bCyjuKhKAiXNTG2+qnSy7yEifkdOsWmkQ
-	HcVBEaeJmTkbY5dQJ1f5GrcMPAZPo/3cEb+SjoDf3GZqRVF/5x3UfpkwJkvS69Ka8dbGwG
-	TmjVHsOG4lPst2wP4+iiEhSkoTvAUxQy1QvmBSmBfwnti7X6y01jQz6kV75B4w==
+	b=kaitNleVGtZ//zpnZRFCnYwwzDUtpOhi8zGcv9oRGMn68GZu3ONwthFUg0/tk5wWsIyebN
+	+bPZIuy1LSh5aXzXlzolRduPMzO6P3D1FLCTqO38/fU4Bw41PbfpOAKykCEhnV1ieRmDIl
+	HUiztnsRlNGI08ZTxcpwQG7xUO6TQKDZI4SFuobGeM1DVbjYr2ZSyPEcY07gcyOaj4PJbs
+	7byUxyQPjzscnlVXA9DtOaIcGBijfjnz4WUpl5IPoaAOM/+7b+3f4sE9PW9HwzAu74J4is
+	R1Efq1yKBnUXuoEZgkz7Qb4VdshiogcI1e6MA1J3tpsGQUpAMiJTgqk33jTRgw==
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=lahtoruutu; t=1741289015;
+	s=lahtoruutu; t=1741289016;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=5F8lP7qMDyK1Fdy9BgP50276riXEwGataBoK2OMynf8=;
-	b=qd+XcIdRAAXHpXifICvZXkBMYeAI+9x33yTmUfpznqECJU5tR8d2twSP5cBkpl6RTrR9QA
-	sfVDdPODKwUb4/l/encwYM+tyjUrsqaDyC2IAYJiEb2Nb6c/BNhVosiKep/7wEMyNOfLwG
-	kZ6hXBjbTQGE5oAR1iYdtdgNi4MVUQTA8B0V+Oni7YNJXysXMADgi9sijS2HdAZbZYSbCY
-	mfOo9bYl+wwgvlHHoS66U0AGryRk+y89awlr5E2Qq0W007V/LRPYDLNSzues8oRBoSRVut
-	/hRqz6iTsNsc9HfCwOz/CEq0PqILlFsMoSXjmVzzoeINu6B8jFmBwd595sDbwQ==
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=mwh6UqcG+jhVY1HsM9XalcRjs8/srX4OCt8aHBIoTMM=;
+	b=UTEZQOhRmhQWsRrdr1E/OG/bQndMIlczJhlwb/OJhv3gzwYlyaGwQHJ6OzrP73Sx3YNTFT
+	drEof0yI7QgE3Bkp8QbH+mmsIB53XZIt3j3LZGaRWHZhbr4+cyPCrBTjqyG7a4Xb/gmEtS
+	pX9nWpDily4BZwibJnRL+zaAPKKs49Q5iH2JfOBP5RDNpKViF69RRyoICJjy8x/Xqe8AiI
+	lnDt+yD4yXXHthn+YyB+yXwrTkcwZLJMoYfPu+sstmpHs7VFZYGz1Nf/KSBniezEuTWb1C
+	JJY4/2Xf2+J5JwGvT7Zte60vrzYmyIXAGTDBd0EYQROpMm80C+25a5mcJ9QWPA==
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ 1/6] btdev: Add support for Sync Flow Control
-Date: Thu,  6 Mar 2025 21:23:13 +0200
-Message-ID: <ab105eb0ca4c2e91218ff76a9040e46fe5f64a2d.1741288951.git.pav@iki.fi>
+Subject: [PATCH BlueZ 2/6] btdev: send SCO setup events to bthost
+Date: Thu,  6 Mar 2025 21:23:14 +0200
+Message-ID: <f95f44e55cae99c6af1e1cd5219acbb45e145a22.1741288951.git.pav@iki.fi>
 X-Mailer: git-send-email 2.48.1
+In-Reply-To: <ab105eb0ca4c2e91218ff76a9040e46fe5f64a2d.1741288951.git.pav@iki.fi>
+References: <ab105eb0ca4c2e91218ff76a9040e46fe5f64a2d.1741288951.git.pav@iki.fi>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -84,119 +89,68 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-
-This adds support for Sync Flow Control by supporting command
-Write Sync Flow Control Enable:
-
-< HCI Command: Write Sync Fl.. (0x03|0x002f) plen 1
-        Flow control: Enabled (0x01)
-> HCI Event: Command Complete (0x0e) plen 4
-        Write Sync Flow Control Enable (0x03|0x002f) ncmd 1
-        Status: Success (0x00)
-
-To act according to the spec this enabled SCO data packets to be
-properly processed and generate Number of Completed Packets event:
-
-sco-tester[40]: < SCO Data TX:.. flags 0x00 dlen 9
-> HCI Event: Number of Completed P.. (0x13) plen 5
-	Num handles: 1
-        Handle: 42 Address: 00:AA:01:01:00:00 (Intel Corporation)
+Send required SCO setup events to bthost conns, so data can be passed to
+the linked connection.
 ---
- emulator/btdev.c | 45 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 45 insertions(+)
+ emulator/btdev.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
 diff --git a/emulator/btdev.c b/emulator/btdev.c
-index ec52c5242..51cb60a41 100644
+index 51cb60a41..3542fdad5 100644
 --- a/emulator/btdev.c
 +++ b/emulator/btdev.c
-@@ -203,6 +203,7 @@ struct btdev {
- 	uint8_t  ssp_debug_mode;
- 	uint8_t  secure_conn_support;
- 	uint8_t  host_flow_control;
-+	uint8_t  sco_flowctl;
- 	uint8_t  le_supported;
- 	uint8_t  le_simultaneous;
- 	uint8_t  le_event_mask[8];
-@@ -2398,6 +2399,20 @@ static int cmd_read_tx_power_level(struct btdev *dev, const void *data,
+@@ -1415,6 +1415,10 @@ done:
+ 
+ 	send_event(dev, BT_HCI_EVT_CONN_COMPLETE, &cc, sizeof(cc));
+ 
++	if (conn)
++		send_event(conn->link->dev, BT_HCI_EVT_CONN_COMPLETE,
++							&cc, sizeof(cc));
++
  	return 0;
  }
  
-+static int cmd_write_sync_flowctl(struct btdev *dev, const void *data,
-+				   uint8_t len)
-+{
-+	const struct bt_hci_cmd_write_sync_flow_control *cmd = data;
-+	uint8_t status = BT_HCI_ERR_SUCCESS;
+@@ -2824,6 +2828,10 @@ static int cmd_enhanced_setup_sync_conn_complete(struct btdev *dev,
+ done:
+ 	send_event(dev, BT_HCI_EVT_SYNC_CONN_COMPLETE, &cc, sizeof(cc));
+ 
++	if (conn)
++		send_event(conn->link->dev, BT_HCI_EVT_SYNC_CONN_COMPLETE,
++							&cc, sizeof(cc));
 +
-+	dev->sco_flowctl = cmd->enable;
-+
-+	cmd_complete(dev, BT_HCI_CMD_WRITE_SYNC_FLOW_CONTROL, &status,
-+							sizeof(status));
-+
-+	return 0;
-+}
-+
- static int cmd_read_num_iac(struct btdev *dev, const void *data, uint8_t len)
- {
- 	struct bt_hci_rsp_read_num_supported_iac rsp;
-@@ -2676,6 +2691,7 @@ static int cmd_enable_dut_mode(struct btdev *dev, const void *data,
- 	CMD(BT_HCI_CMD_READ_VOICE_SETTING, cmd_read_voice, NULL), \
- 	CMD(BT_HCI_CMD_WRITE_VOICE_SETTING, cmd_write_voice, NULL), \
- 	CMD(BT_HCI_CMD_READ_TX_POWER, cmd_read_tx_power_level, NULL), \
-+	CMD(BT_HCI_CMD_WRITE_SYNC_FLOW_CONTROL, cmd_write_sync_flowctl, NULL), \
- 	CMD(BT_HCI_CMD_READ_NUM_SUPPORTED_IAC, cmd_read_num_iac, NULL), \
- 	CMD(BT_HCI_CMD_READ_CURRENT_IAC_LAP, cmd_read_current_iac_lap, \
- 					NULL), \
-@@ -2739,6 +2755,7 @@ static void set_common_commands_bredr20(struct btdev *btdev)
- 	btdev->commands[9]  |= 0x04;	/* Read Voice Setting */
- 	btdev->commands[9]  |= 0x08;	/* Write Voice Setting */
- 	btdev->commands[10] |= 0x04;	/* Read TX Power Level */
-+	btdev->commands[10] |= BIT(4);	/* Write Sync Flow Control */
- 	btdev->commands[11] |= 0x04;	/* Read Number of Supported IAC */
- 	btdev->commands[11] |= 0x08;	/* Read Current IAC LAP */
- 	btdev->commands[11] |= 0x10;	/* Write Current IAC LAP */
-@@ -7655,6 +7672,31 @@ static void send_acl(struct btdev *dev, const void *data, uint16_t len)
- 	send_packet(conn->link->dev, iov, 3);
+ 	return 0;
  }
  
-+static void send_sco(struct btdev *dev, const void *data, uint16_t len)
-+{
-+	struct bt_hci_acl_hdr *hdr;
-+	struct iovec iov[2];
-+	struct btdev_conn *conn;
-+	uint8_t pkt_type = BT_H4_SCO_PKT;
+@@ -2870,6 +2878,10 @@ static int cmd_setup_sync_conn_complete(struct btdev *dev, const void *data,
+ done:
+ 	send_event(dev, BT_HCI_EVT_SYNC_CONN_COMPLETE, &cc, sizeof(cc));
+ 
++	if (conn)
++		send_event(conn->link->dev, BT_HCI_EVT_SYNC_CONN_COMPLETE,
++							&cc, sizeof(cc));
 +
-+	/* Packet type */
-+	iov[0].iov_base = &pkt_type;
-+	iov[0].iov_len = sizeof(pkt_type);
-+
-+	iov[1].iov_base = hdr = (void *) (data);
-+	iov[1].iov_len = len;
-+
-+	conn = queue_find(dev->conns, match_handle,
-+					UINT_TO_PTR(acl_handle(hdr->handle)));
-+	if (!conn)
-+		return;
-+
-+	if (dev->sco_flowctl)
-+		num_completed_packets(dev, conn->handle);
-+
-+	send_packet(conn->link->dev, iov, 2);
-+}
-+
- static void send_iso(struct btdev *dev, const void *data, uint16_t len)
+ 	return 0;
+ }
+ 
+@@ -7674,7 +7686,7 @@ static void send_acl(struct btdev *dev, const void *data, uint16_t len)
+ 
+ static void send_sco(struct btdev *dev, const void *data, uint16_t len)
  {
- 	struct bt_hci_acl_hdr *hdr;
-@@ -7702,6 +7744,9 @@ void btdev_receive_h4(struct btdev *btdev, const void *data, uint16_t len)
- 	case BT_H4_ACL_PKT:
- 		send_acl(btdev, data + 1, len - 1);
- 		break;
-+	case BT_H4_SCO_PKT:
-+		send_sco(btdev, data + 1, len - 1);
-+		break;
- 	case BT_H4_ISO_PKT:
- 		send_iso(btdev, data + 1, len - 1);
- 		break;
+-	struct bt_hci_acl_hdr *hdr;
++	struct bt_hci_sco_hdr *hdr;
+ 	struct iovec iov[2];
+ 	struct btdev_conn *conn;
+ 	uint8_t pkt_type = BT_H4_SCO_PKT;
+@@ -7694,7 +7706,8 @@ static void send_sco(struct btdev *dev, const void *data, uint16_t len)
+ 	if (dev->sco_flowctl)
+ 		num_completed_packets(dev, conn->handle);
+ 
+-	send_packet(conn->link->dev, iov, 2);
++	if (conn->link)
++		send_packet(conn->link->dev, iov, 2);
+ }
+ 
+ static void send_iso(struct btdev *dev, const void *data, uint16_t len)
 -- 
 2.48.1
 
