@@ -1,49 +1,49 @@
-Return-Path: <linux-bluetooth+bounces-11001-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-10998-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83093A57DD4
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  8 Mar 2025 20:40:15 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ADE44A57DCA
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  8 Mar 2025 20:32:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0AEEC188D6E9
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  8 Mar 2025 19:40:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3E4FB3AFCD4
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  8 Mar 2025 19:32:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 240971EB5E4;
-	Sat,  8 Mar 2025 19:40:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09E991FC0E3;
+	Sat,  8 Mar 2025 19:32:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=b4.vu header.i=@b4.vu header.b="Xh4hI6n/"
+	dkim=pass (2048-bit key) header.d=b4.vu header.i=@b4.vu header.b="qn82shWK"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from m.b4.vu (m.b4.vu [203.16.231.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84514155316;
-	Sat,  8 Mar 2025 19:40:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CAB21DC99E;
+	Sat,  8 Mar 2025 19:32:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.16.231.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741462808; cv=none; b=aQufWm3f2d9IKehcN4Jf37YoefIoAK0yhGPj87UmTAnNnv+9eTzIYY/NnKHrhoScPQq04T10y86ZgpKEc8dUd/wo1NrtW++Ej8bJxSRCuZq0S9seL/QuCYNQnY5fdzERIMQo5TTHQH0ox6+I3iZTWoDr5BW6xYQdRuFHTE9Yl4E=
+	t=1741462366; cv=none; b=ioJ8M7v467QktOOdEXUqpA3TdR4c9j2bE0x55myf76uIIzPGsdauWWZSL/F+NJPYkNNdTBCwmEqpLosUYchKHUcEHmx5cczhn7kj+RDdRfbYGBC6KkW0oaNSzITm3JTaCLbZpeEiabkYwqOPvcL8clMF0EoWLq3UxEFl7YvOOH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741462808; c=relaxed/simple;
-	bh=u95SOK8XrtFcUJcoHMZIV67ybjxm9OqN/sfLe0FBqjg=;
+	s=arc-20240116; t=1741462366; c=relaxed/simple;
+	bh=3n4Gx0k4wvJdU3ldrwBd9uwvsIO6uc7ywXM/gJ1w3vw=;
 	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=FuHCnophhJAlXS33kGdT4/OfcCY3YUyg8ZqzH6ZQx3ReQcr8EzgHplPdFn2HAk+gAyRpl8zORnhOHD9N2nVfzmzmD1SLDnhXf8kk/d6p8GOe2iy3XKrQQpA/fnrZ4qHvF2FjdQxWS7/wDrg34xypVSkW8ekGCAZ8xsi6l4wFgQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=b4.vu; spf=pass smtp.mailfrom=b4.vu; dkim=pass (2048-bit key) header.d=b4.vu header.i=@b4.vu header.b=Xh4hI6n/; arc=none smtp.client-ip=203.16.231.148
+	 Content-Disposition; b=GP3DYZ5LHpr5/wXyP1NjRuA0ANBzJq5sM8ZQhpZDeCXb5+V+Cy0jRyoxR8oJrhX4yC+f2lhOaavYNzycTxlba2wjqdcDoV1gjPa9V5Dn4BsLmyiuIEyeykdPPdIJgadWnD8KUoXAsBgj6bbEbYoE8ES1PRMh6+MdYnsKtVWzxFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=b4.vu; spf=pass smtp.mailfrom=b4.vu; dkim=pass (2048-bit key) header.d=b4.vu header.i=@b4.vu header.b=qn82shWK; arc=none smtp.client-ip=203.16.231.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=b4.vu
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=b4.vu
 Received: by m.b4.vu (Postfix, from userid 1000)
-	id 835D66661191; Sun,  9 Mar 2025 06:02:11 +1030 (ACDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 m.b4.vu 835D66661191
+	id 6B63F6668A63; Sun,  9 Mar 2025 06:02:39 +1030 (ACDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 m.b4.vu 6B63F6668A63
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=b4.vu; s=m1;
-	t=1741462331; bh=6nIUT6zNLLVzgjgzFTaOnFCafZ+5lF0wPddW9zDwxB4=;
+	t=1741462359; bh=UEh1amhXjYUH2yT7shpS4PzlgsIWQ03wZXpMr1EMP5Q=;
 	h=Date:From:To:Cc:Subject:From;
-	b=Xh4hI6n/EbO9m6b8XKoBU3l+uN6BiHRPXfGkxBe8qYi5DGoWlbvkBCStjU25QVBTw
-	 pDCneSIelHJtHAe9OgPI7JzwwNFgPGyKKnFq+Cd2kIImE9z2+Kphv/BVD3qgseBeai
-	 0VKaS0xNAkxXR3AYpjZ8ZhcOL8cuwTEAnhz7ulU00e4oRmn7xegCNnJU2txPYCGQ/8
-	 aYDVI/ktUJK7ZAAHYcwml1RSgIx4D/w/y10ZE+LnPx93zYW1Dg32EzMlG4eWOx/OmF
-	 tbf9hafizynbGrQ+2K4Xbk/joq52t7uSysUCR3xpZlLX3SWBt7VglKtqA+ySALciMo
-	 E1AIEhg8N4h5w==
-Date: Sun, 9 Mar 2025 06:02:11 +1030
+	b=qn82shWKQH8gjGklxTLiESWXGfBHKS0Bdt4HxIm7TwQ/UgiARe2a4vR99Eh4C2hIm
+	 gvdZEYmXXzkHUzJy/36SSlDgJriq54Sry4ccNzXHVpoowmD98MS8FOen5YZgGHamMI
+	 I9vpgVCiWaUuuTcmqtuxNoXtGWqT2gjys3IwqHXgk0foLFiTbokf1b7aAPlcf7Wqfr
+	 UhMx03leIez+cz0YY4Rb8MfGcQMY8nFOckFACqgmr1MsRPiNeMgJv67uyV94wtYbO9
+	 kVIiD2Cqle7xliqv06ru377H+r+ODLbSUrOtZeG/gByFH5sF0Z1LhpEIQylGQp6Wdz
+	 44M+jrxUWCE0A==
+Date: Sun, 9 Mar 2025 06:02:39 +1030
 From: "Geoffrey D. Bennett" <g@b4.vu>
 To: Marcel Holtmann <marcel@holtmann.org>,
 	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
@@ -52,9 +52,9 @@ To: Marcel Holtmann <marcel@holtmann.org>,
 Cc: linux-bluetooth@vger.kernel.org, Sean Wang <sean.wang@mediatek.com>,
 	Chris Lu <chris.lu@mediatek.com>, linux-sound@vger.kernel.org,
 	Benedikt Ziemons <ben@rs485.network>
-Subject: [PATCH 0/2] Fix for MediaTek reset affecting Focusrite audio
- interfaces
-Message-ID: <Z8ybO7DfeP3Ag9wz@m.b4.vu>
+Subject: [PATCH 1/2] Revert "Bluetooth: btusb: mediatek: reset the controller
+ before downloading the fw"
+Message-ID: <Z8ybV04CVUfVAykH@m.b4.vu>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -64,35 +64,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-This series (choose 1 of the 2 patches) addresses an issue where the
-MT7922 Bluetooth controller reset added in commit ccfc8948d7e4
-("Bluetooth: btusb: mediatek: reset the controller before downloading
-the fw") is causing Focusrite USB audio devices to fail to initialise
-when connected during boot on kernels 6.11 and newer.
+This reverts commit ccfc8948d7e4d93cab341a99774b24586717d89a.
 
-Reported by three users here:
-https://github.com/geoffreybennett/linux-fcp/issues/24
+The MediaTek Bluetooth controller reset that was added is causing
+Focusrite USB audio devices to fail to initialise when connected
+during boot on kernels 6.11 and newer.
 
-Two users confirmed they have an MT7922.
+The issue was reported by three users, with Scarlett 2nd Gen 6i6 and
+3rd Gen Solo and 4i4 audio interfaces. Two of the reporters confirmed
+they have an MT7922.
 
-I'm providing two possible solutions as I note there was a similar
-change made in commit a7208610761a ("Bluetooth: btmtk: Remove
-resetting mt7921 before downloading the fw"), so I'm not sure if the
-reset should be reverted for the MT7925 as well as the MT7922.
+The issue causes the interface to not work when connected at boot
+time, with errors like this observed in dmesg:
 
-Option 1: Revert the problematic reset behaviour entirely (MT7922 +
-MT7925)
+  usb 3-4: parse_audio_format_rates_v2v3(): unable to find clock source (clock -110)
+  usb 3-4: uac_clock_source_is_valid(): cannot get clock validity for id 41
+  usb 3-4: clock source 41 is not valid, cannot use
 
-Option 2: Remove the reset only for the MT7922
+The problem only occurs when both devices and kernel modules are
+present and loaded during system boot, so it can be worked around by
+connecting the audio interface after booting.
 
-Geoffrey D. Bennett (2):
+Fixes: ccfc8948d7e4 ("Bluetooth: btusb: mediatek: reset the controller before downloading the fw")
+Closes: https://github.com/geoffreybennett/linux-fcp/issues/24
+Bisected-by: Benedikt Ziemons <ben@rs485.network>
+Tested-by: Benedikt Ziemons <ben@rs485.network>
+Cc: stable@vger.kernel.org
+Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
+---
+ drivers/bluetooth/btmtk.c | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-  [PATCH 1/2] Revert "Bluetooth: btusb: mediatek: reset the controller
-    before downloading the fw"
+diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
+index 68846c5bd4f7..4390fd571dbd 100644
+--- a/drivers/bluetooth/btmtk.c
++++ b/drivers/bluetooth/btmtk.c
+@@ -1330,13 +1330,6 @@ int btmtk_usb_setup(struct hci_dev *hdev)
+ 		break;
+ 	case 0x7922:
+ 	case 0x7925:
+-		/* Reset the device to ensure it's in the initial state before
+-		 * downloading the firmware to ensure.
+-		 */
+-
+-		if (!test_bit(BTMTK_FIRMWARE_LOADED, &btmtk_data->flags))
+-			btmtk_usb_subsys_reset(hdev, dev_id);
+-		fallthrough;
+ 	case 0x7961:
+ 		btmtk_fw_get_filename(fw_bin_name, sizeof(fw_bin_name), dev_id,
+ 				      fw_version, fw_flavor);
+@@ -1345,12 +1338,9 @@ int btmtk_usb_setup(struct hci_dev *hdev)
+ 						btmtk_usb_hci_wmt_sync);
+ 		if (err < 0) {
+ 			bt_dev_err(hdev, "Failed to set up firmware (%d)", err);
+-			clear_bit(BTMTK_FIRMWARE_LOADED, &btmtk_data->flags);
+ 			return err;
+ 		}
 
-  [PATCH 2/2] Bluetooth: btmtk: Remove resetting mt7922 before
-    downloading the fw
-
+-		set_bit(BTMTK_FIRMWARE_LOADED, &btmtk_data->flags);
+-
+ 		/* It's Device EndPoint Reset Option Register */
+ 		err = btmtk_usb_uhw_reg_write(hdev, MTK_EP_RST_OPT,
+ 					      MTK_EP_RST_IN_OUT_OPT);
 --
 2.45.0
 
