@@ -1,89 +1,104 @@
-Return-Path: <linux-bluetooth+bounces-11211-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-11213-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 632AFA699E0
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Mar 2025 21:00:05 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6E07A69A12
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Mar 2025 21:16:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BB9A819C3808
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Mar 2025 20:00:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4436A46318C
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Mar 2025 20:16:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A8571214814;
-	Wed, 19 Mar 2025 19:59:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09CC1210185;
+	Wed, 19 Mar 2025 20:15:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f5CTVmJo"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="UD213qLg"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-26.smtp.github.com (out-26.smtp.github.com [192.30.252.209])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1837D17A2F0
-	for <linux-bluetooth@vger.kernel.org>; Wed, 19 Mar 2025 19:59:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28FCF155C97
+	for <linux-bluetooth@vger.kernel.org>; Wed, 19 Mar 2025 20:15:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.209
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742414399; cv=none; b=OwEG/xZCaPf4KcK3nJwpNqaD18ngEf7oxP7GGE44uuN5A/yFXDPTGtLrmfk6Y7vsTjYYCHSyc8E5LlJ2jn1Qf3Ryzfwjx3+rFcuYdK1vqgbBCltzkIOoxGWy/r0K1k3J0ZzVXX3tuNRtEUTTEpemaGEspYZJoDyv5YJUejJ7AnQ=
+	t=1742415358; cv=none; b=f5o0fNdKsg7KYipcysLTfGrCUNeXm3ouvkZiZQZrX6HjbeF/J9WlV0Yi0X2DK1mEjEjF21+m2HA1qmpbQR6qUpVfLRN+kY7OxYaT6Ms2S2VHEVf5sk4a3EeirVEKP1OXDE7xX7Qqn+jUL6Syblhmx1IRoqMkHA7mKOXzgKigBlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742414399; c=relaxed/simple;
-	bh=I6bhRdGLBjD0m9d3i/sNwETr/RfYNEHojBiXyFzpId0=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=pJ+Do5w0boPGW/RBiZPO8Uo8BjF0D/6OwFezP8WrCK2lchbwuKKZcgjYNnxkwLbu+P9JOUtRjNcUN9QXyqmGAVxelkvRM7Q9AC9eHnPBYwgyPvOMzwwTXNWXxGhjFoVxV1WmFjsmsx3eaR/IpkQrphkcNB7bPx7K04qJCExPzEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f5CTVmJo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D323C4CEE4;
-	Wed, 19 Mar 2025 19:59:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742414398;
-	bh=I6bhRdGLBjD0m9d3i/sNwETr/RfYNEHojBiXyFzpId0=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=f5CTVmJozqDfdk67rx9wLZ6jms49KsB9jWfaRPfwp9fWGb8PHl7p6M3z6okGqk+vH
-	 Gpc3eLqYLEPazD2/HQ2xzL1dBaKnFIvo2vClF6crZATDvY+46vOVQgEyoVoOn2LGdR
-	 0+zgMEaMIbf/j+IcG4q0HR0TEYyAE7bfl/ploWWgCiXOrzZHxkJt7Y55JrEn83wE+l
-	 ycXToGtmBNDecoHOPUSi9M1IxWkguqtUm+KcV+uNU9CyxkLvTmvIb6c9bMogh4R/6/
-	 sJkurVqu8zhm4kjOWOEJJHYSXSZFFR2g/BbcosuQArepaDeuNoZfJHlesB/j6xgJnW
-	 hM3CU2dNvEnxA==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 70FDD3806654;
-	Wed, 19 Mar 2025 20:00:35 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1742415358; c=relaxed/simple;
+	bh=ndi2v+A/ybEmS7tlveZWyeiSMB82S70K/MtGcw1toxY=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=mHh3QFgsqTu8z0P1sOtkgvn4Hd7ED9BFt9n2D5ppQ9N0nsZEq2euD7RJmsmj9szZKI2WzS2uX0NOHB11nZWpogOg6K+mkRBukbBKKE8AngxF/K73c78+a7qGXnV9b8GS66QWH5HMF434hN0RL4Etu0J0DFliGkqY17QF7RWYnOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=UD213qLg; arc=none smtp.client-ip=192.30.252.209
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
+Received: from github.com (hubbernetes-node-edc456d.ash1-iad.github.net [10.56.147.19])
+	by smtp.github.com (Postfix) with ESMTPA id 21687600B38
+	for <linux-bluetooth@vger.kernel.org>; Wed, 19 Mar 2025 13:15:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+	s=pf2023; t=1742415356;
+	bh=BXAZaI7TSIBVwZdtzjtnRjWaJ5VHBx9G7MebakcPqIw=;
+	h=Date:From:To:Subject:List-Unsubscribe:From;
+	b=UD213qLggR+6Oz9aqMeVgAvbZTeSFzbRgrD/TkYYnJub0/HvJPH7ctd5BlJDg8oBA
+	 KjVfCRR932VUNFpc2uE/qk+MAFwrhQupmx+qTcS/V/VO7y5oefEkn9wyXyP12a3DoT
+	 l/zx3ghop8EOh0BZeRmNYQPn416xLpxdmwFTwNGk=
+Date: Wed, 19 Mar 2025 13:15:56 -0700
+From: fdanis-oss <noreply@github.com>
+To: linux-bluetooth@vger.kernel.org
+Message-ID: <bluez/bluez/push/refs/heads/master/50a01b-f77e72@github.com>
+Subject: [bluez/bluez] e88f91: profiles/avrcp: Fix AVRCP PDU parameters length
+ do...
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ] profiles/avrcp: Fix AVRCP PDU parameters length don't
- match
-From: patchwork-bot+bluetooth@kernel.org
-Message-Id: 
- <174241443400.1175967.3093241329997633774.git-patchwork-notify@kernel.org>
-Date: Wed, 19 Mar 2025 20:00:34 +0000
-References: <20250319121112.166754-1-frederic.danis@collabora.com>
-In-Reply-To: <20250319121112.166754-1-frederic.danis@collabora.com>
-To: =?utf-8?b?RnLDqWTDqXJpYyBEYW5pcyA8ZnJlZGVyaWMuZGFuaXNAY29sbGFib3JhLmNvbT4=?=@codeaurora.org
-Cc: linux-bluetooth@vger.kernel.org
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
 
-Hello:
+  Branch: refs/heads/master
+  Home:   https://github.com/bluez/bluez
+  Commit: e88f914ea700dc5f67e3a260a29b592df0cf2936
+      https://github.com/bluez/bluez/commit/e88f914ea700dc5f67e3a260a29b5=
+92df0cf2936
+  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
+  Date:   2025-03-19 (Wed, 19 Mar 2025)
 
-This patch was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+  Changed paths:
+    M profiles/audio/avrcp.c
 
-On Wed, 19 Mar 2025 13:11:12 +0100 you wrote:
-> This is required for passing PTS test case AVRCP/TG/VLH/BI-01-C
-> (To verify the behavior of the TG receiving an invalid SetAbsoluteVolume
-> command).
-> ---
->  profiles/audio/avrcp.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+  Log Message:
+  -----------
+  profiles/avrcp: Fix AVRCP PDU parameters length don't match
 
-Here is the summary with links:
-  - [BlueZ] profiles/avrcp: Fix AVRCP PDU parameters length don't match
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=e88f914ea700
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+This is required for passing PTS test case AVRCP/TG/VLH/BI-01-C
+(To verify the behavior of the TG receiving an invalid SetAbsoluteVolume
+command).
 
 
+  Commit: f77e72c3ab11d8c06f487ff7892afef2aefbd0f6
+      https://github.com/bluez/bluez/commit/f77e72c3ab11d8c06f487ff7892af=
+ef2aefbd0f6
+  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
+  Date:   2025-03-19 (Wed, 19 Mar 2025)
+
+  Changed paths:
+    M profiles/audio/avrcp.c
+
+  Log Message:
+  -----------
+  profiles/avrcp: Fix PDU for SetAbsoluteVolume with top level bit set
+
+This is required for passing PTS test case AVRCP/TG/VLH/BI-02-C
+(To verify the behavior of the TG receiving a SetAbsoluteVolume
+command with the top level bit set).
+
+
+Compare: https://github.com/bluez/bluez/compare/50a01b0c17e9...f77e72c3ab=
+11
+
+To unsubscribe from these emails, change your notification settings at ht=
+tps://github.com/bluez/bluez/settings/notifications
 
