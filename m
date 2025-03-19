@@ -1,50 +1,97 @@
-Return-Path: <linux-bluetooth+bounces-11209-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-11212-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59641A698C1
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Mar 2025 20:12:41 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84B10A699E2
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Mar 2025 21:00:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 733B03B883D
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Mar 2025 19:12:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E65E78A634F
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 19 Mar 2025 20:00:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D4F5211A24;
-	Wed, 19 Mar 2025 19:12:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA314214814;
+	Wed, 19 Mar 2025 20:00:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="dmd6IKXK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k42dMeGJ"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-23.smtp.github.com (out-23.smtp.github.com [192.30.252.206])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8CD1B0F1E
-	for <linux-bluetooth@vger.kernel.org>; Wed, 19 Mar 2025 19:12:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.206
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF7D819;
+	Wed, 19 Mar 2025 20:00:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742411540; cv=none; b=pOF9vejbA/uIAcWr5ZFSWPwHIoIeq1tbESFyDUoQ3aBSkYglJ9bjJj3Q+rRDhK2AHWgTIn/gNCSTu50CmxHE61arxEfi+7ca6ThXoGPD/btpvmbOd95jhFBsp93domFFwgU6+U5E0Bk6ZS+rGFih2/HxJw3MVQe9CcfC4DrHG2M=
+	t=1742414414; cv=none; b=Ak5PwhKqig9/upoD+fhznR6gVA0IgRqKaZKNSrloLOzUXB/OB/tiPZSiSiULPCFK5xHke47D1zE8Fwn90XRUhDDrFePyKHkjNE4Wkg6UNsFLusahpPLTPOU/OVI7atcccLO4roa5IuC7KIDGYAh3Os7jl6r+jEPPsJWZbMWlQx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742411540; c=relaxed/simple;
-	bh=07psSmqF2euayiXLhnggTK1RazSvKZEJzjv7zrU8QUQ=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=a0aw2Hz3EtKm+NyLi9Gjj5QyiPej2PTyi8ZiQZJMBw437OQn+9JFfjI+yksGkR3+SbiugVASj8mMZy0CipKMNFHXNpHHXRfiVw/MsxIa+pi+4kpkKjgAvRqnsMU7/djTuvIHB5B0z96VQjtsxgqd6CpFuUh2HBzIFP5qI/xNg3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=dmd6IKXK; arc=none smtp.client-ip=192.30.252.206
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-e8a60f3.ac4-iad.github.net [10.52.158.15])
-	by smtp.github.com (Postfix) with ESMTPA id 4A5C7213B3
-	for <linux-bluetooth@vger.kernel.org>; Wed, 19 Mar 2025 12:12:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1742411538;
-	bh=ANdxIxu2t673pWc5Y35fBrO2aCn3BS5QKQ23VlVLA+U=;
-	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=dmd6IKXKj+y14n1RvQQtKEN4EL8nla4DLqZcUefna0XtoadGW/jdRruF/tAT0YwfR
-	 mpDMEwoheM8YcO1xnqD3yzPfZSDqar/Y5Voe4ehV3HcZjofuTYRcRNW8t0OU0C0q/p
-	 QUc+soBcNZ21ZYxwBnX0+0twWsSexiCjIAraNPcE=
-Date: Wed, 19 Mar 2025 12:12:18 -0700
-From: Christian Eggers <noreply@github.com>
-To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/master/775243-50a01b@github.com>
-Subject: [bluez/bluez] d26a7f: tools: iso-tester: add inclusion of time.h
+	s=arc-20240116; t=1742414414; c=relaxed/simple;
+	bh=j8pL7y3wwffigqMXBjxSs3EJnAhEUx1wmdCuADu/rRw=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 Mime-Version:Content-Type; b=fei2js7o4aQISLbyQnFpEVUvnSgJtCQaQumcZbTAlC//3bnG3klZBUH2xAUwR8KhIK6LyxUhcEDo9va19k8kcTkp7zahZ7sxiUMqQdAFq6xBMwYnVsR5VPZDC+aKzOZzCo8kmdcxthoCAS3kfBzWvBTPMJAhVgFyowEeRxwiuIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k42dMeGJ; arc=none smtp.client-ip=209.85.160.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-47664364628so459851cf.1;
+        Wed, 19 Mar 2025 13:00:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1742414411; x=1743019211; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tBQEFTU9ZJN1Vwj3CU8LBRafYCAjGC1h9OJZyo557s8=;
+        b=k42dMeGJLn3OsNM27YxT+OwWxc5cMH7xuPENL6wHmpE6/27YTp7Q7FDMzvkFh7b9Bg
+         F4rc3TXOlhzzv+EyZECUvs3dgtOJJYpgELYOjPa6jRYCyBo1b52MK3Ke8lqIeOP5r+WV
+         99wqc12mmaIX+kYustpvi8w4AdetS5GmeZv0mdD5jVQN09w6qQ//XYd2fHkktMdjm+gf
+         KxxBQadmB3OWHg73WgDcdt/Z3cHTZ3cWG8EkosE3Fpigq8hAVfWUPyvH/35koNJ3QI3s
+         O51OaTrONRoeJhFG9DZs0cNJybxOKQLQFH+dl4IkXgStTeW1c4DS3QuRO/Rf7h2AcLUA
+         nwWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1742414411; x=1743019211;
+        h=content-transfer-encoding:mime-version:subject:references
+         :in-reply-to:message-id:cc:to:from:date:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=tBQEFTU9ZJN1Vwj3CU8LBRafYCAjGC1h9OJZyo557s8=;
+        b=eLKI0HGrTBIHW3ZbOXrz49oMFo/Oi1CT3wpCNTfePhImGg7VZyIvXVwe7H/VLDY0Gq
+         KLjLklbeuayftTn9/vSendZaZ5Mw7VyMCA8umRuhvsKBnWUcSDmnQUQvGnjGaQi1O/D8
+         8rvIYH6sIGhXiy41bsFYdViHV4NvruqfxAFkDTcjXLmDBCwWgjwWK7hp0UNgUUskKUo3
+         u649Tr+6GlC7DXsNGXk3AdzyK1UktrJTASDM0OLt0sr7As+8UZLu+aFD1EsdI15R+Z54
+         Q4hAhabSR51rwzUzrBWj2/cYwAWuCC9ZXwdgKBe1h9mefIcWCoOUq/kl7gi+IRYaeCmq
+         CryA==
+X-Forwarded-Encrypted: i=1; AJvYcCW0KCKlO7ZSSi+Rdo7pKggrq338xP8SekGdY5Ku6zbQOey9hQF11y1UeFmZDlewWnUnfgbNa9I=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxD67I3gacYdrMDEV4YsOCLcWutBwzUpHX4Poli0wZ9DwQ5u3x6
+	IAoCBhXi0kmWip4edxg3kl2KZxBIyA3/9wIm7btjkZTOWS8O1cY9
+X-Gm-Gg: ASbGnctdjrhcGfhHB/v0yfM78f0ke0krlbOtwC1bipOmRsFQCx6Zh21b1w3Dtz7zZcD
+	//7QpcgEjrLOzDlcszt901bHGEMQpkz/2WnkWgzggwmALf5qhIAYphoNuW5r3fiw1PnQlnzcf65
+	ODo9olX2/BSHGNrx5EaevXrTcO43BFSa3tPsgODSMgwnIih1oeWbolqCq74srvoUQwjXgCPucK2
+	QNFkNdGDsgAuz67I3sGh7vqsCPnt99ak2lLuNfOOm0iZch5g5HpXiBwC2H0UcU/Ej0HBcZN224W
+	XmXc/H4kALcI9OVZK0GBBwHQXTLHhWgqqjd9SvkeAXLrlztDx0PoaLDwRvigaxvJwwMF20eHYuq
+	+q4FanfwziLBKPvb+DgPCwhHCAnVlzKIi
+X-Google-Smtp-Source: AGHT+IH9HOt8qW6aD9BlCzmT8TlKJ9XK5qbhvUKZot2KcsbPVa5vVlLDaaZrKI8EBHCt/kpZ+3sB/A==
+X-Received: by 2002:ac8:5dc6:0:b0:471:b32e:c65d with SMTP id d75a77b69052e-47710caaff7mr11305471cf.19.1742414411104;
+        Wed, 19 Mar 2025 13:00:11 -0700 (PDT)
+Received: from localhost (86.235.150.34.bc.googleusercontent.com. [34.150.235.86])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-476bb82e879sm83355201cf.71.2025.03.19.13.00.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Mar 2025 13:00:10 -0700 (PDT)
+Date: Wed, 19 Mar 2025 16:00:10 -0400
+From: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+To: Pauli Virtanen <pav@iki.fi>, 
+ Willem de Bruijn <willemdebruijn.kernel@gmail.com>, 
+ Jason Xing <kerneljasonxing@gmail.com>
+Cc: linux-bluetooth@vger.kernel.org, 
+ Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+ netdev@vger.kernel.org, 
+ davem@davemloft.net, 
+ kuba@kernel.org
+Message-ID: <67db224a5412b_2a13f29418@willemb.c.googlers.com.notmuch>
+In-Reply-To: <5882af942ef8cf5c9b4ce36a348f959807a387b0.camel@iki.fi>
+References: <cover.1742324341.git.pav@iki.fi>
+ <a5c1b2110e567f499e17a4a67f1cc7c2036566c4.1742324341.git.pav@iki.fi>
+ <CAL+tcoCr-Z_PrWMsERtsm98Q4f-RXkMVzTW3S1gnNY6cFQM0Sg@mail.gmail.com>
+ <67dad8635c22c_5948294ac@willemb.c.googlers.com.notmuch>
+ <5882af942ef8cf5c9b4ce36a348f959807a387b0.camel@iki.fi>
+Subject: Re: [PATCH v5 2/5] Bluetooth: add support for skb TX SND/COMPLETION
+ timestamping
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -52,145 +99,129 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-  Branch: refs/heads/master
-  Home:   https://github.com/bluez/bluez
-  Commit: d26a7f96cdd4250f4de3792fd647c3b92581712e
-      https://github.com/bluez/bluez/commit/d26a7f96cdd4250f4de3792fd647c3b92581712e
-  Author: Christian Eggers <ceggers@arri.de>
-  Date:   2025-03-19 (Wed, 19 Mar 2025)
+Pauli Virtanen wrote:
+> Hi,
+> =
 
-  Changed paths:
-    M tools/iso-tester.c
+> ke, 2025-03-19 kello 10:44 -0400, Willem de Bruijn kirjoitti:
+> > Jason Xing wrote:
+> > > On Wed, Mar 19, 2025 at 3:10=E2=80=AFAM Pauli Virtanen <pav@iki.fi>=
+ wrote:
+> > > > =
 
-  Log Message:
-  -----------
-  tools: iso-tester: add inclusion of time.h
+> > > > Support enabling TX timestamping for some skbs, and track them un=
+til
+> > > > packet completion. Generate software SCM_TSTAMP_COMPLETION when g=
+etting
+> > > > completion report from hardware.
+> > > > =
 
-Inclusion of <linux/errqueue.h> requires that 'struct timespec' has
-already been defined:
+> > > > Generate software SCM_TSTAMP_SND before sending to driver. Sendin=
+g from
+> > > > driver requires changes in the driver API, and drivers mostly are=
+ going
+> > > > to send the skb immediately.
+> > > > =
 
-| In file included from ../bluez-5.79/tools/iso-tester.c:21:
-| /usr/include/linux/errqueue.h:57:25: error: array type has incomplete element type 'struct timespec'
-|    57 |         struct timespec ts[3];
-|       |                         ^~
+> > > > Make the default situation with no COMPLETION TX timestamping mor=
+e
+> > > > efficient by only counting packets in the queue when there is not=
+hing to
+> > > > track.  When there is something to track, we need to make clones,=
+ since
+> > > > the driver may modify sent skbs.
+> > =
 
+> > Why count packets at all? And if useful separate from completions,
+> > should that be a separate patch?
+> =
 
-  Commit: 6f26f2f8de7f57fc8e885328e6b73d95bf227b97
-      https://github.com/bluez/bluez/commit/6f26f2f8de7f57fc8e885328e6b73d95bf227b97
-  Author: Christian Eggers <ceggers@arri.de>
-  Date:   2025-03-19 (Wed, 19 Mar 2025)
+> This paragraph was commenting on the implementation of struct tx_queue,=
 
-  Changed paths:
-    M mesh/agent.c
-    M mesh/appkey.c
-    M mesh/cfgmod-server.c
-    M mesh/crypto.c
-    M mesh/dbus.c
-    M mesh/friend.c
-    M mesh/keyring.c
-    M mesh/main.c
-    M mesh/manager.c
-    M mesh/mesh-config-json.c
-    M mesh/mesh-io-generic.c
-    M mesh/mesh-io-mgmt.c
-    M mesh/mesh-io-unit.c
-    M mesh/mesh-io.c
-    M mesh/mesh-mgmt.c
-    M mesh/mesh.c
-    M mesh/model.c
-    M mesh/net-keys.c
-    M mesh/net.c
-    M mesh/node.c
-    M mesh/pb-adv.c
-    M mesh/prov-acceptor.c
-    M mesh/prov-initiator.c
-    M mesh/prvbeac-server.c
-    M mesh/remprv-server.c
-    M mesh/rpl.c
-    M src/shared/btp.c
-    M src/shared/io-ell.c
-    M src/shared/mainloop-ell.c
-    M src/shared/timeout-ell.c
-    M tools/mesh/cfgcli.c
-    M tools/mesh/keys.c
-    M tools/mesh/remote.c
-    M tools/mesh/util.c
+> and maybe how it works should be explicitly explained somewhere (code
+> comment?). Here's some explanation of it:
+> =
 
-  Log Message:
-  -----------
-  mesh: include <time.h> before <ell/ell.h>
+> 1) We have to hang on (clones of) skbs until completion reports for
+> them arrive, in order to emit COMPLETION timestamps. There's no
+> existing queue that does this in net/bluetooth (drivers may just copy
+> data & discard skbs, and they don't know about completion reports), so
+> something new needs to be added.
+> =
 
-I get many of such warnings:
+> 2) It is only needed for emitting COMPLETION timestamps. So it's better=
 
-In file included from ../bluez-5.79/ell/ell.h:8,
-                 from ../bluez-5.79/mesh/prov-initiator.c:15:
-../bluez-5.79/ell/time-private.h:15:43: warning: 'struct timespec' declared inside parameter list will not be visible outside of this definition or declaration
-   15 | uint64_t _time_from_timespec(const struct timespec *ts);
-      |                                           ^~~~~~~~
+> to not do any extra work (clones etc.) when there are no such
+> timestamps to be emitted.
+> =
 
-It seems that there's no guarantee that 'struct timespec' will be
-available via <sys/time.h>, so include <time.h> directly [1]
+> 3) The new queue should work correctly when timestamping is turned on
+> or off, or only some packets are timestamped. It should also eventually=
 
-[1] https://libc-alpha.sourceware.narkive.com/yb0aXzSp/defining-timespec-in-time-h-or-sys-time-h#post3
+> return to a state where no extra work is done, when new skbs don't
+> request COMPLETION timestamps.
 
+So far, fully understood.
 
-  Commit: ba9f9fbde34a3f5841eab4b94ed1d618fb4988a2
-      https://github.com/bluez/bluez/commit/ba9f9fbde34a3f5841eab4b94ed1d618fb4988a2
-  Author: Christian Eggers <ceggers@arri.de>
-  Date:   2025-03-19 (Wed, 19 Mar 2025)
+> struct tx_queue implements such queue that only "tracks" some skbs.
+> Logical structure:
+> =
 
-  Changed paths:
-    M tools/btpclient.c
+> HEAD
+> <no stored skb>  }
+> <no stored skb>  }  tx_queue::extra is the number of non-tracked
+> ...              }  logical items at queue head
+> <no stored skb>  }
+> <tracked skb>		} tx_queue::queue contains mixture of
+> <non-tracked skb>	} tracked items  (skb->sk !=3D NULL) and
+> <non-tracked skb>	} non-tracked items  (skb->sk =3D=3D NULL).
+> <tracked skb>		} These are ordered after the "extra" items.
+> TAIL
+> =
 
-  Log Message:
-  -----------
-  tools/btpclient: include <time.h> before <ell/ell.h>
+> tx_queue::tracked is the number of tracked skbs in tx_queue::queue.
+> =
 
-It seems that there's no guarantee that 'struct timespec' will be
-available via <sys/time.h>, so include <time.h> directly [1]
+> hci_conn_tx_queue() determines whether skb is tracked (=3D COMPLETION
+> timestamp shall be emitted for it) and pushes a logical item to TAIL.
+> =
 
-[1] https://libc-alpha.sourceware.narkive.com/yb0aXzSp/defining-timespec-in-time-h-or-sys-time-h#post3
+> hci_conn_tx_dequeue() pops a logical item from HEAD, and emits
+> timestamp if it corresponds to a tracked skb.
+> =
 
+> When tracked =3D=3D 0, queue() can just increment tx_queue::extra, and
+> dequeue() can remove any skb from tx_queue::queue, or if empty then
+> decrement tx_queue::extra. This allows it to return to a state with
+> empty tx_queue::queue when new skbs no longer request timestamps.
+> =
 
-  Commit: 50fd1d0cc4c8501b6dd9e2e386529f88975298d7
-      https://github.com/bluez/bluez/commit/50fd1d0cc4c8501b6dd9e2e386529f88975298d7
-  Author: Christian Eggers <ceggers@arri.de>
-  Date:   2025-03-19 (Wed, 19 Mar 2025)
+> When tracked !=3D 0, the ordering of items in the queue needs to be
+> respected strictly, so queue() always pushes real skb (tracked or not)
+> to TAIL, and dequeue() has to decrement extra to zero, before it can
+> pop skb from queue head.
 
-  Changed paths:
-    M client/player.c
+Thanks. I did not understand why you need to queue or track any
+sbs aside from those that have SKBTX_COMPLETION_TSTAMP.
 
-  Log Message:
-  -----------
-  client/player: fix printf format mismatch
+If I follow correctly this is to be able to associate the tx
+completion with the right skb on the queue.
 
-%zd is meant for 'size_t' rather than 'off_t'. As there is no printf
-length modifier for 'off_t', cast to a standard type which should be
-large enough for on all platforms.
+The usual model in Ethernet drivers is that every tx descriptor (and
+completion descriptor) in the ring is associated with a pure software
+ring of metadata structures, which can point to an skb (or NULL).
 
+In a pinch, instead the skb on the queue itself could record the
+descriptor id that it is associated with. But hci_conn_tx_queue is
+too far removed from the HW, so has no direct access to that. And
+similarly hci_conn_tx_dequeue has no such low level details.
 
-  Commit: 50a01b0c17e9c46b7d1ded7cae7df5ea029819dc
-      https://github.com/bluez/bluez/commit/50a01b0c17e9c46b7d1ded7cae7df5ea029819dc
-  Author: Christian Eggers <ceggers@arri.de>
-  Date:   2025-03-19 (Wed, 19 Mar 2025)
+So long story short you indeed have to track this out of band with
+a separate counter. I also don't immediately see a simpler way.
 
-  Changed paths:
-    M src/shared/bap.c
-
-  Log Message:
-  -----------
-  shared/bap: fix printf format mismatch
-
-struct iovec::iov_len is 'size_t' rather than 'long int'.
-https://man7.org/linux/man-pages/man3/iovec.3type.html
-
-
-Compare: https://github.com/bluez/bluez/compare/77524358658a...50a01b0c17e9
-
-To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
+Though you can perhaps replace the skb_clone (not the skb_clone_sk!)
+with some sentinel value that just helps count?
 
