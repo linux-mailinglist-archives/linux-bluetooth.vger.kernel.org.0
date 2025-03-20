@@ -1,49 +1,49 @@
-Return-Path: <linux-bluetooth+bounces-11235-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-11237-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6701A6AE23
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Mar 2025 20:09:09 +0100 (CET)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 44D85A6AE27
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Mar 2025 20:09:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 68C8A4A1302
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Mar 2025 19:04:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C01E94A185D
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Mar 2025 19:04:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E88FB22A4E9;
-	Thu, 20 Mar 2025 19:00:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A104322B8AC;
+	Thu, 20 Mar 2025 19:00:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dK/8lUE0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MHhZI6it"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F380229B23;
-	Thu, 20 Mar 2025 19:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0781222B5A8
+	for <linux-bluetooth@vger.kernel.org>; Thu, 20 Mar 2025 19:00:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742497211; cv=none; b=Rn92A65UkpcFqDuPIAscZgdPAJ5GF0OJmryuUSo3GrAtL+arjygPQJoV2QVOuYQEzV6XA3et9Q70G45v2pgBcPKokXndgBgiu2Wv5KygF0q3w8QfLFnM0+q8VwlUBtMguuOsxmzLHN7gNsaTyjjNPwkMM8Jc00npPf/4+RkkmjI=
+	t=1742497214; cv=none; b=AaO9HiXiItFdb9A2cVLCToiJR26d4UdS2IWEDL49GCPKFmrS0boZ/tGwsIZYsdQ5BdR7uiRmdW2QZz4uUj+gclAzIsg4RIIZVPna9DOYVkEplADABpYN2d0XlX97RKU/cbygsptrfGNVL7C4eLDVevcF9NFccP940EtdBcS2kxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742497211; c=relaxed/simple;
-	bh=0xn17N6DJYWebRRn/jGVYxuRuDM3bLIVEkKZ0yC1gSk=;
+	s=arc-20240116; t=1742497214; c=relaxed/simple;
+	bh=NEZ0rI5A75Txibf+rJXS8XzOzwnMxkssaCT94DrtaH0=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=Uj/AEi6VEsSDpgkYlHliSvpuHK6k+ZgzV7Q6nAb7do1upC7psC03eGL0/tF3uDSmYy9bsK3qbfK4ERaKN2F5m2ZAJAwv7es2sgfovKolNKkieJjePFTuMSHpgxCWsWvC3c5ue9vthPQCRdhAy9GqjlI21uYVroD+77ecA/Maxy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dK/8lUE0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D753C4CEF2;
-	Thu, 20 Mar 2025 19:00:10 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=b9JX/WAqGn35/XK+35Ea9QlZiVicS9Wi4c5ttFUNrBvWpi0GCtXtTeBLxCKgJ8HqHvzTcbYKC/ZGfupKhZbz/T0JpdLdzyZZC9AQ6JYBHUncbcNjWUILDrzaOkmXlW/Tuxx9JcyRtfS0DCOsFpq35lGGOMJ2/033gMX5WKE9eZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MHhZI6it; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FDD1C4CEE8;
+	Thu, 20 Mar 2025 19:00:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1742497210;
-	bh=0xn17N6DJYWebRRn/jGVYxuRuDM3bLIVEkKZ0yC1gSk=;
+	s=k20201202; t=1742497213;
+	bh=NEZ0rI5A75Txibf+rJXS8XzOzwnMxkssaCT94DrtaH0=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=dK/8lUE0pIBRM1oes/UzSveRKsx48zKR1OhoGrXEP3EEJKy9VHS7LkDGnWDtT6BIn
-	 6OWtqTer6kGgr2tvFa/++YgwhlhpWZFS6Ca79XLgujVJv4jzncCKiafILc2+ITPaEd
-	 +sOxjn7YswZEpbI7mujcnPW6w33q30lqgrPhAIJBk8JpGrCrb9WMKN9fm+32h/kHi8
-	 r9izj9p1agWYw8AwcEyVCqECw2iqkQQh4ZqotAUUg4MeT3WrOwfBG2E5opO9mMV4Dn
-	 OKwIE3YTomr3l7XmUBUgOK599Lrqjn+pbWAI25xMp7ej9AovcYNpo5IvT7cmEbqL5I
-	 3dOdf5ZypjPcw==
+	b=MHhZI6itgekY3OOlImVhza5cjsLmPaM3BvfZW4tsLdsBKaM/SKlORugIAkSxmOyz+
+	 r3uEIxiIX2G03JIewQwJuGpQzhTcLpf8kSAEYj1N/NLa6jlRaGLNz+6r0HvkQRZHnP
+	 KQTcpwlqTcHhSZIdjFE6+MIZSO/VQ3qYBSfRKCCvXHyOVWA36QpttBDdeW5kvyhhAB
+	 TaYliZRQyPbByj0Bvz3O5qI9cNl9wOLd/u+UT5ujVFqMs8M8uBua7DyqiwRjjRK6qi
+	 xTqGhZnNveouIjNCQGvEYTN807hhkgDl/9kQdYZ0zeEPF6/gDztVvntgGsD0QNTaD0
+	 1jXzmdLlGqylA==
 Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id AF0683806654;
-	Thu, 20 Mar 2025 19:00:47 +0000 (UTC)
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 70DB33806654;
+	Thu, 20 Mar 2025 19:00:50 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
@@ -52,39 +52,36 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] Bluetooth: btmtk: Remove the resetting step before
- downloading the fw
+Subject: Re: [PATCH v2] Bluetooth: btintel: Add support to configure TX power
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <174249724626.1878155.10663828087577774363.git-patchwork-notify@kernel.org>
-Date: Thu, 20 Mar 2025 19:00:46 +0000
-References: <20250315022730.11071-1-hao.qin@mediatek.com>
-In-Reply-To: <20250315022730.11071-1-hao.qin@mediatek.com>
-To: Hao Qin <hao.qin@mediatek.com>
-Cc: marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
- sean.wang@mediatek.com, deren.Wu@mediatek.com, aaron.hou@mediatek.com,
- chris.lu@mediatek.com, steve.lee@mediatek.com,
- linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-mediatek@lists.infradead.org
+ <174249724900.1878155.11686206489527320241.git-patchwork-notify@kernel.org>
+Date: Thu, 20 Mar 2025 19:00:49 +0000
+References: <20250307110011.1960049-1-vijay.satija@intel.com>
+In-Reply-To: <20250307110011.1960049-1-vijay.satija@intel.com>
+To: Vijay Satija <vijay.satija@intel.com>
+Cc: linux-bluetooth@vger.kernel.org, ravishankar.srivatsa@intel.com,
+ chethan.tumkur.narayan@intel.com, chandrashekar.devegowda@intel.com,
+ kiran.k@intel.com
 
 Hello:
 
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Sat, 15 Mar 2025 10:27:30 +0800 you wrote:
-> Remove the resetting step before downloading the fw, as it may cause
-> other usb devices to fail to initialise when connected during boot
-> on kernels 6.11 and newer.
+On Fri,  7 Mar 2025 16:30:11 +0530 you wrote:
+> BRDS - Bluetooth Regulatory Domain Specific absorption rate
 > 
-> Signed-off-by: Hao Qin <hao.qin@mediatek.com>
-> ---
->  drivers/bluetooth/btmtk.c | 10 ----------
->  1 file changed, 10 deletions(-)
+> Bluetooth has regulatory limitations which prohibit or allow usage of certain
+> bands or channels as well as limiting Tx power. The Tx power values can be
+> configured in ACPI table. This patch reads from ACPI entry configures the
+> controller accordingly.
+> 
+> [...]
 
 Here is the summary with links:
-  - Bluetooth: btmtk: Remove the resetting step before downloading the fw
-    https://git.kernel.org/bluetooth/bluetooth-next/c/aca3e8a5c46f
+  - [v2] Bluetooth: btintel: Add support to configure TX power
+    https://git.kernel.org/bluetooth/bluetooth-next/c/82fcec755f99
 
 You are awesome, thank you!
 -- 
