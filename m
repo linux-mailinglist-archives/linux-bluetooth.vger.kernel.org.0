@@ -1,165 +1,94 @@
-Return-Path: <linux-bluetooth+bounces-11461-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-11456-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4524EA7975F
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  2 Apr 2025 23:14:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C82FA7973E
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  2 Apr 2025 23:10:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 041B97A4CB4
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  2 Apr 2025 21:12:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5236D7A5661
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  2 Apr 2025 21:08:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE9E81F3BAB;
-	Wed,  2 Apr 2025 21:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06B5C1F3BB7;
+	Wed,  2 Apr 2025 21:09:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="bfa+LuvQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X6L2XnSG"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1B51F1936
-	for <linux-bluetooth@vger.kernel.org>; Wed,  2 Apr 2025 21:13:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50A5B1F12FC;
+	Wed,  2 Apr 2025 21:09:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743628437; cv=none; b=BMFA3kkj2fkUFSDXJXZuMVmOfVVPtvHHNep9jmj6FYKsMfEpx+QiX5RL//wqkFLsvTfzcQDARnVBv8hfkJ2QMYKbU9M3D4fkGdfNBGkDEdCJaXfJStGv6U7EtkP4/jTXj3EJVEFDR97cewYuX0B2Dm4Y9vYEW9RG+8Z9yjLm+TU=
+	t=1743628196; cv=none; b=VOCg+pLqc6zKg6zD8cI50IQrXw2u+qDlAt/9zxjcq4VwbHDMxMsr5refHso7NpVJ4WTa6bRTZkvk4ucaPIczfgb+MM5qX/rO7zLfCUoF+DlTpkUUEKEyUyO30bQSo3lgZsv7U4k0X0wM4p3QLul9O9qEzRVx95bXrcUG3XdKYqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743628437; c=relaxed/simple;
-	bh=yMtg/5bd9WuFFPh1QUVVbVzPyQ8PxgEFM//QPDYEqaE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OJVtaQ8XCzJiqpxkXUCieCJH8Cpx17of3y2M0ksy8CVbM5GP/nZXBAhYx4EUEDQ1qj7ytA5l6bxMXd0Zq1DpkxsXZaRZiIcjdVA31Z5AV0laV89dOuyAjWVtnw5VFCZHq4paIqs53iDE11NNdEVM1bqz/L2QtQPopkiPEJNBK5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=bfa+LuvQ; arc=none smtp.client-ip=209.85.218.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-abf3d64849dso27815166b.3
-        for <linux-bluetooth@vger.kernel.org>; Wed, 02 Apr 2025 14:13:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google; t=1743628433; x=1744233233; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=6vOkaWbZeGW9ejcyKHqKRgGRaPzQmhuks1cZQp6R9ag=;
-        b=bfa+LuvQjO3wNd8nBCUqIbk6+pcQsTgzXgHmwBahXEwzn8lBhcyuoqun0TIfkKGiRO
-         dciQvgB3992UIyabIgVrBpfSXwB6FpXE92UbVcKum7M9LMN1dgyKKcC/qe0fxhZYYJNK
-         h180Glb2pJWuyT5ZRJNzlKyrYuqHFK0giRl7E=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743628433; x=1744233233;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6vOkaWbZeGW9ejcyKHqKRgGRaPzQmhuks1cZQp6R9ag=;
-        b=YMgUzY8kA3fQ5Sygvuls8cveMpLuZlHWPMUTaZlZq//wq/xRhf40OXMA73flRCUxjC
-         dt6rP5jizAOAJ0ULCbk+tEg/lzXxYuU/f0nzap/NMLPXqToqw9brfVgvTBz2X+WVe68A
-         07Ab3GPCMZ8aBfU9ddPjv7tsjIkz/PAGw+j5oDpsXnZKxp0gVRDoli8D859lMaHu7gCw
-         SaG1guMVXUGBIsPThjoUPcbuQUyuOmwZ/gfp0pH7rgq+ugH43dLk/+pabxYbdXrFppFX
-         CCzm73t1JRCT19WzrwlIqrKD3YaxmOrUHaPNgEEO8gviX4rFE4CalcRb2Td2AmJiwrdT
-         3Ygg==
-X-Forwarded-Encrypted: i=1; AJvYcCWVdU/xtR8p+MaRAxKNWbN47H8HPq24IpnxKbhKxUsx4phIStNbNVtP+Lk3J7jPdqGbVDwF8nlv05SomkIA9rc=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy7c/m7JCmrMugz+HwKUZyuf1pyoYjQL/MOYWVNjXTJmoaKGbX8
-	YkEesFBZumQ2jpd0DnA9aNfKSNjtykXQrmZVSt3mSupHf82UPMvK1TmWxodacvNVAA+sFfQ49vz
-	IezgETg==
-X-Gm-Gg: ASbGncswujGmlx6Rn3Ef/7YgRbLaEImF8YJz2S2EEVZQ46Z5j4RwWEqawcVQ/2Bghgq
-	5v+0TtVfsGpnP+DXEozCe5JxmR0QEK0muU3wYLJMhdn68eP92s3JbL6leg0NgYefFlbJi2l1hhM
-	rp6IDNqZwLy4zhJsEqXU78G5HEP+xZW/94MBYJ+JCRrbS1eT/ERuJyOoWdCugh+vISucG6/eK3N
-	aFHhp/zdG+esGkG9+xM663fS0fuWFOOQYcTFavftnfOuE/XcjNlFKC3EPCiENQP7+R4LAyNGM07
-	shz3SrbprpSt4hw0R1AOU0ApB/DJl24+ywFWFX0hM/s3bEqaSZfH38p13yAqgjO+Loncot3Z77M
-	rpkG1/LWQT3fpYjGWIzU=
-X-Google-Smtp-Source: AGHT+IFJCtPgmZKwzYwd4MCyA/hEPiTc1HHdIh2u7kMtzuV9TPpV/QoOyyfGIN38m4MmWVShCU4WDw==
-X-Received: by 2002:a17:907:d86:b0:ac3:121e:f2cb with SMTP id a640c23a62f3a-ac7bc03af5cmr21371366b.1.1743628433184;
-        Wed, 02 Apr 2025 14:13:53 -0700 (PDT)
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com. [209.85.218.51])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5edc16aae6fsm8942230a12.16.2025.04.02.14.13.51
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Apr 2025 14:13:52 -0700 (PDT)
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-ac298c8fa50so36295966b.1
-        for <linux-bluetooth@vger.kernel.org>; Wed, 02 Apr 2025 14:13:51 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVygVLUIjf4m/tKZ8xCxixREBYY9VPrKfE7FB9Lx1ddBIH+qtVIFGBJzEAyc3K/uzPKHxHn06oSTZSDeLq8mQM=@vger.kernel.org
-X-Received: by 2002:a17:907:9409:b0:ac7:970b:8ee5 with SMTP id
- a640c23a62f3a-ac7bc126208mr19593966b.27.1743628091735; Wed, 02 Apr 2025
- 14:08:11 -0700 (PDT)
+	s=arc-20240116; t=1743628196; c=relaxed/simple;
+	bh=XA1GnVPZ9o8FT5WId4vucT14twjD0XBRsAIYlvmm8dI=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=ihLq0QqYyReQnb9/Js+4UweSM4Q7WGwK2AQcJJHPWLI/w/sE1aaZmDNJ+tuBTVktmY3sFulDZYDPUyvRZ22Dunj1Y4u5AW9k9RZLpZfwUPNLmP9Ms4VuuSjz8uYauozXp0wYJbwUTZkKEQrxEtk/D9aNTNP3jR08JC6+ogg5NSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X6L2XnSG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA45DC4CEDD;
+	Wed,  2 Apr 2025 21:09:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1743628195;
+	bh=XA1GnVPZ9o8FT5WId4vucT14twjD0XBRsAIYlvmm8dI=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=X6L2XnSGX6Tui5WFlSV2+4mGSFraOHaiBUnnU167WYzx89wZAyuyFjRgGkhL8W2c4
+	 /j9Yw7mYVI77jxZx74ztNL1TPC4rydpbWVsOmMWtas43ovtfjOZbRox3IbAYOURlG9
+	 aLoD40CjTPPlMrM75E9nPokbm2N6cb9xZ50ltPd2RNHgiaasOUlwS16JQ8PYbrA41I
+	 XX6IIIOqOdycotmncGepwb/rS5flURPmRycI134cwqmM1kPcE4FfAlo6y5kdBFTMa5
+	 X/VlzpWWEUr7htKwFIdF6adbtB3Kmr3+CrxhcFK5EMX0HCNGEq62VDiWHqvcSNijTk
+	 3WY9A60pDhyPg==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id EAE01380665A;
+	Wed,  2 Apr 2025 21:10:33 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <Z-sDc-0qyfPZz9lv@mini-arch> <39515c76-310d-41af-a8b4-a814841449e3@samba.org>
- <407c1a05-24a7-430b-958c-0ca78c467c07@samba.org> <ed2038b1-0331-43d6-ac15-fd7e004ab27e@samba.org>
- <Z+wH1oYOr1dlKeyN@gmail.com> <Z-wKI1rQGSgrsjbl@mini-arch> <0f0f9cfd-77be-4988-8043-0d1bd0d157e7@samba.org>
- <Z-xi7TH83upf-E3q@mini-arch> <4b7ac4e9-6856-4e54-a2ba-15465e9622ac@samba.org>
- <20250402132906.0ceb8985@pumpkin> <Z-1Hgv4ImjWOW8X2@mini-arch> <20250402214638.0b5eed55@pumpkin>
-In-Reply-To: <20250402214638.0b5eed55@pumpkin>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Wed, 2 Apr 2025 14:07:54 -0700
-X-Gmail-Original-Message-ID: <CAHk-=wi7p9bKgZt1E1BWE-NjwSRDBQs=Coviiz0ZTQy9OhHvPg@mail.gmail.com>
-X-Gm-Features: AQ5f1JpKVAIlc4pALP5yKNCr8F3ijIqVBIOCCdqoIfNZomenel-ajZbKWJ5EdvE
-Message-ID: <CAHk-=wi7p9bKgZt1E1BWE-NjwSRDBQs=Coviiz0ZTQy9OhHvPg@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/4] net/io_uring: pass a kernel pointer via optlen_t
- to proto[_ops].getsockopt()
-To: David Laight <david.laight.linux@gmail.com>
-Cc: Stanislav Fomichev <stfomichev@gmail.com>, Stefan Metzmacher <metze@samba.org>, 
-	Breno Leitao <leitao@debian.org>, Jens Axboe <axboe@kernel.dk>, 
-	Pavel Begunkov <asml.silence@gmail.com>, Jakub Kicinski <kuba@kernel.org>, Christoph Hellwig <hch@lst.de>, 
-	Karsten Keil <isdn@linux-pingi.de>, Ayush Sawal <ayush.sawal@chelsio.com>, 
-	Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>, Simon Horman <horms@kernel.org>, 
-	Kuniyuki Iwashima <kuniyu@amazon.com>, Willem de Bruijn <willemb@google.com>, David Ahern <dsahern@kernel.org>, 
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>, Xin Long <lucien.xin@gmail.com>, 
-	Neal Cardwell <ncardwell@google.com>, Joerg Reuter <jreuter@yaina.de>, 
-	Marcel Holtmann <marcel@holtmann.org>, Johan Hedberg <johan.hedberg@gmail.com>, 
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Oliver Hartkopp <socketcan@hartkopp.net>, 
-	Marc Kleine-Budde <mkl@pengutronix.de>, Robin van der Gracht <robin@protonic.nl>, 
-	Oleksij Rempel <o.rempel@pengutronix.de>, kernel@pengutronix.de, 
-	Alexander Aring <alex.aring@gmail.com>, Stefan Schmidt <stefan@datenfreihafen.org>, 
-	Miquel Raynal <miquel.raynal@bootlin.com>, Alexandra Winter <wintera@linux.ibm.com>, 
-	Thorsten Winkler <twinkler@linux.ibm.com>, James Chapman <jchapman@katalix.com>, 
-	Jeremy Kerr <jk@codeconstruct.com.au>, Matt Johnston <matt@codeconstruct.com.au>, 
-	Matthieu Baerts <matttbe@kernel.org>, Mat Martineau <martineau@kernel.org>, 
-	Geliang Tang <geliang@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
-	Remi Denis-Courmont <courmisch@gmail.com>, Allison Henderson <allison.henderson@oracle.com>, 
-	David Howells <dhowells@redhat.com>, Marc Dionne <marc.dionne@auristor.com>, 
-	Wenjia Zhang <wenjia@linux.ibm.com>, Jan Karcher <jaka@linux.ibm.com>, 
-	"D. Wythe" <alibuda@linux.alibaba.com>, Tony Lu <tonylu@linux.alibaba.com>, 
-	Wen Gu <guwen@linux.alibaba.com>, Jon Maloy <jmaloy@redhat.com>, 
-	Boris Pismenny <borisp@nvidia.com>, John Fastabend <john.fastabend@gmail.com>, 
-	Stefano Garzarella <sgarzare@redhat.com>, Martin Schiller <ms@dev.tdt.de>, =?UTF-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@kernel.org>, 
-	Magnus Karlsson <magnus.karlsson@intel.com>, 
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>, Jonathan Lemon <jonathan.lemon@gmail.com>, 
-	Alexei Starovoitov <ast@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>, 
-	Jesper Dangaard Brouer <hawk@kernel.org>, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-sctp@vger.kernel.org, linux-hams@vger.kernel.org, 
-	linux-bluetooth@vger.kernel.org, linux-can@vger.kernel.org, 
-	dccp@vger.kernel.org, linux-wpan@vger.kernel.org, linux-s390@vger.kernel.org, 
-	mptcp@lists.linux.dev, linux-rdma@vger.kernel.org, rds-devel@oss.oracle.com, 
-	linux-afs@lists.infradead.org, tipc-discussion@lists.sourceforge.net, 
-	virtualization@lists.linux.dev, linux-x25@vger.kernel.org, 
-	bpf@vger.kernel.org, isdn4linux@listserv.isdn4linux.de, 
-	io-uring@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH] Bluetooth: qca: fix NV variant for one of WCN3950 SoCs
+From: patchwork-bot+bluetooth@kernel.org
+Message-Id: 
+ <174362823277.1678044.5851216887579937470.git-patchwork-notify@kernel.org>
+Date: Wed, 02 Apr 2025 21:10:32 +0000
+References: <20250401-fix-rb1-bt-v1-1-0d140c583a06@oss.qualcomm.com>
+In-Reply-To: <20250401-fix-rb1-bt-v1-1-0d140c583a06@oss.qualcomm.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: marcel@holtmann.org, luiz.dentz@gmail.com, lumag@kernel.org,
+ luiz.von.dentz@intel.com, linux-bluetooth@vger.kernel.org,
+ linux-kernel@vger.kernel.org, wsl@trackunit.com
 
-On Wed, 2 Apr 2025 at 13:46, David Laight <david.laight.linux@gmail.com> wrote:
->
-> The problem is that the generic code has to deal with all the 'wild stuff'.
-> It is also common to do non-sequential accesses - so iov_iter doesn't match
-> at all.
-> There also isn't a requirement for scatter-gather.
+Hello:
 
-Note that the generic code has special cases for the simple stuff,
-which is all that the sockopt code would need.
+This patch was applied to bluetooth/bluetooth-next.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-Now, that's _particularly_ true for the "single user address range"
-thing, where there's a special ITER_UBUF thing.
+On Tue, 01 Apr 2025 18:04:03 +0300 you wrote:
+> The QCA_WCN3950_SOC_ID_S should be using qca/cmnv13s.bin, rather than
+> qca/cmnv13u.bin file. Correct the variant suffix to be used for this SoC
+> ID.
+> 
+> Fixes: 3b0e0839d9f2 ("Bluetooth: qca: add WCN3950 support")
+> Reported-by: Wojciech Slenska <wsl@trackunit.com>
+> Closes: https://github.com/qualcomm-linux/meta-qcom/pull/817#discussion_r2022866431
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> 
+> [...]
 
-We don't actually have a "single kernel range" version of that, but
-ITER_KVEC is simple to use, and the sockopt code could say "I only
-ever look at the first buffer".
+Here is the summary with links:
+  - Bluetooth: qca: fix NV variant for one of WCN3950 SoCs
+    https://git.kernel.org/bluetooth/bluetooth-next/c/87d48ed16c9f
 
-It's ok to just not handle all the cases, and you don't *have* to use
-the generic "copy_from_iter()" routines if you don't want to.
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
-In fact, I would expect that something like sockopt generally wouldn't
-want to use the normal iter copying routines, since those are
-basically all geared towards "copy and update the iter".
 
-           Linus
 
