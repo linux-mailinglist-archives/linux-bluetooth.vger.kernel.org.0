@@ -1,283 +1,165 @@
-Return-Path: <linux-bluetooth+bounces-11455-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-11461-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9259A796FA
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  2 Apr 2025 22:59:49 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4524EA7975F
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  2 Apr 2025 23:14:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1CF3A3B21FA
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  2 Apr 2025 20:57:43 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 041B97A4CB4
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  2 Apr 2025 21:12:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 427AA1F30BE;
-	Wed,  2 Apr 2025 20:57:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE9E81F3BAB;
+	Wed,  2 Apr 2025 21:13:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i5I446TT"
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="bfa+LuvQ"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C405F193436
-	for <linux-bluetooth@vger.kernel.org>; Wed,  2 Apr 2025 20:57:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1B51F1936
+	for <linux-bluetooth@vger.kernel.org>; Wed,  2 Apr 2025 21:13:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743627471; cv=none; b=pBGRI8AC2MnYgY+gAzJoYofzejeFmAOeXt8yITwc4NjdzLXY6ggNwOeaAJkxIIGvVONN2MMD64oA8UCRmSVOLf0M14cdujs21jmX6+Di0Gpt3TNjg54vdn35Oys0FmGbjbM94SkrZAj/Ko4369xNtzTGBrMZnLi25XU0amCngHk=
+	t=1743628437; cv=none; b=BMFA3kkj2fkUFSDXJXZuMVmOfVVPtvHHNep9jmj6FYKsMfEpx+QiX5RL//wqkFLsvTfzcQDARnVBv8hfkJ2QMYKbU9M3D4fkGdfNBGkDEdCJaXfJStGv6U7EtkP4/jTXj3EJVEFDR97cewYuX0B2Dm4Y9vYEW9RG+8Z9yjLm+TU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743627471; c=relaxed/simple;
-	bh=PeA8Og8tLdTywAVZKD53YSb8zrjfl5/FeBd2KR/PWrc=;
+	s=arc-20240116; t=1743628437; c=relaxed/simple;
+	bh=yMtg/5bd9WuFFPh1QUVVbVzPyQ8PxgEFM//QPDYEqaE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CnI3reIibOQDb2o0z4dTK/tPI2mSm+W0tNC2LHwR+YGjol0M5RZI3cbpIoaEVG7RnbZabWj4eGn3JjXmvEU7Pirp3s1+tTMqyLliH09A6AcpXDfO4wHupcVPi8Nxy8HImHgdw3nMSOJh3aeYnAKJPDg4D2Ml7CM81iKJZdflbkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i5I446TT; arc=none smtp.client-ip=209.85.208.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-30bfca745c7so1840391fa.0
-        for <linux-bluetooth@vger.kernel.org>; Wed, 02 Apr 2025 13:57:49 -0700 (PDT)
+	 To:Cc:Content-Type; b=OJVtaQ8XCzJiqpxkXUCieCJH8Cpx17of3y2M0ksy8CVbM5GP/nZXBAhYx4EUEDQ1qj7ytA5l6bxMXd0Zq1DpkxsXZaRZiIcjdVA31Z5AV0laV89dOuyAjWVtnw5VFCZHq4paIqs53iDE11NNdEVM1bqz/L2QtQPopkiPEJNBK5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=bfa+LuvQ; arc=none smtp.client-ip=209.85.218.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-abf3d64849dso27815166b.3
+        for <linux-bluetooth@vger.kernel.org>; Wed, 02 Apr 2025 14:13:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743627468; x=1744232268; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FY6DrmRW6SujfXTHoWQ3u4dKC2oydYwAyBNhX2J/0qw=;
-        b=i5I446TT8u9MM/TcwhyJcGCox4rIdjIEULJ2AfsN8hvD8VOhlv4ktAztFH4cQMopNe
-         cUqTSx0IpGTir/D8nLEOCQ4ngGqOLhIVERcgDKhhlHYjIEz6idbfcgBBs1L++hJVGGB+
-         BJ22WCo7rcnQIZz7DO1ZEvQuWDMyqZFgChf1UAZSTsLR804KCkBSwfn+CsFKgN/6/sIE
-         6xugtfuczIo2EOWgw1gwfvgm4NxSNIymt2z2yEM6HTPfpISwxGfE0ic0dDyWZzyvr5a7
-         rdiZuqD0w2lPp8fjgjY0qzxytBgCU/PDwUPa8VcoAahn1uNJifgM9MyjNUZPGvQgjzms
-         ODGQ==
+        d=linux-foundation.org; s=google; t=1743628433; x=1744233233; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=6vOkaWbZeGW9ejcyKHqKRgGRaPzQmhuks1cZQp6R9ag=;
+        b=bfa+LuvQjO3wNd8nBCUqIbk6+pcQsTgzXgHmwBahXEwzn8lBhcyuoqun0TIfkKGiRO
+         dciQvgB3992UIyabIgVrBpfSXwB6FpXE92UbVcKum7M9LMN1dgyKKcC/qe0fxhZYYJNK
+         h180Glb2pJWuyT5ZRJNzlKyrYuqHFK0giRl7E=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743627468; x=1744232268;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FY6DrmRW6SujfXTHoWQ3u4dKC2oydYwAyBNhX2J/0qw=;
-        b=enmnAWu1Fkap8YfvHml0DhqVuXnXf6oKeBVPpe6SmN4Ln77ReG2SBSprifk6tD1/4k
-         w4jhdMRoOT2duIRlejXY7LKRs64x/kcjrK/DfkPUsDEH2CIB6E4sYpbny//oGv3Xz72a
-         JOfmBFfJcYDlUD+cX60++v4KdolzDH7XW5WoitbvBT5stx81H76vPK0r7+HY7n5Hsa4j
-         ZAuWJ5HHJn/baegw1CR7r1fqj+7zlx+cB1vELJcImJ8Nj8SBBq3oDe9e10I+oO5uUCPt
-         EH3+S6P1mV52LEOXJDhi/71FrzBN6tYZZfsde3AVKyn1pP2KiRtYjKzEsLUO4uZJRQGA
-         8fGQ==
-X-Gm-Message-State: AOJu0YznwtN6gqsGAt6cm2kU0PaLzAtAFhpkG/MmpXxAWDD/pJ3hsDbl
-	j7pCe57ioVYtzyXQ03svFFsp6lRn+BOEtKeXuWsAVm+3SQA2kPUITaPqVOr3dBmbYmlqYP305Pu
-	/p2g6NJaLVUOdJozuypI2EKIfChqHIg==
-X-Gm-Gg: ASbGnctXplHFuXHdZIcxiBMdIi+fS8fpgG2xsHFQDVSfBRRRvmR9MzPBzDts2gZHs79
-	hxjM4j8qDK9TLQzxEjCtAw5ExneNqtv8Ta8dDQmQ5PHyrZqeFOasXtpYecCt1M1vmYvQGRvHbwl
-	r0u2tnQeLMlOPU7nX+whrW1svF
-X-Google-Smtp-Source: AGHT+IHZtbxT0soJxvFnwAaXPzI7hcR2yp9AzLxH6fwJeiVmxejDnOaqaBbskw90Y8QT38oeBLrHjD1VDOZiCY6Oh/w=
-X-Received: by 2002:a2e:aaa8:0:b0:30d:e104:d64a with SMTP id
- 38308e7fff4ca-30ef91e9b57mr10407971fa.38.1743627467529; Wed, 02 Apr 2025
- 13:57:47 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1743628433; x=1744233233;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6vOkaWbZeGW9ejcyKHqKRgGRaPzQmhuks1cZQp6R9ag=;
+        b=YMgUzY8kA3fQ5Sygvuls8cveMpLuZlHWPMUTaZlZq//wq/xRhf40OXMA73flRCUxjC
+         dt6rP5jizAOAJ0ULCbk+tEg/lzXxYuU/f0nzap/NMLPXqToqw9brfVgvTBz2X+WVe68A
+         07Ab3GPCMZ8aBfU9ddPjv7tsjIkz/PAGw+j5oDpsXnZKxp0gVRDoli8D859lMaHu7gCw
+         SaG1guMVXUGBIsPThjoUPcbuQUyuOmwZ/gfp0pH7rgq+ugH43dLk/+pabxYbdXrFppFX
+         CCzm73t1JRCT19WzrwlIqrKD3YaxmOrUHaPNgEEO8gviX4rFE4CalcRb2Td2AmJiwrdT
+         3Ygg==
+X-Forwarded-Encrypted: i=1; AJvYcCWVdU/xtR8p+MaRAxKNWbN47H8HPq24IpnxKbhKxUsx4phIStNbNVtP+Lk3J7jPdqGbVDwF8nlv05SomkIA9rc=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy7c/m7JCmrMugz+HwKUZyuf1pyoYjQL/MOYWVNjXTJmoaKGbX8
+	YkEesFBZumQ2jpd0DnA9aNfKSNjtykXQrmZVSt3mSupHf82UPMvK1TmWxodacvNVAA+sFfQ49vz
+	IezgETg==
+X-Gm-Gg: ASbGncswujGmlx6Rn3Ef/7YgRbLaEImF8YJz2S2EEVZQ46Z5j4RwWEqawcVQ/2Bghgq
+	5v+0TtVfsGpnP+DXEozCe5JxmR0QEK0muU3wYLJMhdn68eP92s3JbL6leg0NgYefFlbJi2l1hhM
+	rp6IDNqZwLy4zhJsEqXU78G5HEP+xZW/94MBYJ+JCRrbS1eT/ERuJyOoWdCugh+vISucG6/eK3N
+	aFHhp/zdG+esGkG9+xM663fS0fuWFOOQYcTFavftnfOuE/XcjNlFKC3EPCiENQP7+R4LAyNGM07
+	shz3SrbprpSt4hw0R1AOU0ApB/DJl24+ywFWFX0hM/s3bEqaSZfH38p13yAqgjO+Loncot3Z77M
+	rpkG1/LWQT3fpYjGWIzU=
+X-Google-Smtp-Source: AGHT+IFJCtPgmZKwzYwd4MCyA/hEPiTc1HHdIh2u7kMtzuV9TPpV/QoOyyfGIN38m4MmWVShCU4WDw==
+X-Received: by 2002:a17:907:d86:b0:ac3:121e:f2cb with SMTP id a640c23a62f3a-ac7bc03af5cmr21371366b.1.1743628433184;
+        Wed, 02 Apr 2025 14:13:53 -0700 (PDT)
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com. [209.85.218.51])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5edc16aae6fsm8942230a12.16.2025.04.02.14.13.51
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Apr 2025 14:13:52 -0700 (PDT)
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-ac298c8fa50so36295966b.1
+        for <linux-bluetooth@vger.kernel.org>; Wed, 02 Apr 2025 14:13:51 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCVygVLUIjf4m/tKZ8xCxixREBYY9VPrKfE7FB9Lx1ddBIH+qtVIFGBJzEAyc3K/uzPKHxHn06oSTZSDeLq8mQM=@vger.kernel.org
+X-Received: by 2002:a17:907:9409:b0:ac7:970b:8ee5 with SMTP id
+ a640c23a62f3a-ac7bc126208mr19593966b.27.1743628091735; Wed, 02 Apr 2025
+ 14:08:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250402022054.64501-1-kiran.k@intel.com>
-In-Reply-To: <20250402022054.64501-1-kiran.k@intel.com>
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Wed, 2 Apr 2025 16:57:34 -0400
-X-Gm-Features: AQ5f1JqiG96ygT2KjQ2Tw-Kkej4Jvm2Z0g5HF9Kr8tQ0pdsbS9lrXatHIAs0rak
-Message-ID: <CABBYNZ+p+_M7396tqo16ORDdBf38wQFRckBG4ZanXUoCQZCoRQ@mail.gmail.com>
-Subject: Re: [PATCH v1] Bluetooth: btintel_pcie: Avoid redundant buffer allocation
-To: Kiran K <kiran.k@intel.com>
-Cc: linux-bluetooth@vger.kernel.org, ravishankar.srivatsa@intel.com, 
-	chethan.tumkur.narayan@intel.com, chandrashekar.devegowda@intel.com, 
-	vijay.satija@intel.com
+References: <Z-sDc-0qyfPZz9lv@mini-arch> <39515c76-310d-41af-a8b4-a814841449e3@samba.org>
+ <407c1a05-24a7-430b-958c-0ca78c467c07@samba.org> <ed2038b1-0331-43d6-ac15-fd7e004ab27e@samba.org>
+ <Z+wH1oYOr1dlKeyN@gmail.com> <Z-wKI1rQGSgrsjbl@mini-arch> <0f0f9cfd-77be-4988-8043-0d1bd0d157e7@samba.org>
+ <Z-xi7TH83upf-E3q@mini-arch> <4b7ac4e9-6856-4e54-a2ba-15465e9622ac@samba.org>
+ <20250402132906.0ceb8985@pumpkin> <Z-1Hgv4ImjWOW8X2@mini-arch> <20250402214638.0b5eed55@pumpkin>
+In-Reply-To: <20250402214638.0b5eed55@pumpkin>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Wed, 2 Apr 2025 14:07:54 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wi7p9bKgZt1E1BWE-NjwSRDBQs=Coviiz0ZTQy9OhHvPg@mail.gmail.com>
+X-Gm-Features: AQ5f1JpKVAIlc4pALP5yKNCr8F3ijIqVBIOCCdqoIfNZomenel-ajZbKWJ5EdvE
+Message-ID: <CAHk-=wi7p9bKgZt1E1BWE-NjwSRDBQs=Coviiz0ZTQy9OhHvPg@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/4] net/io_uring: pass a kernel pointer via optlen_t
+ to proto[_ops].getsockopt()
+To: David Laight <david.laight.linux@gmail.com>
+Cc: Stanislav Fomichev <stfomichev@gmail.com>, Stefan Metzmacher <metze@samba.org>, 
+	Breno Leitao <leitao@debian.org>, Jens Axboe <axboe@kernel.dk>, 
+	Pavel Begunkov <asml.silence@gmail.com>, Jakub Kicinski <kuba@kernel.org>, Christoph Hellwig <hch@lst.de>, 
+	Karsten Keil <isdn@linux-pingi.de>, Ayush Sawal <ayush.sawal@chelsio.com>, 
+	Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>, Simon Horman <horms@kernel.org>, 
+	Kuniyuki Iwashima <kuniyu@amazon.com>, Willem de Bruijn <willemb@google.com>, David Ahern <dsahern@kernel.org>, 
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>, Xin Long <lucien.xin@gmail.com>, 
+	Neal Cardwell <ncardwell@google.com>, Joerg Reuter <jreuter@yaina.de>, 
+	Marcel Holtmann <marcel@holtmann.org>, Johan Hedberg <johan.hedberg@gmail.com>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Oliver Hartkopp <socketcan@hartkopp.net>, 
+	Marc Kleine-Budde <mkl@pengutronix.de>, Robin van der Gracht <robin@protonic.nl>, 
+	Oleksij Rempel <o.rempel@pengutronix.de>, kernel@pengutronix.de, 
+	Alexander Aring <alex.aring@gmail.com>, Stefan Schmidt <stefan@datenfreihafen.org>, 
+	Miquel Raynal <miquel.raynal@bootlin.com>, Alexandra Winter <wintera@linux.ibm.com>, 
+	Thorsten Winkler <twinkler@linux.ibm.com>, James Chapman <jchapman@katalix.com>, 
+	Jeremy Kerr <jk@codeconstruct.com.au>, Matt Johnston <matt@codeconstruct.com.au>, 
+	Matthieu Baerts <matttbe@kernel.org>, Mat Martineau <martineau@kernel.org>, 
+	Geliang Tang <geliang@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Remi Denis-Courmont <courmisch@gmail.com>, Allison Henderson <allison.henderson@oracle.com>, 
+	David Howells <dhowells@redhat.com>, Marc Dionne <marc.dionne@auristor.com>, 
+	Wenjia Zhang <wenjia@linux.ibm.com>, Jan Karcher <jaka@linux.ibm.com>, 
+	"D. Wythe" <alibuda@linux.alibaba.com>, Tony Lu <tonylu@linux.alibaba.com>, 
+	Wen Gu <guwen@linux.alibaba.com>, Jon Maloy <jmaloy@redhat.com>, 
+	Boris Pismenny <borisp@nvidia.com>, John Fastabend <john.fastabend@gmail.com>, 
+	Stefano Garzarella <sgarzare@redhat.com>, Martin Schiller <ms@dev.tdt.de>, =?UTF-8?B?QmrDtnJuIFTDtnBlbA==?= <bjorn@kernel.org>, 
+	Magnus Karlsson <magnus.karlsson@intel.com>, 
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>, Jonathan Lemon <jonathan.lemon@gmail.com>, 
+	Alexei Starovoitov <ast@kernel.org>, Daniel Borkmann <daniel@iogearbox.net>, 
+	Jesper Dangaard Brouer <hawk@kernel.org>, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-sctp@vger.kernel.org, linux-hams@vger.kernel.org, 
+	linux-bluetooth@vger.kernel.org, linux-can@vger.kernel.org, 
+	dccp@vger.kernel.org, linux-wpan@vger.kernel.org, linux-s390@vger.kernel.org, 
+	mptcp@lists.linux.dev, linux-rdma@vger.kernel.org, rds-devel@oss.oracle.com, 
+	linux-afs@lists.infradead.org, tipc-discussion@lists.sourceforge.net, 
+	virtualization@lists.linux.dev, linux-x25@vger.kernel.org, 
+	bpf@vger.kernel.org, isdn4linux@listserv.isdn4linux.de, 
+	io-uring@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi Kiran,
+On Wed, 2 Apr 2025 at 13:46, David Laight <david.laight.linux@gmail.com> wrote:
+>
+> The problem is that the generic code has to deal with all the 'wild stuff'.
+> It is also common to do non-sequential accesses - so iov_iter doesn't match
+> at all.
+> There also isn't a requirement for scatter-gather.
 
-On Tue, Apr 1, 2025 at 10:04=E2=80=AFPM Kiran K <kiran.k@intel.com> wrote:
->
-> Reuse the skb buffer provided by the PCIe driver to pass it onto the
-> stack, instead of copying it to a new skb.
->
-> Fixes: c2b636b3f788 ("Bluetooth: btintel_pcie: Add support for PCIe trans=
-port")
-> Signed-off-by: Kiran K <kiran.k@intel.com>
-> ---
->  drivers/bluetooth/btintel_pcie.c | 58 ++++++++++++--------------------
->  1 file changed, 22 insertions(+), 36 deletions(-)
->
-> diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel=
-_pcie.c
-> index e0b50513403f..ebc36fd33de8 100644
-> --- a/drivers/bluetooth/btintel_pcie.c
-> +++ b/drivers/bluetooth/btintel_pcie.c
-> @@ -947,8 +947,10 @@ static int btintel_pcie_recv_event(struct hci_dev *h=
-dev, struct sk_buff *skb)
->                 /* This is a debug event that comes from IML and OP image=
- when it
->                  * starts execution. There is no need pass this event to =
-stack.
+Note that the generic code has special cases for the simple stuff,
+which is all that the sockopt code would need.
 
-Is this logged/sent to monitor at least?
+Now, that's _particularly_ true for the "single user address range"
+thing, where there's a special ITER_UBUF thing.
 
->                  */
-> -               if (skb->data[2] =3D=3D 0x97)
-> +               if (skb->data[2] =3D=3D 0x97) {
-> +                       kfree_skb(skb);
->                         return 0;
-> +               }
->         }
->
->         return hci_recv_frame(hdev, skb);
-> @@ -964,7 +966,6 @@ static int btintel_pcie_recv_frame(struct btintel_pci=
-e_data *data,
->         u8 pkt_type;
->         u16 plen;
->         u32 pcie_pkt_type;
-> -       struct sk_buff *new_skb;
->         void *pdata;
->         struct hci_dev *hdev =3D data->hdev;
->
-> @@ -974,8 +975,7 @@ static int btintel_pcie_recv_frame(struct btintel_pci=
-e_data *data,
->         pdata =3D skb_pull_data(skb, BTINTEL_PCIE_HCI_TYPE_LEN);
->         if (!pdata) {
->                 bt_dev_err(hdev, "Corrupted packet received");
-> -               ret =3D -EILSEQ;
-> -               goto exit_error;
-> +               goto no_or_short_data;
->         }
->
->         pcie_pkt_type =3D get_unaligned_le32(pdata);
-> @@ -987,8 +987,7 @@ static int btintel_pcie_recv_frame(struct btintel_pci=
-e_data *data,
->                         pkt_type =3D HCI_ACLDATA_PKT;
->                 } else {
->                         bt_dev_err(hdev, "ACL packet is too short");
-> -                       ret =3D -EILSEQ;
-> -                       goto exit_error;
-> +                       goto no_or_short_data;
->                 }
->                 break;
->
-> @@ -998,8 +997,7 @@ static int btintel_pcie_recv_frame(struct btintel_pci=
-e_data *data,
->                         pkt_type =3D HCI_SCODATA_PKT;
->                 } else {
->                         bt_dev_err(hdev, "SCO packet is too short");
-> -                       ret =3D -EILSEQ;
-> -                       goto exit_error;
-> +                       goto no_or_short_data;
->                 }
->                 break;
->
-> @@ -1009,8 +1007,7 @@ static int btintel_pcie_recv_frame(struct btintel_p=
-cie_data *data,
->                         pkt_type =3D HCI_EVENT_PKT;
->                 } else {
->                         bt_dev_err(hdev, "Event packet is too short");
-> -                       ret =3D -EILSEQ;
-> -                       goto exit_error;
-> +                       goto no_or_short_data;
->                 }
->                 break;
->
-> @@ -1020,45 +1017,40 @@ static int btintel_pcie_recv_frame(struct btintel=
-_pcie_data *data,
->                         pkt_type =3D HCI_ISODATA_PKT;
->                 } else {
->                         bt_dev_err(hdev, "ISO packet is too short");
-> -                       ret =3D -EILSEQ;
-> -                       goto exit_error;
-> +                       goto no_or_short_data;
->                 }
->                 break;
->
->         default:
->                 bt_dev_err(hdev, "Invalid packet type received: 0x%4.4x",
->                            pcie_pkt_type);
-> -               ret =3D -EINVAL;
-> -               goto exit_error;
-> +               goto no_or_short_data;
->         }
->
->         if (skb->len < plen) {
->                 bt_dev_err(hdev, "Received corrupted packet. type: 0x%2.2=
-x",
->                            pkt_type);
-> -               ret =3D -EILSEQ;
-> -               goto exit_error;
-> +               goto no_or_short_data;
->         }
->
->         bt_dev_dbg(hdev, "pkt_type: 0x%2.2x len: %u", pkt_type, plen);
->
-> -       new_skb =3D bt_skb_alloc(plen, GFP_ATOMIC);
-> -       if (!new_skb) {
-> -               bt_dev_err(hdev, "Failed to allocate memory for skb of le=
-n: %u",
-> -                          skb->len);
-> -               ret =3D -ENOMEM;
-> -               goto exit_error;
-> -       }
-> -
-> -       hci_skb_pkt_type(new_skb) =3D pkt_type;
-> -       skb_put_data(new_skb, skb->data, plen);
-> +       hci_skb_pkt_type(skb) =3D pkt_type;
->         hdev->stat.byte_rx +=3D plen;
-> +       skb_trim(skb, plen);
->
->         if (pcie_pkt_type =3D=3D BTINTEL_PCIE_HCI_EVT_PKT)
-> -               ret =3D btintel_pcie_recv_event(hdev, new_skb);
-> +               ret =3D btintel_pcie_recv_event(hdev, skb);
->         else
-> -               ret =3D hci_recv_frame(hdev, new_skb);
-> +               ret =3D hci_recv_frame(hdev, skb);
->
-> -exit_error:
-> +goto out;
-> +
-> +no_or_short_data:
-> +       ret =3D -EILSEQ;
-> +       kfree_skb(skb);
+We don't actually have a "single kernel range" version of that, but
+ITER_KVEC is simple to use, and the sockopt code could say "I only
+ever look at the first buffer".
 
-Don't really like where this is going, having a goto label to cleanup
-is fine, having multiple and the having to figure out which one does
-what is rather confusing and doesn't help that much, anyway if we got
-a negative ret you can probably just make it drop the skb on the if
-(ret) statement.
+It's ok to just not handle all the cases, and you don't *have* to use
+the generic "copy_from_iter()" routines if you don't want to.
 
-> +out:
->         if (ret)
->                 hdev->stat.err_rx++;
->
-> @@ -1192,8 +1184,6 @@ static void btintel_pcie_rx_work(struct work_struct=
- *work)
->         struct btintel_pcie_data *data =3D container_of(work,
->                                         struct btintel_pcie_data, rx_work=
-);
->         struct sk_buff *skb;
-> -       int err;
-> -       struct hci_dev *hdev =3D data->hdev;
->
->         if (test_bit(BTINTEL_PCIE_HWEXP_INPROGRESS, &data->flags)) {
->                 /* Unlike usb products, controller will not send hardware
-> @@ -1214,11 +1204,7 @@ static void btintel_pcie_rx_work(struct work_struc=
-t *work)
->
->         /* Process the sk_buf in queue and send to the HCI layer */
->         while ((skb =3D skb_dequeue(&data->rx_skb_q))) {
-> -               err =3D btintel_pcie_recv_frame(data, skb);
-> -               if (err)
-> -                       bt_dev_err(hdev, "Failed to send received frame: =
-%d",
-> -                                  err);
-> -               kfree_skb(skb);
-> +               btintel_pcie_recv_frame(data, skb);
->         }
->  }
->
-> --
-> 2.43.0
->
->
+In fact, I would expect that something like sockopt generally wouldn't
+want to use the normal iter copying routines, since those are
+basically all geared towards "copy and update the iter".
 
-
---=20
-Luiz Augusto von Dentz
+           Linus
 
