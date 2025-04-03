@@ -1,140 +1,135 @@
-Return-Path: <linux-bluetooth+bounces-11471-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-11473-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52574A7A84B
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Apr 2025 18:58:30 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A486A7AACB
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Apr 2025 21:16:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4CDF5177663
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Apr 2025 16:58:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 72E277A7CB5
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Apr 2025 19:11:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52AF6250C15;
-	Thu,  3 Apr 2025 16:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76CA625D559;
+	Thu,  3 Apr 2025 19:03:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="FAnzjTMy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KuRr6qZK"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [185.185.170.37])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269952D052;
-	Thu,  3 Apr 2025 16:58:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=185.185.170.37
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743699501; cv=pass; b=SXkYgf6vTNEC7T6hiewJ5X9NZlSXD/60NgtqYr1BfDxrKMZkTY527vcFsIuaUZldQQcU1zwr6kLJPoyvlIdCJd37W0N+lTIZ9LHe3SQxxy35KqrEOOx9+DDQIGqTJkMWMRK4qkyDoQN1M6neycXgalAaswc8jvX3b1f76r1LpBc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743699501; c=relaxed/simple;
-	bh=IMK0vRqPB1kvZoixPsMjAMEMXNTIwq4WAJ2xK2pug88=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=AgAqqxbwyK2HpoCN2+EHPLZhG4c4NJXoIK0pZKnoDpmOoRlyTN2fKlUpflEEW3OtmAwBLJHj33yhueOm27DmMWr6yk2c9G+o2M5OFyZGUc/iT/ZZvCheZiL3OhR8Q7eh5l//Ijsp0GXZ5+vRCShNbe4aP34JPzIRQTeEp3Oq3iE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=FAnzjTMy; arc=pass smtp.client-ip=185.185.170.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
-Received: from monolith.lan (unknown [193.138.7.138])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: pav)
-	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4ZT7GN2K3Nz49Pxf;
-	Thu,  3 Apr 2025 19:58:03 +0300 (EEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
-	t=1743699485;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=bTZRIVsiORj7EbfVIazfg3T+z6IiFqu0YVKqgFaKKdg=;
-	b=FAnzjTMy1GiWHfakFYG16XC17kub0XF1RMQRgKtcO6ueGDC6D9qc1FYkPp0/APi/z7eT6P
-	xQ77u32mtfET5t4OsDEa7DFJ3o5i2LdA2JSgRPuFDBgVn1fDvNWCG/nNu6maxevSxJhrLh
-	SiWLXDF9C0kB+nrvtAapKYN6KK5fx9VqkbWbs1dCoi1NdakkPMhmw8pkqge0XNeyrpZdP6
-	oo9rCaDpwP6j/xc2oXYHQPIYcWrhkNpa46eRam7ZVLejnD+p2XqHvave0gWtn166UypQgd
-	tEwOhcwxRasgjm6ddabv1At9hmi/vlLUsqXNBPbl253XZlBSybdwdd/IymzpoA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=lahtoruutu; t=1743699485;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=bTZRIVsiORj7EbfVIazfg3T+z6IiFqu0YVKqgFaKKdg=;
-	b=KoiHNzqGUYahpaZkpaHxuZGdvTcACfUCo++A6CTHK10/dVgONdzL1bMRggz3ae4QGnslQe
-	yLwyLaJWIECK4E2uRzfhP2WT/cjBUUHMWcaMzOGJDCcX0+jFkDR5phAfqHvOnqv0xOm2YP
-	G1I9ttkij25DnDyomom1fwwKVsb+0MKpQBTdaTWclN2i9UsNIPbmXXh+2NN0Mpu4E6KlG5
-	aCbOxBhcIBkynJunUp+3fCRWm64PVHKUWpqJMbvsJ884L2FLQmJySO6bq2ofQNOjPgDVuP
-	T7l7kUyxbnXyw+fY/7LLqMUrrvRT30G4P6yGcbefTG4WZsJkAlRcw+VBfZHSrg==
-ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1743699485; a=rsa-sha256;
-	cv=none;
-	b=dzhUY9ntXt3tmrvdevv2iALtvgCXQDEVVJ7Etqec3OGPdHs5skFRRsS0h3wQ86DHMYAS2n
-	8H6AYmvxYvVnA2J37aMpk2sv+J8eVa6NdbavAesNHswRG8nJVn7WJTMkYCQv4fqNMv48XB
-	uDcf7MuJYp06xEbnBWiZ4xUm5fyQnHhiBxNt4KbIF5/N2jsNPXH3WJmu9XEVo80XTRQRKu
-	tSZolKbMD0jjMIyP4lloyMVGuTUcBPvE8n+k4UIp+WBPXKH4l5ESaDgKP9yinFoc+ocbP5
-	j9l2UXw3s49ftZ7BHkgdP/GRWQR5lOaMfmOCFq5o6FNdtf7Eu2CWhwnzcq48TA==
-ARC-Authentication-Results: i=1;
-	ORIGINATING;
-	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
-From: Pauli Virtanen <pav@iki.fi>
-To: linux-bluetooth@vger.kernel.org
-Cc: Pauli Virtanen <pav@iki.fi>,
-	netdev@vger.kernel.org,
-	willemdebruijn.kernel@gmail.com,
-	kerneljasonxing@gmail.com
-Subject: [PATCH] Bluetooth: increment TX timestamping tskey always for stream sockets
-Date: Thu,  3 Apr 2025 19:57:59 +0300
-Message-ID: <cf8e3a5bd2f4dbdba54d785d744e2b1970b28301.1743699406.git.pav@iki.fi>
-X-Mailer: git-send-email 2.49.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB47825D545;
+	Thu,  3 Apr 2025 19:03:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1743707032; cv=none; b=iMU0IAaUwyIOF5Nsl29WYnOPp+Qgz3Tlnn28OLmT34RRAaNt+W7Olj+fTK2Ard4Bc9RUd/dehc6oduRsJlftOiZ788PK43lQ7O4KP06rk8+fWG2XCP54X+SrowC+K5NtULdaHMA/38JWvKYyY0zeu2etwNA9qjQL0x6WfZGoIKk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1743707032; c=relaxed/simple;
+	bh=rah6D8OWkHRxe+bJjTLRhrS3HWCEoLiMWAroXUx9P7E=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=q2kA0hFm214XdFFmT6YHLUJWlwGHliqwnfOFlARC5+4QsQ4xVpO+GwY1exILFOAdLSDixGxFdnqkjoruEXKm9zMcFux9CbWQY7iXWTXdGLK0LiMVBgIsUvoUhzM3ZKKxjzCY4XDly10zyqfzqATobmFSe0DyCJ5RYtEJLhgUG5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KuRr6qZK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB984C4CEE3;
+	Thu,  3 Apr 2025 19:03:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1743707032;
+	bh=rah6D8OWkHRxe+bJjTLRhrS3HWCEoLiMWAroXUx9P7E=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=KuRr6qZKH5LGqeVszXQX5uPmjU8/5ZFQAgAQbkuAsM/MtwDFsRj1kdvho2gkbiLpT
+	 fFVQNmlHVouneTX2VxdFgbDJOppMZ/nksLrY2AqnwvftQpKNp9C9dq0fxjwFuzwMOk
+	 PKzOWZ/vETRxkZT7TT/z6DEDLNJ0NpOOJjSpQoGznqWEoJNt6kR7Kz4U/ARImTrrY8
+	 OPTiEYrKg+IM2PHFpCDb0fYOzSDTc75kL3aAGV4lSZPX2fV+HANcFYG7lr6gnY5B8O
+	 XjbB1s2lKFLkQFUHvTOlIbHdop6nrY/d7HeKuYYhbHg4E1w31L5htQWypIkSIM5e8C
+	 ij1nopDy+lM9g==
+From: Sasha Levin <sashal@kernel.org>
+To: linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Cc: Dorian Cruveiller <doriancruveiller@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	marcel@holtmann.org,
+	luiz.dentz@gmail.com,
+	linux-bluetooth@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.14 45/54] Bluetooth: btusb: Add new VID/PID for WCN785x
+Date: Thu,  3 Apr 2025 15:02:00 -0400
+Message-Id: <20250403190209.2675485-45-sashal@kernel.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250403190209.2675485-1-sashal@kernel.org>
+References: <20250403190209.2675485-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.14
 Content-Transfer-Encoding: 8bit
 
-Documentation/networking/timestamping.rst implies TX timestamping OPT_ID
-tskey increments for each sendmsg.  In practice: TCP socket increments
-it for all sendmsg, timestamping on or off, but UDP only when
-timestamping is on. The user-visible counter resets when OPT_ID is
-turned on, so difference can be seen only if timestamping is enabled for
-some packets only (eg. via SO_TIMESTAMPING CMSG).
+From: Dorian Cruveiller <doriancruveiller@gmail.com>
 
-Fix BT sockets to work in the same way: stream sockets increment tskey
-for all sendmsg (seqpacket already increment for timestamped only).
+[ Upstream commit c7629ccfa175e16bb44a60c469214e1a6051f63d ]
 
-Fixes: 134f4b39df7b ("Bluetooth: add support for skb TX SND/COMPLETION timestamping")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Add VID 0489 & PID e10d for Qualcomm WCN785x USB Bluetooth chip.
+
+The information in /sys/kernel/debug/usb/devices about the Bluetooth
+device is listed as the below.
+
+T:  Bus=01 Lev=01 Prnt=01 Port=03 Cnt=03 Dev#=  4 Spd=12   MxCh= 0
+D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0489 ProdID=e10d Rev= 0.01
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=100mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:  If#= 1 Alt= 7 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  65 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  65 Ivl=1ms
+
+Signed-off-by: Dorian Cruveiller <doriancruveiller@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_conn.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 95972fd4c784..7e1b53857648 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -3072,6 +3072,7 @@ void hci_setup_tx_timestamp(struct sk_buff *skb, size_t key_offset,
- 			    const struct sockcm_cookie *sockc)
- {
- 	struct sock *sk = skb ? skb->sk : NULL;
-+	int key;
- 
- 	/* This shall be called on a single skb of those generated by user
- 	 * sendmsg(), and only when the sendmsg() does not return error to
-@@ -3087,13 +3088,16 @@ void hci_setup_tx_timestamp(struct sk_buff *skb, size_t key_offset,
- 
- 	sock_tx_timestamp(sk, sockc, &skb_shinfo(skb)->tx_flags);
- 
-+	if (sk->sk_type == SOCK_STREAM)
-+		key = atomic_add_return(key_offset, &sk->sk_tskey);
-+
- 	if (sockc->tsflags & SOF_TIMESTAMPING_OPT_ID &&
- 	    sockc->tsflags & SOF_TIMESTAMPING_TX_RECORD_MASK) {
- 		if (sockc->tsflags & SOCKCM_FLAG_TS_OPT_ID) {
- 			skb_shinfo(skb)->tskey = sockc->ts_opt_id;
- 		} else {
--			int key = atomic_add_return(key_offset, &sk->sk_tskey);
--
-+			if (sk->sk_type != SOCK_STREAM)
-+				key = atomic_inc_return(&sk->sk_tskey);
- 			skb_shinfo(skb)->tskey = key - 1;
- 		}
- 	}
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index a0fc465458b2f..2cfaee948bbe9 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -376,6 +376,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0489, 0xe0f3), .driver_info = BTUSB_QCA_WCN6855 |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0489, 0xe10d), .driver_info = BTUSB_QCA_WCN6855 |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3623), .driver_info = BTUSB_QCA_WCN6855 |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x2c7c, 0x0130), .driver_info = BTUSB_QCA_WCN6855 |
 -- 
-2.49.0
+2.39.5
 
 
