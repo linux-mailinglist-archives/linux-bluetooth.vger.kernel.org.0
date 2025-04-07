@@ -1,83 +1,83 @@
-Return-Path: <linux-bluetooth+bounces-11553-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-11558-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC482A7EEDD
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Apr 2025 22:17:41 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id F330CA7EE99
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Apr 2025 22:10:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BCEFE42099D
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Apr 2025 20:02:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 75B1D177C05
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Apr 2025 20:03:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FE47221F0E;
-	Mon,  7 Apr 2025 20:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 238CE22257F;
+	Mon,  7 Apr 2025 20:02:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AkHAeFq/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fk0TCWZ2"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com [209.85.221.171])
+Received: from mail-io1-f41.google.com (mail-io1-f41.google.com [209.85.166.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA538221D88
-	for <linux-bluetooth@vger.kernel.org>; Mon,  7 Apr 2025 20:01:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300642222C4
+	for <linux-bluetooth@vger.kernel.org>; Mon,  7 Apr 2025 20:02:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744056116; cv=none; b=UVPztq9L1M1id0LhDnwzpWXxKHSc0T4DXArs1i0FaVTIAlirb0cpRCQFVdl87StYmgsX51a6RKXqSdcFqE8vj8zzhDwin+WN2f42sRuftOZhdpDhiPPnFZk4bF49sRg7ztHhrnhnFd5AbyrD6i9CwRHpQ0c1US7a02bXtMJWMDI=
+	t=1744056133; cv=none; b=quxSmXLS5I8jao4EKsUfNbVECz9k0QlTyNTqnBNNfV3XnStp8p/iri8BSj63YjaFlHrcmMH0tFhAewEd1prD2J6dN75KdgwpHoDY9QzhgSjIs09N/Z56SXpLA8to9UY1ahalxsjTwgyrp76jsGBVBjtVtuMkZ6wkNTRu4yA0EQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744056116; c=relaxed/simple;
-	bh=RLeTl37TW4N6Zfr0lHg8RGps8YFC3vjs7wWMgOXyoYw=;
+	s=arc-20240116; t=1744056133; c=relaxed/simple;
+	bh=rtFznkee/hfiJclSoLZHUJ06b11xpiXnJ35OAR/6dV4=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lk7nPfSwTHWEuI5aNdvTpDPPGg8gHKL9CAzSCn2cCuiIw3gtm0t+dR3b7xd9CE8rPTVt/dHxNicMXFMtbKLqxAl6S09yap+kLQMLqocy27wpHDUECtcqaGOoaIuNKjNN+snuRkvI5eQWjDtsvfFUgthgkFS3gzxpsggerB90iN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AkHAeFq/; arc=none smtp.client-ip=209.85.221.171
+	 MIME-Version; b=m9u+X4datKj2jVbnP7+CGJXeuR3BnZ4KtgtoRsxVYkcQI6jr9IfAdeqmS2GScpsAph0+YBn+/rA+EHp0EA6lw9pBzfvWSMPuSHAhXHkHU6FvANHof5l7ejgNqUdGSovFoLnJbzq96gw2EY5UpDx70TelpYBx+K83kP9zp1CAAhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fk0TCWZ2; arc=none smtp.client-ip=209.85.166.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vk1-f171.google.com with SMTP id 71dfb90a1353d-524125f6cadso4515002e0c.2
-        for <linux-bluetooth@vger.kernel.org>; Mon, 07 Apr 2025 13:01:54 -0700 (PDT)
+Received: by mail-io1-f41.google.com with SMTP id ca18e2360f4ac-85dac9729c3so323743339f.2
+        for <linux-bluetooth@vger.kernel.org>; Mon, 07 Apr 2025 13:02:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744056112; x=1744660912; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1744056130; x=1744660930; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=3zRNsq30CgpjucwwcKkU/6QUB6ZkvtlRSn7jRFOzCxI=;
-        b=AkHAeFq/VTQLscI0zcvCxtuGfu7E/pC84NV6GgN6FIXr7vNHCqdD8F1ofFXm2eWP2J
-         VweoJuSzQrsLiWNQhsGFJRduu/iWmiFZ5S+eJZ2VjV1wX1NQDXxHXuwAFUoPISpeVO8u
-         vaMbzwFGMdyB45bShTswJhrFCHP+kcDV7qM8/Qs+35YrMTDbsLvscyLnILu/q7gWx4Ad
-         geOcpRyTe4oP2tPyzEWV0fWk9lKcUDeLoQ2hIKza6XmpbkJVnyselE0AniPWpJLOxNHh
-         Cl6b3tKIxTr1rM3sOp4fU+cSk2Zb60lHjp/8s8/fw7wvjzScyvYDoUs36GnJWaNC5v0I
-         jZqQ==
+        bh=KhOLzS/aTB7p+rCSf6gjBGzekkXKtABaMGKHSe8dHUE=;
+        b=Fk0TCWZ2+igi01Ezd599ULc5vMZgK049VlelTjPSbE+ycpsvP8RRcc1vpxq0lGYl+z
+         nrEukUs/cV7AAJa7vxn/S4RsriteGW91+Fpt6TyoTZFeAGmSnP/S4od4EobzYJkgAHtO
+         BYZPTR3fkBKHFatqS2U90AMHGKlirqgcNY4pL+JAUT2toxWsa6cwmULOhtRrz7KjoCzg
+         nkAanh20lq2SUVXt68X3dkKysFidEtyMY0L+WYGsCi2Kr30KYMJ/kUK7ggkwJiIiuQDV
+         CJ8oJimkh0R6K0xOyQsdr5SuNDEq7ZsCIGhU+OjsqEyVE/eViWtZ27xvbklQeGfKba4c
+         Vuyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744056112; x=1744660912;
+        d=1e100.net; s=20230601; t=1744056130; x=1744660930;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3zRNsq30CgpjucwwcKkU/6QUB6ZkvtlRSn7jRFOzCxI=;
-        b=JhfPFjv6IhNMAAnAGKoJdxxMAkhq6cM4Mzkc4q6H+YIP/kPG8PfpvshHZj282TS4bB
-         32DmRldAWDe2tCFUiygTC7c4AclLy7dkQWsr8RKolj6Cje912xAbj5RCVL60+g9v0r1A
-         EznRYngBrooicYbbM+QRzXW9/qtwK7Wn6yC6mC1MVhBYF0374Z0M6BYzoMCojlTRF2PV
-         qsCYXj69dv3pEFxszQBKAciSiXW+RHDznk6sHT12pXr0PLml21IWH7+TF2S6qc+PG+ew
-         Qw5KOrWXC7HuGlKrmeDKWmVg4Lekc/KKVYuCqV6aINd4nmkMymkoJ6ivDoomjuW4ZV3V
-         UXEg==
-X-Gm-Message-State: AOJu0YzlFH9KoUKhW9zVCnJYCd7+JwOPbdMSPiPA6LsGkxFxo9oBrldn
-	zo9e0ph/51QHRC8Ds4diO3iPj4iyCd8ssHpXXIOy8HYqQ7tm9NWPNp3qdUio
-X-Gm-Gg: ASbGnctGEFAs0+ZSHpSKcGIhSOVUr3IGNax4aTOuENNzlgvmhvT/avk87RAbN+xiqlN
-	xUZlthGSBdko1v6hmBCWPD5fiTqWZJISdAc8NNhd0+t2s4ZTX45Zh+Y5vWhsG+dhCvg2R4EydTE
-	2Xc9S0+Lj23VCZuqt/+RbGds4N3oVD/yY0ZQOpHbfEiT3poff+j40tX0A4EuJm/DHGjd4OOiHcg
-	tDrISHh9+jBak3cE73h090TGBuDjvsiogOqqhnGM6U9YABc/yPgfg85vW3NDUW1MFrv49OsFOoD
-	Inio4u2yce+3IMU+p6C5nuZWuZoslc6htPXyUk6zKPHgpIbUXAF+nCJ0IolAHb78HE/XHLYgA8Q
-	xDVXVFnq6rPaRPQ==
-X-Google-Smtp-Source: AGHT+IF85pW/TGF3YVHqcnEKOGdNS1AKxEckvTyajAT6GaK5QEMDlf49pi8ubaipPV0t7iHDYWoI8Q==
-X-Received: by 2002:a05:6122:2516:b0:520:6773:e5ba with SMTP id 71dfb90a1353d-52765c03cd1mr11542751e0c.2.1744056112355;
-        Mon, 07 Apr 2025 13:01:52 -0700 (PDT)
+        bh=KhOLzS/aTB7p+rCSf6gjBGzekkXKtABaMGKHSe8dHUE=;
+        b=WwvRqmC5PUH05w7gVSkYTtUKEyYZWmDkLwLGuFw14pVmFFtcaDj9gxRSkTnm4CanEk
+         lRA1mDzFiXi+OTRxt0YtHS8T2Rq3o2ngWxrkdT8nVg6Kavskn5clrPEqw2Bxh8IyIXNd
+         9hqFgCXasb9W3gEcv9L21k8+TVqEbERp21MM8O15g5oVxx8WMquCDlprQh2TJHsj8o/3
+         2Y/2p9bCGkGHokCKcn6e6KSkgM53ZInKCFLSgKe3Dx3dsK9xhhRjxUcEeP+vvz6TLcPZ
+         nNq+eQlzoU10elPi6BUu78WLMYYESrBxbL2iMBtkj8mI0aNoReT8pBc5jpzKQJgGamjM
+         zouA==
+X-Gm-Message-State: AOJu0YyH6csaqgjLJskWHuIL7F414CDcNfA7PA1sLJ+F1+NJonAqw9ga
+	oEPU2q8ZrbfZCTISCAjbSKXBTCDKHpooJ4QLHAxn9luCZVIfj2XsZGhw0VsB
+X-Gm-Gg: ASbGncsfHSrtwUEfAdwhGoafLfmaAJ9b3O1RrQvOGPps75FYiIG3qYaSHJGIuECY7jn
+	iH4CzQyojRIfnSuuipvIeHx06XQcyoGavsgw6iD/7Uch4AzR41nSECctYz0NhIVZRMQcbNYJPoE
+	q3dn1dy4fRV+XDMTMxkOhzWXvOSH1jbwl9d8st4mAQFdO9pIRuueGM3uKmhOp+y2P/Yo7281Bwd
+	MPWyhcR17DSCDPUhsd0Hurcnpq5IwjPKqgSlv/onmB336x3VRk51IJwGpITNWvMwDIMW7qmRa8N
+	wZppKVa9THXV5SNnVv+abPR48bEPjvxvoxtNVETMxcCXSkWKYYBPCxehBS5HMzg7n/l+0wUPI8o
+	BiMCwThV6TU0+8Q==
+X-Google-Smtp-Source: AGHT+IGhB9HrKv4I3bFsg9iIwaoSWL2Mn+mPrF6FWAStG/0+KyTxXqMIu4ryoDSmDB6pTFUR1VwJ+A==
+X-Received: by 2002:a05:6122:181b:b0:520:9688:d1bb with SMTP id 71dfb90a1353d-52772ede57bmr6997386e0c.2.1744056119554;
+        Mon, 07 Apr 2025 13:01:59 -0700 (PDT)
 Received: from lvondent-mobl5.. (syn-050-089-067-214.res.spectrum.com. [50.89.67.214])
-        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-5279b691f07sm69140e0c.41.2025.04.07.13.01.48
+        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-5279b691f07sm69140e0c.41.2025.04.07.13.01.56
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Apr 2025 13:01:50 -0700 (PDT)
+        Mon, 07 Apr 2025 13:01:57 -0700 (PDT)
 From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v2 09/15] shared/bap: Fix not notifying idle state
-Date: Mon,  7 Apr 2025 16:01:15 -0400
-Message-ID: <20250407200124.881534-10-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ v2 11/15] shared/bap: Fix not sending ASE Notication in case of Metadata update
+Date: Mon,  7 Apr 2025 16:01:17 -0400
+Message-ID: <20250407200124.881534-12-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250407200124.881534-1-luiz.dentz@gmail.com>
 References: <20250407200124.881534-1-luiz.dentz@gmail.com>
@@ -91,45 +91,26 @@ Content-Transfer-Encoding: 8bit
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-The idle state must be notified like any other state.
+Tests such if metadata update requires the server to generate ASE
+notification on Update Metadata operation.
 ---
- src/shared/bap.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ src/shared/bap.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/src/shared/bap.c b/src/shared/bap.c
-index dbeb43fe509d..ec23e882f389 100644
+index ec23e882f389..76f221102dc6 100644
 --- a/src/shared/bap.c
 +++ b/src/shared/bap.c
-@@ -1138,6 +1138,21 @@ static void stream_notify_release(struct bt_bap_stream *stream)
- 					bt_bap_get_att(stream->bap));
+@@ -2162,6 +2162,9 @@ static uint8_t stream_metadata(struct bt_bap_stream *stream, struct iovec *meta,
+ 	util_iov_free(stream->meta, 1);
+ 	stream->meta = util_iov_dup(meta, 1);
+ 
++	/* Force state change to the same state to update the metadata */
++	stream_set_state(stream, bt_bap_stream_get_state(stream));
++
+ 	return 0;
  }
  
-+static void stream_notify_idle(struct bt_bap_stream *stream)
-+{
-+	struct bt_bap_endpoint *ep = stream->ep;
-+	struct bt_ascs_ase_status status;
-+
-+	DBG(stream->bap, "stream %p", stream);
-+
-+	memset(&status, 0, sizeof(status));
-+	status.id = ep->id;
-+	status.state = BT_ASCS_ASE_STATE_IDLE;
-+
-+	gatt_db_attribute_notify(ep->attr, (void *)&status, sizeof(status),
-+					bt_bap_get_att(stream->bap));
-+}
-+
- static struct bt_bap *bt_bap_ref_safe(struct bt_bap *bap)
- {
- 	if (!bap || !bap->ref_count || !queue_find(sessions, NULL, bap))
-@@ -1712,6 +1727,7 @@ static void stream_notify(struct bt_bap_stream *stream, uint8_t state)
- 
- 	switch (state) {
- 	case BT_ASCS_ASE_STATE_IDLE:
-+		stream_notify_idle(stream);
- 		break;
- 	case BT_ASCS_ASE_STATE_CONFIG:
- 		stream_notify_config(stream);
 -- 
 2.49.0
 
