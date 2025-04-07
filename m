@@ -1,1072 +1,487 @@
-Return-Path: <linux-bluetooth+bounces-11543-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-11546-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 024BBA7DFEE
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Apr 2025 15:49:03 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A5AAA7EE5C
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Apr 2025 22:05:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 98073169FFE
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Apr 2025 13:44:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 510041889E20
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Apr 2025 20:02:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58BFA1CD15;
-	Mon,  7 Apr 2025 13:44:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B361C22154A;
+	Mon,  7 Apr 2025 20:01:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DZT0sjNz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dZKoR+14"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B47115C158
-	for <linux-bluetooth@vger.kernel.org>; Mon,  7 Apr 2025 13:44:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BAAF21C16B
+	for <linux-bluetooth@vger.kernel.org>; Mon,  7 Apr 2025 20:01:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744033475; cv=none; b=uj3sj4JhCjd1P3rKFScDDhicu+hH6OvWeuGxSRIp2rC+vO8y4R/gBAr43BMN5bnfjdC684EAzoYbbYcBEGbgNSfhCGKOLVjdMIXY2tmaHjUF2zrLqJi8OVIBCDfiZ1xSyJZ99WG6FtIuPgrSNNIo6IZljFlvxBN3PN5taskK4K8=
+	t=1744056097; cv=none; b=mGOEGg8AvTMk4CZO/pCjg+rPowYPlsSXpIYhSNfS/uYsQDAtVPC0fPbdV2FAVhJ6u2IESR/A2bj/aaxDLBKiph+OfngbpYdv7traWqtsSldbpafE+I/a+SXjd8emup9J2Wo2LssdStdiGFcm7Da2O0jZyTKHWvA+YLCizJGyGHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744033475; c=relaxed/simple;
-	bh=tXEnuRvaEP+k+BCNvC7ntWemRFMpYvqAElYz7gaqCvo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hW6736oSkNwbSaSeXBZGYBlWXWpJOYY1G8v8z4YnlvEZIp2e5b9plU6QdMhLoUIzYRHAGHXzXsc7LsJflM5JucR+TWsGFjHB7iU+34U4L44LIQRIww+aYJnTJDl1f1nmS1OrRmIvuM3UuB5/GvSMHK3cILrKuBqIj1O1J175WnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DZT0sjNz; arc=none smtp.client-ip=209.85.208.170
+	s=arc-20240116; t=1744056097; c=relaxed/simple;
+	bh=lV9Er+Su+VuJRn8I3P/Z5RcbhKDljCbZ7qikSHJHQD8=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=UApe7QEBYFrY+AZXijVjLCIbAzuY6ZFYXKLjprcoqVp52JUxwlPPeDuxgglJ3KID57z0l1hhuERCwin2P7ZjAeCqpvAxYG5NoHN45UdlctZwb5nhBKhDmQ6K9wUgVRg/8gdbTZemjwjgxcsqFv0OnPYXE4JyZY+9g4uLyn5BZDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dZKoR+14; arc=none smtp.client-ip=209.85.221.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-30eef9ce7feso44970331fa.0
-        for <linux-bluetooth@vger.kernel.org>; Mon, 07 Apr 2025 06:44:32 -0700 (PDT)
+Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-523dc190f95so2339065e0c.1
+        for <linux-bluetooth@vger.kernel.org>; Mon, 07 Apr 2025 13:01:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744033471; x=1744638271; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=W2Wc+s/cUpai22J6QxaOJ4EpDn+osmSFnrhaeVanLs4=;
-        b=DZT0sjNzyg0zhRPCuZMFqsUGWEAGuiBx+LhpgLRMYa/llC72BUZP4A7qTe0pyMOsIG
-         pn1XOJ9IUWouK/tdqdUBxGKkpuwgChWORjR1VgylnQthbWBPknP0wGynwUHtB0FyhgqP
-         fMijx5bfFVw1x6fcc8kOICXcr+BT1eJ6Elv32c223aHteXpLnPiiTMukFuc0mI32Ujkh
-         vi/XLEEeSghlP/KZtswuwHt8vey05Nmzd2Yt8Szc+X1sEBo40hLE3iYajmHlkpql6TFI
-         vVO61e2jqKCL/DdokwfFs9hkDtzg5qp5+DJUr94WXxpd9PRBYHusUm5xunI8nkuhzhMz
-         RYOg==
+        d=gmail.com; s=20230601; t=1744056093; x=1744660893; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oH5zIz3fH+HzePqUrVUnHeTuTck/L6WwKXLj9XMwPLs=;
+        b=dZKoR+143krivt61Y1TITdhFA4SLA5ykJnvcwS1ymaZbva9F575Vxn0K/96JjNAmt4
+         +8FvlekwlyUxOgg77p7AxWbFBCy95DnfMjDH8MF7lmLxTB2tNkBunVusuA8bi6x9gBX3
+         CXQoLgvaWuk98nkK1jdbnb2o50GqcutH3ppghdXpjKwg1vCb170C+6OqkUCZug1SUYDp
+         1YSjZHVzlv09qF00H2Zgj7aCDTRvAi9ffPQ/gMrK4Bq6Gpo8+8oiFlr+FIaSDWMbRn1W
+         gxxcR3IN10/GZSuB6o5cXh99ytU/+RQABiRAzVC6QT5cEncZ3+gpFrl2dwpYdnMnnn88
+         05Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744033471; x=1744638271;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1744056093; x=1744660893;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=W2Wc+s/cUpai22J6QxaOJ4EpDn+osmSFnrhaeVanLs4=;
-        b=npQJGdDxKAsGMGMWXg6dIOg+XAWMB6Ku/mGJjy1VvRl4/c1XQYxwvvcgIQ9h7YwurI
-         Ic+1Tx3s0irKTngtfnR4EOwsnrjqX5gEbvF+5tjeva0YGShP9FGyTX7DpTkpFPLu2G3d
-         OFvMDcRXF1dFZs+dCqVms9UdacWTf6aWX2Y3FwYOK2zs8c26/yqTUu4mCRemHNFExf1H
-         8U8Moqts4bDP3YP3seNJcBLxtcCEYVxTnmKWpJheBrlhmutsVAV2FlYAx31DYupV+sFm
-         YUU9DagwI0YLE/bRrzPtTERLfgE+Nm83tSGg89U94A5s+8nny+RmeCsqfKfP+vxKsRtq
-         dahQ==
-X-Gm-Message-State: AOJu0YwiFbPm5TBsb/fKGgXeI4mIXx+6iM06PAhpPJsjL9tkPlEaOIgt
-	CzAKg/knoafRnjfT3eO7Ha28YSmwAlMWamXe6oYS4fbXSruPflM3bIM3N2WpjGqxwfpZ3037K+O
-	ra9g18QVb/BILMNOkA2kG/4ndG7SCXw==
-X-Gm-Gg: ASbGncvC1RJgBFMAM5uF5F9WlW4GqUGaR44ac4MQNW5xvvVgvDmdd591N5/Cjt3FLiS
-	89gOnh60NO2DxIuSu+XOzb68ElgK1khd61uxUKoWiPci3kzHqfedeSIS9g9lsx9D5p6UeQKiKl6
-	I1VGQ3ZyNA+YBMgRFbL5HLhIze
-X-Google-Smtp-Source: AGHT+IHIIplFpUv2ojd8RsyBQ4BQg/47412IYkbAg+NTIyFbbQbVYSUKPNx7Yjwj2rG7sC0X0zbpkf6hhMX8aR+8M8s=
-X-Received: by 2002:a05:651c:510:b0:30d:69cd:ddcf with SMTP id
- 38308e7fff4ca-30f0a025e8fmr38951151fa.0.1744033470691; Mon, 07 Apr 2025
- 06:44:30 -0700 (PDT)
+        bh=oH5zIz3fH+HzePqUrVUnHeTuTck/L6WwKXLj9XMwPLs=;
+        b=cQ/Cj7RncoSqYIKamfO3ZknLSIt1j4NKZiZsR/SS8AyPY1rcYx/XyLKreuOJBWEzr8
+         iP776WPEOz2XnAl5p/Qqyh2g8pIxeHjGmSFBJPm/tEho9GRmdopz6TbgosnD8tsC6QXY
+         PhB2kcp2NOLhfvTHbVpjgCbmiavHmtWpsQdp6FvtY3uVbIoNYiHTATKOd+PQ7+DkYYS9
+         3B5efiwC/AcLn53Qpch1dQDrj9bEIiuF/jKXnvznnW8YT38juof65DrwG9pdxvH+f7I7
+         Uvcn0fxnm+bLjf58DIwl7hb8A8GmWagbvnXtTcWDOpzhMdirMVcVfdMSXngkOJbEYywT
+         PZ/Q==
+X-Gm-Message-State: AOJu0YyTRjLCX94fFrqPWvLbTLLUlJoA5gRdrUgg3RwcLxs+9KCJ/YWw
+	3i1ztUGtU4/Yt2CwcITjaRAZLvHNqoQiI7ozO/Yo+5cxdvjMCKSsJOlweyY4
+X-Gm-Gg: ASbGncuAXN8vqAEWzBwLGNP7TcBeIPdDJedXx/Ff9WHiBi8XgUs8E+vt9taNoqQKx8g
+	8d0yu/Rm+9IASYcpl4rwEBfnJYPSey76cNhI6Udcckzs4wEP/mIM0W20rzYlw9WwPvLRweV4yM8
+	ANzWa7k3aYnox7E7e10eoayb5jrg8NMLZwGFEAGn2wNj3+whQvsPzet5iz6qXuFlajfrGuA3bIg
+	5f2SUMVu+YhY6pYDbf8mdo4oqsdi8dz+Hs1ChlLfGcAIiHZPxkpj2HCC8ialwM1ATDyUVxQqo54
+	mFsaQ7xJQmnmTyPTfNYHXcFnlxzr40AqVI0euTJItB6EHwcpQ3xxoJl/lSjI3faHdQBDwhUPdu1
+	E2Nt5cumRlBV4lg==
+X-Google-Smtp-Source: AGHT+IFHfHC3de5HKBPKDXuPvwHUw3rJHNk72kbnIiGpdZuu3UN4J8ejejQAd5hSmeKRVs/LmHRAKw==
+X-Received: by 2002:a05:6122:16a6:b0:520:4539:4b4c with SMTP id 71dfb90a1353d-527730d8095mr7413302e0c.9.1744056092696;
+        Mon, 07 Apr 2025 13:01:32 -0700 (PDT)
+Received: from lvondent-mobl5.. (syn-050-089-067-214.res.spectrum.com. [50.89.67.214])
+        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-5279b691f07sm69140e0c.41.2025.04.07.13.01.30
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Apr 2025 13:01:31 -0700 (PDT)
+From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+To: linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ v2 02/15] test-bap: Introduce USR/SCC tests for LC3
+Date: Mon,  7 Apr 2025 16:01:08 -0400
+Message-ID: <20250407200124.881534-3-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250407200124.881534-1-luiz.dentz@gmail.com>
+References: <20250407200124.881534-1-luiz.dentz@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <632807049a6b64e11103b95163ffa5de8f18a4ed.1743846534.git.pav@iki.fi>
-In-Reply-To: <632807049a6b64e11103b95163ffa5de8f18a4ed.1743846534.git.pav@iki.fi>
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Mon, 7 Apr 2025 09:44:18 -0400
-X-Gm-Features: ATxdqUEoi8PiCmNAQq_limpbkHoxYgvL9JxURpoRD9WrP1gMzFDWJ8bpIb2KuVM
-Message-ID: <CABBYNZKFtmi1LDABw+ysA-0o0E0ME_KwkPbUxJAaaov8pQP+mw@mail.gmail.com>
-Subject: Re: [PATCH BlueZ v2] tools: add BPF timestamping tests
-To: Pauli Virtanen <pav@iki.fi>
-Cc: linux-bluetooth@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi Pauli,
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-On Sat, Apr 5, 2025 at 5:50=E2=80=AFAM Pauli Virtanen <pav@iki.fi> wrote:
->
-> Add some tests for BPF timestamping on Bluetooth sockets.
->
-> These require additional tester kernel config, and at build time
-> the vmlinux image.
->
-> Add cgroup mount to test-runner.
->
-> Add documentation to tester config for this.
->
-> Add tests:
->
-> ISO Send - TX BPF Timestamping
-> ISO Send - TX BPF + Socket Timestamping
-> ---
->
-> Notes:
->     v2:
->     - automake: nodist, BUILD_SOURCES, CLEANFILES, silence output
->     - fix return type of tx_tstamp_bpf_process
->     - separate timestamp tracking for socket & BPF, add test enabling bot=
-h
->     - match BPF tskey handling to the current plan
->
->  Makefile.tools       |  39 +++++++
->  configure.ac         |  36 +++++-
->  doc/test-runner.rst  |  28 ++++-
->  doc/tester.config    |   8 ++
->  tools/iso-tester.c   |  97 +++++++++++++++-
->  tools/l2cap-tester.c |   2 +-
->  tools/sco-tester.c   |   2 +-
->  tools/test-runner.c  |   1 +
->  tools/tester-bpf.c   | 101 +++++++++++++++++
->  tools/tester-bpf.h   |   7 ++
->  tools/tester.h       | 264 ++++++++++++++++++++++++++++++++++++-------
+4.9.1 Unicast Server as Audio Sink Performs Config Codec – LC3
 
-Might be a good idea to split into separate patches, e.g. enable BPF
-build then introduce tester-bpf, test-runner followed by the new
-tests.
+Test Purpose:
+Verify that a Unicast Server Audio Sink IUT can perform a Config
+Codec operation initiated by a Unicast Client for an ASE in the Idle
+state, the Codec Configured state.
 
->  11 files changed, 531 insertions(+), 54 deletions(-)
->  create mode 100644 tools/tester-bpf.c
->  create mode 100644 tools/tester-bpf.h
->
-> diff --git a/Makefile.tools b/Makefile.tools
-> index e60c31b1d..75bd3daaf 100644
-> --- a/Makefile.tools
-> +++ b/Makefile.tools
-> @@ -144,6 +144,8 @@ tools_l2cap_tester_SOURCES =3D tools/l2cap-tester.c t=
-ools/tester.h monitor/bt.h \
->                                 emulator/smp.c
->  tools_l2cap_tester_LDADD =3D lib/libbluetooth-internal.la \
->                                 src/libshared-glib.la $(GLIB_LIBS)
-> +tools_l2cap_tester_CPPFLAGS =3D $(AM_CPPFLAGS) $(GLIB_CFLAGS)
-> +nodist_tools_l2cap_tester_SOURCES =3D
->
->  tools_rfcomm_tester_SOURCES =3D tools/rfcomm-tester.c monitor/bt.h \
->                                 emulator/hciemu.h emulator/hciemu.c \
-> @@ -191,6 +193,8 @@ tools_sco_tester_SOURCES =3D tools/sco-tester.c tools=
-/tester.h monitor/bt.h \
->                                 emulator/smp.c
->  tools_sco_tester_LDADD =3D lib/libbluetooth-internal.la \
->                                 src/libshared-glib.la $(GLIB_LIBS)
-> +tools_sco_tester_CPPFLAGS =3D $(AM_CPPFLAGS) $(GLIB_CFLAGS)
-> +nodist_tools_sco_tester_SOURCES =3D
->
->  tools_hci_tester_SOURCES =3D tools/hci-tester.c monitor/bt.h
->  tools_hci_tester_LDADD =3D src/libshared-glib.la $(GLIB_LIBS)
-> @@ -212,6 +216,8 @@ tools_iso_tester_SOURCES =3D tools/iso-tester.c tools=
-/tester.h monitor/bt.h \
->                                 emulator/smp.c
->  tools_iso_tester_LDADD =3D lib/libbluetooth-internal.la \
->                                 src/libshared-glib.la $(GLIB_LIBS)
-> +tools_iso_tester_CPPFLAGS =3D $(AM_CPPFLAGS) $(GLIB_CFLAGS)
-> +nodist_tools_iso_tester_SOURCES =3D
->
->  tools_ioctl_tester_SOURCES =3D tools/ioctl-tester.c monitor/bt.h \
->                                 emulator/hciemu.h emulator/hciemu.c \
-> @@ -221,6 +227,39 @@ tools_ioctl_tester_SOURCES =3D tools/ioctl-tester.c =
-monitor/bt.h \
->                                 emulator/smp.c
->  tools_ioctl_tester_LDADD =3D lib/libbluetooth-internal.la \
->                                 src/libshared-glib.la $(GLIB_LIBS)
-> +
-> +if TESTING_BPF
-> +tools/vmlinux.h: $(BPF_VMLINUX)
-> +       $(AM_V_GEN)$(MKDIR_P) $(dir $@) && \
-> +               bpftool btf dump file $(BPF_VMLINUX) format c > $@.new &&=
- \
-> +               mv -f $@.new $@
-> +
-> +tools/tester-bpf.o: $(srcdir)/tools/tester-bpf.c tools/vmlinux.h
-> +       $(AM_V_GEN)$(MKDIR_P) $(dir $@) && \
-> +               $(CLANG_BPF) -Wall -Werror -Os -g --target=3Dbpf -Itools =
--c -o $@ $<
-> +
-> +tools/tester-skel.h: tools/tester-bpf.o
-> +       $(AM_V_GEN)$(MKDIR_P) $(dir $@) && \
-> +               bpftool gen skeleton $< > $@.new && \
-> +               mv -f $@.new $@
-> +
-> +BPF_BUILT_SOURCES =3D $(builddir)/tools/tester-skel.h $(builddir)/tools/=
-vmlinux.h
-> +
-> +nodist_tools_sco_tester_SOURCES +=3D $(BPF_BUILT_SOURCES)
-> +nodist_tools_iso_tester_SOURCES +=3D $(BPF_BUILT_SOURCES)
-> +nodist_tools_l2cap_tester_SOURCES +=3D $(BPF_BUILT_SOURCES)
-> +BUILT_SOURCES +=3D $(BPF_BUILT_SOURCES)
-> +CLEANFILES +=3D $(BPF_BUILT_SOURCES)
-> +
-> +tools_sco_tester_CPPFLAGS +=3D -I$(builddir)/tools $(LIBBPF_CFLAGS)
-> +tools_iso_tester_CPPFLAGS +=3D -I$(builddir)/tools $(LIBBPF_CFLAGS)
-> +tools_l2cap_tester_CPPFLAGS +=3D -I$(builddir)/tools $(LIBBPF_CFLAGS)
-> +
-> +tools_sco_tester_LDADD +=3D $(LIBBPF_LIBS)
-> +tools_iso_tester_LDADD +=3D $(LIBBPF_LIBS)
-> +tools_l2cap_tester_LDADD +=3D $(LIBBPF_LIBS)
-> +endif
-> +
->  endif
->
->  if TOOLS
-> diff --git a/configure.ac b/configure.ac
-> index 2ea727256..6f09e248f 100644
-> --- a/configure.ac
-> +++ b/configure.ac
-> @@ -390,10 +390,38 @@ AC_ARG_ENABLE(testing, AS_HELP_STRING([--enable-tes=
-ting],
->  AM_CONDITIONAL(TESTING, test "${enable_testing}" =3D "yes")
->
->  if (test "${enable_testing}" =3D "yes"); then
-> -   AC_CHECK_DECLS([SOF_TIMESTAMPING_TX_COMPLETION, SCM_TSTAMP_COMPLETION=
-],
-> -       [], [], [[#include <time.h>
-> -               #include <linux/errqueue.h>
-> -               #include <linux/net_tstamp.h>]])
-> +       AC_CHECK_DECLS([SOF_TIMESTAMPING_TX_COMPLETION, SCM_TSTAMP_COMPLE=
-TION],
-> +               [], [], [[#include <time.h>
-> +                       #include <linux/errqueue.h>
-> +                       #include <linux/net_tstamp.h>]])
-> +fi
-> +
-> +AC_ARG_ENABLE(testing-bpf, AS_HELP_STRING([--enable-testing-bpf[=3DPATH/=
-TO/VMLINUX]],
-> +                       [enable BPF testing tools]),
-> +                       [enable_testing_bpf=3Dyes; enable_testing_bpf_arg=
-=3D${enableval}],
-> +                       [enable_bpf=3Dno])
-> +AM_CONDITIONAL(TESTING_BPF, test "${enable_testing_bpf}" =3D "yes")
-> +
-> +if (test "${enable_testing_bpf}" =3D "yes"); then
-> +       AC_ARG_VAR(CLANG_BPF, [CLANG compiler (for BPF)])
-> +       AC_ARG_VAR(BPFTOOL, [bpftool])
-> +       AC_ARG_VAR(BPF_VMLINUX, [vmlinux image to use for BPF testing])
-> +       AC_PATH_PROG([CLANG_BPF], [clang], "no")
-> +       if (test "${CLANG_BPF}" =3D=3D "no"); then
-> +               AC_MSG_ERROR([clang for BPF missing])
-> +       fi
-> +       AC_PATH_PROG([BPFTOOL], [bpftool], "no")
-> +       if (test "${BPFTOOL}" =3D=3D "no"); then
-> +               AC_MSG_ERROR([bpftool missing])
-> +       fi
-> +       PKG_CHECK_MODULES(LIBBPF, libbpf >=3D 1.4, [], [AC_MSG_ERROR([lib=
-bpf missing])])
-> +       if (test "${enable_testing_bpf_arg}" !=3D "yes"); then
-> +               BPF_VMLINUX=3D${enable_testing_bpf_arg}
-> +       elif (test "${BPF_VMLINUX}" =3D ""); then
-> +               BPF_VMLINUX=3D/sys/kernel/btf/vmlinux
-> +       fi
-> +       AC_MSG_NOTICE([using BPF_VMLINUX=3D${BPF_VMLINUX} for BPF testing=
-])
-> +       AC_DEFINE(HAVE_BPF, 1, [Define to 1 if bpf testing is required])
->  fi
->
->  AC_ARG_ENABLE(experimental, AS_HELP_STRING([--enable-experimental],
-> diff --git a/doc/test-runner.rst b/doc/test-runner.rst
-> index 423a9379c..09fb4b248 100644
-> --- a/doc/test-runner.rst
-> +++ b/doc/test-runner.rst
-> @@ -91,8 +91,8 @@ Bluetooth
->
->         CONFIG_UHID=3Dy
->
-> -Lock debuging
-> --------------
-> +Lock debugging
-> +--------------
->
->  To catch locking related issues the following set of kernel config
->  options may be useful:
-> @@ -110,6 +110,21 @@ options may be useful:
->         CONFIG_DEBUG_MUTEXES=3Dy
->         CONFIG_KASAN=3Dy
->
-> +BPF testing
-> +-----------
-> +
-> +For BPF related tests:
-> +
-> +.. code-block::
-> +
-> +       CONFIG_BPF=3Dy
-> +       CONFIG_BPF_SYSCALL=3Dy
-> +       CONFIG_BPF_JIT=3Dy
-> +       CONFIG_CGROUPS=3Dy
-> +       CONFIG_CGROUP_BPF=3Dy
-> +       CONFIG_DEBUG_INFO_DWARF5=3Dy
-> +       CONFIG_DEBUG_INFO_BTF=3Dy
-> +
->  EXAMPLES
->  =3D=3D=3D=3D=3D=3D=3D=3D
->
-> @@ -127,6 +142,15 @@ Running a specific test of mgmt-tester
->
->         $ tools/test-runner -k /pathto/bzImage -- tools/mgmt-tester -s "<=
-name>"
->
-> +Compiling and running BPF tests
-> +-------------------------------
-> +
-> +.. code-block::
-> +
-> +       $ ./configure --enable-testing --enable-testing-bpf=3D/home/me/li=
-nux/vmlinux
-> +       $ make
-> +       $ tools/test-runner -k /home/me/linux/arch/x86_64/boot/bzImage --=
- tools/iso-tester -s BPF
-> +
->  Running bluetoothctl with emulated controller
->  ---------------------------------------------
->
-> diff --git a/doc/tester.config b/doc/tester.config
-> index 099eddc79..70e345c52 100644
-> --- a/doc/tester.config
-> +++ b/doc/tester.config
-> @@ -57,3 +57,11 @@ CONFIG_PROVE_RCU=3Dy
->  CONFIG_LOCKDEP=3Dy
->  CONFIG_DEBUG_MUTEXES=3Dy
->  CONFIG_KASAN=3Dy
-> +
-> +CONFIG_BPF=3Dy
-> +CONFIG_BPF_SYSCALL=3Dy
-> +CONFIG_BPF_JIT=3Dy
-> +CONFIG_CGROUPS=3Dy
-> +CONFIG_CGROUP_BPF=3Dy
-> +CONFIG_DEBUG_INFO_DWARF5=3Dy
-> +CONFIG_DEBUG_INFO_BTF=3Dy
-> diff --git a/tools/iso-tester.c b/tools/iso-tester.c
-> index 350775fdd..858321730 100644
-> --- a/tools/iso-tester.c
-> +++ b/tools/iso-tester.c
-> @@ -471,12 +471,13 @@ struct test_data {
->         uint16_t handle;
->         uint16_t acl_handle;
->         struct queue *io_queue;
-> -       unsigned int io_id[4];
-> +       unsigned int io_id[5];
->         uint8_t client_num;
->         int step;
->         bool reconnect;
->         bool suspending;
->         struct tx_tstamp_data tx_ts;
-> +       struct tx_tstamp_data bpf_tx_ts;
->  };
->
->  struct iso_client_data {
-> @@ -517,6 +518,9 @@ struct iso_client_data {
->
->         /* Disable BT_POLL_ERRQUEUE before enabling TX timestamping */
->         bool no_poll_errqueue;
-> +
-> +       /* Enable BPF TX timestamping */
-> +       bool bpf_ts;
->  };
->
->  typedef bool (*iso_defer_accept_t)(struct test_data *data, GIOChannel *i=
-o,
-> @@ -697,6 +701,13 @@ static void test_pre_setup(const void *test_data)
->                         return;
->         }
->
-> +#ifndef HAVE_BPF
-> +       if (isodata && isodata->bpf_ts) {
-> +               if (tester_pre_setup_skip_by_default())
-> +                       return;
-> +       }
-> +#endif
-> +
->         data->mgmt =3D mgmt_new_default();
->         if (!data->mgmt) {
->                 tester_warn("Failed to setup management interface");
-> @@ -738,6 +749,9 @@ static void test_post_teardown(const void *test_data)
->                           NULL, NULL, NULL);
->         }
->
-> +       tx_tstamp_teardown(&data->tx_ts);
-> +       tx_tstamp_teardown(&data->bpf_tx_ts);
-> +
->         hciemu_unref(data->hciemu);
->         data->hciemu =3D NULL;
->  }
-> @@ -776,7 +790,7 @@ static void test_data_free(void *test_data)
->                 user->accept_reason =3D reason; \
->                 tester_add_full(name, data, \
->                                 test_pre_setup, setup, func, NULL, \
-> -                               test_post_teardown, 2, user, test_data_fr=
-ee); \
-> +                               test_post_teardown, 3, user, test_data_fr=
-ee); \
->         } while (0)
->
->  #define test_iso(name, data, setup, func) \
-> @@ -1094,6 +1108,29 @@ static const struct iso_client_data connect_send_t=
-x_no_poll_timestamping =3D {
->         .no_poll_errqueue =3D true,
->  };
->
-> +static const struct iso_client_data connect_send_tx_bpf_timestamping =3D=
+Pass Veridict:
+The IUT sends a Response_Code of 0x00 (Success) in response to each
+Config Codec operation.
+
+4.9.2 Unicast Server as Audio Source Performs Config Codec – LC3
+
+Test Purpose:
+Verify that a Unicast Server Audio Source IUT can perform a Config
+Codec operation initiated by a Unicast Client for an ASE in the Idle
+state, the Codec Configured state.
+
+Pass verdict:
+The IUT sends a Response_Code of 0x00 (Success) in response to each
+Config Codec operation.
+
+Test Summary
+------------
+BAP/USR/SCC/BV-001-C [USR SNK Config Codec, LC3 8_1] Passed
+BAP/USR/SCC/BV-002-C [USR SNK Config Codec, LC3 8_2] Passed
+BAP/USR/SCC/BV-003-C [USR SNK Config Codec, LC3 16_1] Passed
+BAP/USR/SCC/BV-004-C [USR SNK Config Codec, LC3 16_2] Passed
+BAP/USR/SCC/BV-005-C [USR SNK Config Codec, LC3 24_1] Passed
+BAP/USR/SCC/BV-006-C [USR SNK Config Codec, LC3 24_2] Passed
+BAP/USR/SCC/BV-007-C [USR SNK Config Codec, LC3 32_1] Passed
+BAP/USR/SCC/BV-008-C [USR SNK Config Codec, LC3 32_2] Passed
+BAP/USR/SCC/BV-009-C [USR SNK Config Codec, LC3 44.1_1] Passed
+BAP/USR/SCC/BV-010-C [USR SNK Config Codec, LC3 44.1_2] Passed
+BAP/USR/SCC/BV-011-C [USR SNK Config Codec, LC3 48_1] Passed
+BAP/USR/SCC/BV-012-C [USR SNK Config Codec, LC3 48_2] Passed
+BAP/USR/SCC/BV-013-C [USR SNK Config Codec, LC3 48_3] Passed
+BAP/USR/SCC/BV-014-C [USR SNK Config Codec, LC3 48_4] Passed
+BAP/USR/SCC/BV-015-C [USR SNK Config Codec, LC3 48_5] Passed
+BAP/USR/SCC/BV-016-C [USR SNK Config Codec, LC3 48_6] Passed
+BAP/USR/SCC/BV-017-C [USR SRC Config Codec, LC3 8_1] Passed
+BAP/USR/SCC/BV-018-C [USR SRC Config Codec, LC3 8_2] Passed
+BAP/USR/SCC/BV-019-C [USR SRC Config Codec, LC3 16_1] Passed
+BAP/USR/SCC/BV-020-C [USR SRC Config Codec, LC3 16_2] Passed
+BAP/USR/SCC/BV-021-C [USR SRC Config Codec, LC3 24_1] Passed
+BAP/USR/SCC/BV-022-C [USR SRC Config Codec, LC3 24_2] Passed
+BAP/USR/SCC/BV-023-C [USR SRC Config Codec, LC3 32_1] Passed
+BAP/USR/SCC/BV-024-C [USR SRC Config Codec, LC3 32_2] Passed
+BAP/USR/SCC/BV-025-C [USR SRC Config Codec, LC3 44.1_1] Passed
+BAP/USR/SCC/BV-026-C [USR SRC Config Codec, LC3 44.1_2] Passed
+BAP/USR/SCC/BV-027-C [USR SRC Config Codec, LC3 48_1] Passed
+BAP/USR/SCC/BV-028-C [USR SRC Config Codec, LC3 48_2] Passed
+BAP/USR/SCC/BV-029-C [USR SRC Config Codec, LC3 48_3] Passed
+BAP/USR/SCC/BV-030-C [USR SRC Config Codec, LC3 48_4] Passed
+BAP/USR/SCC/BV-031-C [USR SRC Config Codec, LC3 48_5] Passed
+BAP/USR/SCC/BV-032-C [USR SRC Config Codec, LC3 48_6] Passed
+Total: 32, Passed: 32 (100.0%), Failed: 0, Not Run: 0
+---
+ unit/test-bap.c | 234 +++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 202 insertions(+), 32 deletions(-)
+
+diff --git a/unit/test-bap.c b/unit/test-bap.c
+index cabb9b296ee2..dc199f4871e1 100644
+--- a/unit/test-bap.c
++++ b/unit/test-bap.c
+@@ -90,9 +90,11 @@ static struct iovec lc3_caps = LC3_CAPABILITIES(LC3_FREQ_ANY, LC3_DURATION_ANY,
+ 								3u, 26, 240);
+ 
+ static struct bt_bap_pac_qos lc3_qos = {
++	.phy = 0x02,
++	.rtn = 0x01,
+ 	.location = 0x00000003,
+ 	.supported_context = 0x0fff,
+-	.context = 0x0fff
++	.context = 0x0fff,
+ };
+ 
+ #define iov_data(args...) ((const struct iovec[]) { args })
+@@ -402,12 +404,18 @@ static void gatt_notify_cb(struct gatt_db_attribute *attrib,
+ 	struct test_data *data = user_data;
+ 	uint16_t handle = gatt_db_attribute_get_handle(attrib);
+ 
+-	if (!data->server)
++	if (tester_use_debug())
++		tester_debug("handle 0x%04x len %zd", handle, len);
++
++	if (!data->server) {
++		if (tester_use_debug())
++			tester_debug("data->server %p", data->server);
+ 		return;
++	}
+ 
+ 	if (!bt_gatt_server_send_notification(data->server,
+ 			handle, value, len, false))
+-		printf("%s: Failed to send notification\n", __func__);
++		tester_debug("%s: Failed to send notification", __func__);
+ }
+ 
+ static void gatt_ccc_read_cb(struct gatt_db_attribute *attrib,
+@@ -475,6 +483,19 @@ static void setup_complete_cb(const void *user_data)
+ 	tester_setup_complete();
+ }
+ 
++static int pac_config(struct bt_bap_stream *stream, struct iovec *cfg,
++			struct bt_bap_qos *qos, bt_bap_pac_config_t cb,
++			void *user_data)
++{
++	cb(stream, 0);
++
++	return 0;
++}
++
++static struct bt_bap_pac_ops ucast_pac_ops = {
++	.config = pac_config,
++};
++
+ static void test_setup_server(const void *user_data)
  {
-> +       .qos =3D QOS_16_2_1,
-> +       .expect_err =3D 0,
-> +       .send =3D &send_16_2_1,
-> +       .so_timestamping =3D 0,
-> +       .repeat_send =3D 1,
-> +       .repeat_send_pre_ts =3D 2,
-> +       .bpf_ts =3D true,
-> +};
-> +
-> +static const struct iso_client_data connect_send_tx_bpf_sk_timestamping =
-=3D {
-> +       .qos =3D QOS_16_2_1,
-> +       .expect_err =3D 0,
-> +       .send =3D &send_16_2_1,
-> +       .so_timestamping =3D (SOF_TIMESTAMPING_SOFTWARE |
-> +                                       SOF_TIMESTAMPING_OPT_ID |
-> +                                       SOF_TIMESTAMPING_TX_SOFTWARE |
-> +                                       SOF_TIMESTAMPING_TX_COMPLETION),
-> +       .repeat_send =3D 1,
-> +       .repeat_send_pre_ts =3D 2,
-> +       .bpf_ts =3D true,
-> +};
-> +
->  static const struct iso_client_data listen_16_2_1_recv =3D {
->         .qos =3D QOS_16_2_1,
->         .expect_err =3D 0,
-> @@ -2254,6 +2291,24 @@ static gboolean iso_fail_errqueue(GIOChannel *io, =
-GIOCondition cond,
->         return FALSE;
->  }
->
-> +static gboolean iso_bpf_io(GIOChannel *io, GIOCondition cond,
-> +                                                       gpointer user_dat=
-a)
-> +{
-> +       struct test_data *data =3D user_data;
-> +       int err;
-> +
-> +       err =3D tx_tstamp_bpf_process(&data->bpf_tx_ts, &data->step);
-> +       if (err > 0)
-> +               return TRUE;
-> +       else if (err)
-> +               tester_test_failed();
-> +       else if (!data->step)
-> +               tester_test_passed();
-> +
-> +       data->io_id[4] =3D 0;
-> +       return FALSE;
-> +}
-> +
->  static gboolean iso_timer_errqueue(gpointer user_data)
->  {
->         struct test_data *data =3D user_data;
-> @@ -2281,18 +2336,40 @@ static void iso_tx_timestamping(struct test_data =
-*data, GIOChannel *io)
->         int err;
->         unsigned int count;
->
-> -       if (!(isodata->so_timestamping & TS_TX_RECORD_MASK))
-> +       if (!(isodata->so_timestamping & TS_TX_RECORD_MASK) && !isodata->=
-bpf_ts)
->                 return;
->
->         tester_print("Enabling TX timestamping");
->
-> -       tx_tstamp_init(&data->tx_ts, isodata->so_timestamping, false);
-> +       tx_tstamp_init(&data->tx_ts, isodata->so_timestamping, false, fal=
-se);
-> +       tx_tstamp_init(&data->bpf_tx_ts, isodata->so_timestamping, false,=
- true);
->
-> -       for (count =3D 0; count < isodata->repeat_send + 1; ++count)
-> +       for (count =3D 0; count < isodata->repeat_send + 1; ++count) {
->                 data->step +=3D tx_tstamp_expect(&data->tx_ts, 0);
-> +               if (isodata->bpf_ts)
-> +                       data->step +=3D tx_tstamp_expect(&data->bpf_tx_ts=
-, 0);
-> +       }
->
->         sk =3D g_io_channel_unix_get_fd(io);
->
-> +       if (isodata->bpf_ts) {
-> +               GIOChannel *bpf_io;
-> +
-> +               err =3D tx_tstamp_bpf_start(&data->bpf_tx_ts, sk);
-> +               if (err < 0) {
-> +                       tester_warn("BPF timestamping failed: %s (%d)",
-> +                               strerror(-err), err);
-> +                       tester_test_failed();
-> +                       return;
-> +               }
-> +
-> +               bpf_io =3D g_io_channel_unix_new(err);
-> +               data->io_id[4] =3D g_io_add_watch(bpf_io,
-> +                                               G_IO_IN | G_IO_ERR | G_IO=
-_HUP,
-> +                                               iso_bpf_io, data);
-> +               g_io_channel_unref(bpf_io);
-> +       }
-> +
->         if (isodata->no_poll_errqueue) {
->                 uint32_t flag =3D 0;
->
-> @@ -2393,6 +2470,8 @@ static void iso_send(struct test_data *data, GIOCha=
-nnel *io)
->         for (count =3D 0; count < isodata->repeat_send + 1; ++count)
->                 iso_send_data(data, io);
->
-> +       g_io_channel_set_close_on_unref(io, FALSE);
-> +
->         if (isodata->bcast) {
->                 tester_test_passed();
->                 return;
-> @@ -3647,6 +3726,14 @@ int main(int argc, char *argv[])
->                         &connect_send_tx_no_poll_timestamping, setup_powe=
-red,
->                         test_connect);
->
-> +       /* Test TX timestamping using BPF */
-> +       test_iso("ISO Send - TX BPF Timestamping",
-> +                       &connect_send_tx_bpf_timestamping, setup_powered,
-> +                       test_connect);
-> +       test_iso("ISO Send - TX BPF + Socket Timestamping",
-> +                       &connect_send_tx_bpf_sk_timestamping, setup_power=
-ed,
-> +                       test_connect);
-> +
->         test_iso("ISO Receive - Success", &listen_16_2_1_recv, setup_powe=
-red,
->                                                         test_listen);
->
-> diff --git a/tools/l2cap-tester.c b/tools/l2cap-tester.c
-> index 41ef62578..350823a01 100644
-> --- a/tools/l2cap-tester.c
-> +++ b/tools/l2cap-tester.c
-> @@ -1382,7 +1382,7 @@ static void l2cap_tx_timestamping(struct test_data =
-*data, GIOChannel *io)
->         tester_print("Enabling TX timestamping");
->
->         tx_tstamp_init(&data->tx_ts, l2data->so_timestamping,
-> -                                       l2data->sock_type =3D=3D SOCK_STR=
-EAM);
-> +                               l2data->sock_type =3D=3D SOCK_STREAM, fal=
-se);
->
->         for (count =3D 0; count < l2data->repeat_send + 1; ++count)
->                 data->step +=3D tx_tstamp_expect(&data->tx_ts, l2data->da=
-ta_len);
-> diff --git a/tools/sco-tester.c b/tools/sco-tester.c
-> index 650f8bab3..0b234b37b 100644
-> --- a/tools/sco-tester.c
-> +++ b/tools/sco-tester.c
-> @@ -767,7 +767,7 @@ static void sco_tx_timestamping(struct test_data *dat=
-a, GIOChannel *io)
->
->         tester_print("Enabling TX timestamping");
->
-> -       tx_tstamp_init(&data->tx_ts, scodata->so_timestamping, false);
-> +       tx_tstamp_init(&data->tx_ts, scodata->so_timestamping, false, fal=
-se);
->
->         for (count =3D 0; count < scodata->repeat_send + 1; ++count)
->                 data->step +=3D tx_tstamp_expect(&data->tx_ts, 0);
-> diff --git a/tools/test-runner.c b/tools/test-runner.c
-> index 1d770330c..84c0f90ad 100644
-> --- a/tools/test-runner.c
-> +++ b/tools/test-runner.c
-> @@ -127,6 +127,7 @@ static const struct {
->         { "tmpfs",    "/run",     "mode=3D0755", MS_NOSUID|MS_NODEV|MS_ST=
-RICTATIME },
->         { "tmpfs",    "/tmp",              NULL, 0 },
->         { "debugfs",  "/sys/kernel/debug", NULL, 0 },
-> +       { "cgroup2",  "/sys/fs/cgroup", NULL, 0 },
->         { }
->  };
->
-> diff --git a/tools/tester-bpf.c b/tools/tester-bpf.c
-> new file mode 100644
-> index 000000000..dcea6cc87
-> --- /dev/null
-> +++ b/tools/tester-bpf.c
-> @@ -0,0 +1,101 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + *
-> + *  BlueZ - Bluetooth protocol stack for Linux
-> + *
-> + *  Copyright (C) 2025  Pauli Virtanen
-> + *
-> + */
-> +
-> +#include "vmlinux.h"
-> +
-> +#include <bpf/bpf_helpers.h>
-> +#include <bpf/bpf_tracing.h>
-> +#include <bpf/bpf_core_read.h>
-> +
-> +#ifndef AF_BLUETOOTH
-> +#define AF_BLUETOOTH 31
-> +#endif
-> +
-> +#ifndef SOL_SOCKET
-> +#define SOL_SOCKET 1
-> +#endif
-> +
-> +#include "tester-bpf.h"
-> +
-> +struct {
-> +       __uint(type, BPF_MAP_TYPE_RINGBUF);
-> +       __uint(max_entries, 256 * 1024);
-> +} tx_tstamp_events SEC(".maps");
-> +
-> +static inline void tx_tstamp_event_emit(__u32 type, __u32 tskey)
-> +{
-> +       struct tx_tstamp_event *event;
-> +
-> +       event =3D bpf_ringbuf_reserve(&tx_tstamp_events, sizeof(*event), =
-0);
-> +       if (!event)
-> +               return;
-> +
-> +       event->type =3D type;
-> +       event->id =3D tskey;
-> +       event->nsec =3D bpf_ktime_get_ns();
-> +
-> +       bpf_ringbuf_submit(event, 0);
-> +}
-> +
-> +SEC("sockops")
-> +int skops_sockopt(struct bpf_sock_ops *skops)
-> +{
-> +       struct bpf_sock *bpf_sk =3D skops->sk;
-> +       struct bpf_sock_ops_kern *skops_kern;
-> +       struct skb_shared_info *shinfo;
-> +       const struct sk_buff *skb;
-> +
-> +       if (!bpf_sk)
-> +               return 1;
-> +
-> +       if (skops->family !=3D AF_BLUETOOTH)
-> +               return 1;
-> +
-> +       skops_kern =3D bpf_cast_to_kern_ctx(skops);
-> +       skb =3D skops_kern->skb;
-> +       shinfo =3D bpf_core_cast(skb->head + skb->end, struct skb_shared_=
-info);
-> +
-> +       switch (skops->op) {
-> +       case BPF_SOCK_OPS_TSTAMP_SENDMSG_CB:
-> +               bpf_sock_ops_enable_tx_tstamp(skops_kern, 0);
-> +               break;
-> +       case BPF_SOCK_OPS_TSTAMP_SCHED_CB:
-> +               tx_tstamp_event_emit(SCM_TSTAMP_SCHED, shinfo->tskey);
-> +               break;
-> +       case BPF_SOCK_OPS_TSTAMP_SND_SW_CB:
-> +               tx_tstamp_event_emit(SCM_TSTAMP_SND, shinfo->tskey);
-> +               break;
-> +       case BPF_SOCK_OPS_TSTAMP_ACK_CB:
-> +               tx_tstamp_event_emit(SCM_TSTAMP_ACK, shinfo->tskey);
-> +               break;
-> +       case BPF_SOCK_OPS_TSTAMP_COMPLETION_CB:
-> +               tx_tstamp_event_emit(SCM_TSTAMP_COMPLETION, shinfo->tskey=
-);
-> +               break;
-> +       }
-> +
-> +       return 1;
-> +}
-> +
-> +SEC("cgroup/setsockopt")
-> +int _setsockopt(struct bpf_sockopt *ctx)
-> +{
-> +       if (ctx->level =3D=3D SOL_CUSTOM_TESTER) {
-> +               int flag =3D SK_BPF_CB_TX_TIMESTAMPING;
-> +
-> +               bpf_setsockopt(ctx->sk, SOL_SOCKET,
-> +                       SK_BPF_CB_FLAGS, &flag, sizeof(flag));
-> +
-> +               ctx->optlen =3D -1;
-> +               return 1;
-> +       }
-> +
-> +       return 1;
-> +}
-> +
-> +char _license[] SEC("license") =3D "GPL";
-> diff --git a/tools/tester-bpf.h b/tools/tester-bpf.h
-> new file mode 100644
-> index 000000000..1b3d06bc8
-> --- /dev/null
-> +++ b/tools/tester-bpf.h
-> @@ -0,0 +1,7 @@
-> +struct tx_tstamp_event {
-> +       __u32 type;
-> +       __u32 id;
-> +       __u64 nsec;
-> +};
-> +
-> +#define SOL_CUSTOM_TESTER      0x89abcdef
-> diff --git a/tools/tester.h b/tools/tester.h
-> index 4e7d7226b..16816fb6e 100644
-> --- a/tools/tester.h
-> +++ b/tools/tester.h
-> @@ -11,13 +11,22 @@
->  #include <stdlib.h>
->  #include <stdint.h>
->  #include <time.h>
-> +#include <fcntl.h>
-> +#include <sys/stat.h>
->  #include <sys/socket.h>
->  #include <linux/errqueue.h>
->  #include <linux/net_tstamp.h>
->
->  #include <glib.h>
->
-> -#define SEC_NSEC(_t)  ((_t) * 1000000000LL)
-> +#ifdef HAVE_BPF
-> +#include <linux/bpf.h>
-> +#include <bpf/libbpf.h>
-> +#include "tester-bpf.h"
-> +#include "tester-skel.h"
-> +#endif
-> +
-> +#define SEC_NSEC(_t)  ((_t) * 1000000000ULL)
->  #define TS_NSEC(_ts)  (SEC_NSEC((_ts)->tv_sec) + (_ts)->tv_nsec)
->
->  #if !HAVE_DECL_SOF_TIMESTAMPING_TX_COMPLETION
-> @@ -39,16 +48,24 @@ struct tx_tstamp_data {
->         unsigned int sent;
->         uint32_t so_timestamping;
->         bool stream;
-> +       bool bpf;
-> +#ifdef HAVE_BPF
-> +       struct tester_bpf *skel;
-> +       struct ring_buffer *buf;
-> +       int cgroup_fd;
-> +       int bpf_err;
-> +#endif
->  };
->
->  static inline void tx_tstamp_init(struct tx_tstamp_data *data,
-> -                               uint32_t so_timestamping, bool stream)
-> +                               uint32_t so_timestamping, bool stream, bo=
-ol bpf)
->  {
->         memset(data, 0, sizeof(*data));
->         memset(data->expect, 0xff, sizeof(data->expect));
->
->         data->so_timestamping =3D so_timestamping;
->         data->stream =3D stream;
-> +       data->bpf =3D bpf;
->  }
->
->  static inline int tx_tstamp_expect(struct tx_tstamp_data *data, size_t l=
-en)
-> @@ -59,6 +76,21 @@ static inline int tx_tstamp_expect(struct tx_tstamp_da=
-ta *data, size_t len)
->         if (data->stream && len)
->                 data->sent +=3D len - 1;
->
-> +       if (data->bpf) {
-> +               bool have_tskey =3D
-> +                       data->so_timestamping & SOF_TIMESTAMPING_OPT_ID &=
-&
-> +                       data->so_timestamping & SOF_TIMESTAMPING_TX_RECOR=
-D_MASK;
-> +
-> +               g_assert(pos + 2 <=3D ARRAY_SIZE(data->expect));
-> +               data->expect[pos].type =3D SCM_TSTAMP_SND;
-> +               data->expect[pos].id =3D have_tskey ? data->sent : 0;
-> +               pos++;
-> +               data->expect[pos].type =3D SCM_TSTAMP_COMPLETION;
-> +               data->expect[pos].id =3D have_tskey ? data->sent : 0;
-> +               pos++;
-> +               goto done;
-> +       }
-> +
->         if (data->so_timestamping & SOF_TIMESTAMPING_TX_SCHED) {
->                 g_assert(pos < ARRAY_SIZE(data->expect));
->                 data->expect[pos].type =3D SCM_TSTAMP_SCHED;
-> @@ -80,6 +112,7 @@ static inline int tx_tstamp_expect(struct tx_tstamp_da=
-ta *data, size_t len)
->                 pos++;
->         }
->
-> +done:
->         if (!data->stream || len)
->                 data->sent++;
->
-> @@ -88,6 +121,51 @@ static inline int tx_tstamp_expect(struct tx_tstamp_d=
-ata *data, size_t len)
->         return steps;
->  }
->
-> +static inline int tx_tstamp_validate(struct tx_tstamp_data *data,
-> +                               const char *source, uint32_t type, uint32=
-_t id,
-> +                               uint64_t nsec, uint64_t now)
-> +{
-> +       unsigned int i;
-> +
-> +       if (now < nsec || now > nsec + SEC_NSEC(10)) {
-> +               tester_warn("nonsense in timestamp");
-> +               return -EINVAL;
-> +       }
-> +
-> +       if (data->pos >=3D data->count) {
-> +               tester_warn("Too many timestamps");
-> +               return -EINVAL;
-> +       }
-> +
-> +       /* Find first unreceived timestamp of the right type */
-> +       for (i =3D 0; i < data->count; ++i) {
-> +               if (data->expect[i].type >=3D 0xffff)
-> +                       continue;
-> +
-> +               if (type =3D=3D data->expect[i].type) {
-> +                       data->expect[i].type =3D 0xffff;
-> +                       break;
-> +               }
-> +       }
-> +       if (i =3D=3D data->count) {
-> +               tester_warn("Bad timestamp type %u", type);
-> +               return -EINVAL;
-> +       }
-> +
-> +       if ((data->so_timestamping & SOF_TIMESTAMPING_OPT_ID || data->bpf=
-) &&
-> +                               id !=3D data->expect[i].id) {
-> +               tester_warn("Bad timestamp id %u", id);
-> +               return -EINVAL;
-> +       }
-> +
-> +       tester_print("Got valid %s TX timestamp %u (type %u, id %u)",
-> +                                                       source, i, type, =
-id);
-> +
-> +       ++data->pos;
-> +
-> +       return data->count - data->pos;
-> +}
-> +
->  static inline int tx_tstamp_recv(struct tx_tstamp_data *data, int sk, in=
-t len)
->  {
->         unsigned char control[512];
-> @@ -99,7 +177,6 @@ static inline int tx_tstamp_recv(struct tx_tstamp_data=
- *data, int sk, int len)
->         struct scm_timestamping *tss =3D NULL;
->         struct sock_extended_err *serr =3D NULL;
->         struct timespec now;
-> -       unsigned int i;
->
->         iov.iov_base =3D buf;
->         iov.iov_len =3D sizeof(buf);
-> @@ -159,42 +236,147 @@ static inline int tx_tstamp_recv(struct tx_tstamp_=
-data *data, int sk, int len)
->
->         clock_gettime(CLOCK_REALTIME, &now);
->
-> -       if (TS_NSEC(&now) < TS_NSEC(tss->ts) ||
-> -                       TS_NSEC(&now) > TS_NSEC(tss->ts) + SEC_NSEC(10)) =
-{
-> -               tester_warn("nonsense in timestamp");
-> -               return -EINVAL;
-> -       }
-> -
-> -       if (data->pos >=3D data->count) {
-> -               tester_warn("Too many timestamps");
-> -               return -EINVAL;
-> -       }
-> -
-> -       /* Find first unreceived timestamp of the right type */
-> -       for (i =3D 0; i < data->count; ++i) {
-> -               if (data->expect[i].type >=3D 0xffff)
-> -                       continue;
-> -
-> -               if (serr->ee_info =3D=3D data->expect[i].type) {
-> -                       data->expect[i].type =3D 0xffff;
-> -                       break;
-> -               }
-> -       }
-> -       if (i =3D=3D data->count) {
-> -               tester_warn("Bad timestamp type %u", serr->ee_info);
-> -               return -EINVAL;
-> -       }
-> -
-> -       if ((data->so_timestamping & SOF_TIMESTAMPING_OPT_ID) &&
-> -                               serr->ee_data !=3D data->expect[i].id) {
-> -               tester_warn("Bad timestamp id %u", serr->ee_data);
-> -               return -EINVAL;
-> -       }
-> -
-> -       tester_print("Got valid TX timestamp %u (type %u, id %u)", i,
-> -                                               serr->ee_info, serr->ee_d=
-ata);
-> -
-> -       ++data->pos;
-> -
-> -       return data->count - data->pos;
-> +       return tx_tstamp_validate(data, "socket", serr->ee_info, serr->ee=
-_data,
-> +                                       TS_NSEC(tss->ts), TS_NSEC(&now));
->  }
-> +
-> +
-> +#ifdef HAVE_BPF
-> +
-> +static inline int tx_tstamp_event_handler(void *ctx, void *buf, size_t s=
-ize)
-> +{
-> +       struct tx_tstamp_data *data =3D ctx;
-> +       struct tx_tstamp_event *event =3D buf;
-> +       struct timespec now;
-> +
-> +       if (size < sizeof(*event)) {
-> +               tester_warn("Bad BPF event");
-> +               return -EIO;
-> +       }
-> +
-> +       clock_gettime(CLOCK_MONOTONIC, &now);
-> +
-> +       data->bpf_err =3D tx_tstamp_validate(data, "BPF", event->type, ev=
-ent->id,
-> +                                               event->nsec, TS_NSEC(&now=
-));
-> +       return data->bpf_err;
-> +}
-> +
-> +static inline int tx_tstamp_bpf_start(struct tx_tstamp_data *data, int s=
-k)
-> +{
-> +       int flag;
-> +
-> +       data->cgroup_fd =3D open("/sys/fs/cgroup", O_RDONLY);
-> +       if (data->cgroup_fd < 0) {
-> +               tester_warn("opening cgroup failed");
-> +               goto fail;
-> +       }
-> +
-> +       data->skel =3D tester_bpf__open_and_load();
-> +       if (!data->skel)
-> +               goto fail;
-> +
-> +       data->buf =3D ring_buffer__new(
-> +                       bpf_map__fd(data->skel->maps.tx_tstamp_events),
-> +                       tx_tstamp_event_handler, data, NULL);
-> +       if (!data->buf) {
-> +               tester_warn("ringbuffer failed");
-> +               goto fail;
-> +       }
-> +
-> +       if (tester_bpf__attach(data->skel)) {
-> +               tester_warn("attach failed");
-> +               goto fail;
-> +       }
-> +
-> +       data->skel->links.skops_sockopt =3D
-> +               bpf_program__attach_cgroup(data->skel->progs.skops_sockop=
-t,
-> +                                                       data->cgroup_fd);
-> +       if (!data->skel->links.skops_sockopt) {
-> +               tester_warn("BPF sockops attach cgroup failed");
-> +               goto fail;
-> +       }
-> +
-> +       data->skel->links._setsockopt =3D
-> +               bpf_program__attach_cgroup(data->skel->progs._setsockopt,
-> +                                                       data->cgroup_fd);
-> +       if (!data->skel->links._setsockopt) {
-> +               tester_warn("BPF setsockopt attach cgroup failed");
-> +               goto fail;
-> +       }
-> +
-> +       flag =3D 0;
-> +       if (setsockopt(sk, SOL_CUSTOM_TESTER, 0, &flag, sizeof(flag))) {
-> +               tester_warn("BPF setsockopt failed");
-> +               goto fail;
-> +       }
-> +
-> +       tester_print("BPF test program attached");
-> +       return ring_buffer__epoll_fd(data->buf);
-> +
-> +fail:
-> +       if (data->buf)
-> +               ring_buffer__free(data->buf);
-> +       if (data->skel)
-> +               tester_bpf__destroy(data->skel);
-> +       if (data->cgroup_fd > 0)
-> +               close(data->cgroup_fd);
-> +       data->buf =3D NULL;
-> +       data->skel =3D NULL;
-> +       data->cgroup_fd =3D 0;
-> +       return -EIO;
-> +}
-> +
-> +static inline int tx_tstamp_bpf_process(struct tx_tstamp_data *data, int=
- *step)
-> +{
-> +       int err;
-> +
-> +       err =3D ring_buffer__consume(data->buf);
-> +       if (err < 0) {
-> +               data->bpf_err =3D err;
-> +       } else if (step) {
-> +               if (*step >=3D err)
-> +                       *step -=3D err;
-> +               else
-> +                       data->bpf_err =3D -E2BIG;
-> +       }
-> +
-> +       return data->bpf_err;
-> +}
-> +
-> +static inline void tx_tstamp_teardown(struct tx_tstamp_data *data)
-> +{
-> +       if (data->skel)
-> +               tester_bpf__detach(data->skel);
-> +       if (data->cgroup_fd > 0)
-> +               close(data->cgroup_fd);
-> +       if (data->buf)
-> +               ring_buffer__free(data->buf);
-> +       if (data->skel) {
-> +               tester_bpf__destroy(data->skel);
-> +               tester_print("BPF test program removed");
-> +       }
-> +
-> +       data->buf =3D NULL;
-> +       data->skel =3D NULL;
-> +       data->cgroup_fd =3D 0;
-> +}
-> +
-> +#else
-> +
-> +static inline int tx_tstamp_bpf_start(struct tx_tstamp_data *data, int s=
-k)
-> +{
-> +       tester_warn("Tester compiled without BPF");
-> +       return -EOPNOTSUPP;
-> +}
-> +
-> +static inline int tx_tstamp_bpf_process(struct tx_tstamp_data *data, int=
- *step)
-> +{
-> +       return false;
-> +}
-> +
-> +static inline void tx_tstamp_teardown(struct tx_tstamp_data *data)
-> +{
-> +}
-> +
-> +#endif
-> +
-> --
-> 2.49.0
->
->
+ 	struct test_data *data = (void *)user_data;
+@@ -494,23 +515,19 @@ static void test_setup_server(const void *user_data)
+ 
+ 	data->ccc_states = queue_new();
+ 
+-	/* If there is no configuration, add a sink PAC since otherwise bt_bap
+-	 * won't even register the required services.
+-	 */
+-	if (!data->cfg) {
+-		data->snk = bt_bap_add_pac(db, "test-bap-snk",
+-							BT_BAP_SINK, LC3_ID,
++	data->snk = bt_bap_add_pac(db, "test-bap-snk", BT_BAP_SINK, LC3_ID,
+ 							data->qos, data->caps,
+ 							NULL);
+-		data->src = bt_bap_add_pac(db, "test-bap-src",
+-							BT_BAP_SOURCE, LC3_ID,
++	g_assert(data->snk);
++
++	bt_bap_pac_set_ops(data->snk, &ucast_pac_ops, NULL);
++
++	data->src = bt_bap_add_pac(db, "test-bap-src", BT_BAP_SOURCE, LC3_ID,
+ 							data->qos, data->caps,
+ 							NULL);
+-		g_assert(data->snk);
+-		g_assert(data->src);
+-	} else {
+-		test_setup_pacs(data);
+-	}
++	g_assert(data->src);
++
++	bt_bap_pac_set_ops(data->src, &ucast_pac_ops, NULL);
+ 
+ 	att = bt_att_new(io_get_fd(io), false);
+ 	g_assert(att);
+@@ -675,15 +692,6 @@ static void test_client(const void *user_data)
+ 	bt_bap_attach(data->bap, data->client);
+ }
+ 
+-static int pac_config(struct bt_bap_stream *stream, struct iovec *cfg,
+-			struct bt_bap_qos *qos, bt_bap_pac_config_t cb,
+-			void *user_data)
+-{
+-	cb(stream, 0);
+-
+-	return 0;
+-}
+-
+ static struct bt_bap_pac_ops bcast_pac_ops = {
+ 	.config = pac_config,
+ };
+@@ -1154,8 +1162,6 @@ static void test_server(const void *user_data)
+ 
+ 	tester_io_set_complete_func(test_complete_cb);
+ 
+-	test_setup_pacs(data);
+-
+ 	data->id = bt_bap_register(bap_attached, NULL, data);
+ 	g_assert(data->id);
+ 
+@@ -1221,13 +1227,13 @@ static void test_disc(void)
+  *     Data: 0101010000
+  * ATT: Handle Value Notification (0x1b) len 37
+  *   Handle: 0x0016
+- *     Data: 01010102010a00204e00409c00204e00409c00_cfg
++ *     Data: 01010002010a00204e00409c00204e00409c00_cfg
+  */
+ #define SCC_SNK(_cfg...) \
+ 	IOV_DATA(0x52, 0x22, 0x00, 0x01, 0x01, 0x01, 0x02, 0x02, _cfg), \
+ 	IOV_DATA(0x1b, 0x22, 0x00, 0x01, 0x01, 0x01, 0x00, 0x00), \
+ 	IOV_NULL, \
+-	IOV_DATA(0x1b, 0x16, 0x00, 0x01, 0x01, 0x01, 0x02, 0x01, 0x0a, 0x00, \
++	IOV_DATA(0x1b, 0x16, 0x00, 0x01, 0x01, 0x00, 0x02, 0x01, 0x0a, 0x00, \
+ 			0x20, 0x4e, 0x00, 0x40, 0x9c, 0x00, 0x20, 0x4e, 0x00, \
+ 			0x40, 0x9c, 0x00, _cfg)
+ 
+@@ -1412,13 +1418,13 @@ static struct test_config cfg_snk_48_6 = {
+  *     Data: 0101030000
+  * ATT: Handle Value Notification (0x1b) len 37
+  *   Handle: 0x001c
+- *     Data: 03010102010a00204e00409c00204e00409c00_cfg
++ *     Data: 03010002010a00204e00409c00204e00409c00_cfg
+  */
+ #define SCC_SRC(_cfg...) \
+ 	IOV_DATA(0x52, 0x22, 0x00, 0x01, 0x01, 0x03, 0x02, 0x02, _cfg), \
+ 	IOV_DATA(0x1b, 0x22, 0x00, 0x01, 0x01, 0x03, 0x00, 0x00), \
+ 	IOV_NULL, \
+-	IOV_DATA(0x1b, 0x1c, 0x00, 0x03, 0x01, 0x01, 0x02, 0x01, 0x0a, 0x00, \
++	IOV_DATA(0x1b, 0x1c, 0x00, 0x03, 0x01, 0x00, 0x02, 0x01, 0x0a, 0x00, \
+ 			0x20, 0x4e, 0x00, 0x40, 0x9c, 0x00, 0x20, 0x4e, 0x00, \
+ 			0x40, 0x9c, 0x00, _cfg)
+ 
+@@ -1600,7 +1606,7 @@ static struct test_config cfg_src_48_6 = {
+  * formatted in an LTV structure with the length, type, and value
+  * specified in Table 4.10.
+  */
+-static void test_scc_cc_lc3(void)
++static void test_ucl_scc_cc_lc3(void)
+ {
+ 	define_test("BAP/UCL/SCC/BV-001-C [UCL SRC Config Codec, LC3 8_1]",
+ 			test_setup, test_client, &cfg_snk_8_1, SCC_SNK_8_1);
+@@ -1668,6 +1674,170 @@ static void test_scc_cc_lc3(void)
+ 			test_setup, test_client, &cfg_src_48_6, SCC_SRC_48_6);
+ }
+ 
++
++/* 4.9 Unicast Server Configuration */
++static void test_usr_scc_cc_lc3(void)
++{
++	/* 4.9.1 Unicast Server as Audio Sink Performs Config Codec – LC3
++	 *
++	 * Test Purpose:
++	 * Verify that a Unicast Server Audio Sink IUT can perform a Config
++	 * Codec operation initiated by a Unicast Client for an ASE in the Idle
++	 * state, the Codec Configured state.
++	 *
++	 * Pass Veridict:
++	 * The IUT sends a Response_Code of 0x00 (Success) in response to each
++	 * Config Codec operation.
++	 *
++	 * BAP/USR/SCC/BV-001-C [USR SNK Config Codec, LC3 8_1]
++	 * BAP/USR/SCC/BV-002-C [USR SNK Config Codec, LC3 8_2]
++	 * BAP/USR/SCC/BV-003-C [USR SNK Config Codec, LC3 16_1]
++	 * BAP/USR/SCC/BV-004-C [USR SNK Config Codec, LC3 16_2]
++	 * BAP/USR/SCC/BV-005-C [USR SNK Config Codec, LC3 24_1]
++	 * BAP/USR/SCC/BV-006-C [USR SNK Config Codec, LC3 24_2]
++	 * BAP/USR/SCC/BV-007-C [USR SNK Config Codec, LC3 32_1]
++	 * BAP/USR/SCC/BV-008-C [USR SNK Config Codec, LC3 32_2]
++	 * BAP/USR/SCC/BV-009-C [USR SNK Config Codec, LC3 44.1_1]
++	 * BAP/USR/SCC/BV-010-C [USR SNK Config Codec, LC3 44.1_2]
++	 * BAP/USR/SCC/BV-011-C [USR SNK Config Codec, LC3 48_1]
++	 * BAP/USR/SCC/BV-012-C [USR SNK Config Codec, LC3 48_2]
++	 * BAP/USR/SCC/BV-013-C [USR SNK Config Codec, LC3 48_3]
++	 * BAP/USR/SCC/BV-014-C [USR SNK Config Codec, LC3 48_4]
++	 * BAP/USR/SCC/BV-015-C [USR SNK Config Codec, LC3 48_5]
++	 * BAP/USR/SCC/BV-016-C [USR SNK Config Codec, LC3 48_6]
++	 */
++	define_test("BAP/USR/SCC/BV-001-C [USR SNK Config Codec, LC3 8_1]",
++			test_setup_server, test_server, &cfg_snk_8_1,
++			SCC_SNK_8_1);
++	define_test("BAP/USR/SCC/BV-002-C [USR SNK Config Codec, LC3 8_2]",
++			test_setup_server, test_server, &cfg_snk_8_2,
++			SCC_SNK_8_2);
++	define_test("BAP/USR/SCC/BV-003-C [USR SNK Config Codec, LC3 16_1]",
++			test_setup_server, test_server, &cfg_snk_16_1,
++			SCC_SNK_16_1);
++	define_test("BAP/USR/SCC/BV-004-C [USR SNK Config Codec, LC3 16_2]",
++			test_setup_server, test_server, &cfg_snk_16_2,
++			SCC_SNK_16_2);
++	define_test("BAP/USR/SCC/BV-005-C [USR SNK Config Codec, LC3 24_1]",
++			test_setup_server, test_server, &cfg_snk_24_1,
++			SCC_SNK_24_1);
++	define_test("BAP/USR/SCC/BV-006-C [USR SNK Config Codec, LC3 24_2]",
++			test_setup_server, test_server, &cfg_snk_24_2,
++			SCC_SNK_24_2);
++	define_test("BAP/USR/SCC/BV-007-C [USR SNK Config Codec, LC3 32_1]",
++			test_setup_server, test_server, &cfg_snk_32_1,
++			SCC_SNK_32_1);
++	define_test("BAP/USR/SCC/BV-008-C [USR SNK Config Codec, LC3 32_2]",
++			test_setup_server, test_server, &cfg_snk_32_2,
++			SCC_SNK_32_2);
++	define_test("BAP/USR/SCC/BV-009-C [USR SNK Config Codec, LC3 44.1_1]",
++			test_setup_server, test_server, &cfg_snk_44_1,
++			SCC_SNK_44_1);
++	define_test("BAP/USR/SCC/BV-010-C [USR SNK Config Codec, LC3 44.1_2]",
++			test_setup_server, test_server, &cfg_snk_44_2,
++			SCC_SNK_44_2);
++	define_test("BAP/USR/SCC/BV-011-C [USR SNK Config Codec, LC3 48_1]",
++			test_setup_server, test_server, &cfg_snk_48_1,
++			SCC_SNK_48_1);
++	define_test("BAP/USR/SCC/BV-012-C [USR SNK Config Codec, LC3 48_2]",
++			test_setup_server, test_server, &cfg_snk_48_2,
++			SCC_SNK_48_2);
++	define_test("BAP/USR/SCC/BV-013-C [USR SNK Config Codec, LC3 48_3]",
++			test_setup_server, test_server, &cfg_snk_48_3,
++			SCC_SNK_48_3);
++	define_test("BAP/USR/SCC/BV-014-C [USR SNK Config Codec, LC3 48_4]",
++			test_setup_server, test_server, &cfg_snk_48_4,
++			SCC_SNK_48_4);
++	define_test("BAP/USR/SCC/BV-015-C [USR SNK Config Codec, LC3 48_5]",
++			test_setup_server, test_server, &cfg_snk_48_5,
++			SCC_SNK_48_5);
++	define_test("BAP/USR/SCC/BV-016-C [USR SNK Config Codec, LC3 48_6]",
++			test_setup_server, test_server, &cfg_snk_48_6,
++			SCC_SNK_48_6);
++	/* 4.9.2 Unicast Server as Audio Source Performs Config Codec – LC3
++	 *
++	 * Test Purpose
++	 * Verify that a Unicast Server Audio Source IUT can perform a Config
++	 * Codec operation initiated by a Unicast Client for an ASE in the Idle
++	 * state, the Codec Configured state.
++	 *
++	 * Pass verdict
++	 * The IUT sends a Response_Code of 0x00 (Success) in response to each
++	 * Config Codec operation.
++	 *
++	 * BAP/USR/SCC/BV-017-C [USR SRC Config Codec, LC3 8_1]
++	 * BAP/USR/SCC/BV-018-C [USR SRC Config Codec, LC3 8_2]
++	 * BAP/USR/SCC/BV-019-C [USR SRC Config Codec, LC3 16_1]
++	 * BAP/USR/SCC/BV-020-C [USR SRC Config Codec, LC3 16_2]
++	 * BAP/USR/SCC/BV-021-C [USR SRC Config Codec, LC3 24_1]
++	 * BAP/USR/SCC/BV-022-C [USR SRC Config Codec, LC3 24_2]
++	 * BAP/USR/SCC/BV-023-C [USR SRC Config Codec, LC3 32_1]
++	 * BAP/USR/SCC/BV-024-C [USR SRC Config Codec, LC3 32_2]
++	 * BAP/USR/SCC/BV-025-C [USR SRC Config Codec, LC3 44.1_1]
++	 * BAP/USR/SCC/BV-026-C [USR SRC Config Codec, LC3 44.1_2]
++	 * BAP/USR/SCC/BV-027-C [USR SRC Config Codec, LC3 48_1]
++	 * BAP/USR/SCC/BV-028-C [USR SRC Config Codec, LC3 48_2]
++	 * BAP/USR/SCC/BV-029-C [USR SRC Config Codec, LC3 48_3]
++	 * BAP/USR/SCC/BV-030-C [USR SRC Config Codec, LC3 48_4]
++	 * BAP/USR/SCC/BV-031-C [USR SRC Config Codec, LC3 48_5]
++	 * BAP/USR/SCC/BV-032-C [USR SRC Config Codec, LC3 48_6]
++	 */
++	define_test("BAP/USR/SCC/BV-017-C [USR SRC Config Codec, LC3 8_1]",
++			test_setup_server, test_server, &cfg_src_8_1,
++			SCC_SRC_8_1);
++	define_test("BAP/USR/SCC/BV-018-C [USR SRC Config Codec, LC3 8_2]",
++			test_setup_server, test_server, &cfg_src_8_2,
++			SCC_SRC_8_2);
++	define_test("BAP/USR/SCC/BV-019-C [USR SRC Config Codec, LC3 16_1]",
++			test_setup_server, test_server, &cfg_src_16_1,
++			SCC_SRC_16_1);
++	define_test("BAP/USR/SCC/BV-020-C [USR SRC Config Codec, LC3 16_2]",
++			test_setup_server, test_server, &cfg_src_16_2,
++			SCC_SRC_16_2);
++	define_test("BAP/USR/SCC/BV-021-C [USR SRC Config Codec, LC3 24_1]",
++			test_setup_server, test_server, &cfg_src_24_1,
++			SCC_SRC_24_1);
++	define_test("BAP/USR/SCC/BV-022-C [USR SRC Config Codec, LC3 24_2]",
++			test_setup_server, test_server, &cfg_src_24_2,
++			SCC_SRC_24_2);
++	define_test("BAP/USR/SCC/BV-023-C [USR SRC Config Codec, LC3 32_1]",
++			test_setup_server, test_server, &cfg_src_32_1,
++			SCC_SRC_32_1);
++	define_test("BAP/USR/SCC/BV-024-C [USR SRC Config Codec, LC3 32_2]",
++			test_setup_server, test_server, &cfg_src_32_2,
++			SCC_SRC_32_2);
++	define_test("BAP/USR/SCC/BV-025-C [USR SRC Config Codec, LC3 44.1_1]",
++			test_setup_server, test_server, &cfg_src_44_1,
++			SCC_SRC_44_1);
++	define_test("BAP/USR/SCC/BV-026-C [USR SRC Config Codec, LC3 44.1_2]",
++			test_setup_server, test_server, &cfg_src_44_2,
++			SCC_SRC_44_2);
++	define_test("BAP/USR/SCC/BV-027-C [USR SRC Config Codec, LC3 48_1]",
++			test_setup_server, test_server, &cfg_src_48_1,
++			SCC_SRC_48_1);
++	define_test("BAP/USR/SCC/BV-028-C [USR SRC Config Codec, LC3 48_2]",
++			test_setup_server, test_server, &cfg_src_48_2,
++			SCC_SRC_48_2);
++	define_test("BAP/USR/SCC/BV-029-C [USR SRC Config Codec, LC3 48_3]",
++			test_setup_server, test_server, &cfg_src_48_3,
++			SCC_SRC_48_3);
++	define_test("BAP/USR/SCC/BV-030-C [USR SRC Config Codec, LC3 48_4]",
++			test_setup_server, test_server, &cfg_src_48_4,
++			SCC_SRC_48_4);
++	define_test("BAP/USR/SCC/BV-031-C [USR SRC Config Codec, LC3 48_5]",
++			test_setup_server, test_server, &cfg_src_48_5,
++			SCC_SRC_48_5);
++	define_test("BAP/USR/SCC/BV-032-C [USR SRC Config Codec, LC3 48_6]",
++			test_setup_server, test_server, &cfg_src_48_6,
++			SCC_SRC_48_6);
++}
++
++static void test_scc_cc_lc3(void)
++{
++	test_ucl_scc_cc_lc3();
++	test_usr_scc_cc_lc3();
++}
++
+ static struct test_config cfg_snk_vs = {
+ 	.cc = IOV_NULL,
+ 	.qos = QOS_UCAST,
+-- 
+2.49.0
 
-
---=20
-Luiz Augusto von Dentz
 
