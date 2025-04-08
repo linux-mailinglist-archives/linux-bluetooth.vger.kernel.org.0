@@ -1,173 +1,465 @@
-Return-Path: <linux-bluetooth+bounces-11580-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-11583-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 33381A813C3
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Apr 2025 19:35:04 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D7FFA8170D
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Apr 2025 22:43:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D61CE1BA7FF0
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Apr 2025 17:35:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 066298A3C5D
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Apr 2025 20:42:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7860B2356C2;
-	Tue,  8 Apr 2025 17:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48E06253F11;
+	Tue,  8 Apr 2025 20:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QDK3NrXP"
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="XtwN60wc"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ACAB184524
-	for <linux-bluetooth@vger.kernel.org>; Tue,  8 Apr 2025 17:34:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744133695; cv=none; b=bx+4FoH97d5A1E/cx2v7O0rBO6HOZhy5c0SQ+k3iquZeLapvCmxDmW/36u7s8rk/JOdzSkKtkLiVHkKEBoCiXfkCGtDV8dg79/VBZ7KBgJ5zSp1hSwoKbl5irnm/junwstKuph+VQLTfIOl8goN0PeJO8v29ez3ffpmvg9E6zbk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744133695; c=relaxed/simple;
-	bh=nUWe8Ou+5doHNJKLW2GlnfltdWXDtUyYlkcv8PdK7Hs=;
-	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
-	 In-Reply-To:References; b=VqORn/d6ZxNYArucMud2PXPr8ryXjg+LyX/BNfTVD5nO91l/A1g2vr/gcp/yoWFGc91Ruz+/j5rmlkUCJBMlQEs6H0fBKSikjOiFrzkv3kIPd/c1vudCu9veO5M03LjvbfXAp1+s1yEtTMTuma1RYzuHZe0uCRLmcwmnJTfggVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QDK3NrXP; arc=none smtp.client-ip=209.85.222.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-7c55500d08cso549330285a.0
-        for <linux-bluetooth@vger.kernel.org>; Tue, 08 Apr 2025 10:34:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744133693; x=1744738493; darn=vger.kernel.org;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=2DOb0dvbNmvqnEY0NU/IIA+TeEfJQS2OE5iiA+rmTTo=;
-        b=QDK3NrXPGptOWnHS9f4FgMmJ7NWyRflHonjbdXPi5+6eN91tcDSZFhJiscu2PvMrK/
-         BqD3Vo5JFb8kQu30rcNpje7ZULR6tdf+VU8DON/2w3vJbTqzavZQW5ZwOUhlo3b+/TZ+
-         FKnkG3NpNh7YHI1QCXq9QfC5dJHLaiwhpeaVEnJpz9ru1QKvPELlKdlG73UWs1RyBHUZ
-         jpHznbAcG6v2d0vrdyU+p4Iu+rUeUDK9wUgRWEFXSWpZxtpiPzShI1Cqtri3HL5fkRWY
-         z/CeqUf0+4DJNjAkHhbt48QC10OP1r14XBuQVjYqLoKxUqvQxq7zK2bCIEu1gImXrKJT
-         VGog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744133693; x=1744738493;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2DOb0dvbNmvqnEY0NU/IIA+TeEfJQS2OE5iiA+rmTTo=;
-        b=sBjksYcql64e318w+vODjWPKnpl/Y55SBzdhqS527rdvIVkxeoTOscAZ9HUvgei0MX
-         XEzQPJmv5rPVunjM9eF7LVikvlIeeEBFyA7jZ/8tKQACYOwGOJK+MolMOzYQ4qiob9m3
-         4cVzubYKkc5NdXrysaW7HSO5sRx9Y1bQuzP01k7rojUw8uM7Pcr9VIQxa190V/5SVrXr
-         /7EQ9eagxggridhkXC0Gf8mRejGpy1vqM1kEQR9Tpt9VUxk8EQJyn1YEp7HeliX6v4uk
-         hSISWA1kNXaJwr/FtD3r1l2zMQ6INQzafWYQw/dqxOuSSHgIEVkTQ5B/ZiGW2++d8O/A
-         EwBA==
-X-Gm-Message-State: AOJu0YzRNne5SYptmuxG9adBhTign+yCN0cH/icBLtTYcoutk1SwZ1rx
-	9nwuot2tX+j4MUXlkmqf2GQs29FEPqdMA58eBKqEJYOk68uBmkld66rWHw==
-X-Gm-Gg: ASbGncvbQTghFHNRwSxehwPI2UxG+5P2+nAbOkYS9QoWZ4AWQKB7GXrVbZoPlQkVcwn
-	DNVS+qKdmXmaoZ6wX/Ke55PHWzSoAuXhCqz9cZZDZf4i50ci7NL458KbC8YBqOdtHZz12IVCddi
-	E3TgRcCbNa52Q0zE4NVCxCnwdrN4VktobXDKuezfloGN+iHZRP/AwZtRFN6HIRUBQ2h9/yHJGFZ
-	AvUrpIcC696nQyYegHW/abppZ+gEmv7VahTJvT+l20luSDwf2BiCoJugopZO5UTlCBhn/De6eDO
-	Q14+BwvdJbey6kBaqk7H/c2ye2Unq+G50oG1j12Fjp565WVpV5YfNA==
-X-Google-Smtp-Source: AGHT+IFU36MQHqpxMfXsoK6Uf9EOHakdLuUZq97ayx37fxmfUfTn9Kmt26mjbke61IXTsukL/P5hYg==
-X-Received: by 2002:a05:620a:4409:b0:7c5:5584:dc1b with SMTP id af79cd13be357-7c77ddde0f5mr2685442485a.54.1744133693010;
-        Tue, 08 Apr 2025 10:34:53 -0700 (PDT)
-Received: from [172.17.0.2] ([172.200.199.208])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7c76ea8b7b1sm786903085a.108.2025.04.08.10.34.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Apr 2025 10:34:52 -0700 (PDT)
-Message-ID: <67f55e3c.050a0220.23b5b9.887d@mx.google.com>
-Date: Tue, 08 Apr 2025 10:34:52 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============3656264972077028678=="
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE3D24C081
+	for <linux-bluetooth@vger.kernel.org>; Tue,  8 Apr 2025 20:42:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1744144978; cv=pass; b=AVWGMwevSFlpNSnDBeO4wfHVnjCMsaet6vi2QqC8AWqXmKFOYGdzAoWdSsbu5ATzQ3y9HFkXY/wMF6CNkc/HIv++a3Hz9YVB9JowcoZQaUjSXrHpfo7+/HpPsGoZIWTZADB6frOEchh+F/fgZ1DXkENwdWFNDTwbsbm/h9FsCfU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1744144978; c=relaxed/simple;
+	bh=Sct0SAeR/w295KtiXZ/VZVHGEUQ8WFB2OPk9MPKS3uc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=BoH/+5yAPEFlyvmqA7MGm/vJDMPXXizG2kXIRXvcph8Pyp52kAPUiQmw88SDssM5nl7CksFPYxPE65hhxWcA6569R3Bvs9a5tOex8TkTaaHargcfHD/4Ku2SOuoW5Gxs1N/dDZjZCvMULl79PnYFpRi4Tuk/Ex89TuyhdGBcbtI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=XtwN60wc; arc=pass smtp.client-ip=195.140.195.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
+Received: from monolith.lan (unknown [193.138.7.178])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: pav)
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4ZXJ1L0l0fzySN;
+	Tue,  8 Apr 2025 23:42:45 +0300 (EEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
+	t=1744144966;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=qEy1wdTVki0Wy7XlS6KXfSl3ypZ3qqjQhXUL8k+Zirk=;
+	b=XtwN60wcNkPHcsNGNrhCyRK3jEa0rfrcXpRGw0wdPjNTrv/orU6oXdBs01iy2QJE9EN/Kh
+	+Ic/zgGhd1SUCyFOn3yMfIH3xZ68x6FHBx8G4o2n8c0RluT++neJgvpAGZL9B+6zx4C/P+
+	3GEeEZQcC42y71C90Oc3BUoOnl+M0ig=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
+	s=meesny; t=1744144966;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=qEy1wdTVki0Wy7XlS6KXfSl3ypZ3qqjQhXUL8k+Zirk=;
+	b=iMm2f1Kioj+qcBP5hvIHV0lTp652OaxH0LKJkJZayTRIWjzHkl0A669bsqbru5NX+TdgA/
+	pJ2mjKWCaM/7CXnAvvgEQ3IUY0rHNOpXMHKTR7j7zS/tvBoREASyY7a+6IviA4kJZXhjVY
+	zF/aVu2APAIEFpfB00XffZdbsI4UubU=
+ARC-Authentication-Results: i=1;
+	ORIGINATING;
+	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
+ARC-Seal: i=1; s=meesny; d=iki.fi; t=1744144966; a=rsa-sha256; cv=none;
+	b=nD0p8ZlGc5tuVhrNJjM+mMUx3wzVfjIxEP6nJrYeBnoY+MAkqtW46w69Iu7SyeDgVkUrvC
+	2xxzOAZcKicZbPQkawDLeb8usNXT/gK/xmMXKLuvj9FjR9p47cAxkItgCbK4rMpGtMIgIL
+	AK5Guq7lMnPES1a/xclY7hHbI1OGgo8=
+From: Pauli Virtanen <pav@iki.fi>
+To: linux-bluetooth@vger.kernel.org
+Cc: Pauli Virtanen <pav@iki.fi>
+Subject: [PATCH BlueZ 1/3] shared/io: add watcher to be used with TX timestamping
+Date: Tue,  8 Apr 2025 23:42:38 +0300
+Message-ID: <aa9cdb0ec03c5fcbf12a2df3d183c47de664bdc1.1744144760.git.pav@iki.fi>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: bluez.test.bot@gmail.com
-To: linux-bluetooth@vger.kernel.org, frederic.danis@collabora.com
-Subject: RE: Bluetooth: l2cap: Check encryption key size on incoming connection
-In-Reply-To: <20250408170915.623602-1-frederic.danis@collabora.com>
-References: <20250408170915.623602-1-frederic.danis@collabora.com>
-Reply-To: linux-bluetooth@vger.kernel.org
+Content-Transfer-Encoding: 8bit
 
---===============3656264972077028678==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Add special implementation of fd watcher GSource for audio use.
 
-This is automated email and please do not reply to this email!
+For audio use cases, sound server may turn on TX timestamping on a
+socket that we are watching.  In this case, we shall not consider the TX
+timestamping POLLERR as a socket error condition, nor read the TX
+timestamps.
 
-Dear submitter,
+When TX timestamps appear in errqueue, switch from fd poll wait to
+polling the fd at regular intervals.  This is because unread errqueue
+causes poll() to wake up immediately, so the mainloop cannot block on
+that, and we have to use a timer instead with some reasonable timeout
+for the use case.
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=951217
+This rate limits wakeups on new TX timestamps we aren't going to read,
+and also avoids the busy looping if timestamping was left on but
+errqueue is not flushed.
 
----Test result---
+Kernel does not provide any way for user applications to disable wakeup
+on POLLERR currently.  Note that even with epoll() POLLET it still wakes
+up on every timestamp.
 
-Test Summary:
-CheckPatch                    PENDING   0.33 seconds
-GitLint                       PENDING   0.23 seconds
-SubjectPrefix                 PASS      0.12 seconds
-BuildKernel                   PASS      28.75 seconds
-CheckAllWarning               PASS      29.00 seconds
-CheckSparse                   PASS      45.36 seconds
-BuildKernel32                 PASS      30.55 seconds
-TestRunnerSetup               PASS      479.36 seconds
-TestRunner_l2cap-tester       PASS      21.96 seconds
-TestRunner_iso-tester         FAIL      121.76 seconds
-TestRunner_bnep-tester        PASS      4.90 seconds
-TestRunner_mgmt-tester        FAIL      131.22 seconds
-TestRunner_rfcomm-tester      PASS      13.00 seconds
-TestRunner_sco-tester         PASS      12.71 seconds
-TestRunner_ioctl-tester       PASS      8.54 seconds
-TestRunner_mesh-tester        FAIL      9.33 seconds
-TestRunner_smp-tester         PASS      15.16 seconds
-TestRunner_userchan-tester    PASS      6.96 seconds
-IncrementalBuild              PENDING   0.79 seconds
-
-Details
-##############################
-Test: CheckPatch - PENDING
-Desc: Run checkpatch.pl script
-Output:
-
-##############################
-Test: GitLint - PENDING
-Desc: Run gitlint
-Output:
-
-##############################
-Test: TestRunner_iso-tester - FAIL
-Desc: Run iso-tester with test-runner
-Output:
-BUG: KASAN: slab-use-after-free in iso_conn_hold_unless_zero+0x78/0x1c0
-Total: 124, Passed: 123 (99.2%), Failed: 0, Not Run: 1
-##############################
-Test: TestRunner_mgmt-tester - FAIL
-Desc: Run mgmt-tester with test-runner
-Output:
-Total: 490, Passed: 485 (99.0%), Failed: 1, Not Run: 4
-
-Failed Test Cases
-LL Privacy - Start Discovery 2 (Disable RL)          Failed       0.190 seconds
-##############################
-Test: TestRunner_mesh-tester - FAIL
-Desc: Run mesh-tester with test-runner
-Output:
-BUG: KASAN: slab-use-after-free in run_timer_softirq+0x76f/0x7d0
-WARNING: CPU: 0 PID: 36 at kernel/workqueue.c:2257 __queue_work+0x93e/0xba0
-Total: 10, Passed: 9 (90.0%), Failed: 1, Not Run: 0
-
-Failed Test Cases
-Mesh - Send cancel - 1                               Failed       0.107 seconds
-##############################
-Test: IncrementalBuild - PENDING
-Desc: Incremental build with the patches in the series
-Output:
-
-
-
+Implement this only for io-glib; it is only needed for audio use cases
+that anyway are using glib, so add a glib-specific API for it in
+addition to the 'struct io *' one. Uses features from GLib 2.36 (from
+2013) so update configure.ac also.
 ---
-Regards,
-Linux Bluetooth
 
+Notes:
+    v2:
+    - Remove io-glib.h. Pass void * for GIOChannel *, which is how
+      it needs to be if it's in io.h as requested.
+    - Adjust API a bit
+    
+    In theory avdtp/bap could be changed to use a 'struct io *' instead, but
+    it's mostly additional complication with no gain since they are using
+    GLib anyway, and in theory 'struct io *' users shall use the
+    io_set_ignore_errqueue API instead.
 
---===============3656264972077028678==--
+ acinclude.m4             |   4 +-
+ configure.ac             |   2 +-
+ src/shared/io-ell.c      |  12 +++
+ src/shared/io-glib.c     | 185 ++++++++++++++++++++++++++++++++++++++-
+ src/shared/io-mainloop.c |  12 +++
+ src/shared/io.h          |   5 ++
+ 6 files changed, 216 insertions(+), 4 deletions(-)
+
+diff --git a/acinclude.m4 b/acinclude.m4
+index 168117840..8046c9a7d 100644
+--- a/acinclude.m4
++++ b/acinclude.m4
+@@ -63,8 +63,8 @@ AC_DEFUN([COMPILER_FLAGS], [
+ 		with_cflags="$with_cflags -Wformat -Wformat-security"
+ 		with_cflags="$with_cflags -Wstringop-overflow"
+ 		with_cflags="$with_cflags -DG_DISABLE_DEPRECATED"
+-		with_cflags="$with_cflags -DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_28"
+-		with_cflags="$with_cflags -DGLIB_VERSION_MAX_ALLOWED=GLIB_VERSION_2_32"
++		with_cflags="$with_cflags -DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_36"
++		with_cflags="$with_cflags -DGLIB_VERSION_MAX_ALLOWED=GLIB_VERSION_2_36"
+ 	fi
+ 	AC_SUBST([WARNING_CFLAGS], $with_cflags)
+ ])
+diff --git a/configure.ac b/configure.ac
+index 2ea727256..1e089aaa7 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -81,7 +81,7 @@ AC_CHECK_DECLS([basename], [],
+ 				 ])
+ 
+ 
+-PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.28)
++PKG_CHECK_MODULES(GLIB, glib-2.0 >= 2.36)
+ 
+ if (test "${enable_threads}" = "yes"); then
+ 	AC_DEFINE(NEED_THREADS, 1, [Define if threading support is required])
+diff --git a/src/shared/io-ell.c b/src/shared/io-ell.c
+index 35dc38e2e..4d64cf3c5 100644
+--- a/src/shared/io-ell.c
++++ b/src/shared/io-ell.c
+@@ -175,6 +175,12 @@ bool io_set_close_on_destroy(struct io *io, bool do_close)
+ 	return l_io_set_close_on_destroy(io->l_io, do_close);
+ }
+ 
++bool io_set_ignore_errqueue(struct io *io, bool do_ignore)
++{
++	/* TODO: unimplemented */
++	return false;
++}
++
+ bool io_set_read_handler(struct io *io, io_callback_func_t callback,
+ 				void *user_data, io_destroy_func_t destroy)
+ {
+@@ -303,3 +309,9 @@ bool io_shutdown(struct io *io)
+ 
+ 	return shutdown(fd, SHUT_RDWR) == 0;
+ }
++
++unsigned int io_glib_add_err_watch(void *giochannel, io_glib_err_func_t func,
++							void *user_data)
++{
++	return 0;
++}
+diff --git a/src/shared/io-glib.c b/src/shared/io-glib.c
+index 754043db1..81cd1122b 100644
+--- a/src/shared/io-glib.c
++++ b/src/shared/io-glib.c
+@@ -13,11 +13,14 @@
+ #endif
+ 
+ #include <errno.h>
++#include <sys/socket.h>
+ 
+ #include <glib.h>
+ 
+ #include "src/shared/io.h"
+ 
++#define	IO_ERR_WATCH_RATELIMIT		(500 * G_TIME_SPAN_MILLISECOND)
++
+ struct io_watch {
+ 	struct io *io;
+ 	guint id;
+@@ -29,11 +32,24 @@ struct io_watch {
+ struct io {
+ 	int ref_count;
+ 	GIOChannel *channel;
++	bool err_watch;
+ 	struct io_watch *read_watch;
+ 	struct io_watch *write_watch;
+ 	struct io_watch *disconnect_watch;
+ };
+ 
++struct io_err_watch {
++	GSource			source;
++	GIOChannel		*io;
++	GIOCondition		events;
++	gpointer		tag;
++};
++
++static guint io_glib_add_err_watch_full(GIOChannel *io, gint priority,
++					GIOCondition events,
++					GIOFunc func, gpointer user_data,
++					GDestroyNotify notify);
++
+ static struct io *io_ref(struct io *io)
+ {
+ 	if (!io)
+@@ -179,10 +195,17 @@ static struct io_watch *watch_new(struct io *io, GIOCondition cond,
+ 
+ 	prio = cond == G_IO_HUP ? G_PRIORITY_DEFAULT_IDLE : G_PRIORITY_DEFAULT;
+ 
+-	watch->id = g_io_add_watch_full(io->channel, prio,
++	if (!io->err_watch)
++		watch->id = g_io_add_watch_full(io->channel, prio,
+ 						cond | G_IO_ERR | G_IO_NVAL,
+ 						watch_callback, watch,
+ 						watch_destroy);
++	else
++		watch->id = io_glib_add_err_watch_full(io->channel, prio,
++						cond | G_IO_ERR | G_IO_NVAL,
++						watch_callback, watch,
++						watch_destroy);
++
+ 	if (watch->id == 0) {
+ 		watch_destroy(watch);
+ 		return NULL;
+@@ -250,6 +273,15 @@ bool io_set_disconnect_handler(struct io *io, io_callback_func_t callback,
+ 	return io_set_handler(io, G_IO_HUP, callback, user_data, destroy);
+ }
+ 
++bool io_set_ignore_errqueue(struct io *io, bool do_ignore)
++{
++	if (!io)
++		return false;
++
++	io->err_watch = do_ignore;
++	return true;
++}
++
+ ssize_t io_send(struct io *io, const struct iovec *iov, int iovcnt)
+ {
+ 	int fd;
+@@ -278,3 +310,154 @@ bool io_shutdown(struct io *io)
+ 	return g_io_channel_shutdown(io->channel, TRUE, NULL)
+ 							== G_IO_STATUS_NORMAL;
+ }
++
++/*
++ * GSource implementation that tolerates non-empty MSG_ERRQUEUE, without
++ * attempting to flush it. This is intended for use with TX timestamping in
++ * cases where someone else is reading the timestamps and we are only interested
++ * in POLLHUP or socket errors.
++ */
++
++static gint64 io_err_watch_wakeup;
++
++static gboolean io_err_watch_dispatch(GSource *source,
++				GSourceFunc callback, gpointer user_data)
++{
++	struct io_err_watch *watch = (void *)source;
++	const GIOFunc func = (void *)callback;
++	const gint64 timeout = IO_ERR_WATCH_RATELIMIT;
++	GIOCondition cond;
++	int fd;
++
++	if (!func)
++		return FALSE;
++
++	fd = g_io_channel_unix_get_fd(watch->io);
++
++	/*
++	 * If woken up by POLLERR only, and SO_ERROR is not set, ignore this
++	 * event. Also disable polling for some time so that we don't consume
++	 * too much CPU on events we are not interested in, or busy loop if
++	 * nobody is flushing the errqueue.
++	 */
++
++	if (watch->tag)
++		cond = g_source_query_unix_fd(&watch->source, watch->tag);
++	else
++		cond = 0;
++
++	if (cond == G_IO_ERR) {
++		int err, ret;
++		socklen_t len = sizeof(err);
++
++		ret = getsockopt(fd, SOL_SOCKET, SO_ERROR, &err, &len);
++		if (ret == 0 && err == 0) {
++			g_source_remove_unix_fd(&watch->source, watch->tag);
++			watch->tag = NULL;
++
++			/* io_err watches all wake up at the same time */
++			if (!io_err_watch_wakeup)
++				io_err_watch_wakeup = g_get_monotonic_time()
++								+ timeout;
++
++			g_source_set_ready_time(&watch->source,
++							io_err_watch_wakeup);
++			return TRUE;
++		}
++	}
++
++	if (g_source_get_ready_time(&watch->source) != -1) {
++		g_assert(!watch->tag);
++		io_err_watch_wakeup = 0;
++		watch->tag = g_source_add_unix_fd(&watch->source, fd,
++							watch->events);
++		g_source_set_ready_time(&watch->source, -1);
++	}
++
++	cond &= watch->events;
++
++	if (cond)
++		return func(watch->io, cond, user_data);
++	else
++		return TRUE;
++}
++
++static void io_err_watch_finalize(GSource *source)
++{
++	struct io_err_watch *watch = (void *)source;
++
++	if (watch->tag)
++		g_source_remove_unix_fd(&watch->source, watch->tag);
++
++	g_io_channel_unref(watch->io);
++}
++
++static guint io_glib_add_err_watch_full(GIOChannel *io, gint priority,
++					GIOCondition events,
++					GIOFunc func, gpointer user_data,
++					GDestroyNotify notify)
++{
++	static GSourceFuncs source_funcs = {
++		.dispatch = io_err_watch_dispatch,
++		.finalize = io_err_watch_finalize,
++	};
++	GSourceFunc callback = (void *)func;
++	struct io_err_watch *watch;
++	gint fd;
++	guint id;
++
++	g_return_val_if_fail(!(events & (G_IO_IN | G_IO_OUT)), 0);
++	g_return_val_if_fail(events, 0);
++	g_return_val_if_fail(func, 0);
++
++	fd = g_io_channel_unix_get_fd(io);
++
++	watch = (void *)g_source_new(&source_funcs,
++					sizeof(struct io_err_watch));
++
++	watch->io = g_io_channel_ref(io);
++	watch->events = events;
++	watch->tag = g_source_add_unix_fd(&watch->source, fd, events);
++
++	g_source_set_name((void *)watch, "io_glib_err_watch");
++	g_source_set_callback(&watch->source, callback, user_data, notify);
++
++	if (priority != G_PRIORITY_DEFAULT)
++		g_source_set_priority(&watch->source, priority);
++
++	id = g_source_attach(&watch->source, NULL);
++	g_source_unref(&watch->source);
++
++	return id;
++}
++
++struct err_watch_cb_data {
++	io_glib_err_func_t func;
++	void *data;
++};
++
++static gboolean err_watch_callback(GIOChannel *channel, GIOCondition cond,
++							gpointer user_data)
++{
++	struct err_watch_cb_data *data = user_data;
++
++	data->func(cond, data->data);
++	return FALSE;
++}
++
++unsigned int io_glib_add_err_watch(void *giochannel,
++						io_glib_err_func_t func,
++						void *user_data)
++{
++	struct err_watch_cb_data *data;
++
++	data = g_try_new0(struct err_watch_cb_data, 1);
++	if (!data)
++		return 0;
++
++	data->func = func;
++	data->data = user_data;
++	return io_glib_add_err_watch_full(giochannel, G_PRIORITY_DEFAULT,
++					G_IO_ERR | G_IO_HUP | G_IO_NVAL,
++					err_watch_callback, data, g_free);
++}
+diff --git a/src/shared/io-mainloop.c b/src/shared/io-mainloop.c
+index ad461843c..8fd49935e 100644
+--- a/src/shared/io-mainloop.c
++++ b/src/shared/io-mainloop.c
+@@ -192,6 +192,12 @@ bool io_set_close_on_destroy(struct io *io, bool do_close)
+ 	return true;
+ }
+ 
++bool io_set_ignore_errqueue(struct io *io, bool do_ignore)
++{
++	/* TODO: unimplemented */
++	return false;
++}
++
+ bool io_set_read_handler(struct io *io, io_callback_func_t callback,
+ 				void *user_data, io_destroy_func_t destroy)
+ {
+@@ -309,3 +315,9 @@ bool io_shutdown(struct io *io)
+ 
+ 	return shutdown(io->fd, SHUT_RDWR) == 0;
+ }
++
++unsigned int io_glib_add_err_watch(void *giochannel, io_glib_err_func_t func,
++							void *user_data)
++{
++	return 0;
++}
+diff --git a/src/shared/io.h b/src/shared/io.h
+index bad899ff7..87c3c001c 100644
+--- a/src/shared/io.h
++++ b/src/shared/io.h
+@@ -20,6 +20,7 @@ void io_destroy(struct io *io);
+ 
+ int io_get_fd(struct io *io);
+ bool io_set_close_on_destroy(struct io *io, bool do_close);
++bool io_set_ignore_errqueue(struct io *io, bool do_ignore);
+ 
+ ssize_t io_send(struct io *io, const struct iovec *iov, int iovcnt);
+ bool io_shutdown(struct io *io);
+@@ -32,3 +33,7 @@ bool io_set_write_handler(struct io *io, io_callback_func_t callback,
+ 				void *user_data, io_destroy_func_t destroy);
+ bool io_set_disconnect_handler(struct io *io, io_callback_func_t callback,
+ 				void *user_data, io_destroy_func_t destroy);
++
++typedef void (*io_glib_err_func_t)(int cond, void *user_data);
++unsigned int io_glib_add_err_watch(void *giochannel, io_glib_err_func_t func,
++							void *user_data);
+-- 
+2.49.0
+
 
