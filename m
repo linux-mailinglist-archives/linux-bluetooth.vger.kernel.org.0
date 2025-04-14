@@ -1,164 +1,131 @@
-Return-Path: <linux-bluetooth+bounces-11659-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-11661-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70137A87C02
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 14 Apr 2025 11:36:34 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93696A87FE7
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 14 Apr 2025 14:00:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7B1BA1708F8
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 14 Apr 2025 09:36:34 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E14847A6062
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 14 Apr 2025 11:59:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2568025F96B;
-	Mon, 14 Apr 2025 09:36:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53E0329AB18;
+	Mon, 14 Apr 2025 12:00:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X3etAHsX"
+	dkim=pass (2048-bit key) header.d=salutedevices.com header.i=@salutedevices.com header.b="c9Es8yci"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx1.sberdevices.ru (mx1.sberdevices.ru [37.18.73.165])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1125325E822
-	for <linux-bluetooth@vger.kernel.org>; Mon, 14 Apr 2025 09:36:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 697DC19F133
+	for <linux-bluetooth@vger.kernel.org>; Mon, 14 Apr 2025 12:00:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.18.73.165
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744623386; cv=none; b=niK7/HNVtrpmCeVaPe8DYmvruIKRJrWnyHMZsu6GSTA9xhQlK6FoCFQF//C1ojJPqjJzZi5P4zGsqjANcKCEMQGPogZgFHyQyaTyCYG1mQ3GSLdjjVO8gTcHG/M2ljRV2+NY4onopL7VnZ9zlL9wQOoZ1hs2I35mCoF6HceTg9o=
+	t=1744632037; cv=none; b=kOuhgkRFVsDPLA27udGvXaJ2o9d47XOjG8B8MvZxFWRmqGw8ONMhIxXsvEYlIBGcs0tcA3mGdHihnIhr3ZBGg2I4n/cMpMWFbWDQxkS/7ex4Jh0NeelyYAappHfObq+b18oB/7qjlg2Mm4eA/HM+txY3+PpxNQcM+ou6fepC9Vk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744623386; c=relaxed/simple;
-	bh=7ztTkr7cSYhWLElt9KkNS6XM5xi+ALddWDgtbi/+2JM=;
-	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
-	 In-Reply-To:References; b=L0qfc8qiYMHoUOuejUjngBYDQ+RfTLsJM8qHkxmVO1GbyQECtOPNi7nJKpMmWaacYA4vgCIHiGQ7FJwu9DB5LJokIu34mXmnvNjeNm5y2Hqho8jRRqiRC4AK+Zfni3GuVTrptlY9RmyTP47tJW7wuvtxokMXGdpssu33gxO44gU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X3etAHsX; arc=none smtp.client-ip=209.85.216.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-30155bbbed9so3171588a91.1
-        for <linux-bluetooth@vger.kernel.org>; Mon, 14 Apr 2025 02:36:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744623384; x=1745228184; darn=vger.kernel.org;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=NE+pduSDEE6LG/BgSAhDFuJ3dHqkNd+uBzs4un34Yv8=;
-        b=X3etAHsXcttZMFWUDlaR2fXjR28cFqocndRYCv0sQqtQP3ZBlNT3yXp7CwfgtT2X7p
-         t0r8nHnEvsfd5w8XiAOclm3epsEuZCUmiTSU5FK3lA3g2+5ZPwnmVn4PRZm3BuqHri0H
-         LxobrJ4aF3antw1rigoNAMLHG/OH+2xYynS+mKVazLuOTh9efXjBvGNyx2tLCggwiLDk
-         KC+wSDLNnrISu6tCylylLur7Q5XGmcmvUwa/qw4sdldg7hlW/hJUnPBrJo56JYnzqehx
-         c9t4tm42EL8QL5F61fLygS4dOTFA3ouB2VPwZLTg6vWu8VAbnCTKazutHCURCA3vg5s9
-         +kTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744623384; x=1745228184;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NE+pduSDEE6LG/BgSAhDFuJ3dHqkNd+uBzs4un34Yv8=;
-        b=deQJUp8nkjh2824c/Ozu2uy9qbygbE3EtiaP+2ZI+InUomWSmQ15DauOVUwpohrXdJ
-         wQIMli8lX7HOfSmuwxxSVDgGjlajqRtvZkdyIgGijn1tRGMd8HpTbRmhWfFUpuU4Q9cQ
-         7/RJTfbv+YKTbArUQqEqE27YY5zxkpYzqUXM/57EWEFxRbSMa/rwBa9BcA7M0GfKWr8M
-         gG3at0kIshSf1vQSl7ME9lGLf/OHUl8HGS2tvg+ALw86+mBZfyHJcgNl3sm/lAmQY+C0
-         mil09t6wtuojmpUugmMCdgPu07ueAKOp1NTS1iZR9BfAYCdHESn+8zImx9DeqZprif/C
-         uGlQ==
-X-Gm-Message-State: AOJu0YzxHUkx5VIf9f+lCkksciyHN7GHSdYzUNUEPJP1T1qY0MosTLdb
-	pUB4hR9aXrovZj/DsUnO1WB7N7vvASAkwaYscyU3UFCzm3SGh7bOFS8rVg==
-X-Gm-Gg: ASbGncvL8q48GbulDBnX0mFM3Kw7KXsu6W5ZaWMvWiSQYNGQVEgmtOK+rWPJpoXXEX7
-	Iypw1y57JP9j+FDyrEz1otnCN6poeNZqE8aU8IJ3qPf13anT6n+E+Cok3RmKOBWa3SumzvGrdVH
-	DIbrd8gLwfVqzvK2Vl5sATHOBTnYm30Y+XKQxjs7nzDa+lFdYtrLcJJ8dq5mKnSEG13MRl7QUB/
-	G8bL9gl1U68+/DjPUWfQJmGA4CsDIvafVHYaoERZN/G+27FSj9cO5PQsBZTgf1wqU7ufMed78xN
-	Tv3vMQ8Tzs3pHWSFlpwkQTMZF9E4sQjRkuYMziR230Cfj+SH
-X-Google-Smtp-Source: AGHT+IE0x/kLbbYz85JxgFtWJ1FPUaOcItHpSbDtJcgdAk9RGOWYcN6p9rdclRbmRpGNfSEfsqsbqQ==
-X-Received: by 2002:a17:90b:5242:b0:2fe:e9c6:689e with SMTP id 98e67ed59e1d1-30823670094mr16587188a91.8.1744623383757;
-        Mon, 14 Apr 2025 02:36:23 -0700 (PDT)
-Received: from [172.17.0.2] ([52.160.165.133])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3082a58c27csm5853791a91.20.2025.04.14.02.36.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Apr 2025 02:36:23 -0700 (PDT)
-Message-ID: <67fcd717.170a0220.34b224.0162@mx.google.com>
-Date: Mon, 14 Apr 2025 02:36:23 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============3556788400945103231=="
+	s=arc-20240116; t=1744632037; c=relaxed/simple;
+	bh=3PBgQ1cR8kdEStlI+dzB1DIcq8ihf3Vgp971dz6Xxzc=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ROvWsKLafnv08K7zhUPu7xbo/sfMjUM/dVDlht+URlUEp5nNfSlxg6qu84FGagZXfl9fp/e5O5Td9pqL+yXgqj8QF17AI/30TVFguWxJ6RrOc6bNzZWOkyy8oktb3kB1VuknxCwvFMpRxqO99jEOivDLoLVM8MGb3oHTUnp6nVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=salutedevices.com; spf=pass smtp.mailfrom=salutedevices.com; dkim=pass (2048-bit key) header.d=salutedevices.com header.i=@salutedevices.com header.b=c9Es8yci; arc=none smtp.client-ip=37.18.73.165
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=salutedevices.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=salutedevices.com
+Received: from p-infra-ksmg-sc-msk01.sberdevices.ru (localhost [127.0.0.1])
+	by mx1.sberdevices.ru (Postfix) with ESMTP id 2C293100003
+	for <linux-bluetooth@vger.kernel.org>; Mon, 14 Apr 2025 14:50:57 +0300 (MSK)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.sberdevices.ru 2C293100003
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=salutedevices.com;
+	s=mail; t=1744631457;
+	bh=QbJrurSnaheeNlXQCPoozzQUmwYPRkg80hSMyvfO7K8=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
+	b=c9Es8yciEH4WlXMs4wdsSyftlaBHeArcXcn337fH0zQ9nPTgGtlDblMsVSO+InXXA
+	 NNNqmo1sO9NDYnJmXj3kUkE8rPrAhTfA/J2jEVyQfruGHS2gfqIsLBNcxUCT5gy5DK
+	 bTzNpryl+yvuYQ0ZOcyUJ/5gtbSXr0bOClkA2fNXAHp6GrCp5XeaOp6WgoaBL80Qow
+	 aI1//aPaQ0lTaaFLuTPcSjlDqP/BNRV3e3iICl7sfWQpR2Wp2vxtQLBSwMThRK7Nuq
+	 p7VcN/l5XEXXCw864JIOhJdRxlzx9W1nmwjyU91CXvUKMU05iTHgWi8pgoxdBqkf6A
+	 xdzB8YISHOl7A==
+Received: from smtp.sberdevices.ru (p-i-exch-sc-m01.sberdevices.ru [172.16.192.107])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mx1.sberdevices.ru (Postfix) with ESMTPS
+	for <linux-bluetooth@vger.kernel.org>; Mon, 14 Apr 2025 14:50:57 +0300 (MSK)
+From: Oleg Lyovin <ovlevin@salutedevices.com>
+To: <linux-bluetooth@vger.kernel.org>
+CC: Oleg Lyovin <ovlevin@salutedevices.com>
+Subject: [RFC PATCH BlueZ 0/1] device: Fix rare ERR_BREDR_CONN_BUSY during connect
+Date: Mon, 14 Apr 2025 14:50:16 +0300
+Message-ID: <20250414115017.116579-1-ovlevin@salutedevices.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: bluez.test.bot@gmail.com
-To: linux-bluetooth@vger.kernel.org, frederic.danis@collabora.com
-Subject: RE: [v2] Bluetooth: l2cap: Process valid commands in too long frame
-In-Reply-To: <20250414090815.32366-1-frederic.danis@collabora.com>
-References: <20250414090815.32366-1-frederic.danis@collabora.com>
-Reply-To: linux-bluetooth@vger.kernel.org
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: p-exch-cas-a-m1.sberdevices.ru (172.24.201.216) To
+ p-i-exch-sc-m01.sberdevices.ru (172.16.192.107)
+X-KSMG-Rule-ID: 10
+X-KSMG-Message-Action: clean
+X-KSMG-AntiSpam-Lua-Profiles: 192610 [Apr 14 2025]
+X-KSMG-AntiSpam-Version: 6.1.1.11
+X-KSMG-AntiSpam-Envelope-From: ovlevin@salutedevices.com
+X-KSMG-AntiSpam-Rate: 0
+X-KSMG-AntiSpam-Status: not_detected
+X-KSMG-AntiSpam-Method: none
+X-KSMG-AntiSpam-Auth: dkim=none
+X-KSMG-AntiSpam-Info: LuaCore: 54 0.3.54 464169e973265e881193cca5ab7aa5055e5b7016, {Tracking_from_domain_doesnt_match_to}, 127.0.0.199:7.1.2;salutedevices.com:7.1.1;smtp.sberdevices.ru:5.0.1,7.1.1;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1, FromAlignment: s
+X-MS-Exchange-Organization-SCL: -1
+X-KSMG-AntiSpam-Interceptor-Info: scan successful
+X-KSMG-AntiPhishing: Clean
+X-KSMG-LinksScanning: Clean
+X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 2.0.1.6960, bases: 2025/04/14 08:03:00 #27884858
+X-KSMG-AntiVirus-Status: Clean, skipped
 
---===============3556788400945103231==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Hello everyone,
 
-This is automated email and please do not reply to this email!
+While experimenting with a device acting as and A2DP Source, I have
+encountered the following very rare case during connection to an
+external speaker:
 
-Dear submitter,
+  1970-01-01 00:37:47 debug bluetoothd[240]: profiles/audio/sink.c:sink_set_state() State changed /org/bluez/hci0/dev_28_2B_B9_40_00_1B: SINK_STATE_CONNECTING -> SINK_STATE_DISCONNECTED
+  1970-01-01 00:37:47 debug bluetoothd[240]: profiles/audio/avdtp.c:avdtp_unref() 0x17c1350: ref=1
+  1970-01-01 00:37:47 debug bluetoothd[240]: profiles/audio/a2dp.c:channel_remove() chan 0x17ac468
+  1970-01-01 00:37:47 debug bluetoothd[240]: profiles/audio/avdtp.c:avdtp_unref() 0x17c1350: ref=0
+  1970-01-01 00:37:47 debug bluetoothd[240]: profiles/audio/avdtp.c:avdtp_free() 0x17c1350
+  1970-01-01 00:37:50 debug bluetoothd[240]: src/shared/mgmt.c:can_read_data() [0x0000] event 0x000c
+  1970-01-01 00:37:50 debug bluetoothd[240]: src/adapter.c:dev_disconnected() Device 28:2B:B9:40:00:1B disconnected, reason 2
+  1970-01-01 00:37:50 debug bluetoothd[240]: src/adapter.c:adapter_remove_connection() 
+  1970-01-01 00:37:50 debug bluetoothd[240]: src/device.c:device_remove_connection() connection removed while Connect() is waiting reply
+  1970-01-01 00:37:50 debug bluetoothd[240]: plugins/policy.c:disconnect_cb() reason 2
+  1970-01-01 00:37:50 debug bluetoothd[240]: src/adapter.c:bonding_attempt_complete() hci0 bdaddr 28:2B:B9:40:00:1B type 0 status 0xe
+  1970-01-01 00:37:50 debug bluetoothd[240]: src/device.c:device_bonding_complete() bonding (nil) status 0x0e
+  1970-01-01 00:37:50 debug bluetoothd[240]: src/device.c:device_bonding_failed() status 14
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=952988
+Subsequent attempts to connect using bluetoothctl lead to
+"br-connection-busy":
+  [bluetooth]# connect 28:2B:B9:40:00:1B
+  Attempting to connect to 28:2B:B9:40:00:1B
+  Failed to connect: org.bluez.Error.InProgress br-connection-busy
 
----Test result---
+The reason is that "connect_profiles" does the following check:
+  if (dev->pending || dev->connect || dev->browse)
+    return btd_error_in_progress_str(msg, ERR_BREDR_CONN_BUSY);
 
-Test Summary:
-CheckPatch                    PENDING   0.40 seconds
-GitLint                       PENDING   0.39 seconds
-SubjectPrefix                 PASS      2.24 seconds
-BuildKernel                   PASS      24.51 seconds
-CheckAllWarning               PASS      26.93 seconds
-CheckSparse                   PASS      30.37 seconds
-BuildKernel32                 PASS      23.99 seconds
-TestRunnerSetup               PASS      463.53 seconds
-TestRunner_l2cap-tester       PASS      21.33 seconds
-TestRunner_iso-tester         PASS      35.28 seconds
-TestRunner_bnep-tester        PASS      4.79 seconds
-TestRunner_mgmt-tester        FAIL      124.02 seconds
-TestRunner_rfcomm-tester      PENDING   46.46 seconds
-TestRunner_sco-tester         PASS      16.09 seconds
-TestRunner_ioctl-tester       PASS      8.27 seconds
-TestRunner_mesh-tester        PASS      5.95 seconds
-TestRunner_smp-tester         PASS      20.67 seconds
-TestRunner_userchan-tester    PASS      4.97 seconds
-IncrementalBuild              PENDING   0.52 seconds
+In the above scenario, "dev->pending" is not NULL. I have prepared
+the RFC patch that frees it when a disconnect occurs in the
+"device_remove_connection" code path. I'm not sure if this is the
+correct way to solve the issue, but with this patch it can no longer
+be reproduced.
 
-Details
-##############################
-Test: CheckPatch - PENDING
-Desc: Run checkpatch.pl script
-Output:
+Oleg Lyovin (1):
+  device: Fix rare ERR_BREDR_CONN_BUSY during connect
 
-##############################
-Test: GitLint - PENDING
-Desc: Run gitlint
-Output:
+ src/device.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-##############################
-Test: TestRunner_mgmt-tester - FAIL
-Desc: Run mgmt-tester with test-runner
-Output:
-Total: 490, Passed: 483 (98.6%), Failed: 3, Not Run: 4
+-- 
+2.34.1
 
-Failed Test Cases
-LL Privacy - Add Device 2 (2 Devices to AL)          Failed       0.171 seconds
-LL Privacy - Add Device 3 (AL is full)               Failed       0.206 seconds
-LL Privacy - Set Flags 1 (Add to RL)                 Failed       0.150 seconds
-##############################
-Test: TestRunner_rfcomm-tester - PENDING
-Desc: Run rfcomm-tester with test-runner
-Output:
-
-##############################
-Test: IncrementalBuild - PENDING
-Desc: Incremental build with the patches in the series
-Output:
-
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============3556788400945103231==--
 
