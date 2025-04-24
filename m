@@ -1,59 +1,59 @@
-Return-Path: <linux-bluetooth+bounces-11888-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-11890-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0CFAA9B187
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Apr 2025 16:51:03 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A6C3BA9B182
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Apr 2025 16:50:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7047B7AB5BA
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Apr 2025 14:49:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 697C2921B40
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Apr 2025 14:49:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA00D1A5BAC;
-	Thu, 24 Apr 2025 14:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19BF91B07AE;
+	Thu, 24 Apr 2025 14:49:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="N/kAoQLa"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="WYUrAk9I"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694881AA1F4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6940F1AA1D2
 	for <linux-bluetooth@vger.kernel.org>; Thu, 24 Apr 2025 14:49:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745506180; cv=none; b=BX40JbnxQJ5fTrIsp6z7+ne7Jd0jZ16rTb0isTJ3GTHWXT/tmcJEfdQHnQQ4Xh8yiL+PNOUVkpT48C40M6l2iqMQMHBygQHbQkrDu+LHc9Jcwg+EpwtA3hK1cQ7JnC34fPjzH83usMrkto8G0DYMt5rvzLYfTbc9wAYBw36aalw=
+	t=1745506181; cv=none; b=bZJ6RcVF6puAFyZ9VkkVkCOg4tsAhR4+kM8gOY120ElUARxlHwxFs5ZK1FiAWopeLmRV4ioAbWkPkmAWTWVOGzLH/hEdy5EzIMH1v0K17V3wkx/zVuijRYQRQOciptkGTgq7jlpFYt9YdYjGRm+ro+oaDZh5yEd7RqIVysc1z0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745506180; c=relaxed/simple;
-	bh=sO2suyNYTHAjKiC5MF2Eyb4a1RhA3eniOwJ0ja+qevw=;
+	s=arc-20240116; t=1745506181; c=relaxed/simple;
+	bh=2lyiIniWEG0DJoQfeCCzixYYIF3vFCiCN1jEqIf9zeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gl8EOgErukbkuJAxcLJhpSQ0AewQqdI4loB3FljYvxZRlu4sXkj/DOLNsGkCN6XZ2gDYm30TcMaJP6bHpqsU7UjjwJt2NR5bbrA0TrAXJWUxd2KhqBuHrlbn/2+ahXf/+aZNcBcuyUbZcFWBrnWHj7R3QQxW0loo74nr1qdo+W4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=N/kAoQLa; arc=none smtp.client-ip=148.251.105.195
+	 MIME-Version; b=knTOPydQ+vclkb+WRzg5xsZVec8pbY2z08pqEmVxPOvFy1CbC7+110M0hmgAr2SdL/s6gYEIqYl410gGpMZs8WeszpsFsQ528z7z+bZN5ibLcZTzqo/1SimMg8VtcAvPukoA2y6kr2CY7xsZSGExEfTjhxtnjAvcbBdPHZHKyYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=WYUrAk9I; arc=none smtp.client-ip=148.251.105.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
 	s=mail; t=1745506169;
-	bh=sO2suyNYTHAjKiC5MF2Eyb4a1RhA3eniOwJ0ja+qevw=;
+	bh=2lyiIniWEG0DJoQfeCCzixYYIF3vFCiCN1jEqIf9zeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N/kAoQLa1OgZezCU++pNFq/9WfhEJg4T4VKBEqSeaPoPf5O3ddU/ceDai8r/xqNgN
-	 TCDIC90Dnrv/poTD02F3NR61EPnubdu8IS8wQNzSSbV7/TApSXQULdUHn8f6KdkH4N
-	 sxjiGbggnyaSq78HuVWs7xC602aWg0ORPqGwNDjZv8DJwgnvN0m13yUzPudKm0GIbw
-	 kq9xZBb2gNPJv1UQEWe2HSdFS+312KLKYb521ypKeMooHMYMaEn+OAko0CmmaX0I93
-	 8U3WyO8V3K2qYdEG8yEUYhCgbkszxhmd5wn4UUCM3EtpFKhMV1XIrZf43c2isewmIw
-	 HSUuWFRLAa4zg==
+	b=WYUrAk9Id7v4zBqi/Y5t82fY2pMSAH9yOk5TFSxNMgetK2icFvaGSV1mNfQr3CDX4
+	 puIw0K/fQde/1AE+A71U0PmBTBnGID3dAU1QTTFQVEGhJDI8eL/FlSzW2L3gIzdfq/
+	 X0242NP6wyZZMj5mjH0LasayWWOxlkdpt90bzDyKsC6rr1kDJfDiDsERyM0Gj0TPpP
+	 cfChUqUEqXhNt5QjTGo+W8MSwYLayr+KhPOnT/22IGe9x9K274aTYH3wvW8QQGpJE9
+	 emc9KZfoOOH7e16kLQWWy38CCc3uZa4B/dp8YbXwArHJ1j8+7QN5btk4rBt3EtWI6a
+	 g1FTuQ1NjxkhQ==
 Received: from localhost.localdomain (unknown [81.56.51.115])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: denittis)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id E034A17E362C;
-	Thu, 24 Apr 2025 16:49:28 +0200 (CEST)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 3F29A17E36BB;
+	Thu, 24 Apr 2025 16:49:29 +0200 (CEST)
 From: Ludovico de Nittis <ludovico.denittis@collabora.com>
 To: linux-bluetooth@vger.kernel.org
 Cc: Ludovico de Nittis <ludovico.denittis@collabora.com>
-Subject: [PATCH BlueZ v3 6/7] adapter: Set server security level in load_devices()
-Date: Thu, 24 Apr 2025 16:48:30 +0200
-Message-ID: <20250424144831.95766-7-ludovico.denittis@collabora.com>
+Subject: [PATCH BlueZ v3 7/7] sixaxis: Set security level when adding a sixaxis device
+Date: Thu, 24 Apr 2025 16:48:31 +0200
+Message-ID: <20250424144831.95766-8-ludovico.denittis@collabora.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250424144831.95766-1-ludovico.denittis@collabora.com>
 References: <20250424144831.95766-1-ludovico.denittis@collabora.com>
@@ -65,38 +65,35 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-After loading known devices from storage, change the security level if
-we have a device with `CablePairing`.
-This will allow it to successfully establish a connection.
+When doing the cable pairing for a sixaxis, we may need to change the
+listening input server security level.
+This is because sixaxis gamepads can only work with the level
+BT_IO_SEC_LOW.
 ---
- src/adapter.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ plugins/sixaxis.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/src/adapter.c b/src/adapter.c
-index fd425e6d2..8d875013c 100644
---- a/src/adapter.c
-+++ b/src/adapter.c
-@@ -68,6 +68,7 @@
- #include "adv_monitor.h"
- #include "eir.h"
- #include "battery.h"
+diff --git a/plugins/sixaxis.c b/plugins/sixaxis.c
+index ea160c65d..1fab8ae59 100644
+--- a/plugins/sixaxis.c
++++ b/plugins/sixaxis.c
+@@ -36,6 +36,7 @@
+ #include "src/plugin.h"
+ #include "src/log.h"
+ #include "src/shared/util.h"
 +#include "profiles/input/server.h"
+ #include "profiles/input/sixaxis.h"
  
- #define MODE_OFF		0x00
- #define MODE_CONNECTABLE	0x01
-@@ -5090,6 +5091,12 @@ free:
- 		g_key_file_free(key_file);
+ struct authentication_closure {
+@@ -301,6 +302,8 @@ static void agent_auth_cb(DBusError *derr, void *user_data)
+ 						 SIXAXIS_HID_SDP_RECORD);
+ 
+ 		device_set_cable_pairing(closure->device, true);
++
++		server_set_cable_pairing(adapter_bdaddr, true);
  	}
  
-+	if (btd_adapter_has_cable_pairing_devices(adapter)) {
-+		DBG("There is at least one known cable paired device, setting the "
-+			"listening input server security level accordingly");
-+		server_set_cable_pairing(&adapter->bdaddr, true);
-+	}
-+
- 	closedir(dir);
- 
- 	load_link_keys(adapter, keys, btd_opts.debug_keys);
+ 	ba2str(&closure->bdaddr, device_addr);
 -- 
 2.49.0
 
