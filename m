@@ -1,59 +1,59 @@
-Return-Path: <linux-bluetooth+bounces-11884-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-11887-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CED2BA9B180
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Apr 2025 16:50:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1CA66A9B17A
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Apr 2025 16:50:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DC6A47AC9A4
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Apr 2025 14:48:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3F05C19487FA
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 24 Apr 2025 14:50:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F0991A5B96;
-	Thu, 24 Apr 2025 14:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 818DC1A23A9;
+	Thu, 24 Apr 2025 14:49:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="LnubI00o"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="mjyuOxpl"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 660E219DF7D
-	for <linux-bluetooth@vger.kernel.org>; Thu, 24 Apr 2025 14:49:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B4541A0B08
+	for <linux-bluetooth@vger.kernel.org>; Thu, 24 Apr 2025 14:49:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745506176; cv=none; b=q0JgZrXJ6obUcJZvGM0eXzlOmoFxndRuoV80nU48tXCrpGSO8Ac8qus2cfXkF/bjByJdyfvKaue9QROCZlfU7TaJF6WD0AV/Y2Ok92jHoiQq12e1EXtd7t5totsbwaEhgcmzcolLz55klf//uwgfQa3N6DbGxB8gk5GVDhg5/I4=
+	t=1745506177; cv=none; b=OMmX+q5Lv+faMYAGWJ2C6YXXNkBvEjPTZyWEWZa0WnZ4AwbgWt/41DsEM4vxDKN2WYEzzNN1SapYSsqeZZb+PwAZMQLavPCZSee5AGlfvs7sU0NVoXkxYlZ1Z1A9x3sQmNTWeokV6Zp9Vksvu4HLNjwX/wY+KA0fAye23/Tkd9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745506176; c=relaxed/simple;
-	bh=VbhOsvfPzj15yFnYL9KtWMl5bGSXIe6QDJnauWIS+TI=;
+	s=arc-20240116; t=1745506177; c=relaxed/simple;
+	bh=bzbxsFCYgrgxafRDANaBXMfZ86UQF2dBN1yjTIj/svQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nnqBpAAwjCehECgRJ8mOfQPJOdVGMHWinKEJ+KfuYgfYo/RuODzo5k7mmKvPsG7u5Avu67jk36qrWwPoLK179oG3bUUxmQpAv01wZqYh0aXvgUaksLzgNlW0pgJIJ7KE1quIlpRslMBSdfbY3JTcvbMF5ZQpWDd9Bz3y0dux/5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=LnubI00o; arc=none smtp.client-ip=148.251.105.195
+	 MIME-Version; b=d95C9GUcU7o92yA/F7PtpYbFAG7otEHQjzaYOX5V25kEWU5ufFKZRovCY/st5itbobFcgYUjID/iYFkIHj0WAnn8wvukpDexUasWYB8hsi/Am7GJmDGPZCVg/nLMpV5nDrOgVJXZyGZO3bUJSevftVJOCAfYr2QD//jWn/D7Rbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=mjyuOxpl; arc=none smtp.client-ip=148.251.105.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
 	s=mail; t=1745506167;
-	bh=VbhOsvfPzj15yFnYL9KtWMl5bGSXIe6QDJnauWIS+TI=;
+	bh=bzbxsFCYgrgxafRDANaBXMfZ86UQF2dBN1yjTIj/svQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LnubI00o7RLJ55pY3GHKKG4ShsZHxSN12YjWMZ+RDzLQNngKQkm7+MIwBeaxrWznV
-	 uTshNIsI8LIPc0j7DsB5GRQfmtHuhMBH3o3lvCqImt2xO/L6sj+p+XxUNAsfn8NaJS
-	 Aklr0R5X9eQTGI8/Mn/vaS6Bph2fcHNI9Q97UkjN+z0jfpKhZL1mHBzCS2Xow2yn85
-	 /+suMLUQZYswvBTMXcLdCg3GABthRNQIk2Z8kfysaaOhmxf59nEmTe2/lGxI3osaRx
-	 vFYfxPD+LZbYCSbgplcmLJ1L4Pfn4MQRADl3tqQXhtFqGPfc4IljZFJhBwTZLtQCf1
-	 q+aL57aNXbWzA==
+	b=mjyuOxplFApxbxRxLHpaTktbk6AWVRfU9dsaBDfvzJPHFyX/YduG0KLd2n01jgE0z
+	 Nvx+2LzCoHeF3fCvDCBhAU8hawELr+56zGyjKNVXxEquTtaxWxJYfsIFyFAGsVeSQf
+	 Ah4z/JybmMLqfsCojCdry6cHk863Zc9BDk7eZI1nBBICv1WkXPa1PiIp9eF1Gcb3ZM
+	 vvSMo0m3y5T/FpEmFlYliYwoep12LFWHtWShU3wDxsYsEtsUxaTqtQ8KoD4E+aqOnO
+	 JlIISIHUAobxS4PXi9esuISsfDuFr3B4NJOVXqxTaiJGgP6JbnVnt6wdrmDHiACiv+
+	 4kCaJSqfcDMEw==
 Received: from localhost.localdomain (unknown [81.56.51.115])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: denittis)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 1E31C17E0C10;
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 72BA417E0F66;
 	Thu, 24 Apr 2025 16:49:27 +0200 (CEST)
 From: Ludovico de Nittis <ludovico.denittis@collabora.com>
 To: linux-bluetooth@vger.kernel.org
 Cc: Ludovico de Nittis <ludovico.denittis@collabora.com>
-Subject: [PATCH BlueZ v3 1/7] src: Add new CablePairing property
-Date: Thu, 24 Apr 2025 16:48:25 +0200
-Message-ID: <20250424144831.95766-2-ludovico.denittis@collabora.com>
+Subject: [PATCH BlueZ v3 2/7] client: Print CablePairing property
+Date: Thu, 24 Apr 2025 16:48:26 +0200
+Message-ID: <20250424144831.95766-3-ludovico.denittis@collabora.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250424144831.95766-1-ludovico.denittis@collabora.com>
 References: <20250424144831.95766-1-ludovico.denittis@collabora.com>
@@ -65,147 +65,23 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This adds initial support for a new CablePairing property.
-The property can be used for devices that are paired using a cable and
-don't support the expected bonding (with pairing/encryption), for
-example like the Sixaxis gamepads.
+When using the `info` command, include the new CablePairing value.
 ---
- doc/org.bluez.Device.rst |  7 +++++++
- src/device.c             | 40 ++++++++++++++++++++++++++++++++++++++++
- src/device.h             |  2 ++
- 3 files changed, 49 insertions(+)
+ client/main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/doc/org.bluez.Device.rst b/doc/org.bluez.Device.rst
-index 13328249b..80501eddd 100644
---- a/doc/org.bluez.Device.rst
-+++ b/doc/org.bluez.Device.rst
-@@ -279,6 +279,13 @@ boolean LegacyPairing [readonly]
- 	Bluetooth 2.1 (or newer) devices that have disabled Extended Inquiry
- 	Response support.
- 
-+boolean CablePairing [readonly]
-+```````````````````````````````
-+
-+	Set to true if the device was cable paired and it doesn't support the
-+	canonical bonding with encryption, e.g. the Sixaxis gamepad.
-+	If true, BlueZ will establish a connection without enforcing encryption.
-+
- string Modalias [readonly, optional]
- ````````````````````````````````````
- 
-diff --git a/src/device.c b/src/device.c
-index b82a905f9..123d44c14 100644
---- a/src/device.c
-+++ b/src/device.c
-@@ -239,6 +239,7 @@ struct btd_device {
- 	GSList		*watches;		/* List of disconnect_data */
- 	bool		temporary;
- 	bool		connectable;
-+	bool		cable_pairing;
- 	unsigned int	disconn_timer;
- 	unsigned int	discov_timer;
- 	unsigned int	temporary_timer;	/* Temporary/disappear timer */
-@@ -507,6 +508,9 @@ static gboolean store_device_info_cb(gpointer user_data)
- 	g_key_file_set_boolean(key_file, "General", "Blocked",
- 							device->blocked);
- 
-+	g_key_file_set_boolean(key_file, "General", "CablePairing",
-+							device->cable_pairing);
-+
- 	if (device->wake_override != WAKE_FLAG_DEFAULT) {
- 		g_key_file_set_boolean(key_file, "General", "WakeAllowed",
- 				       device->wake_override ==
-@@ -908,6 +912,11 @@ bool btd_device_is_trusted(struct btd_device *device)
- 	return device->trusted;
- }
- 
-+bool device_is_cable_pairing(struct btd_device *device)
-+{
-+	return device->cable_pairing;
-+}
-+
- static gboolean dev_property_get_address(const GDBusPropertyTable *property,
- 					DBusMessageIter *iter, void *data)
- {
-@@ -1153,6 +1162,17 @@ static gboolean dev_property_get_legacy(const GDBusPropertyTable *property,
- 	return TRUE;
- }
- 
-+static gboolean dev_property_get_cable_pairing(const GDBusPropertyTable *property,
-+					DBusMessageIter *iter, void *data)
-+{
-+	struct btd_device *device = data;
-+	dbus_bool_t val = device->cable_pairing;
-+
-+	dbus_message_iter_append_basic(iter, DBUS_TYPE_BOOLEAN, &val);
-+
-+	return TRUE;
-+}
-+
- static gboolean dev_property_get_rssi(const GDBusPropertyTable *property,
- 					DBusMessageIter *iter, void *data)
- {
-@@ -3483,6 +3503,7 @@ static const GDBusPropertyTable device_properties[] = {
- 	{ "Trusted", "b", dev_property_get_trusted, dev_property_set_trusted },
- 	{ "Blocked", "b", dev_property_get_blocked, dev_property_set_blocked },
- 	{ "LegacyPairing", "b", dev_property_get_legacy },
-+	{ "CablePairing", "b", dev_property_get_cable_pairing },
- 	{ "RSSI", "n", dev_property_get_rssi, NULL, dev_property_exists_rssi },
- 	{ "Connected", "b", dev_property_get_connected },
- 	{ "UUIDs", "as", dev_property_get_uuids },
-@@ -4062,6 +4083,9 @@ next:
- 	if (blocked)
- 		device_block(device, FALSE);
- 
-+	device->cable_pairing = g_key_file_get_boolean(key_file, "General",
-+							"CablePairing", NULL);
-+
- 	/* Load device profile list */
- 	uuids = g_key_file_get_string_list(key_file, "General", "Services",
- 						NULL, NULL);
-@@ -6416,6 +6440,22 @@ void device_set_legacy(struct btd_device *device, bool legacy)
- 					DEVICE_INTERFACE, "LegacyPairing");
- }
- 
-+void device_set_cable_pairing(struct btd_device *device, bool cable_pairing)
-+{
-+	if (!device)
-+		return;
-+
-+	if (device->cable_pairing == cable_pairing)
-+		return;
-+
-+	DBG("setting cable pairing %d", cable_pairing);
-+
-+	device->cable_pairing = cable_pairing;
-+
-+	g_dbus_emit_property_changed(dbus_conn, device->path,
-+					DEVICE_INTERFACE, "CablePairing");
-+}
-+
- void device_store_svc_chng_ccc(struct btd_device *device, uint8_t bdaddr_type,
- 								uint16_t value)
- {
-diff --git a/src/device.h b/src/device.h
-index 2e4a9771d..a35bb1386 100644
---- a/src/device.h
-+++ b/src/device.h
-@@ -94,6 +94,7 @@ bool device_is_connectable(struct btd_device *device);
- bool device_is_paired(struct btd_device *device, uint8_t bdaddr_type);
- bool device_is_bonded(struct btd_device *device, uint8_t bdaddr_type);
- bool btd_device_is_trusted(struct btd_device *device);
-+bool device_is_cable_pairing(struct btd_device *device);
- void device_set_paired(struct btd_device *dev, uint8_t bdaddr_type);
- void device_set_unpaired(struct btd_device *dev, uint8_t bdaddr_type);
- void btd_device_set_temporary(struct btd_device *device, bool temporary);
-@@ -101,6 +102,7 @@ void btd_device_set_trusted(struct btd_device *device, gboolean trusted);
- void btd_device_set_connectable(struct btd_device *device, bool connectable);
- void device_set_bonded(struct btd_device *device, uint8_t bdaddr_type);
- void device_set_legacy(struct btd_device *device, bool legacy);
-+void device_set_cable_pairing(struct btd_device *device, bool cable_pairing);
- void device_set_rssi_with_delta(struct btd_device *device, int8_t rssi,
- 							int8_t delta_threshold);
- void device_set_rssi(struct btd_device *device, int8_t rssi);
+diff --git a/client/main.c b/client/main.c
+index 6039aa50c..a2d9d88bf 100644
+--- a/client/main.c
++++ b/client/main.c
+@@ -1705,6 +1705,7 @@ static void cmd_info(int argc, char *argv[])
+ 	print_property(proxy, "Connected");
+ 	print_property(proxy, "WakeAllowed");
+ 	print_property(proxy, "LegacyPairing");
++	print_property(proxy, "CablePairing");
+ 	print_uuids(proxy);
+ 	print_property(proxy, "Modalias");
+ 	print_property(proxy, "ManufacturerData");
 -- 
 2.49.0
 
