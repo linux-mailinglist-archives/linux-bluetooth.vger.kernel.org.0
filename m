@@ -1,47 +1,50 @@
-Return-Path: <linux-bluetooth+bounces-11992-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-11989-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13FD4A9D15A
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 25 Apr 2025 21:19:15 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B714A9D15D
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 25 Apr 2025 21:19:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4F7FC1C00FD6
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 25 Apr 2025 19:19:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5C7627B1CA3
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 25 Apr 2025 19:17:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF27F21B9DE;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6230221ABB9;
 	Fri, 25 Apr 2025 19:19:02 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from alt2.a-painless.mh.aa.net.uk (alt2.a-painless.mh.aa.net.uk [81.187.30.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E327A21A434
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E060B21883C
 	for <linux-bluetooth@vger.kernel.org>; Fri, 25 Apr 2025 19:18:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=81.187.30.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745608742; cv=none; b=fnKxYCmsHnja0iy0Ls+3475aPV0yVNrsG1B4XoyKWaXGRYnYbYanNh2k19h0/jLPHn209P/lwgR8H7JlonUmuzvnwih5xPkZM+UQti1sJw1L5QDlXQY8qFh1FSuNkbkP7TfYNrp6M9Fbwr+iDBGi0RCIKgdITQDbShyPyIKgByA=
+	t=1745608742; cv=none; b=fk6qe46FxiB9hFCbZGjgFIlElxS2N/fToR/cnRXuLnqwqCTFdUNXIAiWmVulTjyesWw8jadHsf47G/jY1En6u57DzOA5ulsZPCnuqPUdZTtQN7V+A4j2D35RD3u0cuVCgqDSmWQRLaswDOx6ZznmQlpPj7Sjq2+XAKQYF97GXxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1745608742; c=relaxed/simple;
-	bh=8gPc10z7QCW0ZmTGg5jbgqpwfKySW3BSd6sdSmZUF5I=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=FF3J4EmX2mzs1zRfBvMyQTt3RbVdwZPUq7DLU6GS5IXmMgeAEMvkUPJyj8pvtDX3GFHS5QZKP1WC6mSke253b6jFRlLYbvUQ1SjcVKXOxJv90q9eHyrp/R5qXaumTB9Fe92BEmJxQzM/us6m7tC0wGqBvj5ZRy4dTEST+jafC2g=
+	bh=F5TkCiC1YYyLTJG7eKCGP5llitXqEUf0RLnCcSBXU4Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=U1Y362ibq3AsLZvg2ccmmGAfQetHLh0K2wNXJW5doD86hnZjV7gXeEJGIhg+sZmMZUwBU3N08IZz3rjmIxKmhcPXFeUpBLpD5XVoavX1LUQSnSPIkfaCm5riYaUYvfGYo5584aYqMJw5YV12Gg004uIqcae2FAwqwINKEmr5DOs=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pileofstuff.org; spf=pass smtp.mailfrom=pileofstuff.org; arc=none smtp.client-ip=81.187.30.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pileofstuff.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pileofstuff.org
 Received: from f.e.3.8.2.2.5.b.8.9.9.0.4.5.1.6.0.5.8.0.9.1.8.0.0.b.8.0.1.0.0.2.ip6.arpa ([2001:8b0:819:850:6154:998:b522:83ef] helo=andrews-2024-laptop.lan)
 	by painless-a.thn.aa.net.uk with esmtp (Exim 4.96)
 	(envelope-from <kernel.org@pileofstuff.org>)
-	id 1u8OZd-000GhX-0B;
+	id 1u8OZd-000GhX-0b;
 	Fri, 25 Apr 2025 20:18:56 +0100
 From: Andrew Sayers <kernel.org@pileofstuff.org>
 To: linux-bluetooth@vger.kernel.org
 Cc: luiz.dentz@gmail.com,
 	pav@iki.fi,
 	Andrew Sayers <kernel.org@pileofstuff.org>
-Subject: [PATCH BlueZ v3 0/5] obexd: unregister profiles when the user is inactive
-Date: Fri, 25 Apr 2025 20:17:49 +0100
-Message-ID: <20250425191846.639039-1-kernel.org@pileofstuff.org>
+Subject: [PATCH BlueZ v3 1/5] pbap: Support calling pbap_init() after pbap_exit()
+Date: Fri, 25 Apr 2025 20:17:50 +0100
+Message-ID: <20250425191846.639039-2-kernel.org@pileofstuff.org>
 X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250425191846.639039-1-kernel.org@pileofstuff.org>
+References: <20250425191846.639039-1-kernel.org@pileofstuff.org>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -50,58 +53,52 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This is a follow-up to "obexd: only run one instance at once".
-Instead of refusing to run parallel services, it unregisters
-profiles when the user is inactive.  This avoids the need
-for tmpfiles, and avoids issues where the user with the
-obex service logs out, leaving obex disabled altogether.
+pbap_exit() didn't previously unregister itself thoroughly.  That
+was fine if it was only called when the service was about to exit,
+because everything was implicitly unregistered when the process ended.
+But we need to be more scrupulous if this can be called throughout
+the program's lifecycle.
 
-Luiz previously suggested moving this to systemd, but I haven't had much
-luck getting the systemd devs to accept changes, and Pauli's mention of
-elogind (i.e. logind without systemd) suggests it's probably better
-to avoid the dependency anyway.
+Send the UnregisterProfile message directly from pbap_exit(),
+then call unregister_profile().
 
-I considered writing a separate D-Bus service that would notify you
-when the session became (in)active, but D-Bus doesn't have particularly
-strong guarantees about how long messages take to deliver, which could
-lead to race conditions between instances on overloaded systems.
-
-I also considered writing some kind of library, but there's not much
-code to deduplicate, and most of it would need to be reworked for every
-service that uses it.  So I wrote a gist for people to copy/paste:
-
-https://gist.github.com/andrew-sayers/1c4a24f86a9a4c1b1e38d109f1bd1d1e
+The UnregisterProfile message can't be sent directly from
+unregister_profile(), because that also needs to be called when
+register_profile() fails halfway through.
 
 Signed-off-by: Andrew Sayers <kernel.org@pileofstuff.org>
 ---
+ obexd/client/pbap.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-V1 -> V2 Open/close private DBus connections instead of
-           calling UnregisterProfile (thanks Pauli Virtanen)
-         Add obex_setup_dbus_connection_private() (to enable the above)
-         Fix CI errors
-         Minor issues I missed last time...
-           s/regster/register/ in e-mail subject lines
-           s/login_.*_cb/logind_$1_cb/g in logind.[ch]
-           remove watches on exit in pbap.c and bluetooth.c
-V2 -> V3 Fix checkpatch.pl errors - thanks Luiz
-        Note: false positive warning about commit #4 is still present -
-        this URL can't be split or shortened without breaking it.
-
-Andrew Sayers (5):
-      pbap: Support calling pbap_init() after pbap_exit()
-      obexd/bluetooth: Support calling bluetooth_init() after bluetooth_exit()
-      obexd: Support creating private system/session bus connections
-      obexd: Unregister profiles when the user is inactive
-      Revert "obexd: only run one instance at once"
-
- Makefile.obexd            |  10 ++
- obexd/client/pbap.c       |  33 +++++-
- obexd/plugins/bluetooth.c |  30 +++++-
- obexd/src/logind.c        | 257 ++++++++++++++++++++++++++++++++++++++++++++++
- obexd/src/logind.h        |  26 +++++
- obexd/src/main.c          |  12 +++
- obexd/src/obex.service.in |   9 --
- obexd/src/obexd.h         |   2 +
- 8 files changed, 361 insertions(+), 18 deletions(-)
+diff --git a/obexd/client/pbap.c b/obexd/client/pbap.c
+index 2f234fadf..90f8bdc02 100644
+--- a/obexd/client/pbap.c
++++ b/obexd/client/pbap.c
+@@ -1485,8 +1485,20 @@ void pbap_exit(void)
+ {
+ 	DBG("");
+ 
+-	dbus_connection_unref(conn);
+-	conn = NULL;
++	g_dbus_remove_watch(system_conn, listener_id);
++
++	unregister_profile();
++
++	if (system_conn) {
++		dbus_connection_close(system_conn);
++		dbus_connection_unref(system_conn);
++		system_conn = NULL;
++	}
++
++	if (conn) {
++		dbus_connection_unref(conn);
++		conn = NULL;
++	}
+ 
+ 	obc_driver_unregister(&pbap);
+ }
+-- 
+2.49.0
 
 
