@@ -1,92 +1,80 @@
-Return-Path: <linux-bluetooth+bounces-11973-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-11970-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E949EA9CF56
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 25 Apr 2025 19:15:50 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D7C8A9CF49
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 25 Apr 2025 19:14:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3B5C81B849BC
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 25 Apr 2025 17:16:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 57D03189C065
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 25 Apr 2025 17:14:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AE181F4C82;
-	Fri, 25 Apr 2025 17:15:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B4C31DE3CA;
+	Fri, 25 Apr 2025 17:13:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="aA0p4cvU"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from alt2.a-painless.mh.aa.net.uk (alt2.a-painless.mh.aa.net.uk [81.187.30.51])
+Received: from out-22.smtp.github.com (out-22.smtp.github.com [192.30.252.205])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB261F3BB2
-	for <linux-bluetooth@vger.kernel.org>; Fri, 25 Apr 2025 17:15:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=81.187.30.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A541AA1EC
+	for <linux-bluetooth@vger.kernel.org>; Fri, 25 Apr 2025 17:13:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.205
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745601340; cv=none; b=Rr3EJ29TT+oEUPElye2htrERAkBSFAlZp3cf7t1qIYQy1UlKE7rBLbIS+MhUKsp2iKWjG4GCbCIW86pWmc5hJC4F57ChUpqJjVqAnEA3Pcmv1s4kuAEWItYohvkQyu7UCQDMEYyGTVtIEs6057BckR3+4+D2Vk56lQ+RwsV9xho=
+	t=1745601236; cv=none; b=JuTXtTgkC2qTYjjFMGWKFN4fFwXcrSEbJ2vbhScUuGx3fmg5Rs9tXIuWL2WEQL2ezwVwVfMybZkR8rbovItZLWAz5t06R2lG3n03xuGPIo/B4/namZ9ywX3UAjyEmnNBIxa6jtohr7cKvlOGWE0GOGkdGWSOi8pH3Zr4rOknxvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745601340; c=relaxed/simple;
-	bh=/pORlkl6iy5CCHtXO4r13EYVKwWAZM7hO+8n2bM2/Qs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SL9Hcp6PWKo667lQ8suGMvMfubeYUoXKzotGoRsAFpRPxVsThAsWPGcvpvYqGnPIxTtHYm4FzWZnp+4fqjb4/rEG5S2OXXQMjkKWLxPmJeSWFqvI8D5Uf1Rg966PS6rd/Qv5hjjKMexmw8Iw43DvLxbsa/Q268Uu8mlTO/zs6Do=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pileofstuff.org; spf=pass smtp.mailfrom=pileofstuff.org; arc=none smtp.client-ip=81.187.30.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pileofstuff.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pileofstuff.org
-Received: from f.e.3.8.2.2.5.b.8.9.9.0.4.5.1.6.0.5.8.0.9.1.8.0.0.b.8.0.1.0.0.2.ip6.arpa ([2001:8b0:819:850:6154:998:b522:83ef] helo=andrews-2024-laptop.lan)
-	by painless-a.thn.aa.net.uk with esmtp (Exim 4.96)
-	(envelope-from <kernel.org@pileofstuff.org>)
-	id 1u8MeF-0005GV-19;
-	Fri, 25 Apr 2025 18:15:34 +0100
-From: Andrew Sayers <kernel.org@pileofstuff.org>
+	s=arc-20240116; t=1745601236; c=relaxed/simple;
+	bh=FH4lYBxbHwEfGqfHim1Qj5ILLZlh1Rh0E+P6djUR8Zw=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=a7dae59lx26/kK4OqfxcX2CP3v+Z3FDY96yfRQZvwQofaO9NDQ6/5XtXxH+8lI+wvSCd1AW+qPixmO7jLANBJQLDpWy+MJvK/bZgs5R26bor2KOyZ6dP87YGsfqT1d3+pIrf/QGKh/ySNxWlgzsv3UIhQ11rLpQ+p1Du5mXHUBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=aA0p4cvU; arc=none smtp.client-ip=192.30.252.205
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
+Received: from github.com (hubbernetes-node-c799e02.ac4-iad.github.net [10.52.12.74])
+	by smtp.github.com (Postfix) with ESMTPA id C6B54210FB
+	for <linux-bluetooth@vger.kernel.org>; Fri, 25 Apr 2025 10:13:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+	s=pf2023; t=1745601232;
+	bh=OH1EY+SrH2iDpAfB1PNCySDt3cxzxhIeFaHiZuI7kyo=;
+	h=Date:From:To:Subject:List-Unsubscribe:From;
+	b=aA0p4cvU+67v+o9BfcMQMNkpLsn1mXKxE7A0AU1WP76mYgmjqbIiuzbR/oBnzKrZu
+	 1C2VPPxoOGpXP/FCRB6mlYwyjc0eUG79V8JUPc6jNO+zEjmQ3lzqXyUXbLOv4CcsM7
+	 oL3ylSn5owgFwhnvBlWK87aOwLhjwB3f/KQG0zD4=
+Date: Fri, 25 Apr 2025 10:13:52 -0700
+From: Luiz Augusto von Dentz <noreply@github.com>
 To: linux-bluetooth@vger.kernel.org
-Cc: luiz.dentz@gmail.com,
-	pav@iki.fi,
-	Andrew Sayers <kernel.org@pileofstuff.org>
-Subject: [PATCH BlueZ v2 5/5] Revert "obexd: only run one instance at once"
-Date: Fri, 25 Apr 2025 18:13:04 +0100
-Message-ID: <20250425171505.573271-6-kernel.org@pileofstuff.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250425171505.573271-1-kernel.org@pileofstuff.org>
-References: <20250425171505.573271-1-kernel.org@pileofstuff.org>
+Message-ID: <bluez/bluez/push/refs/heads/955880/000000-5962f5@github.com>
+Subject: [bluez/bluez] 5962f5: workflows: Add sync-repo action
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
 
-No longer needed now services can share resources.
+  Branch: refs/heads/955880
+  Home:   https://github.com/bluez/bluez
+  Commit: 5962f5eeab32b0ee7f979801b579b7156bd8c6a0
+      https://github.com/bluez/bluez/commit/5962f5eeab32b0ee7f979801b579b7156bd8c6a0
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2025-04-25 (Fri, 25 Apr 2025)
 
-This reverts commit 8d472b8758dcdd89bf13cf2fb06a8846e1f483a0.
+  Changed paths:
+    A .github/workflows/sync-repo.yml
 
-Signed-off-by: Andrew Sayers <kernel.org@pileofstuff.org>
----
- obexd/src/obex.service.in | 9 ---------
- 1 file changed, 9 deletions(-)
+  Log Message:
+  -----------
+  workflows: Add sync-repo action
 
-diff --git a/obexd/src/obex.service.in b/obexd/src/obex.service.in
-index f269bc513..cf4d8c985 100644
---- a/obexd/src/obex.service.in
-+++ b/obexd/src/obex.service.in
-@@ -1,19 +1,10 @@
- [Unit]
- Description=Bluetooth OBEX service
--# This is a user-specific service, but bluetooth is a device-specific protocol.
--# Only run one instance at a time, even if multiple users log in at once:
--ConditionPathExists=!/run/lock/bluez/obexd.lock
--ConditionUser=!@system
- 
- [Service]
- Type=dbus
- BusName=org.bluez.obex
- ExecStart=@PKGLIBEXECDIR@/obexd
- 
--# If the service fails on the following line, please ensure
--# the bluez tmpfile has been installed in /usr/lib/tmpfiles.d/
--ExecStartPre=touch /run/lock/bluez/obexd.lock
--ExecStopPost=rm -f /run/lock/bluez/obexd.lock
--
- [Install]
- Alias=dbus-org.bluez.obex.service
--- 
-2.49.0
+This adds sync-repo which was part of https://github.com/bluez/actions/
+but it gets disabled every 60 days due to inactivity.
 
+
+
+To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
