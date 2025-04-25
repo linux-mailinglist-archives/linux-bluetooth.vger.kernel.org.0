@@ -1,96 +1,104 @@
-Return-Path: <linux-bluetooth+bounces-11969-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-11975-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3FEBFA9CEEC
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 25 Apr 2025 18:54:42 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC1C9A9CF5A
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 25 Apr 2025 19:15:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CE09D4C3B95
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 25 Apr 2025 16:54:17 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B40C47B22A9
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 25 Apr 2025 17:14:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B61671DDA34;
-	Fri, 25 Apr 2025 16:51:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="ePVKJ69D"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CAC0F1F542A;
+	Fri, 25 Apr 2025 17:15:40 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-28.smtp.github.com (out-28.smtp.github.com [192.30.252.211])
+Received: from alt2.a-painless.mh.aa.net.uk (alt2.a-painless.mh.aa.net.uk [81.187.30.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED211C5D6A
-	for <linux-bluetooth@vger.kernel.org>; Fri, 25 Apr 2025 16:51:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.211
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61CEB1F3B96
+	for <linux-bluetooth@vger.kernel.org>; Fri, 25 Apr 2025 17:15:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=81.187.30.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745599908; cv=none; b=GenCDhpj+Wz8seVKAs/bFHVmoLiQhQ4MCfWV80qkll2NAyExkZTL/AQSaBnEkirZo+W2OHGpmWAhUqOFyCURo4c1fXAMcFVWGZ3QiGGxiP1G4H/O1YDHAlD8/07loDVQ9D7opanWVxx1sbIzkaCYgXpCdOIcYWKXF3IlnRVKOJw=
+	t=1745601340; cv=none; b=IqRs3rBl2qvsBNjklSDUFN70clb4IpLM1U4vuzXbKZOEMt4NLKQlU3OqTozMUOT8Vy7uwWtk7BGVN1WKEzIyPzizN4d5xVfxfCK2cTe3ACMENX5oSWA4/G7h/5gr+y0CnErxpj62KugnoCB6w6guLAKeiPPKULWEZzC4ejrLdtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745599908; c=relaxed/simple;
-	bh=VFZQ8LXDii8z1XDzBh/iNwz7SM4yX4L6QdWQyNIt/ws=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=oDpn6TjBvQOZDFEg2uDRYUTmagTu4v0QcaK+KQX+MVi3e7yIpDr8M/FZKn+a99/J1gz71mfaqs8v4DkaQsCzHirY8rnKUC937+DE4tj9sMbmSq/fBWepqp4ULq7U2D2ZPm59F6kAEyElUuyGlR9hxJ5GSgeWioyPbT2t0WdmnUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=ePVKJ69D; arc=none smtp.client-ip=192.30.252.211
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-feb6d77.ash1-iad.github.net [10.56.189.47])
-	by smtp.github.com (Postfix) with ESMTPA id 024A192126F
-	for <linux-bluetooth@vger.kernel.org>; Fri, 25 Apr 2025 09:51:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1745599906;
-	bh=4qKn8lGxGSWSTEbTuAjZHpl0zXw6wvjMP3IaK3Dx8W4=;
-	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=ePVKJ69DEhHLk/CdFsr42sSvkFDTvSeLyJt31olv3ItlbmZP/udJDx7PDEqVmlYeP
-	 WHaO+nHVDk5LY9JyzADstCcuSerdx57Nc9Kkpazt/Wmsa+tCczpkTxIOqP+SY5q+oF
-	 IK/5Ik0STn29dvtvmZYQvpvn4qsPxrlLrRTsUbVs=
-Date: Fri, 25 Apr 2025 09:51:46 -0700
-From: Luiz Augusto von Dentz <noreply@github.com>
+	s=arc-20240116; t=1745601340; c=relaxed/simple;
+	bh=N5q9akcaPJunL6jppTI5rJin8suTSGtM9bhsBFQdmc4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hv67434QpmpVReqy/AGzsAT/dUVhZsZ9uMcA58XByykiNT0zLBGQbxWQh8+T2+sOhofcTtguswPXeNOmw0PDJqBgCD2gStymtCUsaM9iZRg2EAz4OBuNKY9LLXP974grzPUHAbO4AY+Nen6Nn2zuZhBPbmfqUvMMypXmHLaECoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pileofstuff.org; spf=pass smtp.mailfrom=pileofstuff.org; arc=none smtp.client-ip=81.187.30.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pileofstuff.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pileofstuff.org
+Received: from f.e.3.8.2.2.5.b.8.9.9.0.4.5.1.6.0.5.8.0.9.1.8.0.0.b.8.0.1.0.0.2.ip6.arpa ([2001:8b0:819:850:6154:998:b522:83ef] helo=andrews-2024-laptop.lan)
+	by painless-a.thn.aa.net.uk with esmtp (Exim 4.96)
+	(envelope-from <kernel.org@pileofstuff.org>)
+	id 1u8MeE-0005GV-2E;
+	Fri, 25 Apr 2025 18:15:34 +0100
+From: Andrew Sayers <kernel.org@pileofstuff.org>
 To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/957118/000000-97ecb3@github.com>
-Subject: [bluez/bluez] 0c1026: Add support clang-format
+Cc: luiz.dentz@gmail.com,
+	pav@iki.fi,
+	Andrew Sayers <kernel.org@pileofstuff.org>
+Subject: [PATCH BlueZ v2 0/4] obexd: unregister profiles when the user is inactive
+Date: Fri, 25 Apr 2025 18:12:59 +0100
+Message-ID: <20250425171505.573271-1-kernel.org@pileofstuff.org>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-  Branch: refs/heads/957118
-  Home:   https://github.com/bluez/bluez
-  Commit: 0c10263345ed57abaa5d15c44e58d7dbc30f071b
-      https://github.com/bluez/bluez/commit/0c10263345ed57abaa5d15c44e58d7dbc30f071b
-  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-  Date:   2025-04-25 (Fri, 25 Apr 2025)
+This is a follow-up to "obexd: only run one instance at once".
+Instead of refusing to run parallel services, it unregisters
+profiles when the user is inactive.  This avoids the need
+for tmpfiles, and avoids issues where the user with the
+obex service logs out, leaving obex disabled altogether.
 
-  Changed paths:
-    A .clang-format
+Luiz previously suggested moving this to systemd, but I haven't had much
+luck getting the systemd devs to accept changes, and Pauli's mention of
+elogind (i.e. logind without systemd) suggests it's probably better
+to avoid the dependency anyway.
 
-  Log Message:
-  -----------
-  Add support clang-format
+I considered writing a separate D-Bus service that would notify you
+when the session became (in)active, but D-Bus doesn't have particularly
+strong guarantees about how long messages take to deliver, which could
+lead to race conditions between instances on overloaded systems.
 
-This adds .clang-format (based on kernel) which can be used by linters,
-editors, etc to check the coding style.
+I also considered writing some kind of library, but there's not much
+code to deduplicate, and most of it would need to be reworked for every
+service that uses it.  So I wrote a gist for people to copy/paste:
 
+https://gist.github.com/andrew-sayers/1c4a24f86a9a4c1b1e38d109f1bd1d1e
 
-  Commit: 97ecb3cc423c578a27dc45914b49a8dcc40ec28e
-      https://github.com/bluez/bluez/commit/97ecb3cc423c578a27dc45914b49a8dcc40ec28e
-  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-  Date:   2025-04-25 (Fri, 25 Apr 2025)
+Signed-off-by: Andrew Sayers <kernel.org@pileofstuff.org>
+---
 
-  Changed paths:
-    A .editorconfig
+V1 -> V2 Open/close private DBus connections instead of
+          calling UnregisterProfile (thanks Pauli Virtanen)
+         Add obex_setup_dbus_connection_private() (to enable the above)
+         Fix CI errors
+         Minor issues I missed last time:
+           * s/regster/register/ in e-mail subject lines
+           * s/login_.*_cb/logind_$1_cb/g in logind.[ch]
+           * remove watches on exit in pbap.c and bluetooth.c
 
-  Log Message:
-  -----------
-  Add .editorconfig file for basic formatting
+Andrew Sayers (5):
+      pbap: Support calling pbap_init() after pbap_exit()
+      obexd/bluetooth: Support calling bluetooth_init() after bluetooth_exit()
+      obexd: Support creating private system/session bus connections
+      obexd: Unregister profiles when the user is inactive
+      Revert "obexd: only run one instance at once"
 
-See https://editorconfig.org
+ Makefile.obexd            |  10 ++
+ obexd/client/pbap.c       |  33 ++++++-
+ obexd/plugins/bluetooth.c |  30 +++++-
+ obexd/src/logind.c        | 245 ++++++++++++++++++++++++++++++++++++++++++++++
+ obexd/src/logind.h        |  26 +++++
+ obexd/src/main.c          |  12 +++
+ obexd/src/obex.service.in |   9 --
+ obexd/src/obexd.h         |   2 +
+ 8 files changed, 349 insertions(+), 18 deletions(-)
 
-
-Compare: https://github.com/bluez/bluez/compare/0c10263345ed%5E...97ecb3cc423c
-
-To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
