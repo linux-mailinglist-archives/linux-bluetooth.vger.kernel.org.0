@@ -1,47 +1,47 @@
-Return-Path: <linux-bluetooth+bounces-12035-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-12038-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 646F6A9F1FC
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 28 Apr 2025 15:19:36 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D0201A9F1FF
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 28 Apr 2025 15:19:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D1F5418904A2
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 28 Apr 2025 13:19:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EA5675A289A
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 28 Apr 2025 13:19:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE90426A1B8;
-	Mon, 28 Apr 2025 13:19:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FFE026B2D6;
+	Mon, 28 Apr 2025 13:19:31 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from b-painless.mh.aa.net.uk (b-painless.mh.aa.net.uk [81.187.30.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFEF41FE455
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62AC52641F8
 	for <linux-bluetooth@vger.kernel.org>; Mon, 28 Apr 2025 13:19:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=81.187.30.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745846370; cv=none; b=izvoEUI/XLKHrMSh8YouJrgsgQYF8clWvXousETosYATt2HMhuR3OVHRowj/Znd1r9a429YSeuoMiuJTMTsw0LBBBv+vFayRu5kYyw9vSBsMYrQKvZYBrkcjcqCASFInZkOAdoJbneLaSfIu5d3Fgg/+TewHPBoEN0MWIMaTlyg=
+	t=1745846371; cv=none; b=qksrFQWY52w+NxL+0wab2ktXdg2Bf9hdoh99fHyyaFPhRbdRE3oRisW1E058Gb8JEUIBuZHcKC728wKcteFKRxI904bq17cpnnuAyrKIPwer75VXAj1UoBhWNO8vIGYkxbaQdr48X9DpsP8ub7hDDvY01mSoVcQY5TElgACn6ZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745846370; c=relaxed/simple;
-	bh=d/WxBMxqdLm7vLrEYisbha2jKiJBkkQV3Qhf6tl7cGM=;
+	s=arc-20240116; t=1745846371; c=relaxed/simple;
+	bh=iNoNFHPOntE9VXU3/sXp34BzYarmL3L23nkondhyhLM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I8m7W7JspzVSKcmXXiU1ZLOKfFdlgukoOI8yCTAzVYC1Bhd9FgX1CAUnhAtNAQ7WHUEqGz5/SsyCAJU0YL+GVg7JTmNxBvwwWZgYo0w50gb98AJELGWaUdc1/p9vW+G337VlWpWvJjDe8BFTmS0jCm4BhwCCa+Fx81QKKGbjN1U=
+	 MIME-Version; b=HMI/6ZmEA+Y8M1J/0o6M/6IrxUSG1tFjIzVM5fwRWl1ZsjYA5YsDbzOM4HTRk6Ve/r8VP5dgLQAM+izUxdDqSPwqJftW3V0RrNXBId6gikWeo7FMcEsw8L8WXUYp/5u8yl+UvbzlDU+EtklivwhYd/5JHh5M67VTqQClgn/wqAc=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pileofstuff.org; spf=pass smtp.mailfrom=pileofstuff.org; arc=none smtp.client-ip=81.187.30.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pileofstuff.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pileofstuff.org
 Received: from 4.0.e.4.2.0.f.6.8.d.6.d.1.1.3.4.0.5.8.0.9.1.8.0.0.b.8.0.1.0.0.2.ip6.arpa ([2001:8b0:819:850:4311:d6d8:6f02:4e04] helo=andrews-2024-laptop.lan)
 	by painless-b.tch.aa.net.uk with esmtp (Exim 4.96)
 	(envelope-from <kernel.org@pileofstuff.org>)
-	id 1u9OOM-0079pP-0F;
+	id 1u9OOM-0079pP-0d;
 	Mon, 28 Apr 2025 14:19:26 +0100
 From: Andrew Sayers <kernel.org@pileofstuff.org>
 To: linux-bluetooth@vger.kernel.org
 Cc: luiz.dentz@gmail.com,
 	pav@iki.fi,
 	Andrew Sayers <kernel.org@pileofstuff.org>
-Subject: [PATCH BlueZ v4 2/6] obexd/bluetooth: Support calling bluetooth_init() after bluetooth_exit()
-Date: Mon, 28 Apr 2025 14:15:31 +0100
-Message-ID: <20250428131842.488921-3-kernel.org@pileofstuff.org>
+Subject: [PATCH BlueZ v4 3/6] obexd: Support creating private system/session bus connections
+Date: Mon, 28 Apr 2025 14:15:32 +0100
+Message-ID: <20250428131842.488921-4-kernel.org@pileofstuff.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250428131842.488921-1-kernel.org@pileofstuff.org>
 References: <20250428131842.488921-1-kernel.org@pileofstuff.org>
@@ -53,59 +53,49 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-bluetooth_exit() didn't previously unregister itself thoroughly.  That
-was fine if it was only called when the service was about to exit,
-because everything was implicitly unregistered when the process ended.
-But we need to be more scrupulous if this can be called throughout
-the program's lifecycle.
+Obexd can either connect to the system or session bus.
+We mostly share a common connection to that bus, but it can be useful
+to have a private connection.  For example, this allows us to quickly
+unregister profiles when switching user.
 
-Send UnregisterProfile messages directly from bluetooth_exit(),
-then call unregister_profile(profile).
-
-The UnregisterProfile message can't be sent directly from
-unregister_profile(), because that also needs to be called when
-register_profile() fails halfway through.
-
-Do not free profiles in bluetooth_exit() - profiles are needed
-by a future call to bluetooth_init(), or will be freed by
-bluetooth_stop() if necessary.
+Add obex_setup_dbus_connection_private(), which creates a new
+connection to whichever bus was specified by the user.
 
 Signed-off-by: Andrew Sayers <kernel.org@pileofstuff.org>
 ---
- obexd/plugins/bluetooth.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ obexd/src/main.c  | 8 ++++++++
+ obexd/src/obexd.h | 2 ++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/obexd/plugins/bluetooth.c b/obexd/plugins/bluetooth.c
-index afb2215bd..8cf718922 100644
---- a/obexd/plugins/bluetooth.c
-+++ b/obexd/plugins/bluetooth.c
-@@ -440,12 +440,24 @@ static int bluetooth_init(void)
- 
- static void bluetooth_exit(void)
- {
-+	GSList *l;
-+
- 	g_dbus_remove_watch(connection, listener_id);
- 
--	g_slist_free_full(profiles, profile_free);
-+	for (l = profiles; l; l = l->next) {
-+		struct bluetooth_profile *profile = l->data;
-+
-+		if (profile->path == NULL)
-+			continue;
-+
-+		unregister_profile(profile);
-+	}
- 
--	if (connection)
-+	if (connection) {
-+		dbus_connection_close(connection);
- 		dbus_connection_unref(connection);
-+		connection = NULL;
-+	}
- 
- 	obex_transport_driver_unregister(&driver);
+diff --git a/obexd/src/main.c b/obexd/src/main.c
+index 703173662..ca95a70de 100644
+--- a/obexd/src/main.c
++++ b/obexd/src/main.c
+@@ -253,6 +253,14 @@ DBusConnection *obex_setup_dbus_connection(const char *name,
+ 	return connection;
  }
+ 
++DBusConnection *obex_setup_dbus_connection_private(const char *name,
++					DBusError *error)
++{
++	return g_dbus_setup_private(option_system_bus ?
++				DBUS_BUS_SYSTEM : DBUS_BUS_SESSION,
++				name, error);
++}
++
+ int main(int argc, char *argv[])
+ {
+ 	GOptionContext *context;
+diff --git a/obexd/src/obexd.h b/obexd/src/obexd.h
+index 5e5edc4de..560db29ce 100644
+--- a/obexd/src/obexd.h
++++ b/obexd/src/obexd.h
+@@ -33,3 +33,5 @@ const char *obex_option_capability(void);
+ DBusConnection *obex_get_dbus_connection(void);
+ DBusConnection *obex_setup_dbus_connection(const char *name,
+ 					DBusError *error);
++DBusConnection *obex_setup_dbus_connection_private(const char *name,
++					DBusError *error);
 -- 
 2.49.0
 
