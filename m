@@ -1,34 +1,34 @@
-Return-Path: <linux-bluetooth+bounces-12208-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-12205-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA57DAA878A
-	for <lists+linux-bluetooth@lfdr.de>; Sun,  4 May 2025 18:02:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A14B4AA8787
+	for <lists+linux-bluetooth@lfdr.de>; Sun,  4 May 2025 18:02:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5EB971769A1
-	for <lists+linux-bluetooth@lfdr.de>; Sun,  4 May 2025 16:02:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 14A3417689E
+	for <lists+linux-bluetooth@lfdr.de>; Sun,  4 May 2025 16:02:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9362A1DEFFE;
-	Sun,  4 May 2025 16:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B9EB1DDC21;
+	Sun,  4 May 2025 16:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="cBROGUpz"
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="pURK+tuJ"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91BDA146A72
-	for <linux-bluetooth@vger.kernel.org>; Sun,  4 May 2025 16:02:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 016C81A8412
+	for <linux-bluetooth@vger.kernel.org>; Sun,  4 May 2025 16:02:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746374542; cv=pass; b=cjUKuPvjgD34XZi9YooXELw25s7krHAi6WfjO9SLMFzz1NdLbiGEjTlQ9uxNf0/zkbvpTNXnYyyrIYHwtuKUDfp1/K/YVebvLJ3T7+tE/a50uEEiL9o4FOsrPBcEzgRicfb/9hzKjCEpPUczrHZ+sABY6+ag1oQXx9vmgLJ4nHE=
+	t=1746374540; cv=pass; b=mnoY0aJ3JI+qGsykHZAyV/VkGCYbS+XREaJGcomFYcZg/RwY/MI7FpOmRK4h0svErKkyf5KdARUH11dgGSEfUqlym/GBt4wUmBPAvpJ18gCbd0VRgePFMVfVuYOLIWHFu4hzldHqt6Rlnqh/vEsXyPiIXrjPDShOGPMKyDEmS8w=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746374542; c=relaxed/simple;
-	bh=CVDQ1Ecq32mkVTv2WTPthkWQ3lAZURlPO2+YdOHSRFM=;
+	s=arc-20240116; t=1746374540; c=relaxed/simple;
+	bh=hcp94CFS3/8Y26XHqPdYir6yRbyHVLuaUd0ntDZZuHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XNK2SPohb5BeF40yVNbeogIrDfyEsSHkFQGaKtWGbycp8GGFqyHXsetWvCVnFLdktb/LV0TCk687HxMYUrHzMhkCDcHn1NYHT2ewdEn3RM3mAPIlF4mDzQQUCPHOnAMOg20RyWMSPFEzWdiPtmjZb7UNtD5jpAZs1rYMrloYaIo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=cBROGUpz; arc=pass smtp.client-ip=195.140.195.201
+	 MIME-Version; b=e9oKu6lL9R72D2ghi51BktcIQar2hTPamoKJZJsbLySx20c9tQldWiyfDk9iQVPWdstSVOataVPzfsBMCgn/Zd56qplsvEfKc2WDUAz+0tkOvY5Msz91KO0YNlAlsjuPvuPr5gpKyw6NbZqgMHuvqpuor455uZ7KKUQ5GC1rZpE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=pURK+tuJ; arc=pass smtp.client-ip=195.140.195.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [185.77.218.2])
@@ -36,7 +36,7 @@ Received: from monolith.lan (unknown [185.77.218.2])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4Zr8YZ1rCLzyfh;
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4Zr8YZ4GhZzyhM;
 	Sun,  4 May 2025 19:02:10 +0300 (EEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
 	t=1746374530;
@@ -44,33 +44,33 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=msJ5a0oYaJ/s3qvajVISY/Q6bQeFQhIlLqczm9Yoj+A=;
-	b=cBROGUpzfJ/1JV7X/D3ioCfQIO7ZYv38GL6hcNtOOi5Ys0tHtVehgS+JHJHsXaqmlm0S+W
-	uAfteIKt1IpjBhEHdscEeu8tZPPFSaFiJAbyHW/7dcunQIZW5zUGx5/Kau7oqZgsRXOV7k
-	tstU9E8SEM596m9wOGSOkRum6uOaC0g=
+	bh=C19BSes2JmticcW4n62vIpebJ0mXQTimRvohvx3fSkY=;
+	b=pURK+tuJq3UrKsZ5VpgPLbVn7GZvyAKlo9wOLd1YCs9YgMCLvXqHnIIcZbaK/sQ6EZB3Ep
+	ogZciKGH1DJLv1wHFWtsg9alqY1kGOikwJMLgWicg1Yvwr8069WJUSIqIkU33AFA/EC7LR
+	Y2EZJpL/yJMIiFxlSriQQPLg54FO6lk=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
 	s=meesny; t=1746374530;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=msJ5a0oYaJ/s3qvajVISY/Q6bQeFQhIlLqczm9Yoj+A=;
-	b=YFLBepgOlRJ4haCzgpLdPLgN0coHZanvvNKZNQIB3xmAj7FTdsKRN7VVtJvoJFIy156qfE
-	t0eoP1oCFbylqF/pUSYARa49hQm3rmPPK+hfljI8ZBHE4kiwWtXWzRJch4b7VPBcRF47wg
-	uGom5p7J82uIlArjlja6pWUN6SfURA8=
+	bh=C19BSes2JmticcW4n62vIpebJ0mXQTimRvohvx3fSkY=;
+	b=Q98m2IAp5Y76OxycX3iZgFMczrKwSlMljvQAZr80DFSz50nDKVl316WVWu+mZJmxcAFh4W
+	7NZyLA71UeZqFG9bJIqwu8O2xex2NrMuxja4mz1sZcGTLIndhQHDMVnneBC3BJC2F5Xucj
+	28w7HQZSvMV0Nl7veWfCFmGCWLRB9Ok=
 ARC-Seal: i=1; s=meesny; d=iki.fi; t=1746374530; a=rsa-sha256; cv=none;
-	b=vt8OBXwovLWEO3I8aSw9RMneimIAG/tgV3Gdr3/EnFRH2xTnCwfvvQPEGVgWBIL6EafQz/
-	k4k8OZ0U/G0+nTTZPmRd5xpzolrXFzui1y7PfLvyGiP7eni403gg6PNulxBzEtYFr6xQHp
-	m80vY2+jPrTE019/2aSTh+U4xvdpzIo=
+	b=IaTfLoC71E4aj8yoNtyq7u0CCTzl+Gu02ZOeokQnDYE4P4aeuu973x4OWHQ8WAR4nFFc3E
+	qWvHfRlXJ+EJVzAKacXxc4QbF7oqWShoD+ktyWRUJF3CCErukmziuu6E0DEAbHdl4W8DAo
+	rxM8I2Wmfs5Cj6AAdcOrwg2Roa5GYpk=
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [RFC PATCH BlueZ v2 02/11] org.bluez.MediaEndpoint: add client role Reconfigure
-Date: Sun,  4 May 2025 19:01:54 +0300
-Message-ID: <ed7012536eeeccf3e372fba42f5ee17e31605f10.1746374514.git.pav@iki.fi>
+Subject: [RFC PATCH BlueZ v2 03/11] shared/bap: bap_abort_stream_req() should cancel also current req
+Date: Sun,  4 May 2025 19:01:55 +0300
+Message-ID: <4c8142e02e4b63d181e05baf7f0e849ec9a19b90.1746374514.git.pav@iki.fi>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <3c9eb72cf7b16ea0b710d62221436e2777f7360b.1746374514.git.pav@iki.fi>
 References: <3c9eb72cf7b16ea0b710d62221436e2777f7360b.1746374514.git.pav@iki.fi>
@@ -82,57 +82,30 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a simple way for the sound server to reconfigure a BAP unicast
-endpoint, by calling org.bluez.MediaEndpoint.Reconfigure().
-
-This shall destroy all streams of the endpoint, and restart the
-SelectProperties() configuration flow from the beginning.
-
-Since it may be necessary to reconfigure multiple endpoints at once to
-correctly make bidirectional CIS, add Defer argument to just mark eps
-for configuration.
-
-In future, org.bluez.MediaEndpoint.SetConfiguration() could be changed
-to handle unicast in the same way as broadcast: only create streams.
-This allows sound server to have full control over stream configuration
-itself, and not rely on bt_bap_select().
+After bap_abort_stream_req() no req callbacks for stream shall be
+called, so it has to fail also the currently in-flight request.
 ---
- doc/org.bluez.MediaEndpoint.rst | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ src/shared/bap.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/doc/org.bluez.MediaEndpoint.rst b/doc/org.bluez.MediaEndpoint.rst
-index b81106f0b..ea555a7d3 100644
---- a/doc/org.bluez.MediaEndpoint.rst
-+++ b/doc/org.bluez.MediaEndpoint.rst
-@@ -115,6 +115,28 @@ void ClearConfiguration(object transport)
- 	path given is the path of this endpoint, all its streams are
- 	closed.
+diff --git a/src/shared/bap.c b/src/shared/bap.c
+index 2a08f3eea..976e3c0b1 100644
+--- a/src/shared/bap.c
++++ b/src/shared/bap.c
+@@ -1298,6 +1298,13 @@ static void bap_abort_stream_req(struct bt_bap *bap,
+ 						struct bt_bap_stream *stream)
+ {
+ 	queue_remove_all(bap->reqs, match_req_stream, stream, bap_req_abort);
++
++	if (bap->req && bap->req->stream == stream) {
++		struct bt_bap_req *req = bap->req;
++
++		bap->req = NULL;
++		bap_req_complete(req, NULL);
++	}
+ }
  
-+void Reconfigure(dict properties)
-+`````````````````````````````````
-+
-+	[ISO only]
-+
-+	Reconfigure a BAP unicast endpoint. This closes all existing
-+	streams of the endpoint, and restarts the configuration
-+	selection flow which e.g. triggers calls to *SelectProperties*
-+	allowing the sound server to modify the configuration.
-+
-+	The following arguments are taken in *properties*:
-+
-+	:boolean Defer [optional]:
-+
-+		If True, mark endpoint for reconfiguration, but
-+		postpone it until a non-deferred *Reconfigure()*
-+		operation is made on an endpoint of the same device.
-+
-+		This is necessary to use when reconfiguring source and
-+		sink streams with the intention that they be combined
-+		into the same CIG, possibly forming bidirectional CIS.
-+
- void Release()
- ``````````````
- 
+ static void bt_bap_stream_unref(void *data)
 -- 
 2.49.0
 
