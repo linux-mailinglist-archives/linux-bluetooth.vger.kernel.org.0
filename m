@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-12360-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-12354-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40EABAB500B
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 May 2025 11:39:46 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 709AEAB5004
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 May 2025 11:39:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A34E67A7F2D
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 May 2025 09:38:28 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E176D7A45CC
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 May 2025 09:38:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6384A23BCEB;
-	Tue, 13 May 2025 09:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 339C6239562;
+	Tue, 13 May 2025 09:39:19 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E931E227581
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9389230264
 	for <linux-bluetooth@vger.kernel.org>; Tue, 13 May 2025 09:39:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747129160; cv=none; b=kLggoz9O61gL7ihA6Ez9jmweDdncUd71k0SC1Rb4sgEoxAZvI2v9cWJ8vYiaNA+NWyLkd+bL3clkEsJYYOUqhXT9dd9ITRRpTd4s5Y0JSCyhS4NlBmNabEOA5j6CZSpLGhLIu8oBIQCsDQ4yvMt/3PfwQ4xjxqIJVE/BfBmMNFk=
+	t=1747129158; cv=none; b=CO3ahuaKBG1+Tw5tOgm0GzmC3gpe0PdoABy7P+/eid023osGSkg+HqfmFHWDZJ3sosky1Or041ES8SF3UOnB2gWAgPtwpeu2uYb19uaEIIUw++UjmNZ0Pv6sh59hpwR3OdamefMX2wG9faz7raCy6nBPtOec4bxNbEzH01WodrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747129160; c=relaxed/simple;
-	bh=Q2vf5yICqTlGY8VMRGqQTFzWGnbPDoKDJfAP6kvIVrw=;
+	s=arc-20240116; t=1747129158; c=relaxed/simple;
+	bh=OUngSD58PFhMf38hQbPwnyHfr75JF7xeUivQ8brPLMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h4a7Pv5506Anuk/JN46FhLB8lw7LsWMaoD8s8pje0kvpeUPbxHGGzL4HWYp4sdepPFqyxJnjSzxUlc4Tw3atiKGgGl59EBoo/q6t69Nlv0zAZd8cYvW3fRL+/5bRWlpnQ2SyUxikkPRHM8o+yz1ZIGlAYiBYTgAN7hrNJLZMBd4=
+	 MIME-Version; b=pRxscNcizARwMlR/AfGHU0m7pnLyFlyVyOS6Meeg25ihI5ZG4ExSGOJEYQBB6whTNXOkviYlO0y1kIzw4cZPi13IX7eVCZVeYxygVNY1BgDFBk9YcYlotCF3RHtnOI+i+S9UQtgKTghsx2qxtWL1IjAcTIlRF6V4qpucCPvBfnE=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id EA74643316;
-	Tue, 13 May 2025 09:39:14 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 39E9B439F0;
+	Tue, 13 May 2025 09:39:15 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ v4 2/9] client: Install submenus before contacting bluez daemon
-Date: Tue, 13 May 2025 11:38:12 +0200
-Message-ID: <20250513093913.396876-3-hadess@hadess.net>
+Subject: [BlueZ v4 3/9] shared/shell: Add function to handle early help calls
+Date: Tue, 13 May 2025 11:38:13 +0200
+Message-ID: <20250513093913.396876-4-hadess@hadess.net>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250513093913.396876-1-hadess@hadess.net>
 References: <20250513093913.396876-1-hadess@hadess.net>
@@ -52,43 +52,45 @@ X-GND-Score: 0
 X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdefjeelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomhepuegrshhtihgvnhcupfhotggvrhgruceohhgruggvshhssehhrgguvghsshdrnhgvtheqnecuggftrfgrthhtvghrnhepveethfelveejffetkeelheehueejlefhvdehteehgfeghfekgfdvfefhgeekieetnecukfhppedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemjeduuggrmeefsggumedvtdgrleemudeffeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemjeduuggrmeefsggumedvtdgrleemudeffedphhgvlhhopeholhhimhhpihgtrddrpdhmrghilhhfrhhomhephhgruggvshhssehhrgguvghsshdrnhgvthdpnhgspghrtghpthhtohepvddprhgtphhtthhopehlihhnuhigqdgslhhuvghtohhothhhsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohephhgruggvshhssehhrgguvghsshdrnhgvth
 X-GND-Sasl: hadess@hadess.net
 
-So that the submenus are installed even if bluez isn't available.
+Add a function that would allow tools to exit after handling --help, so
+as to avoid the daemon waiting to communicate with a D-Bus service that
+might not be running.
 ---
- client/main.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ src/shared/shell.c | 10 ++++++++++
+ src/shared/shell.h |  2 ++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/client/main.c b/client/main.c
-index e35e89dd2362..9efa92380663 100644
---- a/client/main.c
-+++ b/client/main.c
-@@ -3403,6 +3403,11 @@ int main(int argc, char *argv[])
- 	bt_shell_add_submenu(&advertise_monitor_menu);
- 	bt_shell_add_submenu(&scan_menu);
- 	bt_shell_add_submenu(&gatt_menu);
-+	admin_add_submenu();
-+	player_add_submenu();
-+	mgmt_add_submenu();
-+	assistant_add_submenu();
-+	hci_add_submenu();
- 	bt_shell_set_prompt(PROMPT_OFF, NULL);
+diff --git a/src/shared/shell.c b/src/shared/shell.c
+index 674992065744..4e42bd69b4d7 100644
+--- a/src/shared/shell.c
++++ b/src/shared/shell.c
+@@ -1708,3 +1708,13 @@ int bt_shell_get_timeout(void)
+ {
+ 	return data.timeout;
+ }
++
++void bt_shell_handle_non_interactive_help(void)
++{
++	if (!data.mode)
++		return;
++	if (data.argv[0] != cmplt)
++		return;
++	print_cmds();
++	exit(EXIT_SUCCESS);
++}
+diff --git a/src/shared/shell.h b/src/shared/shell.h
+index e431db9f5821..eebbc71faffb 100644
+--- a/src/shared/shell.h
++++ b/src/shared/shell.h
+@@ -60,6 +60,8 @@ int bt_shell_exec(const char *input);
+ void bt_shell_quit(int status);
+ void bt_shell_noninteractive_quit(int status);
  
- 	if (agent_option)
-@@ -3419,15 +3424,10 @@ int main(int argc, char *argv[])
- 		bt_shell_set_env("AUTO_REGISTER_ENDPOINT",
- 					(void *)endpoint_option);
++void bt_shell_handle_non_interactive_help(void);
++
+ bool bt_shell_set_menu(const struct bt_shell_menu *menu);
  
--	admin_add_submenu();
- 	admin_enable_submenu();
--	player_add_submenu();
- 	player_enable_submenu();
--	mgmt_add_submenu();
- 	mgmt_enable_submenu();
--	assistant_add_submenu();
- 	assistant_enable_submenu();
--	hci_add_submenu();
- 
- 	client = g_dbus_client_new(dbus_conn, "org.bluez", "/org/bluez");
- 
+ bool bt_shell_add_submenu(const struct bt_shell_menu *menu);
 -- 
 2.49.0
 
