@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-12354-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-12356-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 709AEAB5004
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 May 2025 11:39:27 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32424AB5008
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 May 2025 11:39:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E176D7A45CC
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 May 2025 09:38:11 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D007F7A6F4C
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 May 2025 09:38:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 339C6239562;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F43C23A562;
 	Tue, 13 May 2025 09:39:19 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9389230264
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7254B238157
 	for <linux-bluetooth@vger.kernel.org>; Tue, 13 May 2025 09:39:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747129158; cv=none; b=CO3ahuaKBG1+Tw5tOgm0GzmC3gpe0PdoABy7P+/eid023osGSkg+HqfmFHWDZJ3sosky1Or041ES8SF3UOnB2gWAgPtwpeu2uYb19uaEIIUw++UjmNZ0Pv6sh59hpwR3OdamefMX2wG9faz7raCy6nBPtOec4bxNbEzH01WodrY=
+	t=1747129159; cv=none; b=GyW2daFN4jtYYS/L7RG2RUzACYZ8B/w1LPP3cXqWJ46Vye+oToY4g+vrG1/nIjm6IyByz/haXtWQvOrd7WfidJLTertVApT+wlOzCQHoXC8zS0olBsRdHBMwwUYylMuN/mad6g7U/9RVc4EMsoxiYeKtyLOoiaCtRITskmvmAmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747129158; c=relaxed/simple;
-	bh=OUngSD58PFhMf38hQbPwnyHfr75JF7xeUivQ8brPLMA=;
+	s=arc-20240116; t=1747129159; c=relaxed/simple;
+	bh=rP4xnHSEQGShtOILaxBTO4XeLMQHI9603DBB20hwl9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pRxscNcizARwMlR/AfGHU0m7pnLyFlyVyOS6Meeg25ihI5ZG4ExSGOJEYQBB6whTNXOkviYlO0y1kIzw4cZPi13IX7eVCZVeYxygVNY1BgDFBk9YcYlotCF3RHtnOI+i+S9UQtgKTghsx2qxtWL1IjAcTIlRF6V4qpucCPvBfnE=
+	 MIME-Version; b=pNGRZDjju0g7kBpHzdvfQO30ffLMzOMTptn7mavFidl89mtQvSfnhG5rkhpQwOvMxQedw0X6I/WVmcI7l43fBZRL/x3lDGW/wtKwtlR/tHZftMVKMXqDeG6pJIWq+jW0LQTWS5l7feFNB3j4XZWBcFlGH3YhVktB3zJyU42ArRA=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 39E9B439F0;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 7EEB543319;
 	Tue, 13 May 2025 09:39:15 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [BlueZ v4 3/9] shared/shell: Add function to handle early help calls
-Date: Tue, 13 May 2025 11:38:13 +0200
-Message-ID: <20250513093913.396876-4-hadess@hadess.net>
+Subject: [BlueZ v4 4/9] client: Fix --help hanging if bluetoothd is not running
+Date: Tue, 13 May 2025 11:38:14 +0200
+Message-ID: <20250513093913.396876-5-hadess@hadess.net>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250513093913.396876-1-hadess@hadess.net>
 References: <20250513093913.396876-1-hadess@hadess.net>
@@ -52,45 +52,24 @@ X-GND-Score: 0
 X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdefjeelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomhepuegrshhtihgvnhcupfhotggvrhgruceohhgruggvshhssehhrgguvghsshdrnhgvtheqnecuggftrfgrthhtvghrnhepveethfelveejffetkeelheehueejlefhvdehteehgfeghfekgfdvfefhgeekieetnecukfhppedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemjeduuggrmeefsggumedvtdgrleemudeffeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemjeduuggrmeefsggumedvtdgrleemudeffedphhgvlhhopeholhhimhhpihgtrddrpdhmrghilhhfrhhomhephhgruggvshhssehhrgguvghsshdrnhgvthdpnhgspghrtghpthhtohepvddprhgtphhtthhopehlihhnuhigqdgslhhuvghtohhothhhsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohephhgruggvshhssehhrgguvghsshdrnhgvth
 X-GND-Sasl: hadess@hadess.net
 
-Add a function that would allow tools to exit after handling --help, so
-as to avoid the daemon waiting to communicate with a D-Bus service that
-might not be running.
+Exit after printing all the main and submenu commands.
 ---
- src/shared/shell.c | 10 ++++++++++
- src/shared/shell.h |  2 ++
- 2 files changed, 12 insertions(+)
+ client/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/src/shared/shell.c b/src/shared/shell.c
-index 674992065744..4e42bd69b4d7 100644
---- a/src/shared/shell.c
-+++ b/src/shared/shell.c
-@@ -1708,3 +1708,13 @@ int bt_shell_get_timeout(void)
- {
- 	return data.timeout;
- }
-+
-+void bt_shell_handle_non_interactive_help(void)
-+{
-+	if (!data.mode)
-+		return;
-+	if (data.argv[0] != cmplt)
-+		return;
-+	print_cmds();
-+	exit(EXIT_SUCCESS);
-+}
-diff --git a/src/shared/shell.h b/src/shared/shell.h
-index e431db9f5821..eebbc71faffb 100644
---- a/src/shared/shell.h
-+++ b/src/shared/shell.h
-@@ -60,6 +60,8 @@ int bt_shell_exec(const char *input);
- void bt_shell_quit(int status);
- void bt_shell_noninteractive_quit(int status);
+diff --git a/client/main.c b/client/main.c
+index 9efa92380663..c536a179dc7a 100644
+--- a/client/main.c
++++ b/client/main.c
+@@ -3410,6 +3410,8 @@ int main(int argc, char *argv[])
+ 	hci_add_submenu();
+ 	bt_shell_set_prompt(PROMPT_OFF, NULL);
  
-+void bt_shell_handle_non_interactive_help(void);
++	bt_shell_handle_non_interactive_help();
 +
- bool bt_shell_set_menu(const struct bt_shell_menu *menu);
- 
- bool bt_shell_add_submenu(const struct bt_shell_menu *menu);
+ 	if (agent_option)
+ 		auto_register_agent = g_strdup(agent_option);
+ 	else
 -- 
 2.49.0
 
