@@ -1,108 +1,123 @@
-Return-Path: <linux-bluetooth+bounces-12440-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-12442-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3189EABC433
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 19 May 2025 18:18:21 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 64E68ABC4C2
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 19 May 2025 18:39:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 014CD18880C1
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 19 May 2025 16:17:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 951DD1777E6
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 19 May 2025 16:39:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BB9B2857FA;
-	Mon, 19 May 2025 16:14:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FB662874FC;
+	Mon, 19 May 2025 16:39:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="PVk9WHip"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="Zfb4qEiE"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from out-24.smtp.github.com (out-24.smtp.github.com [192.30.252.207])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD21E286D67
-	for <linux-bluetooth@vger.kernel.org>; Mon, 19 May 2025 16:14:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 444D81E573F
+	for <linux-bluetooth@vger.kernel.org>; Mon, 19 May 2025 16:39:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.207
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747671263; cv=none; b=g0QSqvWfvJKMvo2PjDYJRRolL8bXyYsZItwpSn3x9zm+MNYO2S0yoUtIOKCMA2kltMnFaU1q5AF8dctEmvyvu7QvU/I+D/34Rl+B90YS5ZswgIwc+CuxG3MUQdPMnSJBzeojfyajUNozJL8yWzrGvQBykqP86hB0hZ0BNpbQ+0Q=
+	t=1747672767; cv=none; b=QF23EQdjNX8/1Pqe6LWlOE5DLK3A2OMha4MOUBb2i1y3F4Z7SrCWfkxCE9MCaVTzbyKKLn66jWjg50FFlhlRRl54Qb55vKFM6LfDsr9ouD68D85kadpFxGbQjs/02TMxlZpqW+kZ3QNh71laIb31jgg3QfQwhIREubDmdyQgNao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747671263; c=relaxed/simple;
-	bh=/8hNE4QE/9EWnxNYXK8WwXJYU2pKreD+PQIeuIuxfUA=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VoNCmW77FmDYsjJZjWQtymmI6FTd1IyFmSPnSnexsJVryZ55pqq+FxZETzyjrZQQGeVl1mtgcDFKHdLtDNRhaMubD+bnPqqV0+fvR+aXHiSiwHXTfJta14AiGA7+dQg8DY260Kds3aTLfK4wliD5JGWrdCPrN+B9kMCELVcZWKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=PVk9WHip; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1747671259;
-	bh=/8hNE4QE/9EWnxNYXK8WwXJYU2pKreD+PQIeuIuxfUA=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=PVk9WHips2J3I6eitKueRMbtcTQpuUfxAuAH4ScZv5Z6LudnTrrcQkm97g/bZIxR9
-	 W2dIEBbdxhmDfDRX2CFDZoWl77jCs9Xh37dHOYI8aHTE06Pg32AraiV/4zZ0HbSZ8x
-	 U44ySGKn3MJ2sIWmyJ/Xxp2Q86Sinjkbypph1H8OLYSB4HcXSWJ09Esd22/6aw0osG
-	 K8aoFbaKiC40L8aVBYNMIcJeyaMjYjxwsTurmFwE9p8V9ggHdHai0KIX+jBSu5tjFy
-	 u6fFdyw5+dcTKrj9XsVxC1euHd3tgWKabwfuYPM/S1U98cMnPhiZoav9uHwvo+yFy1
-	 Z0jToHmbIw5Tg==
-Received: from fdanis-ThinkPad-X1.. (2A02-8428-Af44-1001-131b-51fE-028d-5689.rev.sfr.net [IPv6:2a02:8428:af44:1001:131b:51fe:28d:5689])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: fdanis)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 82FE717E3693
-	for <linux-bluetooth@vger.kernel.org>; Mon, 19 May 2025 18:14:19 +0200 (CEST)
-From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
+	s=arc-20240116; t=1747672767; c=relaxed/simple;
+	bh=N2qs+VZNHlGtCk1sZNtVbmYY8KPnfKogRvV7hSS1IJ4=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=VyZz7HDGE6BqmW4bjSpndlyBKQvuxPNz14Gi4aLlVn4CRtkYTTYXFp5xAdpjEPUYto3cGavs78O89XvV+lP9oQGZsRknXcEtltPmsrJUdw72d0b0HR0RiPSm4qCdEI1pcrzmafExFDMFFhIv6aMYzac5h3A8c0LBF7JFYcZ42pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=Zfb4qEiE; arc=none smtp.client-ip=192.30.252.207
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
+Received: from github.com (hubbernetes-node-3fb7cfe.ac4-iad.github.net [10.52.206.92])
+	by smtp.github.com (Postfix) with ESMTPA id 3E34C64103C
+	for <linux-bluetooth@vger.kernel.org>; Mon, 19 May 2025 09:39:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+	s=pf2023; t=1747672765;
+	bh=kT3WPT78TB76S5T7WPDOc3RVqUVGN+WlAGJH4tsu988=;
+	h=Date:From:To:Subject:List-Unsubscribe:From;
+	b=Zfb4qEiE3s4M0ZXa8Y4TqOdo5QCO6b0mBOApvd4m5dyGXRl8vgD3XPX771srrGpYo
+	 5kd4LVU+Xaaa7w8ps7uNxZMiwr0KqdcPLsFrfqunRkLv6Q8eXAPWdhX9zWYNxpxAH/
+	 Pmsn1vr1m2hQNKXgRXST68HNcfoP4YKHTXQS5Q0M=
+Date: Mon, 19 May 2025 09:39:25 -0700
+From: fdanis-oss <noreply@github.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 3/3] client: Display disconnection reason
-Date: Mon, 19 May 2025 18:14:12 +0200
-Message-ID: <20250519161412.107904-4-frederic.danis@collabora.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250519161412.107904-1-frederic.danis@collabora.com>
-References: <20250519161412.107904-1-frederic.danis@collabora.com>
+Message-ID: <bluez/bluez/push/refs/heads/964261/000000-a651f6@github.com>
+Subject: [bluez/bluez] b5d015: src/device: Add Disconnected signal to
+ propagate d...
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
+
+  Branch: refs/heads/964261
+  Home:   https://github.com/bluez/bluez
+  Commit: b5d015c03f0614beb9ad091a37aae69f68d87627
+      https://github.com/bluez/bluez/commit/b5d015c03f0614beb9ad091a37aae=
+69f68d87627
+  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
+  Date:   2025-05-19 (Mon, 19 May 2025)
+
+  Changed paths:
+    M src/adapter.c
+    M src/device.c
+    M src/device.h
+
+  Log Message:
+  -----------
+  src/device: Add Disconnected signal to propagate disconnection reason
+
+Currently a client application is informed of the disconnection by the
+update of the Connected property to false.
+This sends a Disconnected signal with the disconnection reason before
+the property is updated.
+
+This helps client application to know the reason for the disconnection
+and to take appropriate action.
+
+
+  Commit: 64d6e7e08f8c6f846ba94978dd0fcb7dfcc76dd4
+      https://github.com/bluez/bluez/commit/64d6e7e08f8c6f846ba94978dd0fc=
+b7dfcc76dd4
+  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
+  Date:   2025-05-19 (Mon, 19 May 2025)
+
+  Changed paths:
+    M doc/org.bluez.Device.rst
+
+  Log Message:
+  -----------
+  doc/device: Add Disconnected signal
+
+
+  Commit: a651f60bbd2b485bbb0f06bfb1511da13be444cf
+      https://github.com/bluez/bluez/commit/a651f60bbd2b485bbb0f06bfb1511=
+da13be444cf
+  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
+  Date:   2025-05-19 (Mon, 19 May 2025)
+
+  Changed paths:
+    M client/main.c
+
+  Log Message:
+  -----------
+  client: Display disconnection reason
 
 The new org.bluez.Device1.Disconnected signal propagates the
 disconnection reason.
----
- client/main.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
 
-diff --git a/client/main.c b/client/main.c
-index 57d71f2b6..79d0707bb 100644
---- a/client/main.c
-+++ b/client/main.c
-@@ -709,6 +709,26 @@ static void property_changed(GDBusProxy *proxy, const char *name,
- static void message_handler(DBusConnection *connection,
- 					DBusMessage *message, void *user_data)
- {
-+	if (!strcmp(dbus_message_get_member(message), "Disconnected")) {
-+		DBusMessageIter iter;
-+		const char *reason;
-+
-+		if (!dbus_message_iter_init(message, &iter))
-+			goto failed;
-+
-+		if (dbus_message_iter_get_arg_type(&iter) != DBUS_TYPE_STRING)
-+			goto failed;
-+
-+		dbus_message_iter_get_basic(&iter, &reason);
-+
-+		bt_shell_printf("[SIGNAL] %s.%s %s\n",
-+					dbus_message_get_interface(message),
-+					dbus_message_get_member(message),
-+					reason);
-+		return;
-+	}
-+
-+failed:
- 	bt_shell_printf("[SIGNAL] %s.%s\n", dbus_message_get_interface(message),
- 					dbus_message_get_member(message));
- }
--- 
-2.43.0
 
+Compare: https://github.com/bluez/bluez/compare/b5d015c03f06%5E...a651f60=
+bbd2b
+
+To unsubscribe from these emails, change your notification settings at ht=
+tps://github.com/bluez/bluez/settings/notifications
 
