@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-12464-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-12466-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B3DD1ABD950
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 May 2025 15:27:45 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 51BC1ABD952
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 May 2025 15:27:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2D6AB3B244B
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 May 2025 13:27:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CCEF6172931
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 May 2025 13:27:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D73CE242D60;
-	Tue, 20 May 2025 13:27:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95B75242D75;
+	Tue, 20 May 2025 13:27:39 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69BC91ACECE
-	for <linux-bluetooth@vger.kernel.org>; Tue, 20 May 2025 13:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C3A241CA8
+	for <linux-bluetooth@vger.kernel.org>; Tue, 20 May 2025 13:27:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747747658; cv=none; b=UEqpIWz6nAvnVdyzHnLqAlqMQMYg3Pyr7/fV3Bn+hXCFlntFOpJ9ZGl5foKQbVTBlRsK8jiTohy+9+KidpOUnKBReiOv+uzWPcJfEHSYpn0pQ04kS9zh5UoeuL3PpEpeVZrOERcOC7qqYZGECPEnj1i9l/ad+YI+caAVLKMGc0Q=
+	t=1747747659; cv=none; b=sTwGhQ0lXo5K2PGOfyuJA7NTjgwme7ec2xP8QoYFWzcGuHei+k4MDobEZlKjY124ujmHb9pc0kkydarcDxDYgLJO8d3R3Szrs3H0yDyJgs56WNvcAVg9XqHGDclQ9PvHPoSskJ6EpwOqEldsL8VJhchhMz4xHUSnFk3dKMiY1sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747747658; c=relaxed/simple;
-	bh=D36PsCXleWazhHyYKxneEcKcbwQatHMRcr2rdQmzupY=;
+	s=arc-20240116; t=1747747659; c=relaxed/simple;
+	bh=fmEvO9jWgHIksPyAwWC/7NPn09ezbJkAFNR3cGcEPkI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=atOnFzC+FSZvQQlF82YcySJdWr1CtvIR6wAFp0S/L9L3OfzszWcbGU78k2gP6D8kkuT3hxT79TItFaQFC5dC8WnUSdg0Q0OgsggXW7CiCbj7DeWbEfkxEFEokYsk1LZhnZpRdh5bWhGErAt9nHI8WEWYA/nxKxcTXOLlfK1CrJU=
+	 MIME-Version; b=hLlKDQ/WRn7WULqS8uNZPhcCBFTKiuA5kVfXnv846IAiiAPV/BCDd1PsxRw/k1wIcN0sNt5iAhESjpgeZFs5InzUCcp+kp1RlwFgXnVJdn6Ef96ASz3L0CFEbHWSXRG5LEzO6Owp17sDjp4YpL3H4sPIiAaPnDh8UrCSeBBih4Y=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.199
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 66C3B43990;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id B11B843E95;
 	Tue, 20 May 2025 13:27:34 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [PATCH BlueZ v3 2/4] client: Print a human readable error message
-Date: Tue, 20 May 2025 15:26:34 +0200
-Message-ID: <20250520132733.1746996-2-hadess@hadess.net>
+Subject: [PATCH BlueZ v3 3/4] device: Better "Connect" debug
+Date: Tue, 20 May 2025 15:26:35 +0200
+Message-ID: <20250520132733.1746996-3-hadess@hadess.net>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250520132733.1746996-1-hadess@hadess.net>
 References: <20250520132733.1746996-1-hadess@hadess.net>
@@ -52,37 +52,106 @@ X-GND-Score: 0
 X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdeffecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpeevtefhleevjeffteekleehheeujeelhfdvheethefggefhkefgvdefhfegkeeiteenucfkphepvdgrtddumegvfeegmegvtgejfeemtghfvddtmeejudgurgemfegsugemvddtrgelmedufeefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvfeegmegvtgejfeemtghfvddtmeejudgurgemfegsugemvddtrgelmedufeefpdhhvghlohepohhlihhmphhitgdrrddpmhgrihhlfhhrohhmpehhrgguvghssheshhgruggvshhsrdhnvghtpdhnsggprhgtphhtthhopedvpdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehhrgguvghssheshhgruggvshhsrdhnvght
 X-GND-Sasl: hadess@hadess.net
 
-When the D-Bus error message string contains an encoded error code and
-user-readable message, parse this message to only show the user-readable
-message.
+Output clearer debug information so that it's possible to follow the
+decisions made by the bluetoothd daemon when a client such as
+bluetoothctl or the GNOME Bluetooth settings ask it to connect to a
+device.
 ---
- client/main.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ src/device.c | 41 +++++++++++++++++++++++++++++++++--------
+ 1 file changed, 33 insertions(+), 8 deletions(-)
 
-diff --git a/client/main.c b/client/main.c
-index 5d53a7be11e4..122d975a08da 100644
---- a/client/main.c
-+++ b/client/main.c
-@@ -30,6 +30,7 @@
- #include "gdbus/gdbus.h"
- #include "print.h"
- #include "agent.h"
-+#include "error-parse.h"
- #include "gatt.h"
- #include "advertising.h"
- #include "adv_monitor.h"
-@@ -2013,8 +2014,9 @@ static void connect_reply(DBusMessage *message, void *user_data)
- 	g_free(data);
+diff --git a/src/device.c b/src/device.c
+index d230af0a8aaa..0797e5ff5bb8 100644
+--- a/src/device.c
++++ b/src/device.c
+@@ -2560,6 +2560,7 @@ static DBusMessage *connect_profiles(struct btd_device *dev, uint8_t bdaddr_type
+ 							"Connect") &&
+ 				find_service_with_state(dev->services,
+ 						BTD_SERVICE_STATE_CONNECTED)) {
++				DBG("Already connected to services");
+ 				return dbus_message_new_method_return(msg);
+ 			} else {
+ 				return btd_error_not_available_str(msg,
+@@ -2572,8 +2573,10 @@ static DBusMessage *connect_profiles(struct btd_device *dev, uint8_t bdaddr_type
  
- 	if (dbus_set_error_from_message(&error, message) == TRUE) {
--		bt_shell_printf("Failed to connect: %s %s\n", error.name,
--				error.message);
-+		const char *msg = detailed_error_parse(error.message, NULL);
-+		bt_shell_printf("Failed to connect: %s: %s\n", error.name,
-+				msg);
- 		dbus_error_free(&error);
- 		return bt_shell_noninteractive_quit(EXIT_FAILURE);
+ 	err = connect_next(dev);
+ 	if (err < 0) {
+-		if (err == -EALREADY)
++		if (err == -EALREADY) {
++			DBG("Already connected");
+ 			return dbus_message_new_method_return(msg);
++		}
+ 		return btd_error_failed(msg,
+ 					btd_error_bredr_conn_from_errno(err));
  	}
+@@ -2648,14 +2651,24 @@ static uint8_t select_conn_bearer(struct btd_device *dev)
+ 	return dev->bdaddr_type;
+ }
+ 
++static const char *bdaddr_type_strs[] = {
++	"BR/EDR",
++	"LE public",
++	"LE random"
++};
++
+ static DBusMessage *dev_connect(DBusConnection *conn, DBusMessage *msg,
+ 							void *user_data)
+ {
+ 	struct btd_device *dev = user_data;
+ 	uint8_t bdaddr_type;
+ 
+-	if (dev->bonding)
++	DBG("Calling \"Connect\" for device %s", dev->path);
++
++	if (dev->bonding) {
++		DBG("Bonding in progress");
+ 		return btd_error_in_progress(msg);
++	}
+ 
+ 	if (dev->bredr_state.connected) {
+ 		/*
+@@ -2664,23 +2677,35 @@ static DBusMessage *dev_connect(DBusConnection *conn, DBusMessage *msg,
+ 		 */
+ 		if (dev->bredr_state.svc_resolved &&
+ 			find_service_with_state(dev->services,
+-						BTD_SERVICE_STATE_CONNECTED))
++						BTD_SERVICE_STATE_CONNECTED)) {
+ 			bdaddr_type = dev->bdaddr_type;
+-		else
++			DBG("Selecting address type %s, as BR/EDR services are resolved "
++			    " and connected", bdaddr_type_strs[dev->bdaddr_type]);
++		} else {
+ 			bdaddr_type = BDADDR_BREDR;
+-	} else if (dev->le_state.connected && dev->bredr)
++			DBG("Selecting address type BR/EDR, as services not resolved "
++			    "or not connected");
++		}
++	} else if (dev->le_state.connected && dev->bredr) {
+ 		bdaddr_type = BDADDR_BREDR;
+-	else
++		DBG("Selecting address type BR/EDR, as LE already connected");
++	} else {
+ 		bdaddr_type = select_conn_bearer(dev);
++		DBG("Selecting address type %s", bdaddr_type_strs[dev->bdaddr_type]);
++	}
+ 
+ 	if (bdaddr_type != BDADDR_BREDR) {
+ 		int err;
+ 
+-		if (dev->connect)
++		if (dev->connect) {
++			DBG("Device already connecting");
+ 			return btd_error_in_progress(msg);
++		}
+ 
+-		if (dev->le_state.connected)
++		if (dev->le_state.connected) {
++			DBG("Device already connected through LE");
+ 			return dbus_message_new_method_return(msg);
++		}
+ 
+ 		btd_device_set_temporary(dev, false);
+ 
 -- 
 2.49.0
 
