@@ -1,87 +1,167 @@
-Return-Path: <linux-bluetooth+bounces-12600-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-12602-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 307C6AC5016
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 May 2025 15:41:06 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4469DAC5046
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 May 2025 15:54:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5557A188C4E4
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 May 2025 13:41:14 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3EFC47A3C0A
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 May 2025 13:52:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 968092749F1;
-	Tue, 27 May 2025 13:40:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 940A9134CB;
+	Tue, 27 May 2025 13:53:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="NvSnpmro"
+	dkim=fail reason="unknown key version" (0-bit key) header.d=smtpservice.net header.i=@smtpservice.net header.b="q9/bk2xL";
+	dkim=pass (2048-bit key) header.d=triplefau.lt header.i=@triplefau.lt header.b="gEB0YFaZ"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-28.smtp.github.com (out-28.smtp.github.com [192.30.252.211])
+Received: from e2i340.smtp2go.com (e2i340.smtp2go.com [103.2.141.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA1F2749F8
-	for <linux-bluetooth@vger.kernel.org>; Tue, 27 May 2025 13:40:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.211
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B2FE2749DB
+	for <linux-bluetooth@vger.kernel.org>; Tue, 27 May 2025 13:53:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.2.141.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748353241; cv=none; b=Y3iSySc3bqJn7MSh2nwawmJusOGM7VmsUHaF3xYLCepqU/dlg+rzpfLEnQcooNcx5LY0flPrDqcTk9AuSvJZwK8OhCszzSt2x77xA7o6R/lUpG6XiN4/ZtO5v5j7TuzPftqX9DPUzBhd2tLuCAYG5dTT8Qm4tMIsOjQb0vXPNU4=
+	t=1748354027; cv=none; b=GsOHpgdODFkqGAlqdhxKATrTTfDm9vbHdzKOk+ihb8Sz/W0vowex1yQKaz/IZIpR/HWvssuBZCx7huproKNSLdasHLZsntvqpDfoFk/5pGGBDpfDsRQdx0UJdiUEcM/EbqTPn4sor4uZYbwFRRfM56klLSEGjFqveEOHnJzag08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748353241; c=relaxed/simple;
-	bh=vCk+O6WubMUdHzcLXmKIWGPkOHjDwPWRy+ofA4dT5WA=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=Uy3bAWK9s+D9x9aXIiC2sGdttK9tuavOt5fpHvTkwpvw997t0Zayad0z+zwtiqrF+qs4RYuGNVbysgQfFnMnVuMuLqbohpmFOJXcYkuCRXpaU5G47um0gFHm3cF1Y2CQcWLG5Vhg39+CYqazVXIgwuP7UBkqZYVXE2SsQs5pxao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=NvSnpmro; arc=none smtp.client-ip=192.30.252.211
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-feb3a44.ash1-iad.github.net [10.56.158.21])
-	by smtp.github.com (Postfix) with ESMTPA id DA508921330
-	for <linux-bluetooth@vger.kernel.org>; Tue, 27 May 2025 06:40:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1748353238;
-	bh=9n23WJkRBaDRsYv8AOz5+oDFpeQtjKQ61LvDPCpNzBU=;
-	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=NvSnpmroa+CbzYapQ8pqW5kO+VrTNh7paHyGQ1XlUmB7Xxt5N5yAoY5yrPBzT1n3C
-	 A+Da8hg/RPppauWBjq4JXNzSfvgq1P9t1xpYzgjvBBQ7Zij339TVdjfAKUE+9hLuC9
-	 1+vCSYxHLi4ly/3Jms+ejIiPCxODEgt/4qifqqQk=
-Date: Tue, 27 May 2025 06:40:38 -0700
-From: Luiz Augusto von Dentz <noreply@github.com>
+	s=arc-20240116; t=1748354027; c=relaxed/simple;
+	bh=F2arN47b4bB5mmRnBlyQhUoqXVcPR8q3XjoP1Tlu8l8=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=a9t87e1BvlDAhYlmpZzXl8+fifjDHiZAoEJd8IL8SldTOVv8sJPQxIPh19bH5oRZu7qSSDs9/QEM/VFGMWGlvQmY71Xpmh44UqLYO8AjVEnrwocV/hX0cYoaQfjb89gU5F+SmVfOOO3NElORs+9ZrCNAEyKg0bP/sdiGe3cXDMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=triplefau.lt; spf=pass smtp.mailfrom=em510616.triplefau.lt; dkim=fail (0-bit key) header.d=smtpservice.net header.i=@smtpservice.net header.b=q9/bk2xL reason="unknown key version"; dkim=pass (2048-bit key) header.d=triplefau.lt header.i=@triplefau.lt header.b=gEB0YFaZ; arc=none smtp.client-ip=103.2.141.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=triplefau.lt
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=em510616.triplefau.lt
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=smtpservice.net; s=maxzs0.a1-4.dyn; x=1748354924; h=Feedback-ID:
+	X-Smtpcorp-Track:Message-Id:Date:Subject:To:From:Reply-To:Sender:
+	List-Unsubscribe:List-Unsubscribe-Post;
+	bh=2QLsocQqIIE1PjUWYoJN/0gG6O/8Y+rlS3W//d5Z25k=; b=q9/bk2xLDfweXMk1amfBhyUDtc
+	a2Lr37f40G9WWptwuvTMOMPHTH2kcqcxb2Jts4MedDlXjqTKSdIT7WTXLHHhjTsL0o3i7pFq8FzH0
+	IW0UWTQ/P2lQJjipa9jHpbLtfB+7r7VW/McxSV4lDRJmQY8fqiBZCGTjtwfgHyh3hbnNzBmW90Dbe
+	EcuAnCGXGrxeJ4VsQZCMxINimAH14q6mK6o7+ZWgbwK8aeC1dehKMRtuZn9eTQbsQvIJ2x6N+Kw6/
+	YlO2aYPKZF4B62pJonPu8+Vkzq6oTzNmBrahJ6yGFVgf0sLweYw06e2lDN1o2VSG1eH4Tx/OxWqYX
+	8Pw0J0AQ==;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=triplefau.lt;
+ i=@triplefau.lt; q=dns/txt; s=s510616; t=1748354024; h=from : subject
+ : to : message-id : date;
+ bh=2QLsocQqIIE1PjUWYoJN/0gG6O/8Y+rlS3W//d5Z25k=;
+ b=gEB0YFaZvEOBB7NpnW2jNEkllpx+qrkYhs14X0rej/QBEdXsKLJw24BGKBFQuWa1USEbh
+ jYjjmRcVxwfdaz63Pz2PzXNAUHGwRQHYQopkzgkp0y4hSVsyvyAE9C4xqrgkz17vOTGEQ8x
+ vZ+3GII11wI/iPupgJRj3+JjggUdp/yqXtCyn0IwD2lWDjV3lwvpeyy+H0oErigW6dksfod
+ 173zy0DXvRnZi7N6ybOm0gDsVj4xJZFMWzqAaWSrXmIC6xs+kNMX0RWKLrjNM1s2wn1KcfS
+ qQfaRt39z9eBYJk9mgiC9YN/LW4V6mkUp7S8z4dGv5pzCX8q3KllDHJAwsow==
+Received: from [10.139.162.187] (helo=SmtpCorp) by smtpcorp.com with esmtpsa
+ (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+ (Exim 4.94.2-S2G) (envelope-from <repk@triplefau.lt>)
+ id 1uJukP-TRk3NG-7n; Tue, 27 May 2025 13:53:41 +0000
+Received: from [10.12.239.196] (helo=localhost) by smtpcorp.com with esmtpsa
+ (TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+ (Exim 4.97.1-S2G) (envelope-from <repk@triplefau.lt>)
+ id 1uJukO-4o5NDgrlFa2-oELH; Tue, 27 May 2025 13:53:41 +0000
+From: Remi Pommarel <repk@triplefau.lt>
 To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/966677/000000-a08983@github.com>
-Subject: [bluez/bluez] a08983: shared/bap: Fix not handling read offset
+Cc: Remi Pommarel <repk@triplefau.lt>
+Subject: [PATCH BlueZ v2] policy: Fix service retry counters reset
+Date: Tue, 27 May 2025 15:45:21 +0200
+Message-Id: <20250527134521.4942-1-repk@triplefau.lt>
+X-Mailer: git-send-email 2.40.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Smtpcorp-Track: L8cbotX3tUDC.nMtce4RkEwxW.5Tl-0QZ0PpA
+Feedback-ID: 510616m:510616apGKSTK:510616sM14PTLsSF
+X-Report-Abuse: Please forward a copy of this message, including all headers,
+ to <abuse-report@smtp2go.com>
 
-  Branch: refs/heads/966677
-  Home:   https://github.com/bluez/bluez
-  Commit: a089831e49937230a2bafd94b356d07ec5628b48
-      https://github.com/bluez/bluez/commit/a089831e49937230a2bafd94b356d07ec5628b48
-  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-  Date:   2025-05-27 (Tue, 27 May 2025)
+Control and Target retries counter were reset when service state
+goes from CONNECTED to DISCONNECTED, but usually an extra DISCONNECTING
+state is reached before going to DISCONNECTED. This causes retry counter
+to not being reset in this case, leading to service not being able to
+initialize on next connection. Source, sink and HS retry counter were
+only reset when limit was reached, moreover HS timer was not removed on
+CONNECTED state.
 
-  Changed paths:
-    M src/shared/bap.c
+Reset all service retry counter as soon as CONNECTED state is reached to
+avoid that. Also remove hs timer to match other services.
+---
+Changes since v1:
+  - Reset all service retry counter on CONNECTED
+  - Remove hs_timer on CONNECTED
+---
+ plugins/policy.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-  Log Message:
-  -----------
-  shared/bap: Fix not handling read offset
+diff --git a/plugins/policy.c b/plugins/policy.c
+index 0e533ba1f..561e3c089 100644
+--- a/plugins/policy.c
++++ b/plugins/policy.c
+@@ -311,6 +311,7 @@ static void sink_cb(struct btd_service *service, btd_service_state_t old_state,
+ 			timeout_remove(data->sink_timer);
+ 			data->sink_timer = 0;
+ 		}
++		data->sink_retries = 0;
+ 
+ 		/* Try connecting HSP/HFP if it is not connected */
+ 		hs = btd_device_get_service(dev, HFP_HS_UUID);
+@@ -375,6 +376,11 @@ static void hs_cb(struct btd_service *service, btd_service_state_t old_state,
+ 	case BTD_SERVICE_STATE_CONNECTING:
+ 		break;
+ 	case BTD_SERVICE_STATE_CONNECTED:
++		if (data->hs_timer > 0) {
++			timeout_remove(data->hs_timer);
++			data->hs_timer = 0;
++		}
++		data->hs_retries = 0;
+ 		/* Check if service initiate the connection then proceed
+ 		 * immediately otherwise set timer
+ 		 */
+@@ -489,6 +495,7 @@ static void source_cb(struct btd_service *service,
+ 			timeout_remove(data->source_timer);
+ 			data->source_timer = 0;
+ 		}
++		data->source_retries = 0;
+ 
+ 		/* Check if service initiate the connection then proceed
+ 		 * immediatelly otherwise set timer
+@@ -537,8 +544,6 @@ static void controller_cb(struct btd_service *service,
+ 				timeout_remove(data->ct_timer);
+ 				data->ct_timer = 0;
+ 			}
+-		} else if (old_state == BTD_SERVICE_STATE_CONNECTED) {
+-			data->ct_retries = 0;
+ 		}
+ 		break;
+ 	case BTD_SERVICE_STATE_CONNECTING:
+@@ -548,6 +553,7 @@ static void controller_cb(struct btd_service *service,
+ 			timeout_remove(data->ct_timer);
+ 			data->ct_timer = 0;
+ 		}
++		data->ct_retries = 0;
+ 		break;
+ 	case BTD_SERVICE_STATE_DISCONNECTING:
+ 		break;
+@@ -587,8 +593,6 @@ static void target_cb(struct btd_service *service,
+ 				timeout_remove(data->tg_timer);
+ 				data->tg_timer = 0;
+ 			}
+-		} else if (old_state == BTD_SERVICE_STATE_CONNECTED) {
+-			data->tg_retries = 0;
+ 		}
+ 		break;
+ 	case BTD_SERVICE_STATE_CONNECTING:
+@@ -598,6 +602,7 @@ static void target_cb(struct btd_service *service,
+ 			timeout_remove(data->tg_timer);
+ 			data->tg_timer = 0;
+ 		}
++		data->tg_retries = 0;
+ 		break;
+ 	case BTD_SERVICE_STATE_DISCONNECTING:
+ 		break;
+-- 
+2.40.0
 
-Some attributes may need to handle offset other than 0 in case read long
-procedure is used, so this properly handles that for PAC_SINK_CHRC_UUID
-and PAC_SOURCE_CHRC_UUID.
-
-In addition to PAC record this also uses
-gatt_db_attribute_set_fixed_length for attributes that are considered of
-fixed size so gatt_db can handle offset directly.
-
-Fixes: https://github.com/bluez/bluez/issues/1294
-
-
-
-To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
