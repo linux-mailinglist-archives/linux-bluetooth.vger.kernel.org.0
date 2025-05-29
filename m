@@ -1,128 +1,116 @@
-Return-Path: <linux-bluetooth+bounces-12666-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-12664-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88B78AC8117
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 May 2025 18:43:35 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0C0EAC80FC
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 May 2025 18:37:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 52C6E4A429E
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 May 2025 16:43:36 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D39EE7ABE1F
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 May 2025 16:36:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B43F222D9F4;
-	Thu, 29 May 2025 16:43:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3251C22D9F4;
+	Thu, 29 May 2025 16:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b="e0ZvteSh"
+	dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b="PuC9zSuv"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from master.debian.org (master.debian.org [82.195.75.110])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EEBA20C47C
-	for <linux-bluetooth@vger.kernel.org>; Thu, 29 May 2025 16:43:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=82.195.75.110
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1106117CA17
+	for <linux-bluetooth@vger.kernel.org>; Thu, 29 May 2025 16:37:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748537010; cv=none; b=fR5Xx346bMuFxNetTdew6B1g7lEYPsadPujgEdq5lMI6M3mh5dUYNCo4gHoc/N+AXp4PFcBSivra4jtT3CQUY1QRzN7Uf5yfV5/Jr1UJXb5QNjIE4Wsaud0CCnzqXgpNs/Hh94/3uN6y1y2H7f5NhdVQatOuMyMUqZL8hHx6teU=
+	t=1748536645; cv=none; b=KS1vwHV0CBf+J8V/Hf/EbFwqc7snxECuCndQFBn8lldZD9L22iiNLBw+hPNhi3lUgwFOjFYOsqG25Pfi1Iu3XfFk2R2cDVzPn/7bkAgoVKmy5GDDCngV1G3mkT2VOCozRHgRnMkufJ7BHBHPntP2an/i5wN9HnIgPcu6j4DfzFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748537010; c=relaxed/simple;
-	bh=cy8WXGn9kGrq+S0ZO+yrsLcycHnE5Osegmr4Cn/S6C0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=inXuo1tFmtl/OI5Hgw5FlWPsTEzSDzo/DMhPeXa2pmYaoPp0o0w1z4HYhap4Pe+lpD3X/vlS8JQo9GWMNXS8bTshaYpeS/M2oUtPlzIi8z7I+UHEcnaYcLZMCsvfN65nVk3DtR/gf4I+3FFUiP0FtQE9+QLecxz4hH9TIs8W1hs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=none smtp.mailfrom=master.debian.org; dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b=e0ZvteSh; arc=none smtp.client-ip=82.195.75.110
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=master.debian.org
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.master; h=Content-Transfer-Encoding:Content-Type:MIME-Version:
-	Message-ID:Date:Subject:Cc:To:From:Reply-To:Content-ID:Content-Description:
-	In-Reply-To:References; bh=YmNR/X9c2dwORjvmIi0s30BqMlixo33q+IhZCSM5XLY=; b=e0
-	ZvteShlMJGqPLRYRxcqci45UgYmVpKvGo9O02xhw0wZtHi1W7MWdYmY+NG+CQTQQjQUxYBXzdpS2q
-	HfUtkexAcWVe4TqJ6UWWlwUO+hXB3NmXg265OPiCXUezbkq5J9SMVqk8NnTj3Dk5y3FborKpexwIS
-	W7/wA6q/AzB7Q+zQ+SioD7zYWkiBQ78S8zKF1tT2/88Hizdm9P7iYsof1bQwNFpUEMA7ViweE6JiX
-	qrLLpNXsu5Hl03M9XdJ0bYHscU/ImGgrMcgvK+pgNOOCD/H8OQAqmVIB1Qodd94gGR9Ik7zz21GGZ
-	VO5J/arXEopXxtwZGxgTS3ykF79MycYA==;
-Received: from ukleinek by master.debian.org with local (Exim 4.94.2)
-	(envelope-from <ukleinek@master.debian.org>)
-	id 1uKg2j-006IKw-Og; Thu, 29 May 2025 16:23:45 +0000
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@debian.org>
-To: Marcel Holtmann <marcel@holtmann.org>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+	s=arc-20240116; t=1748536645; c=relaxed/simple;
+	bh=36XtsfB/Y/+r/p4PcJpXDCd1enWQ5otOmMPW+JGUpDY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=g1FD3z8KI6zVO+1ckTpoeS5nwaLb7AXz0Y2s973i4R3OEobd/cNbOoKVD0IN0vMlPeCyPO5DTX7c/oIgxTfAZs+8bMS7Rafx39zRtXkVXUykAE8Ela32mN/Te8KbsMA1orD+Rj23t/4LbbmRQuvIFbtQ7c/UIpfkL50Wgcu3xSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org; spf=pass smtp.mailfrom=kali.org; dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b=PuC9zSuv; arc=none smtp.client-ip=209.85.210.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kali.org
+Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-73044329768so822261a34.3
+        for <linux-bluetooth@vger.kernel.org>; Thu, 29 May 2025 09:37:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kali.org; s=google; t=1748536643; x=1749141443; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NJbHX8UWtBwYvowVAn6Pcv/J1e4Yt0eXJegAoG1XhWA=;
+        b=PuC9zSuv8gBLVg5UWkbiVhbOpUD6rMAttLSsopnGAxGGAMkIhGNFBhlz8Nav9iFY36
+         TNY0FEO4KcQGdWofGyTHJIMPQcGbOZaK0pVwg9m5rgTPzm4EizY0bTaJ1DUCHTizLbPI
+         xulEfZtZQ2vfYOMV0M00bw0mEB2oXFVuncmphL5+mJ0+E+IQboxk8JHDhI3TYpFUlRSI
+         j/HYd2K43KzeB6XSDK3j6rWFH7wiL4I3PI8aH0l1YkpvsUkt0FgtstCi8G65ApML21XV
+         6ggMqf27Mg9bax3Ff0SVLSekEkPIHnZ+nHJK6Ys6eG3mA53DD2HaXM4m+12DItNSz1u+
+         pieQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748536643; x=1749141443;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NJbHX8UWtBwYvowVAn6Pcv/J1e4Yt0eXJegAoG1XhWA=;
+        b=jdH8fuHT6r3pSDkFTczjLxU94t139mIqLCu7RWdUDd25hPTTjR7yzleYTa7LQ8KqVi
+         pbZGgfALKsT9eraZng/zW6ESevpOd4IclB3JAq0j2UPamIMS0iwN32jCiaFPTKg4bxYK
+         7SEV4Hbp+r585XKe//7D9FiPj1ofRaxXY8ER+bRKRow3e/ZAnPcwi8eH6j4aR//10tJD
+         piwmya9gEk0odlatpuvdS3wqgdISQ0BwUg2hPtE8Tyi7Fgk7TRB4Px7iITToBKUMvLeL
+         aziS8/KLruFQCnHUJqogMyHoNNHEuHvVL4XT/WDmAAQPvax0rCUYUFg1uBbaon2pCAzO
+         mmsg==
+X-Gm-Message-State: AOJu0Yy0L//l8Ld6fq1Ba6SD+UCmDZFcYRrmiEoLPoYKc5rY10ASg+Js
+	3kdE+8fSQhVM0IjOLaX2qPmVDxE7izWbgy+hIv9sMAZ8flCCLEAMJqCFwyCU+I69a4816SqCUq0
+	l2935OIg=
+X-Gm-Gg: ASbGncsOuJAIeKctR6K+D4qwNitJdA6qrs5BbIaizuna+kF1JeXYC4P62r0oghUMHql
+	ltljnqC1mqwcLCzMbryggybTSI1d3PHxO7R9rF4ZnGvAXC6kQobww9eYQK0C3nS3YNl2wHhaBis
+	q+6hO2QBYclASbLMW90h5/fNRgiC0JxD8FO7aMz86DWgLMBRP8Tfj9Or0rrRWbtcm5B0EL1uiva
+	RSXarFctgKeutRs6Z0C9X1394BbYIQRH9IGc3t9nzy6nsUbu9A+1UdhBzvusdclNn/QwXw23z37
+	nn1MdjrB6J/TGfMi5qjZZ+cSyfvLbQ1O/3KsnNBsChAD6rhv3T+NDzUp6dY2PCe0UMQNeFFgbHb
+	el1ssC9NrEYXXIyzhbO8=
+X-Google-Smtp-Source: AGHT+IGi9zW66xHGV0ooQgA4CE2RM/TMhTeayWKMwz8Z/b5BCfRRoPEIHimSNVfOYav1Uk6Qofw95Q==
+X-Received: by 2002:a05:6830:6589:b0:72b:940a:a7c9 with SMTP id 46e09a7af769-73670a605c7mr15249a34.27.1748536632389;
+        Thu, 29 May 2025 09:37:12 -0700 (PDT)
+Received: from localhost (104-48-214-220.lightspeed.snantx.sbcglobal.net. [104.48.214.220])
+        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-735af85614csm291924a34.26.2025.05.29.09.37.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 May 2025 09:37:11 -0700 (PDT)
+From: Steev Klimaszewski <steev@kali.org>
+To: quic_chejiang@quicinc.com
 Cc: linux-bluetooth@vger.kernel.org,
-	1106386@bugs.debian.org,
-	shdeb <shdeb3000000@gmail.com>
-Subject: [PATCH] Bluetooth: btusb: Add support for variant of RTL8851BE (USB ID 13d3:3601)
-Date: Thu, 29 May 2025 18:23:32 +0200
-Message-ID: <20250529162333.462753-2-ukleinek@debian.org>
+	linux-kernel@vger.kernel.org,
+	luiz.dentz@gmail.com,
+	marcel@holtmann.org
+Subject: Re: [v2] Bluetooth: hci_qca: Drop unused event during BT on
+Date: Thu, 29 May 2025 11:37:11 -0500
+Message-ID: <20250529163711.475128-1-steev@kali.org>
 X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20240821105027.425783-1-quic_chejiang@quicinc.com>
+References: <20240821105027.425783-1-quic_chejiang@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2673; i=ukleinek@debian.org; h=from:subject; bh=cy8WXGn9kGrq+S0ZO+yrsLcycHnE5Osegmr4Cn/S6C0=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBoOIoFePv/cfRkVtAWM6G0HBBGUxeCBHyHcoNDJ tPxbxNMdcGJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCaDiKBQAKCRCPgPtYfRL+ TrwwB/9XKk4sA8+ld0bSvRvELM12fj8pcEtGBL8I9qi9ts1sPKOTBmFm+Kj95ZSXkXNyD/k9INr 73gD4kbh+SiHcVpT+dtbsIHWTezJI0583hJfzS1iZkBTZJGSMiKNVBmn+uiVxEcbilm+FNUHB3l 25wA3yTE28+Z1uVhLt7Cr8LvWyALqRAOYeb/YTs+2fw1nz0OB+sAJJPzMdemOD6drx9lkiE06Pb 8huiQBMjtKZVQVGW7Nih0MzbBbRer1dqMcMEhtp9Hngy2EhtrUWFb+19PCi9nk1KxLmhN3hAb/j xTAmbsbfD98a7d9ds8u7fEnfXrJmGfbAzVTLHcsK7I88NNkS
-X-Developer-Key: i=ukleinek@debian.org; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
 
-Teach the btusb driver to recognize another variant of the RTL8851BE
-bluetooth radio.
+I have been looking into a long standing issue on the Thinkpad X13s, which has a
+WCN6855 where every so often would get the following error in dmesg output:
 
-/sys/kernel/debug/usb/devices reports for that device:
+Bluetooth: hci0: unexpected event for opcode 0xfc48
 
-	T:  Bus=03 Lev=01 Prnt=01 Port=02 Cnt=01 Dev#=  2 Spd=12   MxCh= 0
-	D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-	P:  Vendor=13d3 ProdID=3601 Rev= 0.00
-	S:  Manufacturer=Realtek
-	S:  Product=Bluetooth Radio
-	S:  SerialNumber=00e04c000001
-	C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
-	I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-	E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-	E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-	E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-	I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-	E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-	E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-	I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-	E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-	E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-	I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-	E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-	E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-	I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-	E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-	E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-	I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-	E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-	E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-	I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-	E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-	E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-	I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-	E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-	E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I don't get the message super often, 11 times since 16 April, though I do not
+know how many reboots happened in that time.
 
-Reported-by: shdeb <shdeb3000000@gmail.com>
-Link: https://bugs.debian.org/1106386
-Signed-off-by: Uwe Kleine-König <ukleinek@debian.org>
----
- drivers/bluetooth/btusb.c | 1 +
- 1 file changed, 1 insertion(+)
+I noticed you wrote this patch 9 months ago, and I've applied it locally and in
+my testing, with it applied, I cannot get the unexpected event anymore.  Looking
+in patchwork, it says this patch was superseded, but I can't find what its
+replacement is.
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 3016ee9f2932..39536d4b3d5a 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -515,6 +515,7 @@ static const struct usb_device_id quirks_table[] = {
- 	/* Realtek 8851BE Bluetooth devices */
- 	{ USB_DEVICE(0x0bda, 0xb850), .driver_info = BTUSB_REALTEK },
- 	{ USB_DEVICE(0x13d3, 0x3600), .driver_info = BTUSB_REALTEK },
-+	{ USB_DEVICE(0x13d3, 0x3601), .driver_info = BTUSB_REALTEK },
- 
- 	/* Realtek 8851BU Bluetooth devices */
- 	{ USB_DEVICE(0x3625, 0x010b), .driver_info = BTUSB_REALTEK |
+Does anyone know if this patch just fell through the cracks?
 
-base-commit: 2a628f951ed54c30a232230b5b58349d2a8dbb11
--- 
-2.47.2
+-- steev
 
+Resending due to the previous reply having an empty subject, I am not sure how
+that happened as the subject seemed to move into the body of the email.  Sorry
+for the noise!
 
