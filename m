@@ -1,34 +1,34 @@
-Return-Path: <linux-bluetooth+bounces-12832-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-12831-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD7EFAD14BF
-	for <lists+linux-bluetooth@lfdr.de>; Sun,  8 Jun 2025 23:32:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84946AD14BC
+	for <lists+linux-bluetooth@lfdr.de>; Sun,  8 Jun 2025 23:32:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BA9F9167A86
-	for <lists+linux-bluetooth@lfdr.de>; Sun,  8 Jun 2025 21:32:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 40D7E1887565
+	for <lists+linux-bluetooth@lfdr.de>; Sun,  8 Jun 2025 21:33:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A385B256C76;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6759C25A2DA;
 	Sun,  8 Jun 2025 21:32:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="CHsviPHg"
+	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="TizX2U9S"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [185.185.170.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B814256C89
-	for <linux-bluetooth@vger.kernel.org>; Sun,  8 Jun 2025 21:32:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68325256C9F
+	for <linux-bluetooth@vger.kernel.org>; Sun,  8 Jun 2025 21:32:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=185.185.170.37
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749418362; cv=pass; b=pO2OQ48+I+dtdhCYUnXdsT7ODqW2ZxBQzckQ2plM8FvLmbcGWNm4jUVxof8zZDCns6WCAYBSvXX6dwhaDcHLSepHc+Ocvof57lXedfHllrHXIPtqyu/tNd1y0ZlzyAPlb+hqNqqX9bx8o18v8AxbCXWw15kJ7UKE5DuaiGRh1Js=
+	t=1749418361; cv=pass; b=rvJrVBvwfbZu2lZ43Hr0R3aILfLW0Wb80ff4Yg+dF4/wMZZH2N01LVF/WOaeGy+6ZYpXuEDt2X4qRT/ktAFb3UzK1Y/n8zJie/rqo4mfEjzBMa28m8G4mX1GAkFUjKLOJ3M4kqo3mteMy/vBUaphtq+PUlzEzOemO1ihv5sgRxQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749418362; c=relaxed/simple;
-	bh=VYcrhD2CIDXWa3QLlfZyvykpAIfwSE5fTbvTx1gHWRo=;
+	s=arc-20240116; t=1749418361; c=relaxed/simple;
+	bh=+VCzMt6KfrS0wMd8o+d2ZA6CSF1DWxP5443xC3g3N2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z7MgH1dQYBwCCB6942DDk3k3F0kUjiv6E64czviYnv+8xliEf7BArrRXVd8qAT9o3/xskIUnrcWRnTegmtkjgMimKlVCF/8y86gW4meJS3RN8J73XshyhDPfALLCD8IPSPl7KarIGMIrz0qHrF5eide7JXjdSz6uUb4y2SjHwls=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=CHsviPHg; arc=pass smtp.client-ip=185.185.170.37
+	 MIME-Version; b=l5rJD1mO9uIl9fZcx3wxZBOaMoKszWDEbTxwyL8ZbKE1n4/nWfcqiLuPTqmztYQYrv5F1b5BqKTwjdZ+WWCp4SDzrfFJnkp4rGzuid3YXC9wVxLDdBGje1YKQQ+VrVzg3udL1bq1fw4qpBQtQGZYSRFtHHelb5rfS3wF/QAGC/U=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=TizX2U9S; arc=pass smtp.client-ip=185.185.170.37
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [185.77.218.2])
@@ -36,7 +36,7 @@ Received: from monolith.lan (unknown [185.77.218.2])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4bFpDk2HDtz49Q4L;
+	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4bFpDk4Wvyz49QDC;
 	Mon,  9 Jun 2025 00:32:38 +0300 (EEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
 	t=1749418358;
@@ -44,40 +44,40 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=B29qcsl4V3dNGkC00Sv+rhKeW0H6rzDD+JKT5VVGUfg=;
-	b=CHsviPHgQFzce7Uz9KqyD1LB3D2/rjDIFjwMqXqWFJDx7DmAmpbaGpN6jKvcwlqegNHw6i
-	bisqNImdklA2NasgBq07frUOh8deoJvTz+i/yl1KOS3DYVywFcMMvtPk25Pi+ImE/NpQFf
-	d6CDn+m/7mb8XicYYelMBL9c6POSmZ+ZrATmhAJZa2Rc3pc5JIZz1uD2qJYyGVGuCPlLRI
-	QbTODM4nDvj6+SIzIvrkN8H7NUfDlNSNIJH86czsego+9VQjq8mAxNy9UBVxZ+ti3SZnkU
-	c/OhFp2unoZwbzID6JXHu3I6NrK4EB3xWzfxbDAlYucurx1eEEgVQhL0RUHTpQ==
+	bh=LUV0GcFXwF09YF6XpAfdDgSzcv31H3RTVyHIIvBGI1A=;
+	b=TizX2U9SveURCTxAT0v9Ga9vn3zQwIfBxpgGIn9XzH9+kcLsSGKpfy29Sf8+6JWVhDWm4a
+	+djN8hJEq9x1sHzXpMHGwAqkXsyf2VCX7j4xOukxjHPW1n7ooH0vn9OLhSuYzPhpKMf5Zb
+	4YydTxs0nGGrRgEkBNCPxZB08b1sLp/aXoVdHKyxGygoZHGdaARut6NO6Mi5yNa1tkctP6
+	G7f/IrWY9MQAFBCSX5sokgvs3Oj7MXGEciHyIEwc5HcVniAU5Jx31m2/LIkdyADXPEQwTp
+	rPV+t6WAFRXMY9J/YND/b2lahL2+vFnI8dNlX5Tcl7QCJvQmQHjpeCxbtprohg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
 	s=lahtoruutu; t=1749418358;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=B29qcsl4V3dNGkC00Sv+rhKeW0H6rzDD+JKT5VVGUfg=;
-	b=URpzUNkLkZKTHVgyola9xUKN8K42JFkq2XwnsQr4fL9Iv7JffwK2lsYzajocGyO23qP24S
-	cKdZBbsqfKHpvDn2rU3OUJreCOPex+OBSSRfDh8HLatMicqjaJMezTo+/x+VVY4Gmg5EgH
-	GkBm/6aRzetPmhj4DnICN3pArmV305iv3d00uD56J4NYXXImLoLCBZU9Fq7g9Uho9owniH
-	vIk29nPclO9STlHLK4ZTQ/b+ltvRmLk24tvd9FsHXKlXUxYarjx8jC0Kt/Jejkj//bWGEX
-	aMgjGYsDFi+/uzBvTSvIiqncE3mU3pI6MhSyDpl5JmHTn4Dv+lHOfm2NESoUzw==
+	bh=LUV0GcFXwF09YF6XpAfdDgSzcv31H3RTVyHIIvBGI1A=;
+	b=ZjMlXJUp0BXws8JKYeTiYGgy1d3FlBBaNEcqRnrr+gQYGYKl4iEHWTaZJ0J4CH8UMXoKzr
+	UgihgcgX6GLG+8vmaXNTwL3pqWLSpgZPZ5NnDCgQKmepLqsQrrqDQ2agNmWAYykxBYuyS5
+	5y2lQP5tAeJgqb58UoqwMaReqvmjmeewBjY+4y9Sw9q3NPUqMKYMVqpaZHrFV22n47ItSH
+	J2eXkK5gg3kCtjEs0NEmLVNrHJNQF7zo7/h1X4Mjyw/qj1CwCQ6/8L3KxFaryn3SGSyTkU
+	SPGxXOl/UmyPYU8cmDGbsAP/9KgXDednnIAFQyy4V1PaD+/BnO0Mwu1zdZglHQ==
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1749418358; a=rsa-sha256;
 	cv=none;
-	b=QovO8v7EgA3Cyl9IYK0trvUBdeNMpFLhDP8I9xRDd7xx8P3j7kJbp94b11eLV+ZKDUseGZ
-	npf2gCBJuPvW/9i08ae2Kqe2AnuukzhwKuHlwWxVQ8npzt6ea/octMKz6MJ10lFTfKNvqV
-	iHL6QiQD8zGZjxp7ZemuHmDWdeKtb0LqBoO4hX/TPbDuXvSxSopbyC5aTczD661K0pWQfT
-	vozi5f6Bhtncr1Glh72/saEmyHPKH0X74OqDV/FOwPBwaSZYYMISrT37cDqLRrAibHVAQT
-	YDTyCMrnc4U5SE1///Xt5zqpHSVnmrNbDqBSIPFrcG2wmVJF1tc4vgS3H2NpGg==
+	b=jlcslMOQIE2Yqr/3QQ7XMnX/hT6x9Ij84XzRMUmtyrVmfgzSejU4PkHCKeI3mPs6WGotCy
+	AOgJ0ixgQS/7OaZi6K74SrpYA0QJXv5GELB/w/6H9tSDFYUojjikkQqcYsTNnI0Y6T0O7p
+	nhzDDuwmQRo8K7xWzVVrWpw/eM7hpFjCP4/0JxET5cJGa5KOaMvmMbD1kLULOOtuQXEZFF
+	LKRMlk47aOJ5D0xZRM7cHI94mZ0W6LvsMLttFZZT2MMHZNdHsnCyTzOvV7+nwilfN9S4q1
+	fifnRWh2sXvEtP1U5TP3Y8Ag5ahYUZ2QovhXEpggSuFm47DAGFKSbYhF/vVk6w==
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ v3 03/10] shared/bap: add client ASE reuse and upper level stream locking
-Date: Mon,  9 Jun 2025 00:32:15 +0300
-Message-ID: <36b7af1db42e5fad73161a535146d2b16381b3bf.1749418319.git.pav@iki.fi>
+Subject: [PATCH BlueZ v3 04/10] bap: lock streams when used
+Date: Mon,  9 Jun 2025 00:32:16 +0300
+Message-ID: <11f5fab62c2c8054394f5295b3f0d42054066327.1749418319.git.pav@iki.fi>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <cover.1749418319.git.pav@iki.fi>
 References: <cover.1749418319.git.pav@iki.fi>
@@ -89,251 +89,77 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Change ucast client stream design so that:
+Indicate to lower layer when we are using the streams.
 
-* upper level locks streams to indicate which ones it is using
-* unused streams are reused when upper level wants a new stream
-* only locked streams are used for bidi CIS linking
-* streams (still) correspond 1-to-1 to non-idle ASEs
-
-This fixes some issues:
-
-* bap_ucast_stream_new() could pick a stream upper level is already
-  using if lpac & rpac match (can occur with multi-stream AC 6(ii) etc)
-* Avoids assuming ASE enters idle state at end of stream life cycle.
-  This is False for some devices like Sony headsets, which always cache
-  codec config so RELEASING -> CONFIG always, never RELEASING -> IDLE,
-  so ASE never go IDLE again.
-* Allows reconfiguring an ASE with different codec in this case.
-* Allows upper level to only QoS some of the streams.
-
-Reconfiguring ASE in QOS/CONFIG state with different codec here results
-to need_reconfig=true state, where ASE and stream configs do not match,
-and upper level needs to do bt_bap_stream_config() to sync them.
+When setup is freed, make sure the corresponding stream is released
+after unlocking.
 ---
- src/shared/bap.c | 133 ++++++++++++++++++++++++++++++-----------------
- src/shared/bap.h |   3 ++
- 2 files changed, 89 insertions(+), 47 deletions(-)
+ profiles/audio/bap.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/src/shared/bap.c b/src/shared/bap.c
-index fda1e3560..1c15a4ecb 100644
---- a/src/shared/bap.c
-+++ b/src/shared/bap.c
-@@ -296,6 +296,8 @@ struct bt_bap_stream {
- 	struct queue *pending_states;
- 	bool no_cache_config;
- 	bool client;
-+	bool locked;
-+	bool need_reconfig;
- 	void *user_data;
- };
- 
-@@ -1925,6 +1927,9 @@ static unsigned int bap_ucast_qos(struct bt_bap_stream *stream,
- 	if (!stream->client)
- 		return 0;
- 
-+	if (stream->need_reconfig)
-+		return 0;
-+
- 	memset(&qos, 0, sizeof(qos));
- 
- 	/* TODO: Figure out how to pass these values around */
-@@ -2327,7 +2332,6 @@ static unsigned int bap_ucast_release(struct bt_bap_stream *stream,
- 	/* If stream does not belong to a client session, clean it up now */
- 	if (!bap_stream_valid(stream)) {
- 		stream_set_state(stream, BT_BAP_STREAM_STATE_IDLE);
--		stream = NULL;
- 		return 0;
- 	}
- 
-@@ -2610,6 +2614,9 @@ static int bap_ucast_io_link(struct bt_bap_stream *stream,
- 			stream->ep->dir == link->ep->dir)
- 		return -EINVAL;
- 
-+	if (stream->client && !(stream->locked && link->locked))
-+		return -EINVAL;
-+
- 	if (!stream->links)
- 		stream->links = queue_new();
- 
-@@ -5073,6 +5080,8 @@ static void ep_status_config(struct bt_bap *bap, struct bt_bap_endpoint *ep,
- 		ep->stream->cc = new0(struct iovec, 1);
- 
- 	util_iov_memcpy(ep->stream->cc, cfg->cc, cfg->cc_len);
-+
-+	ep->stream->need_reconfig = false;
+diff --git a/profiles/audio/bap.c b/profiles/audio/bap.c
+index b420354cd..6be6ff8fd 100644
+--- a/profiles/audio/bap.c
++++ b/profiles/audio/bap.c
+@@ -861,6 +861,17 @@ static struct bap_setup *setup_new(struct bap_ep *ep)
+ 	return setup;
  }
  
- static void bap_stream_config_cfm_cb(struct bt_bap_stream *stream, int err)
-@@ -5980,43 +5989,6 @@ bool bt_bap_pac_bcast_is_local(struct bt_bap *bap, struct bt_bap_pac *pac)
- 	return false;
- }
- 
--static bool find_ep_unused(const void *data, const void *user_data)
--{
--	const struct bt_bap_endpoint *ep = data;
--	const struct match_pac *match = user_data;
--
--	if (ep->stream)
--		return false;
--
--	if (match->rpac)
--		return ep->dir == match->rpac->type;
--	else
--		return true;
--}
--
--static bool find_ep_pacs(const void *data, const void *user_data)
--{
--	const struct bt_bap_endpoint *ep = data;
--	const struct match_pac *match = user_data;
--
--	if (!ep->stream)
--		return false;
--
--	if (ep->stream->lpac != match->lpac)
--		return false;
--
--	if (ep->stream->rpac != match->rpac)
--		return false;
--
--	switch (ep->state) {
--	case BT_BAP_STREAM_STATE_CONFIG:
--	case BT_BAP_STREAM_STATE_QOS:
--		return true;
--	}
--
--	return false;
--}
--
- static bool find_ep_source(const void *data, const void *user_data)
- {
- 	const struct bt_bap_endpoint *ep = data;
-@@ -6196,6 +6168,48 @@ static struct bt_bap_stream *bap_bcast_stream_new(struct bt_bap *bap,
- 	return stream;
- }
- 
-+static bool find_ep_ucast(const void *data, const void *user_data)
++static void release_stream(struct bt_bap_stream *stream)
 +{
-+	const struct bt_bap_endpoint *ep = data;
-+	const struct match_pac *match = user_data;
-+
-+	if (ep->stream) {
-+		if (!ep->stream->client)
-+			return false;
-+		if (ep->stream->locked)
-+			return false;
-+		if (!queue_isempty(ep->stream->pending_states))
-+			return false;
-+
-+		switch (ep->stream->state) {
-+		case BT_BAP_STREAM_STATE_IDLE:
-+		case BT_BAP_STREAM_STATE_CONFIG:
-+		case BT_BAP_STREAM_STATE_QOS:
-+			break;
-+		default:
-+			return false;
-+		}
-+	}
-+
-+	if (ep->dir != match->rpac->type)
-+		return false;
-+
-+	switch (match->lpac->type) {
-+	case BT_BAP_SOURCE:
-+		if (ep->dir != BT_BAP_SINK)
-+			return false;
-+		break;
-+	case BT_BAP_SINK:
-+		if (ep->dir != BT_BAP_SOURCE)
-+			return false;
++	switch (bt_bap_stream_get_state(stream)) {
++	case BT_BAP_STREAM_STATE_IDLE:
++	case BT_BAP_STREAM_STATE_RELEASING:
 +		break;
 +	default:
-+		return false;
++		bt_bap_stream_release(stream, NULL, NULL);
 +	}
-+
-+	return true;
 +}
 +
- static struct bt_bap_stream *bap_ucast_stream_new(struct bt_bap *bap,
- 					struct bt_bap_pac *lpac,
- 					struct bt_bap_pac *rpac,
-@@ -6213,20 +6227,26 @@ static struct bt_bap_stream *bap_ucast_stream_new(struct bt_bap *bap,
- 	match.lpac = lpac;
- 	match.rpac = rpac;
- 
--	/* Check for existing stream */
--	ep = queue_find(bap->remote_eps, find_ep_pacs, &match);
-+	/* Get free ASE */
-+	ep = queue_find(bap->remote_eps, find_ep_ucast, &match);
- 	if (!ep) {
--		/* Check for unused ASE */
--		ep = queue_find(bap->remote_eps, find_ep_unused, &match);
--		if (!ep) {
--			DBG(bap, "Unable to find unused ASE");
--			return NULL;
--		}
-+		DBG(bap, "Unable to find usable ASE");
-+		return NULL;
- 	}
- 
- 	stream = ep->stream;
--	if (!stream)
-+	if (stream) {
-+		/* Replace lpac: the stream generally needs to be reconfigured
-+		 * after this, otherwise things like codec config not match.
-+		 */
-+		bap_stream_clear_cfm(stream);
-+		stream->lpac = lpac;
-+		util_iov_free(stream->cc, 1);
-+		stream->cc = util_iov_dup(data, 1);
-+		stream->need_reconfig = true;
-+	} else {
- 		stream = bap_stream_new(bap, ep, lpac, rpac, data, true);
-+	}
- 
- 	return stream;
- }
-@@ -6247,6 +6267,25 @@ struct bt_bap_stream *bt_bap_stream_new(struct bt_bap *bap,
- 	return bap_bcast_stream_new(bap, lpac, pqos, data);
- }
- 
-+void bt_bap_stream_lock(struct bt_bap_stream *stream)
-+{
-+	if (!stream || !stream->client)
-+		return;
-+
-+	/* Reserve stream ASE for use by upper level, so it won't get
-+	 * reallocated
-+	 */
-+	stream->locked = true;
-+}
-+
-+void bt_bap_stream_unlock(struct bt_bap_stream *stream)
-+{
-+	if (!stream || !stream->client)
-+		return;
-+
-+	stream->locked = false;
-+}
-+
- struct bt_bap *bt_bap_stream_get_session(struct bt_bap_stream *stream)
+ static void setup_free(void *data)
  {
- 	if (!stream)
-diff --git a/src/shared/bap.h b/src/shared/bap.h
-index d10581428..fba8b6b17 100644
---- a/src/shared/bap.h
-+++ b/src/shared/bap.h
-@@ -183,6 +183,9 @@ struct bt_bap_stream *bt_bap_stream_new(struct bt_bap *bap,
- 					struct bt_bap_qos *pqos,
- 					struct iovec *data);
+ 	struct bap_setup *setup = data;
+@@ -892,6 +903,10 @@ static void setup_free(void *data)
+ 	if (setup->destroy)
+ 		setup->destroy(setup);
  
-+void bt_bap_stream_lock(struct bt_bap_stream *stream);
-+void bt_bap_stream_unlock(struct bt_bap_stream *stream);
++	bt_bap_stream_unlock(setup->stream);
 +
- struct bt_bap *bt_bap_stream_get_session(struct bt_bap_stream *stream);
- uint8_t bt_bap_stream_get_state(struct bt_bap_stream *stream);
++	release_stream(setup->stream);
++
+ 	free(setup);
+ }
  
+@@ -1015,6 +1030,7 @@ static DBusMessage *set_configuration(DBusConnection *conn, DBusMessage *msg,
+ 
+ 	setup->stream = bt_bap_stream_new(ep->data->bap, ep->lpac, ep->rpac,
+ 						&setup->qos, setup->caps);
++	bt_bap_stream_lock(setup->stream);
+ 	bt_bap_stream_set_user_data(setup->stream, ep->path);
+ 	setup->config_pending = true;
+ 	setup->id = bt_bap_stream_config(setup->stream, &setup->qos,
+@@ -1107,6 +1123,7 @@ static void create_stream_for_bis(struct bap_data *bap_data,
+ 	/* Create and configure stream */
+ 	setup->stream = bt_bap_stream_new(bap_data->bap,
+ 			lpac, NULL, &setup->qos, caps);
++	bt_bap_stream_lock(setup->stream);
+ 
+ 	setup->sid = sid;
+ 	bt_bap_stream_set_user_data(setup->stream, path);
+@@ -1430,10 +1447,12 @@ static void setup_config(void *data, void *user_data)
+ 	/* TODO: Check if stream capabilities match add support for Latency
+ 	 * and PHY.
+ 	 */
+-	if (!setup->stream)
++	if (!setup->stream) {
+ 		setup->stream = bt_bap_stream_new(ep->data->bap, ep->lpac,
+ 						ep->rpac, &setup->qos,
+ 						setup->caps);
++		bt_bap_stream_lock(setup->stream);
++	}
+ 
+ 	setup->config_pending = true;
+ 	setup->id = bt_bap_stream_config(setup->stream, &setup->qos,
 -- 
 2.49.0
 
