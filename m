@@ -1,100 +1,79 @@
-Return-Path: <linux-bluetooth+bounces-12925-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-12929-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C54AAD569D
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Jun 2025 15:12:25 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 17B35AD56D1
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Jun 2025 15:20:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7BC9A1768F5
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Jun 2025 13:12:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 793133A1D7F
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Jun 2025 13:20:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F2762874E4;
-	Wed, 11 Jun 2025 13:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBEAF2882CF;
+	Wed, 11 Jun 2025 13:20:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="Zhv/cSog"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from b-painless.mh.aa.net.uk (b-painless.mh.aa.net.uk [81.187.30.52])
+Received: from out-25.smtp.github.com (out-25.smtp.github.com [192.30.252.208])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20187284B26
-	for <linux-bluetooth@vger.kernel.org>; Wed, 11 Jun 2025 13:12:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=81.187.30.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F674287519
+	for <linux-bluetooth@vger.kernel.org>; Wed, 11 Jun 2025 13:20:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.208
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749647525; cv=none; b=cypstjgTN6Y7PjReIAywlfxguvI62vaplfJvF5x3qNsJFSVHPlqPYfeS/qrz50EHD8BP3HYpegeMS9BXIEnMgYzrcKwWsSpn6stXlHSve6OPBeMIcUvuB7qj5Vc/Q+KPHDedbwIlfewlWewhDJn/gNLnUC6tk8mbJ2PuGfwG6YU=
+	t=1749648021; cv=none; b=Ad4r0q289KaIC02HyQeeSfM0uGYYIYY4CUSB0Kh1w/4W1nGXExlhxsr6jbPbsS1Tgd57NvEEZmljUWUU+KE5AYH6suBFBTrYFdSH6Pxzmdd6M0dgZlgPmDmRj3d1ySEnkowDRCZJ6dEduuIjVgBWPf3g3N8eq0YDLgv8nylhj9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749647525; c=relaxed/simple;
-	bh=Yec/nPySt+JalAFQ9pvInBq8u4b2OvzGO9SkgyxMRbY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DCFFnRCd3LvpbzsiKQtHGHSIS2kYXrGq5vwCbTix/ImBcyItkovVEFbtnNl0n1WGge7gzMP2GbAApWHQ7ricqibRB0KXFGNswDSppMHrmT6BQ24nKJNw/JMR+jIIzdMDt/73vIiXJFXFyQqprGeMuCl57NCY99zGxkN+2yDPBHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pileofstuff.org; spf=pass smtp.mailfrom=pileofstuff.org; arc=none smtp.client-ip=81.187.30.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pileofstuff.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pileofstuff.org
-Received: from 1.a.2.1.e.1.9.2.1.e.2.8.f.7.6.5.0.5.8.0.9.1.8.0.0.b.8.0.1.0.0.2.ip6.arpa ([2001:8b0:819:850:567f:82e1:291e:12a1] helo=andrews-2024-laptop.lan)
-	by painless-b.tch.aa.net.uk with esmtp (Exim 4.96)
-	(envelope-from <kernel.org@pileofstuff.org>)
-	id 1uPLFJ-00CPsc-1V;
-	Wed, 11 Jun 2025 14:12:01 +0100
-From: Andrew Sayers <kernel.org@pileofstuff.org>
+	s=arc-20240116; t=1749648021; c=relaxed/simple;
+	bh=VvFQf+HPuwvxiPO2CciFWT3wBG7LYc3T7itTWZ/gR60=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=oBpOVIJBUYcFtVMDIMNF49/8i8XKnXxdDQFvkVLnwYq8prZiFok94CND/mGnfuIJM803Z0ER+UsXSf/L/vKZ1XiIuKXwPGTCZXlTeIvN6nytefBXZSzZ/DPu1Bs/O0lKdfMXwMit1qxSxGSHLe1zivju4DSqPR6k7pG4RdEpdHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=Zhv/cSog; arc=none smtp.client-ip=192.30.252.208
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
+Received: from github.com (hubbernetes-node-b2708b6.ash1-iad.github.net [10.56.146.44])
+	by smtp.github.com (Postfix) with ESMTPA id A3FAC141358
+	for <linux-bluetooth@vger.kernel.org>; Wed, 11 Jun 2025 06:20:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+	s=pf2023; t=1749648016;
+	bh=9l8VzYod/q1reIAyNxk+SdV73RlwfILTXqF8KK56G+0=;
+	h=Date:From:To:Subject:List-Unsubscribe:From;
+	b=Zhv/cSog30UZO+NBPu+00qcrk9StRDuy8xd6QOHnFtFSp87myuVQQZ9FtH96GkfpI
+	 TBtTy6kkSDxGVqsHylUGRBmjchr/wZwSgewowiGPPhW8ptyJTI4afRsHw1YyzUVuFI
+	 kIIOruDki+OSTwbcuOsgOCz+Uh3/XpAJD9o464u4=
+Date: Wed, 11 Jun 2025 06:20:16 -0700
+From: ValdikSS <noreply@github.com>
 To: linux-bluetooth@vger.kernel.org
-Cc: luiz.dentz@gmail.com,
-	pav@iki.fi,
-	frederic.danis@collabora.com,
-	Andrew Sayers <kernel.org@pileofstuff.org>
-Subject: [PATCH BlueZ v2 3/3] Revert "obexd: Support creating private system/session bus connections"
-Date: Wed, 11 Jun 2025 14:06:15 +0100
-Message-ID: <20250611131125.450039-4-kernel.org@pileofstuff.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250611131125.450039-1-kernel.org@pileofstuff.org>
-References: <20250611131125.450039-1-kernel.org@pileofstuff.org>
+Message-ID: <bluez/bluez/push/refs/heads/970839/000000-60476c@github.com>
+Subject: [bluez/bluez] 60476c: doc: sco.rst: BT_PHY is read-only
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
 
-This reverts commit 237d818ef294e22be87fba69b3cdd79c75c201e7,
-which encouraged the use of private DBus connections.
-Doing so caused a bug, so it's better to remove the temptation for now
-and re-add it if a legitimate use case is ever found.
+  Branch: refs/heads/970839
+  Home:   https://github.com/bluez/bluez
+  Commit: 60476cbfd54697ff3620ad1d86d5c94fc684bade
+      https://github.com/bluez/bluez/commit/60476cbfd54697ff3620ad1d86d5c94fc684bade
+  Author: ValdikSS <iam@valdikss.org.ru>
+  Date:   2025-06-11 (Wed, 11 Jun 2025)
 
-Signed-off-by: Andrew Sayers <kernel.org@pileofstuff.org>
----
- obexd/src/main.c  | 8 --------
- obexd/src/obexd.h | 2 --
- 2 files changed, 10 deletions(-)
+  Changed paths:
+    M doc/sco.rst
 
-diff --git a/obexd/src/main.c b/obexd/src/main.c
-index df150973e..6837f0d73 100644
---- a/obexd/src/main.c
-+++ b/obexd/src/main.c
-@@ -254,14 +254,6 @@ DBusConnection *obex_setup_dbus_connection(const char *name,
- 	return connection;
- }
- 
--DBusConnection *obex_setup_dbus_connection_private(const char *name,
--					DBusError *error)
--{
--	return g_dbus_setup_private(option_system_bus ?
--				DBUS_BUS_SYSTEM : DBUS_BUS_SESSION,
--				name, error);
--}
--
- int main(int argc, char *argv[])
- {
- 	GOptionContext *context;
-diff --git a/obexd/src/obexd.h b/obexd/src/obexd.h
-index 560db29ce..5e5edc4de 100644
---- a/obexd/src/obexd.h
-+++ b/obexd/src/obexd.h
-@@ -33,5 +33,3 @@ const char *obex_option_capability(void);
- DBusConnection *obex_get_dbus_connection(void);
- DBusConnection *obex_setup_dbus_connection(const char *name,
- 					DBusError *error);
--DBusConnection *obex_setup_dbus_connection_private(const char *name,
--					DBusError *error);
--- 
-2.49.0
+  Log Message:
+  -----------
+  doc: sco.rst: BT_PHY is read-only
 
+The kernel is missing BT_PHY setsockopt support, as of 6.16-rc1.
+
+
+
+To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
