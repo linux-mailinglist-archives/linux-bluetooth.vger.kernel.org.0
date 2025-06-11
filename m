@@ -1,246 +1,136 @@
-Return-Path: <linux-bluetooth+bounces-12934-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-12936-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 589ACAD5931
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Jun 2025 16:45:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B828AD5934
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Jun 2025 16:46:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4C35D3A1C0C
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Jun 2025 14:44:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BB1971890EA5
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Jun 2025 14:46:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6C102BD5B1;
-	Wed, 11 Jun 2025 14:45:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35DD12BB04;
+	Wed, 11 Jun 2025 14:46:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BQTQ5WGC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N5bUDiIb"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB1128C2AF
-	for <linux-bluetooth@vger.kernel.org>; Wed, 11 Jun 2025 14:45:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3FE317B506
+	for <linux-bluetooth@vger.kernel.org>; Wed, 11 Jun 2025 14:46:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749653109; cv=none; b=XY1dpYyKVTRNSpt8Z8oQkEyetJ9ggSJYZIWM+mRIBf6EmiAgFkMV+dggD/Ii5t7lcF5cPhpVloHsuAZmhR/AjQNZyfvwmpyW5AjIMD1cuumLUap+2FUtJsws5DlL7WJjpM6HYC9HCruTYKlSQwj7TVuS/cAUFZ379xlkgyy7RQs=
+	t=1749653170; cv=none; b=rkq9kH8lsJZ3xN3Zw6S11vhLQz5NAtQ/qpVa/K8MjqWnxYla5HT30u+29sDp7YXYJjYGRS7OZzSBTgV4UhRwtWoHIxbN07k4QviMHyq+zuYxYw6GCSEZ8Wp4BYdUodq4fp1EbCZRLF8BdzHXJPb1POXS/syRf7fuctV/WIi7qU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749653109; c=relaxed/simple;
-	bh=oqmgWKfWRGHXpk1muxCjroF94TOqNOoX5+nZRYn6mH0=;
+	s=arc-20240116; t=1749653170; c=relaxed/simple;
+	bh=i31pg05KyoXO2ePcsZTYj+VBvzqxZxmZKVey9dXyud0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kpm86gPC9a/oIJA2EMN7oHqr3mYGht3i3sMtcF5+MMFxNWPrptVXFQ+U7OJBQ7V7U5aWOjNPzFyi0hFz/HywJ6rvELP8um0S3el4b7DIsY8QtpE0jpjSSFg54rFUScUNkS/J+yObjHdIVBgmjgyfWVubWou3mD7YfudjWgm7+D0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BQTQ5WGC; arc=none smtp.client-ip=209.85.167.53
+	 To:Cc:Content-Type; b=PgO0xzFMRzAry0xA/2wiQq4yHZdp17ol6Zvk9/GXAisw41eq1bB6GcUknmM4E2Y1IhLaotfmhLMJFawrut+THPMPWGzEhmUCk3BWenPYbm2tr1rBUTDcNotlTRTWMJp/ZQ4LXsrTTI41Z0IsW1CQCesvDk6yg4FeIkP1iiLkBUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N5bUDiIb; arc=none smtp.client-ip=209.85.208.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-553246e975fso7892796e87.0
-        for <linux-bluetooth@vger.kernel.org>; Wed, 11 Jun 2025 07:45:06 -0700 (PDT)
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-32a5eb73ad4so55289311fa.2
+        for <linux-bluetooth@vger.kernel.org>; Wed, 11 Jun 2025 07:46:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749653105; x=1750257905; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1749653167; x=1750257967; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=y5Dj2Tp0zkv/0JPV6iSdx+JQ2yNfo4mLZ2r8Ck2I9DY=;
-        b=BQTQ5WGC+NY0V2Fjd5tj0ZocDuF9llWwbk/mtUVSUYlB0JrxoBRXjF2Jwf6kVHThw2
-         XgyEHJ85lQ2Zx6ghFmA5/h9YIICGcxAhk5rBjrYofZzB5nPS5L7xJa5XQQuCgMx0TWY9
-         s/wpf4jVUdp+yiuo6c6Qb6hEF+7VgBj7uMbK+gGuq5vyO7rdj4D4CtlO66ZG58ch0/in
-         NkUR5SCDiMWGYxq9/2lYuGj9jDw/GTbxrDMu3swUADXGoWFLHhW3tGAUp1fe+YBtmWhT
-         nSyxLA63MGNlmKOC2YQMUePR7cSQZKRqnhB2YrWJrYRF+N/QsiMSH7aOCZczSZdsnZxi
-         XGLg==
+        bh=WOkBH/j3Z/soBt9RN/t5N+mS7KjNlH1maUYoOcngT5w=;
+        b=N5bUDiIbXZjhPDxzuDDKrSm0GOBG4r28NFKP27Ld7YnvJ8DV3C8iiTxZgR7fW9mKUa
+         QIrtFR2G+xmd/Z1A7VaT21GS3/3epHmM+/KO9y8yYNMGqFgAHEXqsW59CkaXCU+Hw6Dm
+         XJ32DxKDWWSXwVGasV6gdCatfSqyJNi5Vj76xsL1WV0XHb3NaNolOQv6d9ivteelHk4J
+         N2i2+HLPFILIGmaNAnOi+J5XtZXiDHZ0Tt6K9+TfFr2CwnMX8hNxR6AN1wANm84blex9
+         Exo8frd8dzoaazk/fGAfQ1W68xQA+LgU5LmH0+StcPM0Ocsh3waEcRZ7isKNR+II6R1h
+         uPqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749653105; x=1750257905;
+        d=1e100.net; s=20230601; t=1749653167; x=1750257967;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=y5Dj2Tp0zkv/0JPV6iSdx+JQ2yNfo4mLZ2r8Ck2I9DY=;
-        b=jlS28OcY+xXI4R23NaU4L7N+8zZCqUFRWlKRO/pGqG+CwnDh/Y+mgX8T9XyxMgbSu5
-         l9wRbjreeOoFfgfBoPsGK5im8d+0IlwuiXmYvXLeWqM6sbjksVIj9XMhKupOV+sAkN+A
-         NhR+I/ZcHJmtJytF4xVoj2x9hz01IbpW4xGezGNbx8Ep/6De7nAkp8vQsPRL8XceNjeY
-         Mljc3JpTe57J4Ve/hom4tXnWxTdQu4woFqIISSU5H+0VLix20tLpadpbkAURAsrR1KUS
-         /fDHD4AoM6hPDrbKgUzTPV7mZmoUZ9EVxGwW4UXSzEgHEGREYj7s4ATn9QkMnTi5DKkx
-         XIAQ==
-X-Gm-Message-State: AOJu0Ywv95mSbjQuzQPvqcmzQuLoAwpbIdUc/9QmU6xDL3hZyp8PUqK0
-	IXixLVoSTic0vokUEm/Jpzt3oS1kA3cYHkkMEuB2wGudbajggsRouxijcYCVfu451JEDRuAUrHr
-	VaudU3wUrGSmJ4sDpayrAEaOeBoB35SMo1Bu8CfGGkw==
-X-Gm-Gg: ASbGncvHKoF6JN7ntfwCSTyJOxHW2887hMzeyvAJ9pl3n265AnxKziks53459q2dKhD
-	4qQEsJygS27KprI7qbm8qS7OZpAMT3ty+kKeh7tpOEGuW0fRHxm2LR9w3Gf9Ha10q/3juxGLM6D
-	Qrk+aYoDxXXZz5OJjGKQuDEKssQjxQl5lJYX9AijmmDQ==
-X-Google-Smtp-Source: AGHT+IFFEppoMMLBW0tgCa5Yag8LxsvIibQK8zO4b7RSO056HquF9cUSR53mNJdGVDhwg9yGVbb+rO4OlZPEI9soC6o=
-X-Received: by 2002:a2e:be9a:0:b0:32a:5e74:5726 with SMTP id
- 38308e7fff4ca-32b224235f8mr10579081fa.38.1749653094053; Wed, 11 Jun 2025
- 07:44:54 -0700 (PDT)
+        bh=WOkBH/j3Z/soBt9RN/t5N+mS7KjNlH1maUYoOcngT5w=;
+        b=dDku9DRxU1BCp+8p+Ly4GMv0f0bxzC2TOTVDgDyIlV+plBDr+LsoZsj/R81Ks5ZuTQ
+         DgzqVLSigrPeR4rxFT4TKjqqYSbY72DXT26LAT9t7ww8UeysPStpKmZe3QONIrfOYL2w
+         yD22Wuumo4TXkuNno9+frVMfc3RdM8zMhB7sGGVRro0Rt3A6Stfm8RBYFFebCDR+RqrT
+         wFoX0uW7wH4kpipYbAJLKqh+rT1oi2GQknKJMjY/HCnL/Xb3ejleYA4B+l94fXEAEWZ7
+         EmMAuTN/V7Dr7YBX8fChMmYrV+pM43l5N8Ct32dlEimBxbASKJlgymVRIbb/UxfDfOAW
+         ylZQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVvhnmIPO6jNZg64WwDfTGMy8QhHyME3n2wmxKnD+X0h8AjqgERdOb2Ps4180aQZCvzClxwkw8CYzjIgir3FY8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwFZhrb40Yn/WN+lPVsU/dLeHpCxeugmvF7SauH03gxqhuoCyv0
+	l7GLf/aaA8N+XJ8AkRxyxNmFPBHaA3RRe8Y6WpdICaTYmex5v1kQllRU+yv08Mk0AZh+7RTsMur
+	G0GqJqrQzPfzYWkIuDOFRynqwyoaNieY=
+X-Gm-Gg: ASbGncvnaLqWkeD/hb9d3UL1LYu6hSET/fizSDzwXLTBR+OiXlT5jkHJNECs0uLfNId
+	mzaNVmGLGq5MUma6+mKmSRwTsS2QrghUOdHl8O6nIb2Phj0UkSeetTqGXaeX5sfPXBy/tC5in20
+	+TY1yivoo74SagPnG9AFZS70KviJayZJe93xw5xOmN7Q==
+X-Google-Smtp-Source: AGHT+IGwHwrIAHcEbgF0nmerw1UMnqG130HVZpme7ed9VqJKY+8EHPYKJbl8mbQByJtcqBjzBdkunSOYKTYVUMWe+tY=
+X-Received: by 2002:a05:651c:50a:b0:32a:6312:bfc2 with SMTP id
+ 38308e7fff4ca-32b21eb9283mr11325051fa.38.1749653166811; Wed, 11 Jun 2025
+ 07:46:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250611080044.26730-1-adrian-constantin.dudau@nxp.com> <20250611080044.26730-2-adrian-constantin.dudau@nxp.com>
-In-Reply-To: <20250611080044.26730-2-adrian-constantin.dudau@nxp.com>
+References: <20250610140038.696091-1-kiran.k@intel.com> <174965282876.3348581.5179310634948609330.git-patchwork-notify@kernel.org>
+In-Reply-To: <174965282876.3348581.5179310634948609330.git-patchwork-notify@kernel.org>
 From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Wed, 11 Jun 2025 10:44:41 -0400
-X-Gm-Features: AX0GCFt09RgaCb0QHF2qId6-mIyoi6mpn9eDfC8662l6wNZk8nlrage2XP9VaAI
-Message-ID: <CABBYNZL9kX1owOk6PJ3NGjueJBJLKGShzrFZ6KK2mjhQw0MzAg@mail.gmail.com>
-Subject: Re: [PATCH 1/1] tools: Expose the raw advertising data available on
- D-bus to PTS tester
-To: Adrian Dudau <adrian-constantin.dudau@nxp.com>
-Cc: linux-bluetooth@vger.kernel.org, mihai-octavian.urzica@nxp.com, 
-	andrei.istodorescu@nxp.com
+Date: Wed, 11 Jun 2025 10:45:54 -0400
+X-Gm-Features: AX0GCFu17OOYn8HMl85b5PNVNQTHPqZnnVH_8hMT_kkG-zJmjbfnaqMPkPIxc4I
+Message-ID: <CABBYNZ+S0orMvq+tTZoXKO2D0-1O1pQMpb-TMUr45xrR3uZTHg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] Bluetooth: btintel_pcie: Fix potential race
+ condition in firmware download
+To: patchwork-bot+bluetooth@kernel.org
+Cc: Kiran K <kiran.k@intel.com>, linux-bluetooth@vger.kernel.org, 
+	ravishankar.srivatsa@intel.com, chethan.tumkur.narayan@intel.com, 
+	chandrashekar.devegowda@intel.com, aluvala.sai.teja@intel.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Adrian,
+Hi Kiran, Chandru,
 
-On Wed, Jun 11, 2025 at 4:01=E2=80=AFAM Adrian Dudau
-<adrian-constantin.dudau@nxp.com> wrote:
+On Wed, Jun 11, 2025 at 10:42=E2=80=AFAM <patchwork-bot+bluetooth@kernel.or=
+g> wrote:
 >
-> This patch extracts the AdvertisingData property exposed by
-> bluetoothd on D-Bus. It will iterate the variable message structure
-> and will construct the eir buffer in the format described in
-> BLUETOOTH CORE SPECIFICATION Version 6.1 | Vol 3, Part C.
+> Hello:
 >
-> Signed-off-by: Adrian Dudau <adrian-constantin.dudau@nxp.com>
-> ---
->  tools/btpclient.c | 80 ++++++++++++++++++++++++++++++++++++++++++++---
->  1 file changed, 76 insertions(+), 4 deletions(-)
+> This series was applied to bluetooth/bluetooth-next.git (master)
+> by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 >
-> diff --git a/tools/btpclient.c b/tools/btpclient.c
-> index 055270edb51b..f80b4532a248 100644
-> --- a/tools/btpclient.c
-> +++ b/tools/btpclient.c
-> @@ -2510,12 +2510,23 @@ static void btp_gap_device_found_ev(struct l_dbus=
-_proxy *proxy)
->  {
->         struct btp_device *device =3D find_device_by_proxy(proxy);
->         struct btp_adapter *adapter =3D find_adapter_by_device(device);
-> +       struct l_dbus_message_iter dict_iter;
-> +       struct l_dbus_message_iter variant_iter;
-> +       struct l_dbus_message_iter array_iter;
-> +       struct btp_device_found_ev *p_ev =3D NULL;
-> +       struct btp_device_found_ev *p_ev_temp =3D NULL;
->         struct btp_device_found_ev ev;
->         struct btp_gap_device_connected_ev ev_conn;
->         const char *str, *addr_str;
->         int16_t rssi;
->         uint8_t address_type;
->         bool connected;
-> +       uint8_t key =3D 0U; /* AD Type will be stored here */
-> +       uint8_t *data =3D NULL; /* AD Data will be stored here */
-> +       uint32_t len =3D 0U; /* Length of the AD Data buffer */
-> +       uint32_t eir_couter =3D 0U; /* Byte count of AD Type, AD Length, =
-AD Data */
-> +
-> +       ev.eir_len =3D  0U;
+> On Tue, 10 Jun 2025 19:30:37 +0530 you wrote:
+> > During firmware download, if an error occurs, interrupts must be
+> > disabled, synchronized, and re-enabled before retrying the download.
+> > This change ensures proper interrupt handling to prevent race
+> > conditions.
+> >
+> > Signed-off-by: Chandrashekar Devegowda <chandrashekar.devegowda@intel.c=
+om>
+> > Signed-off-by: Kiran K <kiran.k@intel.com>
+> >
+> > [...]
 >
->         if (!l_dbus_proxy_get_property(proxy, "Address", "s", &addr_str) =
-||
->                                         str2ba(addr_str, &ev.address) < 0=
-)
-> @@ -2538,11 +2549,72 @@ static void btp_gap_device_found_ev(struct l_dbus=
-_proxy *proxy)
->                                         BTP_EV_GAP_DEVICE_FOUND_FLAG_AD |
->                                         BTP_EV_GAP_DEVICE_FOUND_FLAG_SR);
->
-> -       /* TODO Add eir to device found event */
-> -       ev.eir_len =3D 0;
-> +       /* dict_iter will contain the variant for AdvertisingData */
-> +       if (l_dbus_proxy_get_property(proxy, "AdvertisingData", "a{yv}", =
-&dict_iter)) {
-> +               /* key will contain the AD Type, variant_iter will contai=
-n the variant
-> +                * for the current elem
-> +                */
-> +               while (l_dbus_message_iter_next_entry(&dict_iter, &key, &=
-variant_iter)) {
-> +                       /* Unpack the variant to get the byte array */
-> +                       if (!l_dbus_message_iter_get_variant(&variant_ite=
-r, "ay", &array_iter))
-> +                               continue;
-> +
-> +                       /* data contains AD Data, len is the length exclu=
-ding the AD Type*/
-> +                       if (!l_dbus_message_iter_get_fixed_array(&array_i=
-ter, &data, &len))
-> +                               continue;
-> +
-> +                       if (len <=3D 0U)
-> +                               continue;
->
-> -       btp_send(btp, BTP_GAP_SERVICE, BTP_EV_GAP_DEVICE_FOUND, adapter->=
-index,
-> -                                               sizeof(ev) + ev.eir_len, =
-&ev);
-> +                       p_ev_temp =3D p_ev;
-> +
-> +                       /* Allocate new buffer, recalculated to sustain n=
-ew data
-> +                        * eir_counter length from previous data,
-> +                        * len is size for new data,
-> +                        * 2U (1Byte AD Type, 1Byte AD Length)
-> +                        */
-> +                       p_ev =3D (struct btp_device_found_ev *)
-> +                                       malloc(sizeof(struct btp_device_f=
-ound_ev) +
-> +                                       eir_couter + len + 2U);
-> +
-> +                       if (!p_ev) {
-> +                               p_ev =3D p_ev_temp;
-> +                               break;
-> +                       }
-> +
-> +                       /* There is AD data elemets to be moved after res=
-ize */
-> +                       if (p_ev_temp && eir_couter !=3D 0U) {
-> +                               memcpy(p_ev, p_ev_temp,
-> +                                       sizeof(struct btp_device_found_ev=
-) + eir_couter);
-> +                               free(p_ev_temp);
-> +                       } else {
-> +                               memcpy(p_ev, &ev, sizeof(struct btp_devic=
-e_found_ev));
-> +                       }
-> +
-> +                       /* Populate buffer with length */
-> +                       p_ev->eir[eir_couter++] =3D len + 1U;
-> +                       /* Populate buffer with AD Type */
-> +                       p_ev->eir[eir_couter++] =3D key;
-> +
-> +                       /* Move the data in the p_ev->eir that will be se=
-nt via btp */
-> +                       for (uint32_t i =3D 0U; i < len; i++)
-> +                               p_ev->eir[eir_couter + i] =3D data[i];
-> +
-> +                       eir_couter +=3D len;
-> +               }
-> +       }
-> +
-> +       if (p_ev) {
-> +               p_ev->eir_len =3D eir_couter;
-> +
-> +               btp_send(btp, BTP_GAP_SERVICE, BTP_EV_GAP_DEVICE_FOUND, a=
-dapter->index,
-> +                sizeof(struct btp_device_found_ev) + eir_couter, p_ev);
-> +
-> +               free(p_ev);
-> +       } else {
-> +               btp_send(btp, BTP_GAP_SERVICE, BTP_EV_GAP_DEVICE_FOUND, a=
-dapter->index,
-> +                sizeof(ev) + ev.eir_len, &ev);
-> +       }
->
->         if (l_dbus_proxy_get_property(proxy, "Connected", "b", &connected=
-) &&
->                                                                 connected=
-) {
+> Here is the summary with links:
+>   - [v3,1/2] Bluetooth: btintel_pcie: Fix potential race condition in fir=
+mware download
+>     https://git.kernel.org/bluetooth/bluetooth-next/c/866fd57640ce
+>   - [v3,2/2] Bluetooth: btintel_pcie: Support Function level reset
+>     https://git.kernel.org/bluetooth/bluetooth-next/c/ba6b287d9f91
+
+Note that I did add the following changes on top:
+
+https://github.com/bluez/bluetooth-next/commit/bd35cd12d915bc410c721ba28afc=
+ada16f0ebd16
+
+> You are awesome, thank you!
 > --
-> 2.45.2
+> Deet-doot-dot, I am a bot.
+> https://korg.docs.kernel.org/patchwork/pwbot.html
+>
+>
+>
 
-There is quite a lot of lines going over 80 columns:
-
-https://github.com/bluez/bluez/actions/runs/15579687793/job/43871802897?pr=
-=3D1336
-
-Also notice the usage of sizeof(type) rather than just use sizeof(var)
-which normally is a lot shorter and may help staying within 80
-columns.
 
 --=20
 Luiz Augusto von Dentz
