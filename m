@@ -1,91 +1,156 @@
-Return-Path: <linux-bluetooth+bounces-12958-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-12960-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 53D2DAD7253
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 12 Jun 2025 15:42:31 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C4C22AD74E1
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 12 Jun 2025 16:59:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0FC393A5352
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 12 Jun 2025 13:39:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7569F3B58B2
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 12 Jun 2025 14:55:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F08024678F;
-	Thu, 12 Jun 2025 13:40:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B19AC26D4C4;
+	Thu, 12 Jun 2025 14:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HeGC+gNY"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="UnGl9eh2"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-17.smtp.github.com (out-17.smtp.github.com [192.30.252.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B0024337C
-	for <linux-bluetooth@vger.kernel.org>; Thu, 12 Jun 2025 13:40:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2AC3268FCD
+	for <linux-bluetooth@vger.kernel.org>; Thu, 12 Jun 2025 14:55:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749735601; cv=none; b=uTZ4Yol2VbcPq7Cj5wgv3EvwvfQ3o4IphFKkSr+XXeYZ3iI9eL0sJRYg0XhMDF8s4G6+wLSKvYb0VcTogeh4c3ZfZhLzSK9SblFiqVizr+xn9UBnmJet175n9DPVjOyaEc4K0SGd/tCCjpcMdh8TTFywW7RYw7PISYIvrytZFX0=
+	t=1749740150; cv=none; b=BvVroQhxAODYLNwwMT1lz8cwsmJ18iyw2T0QVmvQORhaUhiUAGUWoFqevp8QL4tesjd3pwSnNoZWnOdz8Izj65EOYkBlxphPQeKzf0Z3hqnLLPzN1VeVWB9EI7XSjwe11gkvBvY6xiadZNjok1TQAYusWpJ73PslN/xiIF+DNW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749735601; c=relaxed/simple;
-	bh=DuRwdUmIgZT+uRqOTBbjkxMlqXrPFe6jT3TNenNNjxU=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=PRe7i45oYjsrHmGaw47b+oRDaGjlUolhakK2MGyx0g5b1Ld1YfhMlzOiw6uz/SXDiLth9Cfnip7gNyGg251SrAyP5JHBS3Q9EQHZWtaCsDYgZKtaatmRfZiXqGHOJIeS8Fz/EkmcL+13Www4yqDVMB+UEzsTCegv9/PirSw6GZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HeGC+gNY; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48AD2C4CEEA;
-	Thu, 12 Jun 2025 13:40:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749735601;
-	bh=DuRwdUmIgZT+uRqOTBbjkxMlqXrPFe6jT3TNenNNjxU=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=HeGC+gNYr2uecTFRi3GxK1PV+X/9szG9Ron7tAp5y7M47UEGw2BpuqNd+sCz9fW+f
-	 dDfcjVY9VFnc4VvB31E7YelXq9p2nKV2vBLeCKqgQ/7VKjFWq2iecGQTqKyOcplyj+
-	 9jLRgQugiZFOrUPqmrR4lLgy1MdSMi1HBrNEgxTsNutMGq98sR2F2X53CiPFCKU4da
-	 rV/b4KXxscvGathEF1JiA1hHaPLOuJUFZiLyB/M87WUHfUocSd1F7y52OdgZHpIsnu
-	 wXQqlIKGL8umc3SSM8vRsRENuitYiHF3vpyQvlG86HoCSETomO6bapXHGZpiLCm1+L
-	 KiALggjDPfycA==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 70ECA39EFFCF;
-	Thu, 12 Jun 2025 13:40:32 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1749740150; c=relaxed/simple;
+	bh=chUqZNKV10ZLlOiAuPAieSlZw+Lw+s34pt3vipFZAmk=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=Nzl8N5Wa2anu0DSjQpedNSz62Vm7DpxZ924zlDDv3VLxEbwei5ztKYZYrQqh+kUk2fdy12XZ+i18ZU2v0TKnOJEv5uLKL4MwnEYIRoaYDDJ7umUv34Rp3Qn18MD1P+WXiLJqzniwWAq1M99S7SQZ5aNvT26YjkvUFErz/kqTrQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=UnGl9eh2; arc=none smtp.client-ip=192.30.252.200
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
+Received: from github.com (hubbernetes-node-ab292ff.va3-iad.github.net [10.48.133.44])
+	by smtp.github.com (Postfix) with ESMTPA id CB6114E1004
+	for <linux-bluetooth@vger.kernel.org>; Thu, 12 Jun 2025 07:55:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+	s=pf2023; t=1749740147;
+	bh=mo5JvsScAkn+5yreK57l9obTpP29ukcc3TN4oI/xkHc=;
+	h=Date:From:To:Subject:List-Unsubscribe:From;
+	b=UnGl9eh2ZKkZQj30RPb9Vt5o09pc/xepgp1TylZeuiNxXo8UWE3qwdKmoBbkrX2ZV
+	 rLfMaJMaIDOTRTTKefSSI+Sw7sCB7fcMDLmjSJ7dTfJWExevGL2rbk6VM8k26r/qEw
+	 +tPxlc9gMdro3ABEjOPRYZekppIQA3PROSYkRWm0=
+Date: Thu, 12 Jun 2025 07:55:47 -0700
+From: BluezTestBot <noreply@github.com>
+To: linux-bluetooth@vger.kernel.org
+Message-ID: <bluez/bluez/push/refs/heads/master/aea0f4-6bc584@github.com>
+Subject: [bluez/bluez] 39d965: shared/bass: Move cb->handle earlier in the
+ flow
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v1] driver: bluetooth: hci_qca:fix unable to load the BT
- driver
-From: patchwork-bot+bluetooth@kernel.org
-Message-Id: 
- <174973563123.4138205.9026768139110053277.git-patchwork-notify@kernel.org>
-Date: Thu, 12 Jun 2025 13:40:31 +0000
-References: <20250609105500.4083963-1-quic_shuaz@quicinc.com>
-In-Reply-To: <20250609105500.4083963-1-quic_shuaz@quicinc.com>
-To: Shuai Zhang <quic_shuaz@quicinc.com>
-Cc: linux-bluetooth@vger.kernel.org, quic_bt@quicinc.com
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
 
-Hello:
+  Branch: refs/heads/master
+  Home:   https://github.com/bluez/bluez
+  Commit: 39d9651857658811e1d8c0fb6197b281273eef0e
+      https://github.com/bluez/bluez/commit/39d9651857658811e1d8c0fb6197b281273eef0e
+  Author: Yang Li <yang.li@amlogic.com>
+  Date:   2025-06-12 (Thu, 12 Jun 2025)
 
-This patch was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+  Changed paths:
+    M src/shared/bass.c
 
-On Mon,  9 Jun 2025 18:55:00 +0800 you wrote:
-> Some modules have BT_EN enabled via a hardware pull-up,
-> meaning it is not defined in the DTS and is not controlled
-> through the power sequence. In such cases, fall through
-> to follow the legacy flow.
-> 
-> Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
-> 
-> [...]
+  Log Message:
+  -----------
+  shared/bass: Move cb->handle earlier in the flow
 
-Here is the summary with links:
-  - [v1] driver: bluetooth: hci_qca:fix unable to load the BT driver
-    https://git.kernel.org/bluetooth/bluetooth-next/c/6c31dab4ff1e
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+This change ensures cb->handle is executed even
+if the function returns early in the attribute_notify
+section. It also allows the stream status to be updated
+before notifying the client, improving efficiency.
 
 
+  Commit: 6bc584b11b8b10dbd717ca4012a6c09afb18d1c7
+      https://github.com/bluez/bluez/commit/6bc584b11b8b10dbd717ca4012a6c09afb18d1c7
+  Author: Yang Li <yang.li@amlogic.com>
+  Date:   2025-06-12 (Thu, 12 Jun 2025)
+
+  Changed paths:
+    M profiles/audio/bass.c
+
+  Log Message:
+  -----------
+  bass: support for encrypted broadcast source
+
+If the BIS is encrypted as indicated in the BIG Info Report, the
+broadcast code needs to be requested from the Assistant.
+
+step 1: Broadcast_Code required
+  > HCI Event: LE Meta Event (0x3e) plen 20                 #631 [hci0] 27.176606
+        LE Broadcast Isochronous Group Info Advertising Report (0x22)
+          Sync Handle: 0x0000
+          Number BIS: 2
+          NSE: 8
+          ISO Interval: 20.00 msec (0x0010)
+          BN: 2
+          PTO: 2
+          IRC: 2
+          Maximum PDU: 60
+          SDU Interval: 10000 us (0x002710)
+          Maximum SDU: 60
+          PHY: LE 2M (0x02)
+          Framing: Unframed (0x00)
+          Encryption: 0x01
+  < ACL Data TX: Handle 16 flags 0x00 dlen 44               #633 [hci0] 27.184478
+        ATT: Handle Value Notification (0x1b) len 39
+          Handle: 0x005f Type: Broadcast Receive State (0x2bc8)
+            Data[37]: 01016698a411bb13019f103b02010100000000110d03506978656c20395f32303938020502
+            Source_ID: 1
+            Source_Address_Type: 1
+            Source_Address: 13:BB:11:A4:98:66
+            Source_Adv_SID: 1
+            Broadcast_ID: 0x3b109f
+            PA_Sync_State: Synchronized to PA
+            BIG_Encryption: Broadcast_Code required
+            Num_Subgroups: 1
+            Subgroup #0:
+              BIS_Sync State: 0x00000000
+              Metadata: #0: len 0x0d type 0x03
+              Metadata:   50 69 78 65 6c 20 39 5f 32 30 39 38              Pixel 9_2098
+              Metadata: #1: len 0x02 type 0x05
+              Metadata:   02
+  > ACL Data RX: Handle 16 flags 0x02 dlen 25               #636 [hci0] 27.455744
+        ATT: Write Command (0x52) len 20
+          Handle: 0x0065 Type: Broadcast Audio Scan Control Point (0x2bc7)
+            Data[18]: 04013a4931614b3a2b7c4b7431722b666724
+              Opcode: Set Broadcast_Code (0x04)
+              Source_ID: 1
+              Broadcast_Code[16]: 3a4931614b3a2b7c4b7431722b666724
+
+step 2: Set Broadcast Code when BIG Create Sync
+  < HCI Command: LE Broadcast Isoc.. (0x08|0x006b) plen 26  #641 [hci0] 27.669211
+          BIG Handle: 0x00
+          BIG Sync Handle: 0x0000
+          Encryption: Encrypted (0x01)
+          Broadcast Code[16]: 3a4931614b3a2b7c4b7431722b666724
+          Maximum Number Subevents: 0x00
+          Timeout: 20000 ms (0x07d0)
+          Number of BIS: 2
+          BIS ID: 0x01
+          BIS ID: 0x02
+
+Fixes: https://github.com/bluez/bluez/issues/1306
+
+
+Compare: https://github.com/bluez/bluez/compare/aea0f46f173f...6bc584b11b8b
+
+To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
