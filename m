@@ -1,320 +1,156 @@
-Return-Path: <linux-bluetooth+bounces-13050-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-13052-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4539DADEDBF
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 18 Jun 2025 15:25:39 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A3C7ADEDD2
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 18 Jun 2025 15:30:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3BC701887CB9
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 18 Jun 2025 13:25:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6FF947A070C
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 18 Jun 2025 13:28:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACEBF2E7F20;
-	Wed, 18 Jun 2025 13:25:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C56D12E4252;
+	Wed, 18 Jun 2025 13:30:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BjQeWkts"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IA67DJps"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF6A249E5
-	for <linux-bluetooth@vger.kernel.org>; Wed, 18 Jun 2025 13:25:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C72155A4E
+	for <linux-bluetooth@vger.kernel.org>; Wed, 18 Jun 2025 13:30:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750253123; cv=none; b=NEIE+cOy5fcO+sXHFYdm87ok7Il0hhy3/Ghiv+n/gIRawOIMY881rIDVDKsP/H8RNcBJu3MUgpCyOKZH+oup1euOJ3FA04v4ILRPEoIHJY90f5NOYGklnw7m8wWh4oL41X1rRmIi1RmROR0qaOOGCi62iiFE22iYidKRCajgLXM=
+	t=1750253406; cv=none; b=gvzHGd0zZ+yvDo6bd4Wx0E9+q8LmOvFrZbAP1vlPMT7wy6DtNCx0VYUxYQfAycY84NJKzgurKQIl7O7BvMXpVXEIaXbxolaRCway5Yikhg9DKtBvB3VDloxhvfzMz14o0nTUYZ/ymxB28JaLEqbqDWGwS9LfghEpEA9UxL1gnRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750253123; c=relaxed/simple;
-	bh=ImHs2BN4Q5eu/xRFZ8RObrc/KIGyntMZ5S5XLv+4dyc=;
+	s=arc-20240116; t=1750253406; c=relaxed/simple;
+	bh=AUksi6ZHbKyeYr8k+s4HXJG3UlqW08lz2dsiETr+XMg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RXFpzymtUR1nyYAH+4efCI7RURJ6hbuwI/rDJ4nflv+0QL3NbclOsBZVHId1FZOGtQkctH7GsbfFas13JDVyCysKrlDI7XLFLfPFmbrXyBGbNrF1MXF6GayOt0EC2oqJHO46jZJvvsxD7QzJ1oQiyWW3LDodTFVNRwGbh5GJIew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BjQeWkts; arc=none smtp.client-ip=209.85.208.175
+	 To:Cc:Content-Type; b=Jb1gDp+GwOJpRL5TvdeG1V1coCxuQqEOMlEAqKAUNA8BfS0UsYYOLZP3s1pPusr7eNkZRlbjbyf31L9rdK/Gz1JWphQ6Rj2pbT57Z1A7fY+0c7yT0iyvJ8gYUN7avLoaSi1A+aa4m/ygTnRD52LN53RbJiNwS7fRwdQZd+txul4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IA67DJps; arc=none smtp.client-ip=209.85.208.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-310447fe59aso73400101fa.0
-        for <linux-bluetooth@vger.kernel.org>; Wed, 18 Jun 2025 06:25:16 -0700 (PDT)
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-3105ef2a071so71431931fa.1
+        for <linux-bluetooth@vger.kernel.org>; Wed, 18 Jun 2025 06:30:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750253115; x=1750857915; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1750253402; x=1750858202; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VrujOoZn5ntsrPLm7SP899cZQY5l95ITy0+kX29RdAg=;
-        b=BjQeWktsWKsTd6BjXuNMTkis1G1MVXE3zAJ1dq4WBjT6kCdKAU0sAO4TImZ+jQqZAJ
-         spWZOfDFNmsswLEC5pagL9TItnetDCj5UZvl7546t/FQeaOXGaaNim2djTG9jgUOZXeU
-         /8bJeMhE3+IsAqtMUFKNjIGuzU60ZVf1ksNGvqSZddmwncSecXFJraDRaTskgDMkD1/I
-         qqwQ7Uiyz/xEje3kJTeHcGXh/Skz6xXnesdq0QarxcFWv7zi+Cq5TXkcmh2hi8hhZPwd
-         cbSMmZS4vvEz9MJy8phDSwSVD7UdXnxWYVKCDjKIng+YE2XnSF1w6sImL3SwGyvukadc
-         BOsg==
+        bh=1SHZ511/VF3ZcuOkHtifXkTapYE4RS6Bun4dzdWS8D0=;
+        b=IA67DJpslQij0Z4W9sN7/59BdUexBbjdwR0baLjbSf+Kd5S4m49gsi62GGMCbOz9Xe
+         CFmLW9U1mTPTwotKYCCjGq921avPngTUgzLNXl6Uxm0NNPy2K4BuW61JQxGqQV/S/vS5
+         oy5C56lm0XjYK99PMtwpHdCDrzUjC8nykl1K6s8IXMq5yDJQp5Mjt+0Ywy9ww0XNQSFd
+         gBCF2kt5jww+x2tSPLxE53GplJIo5yaapvOqHiXacziarr0jAccsBI+dG+A0OQVN1+zD
+         5JQ3cjeKIAWv0ez0UbNNZP/v2pTAGtqsHVfrR2rrzGY8+ZJCivSmDk5eK+a5UT042ROC
+         Rr+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750253115; x=1750857915;
+        d=1e100.net; s=20230601; t=1750253402; x=1750858202;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=VrujOoZn5ntsrPLm7SP899cZQY5l95ITy0+kX29RdAg=;
-        b=w5aAECH8uaPyHSW0xguIhxhh8pnyYZAGrm8nRin3JvRDCuhLyhF8PS8XYLqlvm6TwO
-         Hh4H95Ddq8t73CIJTDNRvLCG7IhwQyp6qTO9njw72bc1/39s89t/CPGrNqqAS99ZnHyA
-         0XB3AopHomQU+121kwE6z8bVf3OD9Dv30I4OhRVNS8/e1SgbwMcxFyo2uCxfQqy81tGE
-         eKfVX2V2Ax8hwzNsFyhJsCiuPYpd8LnAHqiGFQnXrx1Cq80LaPEQ9S1fd/KBHPgMB4ae
-         5i9XEJV44F3i98IzmGAiUJ+7ibe/sO1syLy247TOoA3eiRJ+hg5wQgvFZX7hN8oCSuEs
-         Bdmw==
-X-Forwarded-Encrypted: i=1; AJvYcCWFnA6y4RIJjysZt8N4bfpjrxHXJfhsEUX69/JzxY4/Mzum9POqx7dN3oiFED4R7+5WXTPBMirP1kPTP2P04f4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxnQhpzaEjBXqGoc1lhnB5yj1qi109P2rOr2C3qRjbHRirFGmsp
-	e5dfekcba/XSD9YogYsk1ltNAEhCSWZXosjx9vzKrkgW4/nU97jXEB+eWmQ6tQZR8r0FHBnvfmD
-	0L1Gl0aHiXu1vz2v19hA+5Cjdjg85BcPO6A==
-X-Gm-Gg: ASbGncuvv05MtCuHS1SkA5cJvAC2XlsAsE7Lgrb1y8c+xjaaWDpFJ4VHKvlY5Z21xdC
-	sscojT4fVJoUlRHOw8asV/9ASPhQay54DaKIjbZa5O9x+Ucj4Ucm6aWnwJsxnewuURvSiuD3Xnc
-	7Zk/JWuy8ybSKFbdskR4ORm8qmgcm42Yz6GTUCfSrjiw==
-X-Google-Smtp-Source: AGHT+IH2Bc35HLj6qBDK+jVI3xtp9llD3K5ArIJPhIM2o6FcZCoIItI+hjR7Ux4/buXK7FYs2zpEJz0/lxQ1Yph929Q=
-X-Received: by 2002:a2e:a548:0:b0:32a:5fe2:81b2 with SMTP id
- 38308e7fff4ca-32b4a4ac887mr54996871fa.23.1750253114874; Wed, 18 Jun 2025
- 06:25:14 -0700 (PDT)
+        bh=1SHZ511/VF3ZcuOkHtifXkTapYE4RS6Bun4dzdWS8D0=;
+        b=ZeYzP3lJI9jyTvIrBjRlzZvyha4D4pqFjSa9CXQsMrhG359JpfafO67ctk1Y/bDiOV
+         oFEys+lPAsKIAquz08Fx8EWKQdwd058budnt/KtvftacYZUgJll3LPhzbS455arvEl5B
+         4UHl5bq99fnY39aHBBGJgWJSZxBiY0c1lHRXx2XkAPwVZaTHtPgSZKqy1PTMnKYQjyaw
+         5Axs88Y7OYOSqnvIr4SniC86/cNL3lMqEVFQ8ArCYfeswAN13QeujiI34QeECDNTFeeJ
+         WFf+Amt6wIGgtJkrphl53QeExPNf7UvyfkbxS96X6UJDF24stV68vSg4g/P2eyu4kn8l
+         w7gw==
+X-Gm-Message-State: AOJu0YwUn5Z1TFyrqv9yCLjLE+r1Z9Rc5UaCfR1vr5hyimTwsOIE/8/H
+	mF5kdVvpT6TwaiDZGNFmVxbIFqWLXfVdNqc6UgYi2lePI2pjCEKj0YZw5OPpzvGst8Ymu1xgoxl
+	newYjreW0xUldwUlmhUEH1ytx6N2utZlh9A==
+X-Gm-Gg: ASbGnct6YW6wF2udh6lfQMNkMRpq7nj9ef0j00/JV/D5PbzU8oPDnNUhQO5Rj/WW5gb
+	ZHL+pJg0BJjv1XH3Gx1PbQFBdcb6QuJxJhnaA+g6VGM+ki3wu+AN6FFrRZhEW6uPk0H/w9xpCig
+	4tUP/Ys1e421I3Fy+fG4tZgGfHHJketmZiNg0rMOuQyLMZmTUEmZNT
+X-Google-Smtp-Source: AGHT+IERxNoGfw6/rN8sIPRbJY3J/3L7mexHIEepE7YkNL+47aopYV23rrrKuI3irIFlTq2KIsZw0NkVgCDIF7tTedk=
+X-Received: by 2002:a05:651c:3053:b0:32b:7181:b432 with SMTP id
+ 38308e7fff4ca-32b7181bbc2mr16315811fa.12.1750253402345; Wed, 18 Jun 2025
+ 06:30:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250618-device-bearer-level-conn-state-v1-1-dca5df09c0bd@amlogic.com>
- <d57fedd0a0889309c217e9e145d302ba8a5bac83.camel@hadess.net>
-In-Reply-To: <d57fedd0a0889309c217e9e145d302ba8a5bac83.camel@hadess.net>
+References: <20250618125555.773327-1-kiran.k@intel.com>
+In-Reply-To: <20250618125555.773327-1-kiran.k@intel.com>
 From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Wed, 18 Jun 2025 09:25:00 -0400
-X-Gm-Features: AX0GCFuZKNhkFqv3R-JV6CWVeXFcQ-x5zNzDYjv_5oBZjHvCOR44OUppLT02MhY
-Message-ID: <CABBYNZKQVNJJ7iSV=wv3iEgP8RRtK1uD4M_KBr+Lpzu7nh9Ngw@mail.gmail.com>
-Subject: Re: [PATCH bluez] device: Add bearer info to Connected/Disconnected signals
-To: Bastien Nocera <hadess@hadess.net>
-Cc: ye.he@amlogic.com, Linux Bluetooth <linux-bluetooth@vger.kernel.org>
+Date: Wed, 18 Jun 2025 09:29:49 -0400
+X-Gm-Features: AX0GCFsyel88QFDkHL3t4Lc6B_MagQlQ7ar0PTkZMBSz8EiiKEYgENWMdOpuKAg
+Message-ID: <CABBYNZJShtDX_CiJ=pteK5soovyjhE4PxF0Wh7XajwU2ts83=A@mail.gmail.com>
+Subject: Re: [PATCH v2] Bluetooth: btintel: Add hardware id of BlazarIW
+To: Kiran K <kiran.k@intel.com>
+Cc: linux-bluetooth@vger.kernel.org, ravishankar.srivatsa@intel.com, 
+	chethan.tumkur.narayan@intel.com, chandrashekar.devegowda@intel.com, 
+	aluvala.sai.teja@intel.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Bastien,
+Hi Kiran,
 
-On Wed, Jun 18, 2025 at 4:09=E2=80=AFAM Bastien Nocera <hadess@hadess.net> =
-wrote:
+On Wed, Jun 18, 2025 at 8:44=E2=80=AFAM Kiran K <kiran.k@intel.com> wrote:
 >
-> On Wed, 2025-06-18 at 10:39 +0800, Ye He via B4 Relay wrote:
-> > From: Ye He <ye.he@amlogic.com>
-> >
-> > This patch add a new Connected(string bearer) signal to indicate
-> > which transport
-> > (LE or BR/EDR) has connected. Also extend the Disconnected signal to
-> > include
-> > a bearer argument.
-> >
-> > This allows applications to distinguish transport-specific connection
-> > events in dual-mode scenarios.
-> >
-> > Fixes: https://github.com/bluez/bluez/issues/1350
->
-> This is an API change, the commit needs to explain when the
-> Disconnected signal API was introduced, and probably mention that the
-> because it was introduced in 5.82, it didn't have time to be used.
->
-> It might also be a better idea for both signals to send out a
-> dictionary of values, so that the "bearer" can be added without an API
-> change, and further info can also be passed without an API change.
+> Add hardware id of BlazarIW cnvi core for USB and PCIe transport.
 
-+1, I don't really like the idea of introducing bearer specific API
-into Device interface, using dedicated interface is probably better to
-avoid confusions and we can then introduce bearer specific methods and
-properties as well.
+It might be a good idea to add some trace of what is the expected
+response for the likes of the read version command for these
+controllers.
 
-> Cheers
+> Signed-off-by: Kiran K <kiran.k@intel.com>
+> ---
+>  drivers/bluetooth/btintel.c      | 3 +++
+>  drivers/bluetooth/btintel_pcie.c | 1 +
+>  2 files changed, 4 insertions(+)
 >
-> >
-> > Signed-off-by: Ye He <ye.he@amlogic.com>
-> > ---
-> >  doc/org.bluez.Device.rst | 33 ++++++++++++++++++++++++++++++++-
-> >  src/device.c             | 34 ++++++++++++++++++++++++++--------
-> >  2 files changed, 58 insertions(+), 9 deletions(-)
-> >
-> > diff --git a/doc/org.bluez.Device.rst b/doc/org.bluez.Device.rst
-> > index
-> > 646e2c77ec2ddcbf7e6897336165d228c349fe00..1022402d95a1cd34dea88103ba6
-> > 6fb06f3007de7 100644
-> > --- a/doc/org.bluez.Device.rst
-> > +++ b/doc/org.bluez.Device.rst
-> > @@ -157,7 +157,26 @@ Possible errors:
-> >  Signals
-> >  -------
-> >
-> > -void Disconnected(string reason, string message)
-> > +void Connected(string bearer)
-> > +````````````````````````````````````````````````
-> > +
-> > +This signal is emitted when a device establishes a connection,
-> > indicating the
-> > +bearer (transport type) over which the connection occurred.
-> > +
-> > +Client applications may use this signal to take actions such as
-> > stopping discovery
-> > +or advertising, depending on their internal policy.
-> > +
-> > +Possible bearer:
-> > +
-> > +:"le":
-> > +
-> > +     LE transport is cconnected.
-> > +
-> > +:"bredr":
-> > +
-> > +     BR/EDR transport is connected.
-> > +
-> > +void Disconnected(string reason, string message, string bearer)
-> >  ````````````````````````````````````````````````
-> >
-> >  This signal is launched when a device is disconnected, with the
-> > reason of the
-> > @@ -208,6 +227,18 @@ Possible reasons:
-> >
-> >       Connection terminated by local host for suspend.
-> >
-> > +The additional 'bearer' field indicates which transport was
-> > disconnected.
-> > +
-> > +Possible bearer:
-> > +
-> > +:"le":
-> > +
-> > +     LE transport is disconnected.
-> > +
-> > +:"bredr":
-> > +
-> > +     BR/EDR transport is disconnected.
-> > +
-> >  Properties
-> >  ----------
-> >
-> > diff --git a/src/device.c b/src/device.c
-> > index
-> > 902c4aa44d21eb89076eff3a47ffa727420967a8..ae6196eb2e5b6eca10a8e1c3360
-> > b85023dcddec2 100644
-> > --- a/src/device.c
-> > +++ b/src/device.c
-> > @@ -3491,8 +3491,10 @@ static const GDBusMethodTable device_methods[]
-> > =3D {
-> >  };
-> >
-> >  static const GDBusSignalTable device_signals[] =3D {
-> > +     { GDBUS_SIGNAL("Connected",
-> > +                     GDBUS_ARGS({ "bearer", "s" })) },
-> >       { GDBUS_SIGNAL("Disconnected",
-> > -                     GDBUS_ARGS({ "name", "s" }, { "message", "s"
-> > })) },
-> > +                     GDBUS_ARGS({ "name", "s" }, { "message", "s"
-> > }, { "bearer", "s" })) },
-> >       { }
-> >  };
-> >
-> > @@ -3676,6 +3678,7 @@ void device_add_connection(struct btd_device
-> > *dev, uint8_t bdaddr_type,
-> >                                                       uint32_t
-> > flags)
-> >  {
-> >       struct bearer_state *state =3D get_state(dev, bdaddr_type);
-> > +     const char *bearer;
-> >
-> >       device_update_last_seen(dev, bdaddr_type, true);
-> >       device_update_last_used(dev, bdaddr_type);
-> > @@ -3691,14 +3694,22 @@ void device_add_connection(struct btd_device
-> > *dev, uint8_t bdaddr_type,
-> >       dev->conn_bdaddr_type =3D dev->bdaddr_type;
-> >
-> >       /* If this is the first connection over this bearer */
-> > -     if (bdaddr_type =3D=3D BDADDR_BREDR)
-> > +     if (bdaddr_type =3D=3D BDADDR_BREDR) {
-> >               device_set_bredr_support(dev);
-> > -     else
-> > +             bearer =3D "bredr";
-> > +     } else {
-> >               device_set_le_support(dev, bdaddr_type);
-> > +             bearer =3D "le";
-> > +     }
-> >
-> >       state->connected =3D true;
-> >       state->initiator =3D flags & BIT(3);
-> >
-> > +     g_dbus_emit_signal(dbus_conn, dev->path, DEVICE_INTERFACE,
-> > +                             "Connected",
-> > +                             DBUS_TYPE_STRING, &bearer,
-> > +                             DBUS_TYPE_INVALID);
-> > +
-> >       if (dev->le_state.connected && dev->bredr_state.connected)
-> >               return;
-> >
-> > @@ -3747,7 +3758,7 @@ static void set_temporary_timer(struct
-> > btd_device *dev, unsigned int timeout)
-> >                                                               dev,
-> > NULL);
-> >  }
-> >
-> > -static void device_disconnected(struct btd_device *device, uint8_t
-> > reason)
-> > +static void device_disconnected(struct btd_device *device, uint8_t
-> > reason, const char *bearer)
-> >  {
-> >       const char *name;
-> >       const char *message;
-> > @@ -3787,6 +3798,7 @@ static void device_disconnected(struct
-> > btd_device *device, uint8_t reason)
-> >                                               "Disconnected",
-> >                                               DBUS_TYPE_STRING,
-> > &name,
-> >                                               DBUS_TYPE_STRING,
-> > &message,
-> > +                                             DBUS_TYPE_STRING,
-> > &bearer,
-> >                                               DBUS_TYPE_INVALID);
-> >  }
-> >
-> > @@ -3798,10 +3810,16 @@ void device_remove_connection(struct
-> > btd_device *device, uint8_t bdaddr_type,
-> >       DBusMessage *reply;
-> >       bool remove_device =3D false;
-> >       bool paired_status_updated =3D false;
-> > +     const char *bearer;
-> >
-> >       if (!state->connected)
-> >               return;
-> >
-> > +     if (bdaddr_type =3D=3D BDADDR_BREDR)
-> > +             bearer =3D "bredr";
-> > +     else
-> > +             bearer =3D "le";
-> > +
-> >       state->connected =3D false;
-> >       state->initiator =3D false;
-> >       device->general_connect =3D FALSE;
-> > @@ -3854,15 +3872,15 @@ void device_remove_connection(struct
-> > btd_device *device, uint8_t bdaddr_type,
-> >                                               DEVICE_INTERFACE,
-> >                                               "Paired");
-> >
-> > -     if (device->bredr_state.connected || device-
-> > >le_state.connected)
-> > -             return;
-> > -
-> >       device_update_last_seen(device, bdaddr_type, true);
-> >
-> >       g_slist_free_full(device->eir_uuids, g_free);
-> >       device->eir_uuids =3D NULL;
-> >
-> > -     device_disconnected(device, reason);
-> > +     device_disconnected(device, reason, bearer);
-> > +
-> > +     if (device->bredr_state.connected || device-
-> > >le_state.connected)
-> > +             return;
-> >
-> >       g_dbus_emit_property_changed(dbus_conn, device->path,
-> >                                               DEVICE_INTERFACE,
-> > "Connected");
-> >
-> > ---
-> > base-commit: dc8db3601001de9a085da063e0c5e456074b8963
-> > change-id: 20250618-device-bearer-level-conn-state-3e29d56bda88
-> >
-> > Best regards,
+> diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
+> index 55cc1652bfe4..f6805027be0a 100644
+> --- a/drivers/bluetooth/btintel.c
+> +++ b/drivers/bluetooth/btintel.c
+> @@ -484,6 +484,7 @@ int btintel_version_info_tlv(struct hci_dev *hdev,
+>         case 0x1d:      /* BlazarU (BzrU) */
+>         case 0x1e:      /* BlazarI (Bzr) */
+>         case 0x1f:      /* Scorpious Peak */
+> +       case 0x22:      /* BlazarIW */
+>                 break;
+>         default:
+>                 bt_dev_err(hdev, "Unsupported Intel hardware variant (0x%=
+x)",
+> @@ -3253,6 +3254,7 @@ void btintel_set_msft_opcode(struct hci_dev *hdev, =
+u8 hw_variant)
+>         case 0x1d:
+>         case 0x1e:
+>         case 0x1f:
+> +       case 0x22:
+>                 hci_set_msft_opcode(hdev, 0xFC1E);
+>                 break;
+>         default:
+> @@ -3593,6 +3595,7 @@ static int btintel_setup_combined(struct hci_dev *h=
+dev)
+>         case 0x1d:
+>         case 0x1e:
+>         case 0x1f:
+> +       case 0x22:
+>                 /* Display version information of TLV type */
+>                 btintel_version_info_tlv(hdev, &ver_tlv);
+>
+> diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel=
+_pcie.c
+> index cb3cf2b9acea..1004264128e3 100644
+> --- a/drivers/bluetooth/btintel_pcie.c
+> +++ b/drivers/bluetooth/btintel_pcie.c
+> @@ -2137,6 +2137,7 @@ static int btintel_pcie_setup_internal(struct hci_d=
+ev *hdev)
+>         switch (INTEL_HW_VARIANT(ver_tlv.cnvi_bt)) {
+>         case 0x1e:      /* BzrI */
+>         case 0x1f:      /* ScP  */
+> +       case 0x22:      /* BlazarIW */
+>                 /* Display version information of TLV type */
+>                 btintel_version_info_tlv(hdev, &ver_tlv);
+>
+> --
+> 2.43.0
+>
 >
 
 
