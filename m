@@ -1,174 +1,331 @@
-Return-Path: <linux-bluetooth+bounces-13245-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-13248-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66159AE83DC
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 25 Jun 2025 15:10:41 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8517AE84A3
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 25 Jun 2025 15:28:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1663F6A0A6A
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 25 Jun 2025 13:09:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 642D33A8B6E
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 25 Jun 2025 13:27:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29A34262FD3;
-	Wed, 25 Jun 2025 13:09:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02727262FCD;
+	Wed, 25 Jun 2025 13:27:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arri.de header.i=@arri.de header.b="hh7lmUZs"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ILgF6ZWn"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011038.outbound.protection.outlook.com [52.101.65.38])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5AB25FA0F;
-	Wed, 25 Jun 2025 13:09:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.65.38
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750856995; cv=fail; b=lkRdRnQxX3L7xs3Et7p0N9UukQGVg5CkEIZej69AQkyfdMC0wKfThLsQy+AtBpSs0m6KsKdINFbBl1llu8MKsR6NYtC6oy5fUsO7hq/P9ckpiVvtX+jxuhKZm4qReUG697ZlvbBVcsV11uuAQ1bX/QqvnqxsBLWZ6JIC0PUIIA0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750856995; c=relaxed/simple;
-	bh=GvJjCoRgL/IIGtlwaivv5sRPrNkDAzalF1HSQjykCu0=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FlWlsJTCimW4go4dZ+6SniXMAnKd/TfuU/35zWxIZwFD8ZROp4daGZQ5Jl0gfKycau20PVDXzgju94qO3MGHFbxgT1bpce4wuegxdgUeu+e+pGhcSUKHpG417tjocURiP9i0syzMla1wARGCULC4o+U3sjWgDZpGhguuqw8A26U=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arri.de; spf=pass smtp.mailfrom=arri.de; dkim=pass (1024-bit key) header.d=arri.de header.i=@arri.de header.b=hh7lmUZs; arc=fail smtp.client-ip=52.101.65.38
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arri.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arri.de
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=fc7MdtI0IjO95HG4CiVGswUqLFYq0DCx/YzR5xJtqztae+9TAJvsWWZT5DiryeDLRru6ggipGJw+IPXjQAYbilMgBKAfewOVZWPoWJaswc/s4g8AVMWV2j3z5GcXPm2mqcCdXWR2tGKv+6JamwOExSsmLtG5JGNWtrPLjq0Rsdt1lEmYtpzNfDVtFrvl5fj9EQBDCCbT1eGtlYwCuuWuCycHZhr/BH//CJV1+rojaImQiB4yCElkBbn7G8Mp4sXzVpDheGvJin0+dFywMCXwOpJnrQpD/iSLKi/5j+jRg/D6F67Psl21iED2vJSbj74mZ7wQoRidf/26q/k8fiD/IQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ot2X4WX/ED6XWvisnxAHdwvs9Mak7Az4G/XpkFwKzl8=;
- b=AL/FKWJubbpKnSDMNYzSaatgNWqczJfybWZHt5BP9A2R9q8Xffe+nbLhz5ZfGjApyn6rA5s4kb8ON7KcOVuWVt7SB5wGtvE+VpSOG1ODsXS6Wwfjig4/1TZVlWozsIFg3GXoSTdFt3ii2pvHBidKEWbC7QyqbFVLYjMQ11R4Y/slnzuckz3OjvZP/yuLyRyPOISaW+/07G96xcaKpez6HerRJdy1LA6fxv6lY4nN2CigwM9/WI6pdqNlDEkyOwIjHoi+SeFONygn983ihfyqqZU1e3g0YAMDlyvYWdVynkHQOW9Y3BOkNUXJWbJAvdrROoKwOMWT6FKslNOCN8Gwgw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
- 217.111.95.7) smtp.rcpttodomain=holtmann.org smtp.mailfrom=arri.de;
- dmarc=fail (p=none sp=none pct=100) action=none header.from=arri.de;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arri.de; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ot2X4WX/ED6XWvisnxAHdwvs9Mak7Az4G/XpkFwKzl8=;
- b=hh7lmUZsJnobQWQglVAqmvKdK7O4TcpxTaIkWlKiaL+eFnciro1aeQ+tsG4IPmablDRF6BzwliWTUT+oubq1G2IqCHIfbmE1w5O60+H+85vHvb1EbSLaFJEkQxi+gmfXmx+sfcxJQ3kmumQQSZ+zB15JKP4Mg4OWX/F1airQc9k=
-Received: from AS4P191CA0039.EURP191.PROD.OUTLOOK.COM (2603:10a6:20b:657::24)
- by AS8PR03MB6725.eurprd03.prod.outlook.com (2603:10a6:20b:295::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8857.30; Wed, 25 Jun
- 2025 13:09:48 +0000
-Received: from AMS0EPF000001A4.eurprd05.prod.outlook.com
- (2603:10a6:20b:657:cafe::37) by AS4P191CA0039.outlook.office365.com
- (2603:10a6:20b:657::24) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8880.16 via Frontend Transport; Wed,
- 25 Jun 2025 13:09:48 +0000
-X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 217.111.95.7)
- smtp.mailfrom=arri.de; dkim=none (message not signed)
- header.d=none;dmarc=fail action=none header.from=arri.de;
-Received-SPF: Fail (protection.outlook.com: domain of arri.de does not
- designate 217.111.95.7 as permitted sender) receiver=protection.outlook.com;
- client-ip=217.111.95.7; helo=mta.arri.de;
-Received: from mta.arri.de (217.111.95.7) by
- AMS0EPF000001A4.mail.protection.outlook.com (10.167.16.229) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8880.14 via Frontend Transport; Wed, 25 Jun 2025 13:09:48 +0000
-Received: from N9W6SW14.arri.de (10.30.5.30) by mta.arri.de (10.10.18.5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.38; Wed, 25 Jun
- 2025 15:09:47 +0200
-From: Christian Eggers <ceggers@arri.de>
-To: Marcel Holtmann <marcel@holtmann.org>, Johan Hedberg
-	<johan.hedberg@gmail.com>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Brian Gix <brian.gix@intel.com>, Inga Stotland <inga.stotland@gmail.com>
-CC: <linux-bluetooth@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-	Christian Eggers <ceggers@arri.de>, <stable@vger.kernel.org>
-Subject: [PATCH 3/3] Bluetooth: MGMT: mesh_send: check instances prior disabling advertising
-Date: Wed, 25 Jun 2025 15:09:31 +0200
-Message-ID: <20250625130931.19064-3-ceggers@arri.de>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250625130931.19064-1-ceggers@arri.de>
-References: <20250625130931.19064-1-ceggers@arri.de>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD9B3FD4;
+	Wed, 25 Jun 2025 13:27:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1750858035; cv=none; b=HjnwTvrRZKERhxq0NNuBW+G59aVmtDjKVPjAFEKxio5XB2c9QK0HuW+1X1wDPPsMw3FQ69XXK4wrYxuwellzNZhn1rmUcLAr5TGhxYoE4livFsEB9TJPOWyaQWnT6dOSAeFgb8PAWBtAMen4xdy7ssCHJxKS5Hl9wJJRlRqjOQY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1750858035; c=relaxed/simple;
+	bh=7ZxBAiyfUmMtN7AjxxGSzEQM7fP1mVANe3bslfVATjM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=q9sPy6SuWwtCE9KQspMPq4kMGLOg9B9CFJ2rKrtHKNHL3tbqSF3/0kdj0xi+CjIhQDJLvzNS2TzDX8N22VCATpCWrm578/kdibuSIFeI63pTXvVcISJAuT8NNDm0rG+DhcEM0tt6ASQSRjWyr8SwfFa1crmf06eDkLFKF23Pibs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ILgF6ZWn; arc=none smtp.client-ip=209.85.208.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-32b910593edso13817571fa.1;
+        Wed, 25 Jun 2025 06:27:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750858031; x=1751462831; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0eWmQcceDnjey6WVhwoCM3alttfmTOHZzpPMwjO1DTw=;
+        b=ILgF6ZWnEv0jM1prhwrOzV6Bqp2AdXgx25huXTmTCIWcKUy9rf6HJrv10VDvqrw9jX
+         BkYSvszjJl60uR0IP1UBpcmbQ1pnaG0FEp3dCw/xv/WiAu0omzit5XswaGTKEuOeOzHv
+         2fCo5bMeCQzsmtr7fwfBqax2/bth0G59J9St3ZVD9PACz9kHutVXXPRKNa0X8HsSaLc9
+         MYGB/xViXqG2KpO75r4XTypRMusnAt0tCcjQwXVYxh5yYUQi9z3ZLyR36aIpIgvMeCQI
+         UEyD89at3dhAmWWxlAd6j5L9M1eCQ/6igi+41BhScXFITCUiGkRKDPuR4PvmzOweMOUQ
+         TMJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750858031; x=1751462831;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0eWmQcceDnjey6WVhwoCM3alttfmTOHZzpPMwjO1DTw=;
+        b=QNfkxEB49Sr7jJPo//kxyLc2L+N2ANxikymFqUOsZjzCpq0mWn84ExQy/2boqJQEfV
+         iHT9LG9qGozaLbr8ot1vYsyaVpQWlcmuQP3KZf3SQRm+Q8Vx1G5Tcd7ddCPtrgGCDD+a
+         PnAN8R+ldmMlu55qJPvggD8bTu4uaQ/0S5Jv5sulyycQtoFNekkZ3fkFHDqSVzBqqrbU
+         zHWmOyljMQVZK/KAGYpVfffFaNYcfAJO8Zqk/AJsyGZe4nteVGQDu2BZkRs6GOwNjZni
+         5gaaWaLJdpVfWdl+dSdaCftrJUjh5rYMt4wvi+2dfsxhrBMH1RSTiBNTJQGOz5E9A4NQ
+         OOew==
+X-Forwarded-Encrypted: i=1; AJvYcCWcXTt8nH0983inY2l8uUYzRAU4BbuR3x4TQWRuqUVGveU3U/GV5xAUlT7eo3qJzkosn7hc/kgz@vger.kernel.org, AJvYcCWkkX9xGUyuuFKv+zTmFytjA/pTyPA0T4JRzBngPtpB6wVTS0jZWbzMlY2yOikryZm84PBIN6QM1qZYK0b4+PA=@vger.kernel.org, AJvYcCXbA7ax3fApSHbgIrhPsCCk9zG6UNSErs0BW6qPYOBxySzq3/QXu7AABQXzHuQFCJZMlWLFbmb0@vger.kernel.org, AJvYcCXjH49X1X85P/NiF3rpDkGpAtCpyUrlf7T0pFLPZEP2s4JV/ERtFPFDgrbg30AMPpnER1/nyinyXYSQZN/j@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywfr8hkM4Fn0vAYuZ13uq6YeJXVoTKeunG46ZOylPuSA42tln9x
+	TBaQDuEJaOrhwEH225t9gUMnP1PePlftpavjy1ZDSPAIk7Ocb6TdoX2zxhHaMUb2Bq+DRQiJZlr
+	UI+soR5iLJN9e+sZEcf5QxMhLzDl697I=
+X-Gm-Gg: ASbGnct7bfCfinCKdUjc53o69LPDh461OJUJGTD34+L6rWsH6xqzsypQnE0djhLyDdL
+	K07SyY5eyHXf6pxo77zcC6I5/s02UImLd2VY0j1XmIwtyclP0P3k0+cmVJRdP9NN+dZC1p8i6xw
+	5M/fg6bl180RJ0vm02Mj1mGOZiNgab2o1lWWcZdkHaDA==
+X-Google-Smtp-Source: AGHT+IG2ftQGOZB8IDsuFAGSJ7WRgj2/KluM8fac5/UJbucBJJKKOqnTxouoVa1M2ZVSrEhuRs/0LY5oo8U9dBqktqk=
+X-Received: by 2002:a2e:a5c2:0:b0:32a:8297:54c9 with SMTP id
+ 38308e7fff4ca-32cc6434852mr10560721fa.8.1750858030473; Wed, 25 Jun 2025
+ 06:27:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AMS0EPF000001A4:EE_|AS8PR03MB6725:EE_
-X-MS-Office365-Filtering-Correlation-Id: 92bd4dcb-06fc-4117-6b55-08ddb3e99046
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|82310400026|376014|36860700013|1800799024;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?f9aQ9BTwTyP/ZNj+mPx49PE57nyqbpCOC+yn6oTBtPue8vFg/qJX5Abtl6Mg?=
- =?us-ascii?Q?bmIbbUfC8khfmXH39aVMJsBZQr7cLHthRX87Sb/LGvSPNj0V7zB2vyh5Fl1D?=
- =?us-ascii?Q?n6PVfh6pzBpmoV5vplkPvLjRf1xr//OHPqdXOZT/Hai4qQercbE+bL4Mry1h?=
- =?us-ascii?Q?FJKPyOMnvx1N9ZmNFiK91VJhEXFlaAwzhsr6mxy1OUMP0IJBZVMNp/+7n3Ew?=
- =?us-ascii?Q?Yl6GjlO7XISMmr+7Fev9R//UWmwRJNx9O9vG57H+uOf7btuoumAM/M9CKUJI?=
- =?us-ascii?Q?sh9qgEJ2BSktAMJUdhnbvn/WcKvqKCeG5ituHnwoCMJtOMO9Rlcg6eTb9yGm?=
- =?us-ascii?Q?2rnnumHaPl9E6kvTbM7dIzW/gxPNmN+Zq/UJ9Mo3HsS3Kb3eW6bzC+IadG5l?=
- =?us-ascii?Q?eAoG+58yCKrV2AhlH+ZsxVuj592JCi9wqJPgbqbd+C00D8Bnv/WgowIzx2sV?=
- =?us-ascii?Q?XUajI1+N4thlTXxF36uvoklWLcrEZh/xQWueR9wGW9PtzeHctlnzv1A7Vm9G?=
- =?us-ascii?Q?6lr9h23b7nhg9gpQ+q5XKWABGA5UPZz77QD8p6Ya/ZvrlsBuESo0naCHRgdN?=
- =?us-ascii?Q?L4k9HjBJNUZpRP6MIFniKSM9CggPTOgnEMsQq/fbefgadkr+bKU/KVc8ozMs?=
- =?us-ascii?Q?kW6f7rPgSSkoQGdTEDbHoGZ+2UjN+9DfCc7v79BHta38fNKzh9OCPG7FqeYC?=
- =?us-ascii?Q?gy6uPhS1tZsZE4sNQn+jK6SLB1etppN7yN5NNRnLTzdqg5opJp6SDhWvdu7N?=
- =?us-ascii?Q?Gm3oTGWPpsMp03TRX9iXE0nZ4zNZ2hdN72oydi7JeMMRnPZOgYfp8ha9GJPj?=
- =?us-ascii?Q?Zwew7qUTrd1XM7Rz9ohy3b6nBartlbFe5lDsK4ydi9+RBIddxNzFYEcUw2pO?=
- =?us-ascii?Q?uAKAgx2pLl0755liprDosZ7R+6TqG9lph0386bAYWtULEub0zKPF+KoYr+dy?=
- =?us-ascii?Q?4YuOkAAPwoK0hPI/I85mKZGRQdji1o2vSicNpwe+Wwd2z094mWdwsfxDQ0ci?=
- =?us-ascii?Q?v90YVCJR0XEC2Yrn/Um4FvU+pV96kSE0OJX0cWL/jDMDzH392vYSLmLzVeHQ?=
- =?us-ascii?Q?9hsMyIVM7XIw3Gbzj+Ahr54MlabuDeExFWCBmRiC/hJk/rAyMpDO5ZN4Fbm9?=
- =?us-ascii?Q?gxt3EmrbqtkZmPZuzFL26OKFxpYP38HTUUyP+5g/r1VtpyfLXVzKFyNf3dYi?=
- =?us-ascii?Q?MGU5W9w/2NpgGZjXVxXeBruSs9yUxvciSpUt7IVbn9J0XxYkUv5uJG14V1Bw?=
- =?us-ascii?Q?mwgHuXvDxClGnL5TnYaYmud2aeZ6ER7hZ2Aa/322wKVUtF7NKqz09LhFlATw?=
- =?us-ascii?Q?Z7V6TGPRMb6esCFZmv5VWI3NvEoceXqkMbmYPnGfgB7raedO/NOg78w6CI5o?=
- =?us-ascii?Q?oeyYhIznCy8MEWMy3XacoyL9ZYt6K02guG2w/daidBiWBCY7PUtRBkheO7WO?=
- =?us-ascii?Q?0Lf/df3MhHajIkPrm//z+iELdBEtTGTYW4y+GCQx05vG53qyO1E3iqT67Sfn?=
- =?us-ascii?Q?cWkBfoWONGpoJkyfsGKMYuIYFnsGtAuJaEaW?=
-X-Forefront-Antispam-Report:
-	CIP:217.111.95.7;CTRY:DE;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mta.arri.de;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(82310400026)(376014)(36860700013)(1800799024);DIR:OUT;SFP:1101;
-X-OriginatorOrg: arri.de
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Jun 2025 13:09:48.5382
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 92bd4dcb-06fc-4117-6b55-08ddb3e99046
-X-MS-Exchange-CrossTenant-Id: e6a73a5a-614d-4c51-b3e3-53b660a9433a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e6a73a5a-614d-4c51-b3e3-53b660a9433a;Ip=[217.111.95.7];Helo=[mta.arri.de]
-X-MS-Exchange-CrossTenant-AuthSource:
-	AMS0EPF000001A4.eurprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR03MB6725
+References: <20250625130510.18382-1-ceggers@arri.de>
+In-Reply-To: <20250625130510.18382-1-ceggers@arri.de>
+From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date: Wed, 25 Jun 2025 09:26:58 -0400
+X-Gm-Features: Ac12FXxoRatCETVtaTcE8jTrNySsVyuFBKwzRXMZzaO5K4vFYbneLMjuaNcOZUE
+Message-ID: <CABBYNZ+cfFCzBMNBv6imodUG1twK5=MSwoVCnR8St_w9-HiU_w@mail.gmail.com>
+Subject: Re: [PATCH] Bluetooth: HCI: Fix HCI command order for extended advertising
+To: Christian Eggers <ceggers@arri.de>
+Cc: Marcel Holtmann <marcel@holtmann.org>, Johan Hedberg <johan.hedberg@gmail.com>, 
+	Jaganath Kanakkassery <jaganath.k.os@gmail.com>, linux-bluetooth@vger.kernel.org, 
+	netdev@vger.kernel.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The unconditional call of hci_disable_advertising_sync() in
-mesh_send_done_sync() also disables other LE advertisings (non mesh
-related).
+Hi Christian,
 
-I am not sure whether this call is required at all, but checking the
-adv_instances list (like done at other places) seems to solve the
-problem.
+On Wed, Jun 25, 2025 at 9:05=E2=80=AFAM Christian Eggers <ceggers@arri.de> =
+wrote:
+>
+> For extended advertising capable controllers, hci_start_ext_adv_sync()
+> at the moment synchronously calls SET_EXT_ADV_PARAMS [1],
+> SET_ADV_SET_RAND_ADDR [2], SET_EXT_SCAN_RSP_DATA [3](optional) and
+> SET_EXT_ADV_ENABLE [4].  After all synchronous commands are finished,
+> SET_EXT_ADV_DATA is called from the async response handler of
+> SET_EXT_ADV_PARAMS [5] (via hci_update_adv_data).
+>
+> So the current implementation sets the advertising data AFTER enabling
+> the advertising instance.  The BT Core specification explicitly allows
+> for this [6]:
+>
+> > If advertising is currently enabled for the specified advertising set,
+> > the Controller shall use the new data in subsequent extended
+> > advertising events for this advertising set. If an extended
+> > advertising event is in progress when this command is issued, the
+> > Controller may use the old or new data for that event.
 
-Fixes: b338d91703fa ("Bluetooth: Implement support for Mesh")
-Cc: stable@vger.kernel.org
-Signed-off-by: Christian Eggers <ceggers@arri.de>
----
- net/bluetooth/mgmt.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Ok, lets stop right here, if the controller deviates from the spec it
+needs a quirk and not make the whole stack work around a bug in the
+firmware.
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 5d0f772c7a99..1485b455ade4 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -1080,7 +1080,8 @@ static int mesh_send_done_sync(struct hci_dev *hdev, void *data)
- 	struct mgmt_mesh_tx *mesh_tx;
- 
- 	hci_dev_clear_flag(hdev, HCI_MESH_SENDING);
--	hci_disable_advertising_sync(hdev);
-+	if (list_empty(&hdev->adv_instances))
-+		hci_disable_advertising_sync(hdev);
- 	mesh_tx = mgmt_mesh_next(hdev, NULL);
- 
- 	if (mesh_tx)
--- 
-2.43.0
+> In case of the Realtek RTL8761BU chip (almost all contemporary BT USB
+> dongles are built on it), updating the advertising data after enabling
+> the instance produces (at least one) corrupted advertising message.
+> Under normal conditions, a single corrupted advertising message would
+> probably not attract much attention, but during MESH provisioning (via
+> MGMT I/O / mesh_send(_sync)), up to 3 different messages (BEACON, ACK,
+> CAPS) are sent within a loop which causes corruption of ALL provisioning
+> messages.
+>
+> I have no idea whether this could be fixed in the firmware of the USB
+> dongles (I didn't even find the chip on the Realtek homepage), but
+> generally I would suggest changing the order of the HCI commands as this
+> matches the command order for "non-extended adv capable" controllers and
+> simply is more natural.
+>
+> This patch only considers advertising instances with handle > 0, I don't
+> know whether this should be extended to further cases.
+>
+> [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tr=
+ee/net/bluetooth/hci_sync.c#n1319
+> [2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tr=
+ee/net/bluetooth/hci_sync.c#n1204
+> [3] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tr=
+ee/net/bluetooth/hci_sync.c#n1471
+> [4] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tr=
+ee/net/bluetooth/hci_sync.c#n1469
+> [5] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tr=
+ee/net/bluetooth/hci_event.c#n2180
+> [6] https://www.bluetooth.com/wp-content/uploads/Files/Specification/HTML=
+/Core-60/out/en/host-controller-interface/host-controller-interface-functio=
+nal-specification.html#UUID-d4f36cb5-f26c-d053-1034-e7a547ed6a13
+>
+> Signed-off-by: Christian Eggers <ceggers@arri.de>
+> Fixes: a0fb3726ba55 ("Bluetooth: Use Set ext adv/scan rsp data if control=
+ler supports")
+> Cc: stable@vger.kernel.org
+> ---
+>  include/net/bluetooth/hci_core.h |  1 +
+>  include/net/bluetooth/hci_sync.h |  1 +
+>  net/bluetooth/hci_event.c        | 33 +++++++++++++++++++++++++++++
+>  net/bluetooth/hci_sync.c         | 36 ++++++++++++++++++++++++++------
+>  4 files changed, 65 insertions(+), 6 deletions(-)
+>
+> diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci=
+_core.h
+> index 9fc8f544e20e..8d37f127ddba 100644
+> --- a/include/net/bluetooth/hci_core.h
+> +++ b/include/net/bluetooth/hci_core.h
+> @@ -237,6 +237,7 @@ struct oob_data {
+>
+>  struct adv_info {
+>         struct list_head list;
+> +       bool    enable_after_set_ext_data;
+>         bool    enabled;
+>         bool    pending;
+>         bool    periodic;
+> diff --git a/include/net/bluetooth/hci_sync.h b/include/net/bluetooth/hci=
+_sync.h
+> index 5224f57f6af2..00eceffeec87 100644
+> --- a/include/net/bluetooth/hci_sync.h
+> +++ b/include/net/bluetooth/hci_sync.h
+> @@ -112,6 +112,7 @@ int hci_schedule_adv_instance_sync(struct hci_dev *hd=
+ev, u8 instance,
+>  int hci_setup_ext_adv_instance_sync(struct hci_dev *hdev, u8 instance);
+>  int hci_start_ext_adv_sync(struct hci_dev *hdev, u8 instance);
+>  int hci_enable_ext_advertising_sync(struct hci_dev *hdev, u8 instance);
+> +int hci_enable_ext_advertising(struct hci_dev *hdev, u8 instance);
+>  int hci_enable_advertising_sync(struct hci_dev *hdev);
+>  int hci_enable_advertising(struct hci_dev *hdev);
+>
+> diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+> index 66052d6aaa1d..eb018d8a3c4b 100644
+> --- a/net/bluetooth/hci_event.c
+> +++ b/net/bluetooth/hci_event.c
+> @@ -2184,6 +2184,37 @@ static u8 hci_cc_set_ext_adv_param(struct hci_dev =
+*hdev, void *data,
+>         return rp->status;
+>  }
+>
+> +static u8 hci_cc_le_set_ext_adv_data(struct hci_dev *hdev, void *data,
+> +                                    struct sk_buff *skb)
+> +{
+> +       struct hci_cp_le_set_ext_adv_data *cp;
+> +       struct hci_ev_status *rp =3D data;
+> +       struct adv_info *adv_instance;
+> +
+> +       bt_dev_dbg(hdev, "status 0x%2.2x", rp->status);
+> +
+> +       if (rp->status)
+> +               return rp->status;
+> +
+> +       cp =3D hci_sent_cmd_data(hdev, HCI_OP_LE_SET_EXT_ADV_DATA);
+> +       if (!cp)
+> +               return rp->status;
+> +
+> +       hci_dev_lock(hdev);
+> +
+> +       if (cp->handle) {
+> +               adv_instance =3D hci_find_adv_instance(hdev, cp->handle);
+> +               if (adv_instance) {
+> +                       if (adv_instance->enable_after_set_ext_data)
+> +                               hci_enable_ext_advertising(hdev, cp->hand=
+le);
+> +               }
+> +       }
+> +
+> +       hci_dev_unlock(hdev);
+> +
+> +       return rp->status;
+> +}
+> +
+>  static u8 hci_cc_read_rssi(struct hci_dev *hdev, void *data,
+>                            struct sk_buff *skb)
+>  {
+> @@ -4166,6 +4197,8 @@ static const struct hci_cc {
+>                sizeof(struct hci_rp_le_read_num_supported_adv_sets)),
+>         HCI_CC(HCI_OP_LE_SET_EXT_ADV_PARAMS, hci_cc_set_ext_adv_param,
+>                sizeof(struct hci_rp_le_set_ext_adv_params)),
+> +       HCI_CC_STATUS(HCI_OP_LE_SET_EXT_ADV_DATA,
+> +                     hci_cc_le_set_ext_adv_data),
+>         HCI_CC_STATUS(HCI_OP_LE_SET_EXT_ADV_ENABLE,
+>                       hci_cc_le_set_ext_adv_enable),
+>         HCI_CC_STATUS(HCI_OP_LE_SET_ADV_SET_RAND_ADDR,
+> diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+> index 1f8806dfa556..da0e39cce721 100644
+> --- a/net/bluetooth/hci_sync.c
+> +++ b/net/bluetooth/hci_sync.c
+> @@ -1262,6 +1262,7 @@ int hci_setup_ext_adv_instance_sync(struct hci_dev =
+*hdev, u8 instance)
+>                 hci_cpu_to_le24(adv->max_interval, cp.max_interval);
+>                 cp.tx_power =3D adv->tx_power;
+>                 cp.sid =3D adv->sid;
+> +               adv->enable_after_set_ext_data =3D true;
+>         } else {
+>                 hci_cpu_to_le24(hdev->le_adv_min_interval, cp.min_interva=
+l);
+>                 hci_cpu_to_le24(hdev->le_adv_max_interval, cp.max_interva=
+l);
+> @@ -1456,6 +1457,23 @@ int hci_enable_ext_advertising_sync(struct hci_dev=
+ *hdev, u8 instance)
+>                                      data, HCI_CMD_TIMEOUT);
+>  }
+>
+> +static int enable_ext_advertising_sync(struct hci_dev *hdev, void *data)
+> +{
+> +       u8 instance =3D PTR_UINT(data);
+> +
+> +       return hci_enable_ext_advertising_sync(hdev, instance);
+> +}
+> +
+> +int hci_enable_ext_advertising(struct hci_dev *hdev, u8 instance)
+> +{
+> +       if (!hci_dev_test_flag(hdev, HCI_ADVERTISING) &&
+> +           list_empty(&hdev->adv_instances))
+> +               return 0;
+> +
+> +       return hci_cmd_sync_queue(hdev, enable_ext_advertising_sync,
+> +                                 UINT_PTR(instance), NULL);
+> +}
+> +
+>  int hci_start_ext_adv_sync(struct hci_dev *hdev, u8 instance)
+>  {
+>         int err;
+> @@ -1464,11 +1482,11 @@ int hci_start_ext_adv_sync(struct hci_dev *hdev, =
+u8 instance)
+>         if (err)
+>                 return err;
+>
+> -       err =3D hci_set_ext_scan_rsp_data_sync(hdev, instance);
+> -       if (err)
+> -               return err;
+> -
+> -       return hci_enable_ext_advertising_sync(hdev, instance);
+> +       /* SET_EXT_ADV_DATA and SET_EXT_ADV_ENABLE are called in the
+> +        * asynchronous response chain of set_ext_adv_params in order to
+> +        * set the advertising data first prior enabling it.
+> +        */
 
+Doing things asynchronously is known to create problems, which is why
+we introduced the cmd_sync infra to handle a chain of commands like
+this, so Id suggest sticking to the synchronous way, if the order
+needs to be changed then use a quirk to detect it and then make sure
+the instance is disabled on hci_set_ext_adv_data_sync and then
+re-enable after updating it.
+
+> +       return hci_set_ext_scan_rsp_data_sync(hdev, instance);
+>  }
+>
+>  int hci_disable_per_advertising_sync(struct hci_dev *hdev, u8 instance)
+> @@ -1832,8 +1850,14 @@ static int hci_set_ext_adv_data_sync(struct hci_de=
+v *hdev, u8 instance)
+>
+>         if (instance) {
+>                 adv =3D hci_find_adv_instance(hdev, instance);
+> -               if (!adv || !adv->adv_data_changed)
+> +               if (!adv)
+>                         return 0;
+> +               if (!adv->adv_data_changed) {
+> +                       if (adv->enable_after_set_ext_data)
+> +                               hci_enable_ext_advertising_sync(hdev,
+> +                                                               adv->hand=
+le);
+> +                       return 0;
+> +               }
+>         }
+>
+>         len =3D eir_create_adv_data(hdev, instance, pdu->data,
+> --
+> 2.43.0
+>
+
+
+--=20
+Luiz Augusto von Dentz
 
