@@ -1,58 +1,58 @@
-Return-Path: <linux-bluetooth+bounces-13330-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-13328-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8292AAEBA83
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Jun 2025 16:53:20 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0196DAEBA81
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Jun 2025 16:53:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F0F2716A2CC
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Jun 2025 14:53:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6B7F43B8A85
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Jun 2025 14:52:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A6D02E8E08;
-	Fri, 27 Jun 2025 14:52:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E536B2E888D;
+	Fri, 27 Jun 2025 14:52:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="NlvloKbk"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="jJ2/v7Cx"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F2B32E92DD
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D0B2E972A
 	for <linux-bluetooth@vger.kernel.org>; Fri, 27 Jun 2025 14:51:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751035922; cv=none; b=FZaH2zaShGabbANXjEVJuahwQLmZ6i6/PezVkfCt6CCeI3Wr3j7ApFcF4+qBCJZM+BLVW4PW6pWBWKC7YdGJz3XVNsna1+aI6Si+m/zTDLlxVj6IQzHfdq9f72Px2A95y9331AuCed8FZO1gsHLrjPW8rl+rLsTzWtFcO7RKwJ0=
+	t=1751035921; cv=none; b=QYCrgDTLUzLYBnDnbTMabdFgesEQ13O1vL6Gan27HfYt2hwCCYvHZY5Wdz4NId7yuLMOYiTgT7GbWblFy8f8Mv1siIXDIZUOVFhUddpBqlwe+vAJCZt+Tn0ROf7QX2oTs/snVsZ9UWGEmNNxeT0YAG09DZxiwSX9ua7OOKk9P+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751035922; c=relaxed/simple;
-	bh=OVHhikPU6HIv1oDTRwFAfS0eqmNcKu2P/tWSmfCLn9k=;
+	s=arc-20240116; t=1751035921; c=relaxed/simple;
+	bh=CN/r5xU3o99pLkjP5QNHMR1yN5Z79wirbmfYsRpQD+g=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K4SxGDrtXRVoY4q4B+7P4Jqkds0iOiH1tGrFQEHY+zUELSeHeaqS5ZRCYNoXdR6YTTKUPjP85IsR3xZwIZpthYNYBs3FXlFyPd7XEFLyEIbIRrgtplKuL1uog+3o7lKzPAq0j5UpRzCzdWQb1zXKUUTiv0/0ykkm8Ovb/W0fTq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=NlvloKbk; arc=none smtp.client-ip=148.251.105.195
+	 MIME-Version:Content-Type; b=Lb8ZXU3lEUtsVNo4lGYyVAwn7GM7czeV5tNAQ0/UeB1E6R0Ypqz/Lx1qYMlwKjknLnBsB0KlJr1QEZhBcfvN9VOknmeZFeyE9nZDiYUWAbLCXymd1gusQgFhAx/HHNUOF4lliTUOAPrnSKoyEXGbGFNi/LArw7XZP3PcofUJ7lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=jJ2/v7Cx; arc=none smtp.client-ip=148.251.105.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
 	s=mail; t=1751035909;
-	bh=OVHhikPU6HIv1oDTRwFAfS0eqmNcKu2P/tWSmfCLn9k=;
+	bh=CN/r5xU3o99pLkjP5QNHMR1yN5Z79wirbmfYsRpQD+g=;
 	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=NlvloKbkPZhl0FroNAoPq8lG8hSTo8Z8ncEIJEXoVWikxwBxhthy0Groftf3Cz5bn
-	 BE4X8kIQ6jg8xA7rxA0l9jC6L+lNGSgb6C2594q4oYjmR6FG+32SJ8b+TgoPYkIuPf
-	 Y3GoUlNWQE09dDrFnldRitCJrhYXEiaB7b4J1uwSHo9u0sGrLhLQmO9ek6GM2NBYfo
-	 4NgKPtgNZyNW4SE0fUiLgANrwkOxIJc/unySf7WxLtxUwf5G59eyNXF/Ijhmoxxc0G
-	 55Fe1N3cs98vj7xhXYMp85zcDWp27AFWgT4RGyz2WAsmUQom2gc8txK54qZNgwm4Hh
-	 o7CXkS0L9kJhA==
+	b=jJ2/v7CxZlh4O1n/yjE7qGN1LJaeIfWe/vrbdFdIUlNkoBK1cWXq6EpsO3eRB4KtO
+	 23pKobfixlKi4Ovwo5yj1Cw7CdXt4OHkQtXS8ThQ1jFyNAq9uK9/Nvse5nomPnU2dr
+	 ymr+Gz83UaYYSspISCgdsccj+FXpD298iw4c3jKDkO1WZ2AhrNy3D9nbOdEEPa5W1m
+	 KYmOenQSzl+yjkC78fHuzoGVnM6wco/eyaSBm8Knkd0BGaSARP2pL+LodpN+1qItZg
+	 gzqVYrZvmoW1O5pyPZeUJ5kE9odfJi7Ih55824BzvigHIxjGP//6UrDrbA0xWDWvJz
+	 Hjy1aN8kOWZxA==
 Received: from fdanis-ThinkPad-X1.. (2A02-8428-Af44-1001-81C9-67b7-a328-2001.rev.sfr.net [IPv6:2a02:8428:af44:1001:81c9:67b7:a328:2001])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: fdanis)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 7209517E0CE6
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id BDA3E17E0CE7
 	for <linux-bluetooth@vger.kernel.org>; Fri, 27 Jun 2025 16:51:49 +0200 (CEST)
 From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [RFC BlueZ v2 25/27] audio/hfp-hf: Enable extended error if supported by remote AG
-Date: Fri, 27 Jun 2025 16:51:34 +0200
-Message-ID: <20250627145136.421853-26-frederic.danis@collabora.com>
+Subject: [RFC BlueZ v2 26/27] audio/telephony: Add call multiparty property support
+Date: Fri, 27 Jun 2025 16:51:35 +0200
+Message-ID: <20250627145136.421853-27-frederic.danis@collabora.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250627145136.421853-1-frederic.danis@collabora.com>
 References: <20250627145136.421853-1-frederic.danis@collabora.com>
@@ -66,72 +66,42 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 ---
- profiles/audio/hfp-hf.c | 36 +++++++++++++++++++++++++++++-------
- 1 file changed, 29 insertions(+), 7 deletions(-)
+ profiles/audio/telephony.c | 15 +++++++++++++++
+ profiles/audio/telephony.h |  1 +
+ 2 files changed, 16 insertions(+)
 
-diff --git a/profiles/audio/hfp-hf.c b/profiles/audio/hfp-hf.c
-index afe06296d..5542bce96 100644
---- a/profiles/audio/hfp-hf.c
-+++ b/profiles/audio/hfp-hf.c
-@@ -450,6 +450,25 @@ static void cops_cb(struct hfp_context *context, void *user_data)
- 	telephony_set_operator_name(dev->telephony, name);
+diff --git a/profiles/audio/telephony.c b/profiles/audio/telephony.c
+index a5dace7c3..9e10a94a4 100644
+--- a/profiles/audio/telephony.c
++++ b/profiles/audio/telephony.c
+@@ -791,3 +791,18 @@ void telephony_call_set_line_id(struct call *call, const char *line_id)
+ 			call->path, TELEPHONY_CALL_INTERFACE,
+ 			"LineIdentification");
  }
- 
-+static void ccwa_resp(enum hfp_result result, enum hfp_error cme_err,
-+							void *user_data)
++
++void telephony_call_set_multiparty(struct call *call, bool multiparty)
 +{
-+	struct hfp_device *dev = user_data;
-+
-+	DBG("");
-+
-+	if (result != HFP_RESULT_OK) {
-+		error("hf-client: CCWA error: %d", result);
++	if (call->multiparty == multiparty)
 +		return;
-+	}
 +
-+	if (dev->features & HFP_AG_FEAT_EXTENDED_RES_CODE) {
-+		if (!hfp_hf_send_command(dev->hf, cmd_complete_cb, dev,
-+								"AT+CMEE=1"))
-+			info("hf-client: Could not send AT+CMEE=1");
-+	}
++	DBG("device %s multiparty %u -> %u", call->path, call->multiparty,
++		multiparty);
++
++	call->multiparty = multiparty;
++
++	g_dbus_emit_property_changed(btd_get_dbus_connection(),
++			call->path, TELEPHONY_CALL_INTERFACE,
++			"Multiparty");
 +}
-+
- static void nrec_resp(enum hfp_result result, enum hfp_error cme_err,
- 							void *user_data)
- {
-@@ -463,9 +482,12 @@ static void nrec_resp(enum hfp_result result, enum hfp_error cme_err,
- 	}
+diff --git a/profiles/audio/telephony.h b/profiles/audio/telephony.h
+index 5f2a4ae4c..9541d3edd 100644
+--- a/profiles/audio/telephony.h
++++ b/profiles/audio/telephony.h
+@@ -115,3 +115,4 @@ void telephony_call_unregister_interface(struct call *call);
  
- 	if ((dev->chld_features & CHLD_3WAY_FEATURES) == CHLD_3WAY_FEATURES) {
--		if (!hfp_hf_send_command(dev->hf, cmd_complete_cb, dev,
--								"AT+CCWA=1"))
-+		if (!hfp_hf_send_command(dev->hf, ccwa_resp, dev, "AT+CCWA=1"))
- 			info("hf-client: Could not send AT+CCWA=1");
-+	} else if (dev->features & HFP_AG_FEAT_EXTENDED_RES_CODE) {
-+		if (!hfp_hf_send_command(dev->hf, cmd_complete_cb, dev,
-+								"AT+CMEE=1"))
-+			info("hf-client: Could not send AT+CMEE=1");
- 	}
- }
- 
-@@ -487,12 +509,12 @@ static void clip_resp(enum hfp_result result, enum hfp_error cme_err,
- 			info("hf-client: Could not send AT+NREC=0");
- 	} else if ((dev->chld_features & CHLD_3WAY_FEATURES) ==
- 			CHLD_3WAY_FEATURES) {
--		if (!hfp_hf_send_command(dev->hf, cmd_complete_cb, dev,
--								"AT+CCWA=1"))
-+		if (!hfp_hf_send_command(dev->hf, ccwa_resp, dev, "AT+CCWA=1"))
- 			info("hf-client: Could not send AT+CCWA=1");
--	}
--}
--
-+	} else if (dev->features & HFP_AG_FEAT_EXTENDED_RES_CODE) {
-+		if (!hfp_hf_send_command(dev->hf, cmd_complete_cb, dev,
-+								"AT+CMEE=1"))
-+			info("hf-client: Could not send AT+CMEE=1");
- static void cops_status_resp(enum hfp_result result, enum hfp_error cme_err,
- 							void *user_data)
- {
+ void telephony_call_set_state(struct call *call, enum call_state state);
+ void telephony_call_set_line_id(struct call *call, const char *line_id);
++void telephony_call_set_multiparty(struct call *call, bool multiparty);
 -- 
 2.43.0
 
