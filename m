@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-13413-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-13415-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BFE96AEF4C1
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  1 Jul 2025 12:16:17 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 60A7EAEF4C2
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  1 Jul 2025 12:16:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BBDE4446E4F
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  1 Jul 2025 10:15:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 523AC1BC6E83
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  1 Jul 2025 10:16:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C575270579;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB7022727E0;
 	Tue,  1 Jul 2025 10:15:35 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay16.mail.gandi.net (relay16.mail.gandi.net [217.70.178.236])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09073270EA4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6269D270EB9
 	for <linux-bluetooth@vger.kernel.org>; Tue,  1 Jul 2025 10:15:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.178.236
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751364934; cv=none; b=RGucK56PT6YAcjHghR8fFD6eceP8xxoKHQegfvyEXgqW7ztofD7uvD6438CWB/etORilS3cgcrBF2V4m7LtWU2K1sjIquITYgPi8DcPU4/i3f07XWJieanVMa/qkw8WUKUKf0t79LLMdTiU54htU/qw1RxnGXsSDF4f5C8dojmE=
+	t=1751364935; cv=none; b=kj6ZOyOD92Y//ArmZoQip0edNYAaV4+XOhPIUs2irw7OAqPdi/STjFWerJo2XuYYNnqoNhFzbJ2VKL/YMUiA3dOyHS4QIDUfM5TqJgVjaDlNS20lK9RZJKpUz2srWBpotUkx1gvbrycQMpZbT2F9jtBXV0tkjs0lDD6rMnRjWUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751364934; c=relaxed/simple;
-	bh=jhGeWnL9fii5twYLz1Lf4teEGR2Cl9PQTN4FA9NFt2E=;
+	s=arc-20240116; t=1751364935; c=relaxed/simple;
+	bh=AJhaeRaADyWAB119v1ZI+u1BuKN1is70jZKand0wFX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CVTSBoBqXNvrSAf9RD/LeAkNyODJ6uRrHKz+xQHNbNSBMbeOnB1FmGdxKOWgCnvaOX/M95wiRqmJLeTky4GWXk33ag/XzB1CDHxQjkl37WVnRYspxhSSoY1zL62hdgIGRQ0+bdsCoGtwQO/a4fOAY0ynTJ6o88dnODDQ26cknDo=
+	 MIME-Version; b=jq/xMh7h/JnpATnPaphWOHpRsXxxGCkUbI2K4hfGnUZM3kThG+G50eCB5oyPAsUW5u2PtYLT9GD9v73GUcnfDzampcNqguhQyH21lsDJDhWWaKOevLbGKHaHRYt/tn+eVc+GlHY576/lycc064pxIaOPJGE67/PYLMsiutNqP48=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.178.236
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 38A9D43981;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 8562D438D5;
 	Tue,  1 Jul 2025 10:15:31 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [PATCH BlueZ v4 6/8] device: Better "Connect" debug
-Date: Tue,  1 Jul 2025 12:14:27 +0200
-Message-ID: <20250701101520.459452-7-hadess@hadess.net>
+Subject: [PATCH BlueZ v4 7/8] device: Better error when the link key is missing
+Date: Tue,  1 Jul 2025 12:14:28 +0200
+Message-ID: <20250701101520.459452-8-hadess@hadess.net>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250701101520.459452-1-hadess@hadess.net>
 References: <20250701101520.459452-1-hadess@hadess.net>
@@ -51,106 +51,146 @@ X-GND-State: clean
 X-GND-Score: 0
 X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugedvjecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpeevtefhleevjeffteekleehheeujeelhfdvheethefggefhkefgvdefhfegkeeiteenucfkphepvdgrtddumegvfeegmegvtgejfeemtghfvddtmeejudgurgemfegsugemvddtrgelmedufeefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvfeegmegvtgejfeemtghfvddtmeejudgurgemfegsugemvddtrgelmedufeefpdhhvghlohepohhlihhmphhitgdpmhgrihhlfhhrohhmpehhrgguvghssheshhgruggvshhsrdhnvghtpdhnsggprhgtphhtthhopedvpdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehhrgguvghssheshhgruggvshhsrdhnvght
 
-Output clearer debug information so that it's possible to follow the
-decisions made by the bluetoothd daemon when a client such as
-bluetoothctl or the GNOME Bluetooth settings ask it to connect to a
-device.
+Add a more precise error when the link key is missing for a
+profile or device we're trying to connect to.
 ---
- src/device.c | 41 +++++++++++++++++++++++++++++++++--------
- 1 file changed, 33 insertions(+), 8 deletions(-)
+ doc/org.bluez.Device.rst |  2 ++
+ src/device.c             | 12 ++++++------
+ src/error.c              | 27 ++++++++++++++++++++++-----
+ src/error.h              |  3 +--
+ 4 files changed, 31 insertions(+), 13 deletions(-)
 
+diff --git a/doc/org.bluez.Device.rst b/doc/org.bluez.Device.rst
+index b36a49eabdd5..d4de78a47239 100644
+--- a/doc/org.bluez.Device.rst
++++ b/doc/org.bluez.Device.rst
+@@ -50,6 +50,8 @@ Possible errors:
+ :org.bluez.Error.InProgress:
+ :org.bluez.Error.AlreadyConnected:
+ :org.bluez.Error.ProfileUnavailable:
++:org.bluez.Error.BrConnectionKeyMissing:
++:org.bluez.Error.LeConnectionKeyMissing:
+ 
+ void Disconnect()
+ `````````````````
 diff --git a/src/device.c b/src/device.c
-index 99c0aa67ec0c..d7a859f9df3f 100644
+index d7a859f9df3f..3bad7fb2c77c 100644
 --- a/src/device.c
 +++ b/src/device.c
-@@ -2683,6 +2683,7 @@ static DBusMessage *connect_profiles(struct btd_device *dev, uint8_t bdaddr_type
- 							"Connect") &&
- 				find_service_with_state(dev->services,
- 						BTD_SERVICE_STATE_CONNECTED)) {
-+				DBG("Already connected to services");
- 				return dbus_message_new_method_return(msg);
- 			} else {
- 				return btd_error_profile_unavailable(msg);
-@@ -2694,8 +2695,10 @@ static DBusMessage *connect_profiles(struct btd_device *dev, uint8_t bdaddr_type
- 
- 	err = connect_next(dev);
- 	if (err < 0) {
--		if (err == -EALREADY)
-+		if (err == -EALREADY) {
-+			DBG("Already connected");
- 			return dbus_message_new_method_return(msg);
-+		}
- 		return btd_error_bredr_conn_from_errno(msg, err);
+@@ -1982,14 +1982,14 @@ void device_request_disconnect(struct btd_device *device, DBusMessage *msg)
  	}
  
-@@ -2718,14 +2721,24 @@ resolve_services:
- 	return NULL;
+ 	if (device->connect) {
+-		const char *err_str;
+ 		DBusMessage *reply;
+ 
+-		if (device->bonding_status == MGMT_STATUS_AUTH_FAILED)
+-			err_str = ERR_BREDR_CONN_KEY_MISSING;
+-		else
+-			err_str = ERR_BREDR_CONN_CANCELED;
+-		reply = btd_error_failed(device->connect, err_str);
++		if (device->bonding_status == MGMT_STATUS_AUTH_FAILED) {
++			reply = btd_error_br_connection_key_missing(device->connect);
++		} else {
++			reply = btd_error_failed(device->connect,
++						ERR_BREDR_CONN_CANCELED);
++		}
+ 		g_dbus_send_message(dbus_conn, reply);
+ 		dbus_message_unref(device->connect);
+ 		device->bonding_status = 0;
+diff --git a/src/error.c b/src/error.c
+index 8070bc6107ae..596ea4280991 100644
+--- a/src/error.c
++++ b/src/error.c
+@@ -136,6 +136,20 @@ DBusMessage *btd_error_profile_unavailable(DBusMessage *msg)
+ 					"profiles to connect to");
  }
  
-+static const char *bdaddr_type_strs[] = {
-+	"BR/EDR",
-+	"LE public",
-+	"LE random"
-+};
++DBusMessage *btd_error_br_connection_key_missing(DBusMessage *msg)
++{
++	return g_dbus_create_error(msg, ERROR_INTERFACE
++					".BrConnectionKeyMissing",
++					"BR/EDR Link Key missing");
++}
 +
- static DBusMessage *dev_connect(DBusConnection *conn, DBusMessage *msg,
- 							void *user_data)
++static DBusMessage *btd_error_le_connection_key_missing(DBusMessage *msg)
++{
++	return g_dbus_create_error(msg, ERROR_INTERFACE
++					".LeConnectionKeyMissing",
++					"LE Link Key missing");
++}
++
+ DBusMessage *btd_error_failed(DBusMessage *msg, const char *str)
  {
- 	struct btd_device *dev = user_data;
- 	uint8_t bdaddr_type;
+ 	return g_dbus_create_error(msg, ERROR_INTERFACE
+@@ -177,8 +191,6 @@ static const char *btd_error_str_bredr_conn_from_errno(int errno_code)
+ 		return ERR_BREDR_CONN_ABORT_BY_LOCAL;
+ 	case EPROTO:
+ 		return ERR_BREDR_CONN_LMP_PROTO_ERROR;
+-	case EBADE:
+-		return ERR_BREDR_CONN_KEY_MISSING;
+ 	default:
+ 		return ERR_BREDR_CONN_UNKNOWN;
+ 	}
+@@ -217,8 +229,6 @@ static const char *btd_error_str_le_conn_from_errno(int errno_code)
+ 		return ERR_LE_CONN_ABORT_BY_LOCAL;
+ 	case EPROTO:
+ 		return ERR_LE_CONN_LL_PROTO_ERROR;
+-	case EBADE:
+-		return ERR_LE_CONN_KEY_MISSING;
+ 	default:
+ 		return ERR_LE_CONN_UNKNOWN;
+ 	}
+@@ -227,6 +237,8 @@ static const char *btd_error_str_le_conn_from_errno(int errno_code)
+ DBusMessage *btd_error_bredr_conn_from_errno(DBusMessage *msg, int errno_code)
+ {
+ 	switch (-errno_code) {
++	case EBADE:
++		return btd_error_br_connection_key_missing(msg);
+ 	case ENOPROTOOPT:
+ 		return btd_error_profile_unavailable(msg);
+ 	default:
+@@ -237,6 +249,11 @@ DBusMessage *btd_error_bredr_conn_from_errno(DBusMessage *msg, int errno_code)
  
--	if (dev->bonding)
-+	DBG("Calling \"Connect\" for device %s", dev->path);
-+
-+	if (dev->bonding) {
-+		DBG("Bonding in progress");
- 		return btd_error_in_progress(msg);
+ DBusMessage *btd_error_le_conn_from_errno(DBusMessage *msg, int errno_code)
+ {
+-	return btd_error_failed(msg,
++	switch (-errno_code) {
++	case EBADE:
++		return btd_error_le_connection_key_missing(msg);
++	default:
++		return btd_error_failed(msg,
+ 				btd_error_str_le_conn_from_errno(errno_code));
 +	}
+ }
+diff --git a/src/error.h b/src/error.h
+index f4ad81e5daa5..96b7a7122457 100644
+--- a/src/error.h
++++ b/src/error.h
+@@ -41,7 +41,6 @@
+ #define ERR_BREDR_CONN_LMP_PROTO_ERROR		"br-connection-lmp-protocol-"\
+ 						"error"
+ #define ERR_BREDR_CONN_CANCELED			"br-connection-canceled"
+-#define ERR_BREDR_CONN_KEY_MISSING		"br-connection-key-missing"
+ #define ERR_BREDR_CONN_UNKNOWN			"br-connection-unknown"
  
- 	if (dev->bredr_state.connected) {
- 		/*
-@@ -2734,23 +2747,35 @@ static DBusMessage *dev_connect(DBusConnection *conn, DBusMessage *msg,
- 		 */
- 		if (dev->bredr_state.svc_resolved &&
- 			find_service_with_state(dev->services,
--						BTD_SERVICE_STATE_CONNECTED))
-+						BTD_SERVICE_STATE_CONNECTED)) {
- 			bdaddr_type = dev->bdaddr_type;
--		else
-+			DBG("Selecting address type %s, as BR/EDR services are resolved "
-+			    " and connected", bdaddr_type_strs[dev->bdaddr_type]);
-+		} else {
- 			bdaddr_type = BDADDR_BREDR;
--	} else if (dev->le_state.connected && dev->bredr)
-+			DBG("Selecting address type BR/EDR, as services not resolved "
-+			    "or not connected");
-+		}
-+	} else if (dev->le_state.connected && dev->bredr) {
- 		bdaddr_type = BDADDR_BREDR;
--	else
-+		DBG("Selecting address type BR/EDR, as LE already connected");
-+	} else {
- 		bdaddr_type = select_conn_bearer(dev);
-+		DBG("Selecting address type %s", bdaddr_type_strs[dev->bdaddr_type]);
-+	}
+ /* LE connection failure reasons */
+@@ -62,7 +61,6 @@
+ #define ERR_LE_CONN_LL_PROTO_ERROR	"le-connection-link-layer-protocol-"\
+ 					"error"
+ #define ERR_LE_CONN_GATT_BROWSE		"le-connection-gatt-browsing"
+-#define ERR_LE_CONN_KEY_MISSING		"le-connection-key-missing"
+ #define ERR_LE_CONN_UNKNOWN		"le-connection-unknown"
  
- 	if (bdaddr_type != BDADDR_BREDR) {
- 		int err;
- 
--		if (dev->connect)
-+		if (dev->connect) {
-+			DBG("Device already connecting");
- 			return btd_error_in_progress(msg);
-+		}
- 
--		if (dev->le_state.connected)
-+		if (dev->le_state.connected) {
-+			DBG("Device already connected through LE");
- 			return dbus_message_new_method_return(msg);
-+		}
- 
- 		btd_device_set_temporary(dev, false);
- 
+ DBusMessage *btd_error_invalid_args(DBusMessage *msg);
+@@ -84,6 +82,7 @@ DBusMessage *btd_error_agent_not_available(DBusMessage *msg);
+ DBusMessage *btd_error_not_ready(DBusMessage *msg);
+ DBusMessage *btd_error_not_ready_str(DBusMessage *msg, const char *str);
+ DBusMessage *btd_error_profile_unavailable(DBusMessage *msg);
++DBusMessage *btd_error_br_connection_key_missing(DBusMessage *msg);
+ DBusMessage *btd_error_failed(DBusMessage *msg, const char *str);
+ DBusMessage *btd_error_bredr_conn_from_errno(DBusMessage *msg, int errno_code);
+ DBusMessage *btd_error_le_conn_from_errno(DBusMessage *msg, int errno_code);
 -- 
 2.50.0
 
