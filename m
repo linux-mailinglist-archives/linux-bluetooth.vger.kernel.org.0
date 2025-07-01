@@ -1,50 +1,51 @@
-Return-Path: <linux-bluetooth+bounces-13422-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-13428-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E958AEFCC0
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  1 Jul 2025 16:38:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2EB60AEFD7E
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  1 Jul 2025 17:02:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6020D1C00111
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  1 Jul 2025 14:39:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0D2561891BFB
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  1 Jul 2025 15:00:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF7972737F3;
-	Tue,  1 Jul 2025 14:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09B7D27A11A;
+	Tue,  1 Jul 2025 14:55:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="Xf4luIgO"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="G2xXy3Z3"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-21.smtp.github.com (out-21.smtp.github.com [192.30.252.204])
+Received: from out-26.smtp.github.com (out-26.smtp.github.com [192.30.252.209])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D630A199FAB
-	for <linux-bluetooth@vger.kernel.org>; Tue,  1 Jul 2025 14:38:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.204
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15186279DA6
+	for <linux-bluetooth@vger.kernel.org>; Tue,  1 Jul 2025 14:55:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.209
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751380725; cv=none; b=NgExRcEsr31XnN402bX4AhyDlXPawzpZWnu32pQx47sHmf9dBUivv2CpNbILcNp4zStJux6RN6G8Q7+7teY5mHf3eoAqGy4vkEQqjgT+RnUOsEqQeLE3Tv6vyR362qIviiMKJx05wciATHcDFjevlu5rO6eU3LJaJP2lgURdbsI=
+	t=1751381748; cv=none; b=K786cjIitvvndfnIZqcVxhLbbitj6BWEx0wCD4S3nF5t5gzxBYw6+WeZh3Qk0EWtRxThv3nRXe2Qo8uSoJTqEC7Bo0YckPg5ogt0Zj4fmGnnsrodUpLoxCA4eCcPxmbJrRFoSn0+CzYwVH6EcUPB4w2+4pw48F8VD9ZD7O9rKpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751380725; c=relaxed/simple;
-	bh=tol1113W5sDrzDXjD1zm81pIOWLGW704nd+9rvBvUdg=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=msmzVde8W8Gb0xEunty3r0FZvWC0cHclMlC2zWKabcP/4jIoVLfDlvFUhh2QFdt7bkkr9xvpAjt/9y9qc1q2J8BTaJz2AiN4SKqGGn5p+Xhjdy7+horOoarCuggf2bP0Gdjn2FIaabh9VF1pl4O7e/x0SloWgwU+w6vdx6gGWng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=Xf4luIgO; arc=none smtp.client-ip=192.30.252.204
+	s=arc-20240116; t=1751381748; c=relaxed/simple;
+	bh=SMcrI5CJbJsbLoWtqJ2TPW0BbQapqvEGiqp8kEVw/3k=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=PZBGHBFuFtAkWWRD2pS8dshtAs42PQ5kkgEGFCWwYfUikiV7GiYQxdMvAHa6rmcAqZWfnyu8iQ6utH/kjwa4etWQ52otCP/zjs3+Ur4rObJUSs4Q+riUruxC3EWaA7lX+HkR6wogKBgscPKt0Yij2RrqqBo8JvB4ZjdBCoQ9zGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=G2xXy3Z3; arc=none smtp.client-ip=192.30.252.209
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-d9b4b9b.ac4-iad.github.net [10.52.202.53])
-	by smtp.github.com (Postfix) with ESMTPA id F107F7006B2
-	for <linux-bluetooth@vger.kernel.org>; Tue,  1 Jul 2025 07:38:42 -0700 (PDT)
+Received: from github.com (hubbernetes-node-8911680.ash1-iad.github.net [10.56.158.23])
+	by smtp.github.com (Postfix) with ESMTPA id 291B360091F
+	for <linux-bluetooth@vger.kernel.org>; Tue,  1 Jul 2025 07:55:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1751380722;
-	bh=8gh8ETrbhLN4zh0VK4WpOshUSaIefbd9OcGQKLS3i5k=;
+	s=pf2023; t=1751381746;
+	bh=7MZD4bEtci/NLpid/3WYfmsC8zknCw6DV8fvutl4QE8=;
 	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=Xf4luIgO+1XWtCja3garQ24rJXC1Pgh7D7/tZHZREAwat9/QTuD9BE+4kZcn2hW9v
-	 bCd0qEE5NHB/pg3nj+fVkwwxgsiloWOkTD8BkQu7o79ZKKVFf8Wn9tiValiUIw5l4/
-	 qBy84Zy8O6YMrBNKtGbC4ABpOUFdwcawYSDaWYiI=
-Date: Tue, 01 Jul 2025 07:38:42 -0700
+	b=G2xXy3Z3iZK85eKCFrFSYcydpZsrIiPM6A2iPxKxSJ6hcRe1JvbxwEbcddPsw4v70
+	 dPAEW5MuOChGlodQxeu4kqJqt6z+spEr/cbrmf+m/8coBR54Q4v9fgu6hLjYpZKTQg
+	 PX82L9kvp9/WdD70O6KYgKoHg/rjXRpY6M0BdUSI=
+Date: Tue, 01 Jul 2025 07:55:46 -0700
 From: Christian Eggers <noreply@github.com>
 To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/977745/000000-e71481@github.com>
-Subject: [bluez/bluez] 3fce1b: advertising: client_remove: use concrete type
+Message-ID: <bluez/bluez/push/refs/heads/977765/000000-189ecb@github.com>
+Subject: [bluez/bluez] 5810cb: mesh: acceptor: increase interval for
+ unprovisione...
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -57,40 +58,102 @@ Content-Transfer-Encoding: 7bit
 X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
 X-Auto-Response-Suppress: All
 
-  Branch: refs/heads/977745
+  Branch: refs/heads/977765
   Home:   https://github.com/bluez/bluez
-  Commit: 3fce1b5800eb96208deea45b134b406633fd0bd3
-      https://github.com/bluez/bluez/commit/3fce1b5800eb96208deea45b134b406633fd0bd3
+  Commit: 5810cb647382acdd368fe31e568ad36b4318c185
+      https://github.com/bluez/bluez/commit/5810cb647382acdd368fe31e568ad36b4318c185
   Author: Christian Eggers <ceggers@arri.de>
   Date:   2025-07-01 (Tue, 01 Jul 2025)
 
   Changed paths:
-    M src/advertising.c
+    M mesh/prov-acceptor.c
 
   Log Message:
   -----------
-  advertising: client_remove: use concrete type
+  mesh: acceptor: increase interval for unprovisioned device beacon
 
-No need for using a void pointer here.
+I cannot find a specific interval for sending unprovisioned device
+beacons in MshPRT_v1.1, section 3.10.2/5.2.1. The current interval of
+500 ms seems to cause interferience with normal advertising messages,
+maybe this is controller dependent (seen on RTL8761BU).
+
+A beacon interval of 1000 ms should be sufficient for scanning (e.g. by
+a provisioner) while allowing normal advertising messages to be
+transmitted.
 
 
-  Commit: e71481f6178d1901ea2f71d1b1e1884bb795cd65
-      https://github.com/bluez/bluez/commit/e71481f6178d1901ea2f71d1b1e1884bb795cd65
+  Commit: 796b0e6a6588b63354ee3733ffc589982ecfa62a
+      https://github.com/bluez/bluez/commit/796b0e6a6588b63354ee3733ffc589982ecfa62a
   Author: Christian Eggers <ceggers@arri.de>
   Date:   2025-07-01 (Tue, 01 Jul 2025)
 
   Changed paths:
-    M mesh/node.h
+    M Makefile.mesh
+    A mesh/gatt-service.c
+    A mesh/gatt-service.h
+    A mesh/pb-gatt.c
+    A mesh/pb-gatt.h
+    M mesh/prov-acceptor.c
 
   Log Message:
   -----------
-  mesh: node: remove dead function declaration
+  mesh: add support for provisioning via GATT
 
-node_attach_io() has been removed in 7cdc215ff5a1 ("mesh: Add
-finalization of a newly created node")
+ToDo: Consider moving dbus_client instance into separate singleton, so
+that no destruction/construction is necessary when switching from GATT
+provisioning service to GATT proxy service (see next commit).
 
 
-Compare: https://github.com/bluez/bluez/compare/3fce1b5800eb%5E...e71481f6178d
+  Commit: fb20d62fda1d971e0e0679866f109c353ab1de93
+      https://github.com/bluez/bluez/commit/fb20d62fda1d971e0e0679866f109c353ab1de93
+  Author: Christian Eggers <ceggers@arri.de>
+  Date:   2025-07-01 (Tue, 01 Jul 2025)
+
+  Changed paths:
+    M Makefile.mesh
+    A mesh/gatt-proxy-svc.c
+    A mesh/gatt-proxy-svc.h
+    M mesh/main.c
+    M mesh/net-keys.c
+    M mesh/net-keys.h
+    M mesh/net.c
+    M mesh/net.h
+    M mesh/prov-acceptor.c
+
+  Log Message:
+  -----------
+  mesh: add GATT proxy service
+
+FIXME: net.c: determine whether data shall be sent via mesh_io or
+gatt_proxy
+
+
+  Commit: 189ecb870d7baecc6b5aa96df9d39948117198e5
+      https://github.com/bluez/bluez/commit/189ecb870d7baecc6b5aa96df9d39948117198e5
+  Author: Christian Eggers <ceggers@arri.de>
+  Date:   2025-07-01 (Tue, 01 Jul 2025)
+
+  Changed paths:
+    M Makefile.mesh
+    M mesh/crypto.c
+    M mesh/crypto.h
+    M mesh/net-keys.c
+    M mesh/net-keys.h
+    M mesh/net.c
+    A mesh/proxy-cfg.c
+    A mesh/proxy-cfg.h
+
+  Log Message:
+  -----------
+  mesh: initial support for proxy configuration messages via GATT
+
+Implement reception and response for Proxy Configuration Messages
+(MshPRT_v1.1, section 6.6).
+
+ToDo: Apply configured filters.
+
+
+Compare: https://github.com/bluez/bluez/compare/5810cb647382%5E...189ecb870d7b
 
 To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
