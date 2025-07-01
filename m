@@ -1,42 +1,45 @@
-Return-Path: <linux-bluetooth+bounces-13407-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-13409-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8651AEF4BA
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  1 Jul 2025 12:16:00 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D792FAEF4BC
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  1 Jul 2025 12:16:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BE8501BC6865
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  1 Jul 2025 10:16:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 765984463DD
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  1 Jul 2025 10:15:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E69027144A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AB4927144E;
 	Tue,  1 Jul 2025 10:15:34 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay16.mail.gandi.net (relay16.mail.gandi.net [217.70.178.236])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A58F2701B6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B15732701D0
 	for <linux-bluetooth@vger.kernel.org>; Tue,  1 Jul 2025 10:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.178.236
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751364933; cv=none; b=mfXRBSsgiAVkNoay/70HkJ/1HpSkVUuVK/xvWOvqAs73uLnTupdbRGWqvqV6qv86ZQewXlNAc/8bR6PqFL9vo3yKUw53DWseOUCk6puVBtV8MHL0uexeKrhF10YAdA5nN4+HvJDitUlWnxiEcEQ7p0lmgrj/ndFYlzmfashitbY=
+	t=1751364934; cv=none; b=sRn45xcnHE3zyW1AEoabal1HCN55Uj+Vm7Bt2izaIpMjD9pwz/HIdWrQE2HH+M27qxfzRM4ixdZQXBmd1pz3J0pI6dWw+85EIAPC7A3MQxHWvlGPatscvSIy7RKwkF8fNxLwat+J4bt634VInb59UbCbIyXl7S4TewlTHpBpXvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751364933; c=relaxed/simple;
-	bh=VuOOktw2UHQTrbLxaU9oqlgAgNuujr2+2liXJULxt9o=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fs+srgLPraQpOqC7U945VmLenyxTQ0DvGg9ydQQW7euLpZhSfvttZq5XGH/Zi55+s12BX2HMgF0MNy13IdhSqucZuLPUl59uuSWfqnXdRHjZpGuZiVGbTZe047HDhEmIF0syf+LzOMeCqpQYyJ2I/R0WibHWTep1LFtceShJ4fY=
+	s=arc-20240116; t=1751364934; c=relaxed/simple;
+	bh=AkJOb5kKaoCrIGu8CqwKmWGFA9KMTyRbQ2ael4VGbCY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=qQGumaI3/GrY3ofOOVn3dWDVwN4aVM3OXUkPRhm2qY8Ezf/IGPk/+4gjJXqwZ79tXuQWn8+ESaTw1wQy2Din25nZH4SEMoGIWK6Rro339F+knoXHlk+2gjcekEBhHamttWd+Z6uyK8gKynGJZMwL2XOt1J0iaDPjcOEIO1gTx8I=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.178.236
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 61182438D1;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id A7E4643980;
 	Tue,  1 Jul 2025 10:15:29 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [PATCH BlueZ v4 0/8] Better connect debug and error reporting
-Date: Tue,  1 Jul 2025 12:14:21 +0200
-Message-ID: <20250701101520.459452-1-hadess@hadess.net>
+Subject: [PATCH BlueZ v4 1/8] error: Rename device error helper to match retval
+Date: Tue,  1 Jul 2025 12:14:22 +0200
+Message-ID: <20250701101520.459452-2-hadess@hadess.net>
 X-Mailer: git-send-email 2.50.0
+In-Reply-To: <20250701101520.459452-1-hadess@hadess.net>
+References: <20250701101520.459452-1-hadess@hadess.net>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -46,27 +49,92 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-State: clean
 X-GND-Score: 0
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugedvjecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucenucfjughrpefhvfevufffkffoggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpefhlefhkefhtdethedukeegvdehieeviedvledtueetjefggefhuedtveevlefffeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecukfhppedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemjeduuggrmeefsggumedvtdgrleemudeffeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemjeduuggrmeefsggumedvtdgrleemudeffedphhgvlhhopeholhhimhhpihgtpdhmrghilhhfrhhomhephhgruggvshhssehhrgguvghsshdrnhgvthdpnhgspghrtghpthhtohepvddprhgtphhtthhopehlihhnuhigqdgslhhuvghtohhothhhsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohephhgruggvshhssehhrgguvghsshdrnhgvth
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugedvjecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpeevtefhleevjeffteekleehheeujeelhfdvheethefggefhkefgvdefhfegkeeiteenucfkphepvdgrtddumegvfeegmegvtgejfeemtghfvddtmeejudgurgemfegsugemvddtrgelmedufeefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvfeegmegvtgejfeemtghfvddtmeejudgurgemfegsugemvddtrgelmedufeefpdhhvghlohepohhlihhmphhitgdpmhgrihhlfhhrohhmpehhrgguvghssheshhgruggvshhsrdhnvghtpdhnsggprhgtphhtthhopedvpdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehhrgguvghssheshhgruggvshhsrdhnvght
 
-Completely redone from v3, following discussion on the mailing-list:
-https://patchwork.kernel.org/project/bluetooth/list/?series=964591&archive=both
+Rename the helper to show that it outputs a string, and not an error
+DbusMessage as the other functions do.
+---
+ src/device.c | 10 +++++-----
+ src/error.c  |  4 ++--
+ src/error.h  |  4 ++--
+ 3 files changed, 9 insertions(+), 9 deletions(-)
 
-Bastien Nocera (8):
-  error: Rename device error helper to match retval
-  error: Add helper to return DbusMessage errors from errno
-  device: Use new DbusMessage error helper
-  error: Make errno to string helpers private
-  device: Better error when no BR/EDR profiles can be connected to
-  device: Better "Connect" debug
-  device: Better error when the link key is missing
-  device: Better error when the adapter is not powered
-
- doc/org.bluez.Device.rst |  5 +++
- src/device.c             | 79 +++++++++++++++++++++++++---------------
- src/error.c              | 71 ++++++++++++++++++++++++++++++------
- src/error.h              | 12 +++---
- 4 files changed, 118 insertions(+), 49 deletions(-)
-
+diff --git a/src/device.c b/src/device.c
+index e4d5d79ee18b..709052d301b7 100644
+--- a/src/device.c
++++ b/src/device.c
+@@ -2341,7 +2341,7 @@ done:
+ 
+ 		g_dbus_send_message(dbus_conn,
+ 			btd_error_failed(dev->connect,
+-					btd_error_bredr_conn_from_errno(err)));
++					btd_error_str_bredr_conn_from_errno(err)));
+ 	} else {
+ 		/* Start passive SDP discovery to update known services */
+ 		if (dev->bredr && !dev->svc_refreshed && dev->refresh_discovery)
+@@ -2699,7 +2699,7 @@ static DBusMessage *connect_profiles(struct btd_device *dev, uint8_t bdaddr_type
+ 		if (err == -EALREADY)
+ 			return dbus_message_new_method_return(msg);
+ 		return btd_error_failed(msg,
+-					btd_error_bredr_conn_from_errno(err));
++					btd_error_str_bredr_conn_from_errno(err));
+ 	}
+ 
+ 	dev->connect = dbus_message_ref(msg);
+@@ -3004,8 +3004,8 @@ static void browse_request_complete(struct browse_req *req, uint8_t type,
+ 		}
+ 		reply = btd_error_failed(req->msg,
+ 				bdaddr_type == BDADDR_BREDR ?
+-				btd_error_bredr_conn_from_errno(err) :
+-				btd_error_le_conn_from_errno(err));
++				btd_error_str_bredr_conn_from_errno(err) :
++				btd_error_str_le_conn_from_errno(err));
+ 		goto done;
+ 	}
+ 
+@@ -6283,7 +6283,7 @@ done:
+ 	if (device->connect) {
+ 		if (err < 0)
+ 			reply = btd_error_failed(device->connect,
+-					btd_error_le_conn_from_errno(err));
++					btd_error_str_le_conn_from_errno(err));
+ 		else
+ 			reply = dbus_message_new_method_return(device->connect);
+ 
+diff --git a/src/error.c b/src/error.c
+index f179e6cda0e8..d82c2f2e1520 100644
+--- a/src/error.c
++++ b/src/error.c
+@@ -134,7 +134,7 @@ DBusMessage *btd_error_failed(DBusMessage *msg, const char *str)
+ 					".Failed", "%s", str);
+ }
+ 
+-const char *btd_error_bredr_conn_from_errno(int errno_code)
++const char *btd_error_str_bredr_conn_from_errno(int errno_code)
+ {
+ 	switch (-errno_code) {
+ 	case EALREADY:
+@@ -178,7 +178,7 @@ const char *btd_error_bredr_conn_from_errno(int errno_code)
+ 	}
+ }
+ 
+-const char *btd_error_le_conn_from_errno(int errno_code)
++const char *btd_error_str_le_conn_from_errno(int errno_code)
+ {
+ 	switch (-errno_code) {
+ 	case EINVAL:
+diff --git a/src/error.h b/src/error.h
+index 83206cb48a66..5b49400fbb92 100644
+--- a/src/error.h
++++ b/src/error.h
+@@ -87,5 +87,5 @@ DBusMessage *btd_error_not_ready(DBusMessage *msg);
+ DBusMessage *btd_error_not_ready_str(DBusMessage *msg, const char *str);
+ DBusMessage *btd_error_failed(DBusMessage *msg, const char *str);
+ 
+-const char *btd_error_bredr_conn_from_errno(int errno_code);
+-const char *btd_error_le_conn_from_errno(int errno_code);
++const char *btd_error_str_bredr_conn_from_errno(int errno_code);
++const char *btd_error_str_le_conn_from_errno(int errno_code);
 -- 
 2.50.0
 
