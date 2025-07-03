@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-13510-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-13508-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32742AF6DEF
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jul 2025 10:58:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D9AB7AF6DDB
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jul 2025 10:57:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4A0E54E3EC4
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jul 2025 08:57:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0BB5A1C8076F
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jul 2025 08:57:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 928652D4B6E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6662D2D4B65;
 	Thu,  3 Jul 2025 08:56:54 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay15.mail.gandi.net (relay15.mail.gandi.net [217.70.178.235])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA5A92D46C1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4D12D46BE
 	for <linux-bluetooth@vger.kernel.org>; Thu,  3 Jul 2025 08:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.178.235
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751533014; cv=none; b=LyUonxNxTTiFiPKlNV38tFbdcKldCOuJ7jlfmuW4E8nW43mg0T7PPApFS/ntlHu8fduC8nbX3ZhB3kpLTbdVAZh7u+LH9BxOQ0AQHbqXbX4SNELUgoL7leZZu3hsBIVvtiMXaiYEQismdamvHS4i1dgwwWfBQUDzVfIoQB/hw4Q=
+	t=1751533014; cv=none; b=ZYhKVghuvO+PL/P8zMeHZCDbphcCLpi9z8I/h/TnUYr3xPd+amdM2o8mYb164F5cMwowuNtYQKpsVxmT+vMETU28MgYGyTM5NuC2DdHoBjZY0kefLNFV+3+8LJCWjyHkTd28zHT+v83qgQLMOcfdt6Bm8droDsVlLuxzIiM8uCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1751533014; c=relaxed/simple;
-	bh=tx2cjMROEF6FMUVFAPEqW+aLQsdoN2ylkPp7AZEEqB8=;
+	bh=fGvLV/9OGVY8UigF6qc826Em5FamRhym/phxbn/ld2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cDSiYwPxY83PJtclCApYguKaeuB9QHXP61cL0UJVQhn+Gp1EsP5UJN8CVUky9aK3qpCnQoIn1tWiveJomshjzoiCwEci7jQYIcV99PjW0TIwmCsVGWzKRk21TtnSoomFiyol0gAfZ6QGuO/Xp/8gA8fMMFuHdZFifwKRa3Hs+xo=
+	 MIME-Version; b=D6fuTTq5fjMpACNtqPqC9+G6e1bwUj8kyynJGDyNV1YSTuArpUCSCzN5oCkSA4O0cfX79y6UVsyagj1tbv3cV8zqMPc+4U7HbJyFSBMQtap7Be2Quz6bzMcCcRkzBTTbhgVb5qIcrKxzNS9wpdEeylROzu5ZQ58DicHeSWbqWFQ=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.178.235
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 1EB9543195;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 6A958431A6;
 	Thu,  3 Jul 2025 08:56:44 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [PATCH BlueZ 15/19] src: Fix typos
-Date: Thu,  3 Jul 2025 10:53:23 +0200
-Message-ID: <20250703085630.935452-16-hadess@hadess.net>
+Subject: [PATCH BlueZ 16/19] shared: Fix typos
+Date: Thu,  3 Jul 2025 10:53:24 +0200
+Message-ID: <20250703085630.935452-17-hadess@hadess.net>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703085630.935452-1-hadess@hadess.net>
 References: <20250703085630.935452-1-hadess@hadess.net>
@@ -53,240 +53,179 @@ X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduleekiecutefuodetggdotef
 
 Found using codespell.
 ---
- src/adapter.c     | 24 ++++++++++++------------
- src/adv_monitor.c |  4 ++--
- src/device.c      | 10 +++++-----
- src/main.conf     |  4 ++--
- src/profile.c     |  4 ++--
- 5 files changed, 23 insertions(+), 23 deletions(-)
+ src/shared/att.c         | 2 +-
+ src/shared/bap.c         | 8 ++++----
+ src/shared/crypto.c      | 2 +-
+ src/shared/gatt-client.c | 2 +-
+ src/shared/gatt-db.c     | 4 ++--
+ src/shared/gatt-server.c | 2 +-
+ src/shared/ringbuf.c     | 2 +-
+ src/shared/util.c        | 4 ++--
+ src/shared/vcp.c         | 2 +-
+ 9 files changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/src/adapter.c b/src/adapter.c
-index 70141e1542d7..67489b41f7f9 100644
---- a/src/adapter.c
-+++ b/src/adapter.c
-@@ -238,7 +238,7 @@ struct service_auth {
+diff --git a/src/shared/att.c b/src/shared/att.c
+index 14d346ca7ad3..c29e914c654a 100644
+--- a/src/shared/att.c
++++ b/src/shared/att.c
+@@ -669,7 +669,7 @@ static bool disconnect_cb(struct io *io, void *user_data)
  
- struct btd_adapter_pin_cb_iter {
- 	GSList *it;			/* current callback function */
--	unsigned int attempt;		/* numer of times it() was called */
-+	unsigned int attempt;		/* number of times it() was called */
- 	/* When the iterator reaches the end, it is NULL and attempt is 0 */
- };
+ 	DBG(att, "Channel %p disconnected: %s", chan, strerror(err));
  
-@@ -1655,7 +1655,7 @@ static void stop_passive_scanning(struct btd_adapter *adapter)
- 	DBG("");
+-	/* Dettach channel */
++	/* Detach channel */
+ 	queue_remove(att->chans, chan);
  
- 	/* If there are any normal discovery clients passive scanning
--	 * wont be running */
-+	 * won't be running */
- 	if (adapter->discovery_list)
- 		return;
+ 	if (chan->pending_req) {
+diff --git a/src/shared/bap.c b/src/shared/bap.c
+index 40e1c974b111..33d614aca45d 100644
+--- a/src/shared/bap.c
++++ b/src/shared/bap.c
+@@ -1033,7 +1033,7 @@ static void stream_notify_config(struct bt_bap_stream *stream)
+ 	status->id = ep->id;
+ 	status->state = ep->state;
  
-@@ -2267,7 +2267,7 @@ static int merge_discovery_filters(struct btd_adapter *adapter, int *rssi,
- 		*rssi = HCI_RSSI_INVALID;
+-	/* Initialize preffered settings if not set */
++	/* Initialize preferred settings if not set */
+ 	if (!lpac->qos.phy)
+ 		lpac->qos.phy = 0x02;
  
- 	/*
--	 * Empty_uuid variable determines wether there was any filter with no
-+	 * Empty_uuid variable determines whether there was any filter with no
- 	 * uuids. In this case someone might be looking for all devices in
- 	 * certain proximity, and we need to have empty uuids in kernel filter.
- 	 */
-@@ -2282,7 +2282,7 @@ static int merge_discovery_filters(struct btd_adapter *adapter, int *rssi,
+@@ -1055,7 +1055,7 @@ static void stream_notify_config(struct bt_bap_stream *stream)
+ 	if (!lpac->qos.ppd_max)
+ 		lpac->qos.ppd_max = lpac->qos.pd_max;
  
- 		/*
- 		 * It there is both regular and filtered scan running, then
--		 * clear whole fitler to report all devices.
-+		 * clear whole filter to report all devices.
+-	/* TODO:Add support for setting preffered settings on bt_bap_pac */
++	/* TODO:Add support for setting preferred settings on bt_bap_pac */
+ 	config = (void *)status->params;
+ 	config->framing = lpac->qos.framing;
+ 	config->phy = lpac->qos.phy;
+@@ -3681,7 +3681,7 @@ static void ascs_ase_cp_write(struct gatt_db_attribute *attrib,
+ 		DBG(bap, "%s", handler->str);
+ 
+ 		/* Set in_cp_write so ASE notification are not sent ahead of
+-		 * CP notifcation.
++		 * CP notification.
  		 */
- 		*transport = adapter_scan_type;
- 		*rssi = HCI_RSSI_INVALID;
-@@ -2314,7 +2314,7 @@ static void populate_mgmt_filter_uuids(uint8_t (*mgmt_uuids)[16], GSList *uuids)
- /*
-  * This method merges all adapter filters into one that will be send to kernel.
-  * cp_ptr is set to null when regular non-filtered discovery is needed,
-- * otherwise it's pointing to filter. Returns 0 on succes, -1 on error
-+ * otherwise it's pointing to filter. Returns 0 on success, -1 on error
-  */
- static int discovery_filter_to_mgmt_cp(struct btd_adapter *adapter,
- 		       struct mgmt_cp_start_service_discovery **cp_ptr)
-@@ -4325,7 +4325,7 @@ static void set_privacy_complete(uint8_t status, uint16_t length,
+ 		bap->in_cp_write = true;
+ 
+@@ -4884,7 +4884,7 @@ static void read_pac_supported_context(bool success, uint8_t att_ecode,
+ 	const struct bt_pacs_context *ctx = (void *)value;
+ 
+ 	if (!success) {
+-		DBG(bap, "Unable to read PAC Supproted Context: error 0x%02x",
++		DBG(bap, "Unable to read PAC Supported Context: error 0x%02x",
+ 								att_ecode);
  		return;
  	}
- 
--	DBG("Successfuly set privacy for index %u", adapter->dev_id);
-+	DBG("Successfully set privacy for index %u", adapter->dev_id);
- }
- 
- static int set_privacy(struct btd_adapter *adapter, uint8_t privacy)
-@@ -5706,7 +5706,7 @@ void adapter_auto_connect_add(struct btd_adapter *adapter,
- 	bdaddr_type = btd_device_get_bdaddr_type(device);
- 
- 	if (bdaddr_type == BDADDR_BREDR) {
--		DBG("auto-connection feature is not avaiable for BR/EDR");
-+		DBG("auto-connection feature is not available for BR/EDR");
- 		return;
- 	}
- 
-@@ -5838,7 +5838,7 @@ void adapter_auto_connect_remove(struct btd_adapter *adapter,
- 	bdaddr_type = btd_device_get_bdaddr_type(device);
- 
- 	if (bdaddr_type == BDADDR_BREDR) {
--		DBG("auto-connection feature is not avaiable for BR/EDR");
-+		DBG("auto-connection feature is not available for BR/EDR");
- 		return;
- 	}
- 
-@@ -8457,7 +8457,7 @@ static void bonding_attempt_complete(struct btd_adapter *adapter,
- 		device = btd_adapter_find_device(adapter, bdaddr, addr_type);
- 
- 	if (status == MGMT_STATUS_AUTH_FAILED && adapter->pincode_requested) {
--		/* On faliure, issue a bonding_retry if possible. */
-+		/* On failure, issue a bonding_retry if possible. */
- 		if (device != NULL) {
- 			if (device_bonding_attempt_retry(device) == 0)
- 				return;
-@@ -10322,7 +10322,7 @@ static void read_info_complete(uint8_t status, uint16_t length,
- 	case BT_MODE_BREDR:
- 		if (!(adapter->supported_settings & MGMT_SETTING_BREDR)) {
- 			btd_error(adapter->dev_id,
--				"Ignoring adapter withouth BR/EDR support");
-+				"Ignoring adapter without BR/EDR support");
- 			goto failed;
- 		}
- 
-@@ -10336,7 +10336,7 @@ static void read_info_complete(uint8_t status, uint16_t length,
- 	case BT_MODE_LE:
- 		if (!(adapter->supported_settings & MGMT_SETTING_LE)) {
- 			btd_error(adapter->dev_id,
--				"Ignoring adapter withouth LE support");
-+				"Ignoring adapter without LE support");
- 			goto failed;
- 		}
- 
-@@ -10514,7 +10514,7 @@ failed:
- 	 * Remove adapter from list in case of a failure.
- 	 *
- 	 * Leaving an adapter structure around for a controller that can
--	 * not be initilized makes no sense at the moment.
-+	 * not be initialized makes no sense at the moment.
- 	 *
- 	 * This is a simplification to avoid constant checks if the
- 	 * adapter is ready to do anything.
-diff --git a/src/adv_monitor.c b/src/adv_monitor.c
-index cb38916fc28b..4323063e2787 100644
---- a/src/adv_monitor.c
-+++ b/src/adv_monitor.c
-@@ -102,7 +102,7 @@ struct rssi_parameters {
- 	int8_t low_rssi;		/* Low RSSI threshold */
- 	uint16_t low_rssi_timeout;	/* Low RSSI threshold timeout */
- 	uint16_t sampling_period;	/* Merge packets in the same timeslot.
--					 * Currenly unimplemented in user space.
-+					 * Currently unimplemented in user space.
- 					 * Used only to pass data to kernel.
- 					 */
- };
-@@ -406,7 +406,7 @@ static void merged_pattern_replace(
- 	/* If the RSSI are the same then nothing needs to be done, except on
- 	 * the case where pattern is being removed. In that case, we need to
- 	 * re-add the pattern.
--	 * high_rssi_timeout is purposedly left out in the comparison since
-+	 * high_rssi_timeout is purposely left out in the comparison since
- 	 * the value is ignored upon submission to kernel.
+diff --git a/src/shared/crypto.c b/src/shared/crypto.c
+index 5449621b55ea..43d7f7c5c4b7 100644
+--- a/src/shared/crypto.c
++++ b/src/shared/crypto.c
+@@ -496,7 +496,7 @@ static inline void u128_xor(const uint8_t p[16], const uint8_t q[16],
+  *
+  * ra is concatenated with ia and padding to generate p2 which is XORed
+  * with the result of the security function e using p1 as the input
+- * paremter plaintextData and is then used as the 128-bit input
++ * parameter plaintextData and is then used as the 128-bit input
+  * parameter plaintextData to security function e:
+  *
+  *   p2 = padding || ia || ra
+diff --git a/src/shared/gatt-client.c b/src/shared/gatt-client.c
+index ec23415086c3..26b4d1c7cb1c 100644
+--- a/src/shared/gatt-client.c
++++ b/src/shared/gatt-client.c
+@@ -79,7 +79,7 @@ struct bt_gatt_client {
+ 	/*
+ 	 * Queue of long write requests. An error during "prepare write"
+ 	 * requests can result in a cancel through "execute write". To prevent
+-	 * cancelation of prepared writes to the wrong attribute and multiple
++	 * cancellation of prepared writes to the wrong attribute and multiple
+ 	 * requests to the same attribute that may result in a corrupted final
+ 	 * value, we avoid interleaving prepared writes.
  	 */
- 	if (merged_pattern->rssi.high_rssi == rssi->high_rssi &&
-diff --git a/src/device.c b/src/device.c
-index 2892b75e7e25..a50d9ad5cee5 100644
---- a/src/device.c
-+++ b/src/device.c
-@@ -3240,7 +3240,7 @@ static DBusMessage *pair_device(DBusConnection *conn, DBusMessage *msg,
- 		return btd_error_in_progress(msg);
+diff --git a/src/shared/gatt-db.c b/src/shared/gatt-db.c
+index 8951079beef1..332af2d8aba4 100644
+--- a/src/shared/gatt-db.c
++++ b/src/shared/gatt-db.c
+@@ -493,7 +493,7 @@ static void notify_service_changed(struct gatt_db *db,
  
- 	/* Only use this selection algorithms when device is combo
--	 * chip. Ohterwise, it will use the wrong bearer to establish
-+	 * chip. Otherwise, it will use the wrong bearer to establish
- 	 * a connection if the device is already paired, which will
- 	 * stall the pairing procedure. For example, for a BLE only
- 	 * device, if the device is already paired, and upper layer
-@@ -4692,7 +4692,7 @@ static void gatt_service_removed(struct gatt_db_attribute *attr,
- 	if (l && !g_slist_find_custom(device->primaries, prim->uuid,
- 							prim_uuid_cmp)) {
- 		/*
--		 * If this happend since the db was cleared for a non-bonded
-+		 * If this happened since the db was cleared for a non-bonded
- 		 * device, then don't remove the btd_service just yet. We do
- 		 * this so that we can avoid re-probing the profile if the same
- 		 * GATT service is found on the device on re-connection.
-@@ -5061,7 +5061,7 @@ void btd_device_set_connectable(struct btd_device *device, bool connectable)
-  * case it has first been discovered over BR/EDR and has a private
-  * address when discovered over LE for the first time. In such a case we
-  * need to inherit critical values from the duplicate so that we don't
-- * ovewrite them when writing to storage. The next time bluetoothd
-+ * overwrite them when writing to storage. The next time bluetoothd
-  * starts the device will show up as a single instance.
-  */
- void device_merge_duplicate(struct btd_device *dev, struct btd_device *dup)
-@@ -6972,7 +6972,7 @@ void device_bonding_complete(struct btd_device *device, uint8_t bdaddr_type,
- 	 * request
- 	 */
- 	if (state->svc_resolved && bonding) {
--		/* Attept to store services for this device failed because it
-+		/* Attempt to store services for this device failed because it
- 		 * was not paired. Now that we're paired retry. */
- 		store_gatt_db(device);
+ 	queue_foreach(db->notify_list, handle_notify, &data);
  
-@@ -7111,7 +7111,7 @@ static gboolean device_bonding_retry(gpointer data)
- 	DBG("retrying bonding");
- 	bonding->retry_timer = 0;
+-	/* Tigger hash update */
++	/* Trigger hash update */
+ 	if (!db->hash_id && db->crypto)
+ 		db->hash_id = timeout_add(HASH_UPDATE_TIMEOUT, db_hash_update,
+ 								db, NULL);
+@@ -2099,7 +2099,7 @@ bool gatt_db_attribute_set_fixed_length(struct gatt_db_attribute *attrib,
+ 	if (attrib->service->attributes[0] == attrib)
+ 		return false;
  
--	/* Restart the bonding timer to the begining of the pairing. If not
-+	/* Restart the bonding timer to the beginning of the pairing. If not
- 	 * pincode request/reply occurs during this retry,
- 	 * device_bonding_last_duration() will return a consistent value from
- 	 * this point. */
-diff --git a/src/main.conf b/src/main.conf
-index ada9b9b5ebf1..86759d53c1f2 100644
---- a/src/main.conf
-+++ b/src/main.conf
-@@ -207,7 +207,7 @@
- #ScanWindowSuspend=
+-	/* If attribute is a characteristic declaration ajust to its value */
++	/* If attribute is a characteristic declaration adjust to its value */
+ 	if (!bt_uuid_cmp(&characteristic_uuid, &attrib->uuid)) {
+ 		int i;
  
- # LE scanning parameters used for active scanning supporting discovery
--# proceedure
-+# procedure
- #ScanIntervalDiscovery=
- #ScanWindowDiscovery=
+diff --git a/src/shared/gatt-server.c b/src/shared/gatt-server.c
+index b30ec8c6acc9..f8ed9a505bf0 100644
+--- a/src/shared/gatt-server.c
++++ b/src/shared/gatt-server.c
+@@ -887,7 +887,7 @@ static uint8_t get_read_rsp_opcode(uint8_t opcode)
+ 		 * Should never happen
+ 		 *
+ 		 * TODO: It would be nice to have a debug-mode assert macro
+-		 * for development builds. This way bugs could be easily catched
++		 * for development builds. This way bugs could be easily caught
+ 		 * during development and there would be self documenting code
+ 		 * that wouldn't be crash release builds.
+ 		 */
+diff --git a/src/shared/ringbuf.c b/src/shared/ringbuf.c
+index 1b7adbb4f513..957d355f9b36 100644
+--- a/src/shared/ringbuf.c
++++ b/src/shared/ringbuf.c
+@@ -36,7 +36,7 @@ struct ringbuf {
  
-@@ -220,7 +220,7 @@
- #ScanIntervalConnect=
- #ScanWindowConnect=
+ #define RINGBUF_RESET 0
  
--# LE default connection parameters.  These values are superceeded by any
-+# LE default connection parameters.  These values are superseded by any
- # specific values provided via the Load Connection Parameters interface
- #MinConnectionInterval=
- #MaxConnectionInterval=
-diff --git a/src/profile.c b/src/profile.c
-index ad204362816d..8a25a97cc62b 100644
---- a/src/profile.c
-+++ b/src/profile.c
-@@ -1262,7 +1262,7 @@ static void ext_confirm(GIOChannel *io, gpointer user_data)
- 	DBG("incoming connect from %s", addr);
+-/* Find last (most siginificant) set bit */
++/* Find last (most significant) set bit */
+ static inline unsigned int fls(unsigned int x)
+ {
+ 	return x ? sizeof(x) * 8 - __builtin_clz(x) : 0;
+diff --git a/src/shared/util.c b/src/shared/util.c
+index 5d3a14d96347..6fa451d329bd 100644
+--- a/src/shared/util.c
++++ b/src/shared/util.c
+@@ -741,7 +741,7 @@ static const struct {
+ 	{ 0x111d, "Imaging Referenced Objects"			},
+ 	{ 0x111e, "Handsfree"					},
+ 	{ 0x111f, "Handsfree Audio Gateway"			},
+-	{ 0x1120, "Direct Printing Refrence Objects Service"	},
++	{ 0x1120, "Direct Printing Reference Objects Service"	},
+ 	{ 0x1121, "Reflected UI"				},
+ 	{ 0x1122, "Basic Printing"				},
+ 	{ 0x1123, "Printing Status"				},
+@@ -855,7 +855,7 @@ static const struct {
+ 	{ 0x2902, "Client Characteristic Configuration"		},
+ 	{ 0x2903, "Server Characteristic Configuration"		},
+ 	{ 0x2904, "Characteristic Format"			},
+-	{ 0x2905, "Characteristic Aggregate Formate"		},
++	{ 0x2905, "Characteristic Aggregate Format"		},
+ 	{ 0x2906, "Valid Range"					},
+ 	{ 0x2907, "External Report Reference"			},
+ 	{ 0x2908, "Report Reference"				},
+diff --git a/src/shared/vcp.c b/src/shared/vcp.c
+index c96ad4376131..e614ff61f550 100644
+--- a/src/shared/vcp.c
++++ b/src/shared/vcp.c
+@@ -37,7 +37,7 @@
+ #define VOCS_VOL_OFFSET_UPPER_LIMIT	 255
+ #define VOCS_VOL_OFFSET_LOWER_LIMIT	-255
  
- 	if (!btd_adapter_is_uuid_allowed(adapter_find(&src), uuid)) {
--		info("UUID %s is not allowed. Igoring the connection", uuid);
-+		info("UUID %s is not allowed. Ignoring the connection", uuid);
- 		return;
- 	}
- 
-@@ -1304,7 +1304,7 @@ static void ext_direct_connect(GIOChannel *io, GError *err, gpointer user_data)
- 	}
- 
- 	if (!btd_adapter_is_uuid_allowed(adapter_find(&src), uuid)) {
--		info("UUID %s is not allowed. Igoring the connection", uuid);
-+		info("UUID %s is not allowed. Ignoring the connection", uuid);
- 		return;
- 	}
- 
+-/* Apllication Error Code */
++/* Application Error Code */
+ #define BT_ATT_ERROR_INVALID_CHANGE_COUNTER	0x80
+ #define BT_ATT_ERROR_OPCODE_NOT_SUPPORTED	0x81
+ #define BT_ATT_ERROR_VALUE_OUT_OF_RANGE		0x82
 -- 
 2.50.0
 
