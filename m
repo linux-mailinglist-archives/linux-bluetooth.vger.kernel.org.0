@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-13507-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-13510-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id DBE19AF6DEB
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jul 2025 10:58:06 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32742AF6DEF
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jul 2025 10:58:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E937C3A1871
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jul 2025 08:57:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4A0E54E3EC4
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jul 2025 08:57:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50A722D4B5E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 928652D4B6E;
 	Thu,  3 Jul 2025 08:56:54 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay15.mail.gandi.net (relay15.mail.gandi.net [217.70.178.235])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFED62D3757
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA5A92D46C1
 	for <linux-bluetooth@vger.kernel.org>; Thu,  3 Jul 2025 08:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.178.235
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751533013; cv=none; b=PB4+3ClQRG6pwuKAFKJxXk4INfG4Ms/v6j/mMfje4cQu0Q0pznkbZpd9KiBCZThzp8W5/0+sIl/RDJvBED+aaze6Y6bPomiL1HgCNRkxQYaaTNh7pvfNaB+70/F7XTemD9aJvGI56hkqlBUYLv2cOKpnVINzQP5mjuM7USxnuQ0=
+	t=1751533014; cv=none; b=LyUonxNxTTiFiPKlNV38tFbdcKldCOuJ7jlfmuW4E8nW43mg0T7PPApFS/ntlHu8fduC8nbX3ZhB3kpLTbdVAZh7u+LH9BxOQ0AQHbqXbX4SNELUgoL7leZZu3hsBIVvtiMXaiYEQismdamvHS4i1dgwwWfBQUDzVfIoQB/hw4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751533013; c=relaxed/simple;
-	bh=U90gis2UnA/s8f8VN5i7TXG/a3cNPlfqY6UmmJnmbYQ=;
+	s=arc-20240116; t=1751533014; c=relaxed/simple;
+	bh=tx2cjMROEF6FMUVFAPEqW+aLQsdoN2ylkPp7AZEEqB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HqTZdF/SHXOAoIVN1mOCLybW3NpsPW3/boX5J3nSGHjf0XhW9zEKysPaGZMY0jb10YtN9Ylvs2gP0gPSGwM7UWR7mJJ1hMoiv/1gQ7VLNLvM5ipJNowBHO+iyfZ5UA5gbJrxeVju/+oeQvMtwwbLhDsN3nzYIpQVL9G/maFn0gA=
+	 MIME-Version; b=cDSiYwPxY83PJtclCApYguKaeuB9QHXP61cL0UJVQhn+Gp1EsP5UJN8CVUky9aK3qpCnQoIn1tWiveJomshjzoiCwEci7jQYIcV99PjW0TIwmCsVGWzKRk21TtnSoomFiyol0gAfZ6QGuO/Xp/8gA8fMMFuHdZFifwKRa3Hs+xo=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.178.235
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id C701243194;
-	Thu,  3 Jul 2025 08:56:43 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 1EB9543195;
+	Thu,  3 Jul 2025 08:56:44 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [PATCH BlueZ 14/19] profiles: Fix typos
-Date: Thu,  3 Jul 2025 10:53:22 +0200
-Message-ID: <20250703085630.935452-15-hadess@hadess.net>
+Subject: [PATCH BlueZ 15/19] src: Fix typos
+Date: Thu,  3 Jul 2025 10:53:23 +0200
+Message-ID: <20250703085630.935452-16-hadess@hadess.net>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703085630.935452-1-hadess@hadess.net>
 References: <20250703085630.935452-1-hadess@hadess.net>
@@ -53,255 +53,240 @@ X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduleekiecutefuodetggdotef
 
 Found using codespell.
 ---
- profiles/audio/a2dp.c      |  2 +-
- profiles/audio/avrcp.c     |  4 ++--
- profiles/audio/bap.c       |  2 +-
- profiles/audio/bass.c      |  2 +-
- profiles/audio/micp.c      |  6 +++---
- profiles/battery/battery.c |  2 +-
- profiles/gap/gas.c         |  2 +-
- profiles/health/mcap.c     | 18 +++++++++---------
- profiles/input/hog-lib.c   |  2 +-
- profiles/midi/libmidi.c    |  2 +-
- profiles/midi/midi.c       |  2 +-
- 11 files changed, 22 insertions(+), 22 deletions(-)
+ src/adapter.c     | 24 ++++++++++++------------
+ src/adv_monitor.c |  4 ++--
+ src/device.c      | 10 +++++-----
+ src/main.conf     |  4 ++--
+ src/profile.c     |  4 ++--
+ 5 files changed, 23 insertions(+), 23 deletions(-)
 
-diff --git a/profiles/audio/a2dp.c b/profiles/audio/a2dp.c
-index 7c0f9c54a9e8..fe58b8fb351d 100644
---- a/profiles/audio/a2dp.c
-+++ b/profiles/audio/a2dp.c
-@@ -334,7 +334,7 @@ static int error_to_errno(struct avdtp_error *err)
- 		return -perr;
- 	default:
+diff --git a/src/adapter.c b/src/adapter.c
+index 70141e1542d7..67489b41f7f9 100644
+--- a/src/adapter.c
++++ b/src/adapter.c
+@@ -238,7 +238,7 @@ struct service_auth {
+ 
+ struct btd_adapter_pin_cb_iter {
+ 	GSList *it;			/* current callback function */
+-	unsigned int attempt;		/* numer of times it() was called */
++	unsigned int attempt;		/* number of times it() was called */
+ 	/* When the iterator reaches the end, it is NULL and attempt is 0 */
+ };
+ 
+@@ -1655,7 +1655,7 @@ static void stop_passive_scanning(struct btd_adapter *adapter)
+ 	DBG("");
+ 
+ 	/* If there are any normal discovery clients passive scanning
+-	 * wont be running */
++	 * won't be running */
+ 	if (adapter->discovery_list)
+ 		return;
+ 
+@@ -2267,7 +2267,7 @@ static int merge_discovery_filters(struct btd_adapter *adapter, int *rssi,
+ 		*rssi = HCI_RSSI_INVALID;
+ 
+ 	/*
+-	 * Empty_uuid variable determines wether there was any filter with no
++	 * Empty_uuid variable determines whether there was any filter with no
+ 	 * uuids. In this case someone might be looking for all devices in
+ 	 * certain proximity, and we need to have empty uuids in kernel filter.
+ 	 */
+@@ -2282,7 +2282,7 @@ static int merge_discovery_filters(struct btd_adapter *adapter, int *rssi,
+ 
  		/*
--		 * An unexpect error has occurred setup may be attempted again.
-+		 * An unexpected error has occurred setup may be attempted again.
+ 		 * It there is both regular and filtered scan running, then
+-		 * clear whole fitler to report all devices.
++		 * clear whole filter to report all devices.
  		 */
- 		return -EAGAIN;
- 	}
-diff --git a/profiles/audio/avrcp.c b/profiles/audio/avrcp.c
-index 831f1dc8bf12..df28bf0b398c 100644
---- a/profiles/audio/avrcp.c
-+++ b/profiles/audio/avrcp.c
-@@ -1324,7 +1324,7 @@ static uint8_t avrcp_handle_get_current_player_value(struct avrcp *session,
- 	len = 0;
- 
- 	/*
--	 * From sec. 5.7 of AVRCP 1.3 spec, we should igore non-existent IDs
-+	 * From sec. 5.7 of AVRCP 1.3 spec, we should ignore non-existent IDs
- 	 * and send a response with the existent ones. Only if all IDs are
- 	 * non-existent we should send an error.
- 	 */
-@@ -1376,7 +1376,7 @@ static uint8_t avrcp_handle_set_player_value(struct avrcp *session,
- 		goto err;
- 
- 	/*
--	 * From sec. 5.7 of AVRCP 1.3 spec, we should igore non-existent IDs
-+	 * From sec. 5.7 of AVRCP 1.3 spec, we should ignore non-existent IDs
- 	 * and set the existent ones. Sec. 5.2.4 is not clear however how to
- 	 * indicate that a certain ID was not accepted. If at least one
- 	 * attribute is valid, we respond with no parameters. Otherwise an
-diff --git a/profiles/audio/bap.c b/profiles/audio/bap.c
-index 66403fcb7997..a1ca26bdc848 100644
---- a/profiles/audio/bap.c
-+++ b/profiles/audio/bap.c
-@@ -2953,7 +2953,7 @@ static uint8_t get_streams_nb_by_state(struct bap_setup *setup)
- 				entry; entry = entry->next) {
- 		ent_setup = entry->data;
- 
--		/* Skip the curent stream form testing */
-+		/* Skip the current stream form testing */
- 		if (ent_setup == setup) {
- 			stream_cnt++;
- 			continue;
-diff --git a/profiles/audio/bass.c b/profiles/audio/bass.c
-index 2cda00b690ca..c853fbc4ae89 100644
---- a/profiles/audio/bass.c
-+++ b/profiles/audio/bass.c
-@@ -546,7 +546,7 @@ static void bis_handler(uint8_t sid, uint8_t bis, uint8_t sgrp,
- 
- 	queue_push_tail(setup->dg->setups, setup);
- 
--	/* Only handle streams required by the Brodcast Assistant. */
-+	/* Only handle streams required by the Broadcast Assistant. */
- 	if (!bt_bass_check_bis(dg->src, bis))
- 		return;
- 
-diff --git a/profiles/audio/micp.c b/profiles/audio/micp.c
-index 3f0845dcb328..4f0bde1438ce 100644
---- a/profiles/audio/micp.c
-+++ b/profiles/audio/micp.c
-@@ -87,7 +87,7 @@ static void micp_data_add(struct micp_data *data)
- 	DBG("data %p", data);
- 
- 	if (queue_find(sessions, NULL, data)) {
--		error("data %p allready added", data);
-+		error("data %p already added", data);
+ 		*transport = adapter_scan_type;
+ 		*rssi = HCI_RSSI_INVALID;
+@@ -2314,7 +2314,7 @@ static void populate_mgmt_filter_uuids(uint8_t (*mgmt_uuids)[16], GSList *uuids)
+ /*
+  * This method merges all adapter filters into one that will be send to kernel.
+  * cp_ptr is set to null when regular non-filtered discovery is needed,
+- * otherwise it's pointing to filter. Returns 0 on succes, -1 on error
++ * otherwise it's pointing to filter. Returns 0 on success, -1 on error
+  */
+ static int discovery_filter_to_mgmt_cp(struct btd_adapter *adapter,
+ 		       struct mgmt_cp_start_service_discovery **cp_ptr)
+@@ -4325,7 +4325,7 @@ static void set_privacy_complete(uint8_t status, uint16_t length,
  		return;
  	}
  
-@@ -145,7 +145,7 @@ static void micp_detached(struct bt_micp *micp, void *user_data)
+-	DBG("Successfuly set privacy for index %u", adapter->dev_id);
++	DBG("Successfully set privacy for index %u", adapter->dev_id);
+ }
  
- 	data = queue_find(sessions, match_data, micp);
- 	if (!data) {
--		error("unable to find sessio");
-+		error("unable to find session");
+ static int set_privacy(struct btd_adapter *adapter, uint8_t privacy)
+@@ -5706,7 +5706,7 @@ void adapter_auto_connect_add(struct btd_adapter *adapter,
+ 	bdaddr_type = btd_device_get_bdaddr_type(device);
+ 
+ 	if (bdaddr_type == BDADDR_BREDR) {
+-		DBG("auto-connection feature is not avaiable for BR/EDR");
++		DBG("auto-connection feature is not available for BR/EDR");
  		return;
  	}
  
-@@ -197,7 +197,7 @@ static int micp_probe(struct btd_service *service)
- 	ba2str(device_get_address(device), addr);
- 	DBG("%s", addr);
+@@ -5838,7 +5838,7 @@ void adapter_auto_connect_remove(struct btd_adapter *adapter,
+ 	bdaddr_type = btd_device_get_bdaddr_type(device);
  
--	/*Ignore, if we probed for this device allready */
-+	/*Ignore, if we probed for this device already */
- 	if (data) {
- 		error("Profile probed twice for this device");
- 		return -EINVAL;
-diff --git a/profiles/battery/battery.c b/profiles/battery/battery.c
-index 5318d40d12b4..5be78ab14c7b 100644
---- a/profiles/battery/battery.c
-+++ b/profiles/battery/battery.c
-@@ -151,7 +151,7 @@ static void read_initial_battery_level_cb(bool success,
- 	struct batt *batt = user_data;
- 
- 	if (!success) {
--		DBG("Reading battery level failed with ATT errror: %u",
-+		DBG("Reading battery level failed with ATT error: %u",
- 								att_ecode);
+ 	if (bdaddr_type == BDADDR_BREDR) {
+-		DBG("auto-connection feature is not avaiable for BR/EDR");
++		DBG("auto-connection feature is not available for BR/EDR");
  		return;
  	}
-diff --git a/profiles/gap/gas.c b/profiles/gap/gas.c
-index 08aaf19cb332..a4831d38f43b 100644
---- a/profiles/gap/gas.c
-+++ b/profiles/gap/gas.c
-@@ -99,7 +99,7 @@ static void read_device_name_cb(bool success, uint8_t att_ecode,
- 	char *name;
  
- 	if (!success) {
--		DBG("Reading device name failed with ATT errror: %u",
-+		DBG("Reading device name failed with ATT error: %u",
- 								att_ecode);
- 		return;
- 	}
-diff --git a/profiles/health/mcap.c b/profiles/health/mcap.c
-index 2e4214a6984f..74fffa71a2d1 100644
---- a/profiles/health/mcap.c
-+++ b/profiles/health/mcap.c
-@@ -2416,7 +2416,7 @@ static gboolean read_btclock(struct mcap_mcl *mcl, uint32_t *btclock,
- 	/*
- 	 * FIXME: btd_adapter_read_clock(...) always return FALSE, current
- 	 * code doesn't support CSP (Clock Synchronization Protocol). To avoid
--	 * build dependancy on struct 'btd_adapter', removing this code.
-+	 * build dependency on struct 'btd_adapter', removing this code.
- 	 */
+@@ -8457,7 +8457,7 @@ static void bonding_attempt_complete(struct btd_adapter *adapter,
+ 		device = btd_adapter_find_device(adapter, bdaddr, addr_type);
  
- 	return FALSE;
-@@ -2506,7 +2506,7 @@ static gboolean initialize_caps(struct mcap_mcl *mcl)
- 
- 	_caps.ts_acc = 20; /* ppm, estimated */
- 
--	/* A little exercise before measuing latency */
-+	/* A little exercise before measuring latency */
- 	clock_gettime(CLK, &t1);
- 	read_btclock_retry(mcl, &btclock, &btaccuracy);
- 
-@@ -2878,7 +2878,7 @@ static void proc_sync_set_req(struct mcap_mcl *mcl, uint8_t *cmd, uint32_t len)
- 			return;
+ 	if (status == MGMT_STATUS_AUTH_FAILED && adapter->pincode_requested) {
+-		/* On faliure, issue a bonding_retry if possible. */
++		/* On failure, issue a bonding_retry if possible. */
+ 		if (device != NULL) {
+ 			if (device_bonding_attempt_retry(device) == 0)
+ 				return;
+@@ -10322,7 +10322,7 @@ static void read_info_complete(uint8_t status, uint16_t length,
+ 	case BT_MODE_BREDR:
+ 		if (!(adapter->supported_settings & MGMT_SETTING_BREDR)) {
+ 			btd_error(adapter->dev_id,
+-				"Ignoring adapter withouth BR/EDR support");
++				"Ignoring adapter without BR/EDR support");
+ 			goto failed;
  		}
  
--		/* Convert to miliseconds */
-+		/* Convert to milliseconds */
- 		phase2_delay = bt2ms(phase2_delay);
+@@ -10336,7 +10336,7 @@ static void read_info_complete(uint8_t status, uint16_t length,
+ 	case BT_MODE_LE:
+ 		if (!(adapter->supported_settings & MGMT_SETTING_LE)) {
+ 			btd_error(adapter->dev_id,
+-				"Ignoring adapter withouth LE support");
++				"Ignoring adapter without LE support");
+ 			goto failed;
+ 		}
  
- 		if (phase2_delay > 61*1000) {
-@@ -2961,12 +2961,12 @@ static void proc_sync_cap_rsp(struct mcap_mcl *mcl, uint8_t *cmd, uint32_t len)
- 	gpointer user_data;
+@@ -10514,7 +10514,7 @@ failed:
+ 	 * Remove adapter from list in case of a failure.
+ 	 *
+ 	 * Leaving an adapter structure around for a controller that can
+-	 * not be initilized makes no sense at the moment.
++	 * not be initialized makes no sense at the moment.
+ 	 *
+ 	 * This is a simplification to avoid constant checks if the
+ 	 * adapter is ready to do anything.
+diff --git a/src/adv_monitor.c b/src/adv_monitor.c
+index cb38916fc28b..4323063e2787 100644
+--- a/src/adv_monitor.c
++++ b/src/adv_monitor.c
+@@ -102,7 +102,7 @@ struct rssi_parameters {
+ 	int8_t low_rssi;		/* Low RSSI threshold */
+ 	uint16_t low_rssi_timeout;	/* Low RSSI threshold timeout */
+ 	uint16_t sampling_period;	/* Merge packets in the same timeslot.
+-					 * Currenly unimplemented in user space.
++					 * Currently unimplemented in user space.
+ 					 * Used only to pass data to kernel.
+ 					 */
+ };
+@@ -406,7 +406,7 @@ static void merged_pattern_replace(
+ 	/* If the RSSI are the same then nothing needs to be done, except on
+ 	 * the case where pattern is being removed. In that case, we need to
+ 	 * re-add the pattern.
+-	 * high_rssi_timeout is purposedly left out in the comparison since
++	 * high_rssi_timeout is purposely left out in the comparison since
+ 	 * the value is ignored upon submission to kernel.
+ 	 */
+ 	if (merged_pattern->rssi.high_rssi == rssi->high_rssi &&
+diff --git a/src/device.c b/src/device.c
+index 2892b75e7e25..a50d9ad5cee5 100644
+--- a/src/device.c
++++ b/src/device.c
+@@ -3240,7 +3240,7 @@ static DBusMessage *pair_device(DBusConnection *conn, DBusMessage *msg,
+ 		return btd_error_in_progress(msg);
  
- 	if (mcl->csp->csp_req != MCAP_MD_SYNC_CAP_REQ) {
--		DBG("CSP: got unexpected cap respose");
-+		DBG("CSP: got unexpected cap response");
+ 	/* Only use this selection algorithms when device is combo
+-	 * chip. Ohterwise, it will use the wrong bearer to establish
++	 * chip. Otherwise, it will use the wrong bearer to establish
+ 	 * a connection if the device is already paired, which will
+ 	 * stall the pairing procedure. For example, for a BLE only
+ 	 * device, if the device is already paired, and upper layer
+@@ -4692,7 +4692,7 @@ static void gatt_service_removed(struct gatt_db_attribute *attr,
+ 	if (l && !g_slist_find_custom(device->primaries, prim->uuid,
+ 							prim_uuid_cmp)) {
+ 		/*
+-		 * If this happend since the db was cleared for a non-bonded
++		 * If this happened since the db was cleared for a non-bonded
+ 		 * device, then don't remove the btd_service just yet. We do
+ 		 * this so that we can avoid re-probing the profile if the same
+ 		 * GATT service is found on the device on re-connection.
+@@ -5061,7 +5061,7 @@ void btd_device_set_connectable(struct btd_device *device, bool connectable)
+  * case it has first been discovered over BR/EDR and has a private
+  * address when discovered over LE for the first time. In such a case we
+  * need to inherit critical values from the duplicate so that we don't
+- * ovewrite them when writing to storage. The next time bluetoothd
++ * overwrite them when writing to storage. The next time bluetoothd
+  * starts the device will show up as a single instance.
+  */
+ void device_merge_duplicate(struct btd_device *dev, struct btd_device *dup)
+@@ -6972,7 +6972,7 @@ void device_bonding_complete(struct btd_device *device, uint8_t bdaddr_type,
+ 	 * request
+ 	 */
+ 	if (state->svc_resolved && bonding) {
+-		/* Attept to store services for this device failed because it
++		/* Attempt to store services for this device failed because it
+ 		 * was not paired. Now that we're paired retry. */
+ 		store_gatt_db(device);
+ 
+@@ -7111,7 +7111,7 @@ static gboolean device_bonding_retry(gpointer data)
+ 	DBG("retrying bonding");
+ 	bonding->retry_timer = 0;
+ 
+-	/* Restart the bonding timer to the begining of the pairing. If not
++	/* Restart the bonding timer to the beginning of the pairing. If not
+ 	 * pincode request/reply occurs during this retry,
+ 	 * device_bonding_last_duration() will return a consistent value from
+ 	 * this point. */
+diff --git a/src/main.conf b/src/main.conf
+index ada9b9b5ebf1..86759d53c1f2 100644
+--- a/src/main.conf
++++ b/src/main.conf
+@@ -207,7 +207,7 @@
+ #ScanWindowSuspend=
+ 
+ # LE scanning parameters used for active scanning supporting discovery
+-# proceedure
++# procedure
+ #ScanIntervalDiscovery=
+ #ScanWindowDiscovery=
+ 
+@@ -220,7 +220,7 @@
+ #ScanIntervalConnect=
+ #ScanWindowConnect=
+ 
+-# LE default connection parameters.  These values are superceeded by any
++# LE default connection parameters.  These values are superseded by any
+ # specific values provided via the Load Connection Parameters interface
+ #MinConnectionInterval=
+ #MaxConnectionInterval=
+diff --git a/src/profile.c b/src/profile.c
+index ad204362816d..8a25a97cc62b 100644
+--- a/src/profile.c
++++ b/src/profile.c
+@@ -1262,7 +1262,7 @@ static void ext_confirm(GIOChannel *io, gpointer user_data)
+ 	DBG("incoming connect from %s", addr);
+ 
+ 	if (!btd_adapter_is_uuid_allowed(adapter_find(&src), uuid)) {
+-		info("UUID %s is not allowed. Igoring the connection", uuid);
++		info("UUID %s is not allowed. Ignoring the connection", uuid);
  		return;
  	}
  
- 	if (!mcl->csp->csp_priv_data) {
--		DBG("CSP: no priv data for cap respose");
-+		DBG("CSP: no priv data for cap response");
+@@ -1304,7 +1304,7 @@ static void ext_direct_connect(GIOChannel *io, GError *err, gpointer user_data)
+ 	}
+ 
+ 	if (!btd_adapter_is_uuid_allowed(adapter_find(&src), uuid)) {
+-		info("UUID %s is not allowed. Igoring the connection", uuid);
++		info("UUID %s is not allowed. Ignoring the connection", uuid);
  		return;
  	}
  
-@@ -2979,7 +2979,7 @@ static void proc_sync_cap_rsp(struct mcap_mcl *mcl, uint8_t *cmd, uint32_t len)
- 	mcl->csp->csp_req = 0;
- 
- 	if (len != sizeof(mcap_md_sync_cap_rsp)) {
--		DBG("CSP: got corrupted cap respose");
-+		DBG("CSP: got corrupted cap response");
- 		return;
- 	}
- 
-@@ -3009,12 +3009,12 @@ static void proc_sync_set_rsp(struct mcap_mcl *mcl, uint8_t *cmd, uint32_t len)
- 	gpointer user_data;
- 
- 	if (mcl->csp->csp_req != MCAP_MD_SYNC_SET_REQ) {
--		DBG("CSP: got unexpected set respose");
-+		DBG("CSP: got unexpected set response");
- 		return;
- 	}
- 
- 	if (!mcl->csp->csp_priv_data) {
--		DBG("CSP: no priv data for set respose");
-+		DBG("CSP: no priv data for set response");
- 		return;
- 	}
- 
-@@ -3027,7 +3027,7 @@ static void proc_sync_set_rsp(struct mcap_mcl *mcl, uint8_t *cmd, uint32_t len)
- 	mcl->csp->csp_req = 0;
- 
- 	if (len != sizeof(mcap_md_sync_set_rsp)) {
--		DBG("CSP: got corrupted set respose");
-+		DBG("CSP: got corrupted set response");
- 		return;
- 	}
- 
-diff --git a/profiles/input/hog-lib.c b/profiles/input/hog-lib.c
-index 22599f71a394..dbf4dad96bc5 100644
---- a/profiles/input/hog-lib.c
-+++ b/profiles/input/hog-lib.c
-@@ -1132,7 +1132,7 @@ static void proto_mode_read_cb(guint8 status, const guint8 *pdu, guint16 plen,
- 	if (value == HOG_PROTO_MODE_BOOT) {
- 		uint8_t nval = HOG_PROTO_MODE_REPORT;
- 
--		DBG("HoG is operating in Boot Procotol Mode");
-+		DBG("HoG is operating in Boot Protocol Mode");
- 
- 		gatt_write_cmd(hog->attrib, hog->proto_mode_handle, &nval,
- 						sizeof(nval), NULL, NULL);
-diff --git a/profiles/midi/libmidi.c b/profiles/midi/libmidi.c
-index 5b77cd3f52f1..6f2914a8c2ef 100644
---- a/profiles/midi/libmidi.c
-+++ b/profiles/midi/libmidi.c
-@@ -423,7 +423,7 @@ size_t midi_read_raw(struct midi_read_parser *parser, const uint8_t *data,
- 		snd_seq_ev_set_sysex(ev, parser->sysex_stream.len,
- 		                     parser->sysex_stream.data);
- 
--		midi_size = 1; /* timestampLow was alredy processed */
-+		midi_size = 1; /* timestampLow was already processed */
- 		goto _finish;
- 
- 	case 0x80 ... 0xEF:
-diff --git a/profiles/midi/midi.c b/profiles/midi/midi.c
-index bab309bca7c3..0976842e80b2 100644
---- a/profiles/midi/midi.c
-+++ b/profiles/midi/midi.c
-@@ -319,7 +319,7 @@ static int midi_accept(struct btd_service *service)
- 
- 	err = snd_seq_client_id(midi->seq_handle);
- 	if (err < 0) {
--		error("Could retreive ALSA client: %s (%d)", snd_strerror(err), err);
-+		error("Could retrieve ALSA client: %s (%d)", snd_strerror(err), err);
- 		goto _err_handle;
- 	}
- 	midi->seq_client_id = err;
 -- 
 2.50.0
 
