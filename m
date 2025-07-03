@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-13500-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-13496-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 634F0AF6DE0
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jul 2025 10:57:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AF898AF6DDC
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jul 2025 10:57:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 904714A3EF5
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jul 2025 08:56:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7DC0E483FB4
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jul 2025 08:56:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5421F2D3A64;
-	Thu,  3 Jul 2025 08:56:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 913A12D3A96;
+	Thu,  3 Jul 2025 08:56:50 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay15.mail.gandi.net (relay15.mail.gandi.net [217.70.178.235])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BCB2D3A75
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78ACC2D3A71
 	for <linux-bluetooth@vger.kernel.org>; Thu,  3 Jul 2025 08:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.178.235
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751533010; cv=none; b=pkOWxflVVcuxKOENm76RBlM7SJOqpz+Kr3B++SKiq8cLwEktxzoMbJed8glJWyx5wdWLf91uppSi+Fc2DD1N2BL17/XLHR8jJax8vmisD4aWzfJU0DOnEATa3MuZEfNjydn4mweTO88IxKVPhICOtaZ/yd1lQBz1LsxT4v2L5jk=
+	t=1751533010; cv=none; b=hQlpFCYJBUuLQ2jIdHwfc5qyp35MTSOhwOTES4ro36RQ4IXgGfZ4MIksTrYmr3yZYLO+ACCCB4VgdWFrmSVL6ojYQYOZ9HGy0Hl3s+aZKsGYF5ayXX18y5NucNYi8Oa+5KkxbwNIpzQgx1LbB9V0N9owe+GqSuYT/tRyYDWP0lU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1751533010; c=relaxed/simple;
-	bh=mAWgkUrBVnVHPcN5fYmFRyhCo9R8ApMoDdhDW2t/69U=;
+	bh=gVEY2LGQf6dip6y8rlBiMZoWnSJGDm39aOsLubM5jZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MkaSD8ooVbYFHUarSerPiApjOj++LZgVy0Ii5vgFszZPghKZr5h1Nagdm61/4pezH7wJMvZsbfvdov9fyIj2NnSQdNPP3DQyOzG9+cv/z4Oaa8uuU68/DTo6+r9qjZAsdFXkXKCOOk4xh9Ay/padqA1BkpkPBJm/y46GtdFsMpQ=
+	 MIME-Version; b=KyT1NGmeYoPNlzAvvyH6GE6bXy68IrcFhfnTjg9deGrPQFEKGPnAMjk9JsIuV2iCTPvV6WSN1J1HGDx5cHck6rdJlJpj810BH/cdgVVb8R6QuejkREk3giQGdupDAuje3IcJy8MG9XEHTrWRCmA1it+QNIFMqwPi3DYcVh9ccEc=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.178.235
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 062F243187;
-	Thu,  3 Jul 2025 08:56:40 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 4DC6D43189;
+	Thu,  3 Jul 2025 08:56:41 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [PATCH BlueZ 05/19] client: Fix typos
-Date: Thu,  3 Jul 2025 10:53:13 +0200
-Message-ID: <20250703085630.935452-6-hadess@hadess.net>
+Subject: [PATCH BlueZ 06/19] emulator: Fix typos
+Date: Thu,  3 Jul 2025 10:53:14 +0200
+Message-ID: <20250703085630.935452-7-hadess@hadess.net>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703085630.935452-1-hadess@hadess.net>
 References: <20250703085630.935452-1-hadess@hadess.net>
@@ -53,89 +53,22 @@ X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduleekiecutefuodetggdotef
 
 Found using codespell.
 ---
- client/adv_monitor.c             | 2 +-
- client/mgmt.c                    | 6 +++---
- client/player.c                  | 2 +-
- client/scripts/scan-delegator.bt | 4 ++--
- 4 files changed, 7 insertions(+), 7 deletions(-)
+ emulator/btdev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/client/adv_monitor.c b/client/adv_monitor.c
-index 29e67096018b..58f379f1bfb1 100644
---- a/client/adv_monitor.c
-+++ b/client/adv_monitor.c
-@@ -758,7 +758,7 @@ void adv_monitor_get_supported_info(void)
- 	print_supported_list(manager.supported_features);
- 	bt_shell_printf("\n");
+diff --git a/emulator/btdev.c b/emulator/btdev.c
+index 555f55e52772..cc844fc3a8ec 100644
+--- a/emulator/btdev.c
++++ b/emulator/btdev.c
+@@ -273,7 +273,7 @@ struct inquiry_data {
+ 	int iter;
+ };
  
--	bt_shell_printf("Supported Moniter Types:");
-+	bt_shell_printf("Supported Monitor Types:");
- 	print_supported_list(manager.supported_types);
- 	bt_shell_printf("\n");
- }
-diff --git a/client/mgmt.c b/client/mgmt.c
-index 0a9cc589f09f..d07f7d8c0ea3 100644
---- a/client/mgmt.c
-+++ b/client/mgmt.c
-@@ -4243,7 +4243,7 @@ static void clock_info_rsp(uint8_t status, uint16_t len, const void *param,
+-#define DEFAULT_INQUIRY_INTERVAL 100 /* 100 miliseconds */
++#define DEFAULT_INQUIRY_INTERVAL 100 /* 100 milliseconds */
  
- 	print("Local Clock:   %u", le32_to_cpu(rp->local_clock));
- 	print("Piconet Clock: %u", le32_to_cpu(rp->piconet_clock));
--	print("Accurary:      %u", le16_to_cpu(rp->accuracy));
-+	print("Accuracy:      %u", le16_to_cpu(rp->accuracy));
+ #define MAX_BTDEV_ENTRIES 16
  
- 	bt_shell_noninteractive_quit(EXIT_SUCCESS);
- }
-@@ -6033,7 +6033,7 @@ static const struct bt_shell_menu mgmt_menu = {
- 	{ "ssp",		"<on/off>",
- 		cmd_ssp,		"Toggle SSP mode"		},
- 	{ "sc",			"<on/off/only>",
--		cmd_sc,			"Toogle SC support"		},
-+		cmd_sc,			"Toggle SC support"		},
- 	{ "hs",			"<on/off>",
- 		cmd_hs,			"Toggle HS support"		},
- 	{ "le",			"<on/off>",
-@@ -6095,7 +6095,7 @@ static const struct bt_shell_menu mgmt_menu = {
- 	{ "ext-config",		"<on/off>",
- 		cmd_ext_config,		"External configuration"	},
- 	{ "debug-keys",		"<on/off>",
--		cmd_debug_keys,		"Toogle debug keys"		},
-+		cmd_debug_keys,		"Toggle debug keys"		},
- 	{ "conn-info",		"[-t type] <remote address>",
- 		cmd_conn_info,		"Get connection information"	},
- 	{ "io-cap",		"<cap>",
-diff --git a/client/player.c b/client/player.c
-index 2702ea54247b..e4c2d451acca 100644
---- a/client/player.c
-+++ b/client/player.c
-@@ -5359,7 +5359,7 @@ static void set_links_cb(const DBusError *error, void *user_data)
- 	/* Enqueue link to mark that it is ready to be selected */
- 	queue_push_tail(args->selecting, link);
- 
--	/* Continue setting the remanining links */
-+	/* Continue setting the remaining links */
- 	transport_set_links(args);
- }
- 
-diff --git a/client/scripts/scan-delegator.bt b/client/scripts/scan-delegator.bt
-index 5ff7bcb892b4..cc2b5afc98a3 100644
---- a/client/scripts/scan-delegator.bt
-+++ b/client/scripts/scan-delegator.bt
-@@ -16,7 +16,7 @@ advertise on
- #
- #
- # After the connection has been established, transports will
--# be created for streams added by the Bradcast Assistant that
-+# be created for streams added by the Broadcast Assistant that
- # match the audio capabilities chosen at endpoint register.
- # Select the desired transport. If the stream is encrypted,
- # a prompt will be displayed to enter the Broadacast Code for
-@@ -40,4 +40,4 @@ advertise on
- #
- # Check that the transport has transitioned to "active" state
- #
--# [CHG] Transport /org/bluez/hci0/dev_xx_xx_xx_xx_xx_xx/bis_n/fd_m State: active
-\ No newline at end of file
-+# [CHG] Transport /org/bluez/hci0/dev_xx_xx_xx_xx_xx_xx/bis_n/fd_m State: active
 -- 
 2.50.0
 
