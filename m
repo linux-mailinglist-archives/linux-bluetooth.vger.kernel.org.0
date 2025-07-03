@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-13506-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-13504-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id F21D1AF6DD7
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jul 2025 10:57:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F033AF6DD5
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jul 2025 10:57:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 319C01C80738
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jul 2025 08:57:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A42F01C806A2
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jul 2025 08:57:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C3272D3A88;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 249CD2D46DA;
 	Thu,  3 Jul 2025 08:56:53 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay15.mail.gandi.net (relay15.mail.gandi.net [217.70.178.235])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319EB2D46AA
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3CB2D46A3
 	for <linux-bluetooth@vger.kernel.org>; Thu,  3 Jul 2025 08:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.178.235
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751533012; cv=none; b=uWXhwftNKZO9tZdKS7exSaxhBJQNBP+9hmWSyn357pDDRE7M8MYg2MU0VxcwbEULb9RXJxkS0YLHXnlCLJVtcu6c+MS9XIHyFSWrr3onO11uGf+jjzeCd4BAI1yPhbcYPyL/7NS6+c+WoWKZoAUHfAy+oUFk0YwYVk3LBxub7J8=
+	t=1751533012; cv=none; b=rFhACba51HH/1PO/ElEgheiJ/tzWx/nzXIdXHXUWYqb0J+6Wa2PFlHc3h/bURBgpc5zUpgQa3wPVTvnwIIrjw6YoMeIHequvKk+FSR4q/zfuUHvWp/jXzLcUwS7r3Gr1vfC5OXduUWx2fjuc4s4DJMvwQch7VnfN7KMAoXF2GlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1751533012; c=relaxed/simple;
-	bh=eOhe2SntyotvFWQU7rQZmIkFwdvqLc7KN7GtV/xCVO0=;
+	bh=HuisIXaItRv33QMTLVxVzhnHoV0zrhJdPDGU64lTYiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NTqIRYYfX63g0Wkyy8mK4Tju17At+8uqxEhFwlpW6LCK2RRNjsq82vvsrJJ65SJsktBi+Qaq4Xd8Rbhzb2s7hUQi5IX7VloOYXEw8+zAgY7HOMoLubCb6xJIa3daZpNqyXv5RGU0toFFY/W6rgaKzUECsCiO2b8NKcD0Rq5U6Zw=
+	 MIME-Version; b=Z9hjjM8X2YZGb9pz/AxBSTi9r3EqbQF0ZmJVQoLWcKm1nxjZAf8LllGcMGFqeB9xEjdXDuEBchEW+1GeNbEA+VS+uX9UOWTXq1IZ7+PCH6+TUp3Ah7+6TWjAiCxtZZIxqVklrpdErIddeYZfiMRp2dWXL7vMpg3nUCaEvWwAb9A=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.178.235
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 2B2F343190;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 8037743192;
 	Thu,  3 Jul 2025 08:56:43 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [PATCH BlueZ 12/19] peripheral: Fix typo
-Date: Thu,  3 Jul 2025 10:53:20 +0200
-Message-ID: <20250703085630.935452-13-hadess@hadess.net>
+Subject: [PATCH BlueZ 13/19] plugins: Fix typos
+Date: Thu,  3 Jul 2025 10:53:21 +0200
+Message-ID: <20250703085630.935452-14-hadess@hadess.net>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703085630.935452-1-hadess@hadess.net>
 References: <20250703085630.935452-1-hadess@hadess.net>
@@ -53,22 +53,31 @@ X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduleekiecutefuodetggdotef
 
 Found using codespell.
 ---
- peripheral/gatt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ plugins/policy.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/peripheral/gatt.c b/peripheral/gatt.c
-index ff1354cb48d5..2c5e037b9f70 100644
---- a/peripheral/gatt.c
-+++ b/peripheral/gatt.c
-@@ -105,7 +105,7 @@ static struct gatt_conn *gatt_conn_new(int fd)
+diff --git a/plugins/policy.c b/plugins/policy.c
+index 561e3c089e51..66f5c04ccb04 100644
+--- a/plugins/policy.c
++++ b/plugins/policy.c
+@@ -322,7 +322,7 @@ static void sink_cb(struct btd_service *service, btd_service_state_t old_state,
+ 			policy_set_hs_timer(data);
  
- 	conn->att = bt_att_new(fd, false);
- 	if (!conn->att) {
--		fprintf(stderr, "Failed to initialze ATT transport layer\n");
-+		fprintf(stderr, "Failed to initialize ATT transport layer\n");
- 		free(conn);
- 		return NULL;
- 	}
+ 		/* Check if service initiate the connection then proceed
+-		 * immediatelly otherwise set timer
++		 * immediately otherwise set timer
+ 		 */
+ 		if (btd_service_is_initiator(service))
+ 			policy_connect(data, controller);
+@@ -498,7 +498,7 @@ static void source_cb(struct btd_service *service,
+ 		data->source_retries = 0;
+ 
+ 		/* Check if service initiate the connection then proceed
+-		 * immediatelly otherwise set timer
++		 * immediately otherwise set timer
+ 		 */
+ 		if (btd_service_is_initiator(service))
+ 			policy_connect(data, target);
 -- 
 2.50.0
 
