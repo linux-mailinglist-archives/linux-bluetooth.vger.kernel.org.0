@@ -1,42 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-13503-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-13512-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E8BFAF6DE5
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jul 2025 10:57:49 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0925DAF6DE1
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jul 2025 10:57:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C1A8C4E1E35
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jul 2025 08:56:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 016935223D1
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jul 2025 08:57:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E72042D46D0;
-	Thu,  3 Jul 2025 08:56:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 578252D5402;
+	Thu,  3 Jul 2025 08:56:55 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay15.mail.gandi.net (relay15.mail.gandi.net [217.70.178.235])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6685A2D3A7C
-	for <linux-bluetooth@vger.kernel.org>; Thu,  3 Jul 2025 08:56:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A997F2D3ED9
+	for <linux-bluetooth@vger.kernel.org>; Thu,  3 Jul 2025 08:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.178.235
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751533012; cv=none; b=GXT27fLCQWo6f2gJH05vr72TD3Dblw951GOjgkO0sMyOh3AUjc/QpjQSFsLhkrR3lIIUUtE37ISnNuKUOcBSLYdQ5hPp8BEdWGE+cdGBGxxvwL+Oa0e5F+BgwSXXy2w630/er9/MEFSgj3bjSq6Nb3p6+peOUj9V4D7iVMjFwXI=
+	t=1751533015; cv=none; b=jP0jhJkFGaLt6O4iZy4/vbMi/XCrQwEgHF5tKjitX6eNlKt6/uowUEMuC+pFMPboH7CRQJv3HTSRYZ18AGzypeCtPx3qH5QiTtxN6gt7p7YMBhoRksMc2mwX+2LKn3N2bSRKUahZuS+HZ3o8++zEoBZhEqp/rPrLzFCSNKTcbB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751533012; c=relaxed/simple;
-	bh=zb3/3cQ/Iyr3+dKd1Izk5rT0iuHlk2xd+ZP5vcNylW8=;
+	s=arc-20240116; t=1751533015; c=relaxed/simple;
+	bh=qOHzU+5RcHHpZ5U2OijXc9k2/gxdN/Ll1dwbeby6VR8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WQivF3V69Gf8HqV9UXaQSWRZtrtrzZOHR81uHbmyBBbU07OJ2sC69aw1uYp6e+O/GxzcujvLuaUAdHc1g8CIl8Xc/zziORtsDXDDELkNSW+R0KSZpfybQbYhsGHLWs3ZJHp78xIBJ4SiJ6ztPvWRDws9h3KSvrRgUaefT4kh/B8=
+	 MIME-Version; b=DwoycOYctQf0LKbw3NDInfXvMEd3C90JMfHzV96J+78nSrIZOfmZL+83ts5oGkWyXaXkYWHfzCkBQK9JD4tJr8TANBeg19GaikcUQu6TyYZI37S9QAygiAlhEc/cX+AwbeAWjNuI0IzXZppBzIDzrPjdDlF81m/p7MMRf4tZP08=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.178.235
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 3C29443142;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 8B7804318D;
 	Thu,  3 Jul 2025 08:56:42 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Bastien Nocera <hadess@hadess.net>
-Subject: [PATCH BlueZ 09/19] mesh: Fix typos
-Date: Thu,  3 Jul 2025 10:53:17 +0200
-Message-ID: <20250703085630.935452-10-hadess@hadess.net>
+Subject: [PATCH BlueZ 10/19] monitor: Fix typos
+Date: Thu,  3 Jul 2025 10:53:18 +0200
+Message-ID: <20250703085630.935452-11-hadess@hadess.net>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250703085630.935452-1-hadess@hadess.net>
 References: <20250703085630.935452-1-hadess@hadess.net>
@@ -49,133 +49,252 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-State: clean
 X-GND-Score: 0
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduleekiecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpefggefhkeeuveeuveekteeffeejteegkedutefgjeffkedtvdefieevfeelieeufeenucffohhmrghinhephhgspghpuhgsrdhnvghtnecukfhppedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemjeduuggrmeefsggumedvtdgrleemudeffeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemjeduuggrmeefsggumedvtdgrleemudeffedphhgvlhhopeholhhimhhpihgtpdhmrghilhhfrhhomhephhgruggvshhssehhrgguvghsshdrnhgvthdpnhgspghrtghpthhtohepvddprhgtphhtthhopehlihhnuhigqdgslhhuvghtohhothhhsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohephhgruggvshhssehhrgguvghsshdrnhgvth
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduleekiecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpeevtefhleevjeffteekleehheeujeelhfdvheethefggefhkefgvdefhfegkeeiteenucfkphepvdgrtddumegvfeegmegvtgejfeemtghfvddtmeejudgurgemfegsugemvddtrgelmedufeefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvfeegmegvtgejfeemtghfvddtmeejudgurgemfegsugemvddtrgelmedufeefpdhhvghlohepohhlihhmphhitgdpmhgrihhlfhhrohhmpehhrgguvghssheshhgruggvshhsrdhnvghtpdhnsggprhgtphhtthhopedvpdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehhrgguvghssheshhgruggvshhsrdhnvght
 
 Found using codespell.
 ---
- mesh/README            | 2 +-
- mesh/mesh-io-generic.c | 2 +-
- mesh/mesh-io-mgmt.c    | 2 +-
- mesh/mesh.c            | 2 +-
- mesh/net.c             | 4 ++--
- mesh/net.h             | 2 +-
- mesh/node.c            | 2 +-
- mesh/prov-acceptor.c   | 2 +-
- 8 files changed, 9 insertions(+), 9 deletions(-)
+ monitor/analyze.c |  4 ++--
+ monitor/att.c     |  8 ++++----
+ monitor/avctp.c   |  6 +++---
+ monitor/btmon.rst |  6 +++---
+ monitor/l2cap.c   |  2 +-
+ monitor/ll.c      | 10 +++++-----
+ monitor/msft.c    |  2 +-
+ monitor/packet.c  | 10 +++++-----
+ 8 files changed, 24 insertions(+), 24 deletions(-)
 
-diff --git a/mesh/README b/mesh/README
-index f36b97c2ba67..1f750060505f 100644
---- a/mesh/README
-+++ b/mesh/README
-@@ -40,7 +40,7 @@ Each subdirectory contains the following files:
- 		File containing next sequence number to use
- 	- seq_num.bak:
- 		Backup of the sequence number. This may be larger than the
--		actual sequence number being used at runtime, to prevent re-use
-+		actual sequence number being used at runtime, to prevent reuse
- 		of sequence numbers in the event of an unexpected restart.
- 	- ./rpl/:
- 		Directory to store the sequence numbers of remote nodes, as
-diff --git a/mesh/mesh-io-generic.c b/mesh/mesh-io-generic.c
-index 3da0a8c2d227..1ec4f379def0 100644
---- a/mesh/mesh-io-generic.c
-+++ b/mesh/mesh-io-generic.c
-@@ -709,7 +709,7 @@ static bool send_tx(struct mesh_io *io, struct mesh_io_send_info *info,
- 	else {
- 		/*
- 		 * If transmitter is idle, send packets at least twice to
--		 * guard against in-line cancelation of HCI command chain.
-+		 * guard against in-line cancellation of HCI command chain.
- 		 */
- 		if (info->type == MESH_IO_TIMING_TYPE_GENERAL &&
- 					!pvt->tx &&
-diff --git a/mesh/mesh-io-mgmt.c b/mesh/mesh-io-mgmt.c
-index d185f5c9760f..f33f64124bd1 100644
---- a/mesh/mesh-io-mgmt.c
-+++ b/mesh/mesh-io-mgmt.c
-@@ -143,7 +143,7 @@ done:
- 	pvt->dup_timeout = NULL;
+diff --git a/monitor/analyze.c b/monitor/analyze.c
+index 3cc482cd9227..c466ff3ca85d 100644
+--- a/monitor/analyze.c
++++ b/monitor/analyze.c
+@@ -112,7 +112,7 @@ static void tmp_write(void *data, void *user_data)
+ 	fprintf(tmp, "%lld %zu\n", plot->x_msec, plot->y_count);
  }
  
--/* Ignore consequtive duplicate advertisements within timeout period */
-+/* Ignore consecutive duplicate advertisements within timeout period */
- static bool filter_dups(const uint8_t *addr, const uint8_t *adv,
- 							uint32_t instant)
+-static void plot_draw(struct queue *queue, const char *tittle)
++static void plot_draw(struct queue *queue, const char *title)
  {
-diff --git a/mesh/mesh.c b/mesh/mesh.c
-index 354aabaf388e..01a1607b1a31 100644
---- a/mesh/mesh.c
-+++ b/mesh/mesh.c
-@@ -97,7 +97,7 @@ static struct l_queue *pending_queue;
+ 	FILE *gplot;
  
- static const char *storage_dir;
+@@ -132,7 +132,7 @@ static void plot_draw(struct queue *queue, const char *tittle)
+ 	fprintf(gplot, "set tics out nomirror\n");
+ 	fprintf(gplot, "set log y\n");
+ 	fprintf(gplot, "set yrange [0.5:*]\n");
+-	fprintf(gplot, "plot $data using 1:2 t '%s' w impulses\n", tittle);
++	fprintf(gplot, "plot $data using 1:2 t '%s' w impulses\n", title);
+ 	fflush(gplot);
  
--/* Forward static decalrations */
-+/* Forward static declarations */
- static void def_attach(struct l_timeout *timeout, void *user_data);
- static void def_leave(struct l_timeout *timeout, void *user_data);
+ 	pclose(gplot);
+diff --git a/monitor/att.c b/monitor/att.c
+index e5630f0e7d32..33d45e960bec 100644
+--- a/monitor/att.c
++++ b/monitor/att.c
+@@ -1133,9 +1133,9 @@ static bool print_prefer_framing(const struct l2cap_frame *frame)
+ }
  
-diff --git a/mesh/net.c b/mesh/net.c
-index 1cf74c892ca0..a49df531c933 100644
---- a/mesh/net.c
-+++ b/mesh/net.c
-@@ -846,7 +846,7 @@ int mesh_net_del_key(struct mesh_net *net, uint16_t idx)
- 	/* Delete associated app keys */
- 	appkey_delete_bound_keys(net, idx);
+ static const struct bitfield_data prefer_phy_table[] = {
+-	{  0, "LE 1M PHY preffered (0x01)"		},
+-	{  1, "LE 2M PHY preffered (0x02)"		},
+-	{  2, "LE Codec PHY preffered (0x04)"		},
++	{  0, "LE 1M PHY preferred (0x01)"		},
++	{  1, "LE 2M PHY preferred (0x02)"		},
++	{  2, "LE Codec PHY preferred (0x04)"		},
+ 	{ }
+ };
  
--	/* Disable hearbeat publication on this subnet */
-+	/* Disable heartbeat publication on this subnet */
- 	if (idx == net->hb_pub.net_idx)
- 		net->hb_pub.dst = UNASSIGNED_ADDRESS;
- 
-@@ -1059,7 +1059,7 @@ static bool msg_in_cache(struct mesh_net *net, uint16_t src, uint32_t seq,
- 	msg = l_queue_find(net->msg_cache, match_cache, &tst);
- 
- 	if (msg) {
--		l_debug("Supressing duplicate %4.4x + %6.6x + %8.8x",
-+		l_debug("Suppressing duplicate %4.4x + %6.6x + %8.8x",
- 							src, seq, mic);
- 		return true;
+@@ -2293,7 +2293,7 @@ static void print_vcs_flag(const struct l2cap_frame *frame)
+ 		print_text(COLOR_ERROR, "Volume Flag: invalid size");
+ 		goto done;
  	}
-diff --git a/mesh/net.h b/mesh/net.h
-index d385ba16efdd..8a3b4038b6de 100644
---- a/mesh/net.h
-+++ b/mesh/net.h
-@@ -89,7 +89,7 @@ struct mesh_node;
- #define PROXY_FILTER_ACCEPT_LIST	0x00
- #define PROXY_FILTER_REJECT_LIST	0x01
+-	print_field("    Volume Falg: %u", vol_flag);
++	print_field("    Volume Flag: %u", vol_flag);
  
--/* Network Tranport Opcodes */
-+/* Network Transport Opcodes */
- #define NET_OP_SEG_ACKNOWLEDGE		0x00
- #define NET_OP_FRND_POLL		0x01
- #define NET_OP_FRND_UPDATE		0x02
-diff --git a/mesh/node.c b/mesh/node.c
-index 65161b7afb3d..7f20e97ea230 100644
---- a/mesh/node.c
-+++ b/mesh/node.c
-@@ -1329,7 +1329,7 @@ static bool get_element_properties(struct mesh_node *node, const char *path,
+ done:
+ 	if (frame->size)
+diff --git a/monitor/avctp.c b/monitor/avctp.c
+index 4da448750be5..fda7ff1ffef6 100644
+--- a/monitor/avctp.c
++++ b/monitor/avctp.c
+@@ -1317,13 +1317,13 @@ static bool avrcp_get_play_status(struct avctp_frame *avctp_frame,
+ 	if (!l2cap_frame_get_be32(frame, &interval))
+ 		return false;
  
- 	/*
- 	 * Add configuration server model on the primary element.
--	 * We allow the application not to specify the presense of
-+	 * We allow the application not to specify the presence of
- 	 * the Configuration Server model, since it's implemented by the
- 	 * daemon. If the model is present in the application properties,
- 	 * the operation below will be a "no-op".
-diff --git a/mesh/prov-acceptor.c b/mesh/prov-acceptor.c
-index 27d4964316b3..650309b635cd 100644
---- a/mesh/prov-acceptor.c
-+++ b/mesh/prov-acceptor.c
-@@ -546,7 +546,7 @@ static void acp_prov_rx(void *user_data, const void *dptr, uint16_t len)
+-	print_field("%*cSongLength: 0x%08x (%u miliseconds)",
++	print_field("%*cSongLength: 0x%08x (%u milliseconds)",
+ 					(indent - 8), ' ', interval, interval);
  
- 			if (prov->conf_inputs.start.auth_action ==
- 							PROV_ACTION_OUT_ALPHA) {
--				/* TODO: Construst NUL-term string to pass */
-+				/* TODO: Construct NUL-term string to pass */
- 				fail.reason = mesh_agent_display_string(
- 					prov->agent, NULL, NULL, prov);
- 			} else {
+ 	if (!l2cap_frame_get_be32(frame, &interval))
+ 		return false;
+ 
+-	print_field("%*cSongPosition: 0x%08x (%u miliseconds)",
++	print_field("%*cSongPosition: 0x%08x (%u milliseconds)",
+ 					(indent - 8), ' ', interval, interval);
+ 
+ 	if (!l2cap_frame_get_u8(frame, &status))
+@@ -1388,7 +1388,7 @@ response:
+ 		if (!l2cap_frame_get_be32(frame, &interval))
+ 			return false;
+ 
+-		print_field("%*cPosition: 0x%08x (%u miliseconds)",
++		print_field("%*cPosition: 0x%08x (%u milliseconds)",
+ 					(indent - 8), ' ', interval, interval);
+ 		break;
+ 	case AVRCP_EVENT_BATT_STATUS_CHANGED:
+diff --git a/monitor/btmon.rst b/monitor/btmon.rst
+index 31970d4fba95..eb5e25182f0f 100644
+--- a/monitor/btmon.rst
++++ b/monitor/btmon.rst
+@@ -15,7 +15,7 @@ Bluetooth monitor
+ :Manual section: 1
+ :Manual group: Linux System Administration
+ 
+-SYNOPSYS
++SYNOPSIS
+ ========
+ 
+ **btmon** [*OPTIONS* ...]
+@@ -91,7 +91,7 @@ OPTIONS
+ -P, --no-pager              Disable pager usage while reading the log file.
+ 
+ -J OPTIONS, --jlink OPTIONS     Read data from RTT.  Each options are comma(,)
+-                                seprated without spaces.
++                                separated without spaces.
+ 
+ .. list-table::
+    :header-rows: 1
+@@ -114,7 +114,7 @@ OPTIONS
+      - (Optional) Set target interface speed in kHz. Default is **1000**.
+ 
+ -R OPTIONS, --rtt OPTIONS   RTT control block parameters. Each options are
+-                            comma(,) seprated without spaces.
++                            comma(,) separated without spaces.
+ 
+ .. list-table::
+    :header-rows: 1
+diff --git a/monitor/l2cap.c b/monitor/l2cap.c
+index dff183bd0972..8c47f8c89674 100644
+--- a/monitor/l2cap.c
++++ b/monitor/l2cap.c
+@@ -2283,7 +2283,7 @@ static void smp_pairing_confirm(const struct l2cap_frame *frame)
+ {
+ 	const struct bt_l2cap_smp_pairing_confirm *pdu = frame->data;
+ 
+-	print_hex_field("Confim value", pdu->value, 16);
++	print_hex_field("Confirm value", pdu->value, 16);
+ }
+ 
+ static void smp_pairing_random(const struct l2cap_frame *frame)
+diff --git a/monitor/ll.c b/monitor/ll.c
+index feeb13e9282a..34dddcb0bb74 100644
+--- a/monitor/ll.c
++++ b/monitor/ll.c
+@@ -144,7 +144,7 @@ static void advertising_packet(const void *data, uint8_t size)
+ 		}
+ 
+ 		packet_print_addr("Advertiser address", data + 2, tx_add);
+-		packet_print_addr("Inititator address", data + 8, rx_add);
++		packet_print_addr("Initiator address", data + 8, rx_add);
+ 		break;
+ 
+ 	case 0x03:	/* SCAN_REQ */
+@@ -165,7 +165,7 @@ static void advertising_packet(const void *data, uint8_t size)
+ 			return;
+ 		}
+ 
+-		packet_print_addr("Inititator address", data + 2, tx_add);
++		packet_print_addr("Initiator address", data + 2, tx_add);
+ 		packet_print_addr("Advertiser address", data + 8, rx_add);
+ 
+ 		access_addr = ptr[14] | ptr[15] << 8 |
+@@ -256,7 +256,7 @@ static void data_packet(const void *data, uint8_t size, bool padded)
+ 	switch (llid) {
+ 	case 0x01:
+ 		if (length > 0)
+-			str = "Continuation fragement of L2CAP message";
++			str = "Continuation fragment of L2CAP message";
+ 		else
+ 			str = "Empty message";
+ 		break;
+@@ -469,7 +469,7 @@ static void conn_param_req(const void *data, uint8_t size)
+ 	print_field("Latency: %d (0x%4.4x)", pdu->latency, pdu->latency);
+ 	print_field("Timeout: %d msec (0x%4.4x)", pdu->timeout * 10,
+ 								pdu->timeout);
+-	print_field("Preffered periodicity: %.2f (0x%2.2x)",
++	print_field("Preferred periodicity: %.2f (0x%2.2x)",
+ 				pdu->pref_period * 1.25, pdu->pref_period);
+ 	print_field("Reference connection event count: %d (0x%2.2x)",
+ 			pdu->pref_conn_evt_count, pdu->pref_conn_evt_count);
+@@ -498,7 +498,7 @@ static void conn_param_rsp(const void *data, uint8_t size)
+ 	print_field("Latency: %d (0x%4.4x)", pdu->latency, pdu->latency);
+ 	print_field("Timeout: %d msec (0x%4.4x)", pdu->timeout * 10,
+ 								pdu->timeout);
+-	print_field("Preffered periodicity: %.2f (0x%2.2x)",
++	print_field("Preferred periodicity: %.2f (0x%2.2x)",
+ 				pdu->pref_period * 1.25, pdu->pref_period);
+ 	print_field("Reference connection event count: %d (0x%2.2x)",
+ 			pdu->pref_conn_evt_count, pdu->pref_conn_evt_count);
+diff --git a/monitor/msft.c b/monitor/msft.c
+index 096fedd59317..24b7bd55444c 100644
+--- a/monitor/msft.c
++++ b/monitor/msft.c
+@@ -147,7 +147,7 @@ static void le_monitor_advertisement_cmd(const void *data, uint16_t size)
+ 		packet_hexdump(irk->irk, size - sizeof(*cmd));
+ 		break;
+ 	case MSFT_LE_MONITOR_ADV_ADDR:
+-		print_field("Type: Adderss (0x%2.2x)", cmd->type);
++		print_field("Type: Address (0x%2.2x)", cmd->type);
+ 		addr = (void *)cmd->data;
+ 		packet_print_addr(NULL, addr->addr, addr->type);
+ 		break;
+diff --git a/monitor/packet.c b/monitor/packet.c
+index f4981730ac4a..21df067b19ce 100644
+--- a/monitor/packet.c
++++ b/monitor/packet.c
+@@ -3184,7 +3184,7 @@ static const struct bitfield_data events_le_table[] = {
+ 	{ 25, "LE CIS Request"				},
+ 	{ 26, "LE Create BIG Complete"			},
+ 	{ 27, "LE Terminate BIG Complete"		},
+-	{ 28, "LE BIG Sync Estabilished Complete"	},
++	{ 28, "LE BIG Sync Established Complete"	},
+ 	{ 29, "LE BIG Sync Lost"			},
+ 	{ 30, "LE Request Peer SCA Complete"},
+ 	{ 31, "LE Path Loss Threshold"		},
+@@ -3486,7 +3486,7 @@ static void print_base_annoucement(const uint8_t *data, uint8_t data_len)
+ 		goto done;
+ 
+ 	/* Level 1 - BASE */
+-	print_field("  Presetation Delay: %u", get_le24(base_data->pd));
++	print_field("  Presentation Delay: %u", get_le24(base_data->pd));
+ 	print_field("  Number of Subgroups: %u", base_data->num_subgroups);
+ 
+ 	/* Level 2 - Subgroups*/
+@@ -9776,7 +9776,7 @@ static const struct opcode_data opcode_table[] = {
+ 	{ 0x043b, 174, "Logical Link Cancel",
+ 				logic_link_cancel_cmd, 2, true,
+ 				logic_link_cancel_rsp, 3, true },
+-	{ 0x043c, 175, "Flow Specifcation Modify",
++	{ 0x043c, 175, "Flow Specification Modify",
+ 				flow_spec_modify_cmd, 34, true },
+ 	{ 0x043d, 235, "Enhanced Setup Synchronous Connection",
+ 				enhanced_setup_sync_conn_cmd, 59, true },
+@@ -11599,7 +11599,7 @@ static void keypress_notify_evt(struct timeval *tv, uint16_t index,
+ 		str = "Passkey digit erased";
+ 		break;
+ 	case 0x03:
+-		str = "Passkey clared";
++		str = "Passkey cleared";
+ 		break;
+ 	case 0x04:
+ 		str = "Passkey entry completed";
+@@ -13290,7 +13290,7 @@ static const struct subevent_data le_meta_event_table[] = {
+ 				sizeof(struct bt_hci_evt_le_big_terminate) },
+ 	{ BT_HCI_EVT_LE_BIG_SYNC_ESTABILISHED,
+ 				"LE Broadcast Isochronous Group Sync "
+-				"Estabilished", le_big_sync_estabilished_evt,
++				"Established", le_big_sync_estabilished_evt,
+ 				sizeof(struct bt_hci_evt_le_big_sync_lost) },
+ 	{ BT_HCI_EVT_LE_BIG_SYNC_LOST,
+ 				"LE Broadcast Isochronous Group Sync Lost",
 -- 
 2.50.0
 
