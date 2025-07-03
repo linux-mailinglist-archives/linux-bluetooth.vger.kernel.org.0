@@ -1,290 +1,334 @@
-Return-Path: <linux-bluetooth+bounces-13525-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-13522-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C4461AF7573
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jul 2025 15:24:33 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E5A9AF754A
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jul 2025 15:19:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6521F1C232BB
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jul 2025 13:24:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E8CEA1881DDF
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  3 Jul 2025 13:19:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4377F2D979D;
-	Thu,  3 Jul 2025 13:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13B332E7BDC;
+	Thu,  3 Jul 2025 13:18:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="JEIYV50t"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F4EJVQsT"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011035.outbound.protection.outlook.com [52.101.70.35])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0B418DB0D;
-	Thu,  3 Jul 2025 13:24:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.35
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751549047; cv=fail; b=XFFXT5uyj+j9Fj4PK3zDEwOFByQMCbH7kC9V5tr3Maufq4Bw3VSeUik09THJO4IM15vZtHeoGvzLzsabr8hv+La+CZU3J4WhCm9WdDvs+i9kcRhFgyc+C+ILQlaJhyF3p2hhLK4vFccD7qaisC0cPbgMCk23SX9HcCeqLmaVDL8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751549047; c=relaxed/simple;
-	bh=8lns0L44Y9UYBkaqbdM4V8uBtBjVNWBZ8yOOLAfNmGI=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=E4Mjj9+TMW/7cXCzDWRwYmfh4CWTcdj7sGFQdiGd4VvmYcCF00/wWkEFTuLOhQ25/pVmmSeHzXTzPTtEBknWnTGlBZbtO03uXI1mgtYxlsezSOv+F7JL53FVhl5JrGZ4a80V6B6dRMZ00sttgNuIYaDjowBff43J9/oeE+tF5Oo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=JEIYV50t; arc=fail smtp.client-ip=52.101.70.35
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=YIqGbLSc+NRAgzpGLJO3ka4TkdKHT7ta2SP7u/yTJuKl3vAM9A7u4rNt+YGPO5Jfz/wPuPduBMB2MD9RJ0e1L79ki6U7GMPjIfqHrBWfFZUsko8Btb6JWaJCAwxwaMureUak1AgdzAgfW0ixw3DuAuzkXUihtaBHmC0hmIk572iUsXXxGIy+JkByopJIXX8Yxbth6YPVLEOtxGDeTJmrqBgQw9ZhERk0JdBHgLmeI4hVqHxYCVe9/5CeAE3mtT79iceAiI62rQKrYRrsP0fwKWVQ1v87DI0yynE+qpg/3ltpqbc2Iz5/CpfGGNja39Xjiql//5BV8/quPznsArsdsA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=JxiVz8W/dG/C1nkA4LUFTdOCj0QC+pphrTe4IVhtV3A=;
- b=B5ntpglPy/dof+9LWro28eJA0PXY1QbKvJqmvWRO6Iy5aUiEnkdyBwcTSf5NYCDKt+SKWDPt+ITYFY/1tJDWzgjmOXdLqpeeztEuqmPkd5DuSYA2G2ySPskopwdcH9tzH2zfyvpkIH3WKVhNxEZJTimX1v9YCuPfZCERFRvlI+jEIkPj4qs0A7eHSgkDmei6jUd08Uc2QEAtg5GA8KNMQywirjye6jgURY2/GB5zbquJacPfH0fFc6UKAaCqu//nwHKiqshfjh2ma7NmtHdshZpTqpAlawuN76VwNFmlncU2X8xnh1rYWiN3yAQyJNTklNahFgQOjayH5CyDNZ3hbA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=JxiVz8W/dG/C1nkA4LUFTdOCj0QC+pphrTe4IVhtV3A=;
- b=JEIYV50t2xbub/xZcCSHPtNeiqd4viKyB/B008Zp1KsT889makWgMmysOOoJ2ptBkGU1J4Jj7nJsN0fH9MXUyCgRn1iYBRxtM+QTUt/Fx3eZdMZknbM3HUpweZAIYIFi7ErEq7tuhGtC0Zx6ngcJK7MnF9ErCYxiduCWN3ThWB6chMh7M8FtFvrjHRtd/FZPj7/Mf4IWh6VbQrJmqm+ep1S9F3/f972w/xMvO8FngT02YLve8F6qOllwl9XzncVlVFSCrgxNslqQVzkrSp3b++ezJ1rnSPLooBP92d0J6tOPwIhJdKZ3i0cyfOSXv4NVY9getSOTp5j/iyHyL+3wnA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-Received: from AS4PR04MB9692.eurprd04.prod.outlook.com (2603:10a6:20b:4fe::20)
- by VI1PR04MB6896.eurprd04.prod.outlook.com (2603:10a6:803:12e::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.20; Thu, 3 Jul
- 2025 13:24:02 +0000
-Received: from AS4PR04MB9692.eurprd04.prod.outlook.com
- ([fe80::a2bf:4199:6415:f299]) by AS4PR04MB9692.eurprd04.prod.outlook.com
- ([fe80::a2bf:4199:6415:f299%5]) with mapi id 15.20.8901.018; Thu, 3 Jul 2025
- 13:24:02 +0000
-From: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
-To: marcel@holtmann.org,
-	luiz.dentz@gmail.com
-Cc: linux-bluetooth@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	amitkumar.karwar@nxp.com,
-	neeraj.sanjaykale@nxp.com,
-	sherry.sun@nxp.com,
-	manjeet.gupta@nxp.com,
-	jean-yves.salaun@nxp.com
-Subject: [PATCH v1 2/2] Bluetooth: btnxpuart: Add uevents for FW dump and FW download complete
-Date: Thu,  3 Jul 2025 18:35:49 +0530
-Message-Id: <20250703130549.1659732-2-neeraj.sanjaykale@nxp.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250703130549.1659732-1-neeraj.sanjaykale@nxp.com>
-References: <20250703130549.1659732-1-neeraj.sanjaykale@nxp.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: FR2P281CA0171.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:99::16) To AS4PR04MB9692.eurprd04.prod.outlook.com
- (2603:10a6:20b:4fe::20)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E662E7658
+	for <linux-bluetooth@vger.kernel.org>; Thu,  3 Jul 2025 13:18:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1751548691; cv=none; b=FdN93PkTJJ57KKFtTp7lxp15DmDUvElJy9yDZccN0URjKWdfdiewXSDvA/8mTouJFzMPUY305L/VH/so9e628UB5MFo4cJJOEfOVrfj+/bl7kCpucYx40Q3pll1HtMp+bQDvJFN1OngrRQrfhgS7WlmNhA8MYKDd1wBCokorCPI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1751548691; c=relaxed/simple;
+	bh=JtA3sI0x3avaGHKaDhwLhh+j5BeQy+xzOODfPfgXz8s=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=X6Yel042t80tQ5mbrzhM5TboeziZrBkSOOkS8snzR733i7r9w3IOufIZRa5fu4sT1YD61v4Favy7fcUxZ8ho6rANZYcWvvWIhwg3ZsoPm9gpstaKgmb7g1lNwYKhzfa1gNjZWpldibjmi7MK2Qy1iUpReXnFdp+vehz0QMPF9x4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F4EJVQsT; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-553b60de463so6392345e87.3
+        for <linux-bluetooth@vger.kernel.org>; Thu, 03 Jul 2025 06:18:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751548687; x=1752153487; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ajgmCDyw4Q8aRR+BmJ2261iSp9w5VXwjomtBiT4tzyg=;
+        b=F4EJVQsTKJXlxTim0HOOB0TlGmz7fVMGjfDJRKvjHGajajznGsY6wjT4J/PoRzl+Yn
+         FzyoOCQM7NRoT1sLhO2K754DW6N2gEnk2QLTmrmtzQGZ9ChCBtUdzix8XJPkJLZP4/5g
+         wiT2xjMFCtAfNUWn4qE0XsYu6zwC5JYr8LPYF2xZj63ynV2hsE47Ha+oKYqk2xtLObc2
+         NxPxYGlxOiYBqIQvroEE2RD/XrY4cFT8t2jyN2z8DC2jIDqKhbHUpDKS5maPkgiahM6w
+         uLzs/cNvb9nECFyG7gxesXUwaJ/KE29g53PxpQgQt96UzGWn4vRmTtvJrx+DKNjJGOnm
+         48yQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751548687; x=1752153487;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ajgmCDyw4Q8aRR+BmJ2261iSp9w5VXwjomtBiT4tzyg=;
+        b=t7Bhd0BRfGbwm2gE1vnL/gLvcqIFA5MhNHao5/UXMFNEV9qQLv82NjtuT75wPg8ihY
+         6vhMg4h+lw9CTAkWcfLp8rPRIngp9LWrKWczfor+fAqq1OaY8mDquJR6u9JcrYZNzGwS
+         0Y+VsRnnnygXWLdid1o2Ubqz8eZ8qk8Gp8im9baR8lYHw/uik1lPJR+7d3OAKYZBvJsa
+         uyXchjmQgaUlm577vJS/OVx7NxGGj3s0ZkQ7W8KkL+maCsCH6X+m1HwCR3XHfkFO48x4
+         i0GSPFPoAygmOVZbocS86TUHIsODQHxFq5m5a2DcSvupSa5YcxRypWi+XYKQgRGJk6cH
+         zlYQ==
+X-Gm-Message-State: AOJu0Yy4HYbvVjEYKQtSV0y0zZ0Y+nTdFKKmvFHn0kOCdXAvgOY+8RAJ
+	QVEzFpiURMYjAmnrT/J8hFjPt8f47a2Zm7kgiIDzygdGm0OKAnPFsV0bvOVMjnXscq7jr1LFdUv
+	sw8UJIUhuhVT/xUhQNls1julZyl+yvlbuGoUEZsBcTw==
+X-Gm-Gg: ASbGncsEFVvV+JnccrjhMvVFPCHJz5PxDUHYj0y7cqnGw1L9mvqzKjPsnn8bD40b503
+	cOK4Qe2fT9c17frO0oI+ywG8pcjjvSBKy4F3iNJ4x7IXFtQxwAzAHOkR/DyOAr+w1lnmD/uL9uO
+	TjfN16t0Zh2b2LJUgFJHV15FUwaySpRPqZcwbnroaIFrhPQFymrSaf
+X-Google-Smtp-Source: AGHT+IFartDO/4T+Ehm3AuNhtxt0ODNcXuipsc6dc2/oSwH3qDkn0hy8m7GjF7bI0ZnzJq7NcReaa/wvSVoyck/QR0M=
+X-Received: by 2002:a05:6512:b89:b0:554:f74b:78ae with SMTP id
+ 2adb3069b0e04-5562eed59femr1193089e87.31.1751548686907; Thu, 03 Jul 2025
+ 06:18:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AS4PR04MB9692:EE_|VI1PR04MB6896:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3bee76ca-ff7a-4694-9b0d-08ddba34e06f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|52116014|1800799024|376014|19092799006|38350700014;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?ekJoOG44dGdyRFBZWEl0cGtDZjNmZ1lTU2VkZTF2eWtSYlBadWxZUEVaWnlt?=
- =?utf-8?B?U1h3QkxwTGFCb1lLWkVUbE1RaTNiSGV2bk5nQlBPNldIdWxMSVlWVFpieUMx?=
- =?utf-8?B?c01NVXYxaXhTRlNwUzJzSzMya1NMTUdVOTN1OEdoaEFXazR5MlZ3ZnZpOTNp?=
- =?utf-8?B?NjMyUGFpeDV3bE03bjArcTUzOTQ5bkRFNVgvT2dHRjNGT1BMejloQXJxNkVs?=
- =?utf-8?B?K0dJRys3cWVUZ1ZZWDNZSmprSGVRRGdxQ28xVXBLWmhxY1d2RGZaeWdrajgx?=
- =?utf-8?B?b1NVeURIaXgvNGprQkF0UCt2VHIxbFdPMmp3THZJVUNqeVYxSTFnUVozSlA5?=
- =?utf-8?B?alI4RFkyU0hLREFzSmdYZjNlM2RzR3l0emxrbDRQaUtQblV3Q3pHU3ViU01C?=
- =?utf-8?B?VERIVFdHTk1HWmp1K21qS2c1V0RCUTEvUUgzQXNVT0wya0EwNUhmQ1FXdTJW?=
- =?utf-8?B?VDBVTUx4OVRGZTEyZm5ISnJCaExpMHQraDV3SjM1a2NJMHcyTDRjUzl4N0hr?=
- =?utf-8?B?cWk4ZGFGeHM3Mjgyc2JYN0ExZ0JtRHdLTTY4ZHNWQUlKMmtGaGwvRm9OM1hx?=
- =?utf-8?B?c01VZXlCK2lqckRZVjE2RFVHZXVSWXF5ZGlMTEpOWFJWcWFmNm5BU1ZaTW56?=
- =?utf-8?B?SUNUOHJmMkhHUHpHQkk3VWR4YjVEWk9CTHdBK1VuWXJOeHdsUkt4cjNuWXdt?=
- =?utf-8?B?YkpZQk4vRXlCT0VtQjIxaXlzZm9pZFlyMDNMY25nTjhxQzVtUEtUNGlTMHJ4?=
- =?utf-8?B?ZElHQ1pldkdaVFdwaHZ3WnJycThRVkpIN2o3c0RBbWhJNGZzK0xMdW90angy?=
- =?utf-8?B?by9zT0p5MmV3OUZ3ajRLVHdrektXR1crSTNsRGxLZzAvKzZRSU1abFZYOW9n?=
- =?utf-8?B?RWtBNlRRNG9OajFHb3VzLzNkL3QwZ1ZoZ1V1MC9RY3F2cDRSYVdCdEdUb2lG?=
- =?utf-8?B?NlB3TXY4bXcvcHBZdHNvbzY5VGFtZFk4RllXNGluY2RSaFB4SkF3UTMxOCsy?=
- =?utf-8?B?Z1ZQb2xvckNFQ05SbDNuejd4Ri94RVhYVXFkVzBNUnBUYVBPK1VOVEN5akln?=
- =?utf-8?B?K0lQRHNNK2NqQkxtR1JJQ0dabldHOEI5aHpRTEZkSUVNZ21Pc01lSDd6R04r?=
- =?utf-8?B?K1MveDU4clVQRDA0Z3lBenljZUdZZHhPK001WFZSNzh0clE4TVQzcW5FU2I2?=
- =?utf-8?B?ZFJ5WVRJZUdKRHFGc1FPOVdaS2ZNL2ZYcStsbm5zYVlRcnM5aVNISzlQbnNs?=
- =?utf-8?B?SDJhRnBBU1U0RDhtN3lIemUzWWRRdzFIa2M0Yno2blFCcGlCdkVSVlRUVWFq?=
- =?utf-8?B?LzBFWGJLNEpBcWNoVnBWMkgzdlRMa2hhUm1Dc0N3Y0xTSUFTUkh3by9iUjZ4?=
- =?utf-8?B?VXhTcDdjWkRBQ3o2MlBDS3pwOGVWMkxaRHVQSDRDS1FLbHpmaEw5UHlVOHJs?=
- =?utf-8?B?NUJvK09lVGRTRDJaUnU2U0oyVHg0Q0VCeGMxdDV2QkFhSWN0K1ZjK2ljUDhm?=
- =?utf-8?B?RVFVb2xkYkVEcC9UZ002YmdDTUNKSTkyR3loR2NmczdPV0ZtdUtFY0FrVDFp?=
- =?utf-8?B?dTBmN1lJL1RYUkE4aEluVC9YU1BOVG9RUGpDN2ptQ3JHdjliWTQyVHF4SmJk?=
- =?utf-8?B?dm9reU9WaG5DeGExNSs5aFZiZjBNMGJmNWRkcmZ2U2JSeTEwMUtaaXZBOUF3?=
- =?utf-8?B?N1FWbVFPOEp6Q1hnNGdaMmQra2JEV0xHdWdLamlVcjBsNFFOMjc2MlZqMFFH?=
- =?utf-8?B?OCtWeDg0TVdCT29PcWxnWUhtL0dCVjY2bExncXkrTG9XU29wZERvaVlmVVpm?=
- =?utf-8?B?T2NRR082Z2FxL1RETHdob1liM0E4bDhtT09VZXlYc0pQWUJPbGxhd2M5bHB0?=
- =?utf-8?B?dm4vTCtQWW5NOHVMNUgwSHJhUUtSOEd3V0p0R1ZFdXljaUF0R3lkamc4SVRX?=
- =?utf-8?B?T1UxREd2bWdidnNOVUxOYlE2RWtxSnRXdlZxbkd3OU5zRVdBME1ld3pOc3Ft?=
- =?utf-8?B?OWlicEpVcE5BPT0=?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS4PR04MB9692.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(52116014)(1800799024)(376014)(19092799006)(38350700014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?TVhXTU96YWphK1Y4MzE3QXp4T2FYYXVVWHN1Uy90QXJXYTF1Q0lDelJrYjRZ?=
- =?utf-8?B?MlpNWHRsWkZpS3FjWERDQnVZcy90RERiZG5nbEQ5OGNWbjl2d3lLYy9aTy9a?=
- =?utf-8?B?SVlRcWpLTzk5OCtZRWx4YXJudk1qaTE4VXdaNXZGaXp0MWp5QTNGQjQ3cGgz?=
- =?utf-8?B?c3B4dGZ0UytNMWlORUllcjBneGx3Q20vNWJRZ0Z4UVozK3NDSExaT3V4UzJ0?=
- =?utf-8?B?UE5xSEFyTE9EQzZ6YVVFcDU0U0ZNcTZnRHhiV2RWeDlEVTRnNjcxeDFjWEpJ?=
- =?utf-8?B?STJweHBPSXk3b2IyZ3hFb1pIdUlPNnM1dzB4VnBDSU81VGlzYkVLMVJjSWNy?=
- =?utf-8?B?TDdWSHQ2ZzVSOXFKWXNaZ3lwSUw1T1psVWozU1hYNHdOTlNoYkZjTG00RjZx?=
- =?utf-8?B?OFVIWEQzdENHbkl4N28yV2VLYmd3TUtCWUpMT3pFb2M5Q2MraG95eEl5V1Y0?=
- =?utf-8?B?R0pXT2pueHlDSmIzMWdHWTdOaFE3Qkc2aVFteHg0M1FaREMxNnNMWWNzTG41?=
- =?utf-8?B?aXJxd2NZeU05VnozQjJYMHZkZEdGdzVRMDEwQnMwMDljMlptN2NpbFdDREtw?=
- =?utf-8?B?bzJhVEU4Smw5WFk0WWU0NFRSUzE5WTgrenBRZ3NWWU5obHNDTlV1a3NTYXpY?=
- =?utf-8?B?QUx6My9VSGc1QWRIMU8wTzZGZmczYVdUaTNEeG5LUUg0Z083V0l6eWU0K3Rt?=
- =?utf-8?B?NjBUWENXK3h2cEF3YkFYUHRsMU8rWXlWVjZIODRYTC85SzNEVXFrZGVyUWhy?=
- =?utf-8?B?UEl6T3VJUzFEVXMzdHBTa2lERzdVdXZHN3J3YWZhOGk2ZXFmeEFqdWJhL0w0?=
- =?utf-8?B?cnhDaUdXbFNERmVHUm5yZFR1Rk4xUVFyckl0ZFNETlBKZHFYRnUyRkdBQit4?=
- =?utf-8?B?QW5jZGIxOUw5Q0k4VytBRGJweStaQUQwTUNDMzBJNVNvRHRha3VXNlJTUkVt?=
- =?utf-8?B?LzI3ZzY4eEx3QnJqOEtKWEJ1cGlIbGpYVHNRc2YvMndxZWRraFprUVU5UWU5?=
- =?utf-8?B?QlU2K2dhNjNORWNtRkpGQVF1Nis5YmJob1Q2b0grelNTQnMwcUQ4Q0xDWkhJ?=
- =?utf-8?B?d1UyWWJ6QjFhbFpkNUtDZXlsR0FnU0ZxZW1WUnZSZ0E1N3hQMWdSVThwT3hm?=
- =?utf-8?B?NXdhQ2F2dzZ0MDBPZU1uRk5JMXIxcU5TRjZGcldwL1I1cVplL2ZJdXBtN1Ja?=
- =?utf-8?B?SldTVWxKMUVTdXM1SEFtMDdVNjlYaE5MV0JhczF6MW9rWTVlNzR3UHlFOFFC?=
- =?utf-8?B?RTFKczh3RDFzZjNaUXpnbEhiVE0yQ3cyNkxtVzNRRXk0dDJHRU1RYm9sM3Ry?=
- =?utf-8?B?aGtyVU9uSVFGT3N5MURZU3YyQythaXJvYW9HOVRTSHBoUkhLdjFjOGZ1QXlF?=
- =?utf-8?B?NDY0TlJ6aHJFUzBMb0c3dTlTM3RNNnMyTUdBS1ZYSnEvQVdicXF5VXVJclZ2?=
- =?utf-8?B?UGRwQzVWNVZOa3Y5VEF3WjNlbTdReDBGbWNmWEh1MGpUZ0VpKzRidTBjdzBj?=
- =?utf-8?B?dmxjeVkzTHNyK1RGSVI2Njdtc1AwdThTcTZBWHVkYkxKT0QvdE9veWFUOEVU?=
- =?utf-8?B?RUhxZnJ2V2dQenpvbkQzMThGSURIb0JsYlNMeUJSZHI2dCtzM0pxRFNreWVU?=
- =?utf-8?B?ZFlCRlk4d094TnNEWUZpWmRjeGlxaHpWL1FGYjlENlFXSzNhWHdBT3hDblpm?=
- =?utf-8?B?cU1aaXUzMlVpaUpUZW51dGhkL3A2YjhQVElRTHJyYTVmZmVJYWZIbng3Yko3?=
- =?utf-8?B?SkVzaWFSRURzVW5MWFBMeGVydTFjeHBJdkpFTmQ4dU5Uc2FiaFVtbTVmYzFZ?=
- =?utf-8?B?VmY2b0UrWG5yL2pQSmptUHUvZnIxZGZ3RjJaaUZ0dGRpbDVVRGdZTWRxOTlW?=
- =?utf-8?B?Nm1EOVYxb0k3R0RuQitvckdWaFdkTVdSc0g1R0RNMGRRYnpKcGduN1crQUo5?=
- =?utf-8?B?S0JvQnFBQkdYazdocUJDMmc2ejFBOEpxeHdvcXh3SHpudzZ4MWZuNnJMaFV5?=
- =?utf-8?B?YnFTSjQvdlMzRi9MNjlTMzhMdmN1dWVYL3RYRjF5M0JIWVhQdDV5Znk0MVdJ?=
- =?utf-8?B?WmlCYzJ1bDBZUlowNWdnUG5sWVB2ZllLOERxdlBjdlU0WFlpUE9FVUdacitk?=
- =?utf-8?B?Zm5aVExDZW1udkprUGJWUWlhdjB3NGI5OUdjSFlJdjEzTUNaZklYZUtuQ25h?=
- =?utf-8?B?ZUE9PQ==?=
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3bee76ca-ff7a-4694-9b0d-08ddba34e06f
-X-MS-Exchange-CrossTenant-AuthSource: AS4PR04MB9692.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jul 2025 13:24:02.7040
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: aNOdErYU3Wcgn3HRqPrFcXOYk6FnSCJkG0pC7l7kIqe2GLm0fl603/fJlXBWPq9wENXjf7yNhJnLPUtSuRPfn84Wp3ox0qOWCxN/0gO2fnE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR04MB6896
+References: <20250702-bap_for_big_sync_lost-v3-1-d314b60abf7a@amlogic.com>
+ <CABBYNZLNdr5kW=AXYohCOp71CCmvir3hjeBungDHYq2gRD0xEg@mail.gmail.com> <05dcbdc1-893d-4ea6-8c8c-40abfbb906f4@amlogic.com>
+In-Reply-To: <05dcbdc1-893d-4ea6-8c8c-40abfbb906f4@amlogic.com>
+From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date: Thu, 3 Jul 2025 09:17:54 -0400
+X-Gm-Features: Ac12FXzUnJWp8QvNGNkSynwfAEU39ofj7p3ushwZjCNmImKUPOpTu-Og0ohQP6w
+Message-ID: <CABBYNZ+WVE6OKp+Um_g6Ji6CCE1eO+MSuPQz8WLw4QUFCZQ2Aw@mail.gmail.com>
+Subject: Re: [PATCH BlueZ bluez v3] shared/bap: Add stream state check in stream_disable
+To: Yang Li <yang.li@amlogic.com>
+Cc: Linux Bluetooth <linux-bluetooth@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This adds uevents which will be generated whenever FW dump is triggered,
-FW dump is complete and FW (re)download is done.
+Hi,
 
-This feature is needed for IW612 chipset, which is a tri-radio chipset,
-where WLAN runs on CPU1 and BT and Zigbee runs on CPU2.
+On Thu, Jul 3, 2025 at 4:40=E2=80=AFAM Yang Li <yang.li@amlogic.com> wrote:
+>
+> Hi Luzi,
+> > [ EXTERNAL EMAIL ]
+> >
+> > Hi,
+> >
+> > On Tue, Jul 1, 2025 at 9:19=E2=80=AFPM Yang Li via B4 Relay
+> > <devnull+yang.li.amlogic.com@kernel.org> wrote:
+> >> From: Yang Li <yang.li@amlogic.com>
+> >>
+> >> Add a state check so that stream_disable() is a no-op when the stream
+> >> is not in ENABLING or STREAMING state. This prevents unexpected state
+> >> transitions or redundant operations during cleanup.
+> > What is the issue here, do you have traces, debug logs, etc?
+>
+> Regarding the Unicast caching configuration you mentioned, there is
+> currently an issue in the code flow. The relevant log is shown below:
+>
+> When music is paused on the pixel 9 phone, the CIS link gets
+> disconnected. As the transport state changes from ACTIVE to IDLE, the
+> stream state transitions from config to qos.
+>
+>  > HCI Event: Disconnect Complete (0x05) plen 4           #1425 [hci0]
+> 49.572089
+> Status: Success (0x00)
+> Handle: 512 Address: 6A:AB:51:47:3B:80 (Resolvable)
+> Identity type: Random (0x01)
+> Identity: E8:D5:2B:59:57:A6 (Static)
+> Reason: Remote User Terminated Connection (0x13)
+> bluetoothd[2313]: src/shared/bap.c:stream_io_disconnected() stream
+> 0x1f9fc20 io disconnected
+> bluetoothd[2313]: src/shared/bap.c:bap_ucast_set_state() stream
+> 0x1f9fc20 dir 0x01: releasing -> config
+> bluetoothd[2313]: src/shared/bap.c:stream_notify() stream 0x1f9fc20
+> state 1
+> bluetoothd[2313]: profiles/audio/transport.c:bap_state_changed()
+> stream 0x1f9fc20: releasing(6) -> config(1)
+> bluetoothd[2313]:
+> profiles/audio/transport.c:transport_update_playing()
+> /org/bluez/hci0/dev_6A_AB_51_47_3B_80/fd1 State=3DTRANSPORT_STATE_ACTIVE
+> Playing=3D0
+> bluetoothd[2313]:
+> profiles/audio/transport.c:media_transport_remove_owner() Transport
+> /org/bluez/hci0/dev_6A_AB_51_47_3B_80/fd1 Owner :1.1
+> bluetoothd[2313]: profiles/audio/transport.c:media_owner_free() Owner
+> :1.1
+> bluetoothd[2313]:
+> profiles/audio/transport.c:media_transport_suspend() Transport
+> /org/bluez/hci0/dev_6A_AB_51_47_3B_80/fd1 Owner
+> bluetoothd[2313]: profiles/audio/transport.c:transport_set_state()
+> State changed /org/bluez/hci0/dev_6A_AB_51_47_3B_80/fd1:
+> TRANSPORT_STATE_ACTIVE -> TRANSPORT_STATE_IDLE
+> bluetoothd[2313]: src/shared/bap.c:stream_disable() stream 0x1f9fc20
+> bluetoothd[2313]: src/shared/bap.c:bap_ucast_set_state() stream
+> 0x1f9fc20 dir 0x01: config -> qos
 
-Currently, whenever BT FW crashes, and FW dump is in progress, there is
-no way for 15.4 application to know that CPU2 is in bad state, and when
-it will be recovered.
+Ok, this indeed is not expected, that said we do have the following
+checks already in place so we might as well update them:
 
-With the help of these uevents and udev rules, the 15.4 app, or any
-userspace application can be alerted whenever CPU2 goes in bad state and
-recoveres after BTNXPUART reloads the firmware.
+    if (!stream || stream->ep->state =3D=3D BT_BAP_STREAM_STATE_QOS ||
+            stream->ep->state =3D=3D BT_BAP_STREAM_STATE_IDLE)
+        return 0;
 
-[  334.255154] Bluetooth: hci0: ==== Start FW dump ===
-[  334.261003] Bluetooth: hci0: ==== Send uevent: BTNXPUART_DEV=serial0-0:BTNXPUART_STATE=FW_DUMP_ACTIVE ===
-[  351.486048] Bluetooth: hci0: ==== FW dump complete ===
-[  351.491356] Bluetooth: hci0: ==== Send uevent: BTNXPUART_DEV=serial0-0:BTNXPUART_STATE=FW_DUMP_DONE ===
-[  352.028974] Bluetooth: hci0: ChipID: 7601, Version: 0
-[  352.034490] Bluetooth: hci0: Request Firmware: nxp/uartspi_n61x_v1.bin.se
-[  353.979977] Bluetooth: hci0: FW Download Complete: 417064 bytes
-[  355.197222] Bluetooth: hci0: ==== Send uevent: BTNXPUART_DEV=serial0-0:BTNXPUART_STATE=FW_READY ===
+> ATTbluetoothd[2313]: < ACL Data TX: H.. flags 0x00 dlen 51 #1426
+> [hci0] 49.585656
+> ATT: Handle Value Notification (0x1b) len 46
+> Handle: 0x007b Type: Sink ASE (0x2bc4)
+> Data[44]:
+> 01010002050a00204e00409c00204e00409c0006000000001302010302020105030300000=
+003042800020501
+> ASE ID: 1
+> State: Codec Configured (0x01)
+> Framing: Unframed PDUs supported (0x00)
+> PHY: 0x02
+> LE 2M PHY preffered (0x02)
+> RTN: 5
+> Max Transport Latency: 10
+> Presentation Delay Min: 20000 us
+> ...
+> bluetoothd[2313]: < ACL Data TX: H.. flags 0x00 dlen 24 #1427 [hci0]
+> 49.585725
+> ATT: Handle Value Notification (0x1b) len 19
+> Handle: 0x007b Type: Sink ASE (0x2bc4)
+> Data[17]: 0102010010270000025000050a00204e00
+> ASE ID: 1
+> State: QoS Configured (0x02)
+> CIG ID: 0x01
+> CIS ID: 0x00
+> ...
+>
+> when playback resumes on the phone, it attempts to set the ASE state to
+> Codec. However, since the stream has already transitioned from config to
+> qos, the phone ends up disconnecting the connection.
+>
+> bluetoothd[2313]: < ACL Data TX: H.. flags 0x00 dlen 12  #1433 [hci0]
+> 60.216004
+> ATT: Handle Value Notification (0x1b) len 7
+> Handle: 0x0087 Type: ASE Control Point (0x2bc6)
+> Data[5]: 0101010000
+> Opcode: Codec Configuration (0x01)
+> Number of ASE(s): 1
+> ASE: #0
+> ASE ID: 0x01
+> ASE Response Code: Success (0x00)
+> ASE Response Reason: None (0x00)
+> bluetoothd[2313]: < ACL Data TX: H.. flags 0x00 dlen 51 #1434 [hci0]
+> 60.226086
+> ATT: Handle Value Notification (0x1b) len 46
+> Handle: 0x007b Type: Sink ASE (0x2bc4)
+> Data[44]:
+> 01010002050a00204e00409c00204e00409c0006000000001302010302020105030300000=
+003042800020501
+> ASE ID: 1
+> State: Codec Configured (0x01)
+> Framing: Unframed PDUs supported (0x00)
+> PHY: 0x02
+> LE 2M PHY preffered (0x02)
+> RTN: 5
+> Max Transport Latency: 10
+> Presentation Delay Min: 20000 us
+> Presentation Delay Max: 40000 us
+> Preferred Presentation Delay Min: 20000 us
+> Preferred Presentation Delay Max: 40000 us
+> Codec: LC3 (0x06)
+> Codec Specific Configuration: #0: len 0x02 type 0x01
+> Sampling Frequency: 16 Khz (0x03)
+> Codec Specific Configuration: #1: len 0x02 type 0x02
+> Frame Duration: 10 ms (0x01)
+> Codec Specific Configuration: #2: len 0x05 type 0x03
+> Location: 0x00000003
+> Front Left (0x00000001)
+> Front Right (0x00000002)
+> Codec Specific Configuration: #3: len 0x03 type 0x04
+> Frame Length: 40 (0x0028)
+> Codec Specific Configuration: #4: len 0x02 type 0x05
+> Frame Blocks per SDU: 1 (0x01)
+>
+> ...
+>
+>  > HCI Event: Disconnect Complete (0x05) plen 4           #1445 [hci0]
+> 63.651497
+> Status: Success (0x00)
+> Handle: 16 Address: 6A:AB:51:47:3B:80 (Resolvable)
+> Identity type: Random (0x01)
+> Identity: E8:D5:2B:59:57:A6 (Static)
+> Reason: Remote User Terminated Connection (0x13)
+>
+> Here is Pauli Virtanen=E2=80=99s analysis and solution:
+> https://lore.kernel.org/all/3ac16d0a7c5569bce0b28f18bc2245bef8ab64c2.came=
+l@iki.fi/
+>
+> AFAICS the bug appears to be:
+>
+> - bap.c:stream_disable() should do nothing if stream is
+> not ENABLING or STREAMING
+>
+> since it's called from bt_bap_stream_disable() which is called on
+> transport suspend which should be noop for BAP server if stream is
+> already gone.
+>
+> Next, I will attach the relevant btmon trace to the commit message.
+> >
+> >> Signed-off-by: Yang Li <yang.li@amlogic.com>
+> >> ---
+> >> Changes in v3:
+> >> - Optimizing the code
+> >> - Link to v2: https://patch.msgid.link/20250630-bap_for_big_sync_lost-=
+v2-0-1491b608cda5@amlogic.com
+> >>
+> >> bap for big sync lost
+> >>
+> >> To: Linux Bluetooth <linux-bluetooth@vger.kernel.org>
+> >> Signed-off-by: Yang Li <yang.li@amlogic.com>
+> >>
+> >> Changes in v2:
+> >> - Add state check in stream_disable.
+> >> - Add type check in stream_io_disconnected.
+> >> - Link to v1: https://patch.msgid.link/20250624-bap_for_big_sync_lost-=
+v1-1-0df90a0f55d0@amlogic.com
+> >> ---
+> >>   src/shared/bap.c | 22 ++++++++++++++--------
+> >>   1 file changed, 14 insertions(+), 8 deletions(-)
+> >>
+> >> diff --git a/src/shared/bap.c b/src/shared/bap.c
+> >> index 40e1c974b..1790b277b 100644
+> >> --- a/src/shared/bap.c
+> >> +++ b/src/shared/bap.c
+> >> @@ -2131,14 +2131,20 @@ static uint8_t stream_disable(struct bt_bap_st=
+ream *stream, struct iovec *rsp)
+> >>
+> >>          ascs_ase_rsp_success(rsp, stream->ep->id);
+> >>
+> >> -       /* Sink can autonomously transit to QOS while source needs to =
+go to
+> >> -        * Disabling until BT_ASCS_STOP is received.
+> >> -        */
+> >> -       if (stream->ep->dir =3D=3D BT_BAP_SINK)
+> >> -               stream_set_state(stream, BT_BAP_STREAM_STATE_QOS);
+> >> -
+> >> -       if (stream->ep->dir =3D=3D BT_BAP_SOURCE)
+> >> -               stream_set_state(stream, BT_BAP_STREAM_STATE_DISABLING=
+);
+> >> +       switch (stream->ep->state) {
+> >> +               case BT_ASCS_ASE_STATE_ENABLING:
+> >> +               case BT_ASCS_ASE_STATE_STREAMING:
+> >> +                       if (stream->ep->dir =3D=3D BT_BAP_SINK)
+> >> +                               stream_set_state(stream, BT_BAP_STREAM=
+_STATE_QOS);
+> >> +                       else if (stream->ep->dir =3D=3D BT_BAP_SOURCE)
+> >> +                               /* Sink can autonomously transit to QO=
+S while source needs to go to
+> >> +                               * Disabling until BT_ASCS_STOP is rece=
+ived.
+> >> +                               */
+> >> +                               stream_set_state(stream, BT_BAP_STREAM=
+_STATE_DISABLING);
+> >> +                       break;
+> >> +               default:
+> >> +                       break;
+> >> +       }
+> >>
+> >>          return 0;
+> >>   }
+> >>
+> >> ---
+> >> base-commit: 55a6763cde8a2309fd23a96479ee4cf2fc23a442
+> >> change-id: 20250624-bap_for_big_sync_lost-63476c679dbb
+> >>
+> >> Best regards,
+> >> --
+> >> Yang Li <yang.li@amlogic.com>
+> >>
+> >>
+> >>
+> >
+> > --
+> > Luiz Augusto von Dentz
 
-Tested this change by creating a simple udev rule to store the
-BTNXPUART_STATE value in a ~/<BTNXPUART_DEV>/state file, and running
-15.4 traffic.
 
-The 15.4 packets were sent over SPI only when BTNXPUART_STATE was
-FW_READY.
 
-Signed-off-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
-Tested-by: Jean-Yves Salaün <jean-yves.salaun@nxp.com>
----
- drivers/bluetooth/btnxpuart.c | 38 ++++++++++++++++++++++++++++++++++-
- 1 file changed, 37 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/bluetooth/btnxpuart.c b/drivers/bluetooth/btnxpuart.c
-index f40794be2d89..c16ff72c9948 100644
---- a/drivers/bluetooth/btnxpuart.c
-+++ b/drivers/bluetooth/btnxpuart.c
-@@ -1434,6 +1434,10 @@ static int nxp_set_bdaddr(struct hci_dev *hdev, const bdaddr_t *bdaddr)
- static int nxp_setup(struct hci_dev *hdev)
- {
- 	struct btnxpuart_dev *nxpdev = hci_get_drvdata(hdev);
-+	struct serdev_device *serdev = nxpdev->serdev;
-+	char device_string[30];
-+	char event_string[50];
-+	char *envp[] = {device_string, event_string, NULL};
- 	int err = 0;
- 
- 	if (nxp_check_boot_sign(nxpdev)) {
-@@ -1446,6 +1450,11 @@ static int nxp_setup(struct hci_dev *hdev)
- 		clear_bit(BTNXPUART_FW_DOWNLOADING, &nxpdev->tx_state);
- 	}
- 
-+	snprintf(device_string, 30, "BTNXPUART_DEV=%s", dev_name(&serdev->dev));
-+	snprintf(event_string, 50, "BTNXPUART_STATE=FW_READY");
-+	bt_dev_dbg(hdev, "==== Send uevent: %s:%s ===", device_string, event_string);
-+	kobject_uevent_env(&serdev->dev.kobj, KOBJ_CHANGE, envp);
-+
- 	serdev_device_set_baudrate(nxpdev->serdev, nxpdev->fw_init_baudrate);
- 	nxpdev->current_baudrate = nxpdev->fw_init_baudrate;
- 
-@@ -1766,6 +1775,33 @@ static const struct serdev_device_ops btnxpuart_client_ops = {
- 	.write_wakeup = btnxpuart_write_wakeup,
- };
- 
-+static void nxp_coredump_notify(struct hci_dev *hdev, int state)
-+{
-+	struct btnxpuart_dev *nxpdev = hci_get_drvdata(hdev);
-+	struct serdev_device *serdev = nxpdev->serdev;
-+	char device_string[30];
-+	char event_string[50];
-+	char *envp[] = {device_string, event_string, NULL};
-+
-+	snprintf(device_string, 30, "BTNXPUART_DEV=%s", dev_name(&serdev->dev));
-+	switch (state) {
-+	case HCI_DEVCOREDUMP_ACTIVE:
-+		snprintf(event_string, 50, "BTNXPUART_STATE=FW_DUMP_ACTIVE");
-+		break;
-+	case HCI_DEVCOREDUMP_DONE:
-+		snprintf(event_string, 50, "BTNXPUART_STATE=FW_DUMP_DONE");
-+		break;
-+	case HCI_DEVCOREDUMP_TIMEOUT:
-+		snprintf(event_string, 50, "BTNXPUART_STATE=FW_DUMP_TIMEOUT");
-+		break;
-+	default:
-+		snprintf(event_string, 50, "BTNXPUART_STATE=FW_DUMP_STATE_%d", state);
-+		break;
-+	}
-+	bt_dev_dbg(hdev, "==== Send uevent: %s:%s ===", device_string, event_string);
-+	kobject_uevent_env(&serdev->dev.kobj, KOBJ_CHANGE, envp);
-+}
-+
- static int nxp_serdev_probe(struct serdev_device *serdev)
- {
- 	struct hci_dev *hdev;
-@@ -1849,7 +1885,7 @@ static int nxp_serdev_probe(struct serdev_device *serdev)
- 	if (ps_setup(hdev))
- 		goto probe_fail;
- 
--	hci_devcd_register(hdev, nxp_coredump, nxp_coredump_hdr, NULL);
-+	hci_devcd_register(hdev, nxp_coredump, nxp_coredump_hdr, nxp_coredump_notify);
- 
- 	return 0;
- 
--- 
-2.34.1
-
+--=20
+Luiz Augusto von Dentz
 
