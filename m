@@ -1,151 +1,168 @@
-Return-Path: <linux-bluetooth+bounces-13602-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-13605-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9764AFA9B5
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Jul 2025 04:38:31 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D3D86AFAA3F
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Jul 2025 05:31:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 280FE3B2630
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Jul 2025 02:38:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 80E2F3B4530
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Jul 2025 03:30:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F24581BBBE5;
-	Mon,  7 Jul 2025 02:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84B8E259CB5;
+	Mon,  7 Jul 2025 03:31:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PZnkAC9+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wa8yturo"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C7A17D7;
-	Mon,  7 Jul 2025 02:38:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C223259CB1
+	for <linux-bluetooth@vger.kernel.org>; Mon,  7 Jul 2025 03:30:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751855901; cv=none; b=t6/c5Rvdst+3tn9VI2FUONrkfJC6uPwuV8JfifMgXGMLt4ahZm+PULxD28S88CV1DB8YxJT6F8i7Nyfvajm1RSd9mPUQKJckk5Ig4Hj6ZdtK3EyX+2T3VkwA/mFMz54wbIk4fRbHtmIBi0Ex8a6c2lk3EzEFsas0V4tsDpVgAxY=
+	t=1751859062; cv=none; b=pzqTKik0Cp6HVeLMO5NM2KgCoA2+LOw+8VWdjWhoOUhotezyrfegC7Ei+Afx4Mn+v2bTmpAS8DBP7OWpGA/D0EIDWUwUlzbo+MhDuybTvQodzNyvZ/arN1jW0655PSTDyxOuU4vx46Gxq8WeaC3jTjJ+8nkGE36cjxWkU5hKrWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751855901; c=relaxed/simple;
-	bh=jsMSlWRbC2p2Ki/3pcpBduSnR9cjT/0cdZHutS4pqLc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=OjxEB3u7w8asyxU55qHeZHE6suAs5YUrYdhiNe5h2joKmF5o1PXQsqU9hDwpZzEdR4aP68nsqSLbRXwoBosw4rjIfzLDIudfopKembPXTwP6bPrRcxHG5zNdokntChSKz5FET38XqFQId6J+3DTd6v7yrdP9vfv1JPOPPXyYxAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PZnkAC9+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C73FCC4CEED;
-	Mon,  7 Jul 2025 02:38:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751855900;
-	bh=jsMSlWRbC2p2Ki/3pcpBduSnR9cjT/0cdZHutS4pqLc=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=PZnkAC9+SBjAsCtt3qV6KEi9x/hY9NehFoEIyat4+oRtL/hXlHPQEVToNO/Yp5loj
-	 BhgIA2+8YFyL/R+G1xyrnfIdydDFxHzH7if1mHBAhrXnv1IWkATHQMkIq0oQ6j4yXg
-	 sf9PrtbEcWDyQf5rFOhL4vcthqvsriguUpgSLAMrFUl9BRnYyVqGSPDM7OKdaUyz3r
-	 t5Mto8v3nX5XLsc1a/KMteUtqs0nV05QnWPO29GSMWOgM6MhkseFXJHatBMyQKmOz3
-	 XdgmiJELHd2gvgO7dTDl7J41Z9Jwp8Qfx2rFe3+9sj7CR0gxMoHZCXXYOfscdMWBLa
-	 aH9885SA0tkCA==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B33A8C83F09;
-	Mon,  7 Jul 2025 02:38:20 +0000 (UTC)
-From: Yang Li via B4 Relay <devnull+yang.li.amlogic.com@kernel.org>
-Date: Mon, 07 Jul 2025 10:38:17 +0800
-Subject: [PATCH v4] Bluetooth: ISO: Support SCM_TIMESTAMPING for ISO TS
+	s=arc-20240116; t=1751859062; c=relaxed/simple;
+	bh=V79zvSb5gbNnsO9n7ojaiPPJ2H5nr0DR1ssbcne/Vkg=;
+	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
+	 In-Reply-To:References; b=FB/iwnMvZCQzMN6MZoDiE9eBmF1gclW91CjxekbWAPF1sOkSd0enQGIt1q5QDmIibSTt+n6Ea8eE0ByaXiEVuqEaqcLdMdh6ve4qsL7MANjCYw1siqKZDGOIOBoiXLISLwiI9Jw+oTFP9m2NdYPk3E+fLToMWpBx763COh5Nel4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wa8yturo; arc=none smtp.client-ip=209.85.222.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-7d5d1feca18so329491985a.2
+        for <linux-bluetooth@vger.kernel.org>; Sun, 06 Jul 2025 20:30:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751859059; x=1752463859; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=AkJHGMevQNJ1Y+R7TMIE32RNWIZU5TKUsNj3ivBMOA8=;
+        b=Wa8yturod9Z9CEAbKlLmlYYqBykIJ+SKxc9X/iiYvpNW/pBVa2WpnAhnTRxLtu4y7V
+         SL89d9tu8rs+dMiX+Q+/sKd7bfngCtYfHJu2gtlwJ9L3ooqMII0TZ7z40mTmtVl5s50H
+         ZW7Inktl8cNy0t7NI2e0w+Dk7+5u3VWcdIh7DXwmL++lzxavtx068BYTApEn8L0wj40h
+         xbhD3xORWoKePReEJjxbeiQywGFHGXg+37/a2sY1teNeO1VFM95LeEdf0maj9EuRUP7I
+         NC9YOvi3cDlkitLCXeniQBQSxFhcDodgvZZMXzmzJ3kQVb1WD5szdNjO73NJQhYPIz1e
+         pTsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751859059; x=1752463859;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AkJHGMevQNJ1Y+R7TMIE32RNWIZU5TKUsNj3ivBMOA8=;
+        b=WriQkAo6X7QsAvxHgjnWCQpkuyXy+shoC/9xabNcFCmJcxltAIhY4bU6s7g0p3t/xe
+         bTpgSxAa3xNjD6u8JxIxxcWFC4dIGEgM3+Dd0Q4NYbsvcjt7SG19cyaal9tGJlhwXosu
+         yogBdQaUfvPoMOjVU4gGBysIix8v5rU5P1RwD98lSVLrJoSr9UdJXHPzXsbI4sMdEfu+
+         MQqcPamR+Tbd/iniuZZkcNTnrS22SnFMYjrg6q3md5rzqQT9YGELrnRQET/Gx32Hl2C1
+         r5MW7vsnF3F8dgrqhw3w02zd3E9YRAueFGEoSPtFHy6SoBJ9yvrGB2u1npYLaQa39Z+7
+         rGmw==
+X-Gm-Message-State: AOJu0Yy8J05rTwy8nwJGYIy9hxI0YXfyT3W4hPzWSJYyzOha0sX0QKLZ
+	T3YV1jvBy4/SekcdNCx15VffiFx3W9ZQ5CX2QNm8uUBHVqJY9PsLt6zDBWUtig==
+X-Gm-Gg: ASbGnctlR34bWNcaTfD0sVkiAQ5/h3Aa3VYejc0J2FWcT+QyVqdNePangaJ++BQu8RX
+	zWQaMDbW5EaSsJNEek/t/nwoAVcHn7YXOQlH0gpOhqnlzRGCvJAiHDGK5WhgAv0MFtpnR13AVtB
+	bz8+Y6pwHKo8elG7heJvKyOtqI/JFPFqsE/9E1E3nKp947l4vwfvwA4Mipikc5tD79GEBhdS/Lg
+	8qeuMGpAPr8HuBgB2xTMwvgjzcPSmmm12Rd/57OzXyLvB8Ru3v0vK1d3BwaNuzHOaidIsHswnme
+	uFbFp0xQN+ZyBUwfyNLEqEdMc/w5MWNkpzyMWoVRJTwf638SueCWhzoB+OGfIaCv2JX5
+X-Google-Smtp-Source: AGHT+IHRQbFF2zTvwFVviLwjQQcBH/ZBh7IHh+KD6e0gRUwk+T5Lr+PZg9sTaYGsSrRptJwdVsGaww==
+X-Received: by 2002:a05:620a:a916:b0:7d5:e30f:ba06 with SMTP id af79cd13be357-7d5e30fba27mr1487460685a.9.1751859058754;
+        Sun, 06 Jul 2025 20:30:58 -0700 (PDT)
+Received: from [172.17.0.2] ([172.174.93.93])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4a994a8e1ebsm55262261cf.59.2025.07.06.20.30.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 06 Jul 2025 20:30:58 -0700 (PDT)
+Message-ID: <686b3f72.050a0220.7ef41.eb51@mx.google.com>
+Date: Sun, 06 Jul 2025 20:30:58 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============1306232811136654919=="
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250707-iso_ts-v4-1-0f0bb162a182@amlogic.com>
-X-B4-Tracking: v=1; b=H4sIABgza2gC/2XM0Q6CIBTG8VdxXEeDgyJ01Xu01hBR2VIaOFZzv
- nvoptW6/M7O7z+hYLw1AZ2yCXkTbbBuSCM/ZEh3amgNtnXaCAgUJAeKbXC3MWAtQDFClClFjtL
- zw5vGPtfQ5Zp2Z8Po/GvtRrpct4TcEpFiik0heMNIbbiuzqq/u9bqo3Y9WiIRPrAksENIsARWU
- ym1IFz8Q/YN8x2yBIGBqDQnIDn9hfM8vwEQFcK3EAEAAA==
-To: Marcel Holtmann <marcel@holtmann.org>, 
- Johan Hedberg <johan.hedberg@gmail.com>, 
- Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
- Simon Horman <horms@kernel.org>
-Cc: linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Yang Li <yang.li@amlogic.com>
-X-Mailer: b4 0.13-dev-f0463
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1751855898; l=2017;
- i=yang.li@amlogic.com; s=20240418; h=from:subject:message-id;
- bh=qgUJFn3trnlHdIpSsRIi/lqpwsE0ic/VXvHX/T3pPD0=;
- b=zGf02G9TNaUyf7AUHDel5TePBmF/SbbYQWX7X849oQ6I/tGvyPElaI8e+fsoFmd2x0K33eRP3
- 5JFDaZh67h3DLRD18THLJO/jQJci9dO7xnfy87onJmYzw8UB8FM3KCW
-X-Developer-Key: i=yang.li@amlogic.com; a=ed25519;
- pk=86OaNWMr3XECW9HGNhkJ4HdR2eYA5SEAegQ3td2UCCs=
-X-Endpoint-Received: by B4 Relay for yang.li@amlogic.com/20240418 with
- auth_id=180
-X-Original-From: Yang Li <yang.li@amlogic.com>
-Reply-To: yang.li@amlogic.com
+From: bluez.test.bot@gmail.com
+To: linux-bluetooth@vger.kernel.org, yang.li@amlogic.com
+Subject: RE: [v4] Bluetooth: ISO: Support SCM_TIMESTAMPING for ISO TS
+In-Reply-To: <20250707-iso_ts-v4-1-0f0bb162a182@amlogic.com>
+References: <20250707-iso_ts-v4-1-0f0bb162a182@amlogic.com>
+Reply-To: linux-bluetooth@vger.kernel.org
 
-From: Yang Li <yang.li@amlogic.com>
+--===============1306232811136654919==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-User-space applications (e.g. PipeWire) depend on
-ISO-formatted timestamps for precise audio sync.
+This is automated email and please do not reply to this email!
 
-The ISO ts is based on the controller’s clock domain,
-so hardware timestamping (hwtimestamp) must be used.
+Dear submitter,
 
-Ref: Documentation/networking/timestamping.rst,
-section 3.1 Hardware Timestamping.
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=979522
 
-Signed-off-by: Yang Li <yang.li@amlogic.com>
----
-Changes in v4:
-- Optimizing the code
-- Link to v3: https://lore.kernel.org/r/20250704-iso_ts-v3-1-2328bc602961@amlogic.com
+---Test result---
 
-Changes in v3:
-- Change to use hwtimestamp
-- Link to v2: https://lore.kernel.org/r/20250702-iso_ts-v2-1-723d199c8068@amlogic.com
+Test Summary:
+CheckPatch                    PENDING   0.27 seconds
+GitLint                       PENDING   0.25 seconds
+SubjectPrefix                 PASS      0.23 seconds
+BuildKernel                   PASS      24.65 seconds
+CheckAllWarning               PASS      27.47 seconds
+CheckSparse                   PASS      30.94 seconds
+BuildKernel32                 PASS      25.04 seconds
+TestRunnerSetup               PASS      475.90 seconds
+TestRunner_l2cap-tester       PASS      25.44 seconds
+TestRunner_iso-tester         PASS      40.61 seconds
+TestRunner_bnep-tester        PASS      6.01 seconds
+TestRunner_mgmt-tester        FAIL      132.02 seconds
+TestRunner_rfcomm-tester      PASS      9.62 seconds
+TestRunner_sco-tester         PASS      14.98 seconds
+TestRunner_ioctl-tester       PASS      10.20 seconds
+TestRunner_mesh-tester        FAIL      11.50 seconds
+TestRunner_smp-tester         PASS      8.72 seconds
+TestRunner_userchan-tester    PASS      6.41 seconds
+IncrementalBuild              PENDING   0.71 seconds
 
-Changes in v2:
-- Support SOCK_RCVTSTAMPNS via CMSG for ISO sockets
-- Link to v1: https://lore.kernel.org/r/20250429-iso_ts-v1-1-e586f30de6cb@amlogic.com
----
- net/bluetooth/iso.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Details
+##############################
+Test: CheckPatch - PENDING
+Desc: Run checkpatch.pl script
+Output:
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index fc22782cbeeb..677144bb6b94 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -2278,6 +2278,7 @@ static void iso_disconn_cfm(struct hci_conn *hcon, __u8 reason)
- void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
- {
- 	struct iso_conn *conn = hcon->iso_data;
-+	struct skb_shared_hwtstamps *hwts;
- 	__u16 pb, ts, len;
- 
- 	if (!conn)
-@@ -2301,13 +2302,16 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
- 		if (ts) {
- 			struct hci_iso_ts_data_hdr *hdr;
- 
--			/* TODO: add timestamp to the packet? */
- 			hdr = skb_pull_data(skb, HCI_ISO_TS_DATA_HDR_SIZE);
- 			if (!hdr) {
- 				BT_ERR("Frame is too short (len %d)", skb->len);
- 				goto drop;
- 			}
- 
-+			/*  Record the timestamp to skb*/
-+			hwts = skb_hwtstamps(skb);
-+			hwts->hwtstamp = us_to_ktime(le32_to_cpu(hdr->ts));
-+
- 			len = __le16_to_cpu(hdr->slen);
- 		} else {
- 			struct hci_iso_data_hdr *hdr;
+##############################
+Test: GitLint - PENDING
+Desc: Run gitlint
+Output:
+
+##############################
+Test: TestRunner_mgmt-tester - FAIL
+Desc: Run mgmt-tester with test-runner
+Output:
+Total: 490, Passed: 483 (98.6%), Failed: 3, Not Run: 4
+
+Failed Test Cases
+LL Privacy - Add Device 3 (AL is full)               Failed       0.229 seconds
+LL Privacy - Set Flags 1 (Add to RL)                 Failed       0.159 seconds
+LL Privacy - Start Discovery 2 (Disable RL)          Failed       0.203 seconds
+##############################
+Test: TestRunner_mesh-tester - FAIL
+Desc: Run mesh-tester with test-runner
+Output:
+Total: 10, Passed: 8 (80.0%), Failed: 2, Not Run: 0
+
+Failed Test Cases
+Mesh - Send cancel - 1                               Timed out    2.044 seconds
+Mesh - Send cancel - 2                               Timed out    1.998 seconds
+##############################
+Test: IncrementalBuild - PENDING
+Desc: Incremental build with the patches in the series
+Output:
+
+
 
 ---
-base-commit: b8db3a9d4daeb7ff6a56c605ad6eca24e4da78ed
-change-id: 20250421-iso_ts-c82a300ae784
-
-Best regards,
--- 
-Yang Li <yang.li@amlogic.com>
+Regards,
+Linux Bluetooth
 
 
+--===============1306232811136654919==--
 
