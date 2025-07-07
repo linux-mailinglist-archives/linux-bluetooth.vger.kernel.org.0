@@ -1,147 +1,96 @@
-Return-Path: <linux-bluetooth+bounces-13604-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-13606-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B872AFAA34
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Jul 2025 05:30:33 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3D04DAFAA73
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Jul 2025 05:56:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CC97D3B54A6
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Jul 2025 03:30:06 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 26A617A2D0D
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Jul 2025 03:55:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43F29259CB5;
-	Mon,  7 Jul 2025 03:30:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75F29242D9A;
+	Mon,  7 Jul 2025 03:56:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cDLfrL3m"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BpqDprXQ"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E392F1E48A
-	for <linux-bluetooth@vger.kernel.org>; Mon,  7 Jul 2025 03:30:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D90E91373
+	for <linux-bluetooth@vger.kernel.org>; Mon,  7 Jul 2025 03:56:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751859027; cv=none; b=ETDydGbd2PrDlsoUH/XkhdJPYWYyWrtMeujbeFCwUob+ullR5kCcs92WTaIZ/o43mp/If+xU5mlCtp2ZQDDc83p7hOGR55d35Cj8vthAlqkM8nZ3qBwMJ+SeUN4druudQcZc7CHVp0l9ogMwFNAMfd/c31G6m7+gVv9K5g1JgAk=
+	t=1751860603; cv=none; b=bGJAXZeH1J7jrfW3xjWlbf/PVK4D6+h8V8x4BalHA+hPhvG9XB/thWEQakT8kn1aCLdQe1SkCROOqLuUqAP8uGkzMwCQYQYyJ5dj4z4eKq/P6LQOwxGjch+qRya11m8GH+R+AMyk9U1YsQ7vv4iy6UDC767aGuEROzymurejJFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751859027; c=relaxed/simple;
-	bh=InLn7A2YlAhV57wokox8y4A6sdxX0K1AvFRwCTkaHjk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H7lczjtiKxcvbBgr/F8mWTx6gVOS51kDiyyKmbP43SRDqd8zRyU5zdvE5Z3FhXNWD0vt+rqgCdyEXOVAqC39+5xyIn9WgUmFfnwwn7z+ThljmS9kbVveObHauVqUnvc9TZa6IzgAgMcShwcMY6JhzAm4Vr5kN248eacR9KWGFc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cDLfrL3m; arc=none smtp.client-ip=192.198.163.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1751859026; x=1783395026;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=InLn7A2YlAhV57wokox8y4A6sdxX0K1AvFRwCTkaHjk=;
-  b=cDLfrL3m/uzx4FZx0j8rLmm7BGzK1bKaVcP4exbAZuc4Kh2OVhNJ1pR7
-   NhWCM5XhxBkf9MXL+T+W3dmHCsEjTYYs22+r2sS1pYTYyOS3kz23ODQYW
-   qPa/QXzwciNwDkTKHEi026VQ6Hhf9UCIno92Q8JGntLh2Mobc7n3tABZc
-   uqKEe3BlK1QoQHqpXXtO3rWxMxAafkH9zQFkirzofik3D9md5TzciwRt1
-   22RxwFJW/SDRnkxcV0MRFfYOC3pUFcJ+Ew47jowSbWXEZLIFO5qrxEkaR
-   izMtvmZDi7ikdZ3FVAwdZV4TXkicbHpF+09iaMS+0fw8SxfeUOr3/02x3
-   g==;
-X-CSE-ConnectionGUID: mOYQF5UNQ6CdpKyhd7/CNQ==
-X-CSE-MsgGUID: DC780QcJRaiI9dEMow0LTA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11486"; a="79507174"
-X-IronPort-AV: E=Sophos;i="6.16,293,1744095600"; 
-   d="scan'208";a="79507174"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jul 2025 20:30:26 -0700
-X-CSE-ConnectionGUID: 2QLAuuwgSpi9zE6oaXkA+Q==
-X-CSE-MsgGUID: oL3xEATaTfuB7fE6BqfbNw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,293,1744095600"; 
-   d="scan'208";a="159451541"
-Received: from unknown (HELO intel-Lenovo-Legion-Y540-15IRH-PG0.iind.intel.com) ([10.224.186.95])
-  by orviesa003.jf.intel.com with ESMTP; 06 Jul 2025 20:30:24 -0700
-From: Kiran K <kiran.k@intel.com>
+	s=arc-20240116; t=1751860603; c=relaxed/simple;
+	bh=JohLCWC7lH6PUmsWhhMyaaTK04XaWmyrUsiJssXIJ6g=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=RZqOiyAqFsgPzH2RraPkxiv2ThvOr6N7L1hyL2n2g+3L5EWXpn5UvsUUMNync7fKMaa/cm0/zSITt9jTNyuiOESVuRlLAPlkBp72sbBu+WnEiDqtB61d1RYKequ+eHthSZIJxz1zUsekd2aNbwsUYuCEQpXiNDu73Xc88UAYDHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BpqDprXQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 4CA4FC4CEEE
+	for <linux-bluetooth@vger.kernel.org>; Mon,  7 Jul 2025 03:56:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1751860603;
+	bh=JohLCWC7lH6PUmsWhhMyaaTK04XaWmyrUsiJssXIJ6g=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=BpqDprXQ2UKp/ja6JJ+TH1/w9JEIFNVL+63gwTfVxHMs83zibvgbCT3vjuKAjMUR+
+	 /ObC8TRRkDm0moo+ssqIGUCO0uyiJBtufSlpBI9HW3dF6k/ywYJHG2gPVRM7KXveJ7
+	 U39MW1ZpHUAtlgHqCSAdETseTLF1uxKfvszORzaPU0u3iVvUc/euPMSdJCVaYZOLvj
+	 7N3WgusgPxEzqNyTqU69/yuAY4+6wQY3Z5ZaMc4zp1DkhaDBHzIi2nWb7y6u6JKQqa
+	 NEbRfKH10eNb4IUDwJ4JsTWEeQHwhIsTywGwuh5xEBVr3OL9eBE4jw1X7Q7y7yQLDe
+	 biLZLH88becyQ==
+Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
+	id 389C2C433E1; Mon,  7 Jul 2025 03:56:43 +0000 (UTC)
+From: bugzilla-daemon@kernel.org
 To: linux-bluetooth@vger.kernel.org
-Cc: ravishankar.srivatsa@intel.com,
-	chethan.tumkur.narayan@intel.com,
-	chandrashekar.devegowda@intel.com,
-	aluvala.sai.teja@intel.com,
-	Kiran K <kiran.k@intel.com>
-Subject: [PATCH v1 2/2] Bluetooth: btintel_pcie: Fix alive context state handling
-Date: Mon,  7 Jul 2025 09:16:57 +0530
-Message-ID: <20250707034657.929092-2-kiran.k@intel.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250707034657.929092-1-kiran.k@intel.com>
-References: <20250707034657.929092-1-kiran.k@intel.com>
+Subject: [Bug 220306] Updated ibt-18-16-1.sfi is bugged, "Invalid exception
+ type 03" kernel spam
+Date: Mon, 07 Jul 2025 03:56:43 +0000
+X-Bugzilla-Reason: AssignedTo
+X-Bugzilla-Type: changed
+X-Bugzilla-Watch-Reason: None
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: Bluetooth
+X-Bugzilla-Version: 2.5
+X-Bugzilla-Keywords: 
+X-Bugzilla-Severity: high
+X-Bugzilla-Who: kiran.k@intel.com
+X-Bugzilla-Status: NEW
+X-Bugzilla-Resolution: 
+X-Bugzilla-Priority: P3
+X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
+X-Bugzilla-Flags: 
+X-Bugzilla-Changed-Fields: 
+Message-ID: <bug-220306-62941-kpsDKTdr10@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-220306-62941@https.bugzilla.kernel.org/>
+References: <bug-220306-62941@https.bugzilla.kernel.org/>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Bugzilla-URL: https://bugzilla.kernel.org/
+Auto-Submitted: auto-generated
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Firmware raises alive interrpt on sending 0xfc01 command. Alive context
-maintained in driver needs to be updated before sending 0xfc01 (Intel
-Reset) or 0x03c0 (HCI Reset) to avoid the potential race condition where
-the context is also updated in threaded irq.
+https://bugzilla.kernel.org/show_bug.cgi?id=3D220306
 
-Signed-off-by: Kiran K <kiran.k@intel.com>
-Signed-off-by: Sai Teja Aluvala <aluvala.sai.teja@intel.com>
-Fixes: 05c200c8f029 ("Bluetooth: btintel_pcie: Add handshake between driver and firmware")
----
- drivers/bluetooth/btintel_pcie.c | 25 ++++++++++++++-----------
- 1 file changed, 14 insertions(+), 11 deletions(-)
+--- Comment #7 from Kiran (kiran.k@intel.com) ---
+Hi Artem S. Tashkinov,
 
-diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
-index f893ad6fc87a..d29103b102e4 100644
---- a/drivers/bluetooth/btintel_pcie.c
-+++ b/drivers/bluetooth/btintel_pcie.c
-@@ -1988,10 +1988,6 @@ static int btintel_pcie_send_frame(struct hci_dev *hdev,
- 				btintel_pcie_inject_cmd_complete(hdev, opcode);
- 		}
- 
--		/* Firmware raises alive interrupt on HCI_OP_RESET or 0xfc01*/
--		if (opcode == HCI_OP_RESET || opcode == 0xfc01)
--			data->gp0_received = false;
--
- 		hdev->stat.cmd_tx++;
- 		break;
- 	case HCI_ACLDATA_PKT:
-@@ -2012,6 +2008,20 @@ static int btintel_pcie_send_frame(struct hci_dev *hdev,
- 	memcpy(skb_push(skb, BTINTEL_PCIE_HCI_TYPE_LEN), &type,
- 	       BTINTEL_PCIE_HCI_TYPE_LEN);
- 
-+	if (type == BTINTEL_PCIE_HCI_CMD_PKT) {
-+		/* Firmware raises alive interrupt on HCI_OP_RESET or 0xfc01*/
-+		if (opcode == HCI_OP_RESET || opcode == 0xfc01) {
-+			data->gp0_received = false;
-+			old_ctxt = data->alive_intr_ctxt;
-+			data->alive_intr_ctxt =
-+				(opcode == 0xfc01 ? BTINTEL_PCIE_INTEL_HCI_RESET1 :
-+					BTINTEL_PCIE_HCI_RESET);
-+			bt_dev_dbg(data->hdev, "sending cmd: 0x%4.4x alive context changed: %s  ->  %s",
-+				   opcode, btintel_pcie_alivectxt_state2str(old_ctxt),
-+				   btintel_pcie_alivectxt_state2str(data->alive_intr_ctxt));
-+		}
-+	}
-+
- 	ret = btintel_pcie_send_sync(data, skb);
- 	if (ret) {
- 		hdev->stat.err_tx++;
-@@ -2021,13 +2031,6 @@ static int btintel_pcie_send_frame(struct hci_dev *hdev,
- 
- 	if (type == BTINTEL_PCIE_HCI_CMD_PKT &&
- 	    (opcode == HCI_OP_RESET || opcode == 0xfc01)) {
--		old_ctxt = data->alive_intr_ctxt;
--		data->alive_intr_ctxt =
--			(opcode == 0xfc01 ? BTINTEL_PCIE_INTEL_HCI_RESET1 :
--				BTINTEL_PCIE_HCI_RESET);
--		bt_dev_dbg(data->hdev, "sent cmd: 0x%4.4x alive context changed: %s  ->  %s",
--			   opcode, btintel_pcie_alivectxt_state2str(old_ctxt),
--			   btintel_pcie_alivectxt_state2str(data->alive_intr_ctxt));
- 		ret = wait_event_timeout(data->gp0_wait_q,
- 					 data->gp0_received,
- 					 msecs_to_jiffies(BTINTEL_DEFAULT_INTR_TIMEOUT_MS));
--- 
-2.43.0
+Sai would revert this firmware for now and follow up with firmware team for
+further debug.
 
+Thanks,
+Kiran
+
+--=20
+You may reply to this email to add a comment.
+
+You are receiving this mail because:
+You are the assignee for the bug.=
 
