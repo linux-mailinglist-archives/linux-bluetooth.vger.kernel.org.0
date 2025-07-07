@@ -1,49 +1,49 @@
-Return-Path: <linux-bluetooth+bounces-13650-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-13651-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7D4FAFBA63
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Jul 2025 20:10:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 35A95AFBA65
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Jul 2025 20:10:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D1C133B0AFD
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Jul 2025 18:09:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 397C21897785
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  7 Jul 2025 18:10:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF6D4264A60;
-	Mon,  7 Jul 2025 18:09:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64F162652AC;
+	Mon,  7 Jul 2025 18:09:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fl9mCUyT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dA+MJrP6"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576F122A4DA
-	for <linux-bluetooth@vger.kernel.org>; Mon,  7 Jul 2025 18:09:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB0C264A71
+	for <linux-bluetooth@vger.kernel.org>; Mon,  7 Jul 2025 18:09:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751911787; cv=none; b=kk2pisSVaTcYy+WBHHk1YmjYs1ZmWPXKk9NCxKDV120mcSLkAkwiQ3vhlAcTC0yaYlSij7tnGgf9TVd5/z0jERP8Q8JnUH1dPH0dMimN5uRVrsy5rxqf+8Ip2CHTMV8+B118CzM+lMhOJLoU/IPadJ68GkIGkeKKxok+7eu8PPo=
+	t=1751911788; cv=none; b=lBG7AWG41bmm0f1ffGhAHAZFJYWHe8HNFpvvYDti/VVAlDyKG5JgJ/+unUVA89S+zLlqPoLBZ3bHHHm3sWBuEwe/l4/9gWQVEEG/k34hgd28+qfCIc2ouVvoF1OfMlyvhS0cfUCHLftGEi0RAWwlC0wP498rTvTgah6ZG2Gfb7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751911787; c=relaxed/simple;
-	bh=cXUaXbzmL3MsfMla4tW0pjihaS+d4N/gAPkxL5H4aXs=;
+	s=arc-20240116; t=1751911788; c=relaxed/simple;
+	bh=YjjFULAODu1pKIPp0ihS8j+YG2WFi0jp2iA+gytdWLo=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=KWj+6eq8+6S3kwZTUZ6qK9MuUQsQ0wQGxDOHsbHkX9ZmZ+tHEJHEhkr0HKDz0/EoVa03rnJLThFLDgDrt9BPfzOmTnssALf6Xa8yoaQq9GMdzz3wbHBkrzQU/WiCkAT5fWKaestb4LKv7tUg7epUlpjRFX+UzO+ZfzwmNY0ksIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fl9mCUyT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDFB6C4CEE3;
-	Mon,  7 Jul 2025 18:09:46 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=itOYVo3O3XxzwPDOGu7q51zboKtx09QoqlmB0EO62HO5R4FkCASIZBkMsgB284K0ZhtLmwGv16MQrZDdc2ntULgYzOWsyJSmD/TMrpFzMDloq7NpzLkoPfKHJVTNZAzPZsMle84IRBL7MNMeiTfK5G/Z7h/wskyUN3WBfUtkEk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dA+MJrP6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51EAFC4CEE3;
+	Mon,  7 Jul 2025 18:09:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1751911786;
-	bh=cXUaXbzmL3MsfMla4tW0pjihaS+d4N/gAPkxL5H4aXs=;
+	s=k20201202; t=1751911788;
+	bh=YjjFULAODu1pKIPp0ihS8j+YG2WFi0jp2iA+gytdWLo=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=fl9mCUyTH32sAKwjF27EUjmt2gmvtmb90/To72neOf8jp9Wi/86JQj4HpgEfFkKLQ
-	 WD5jB6AxSwZGuuMdWuyODpviuW15lriIVbaSTVLfMMIBR11JNjSal+7A2bQjdIf/kj
-	 QXk9VRoLbgmS9GA4DpyIEW+MKblZMPDqhCdyMBMDIj29t0jjEg8ZZYDcaPCvSDM9Ml
-	 e/OceOu4ZoAK8lP3BQeNj/XQbO6+edUs1UyIGhsigbbhwRcDXoNYeGMLIyYkevtxna
-	 eK9zOhzOKTv0uVe8/MtFDgUJ/4UbGsgIiCY5QhddTbb+p9p0f07DuZyoc6ZAD3smnS
-	 tLGPYSyT6MkLw==
+	b=dA+MJrP6oM/FZ7OYShELnqZgQzMRuF6DV6ViP1jAej3VN2OQn/H3yJJNfboSuEzz2
+	 wqiuczg0RKO55xsQ9K210FciWVrQFdAv4uoHF70LN/i86VBjpGnGI5i4ifRqIsu2cX
+	 +Cea2FQKDL6aYs5MmTTPYEZvBeMSZCzjNN84O46t/Nb69gKlFSr9AMHCZvsG+s2x21
+	 jwTtXblp4f7PUGIJ7YNYRM00RyLuv3ePvSKbPgc24cUrupLUpTHsPJmoxPr+4Piity
+	 h+Fgdb6IAZjy3LUrpXpe6DMXgndJBjvkJsB4imONo0Liy3Z0PxMWopJ0f1TwvDS4Vm
+	 otGb3oX2/kFhg==
 Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 33D61383BA25;
-	Mon,  7 Jul 2025 18:10:11 +0000 (UTC)
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id AE323383BA25;
+	Mon,  7 Jul 2025 18:10:12 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
@@ -52,90 +52,35 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ 00/19] Fix typos
+Subject: Re: [PATCH BlueZ 0/1] Fix double free in obexd/client.
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <175191180997.3378325.14050348753349283122.git-patchwork-notify@kernel.org>
-Date: Mon, 07 Jul 2025 18:10:09 +0000
-References: <20250703085630.935452-1-hadess@hadess.net>
-In-Reply-To: <20250703085630.935452-1-hadess@hadess.net>
-To: Bastien Nocera <hadess@hadess.net>
+ <175191181124.3378325.4493638428859276505.git-patchwork-notify@kernel.org>
+Date: Mon, 07 Jul 2025 18:10:11 +0000
+References: <20250707145242.2356210-1-i.iskakov@omp.ru>
+In-Reply-To: <20250707145242.2356210-1-i.iskakov@omp.ru>
+To: Ismagil Iskakov <i.iskakov@omp.ru>
 Cc: linux-bluetooth@vger.kernel.org
 
 Hello:
 
-This series was applied to bluetooth/bluez.git (master)
+This patch was applied to bluetooth/bluez.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Thu,  3 Jul 2025 10:53:08 +0200 you wrote:
-> Used codespell to detect typos, and my head to remove the false
-> positive.
+On Mon, 7 Jul 2025 17:52:41 +0300 you wrote:
+> This patch fixes double free that could have happened
+> when 'contents' in obc_transfer_get_contents could not
+> be read. The second free then would've occured in
+> image_properties_complete_cb at the end.
 > 
-> Please review line-by-line before applying, it's long, but won't be as
-> long as fixing those typos ;)
-> 
-> Bastien Nocera (19):
->   android: Fix typos
->   Fix typos in top-level project docs
->   attrib: Fix typos
->   doc: Fix typos
->   client: Fix typos
->   emulator: Fix typos
->   gobex: Fix typos
->   lib: Fix typos
->   mesh: Fix typos
->   monitor: Fix typos
->   obexd: Fix typos
->   peripheral: Fix typo
->   plugins: Fix typos
->   profiles: Fix typos
->   src: Fix typos
->   shared: Fix typos
->   test: Fix typos
->   unit: Fix typos
->   tools: Fix typos
+> Ismagil Iskakov (1):
+>   obexd/client: prevent double freeing
 > 
 > [...]
 
 Here is the summary with links:
-  - [BlueZ,01/19] android: Fix typos
-    (no matching commit)
-  - [BlueZ,02/19] Fix typos in top-level project docs
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=d46ec5f46c36
-  - [BlueZ,03/19] attrib: Fix typos
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=87fb2b7b5a80
-  - [BlueZ,04/19] doc: Fix typos
-    (no matching commit)
-  - [BlueZ,05/19] client: Fix typos
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=9986633b3155
-  - [BlueZ,06/19] emulator: Fix typos
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=e3b9fc5ac340
-  - [BlueZ,07/19] gobex: Fix typos
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=a1b1d08d430d
-  - [BlueZ,08/19] lib: Fix typos
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=9e9f27057784
-  - [BlueZ,09/19] mesh: Fix typos
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=ce78b15e67b0
-  - [BlueZ,10/19] monitor: Fix typos
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=27b1e893cd99
-  - [BlueZ,11/19] obexd: Fix typos
-    (no matching commit)
-  - [BlueZ,12/19] peripheral: Fix typo
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=a1f82f1020f9
-  - [BlueZ,13/19] plugins: Fix typos
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=4d68c6090471
-  - [BlueZ,14/19] profiles: Fix typos
-    (no matching commit)
-  - [BlueZ,15/19] src: Fix typos
-    (no matching commit)
-  - [BlueZ,16/19] shared: Fix typos
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=f019d0671875
-  - [BlueZ,17/19] test: Fix typos
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=32e3d6351d3f
-  - [BlueZ,18/19] unit: Fix typos
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=de69e5a3ab7d
-  - [BlueZ,19/19] tools: Fix typos
-    (no matching commit)
+  - [BlueZ,1/1] obexd/client: prevent double freeing
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=be8c031baaa8
 
 You are awesome, thank you!
 -- 
