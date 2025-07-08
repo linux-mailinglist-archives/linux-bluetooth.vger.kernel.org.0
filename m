@@ -1,85 +1,100 @@
-Return-Path: <linux-bluetooth+bounces-13702-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-13704-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 974FEAFC846
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Jul 2025 12:24:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 461E1AFC8BA
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Jul 2025 12:45:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B4A2B485B63
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Jul 2025 10:24:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 63DAC3A8559
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Jul 2025 10:45:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBCBD269885;
-	Tue,  8 Jul 2025 10:24:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D35B2D8777;
+	Tue,  8 Jul 2025 10:42:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="d2TFyNJk"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from relay7-d.mail.gandi.net (relay7-d.mail.gandi.net [217.70.183.200])
+Received: from out-23.smtp.github.com (out-23.smtp.github.com [192.30.252.206])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A3721767A
-	for <linux-bluetooth@vger.kernel.org>; Tue,  8 Jul 2025 10:24:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED282D8397
+	for <linux-bluetooth@vger.kernel.org>; Tue,  8 Jul 2025 10:42:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.206
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751970270; cv=none; b=GSjrORbdgim7iu/gtC9W7mTJKq6Ana1e6y2uDKak2BQZk4iZfOUi9oluw1a2s+AS63zpd8MMK5x4TG9PNXdf6iDAH7++PL/UIdeI0UMhZ/er7rPNvwBbCRIpiVoleU798QBK0zXGR9ZiKIKdF4Nvgz/Jxfi0obWb1bJPaSSplGs=
+	t=1751971350; cv=none; b=kaYAB3XAsJa327lH2Jt1BvnIPkW9FfDvSmXm81s7C1Cw2EJUUOX19hyDpys/k9Xs+JjUa/JCDkGlWIaQ9/hgd6ekzAk0lMuq06bfLNmSKvb+wSjq4o0jSkldbTueAsbCeE34T6I+vnDG//jHLGoOGX+TxcgNvUkH5SencQCH5JQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751970270; c=relaxed/simple;
-	bh=ElVoLWup8CoWP4rpRdiXjD7z16DlGFhN3jdav0Sq/BI=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mzH6Kyqqz5Cnta67m/TCXkz7lNHsNPE9NGHERwpBqGaOH1Kbxl0oPffmw2MQsZwVBKo9FTDIWSNlehhTVZXGm86O2Zca7kAWxblKLlqea9Kut5YFL8MhtK80gHIw6ry1XlimZY8FlEwiYgy3VVY/HY5oktzSfL1wla5w3lpVhGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.200
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id DA1D2438F0
-	for <linux-bluetooth@vger.kernel.org>; Tue,  8 Jul 2025 10:24:26 +0000 (UTC)
-From: Bastien Nocera <hadess@hadess.net>
+	s=arc-20240116; t=1751971350; c=relaxed/simple;
+	bh=fCcXOlF86em/hSvr9YgV8EWr0byKIaRUc88SPg7ihAY=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=s4eId/7iJyUGVMaii4hhE+BfTHgWp6SiLi6i0FKxrCM4kp3USw35He+nivPINxwd74X4BN6G6uNbVH4UHf1vSPjib1DabZ1VS+DBCNSTd4UkxG6ERcDBP6dDxwWqHezg8LHMKQo363YQ99/VPbHTYKvHnjztGWw/X28fr/NnLtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=d2TFyNJk; arc=none smtp.client-ip=192.30.252.206
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
+Received: from github.com (hubbernetes-node-3a5170f.ac4-iad.github.net [10.52.184.34])
+	by smtp.github.com (Postfix) with ESMTPA id 617622114B
+	for <linux-bluetooth@vger.kernel.org>; Tue,  8 Jul 2025 03:42:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+	s=pf2023; t=1751971348;
+	bh=mIRqw4Q35SBYCNbv/lf/2Pn7YTGtDv6cUrb1WX/NKIc=;
+	h=Date:From:To:Subject:List-Unsubscribe:From;
+	b=d2TFyNJk/IV8mY8jURf0w/K0XSiz0nLwAWcp+IG0AP1kc0Ym6NPGLydmp8WDeMmJe
+	 rdD8MlOBV0f9eTFMgTzuU0zbQ+5aIZQtNSjh/2bAt3aKx5ch+BfoJUX/TbAHzKlEz0
+	 tfWkO3ghn4qIL4xiRcUU4p6XqPbzpvcC3lnoweVM=
+Date: Tue, 08 Jul 2025 03:42:28 -0700
+From: hadess <noreply@github.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 2/2] build: Remove deleted files from .gitignore
-Date: Tue,  8 Jul 2025 12:24:09 +0200
-Message-ID: <20250708102418.1863891-2-hadess@hadess.net>
-X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250708102418.1863891-1-hadess@hadess.net>
-References: <20250708102418.1863891-1-hadess@hadess.net>
+Message-ID: <bluez/bluez/push/refs/heads/979993/000000-c99487@github.com>
+Subject: [bluez/bluez] 13d79c: build: Remove deleted configure option
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-GND-State: clean
-X-GND-Score: 0
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefgeegfecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucenucfjughrpefhvffufffkofgjfhgggfestdekredtredttdenucfhrhhomhepuegrshhtihgvnhcupfhotggvrhgruceohhgruggvshhssehhrgguvghsshdrnhgvtheqnecuggftrfgrthhtvghrnhepkeetteegtedtheeiudeitddtteffleelhedtjeekleeuvdfgffdvveetteduhfeknecukfhppedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemjeduuggrmeefsggumedvtdgrleemudeffeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemjeduuggrmeefsggumedvtdgrleemudeffedphhgvlhhopeholhhimhhpihgtpdhmrghilhhfrhhomhephhgruggvshhssehhrgguvghsshdrnhgvthdpnhgspghrtghpthhtohepuddprhgtphhtthhopehlihhnuhigqdgslhhuvghtohhothhhsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-GND-Sasl: hadess@hadess.net
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
+
+  Branch: refs/heads/979993
+  Home:   https://github.com/bluez/bluez
+  Commit: 13d79ca76aa5088939112969d6cbfd9ffddc3bc5
+      https://github.com/bluez/bluez/commit/13d79ca76aa5088939112969d6cbfd9ffddc3bc5
+  Author: Bastien Nocera <hadess@hadess.net>
+  Date:   2025-07-08 (Tue, 08 Jul 2025)
+
+  Changed paths:
+    M bootstrap-configure
+
+  Log Message:
+  -----------
+  build: Remove deleted configure option
+
+Remove this option now that that the supporting code has been
+removed, fixes a configure warning:
+configure: WARNING: unrecognized options: --enable-android
+
+Fixes: f0512114aacf ("Remove android support")
+
+
+  Commit: c9948759d928f5fb009c3d1925e97739b44f46d6
+      https://github.com/bluez/bluez/commit/c9948759d928f5fb009c3d1925e97739b44f46d6
+  Author: Bastien Nocera <hadess@hadess.net>
+  Date:   2025-07-08 (Tue, 08 Jul 2025)
+
+  Changed paths:
+    M .gitignore
+
+  Log Message:
+  -----------
+  build: Remove deleted files from .gitignore
 
 As all the android support was removed in
 f0512114aacf ("Remove android support").
----
- .gitignore | 11 -----------
- 1 file changed, 11 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 108c3b820a7f..155a65c5a5d5 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -174,17 +174,6 @@ unit/test-vcp
- unit/test-*.log
- unit/test-*.trs
- 
--android/system-emulator
--android/bluetoothd
--android/avdtptest
--android/haltest
--android/android-tester
--android/ipc-tester
--android/bluetoothd-snoop
--android/test-ipc
--android/test-*.log
--android/test-*.trs
--
- compile_commands.json
- cscope.in.out
- cscope.out
--- 
-2.50.0
 
+Compare: https://github.com/bluez/bluez/compare/13d79ca76aa5%5E...c9948759d928
+
+To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
