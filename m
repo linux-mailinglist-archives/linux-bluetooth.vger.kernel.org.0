@@ -1,58 +1,58 @@
-Return-Path: <linux-bluetooth+bounces-13674-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-13676-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0549AFC399
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Jul 2025 09:08:50 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC58EAFC39B
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Jul 2025 09:08:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8E8B6188E5B5
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Jul 2025 07:09:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D17283BC332
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Jul 2025 07:08:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85D0B2571C9;
-	Tue,  8 Jul 2025 07:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08A03258CFA;
+	Tue,  8 Jul 2025 07:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="SRpSw0ko"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="Ly0m83M4"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B8221B905
-	for <linux-bluetooth@vger.kernel.org>; Tue,  8 Jul 2025 07:08:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6237C255E34
+	for <linux-bluetooth@vger.kernel.org>; Tue,  8 Jul 2025 07:08:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751958523; cv=none; b=pV4Bx2n70o8ynnCOQwE6ejalRTjwjk2tidD+FkXbVyvImws8TKQajkB5zPcUn37D1xJ3NUwmWqXdwciZ02KIVbg/q5wct94PUYtbLZDuq1Mek2Er9lFjEKR+zY6xz4D7UgbbJe8YJxyS1Dvsg9eAqIGtYEFzonwgoM62QdvRLiQ=
+	t=1751958523; cv=none; b=l6wJysnH2S7/Wa48lYx7q8vgoXD4LgVn+/8R9GBWPERkDzqTzIZkNCv1S6JWcQ63/GLM28UnhMTmHSA0KJqNgAiplTAMrOxTSwQcjCfveV4b7PM26jSQFQoRpCxadWqdkM0M3yuYLGw3JDwjI8bKR1cFmL3cugzpdUK3gq9393k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1751958523; c=relaxed/simple;
-	bh=STdYxHGkc/8zY4rJGotLZnM4XL5k+1Sq4X3YIqUALxQ=;
+	bh=WD+SsCdGGiHuDo5nYQDWyWYPA/BpfVVTRHxYlb48C2g=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r4t4Yw6iqmz2GRX5h1G397o5gV3TfKrxDCSowXTfaf2xRm7WjOhruw8szU67qCs03qmoM5LoFPSdQU71bqIYZ2GBCtBXiwOAiayW7s2zLTwaZ/Y2nsy8LwMnLwHjaUZ/1XGg7SyQHgGqMOiTOnXdPKB2y4q9kgdpJ2r0/ChtkYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=SRpSw0ko; arc=none smtp.client-ip=148.251.105.195
+	 MIME-Version:Content-Type:Content-Type; b=erJz3M8cgjRBOaWjMvEHgimprcSNx2Iga+VlIxstiscL28QDdXdfk03vJ39+9FALrmjReRpgyxu4BP2by0Y+Lbug27+MKdnzIscPfce1sjkp8/fFL6pOeeVea4It5OVjjiBK9AlR80xgS88vjuh/XJZmEkH/oqM4vflUEQsMcyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=Ly0m83M4; arc=none smtp.client-ip=148.251.105.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
 	s=mail; t=1751958519;
-	bh=STdYxHGkc/8zY4rJGotLZnM4XL5k+1Sq4X3YIqUALxQ=;
+	bh=WD+SsCdGGiHuDo5nYQDWyWYPA/BpfVVTRHxYlb48C2g=;
 	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=SRpSw0kowMtbVlWL48Ni5ws8WpEzETXZYDr9yOT5IB4oofMAXLH0ySwDUeqcJsvIZ
-	 JVj8Gj04aAaqF7loI41VVH4n/7DEK/mAYOJ6MgeZlIb0nJFAJ3YmZWsWwNghMjGguX
-	 UhOuOdYeA+Qi8+uTra+URu6CjypM1VXDsULIYVti5IcK5dlm9ZzlHiWKiEgjHGNBWd
-	 pgk2xRLw3RYSPvmMeV2AUVjBRDo/bln7912UhzWeaGCl4vfPQ8A9gFRAlMPsC5JI/3
-	 9QzXdbYLE2PbALiZJ9XbEzpWjQCHscNKgOnHER/x45gZA8FXPRNiA3kj67QakTFWcN
-	 9dzQkYY9VC5Cg==
+	b=Ly0m83M47nGSvt38dN2HInRFlA6yytfyAQYcc1EIqtP9Oz8isjoXkgSvdhXhIoLHg
+	 ksnUQU7NrwJDCYF7EoPXZs2N/63zEyyvw6MdbIiw9FZmz+70LZUM0hGxr4OwCsDrIx
+	 Xnd433qnmG9d3OWNAh8NIddBw6KBcA6Kx+H1lf+KTCsWVRSViqCZXl+9x7LaQBbLa/
+	 WNi9wlXkNxZlhT8dICQlTImIX39j+tQeh4nf2mWfUonKLEsIOmuAaz8ExKhVobQrEt
+	 Vq6BSB584m7JK1Og5zrsEZXwJ36KnX+zFmIlmCWBaGLgHNboCbLcLLCdrs6qtzkwHf
+	 R485SDnePzJSg==
 Received: from fdanis-ThinkPad-X1.. (2A02-8428-Af44-1001-A903-AfF7-D14E-7699.rev.sfr.net [IPv6:2a02:8428:af44:1001:a903:aff7:d14e:7699])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: fdanis)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id ECFDD17E088B
-	for <linux-bluetooth@vger.kernel.org>; Tue,  8 Jul 2025 09:08:38 +0200 (CEST)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 41CDB17E099B
+	for <linux-bluetooth@vger.kernel.org>; Tue,  8 Jul 2025 09:08:39 +0200 (CEST)
 From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v2 1/5] shared/util: Add strtoutf8 function
-Date: Tue,  8 Jul 2025 09:08:18 +0200
-Message-ID: <20250708070822.185375-2-frederic.danis@collabora.com>
+Subject: [PATCH BlueZ v2 2/5] audio/avrcp: Fix crash with invalid UTF-8 item name
+Date: Tue,  8 Jul 2025 09:08:19 +0200
+Message-ID: <20250708070822.185375-3-frederic.danis@collabora.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250708070822.185375-1-frederic.danis@collabora.com>
 References: <20250708070822.185375-1-frederic.danis@collabora.com>
@@ -62,79 +62,55 @@ List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-This adds the strtoutf8 function that truncate a string before the
-first non UTF-8 character.
-This truncation is done in place.
----
- src/shared/util.c | 42 ++++++++++++++++++++++++++++++++++++++++++
- src/shared/util.h |  1 +
- 2 files changed, 43 insertions(+)
+As stated in AVRCP 1.6.2 chapter 6.10.2.3 Media element item, for the
+Displayable Name Length property, the target device may truncate the
+item name:
 
-diff --git a/src/shared/util.c b/src/shared/util.c
-index 5d3a14d96..5262458cb 100644
---- a/src/shared/util.c
-+++ b/src/shared/util.c
-@@ -1959,3 +1959,45 @@ bool argsisutf8(int argc, char *argv[])
- 
- 	return true;
- }
-+
-+char *strtoutf8(char *str, size_t len)
-+{
-+	size_t i = 0;
-+
-+	while (i < len) {
-+		unsigned char c = str[i];
-+		size_t size = 0;
-+
-+		/* Check the first byte to determine the number of bytes in the
-+		 * UTF-8 character.
-+		 */
-+		if ((c & 0x80) == 0x00)
-+			size = 1;
-+		else if ((c & 0xE0) == 0xC0)
-+			size = 2;
-+		else if ((c & 0xF0) == 0xE0)
-+			size = 3;
-+		else if ((c & 0xF8) == 0xF0)
-+			size = 4;
-+		else
-+			/* Invalid UTF-8 sequence */
-+			goto done;
-+
-+		/* Check the following bytes to ensure they have the correct
-+		 * format.
-+		 */
-+		for (size_t j = 1; j < size; ++j) {
-+			if (i + j > len || (str[i + j] & 0xC0) != 0x80)
-+				/* Invalid UTF-8 sequence */
-+				goto done;
-+		}
-+
-+		/* Move to the next character */
-+		i += size;
+  Length of Displayable Name in octets. The name shall be limited such
+  that a response to a GetFolderItems containing one media player item
+  fits within the maximum size of PDU which can be received by the CT.
+
+This truncatation may occur in the middle of a multi-byte character,
+at least with Samsung Music app, which triggers a DBus assertion and
+crashes bluetoothd:
+
+  profiles/audio/player.c:media_folder_create_item() Din Dhal Jaye
+      Haye with lyrics | "दिन ढल जाए
+      हाय" गाने के बो� type audio uid 1
+  profiles/audio/player.c:media_folder_create_item()
+      /org/bluez/hci0/dev_24_24_B7_11_82_6C/player0/NowPlaying/item1
+  profiles/audio/player.c:media_player_set_metadata() Title: Din Dhal
+      Jaye Haye with lyrics | "दिन ढल जाए हाय"
+      गाने के बोल | Guide | Dev Anand, Waheeda Rehman
+  …
+  arguments to dbus_message_iter_append_basic() were incorrect,
+      assertion "_dbus_check_is_valid_utf8 (*string_p)" failed in
+      file dbus-message.c line 2775.
+  This is normally a bug in some application using the D-Bus library.
+---
+ profiles/audio/avrcp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/profiles/audio/avrcp.c b/profiles/audio/avrcp.c
+index 831f1dc8b..30997335a 100644
+--- a/profiles/audio/avrcp.c
++++ b/profiles/audio/avrcp.c
+@@ -2595,8 +2595,10 @@ static struct media_item *parse_media_element(struct avrcp *session,
+ 	memset(name, 0, sizeof(name));
+ 	namesize = get_be16(&operands[11]);
+ 	namelen = MIN(namesize, sizeof(name) - 1);
+-	if (namelen > 0)
++	if (namelen > 0) {
+ 		memcpy(name, &operands[13], namelen);
++		strtoutf8(name, namelen);
 +	}
-+
-+done:
-+	/* Truncate to the longest valid UTF-8 string */
-+	memset(str + i, 0, len - i);
-+	return str;
-+}
-diff --git a/src/shared/util.h b/src/shared/util.h
-index dd357fb93..6fc02a9dc 100644
---- a/src/shared/util.h
-+++ b/src/shared/util.h
-@@ -92,6 +92,7 @@ int strsuffix(const char *str, const char *suffix);
- char *strstrip(char *str);
- bool strisutf8(const char *str, size_t length);
- bool argsisutf8(int argc, char *argv[]);
-+char *strtoutf8(char *str, size_t len);
  
- void *util_malloc(size_t size);
- void *util_memdup(const void *src, size_t size);
+ 	count = operands[13 + namesize];
+ 
 -- 
 2.43.0
 
