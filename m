@@ -1,145 +1,149 @@
-Return-Path: <linux-bluetooth+bounces-13768-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-13770-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 470C5AFCF8A
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Jul 2025 17:43:40 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B04BAFCF91
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Jul 2025 17:44:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 93C2517E8DD
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Jul 2025 15:43:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 14AE2188A290
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Jul 2025 15:44:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 331192E2650;
-	Tue,  8 Jul 2025 15:43:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19D012DECC0;
+	Tue,  8 Jul 2025 15:43:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="E8/ywSgY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lK0cDNro"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7ADD2E1C5C
-	for <linux-bluetooth@vger.kernel.org>; Tue,  8 Jul 2025 15:43:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22A72E11DE
+	for <linux-bluetooth@vger.kernel.org>; Tue,  8 Jul 2025 15:43:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751989400; cv=none; b=BdyOJamVZxjPA8i4cRSLbV8cRoMy8sVH8/7yyaG57eL74aOPHfNSP46HQisRNWDdbkZz+OQhfnNQxU9S50JaTvHztKosZuKw2c6mznCbTsOgRWUAd0f+hDMTGy++rdn9/e1oeZKMIeE5b35LETwSmLYidXvujfJWvXS8yz0zhU4=
+	t=1751989407; cv=none; b=bTsCHeinlfXj1REGoo/5o+QM+ppxz2wqNirgoZltEEcDAKqMDzz/RtdhxJhp4pdv4Cb0TwAqECtYwR+mYiza/KDQQkn/1VpAPTKdN/g/iM6aPd1WiXJYJx/RXYlbHzMNcCcRq1md8ORhlAzvO/nk2m8lCLnpG7aMseYJAIJ1VMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751989400; c=relaxed/simple;
-	bh=BiqWoJqvkyhp5RlQheFeGTGd12lxs+Tox/erbqIlkXs=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=j0dLeukZIXZzkEoO6BefLKwsJsOEmR7IEtjV2/vtOF3L1aQeQzIpfPVGMD3HuWB1909JgS+cZb4F8JyUL9LdunXYzRX5eKB2lRxZXKbvAokhJm85z255/uz4/smvXFWWAk/2fb672CNm/ZUqfOybed1+NYw0WgutK3Li2vVoh5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=E8/ywSgY; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1751989395;
-	bh=BiqWoJqvkyhp5RlQheFeGTGd12lxs+Tox/erbqIlkXs=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=E8/ywSgYZQ92rYAaR0xaDWcULZrYegt9gUOm2jMbVs7QUx4N+CBC1iRb9A30tIaMH
-	 V6gnM+r77aeXBQ3JUePdU9qOjIDhICh1q34rE7nJnv/QM9mASbjTC+vfMuWoBkVynP
-	 0ffDoOR7OVTbmz+38gR4zcNVDW2ULINw47zV+D0JuoFU0Dm6k9DXEkP4ppcxMM1tcz
-	 /XBlWICw7K9VPySfRNFu7f6DrubT9BctOctQ4bhfkIWCY56fzsNyc3kual7rKKCEW4
-	 CG6x0LusdMsOBDTGobm/wIk2GoUL/noS/lxYAAHaEkClrZnt0RkYy7+GFSY5S6j7hR
-	 dGGNbeVaaPJ0Q==
-Received: from fdanis-ThinkPad-X1.. (2A02-8428-af44-1001-a903-aFF7-d14E-7699.rev.sfr.net [IPv6:2a02:8428:af44:1001:a903:aff7:d14e:7699])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: fdanis)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 46CE317E05F0
-	for <linux-bluetooth@vger.kernel.org>; Tue,  8 Jul 2025 17:43:15 +0200 (CEST)
-From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
-To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v3 7/7] unit/test-eir: Add name encoding tests
-Date: Tue,  8 Jul 2025 17:43:07 +0200
-Message-ID: <20250708154308.238963-8-frederic.danis@collabora.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250708154308.238963-1-frederic.danis@collabora.com>
-References: <20250708154308.238963-1-frederic.danis@collabora.com>
+	s=arc-20240116; t=1751989407; c=relaxed/simple;
+	bh=KHDWlh9QgcUcur6yq1+meyYuS7RAp+9/VDElIyB5pYA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XEb2PSlaAPxanNxlM3Xxvx43sCkfdCKBlp4WsRc5rXveywgmvbWUGfTd92BMttBDN+vDXWAxhdDwC/L9DQ2ihYhvLR8CLx4RsKXXHz3tlYMGHPwejDseaPRtEpDof5X0gEUp+RFo+WNER346EmmgIX+6ve8UqGYdmtKTG1npqRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lK0cDNro; arc=none smtp.client-ip=209.85.208.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-32f1aaf0d60so37202221fa.1
+        for <linux-bluetooth@vger.kernel.org>; Tue, 08 Jul 2025 08:43:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751989404; x=1752594204; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5Hrhohr+OvIOQbZ5/dR1eoVjnfjA87m+6eJ59YDnqPE=;
+        b=lK0cDNro8yaWJfPRyYrbO7BM4Efj9QcZr+BoHpn0TVmeM4AFsnOAUomqq2FYpthYp8
+         3/AM8P32U+iWbgkgD5XaM5IxuDuK4g6Cn+SQC97fZO8Y5n61aLjPlu6FC08MFEyt+y87
+         nsj060Nt5FLPgXyqXu1SWD/rjwctLXCdQ8xqGww63Pwa9VlDIHGAQPiCQ3a0jOnWyZNi
+         YLVr5Hf4NXTcFchB1BNZ/38HG00QngEpi2ZTSB4oHTQYN03aoQ9JFOIKmjbcx3XtqH6K
+         ssMexUahgKyUybjD2mV+w2XqJocja9rDrFFEFVI1HLTjn1XF8kfuRNVuA0H0f8LbcXcD
+         b0Uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751989404; x=1752594204;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5Hrhohr+OvIOQbZ5/dR1eoVjnfjA87m+6eJ59YDnqPE=;
+        b=pbfqIYP9+0PkWo40vpDIERc+yAkmr/Jeo5dYLvRyHzjAidfra5+xKrR7R/P6WSvKiq
+         r7r9jEse9kSVawFSaayOVH+iolXVVG8/DuNxe83DNI52kpC2NEhaPYjAgHi2r7GSXg4q
+         lid6iOI3RuOnSxV+bf3JZhUe2l8A6QaQFedblImEi4cBO3bVSfcKZlNoLE2Vi6VwbXNI
+         Elcrvgf767N2qA6IjdvNzFJE4J6/xwJ0DvTB0b6YmYhgjedMYMXw64MtA6uPjFV0cEo3
+         BGM+QYP5fAShYeEOd34L4/1MagAGh4rcA6yhsm71Qby/x0vrrrYZ+QUSHzEGhpGyx/Q/
+         2TSw==
+X-Gm-Message-State: AOJu0YzslKQAe1fwuD0JiL0Ot0so3rNtc0QIAYOqVxicaere6d6Pl55g
+	SaTogDDd3QcK65Xbh9dKkeBP/4TDLNeJooLEvkzufKHVCapuqFgoa7UmpARu5ANdZtJJXXXUcK9
+	z8LB4vVStDQaHEtY88UKG9FEEe3/46mA=
+X-Gm-Gg: ASbGncstv3gcc5vL1d9z/wrt9OwDkSuIaSawu1o9/fqSWh0bo2B0xMl6+Wmjrw7AxL3
+	ZDGbhaVQRhYmmGerHmoHD3ESJfrt4c8ID3duFlQ+1ajwFb6ZEA6yjlplZyWuZmPQj6js7PyZIHw
+	oLaG1zTfZtqi5tOdzJTe/ddezpfx+BmhJ/fHdnCoolfw==
+X-Google-Smtp-Source: AGHT+IEbbzjGuBxmXSRciKaegQt86L4UXL2cKwrkq69svqzwDsQ5xALbdJbTfH/r1/t/HlTKbwc5E1uxrY02BVwwZR8=
+X-Received: by 2002:a2e:ae0c:0:b0:32f:219d:760d with SMTP id
+ 38308e7fff4ca-32f39ad155cmr11006501fa.20.1751989403494; Tue, 08 Jul 2025
+ 08:43:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+References: <BN0PR02MB8304F3E5A337240DDB24BB97E74EA@BN0PR02MB8304.namprd02.prod.outlook.com>
+In-Reply-To: <BN0PR02MB8304F3E5A337240DDB24BB97E74EA@BN0PR02MB8304.namprd02.prod.outlook.com>
+From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date: Tue, 8 Jul 2025 11:43:10 -0400
+X-Gm-Features: Ac12FXxroWdo0jyUNhetK0V93T0njKF25MtumnPx9Q_4j_mmAtBE2cHtmeXmg2c
+Message-ID: <CABBYNZJ=udxJgqCwAxUhOLLD5WofWvnC+jLD=suMONRGv0u_yA@mail.gmail.com>
+Subject: Re: Query on Periodic Advertising
+To: "Damodar Reddy GangiReddy (QUIC)" <quic_dgangire@quicinc.com>
+Cc: "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>, Harish Bandi <quic_hbandi@quicinc.com>, 
+	Mohammed Sameer Mulla <quic_mohamull@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This ensures that device name encode with UTF-16, ISO-2022-JP or with
-an incorrect character in UTF-8 string are truncated correctly.
----
- unit/test-eir.c | 50 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 50 insertions(+)
+Hi Damodar,
 
-diff --git a/unit/test-eir.c b/unit/test-eir.c
-index 49ce65f24..b94a2985a 100644
---- a/unit/test-eir.c
-+++ b/unit/test-eir.c
-@@ -396,6 +396,50 @@ static const struct test_data fuelband_test = {
- 	.uuid = fuelband_uuid,
- };
- 
-+static const unsigned char invalid_utf8_name_data[] = {
-+		0x22, 0x09, 0x74, 0x65, 0x73, 0x74, 0x20, 0xe0,
-+		0xa4, 0xaa, 0xe0, 0xa4, 0xb0, 0xe0, 0xa5, 0x80,
-+		0xe0, 0xa4, /*0x95,*/ 0xe0, 0xa5, 0x8d, 0xe0, 0xa4,
-+		0xb7, 0xe0, 0xa4, 0xbe, 0x20, 0x69, 0x6e, 0x76,
-+		0x61, 0x6c, 0x69, 0x64,
-+};
-+
-+static const struct test_data invalid_utf8_name_test = {
-+	.eir_data = invalid_utf8_name_data,
-+	.eir_size = sizeof(invalid_utf8_name_data),
-+	.name = "test परी",
-+	.name_complete = true,
-+	.tx_power = 127,
-+};
-+
-+static const unsigned char utf16_name_data[] = {
-+		0x17, 0x09, 0x00, 0x55, 0x00, 0x54, 0x00, 0x46,
-+		0x00, 0x2d, 0x00, 0x31, 0x00, 0x36, 0x00, 0x20,
-+		0x00, 0x74, 0x00, 0x65, 0x00, 0x73, 0x00, 0x74,
-+};
-+
-+static const struct test_data utf16_name_test = {
-+	.eir_data = utf16_name_data,
-+	.eir_size = sizeof(utf16_name_data),
-+	.name = "",
-+	.name_complete = true,
-+	.tx_power = 127,
-+};
-+
-+static const unsigned char iso_2022_jp_name_data[] = {
-+		0x13, 0x09, 0x74, 0x65, 0x73, 0x74, 0x20, 0x1B,
-+		0x24, 0x42, 0xbb, 0xfa, 0xb8, 0xb5, 0x1b, 0x28,
-+		0x42, 0x20, 0x4f, 0x4b,
-+};
-+
-+static const struct test_data iso_2022_jp_name_test = {
-+	.eir_data = iso_2022_jp_name_data,
-+	.eir_size = sizeof(iso_2022_jp_name_data),
-+	.name = "test \033$B",
-+	.name_complete = true,
-+	.tx_power = 127,
-+};
-+
- static const unsigned char bluesc_data[] = {
- 		0x02, 0x01, 0x06, 0x03, 0x02, 0x16, 0x18, 0x12,
- 		0x09, 0x57, 0x61, 0x68, 0x6f, 0x6f, 0x20, 0x42,
-@@ -707,6 +751,12 @@ int main(int argc, char *argv[])
- 	tester_add("/eir/sl910", &gigaset_sl910_test, NULL, test_parsing, NULL);
- 	tester_add("/eir/bh907", &nokia_bh907_test, NULL, test_parsing, NULL);
- 	tester_add("/eir/fuelband", &fuelband_test, NULL, test_parsing, NULL);
-+	tester_add("/eir/invalid-utf8-name", &invalid_utf8_name_test, NULL,
-+							test_parsing, NULL);
-+	tester_add("/eir/utf16-name", &utf16_name_test, NULL, test_parsing,
-+									NULL);
-+	tester_add("/eir/iso-2022-jp-name", &iso_2022_jp_name_test, NULL,
-+							test_parsing, NULL);
- 	tester_add("/ad/bluesc", &bluesc_test, NULL, test_parsing, NULL);
- 	tester_add("/ad/wahooscale", &wahoo_scale_test, NULL, test_parsing,
- 									NULL);
--- 
-2.43.0
+On Tue, Jul 8, 2025 at 11:21=E2=80=AFAM Damodar Reddy GangiReddy (QUIC)
+<quic_dgangire@quicinc.com> wrote:
+>
+> Hi Luiz ,
+>
+> I am reaching out to you to check about the Periodic Advertising in bluez=
+. I am seeing below in emulator folder but there is no document available i=
+n Doc folder about the periodic advertising.
+> //hci->commands[37] |=3D 0x04;   /* LE Set Periodic Advertising Parameter=
+s */
+>     //hci->commands[37] |=3D 0x08;    /* LE Set Periodic Advertising Data=
+ */
+>     //hci->commands[37] |=3D 0x10;    /* LE Set Periodic Advertising Enab=
+le */
+>     //hci->commands[37] |=3D 0x20;    /* LE Set Extended Scan Parameters =
+*/
+>     //hci->commands[37] |=3D 0x40;    /* LE Set Extended Scan Enable */
+>     //hci->commands[37] |=3D 0x80;    /* LE Extended Create Connection */
+>     //hci->commands[38] |=3D 0x01;    /* LE Periodic Advertising Create S=
+ync */
+>     //hci->commands[38] |=3D 0x02;    /* LE Periodic Advertising Create S=
+ync Cancel */
+>     //hci->commands[38] |=3D 0x04;    /* LE Periodic Advertising Terminat=
+e Sync */
+>     //hci->commands[38] |=3D 0x08;    /* LE Add Device To Periodic Advert=
+iser List */
+>     //hci->commands[38] |=3D 0x10;    /* LE Remove Device From Periodic A=
+dvertiser List */
+>     //hci->commands[38] |=3D 0x20;    /* LE Clear Periodic Advertiser Lis=
+t */
+>     //hci->commands[38] |=3D 0x40;    /* LE Read Periodic Advertiser List=
+ Size */
 
+Yeah, we use those commands with the broadcast test cases under iso-tester.
+
+>
+>
+> In AOSP Stack , Android has provided SDK APIS to enable Periodic Advertis=
+ing but in the latest bluez version there is no option in bluetoothctl to e=
+nable Periodic Advertising.
+> Is there any plan to provide APIS in bluez version ?
+> Is Periodic advertising part of experimental features ?
+> Kind Regards,
+> Damodar.
+
+Currently we only use PA with LE Audio Broadcast, so there is no
+dedicated API for PA alone, broadcast is enabled via experimental
+flags, you can find more information in pipewire regarding the
+main.conf options for LE Audio:
+
+https://gitlab.freedesktop.org/pipewire/pipewire/-/wikis/LE-Audio-+-LC3-sup=
+port
+
+If you need PA for something other than Broadcast let us know, we
+might need to extend our MGMT APIs to allow usage of that.
+
+--=20
+Luiz Augusto von Dentz
 
