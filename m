@@ -1,58 +1,58 @@
-Return-Path: <linux-bluetooth+bounces-13769-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-13767-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD16CAFCF8D
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Jul 2025 17:43:53 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11716AFCF89
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Jul 2025 17:43:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D41847B0283
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Jul 2025 15:42:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C729117A09A
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Jul 2025 15:43:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 885C62E267B;
-	Tue,  8 Jul 2025 15:43:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E984B2E2663;
+	Tue,  8 Jul 2025 15:43:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="IkTtnPSI"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="ik1rF+/q"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2B562E264F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2BD92E2650
 	for <linux-bluetooth@vger.kernel.org>; Tue,  8 Jul 2025 15:43:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751989401; cv=none; b=Z2oC4lHzA4BcQuNs7DRaddQOxXOecYf3ImBW0hltoxV63SR8NtBoz1yoc5L8BkHhaX4QCdvykV8S6nFRRGiQUMn27seUUOwTtcPnAUHsKJfyWNY6WQKJ8gNr1yhUnVpTDs9hKJwku0x04Hk0MO+6tSLKNYb7xKghFCLMBoFcn8Y=
+	t=1751989400; cv=none; b=AvFLXpEuEv524shRr0pnF3xNDjAhMGq5x8PJSqe97BCXQFfFIADA8fqoNzd0uj3/AG8OTd7/1eRgTeHdlaMOYXgquiSg486Xru12fcB1QHy6D4ifNOQbIWy22ME8hB8N8DuoAgHsvpw+SfLgGsZE3smUynureioOxQ0oGxdyVok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751989401; c=relaxed/simple;
-	bh=iKbb/0VhsEjq4xSN3eH9pkLAA+Twkoab/rMPto6+VxA=;
+	s=arc-20240116; t=1751989400; c=relaxed/simple;
+	bh=vfwup6qgRZkYYkTO4swivEoPg9JhneJqPcj6nikjZf4=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qj7W3hx2t2fYwcUWTQ+QbFVgsNjZOlKEtlPVRX60+LsBExQNPkN5p2uwDwMlBecQXW4k9ZLuQ0Cdg/8IBkOUtm8IK5QgZ6B+dZQicp2UtX5fNh7+H2xhJQBE7V+qhdCT35dBsQf2k4xx2cve2GZK51c4lhEYDF8GpMtrmtORtqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=IkTtnPSI; arc=none smtp.client-ip=148.251.105.195
+	 MIME-Version:Content-Type; b=kIDhYxKoSTm5WNQYTQJObfRgjFbog44TmGEOzF0wlvuxfP3PPPn0cXzRyw23aiM1HCkSXPs9/V28XxZdXovUfWMZkBUMaJ2yPMEVyp4ex0xB/tMjvWQxcqfZf8nun9YpjcgfnOURm73HhYCBelVkesFwaTOeuRzK0LHgGtKUfYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=ik1rF+/q; arc=none smtp.client-ip=148.251.105.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1751989394;
-	bh=iKbb/0VhsEjq4xSN3eH9pkLAA+Twkoab/rMPto6+VxA=;
+	s=mail; t=1751989395;
+	bh=vfwup6qgRZkYYkTO4swivEoPg9JhneJqPcj6nikjZf4=;
 	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=IkTtnPSI0SQscp6W0e2l2MifmIDnnURj0y06AgKm1QQ7zaWfA0PS+kAwKpK43D9x0
-	 SZXaq5TsAchk4y0s8NO/Wh6XHLvVgwVCJZOgIVD0JQ6wRVlr7Sdl7Adkj00wa8vTxa
-	 GNIXyVeG9LKm6eVSclenW30k2VUPxxWhfn1VMoUyt/3HwGCMy2qfvMjG8S8Y52zVdl
-	 AnRHcEOSCTJ4SbvPttU3DI7JpxWGKTQTYMuIMiaNpu0UzCMVLvyJPPmty6wAFuhwoM
-	 4u3ZolYrqImEdD5/BgaLhbuKwXBhCUD+e5kOb1xlzaoaOkCQvPv9PA7pNNDHE1NnNT
-	 9QWUI9U5OoBGg==
+	b=ik1rF+/qcB0UhE2K/E/if4kG0xW8iNjeM2s4INL1rV4vRm3aeNltkElUro5kgh/LM
+	 11zV5YHQs/7W0kOhuo3SVDBiS5Yneeud5yfMBtIrlN4dgGRCmI7XL/m3EAiclXmMcY
+	 uG9oHi4lY7Z/wk/oAkKkG7vTHULYeJ3tSu/9EJI28x7cvcQiVT1M7Xost1xZHFtcEv
+	 kBTAHrEBloNr90aXRjInBUH8AAZtDZCd0MtjKfBS/4cF/u5BQW4PhL0JsTdw/1KpzL
+	 lHKXmwFB7VLhHYIIWxKeNi9zOEhslybcqwzSyGVxDKZqoPVwYwPbF828mDa4EojLoL
+	 I9+OGhKrvwqpQ==
 Received: from fdanis-ThinkPad-X1.. (2A02-8428-af44-1001-a903-aFF7-d14E-7699.rev.sfr.net [IPv6:2a02:8428:af44:1001:a903:aff7:d14e:7699])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: fdanis)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id AA81717E11EE
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id F3E0B17E0523
 	for <linux-bluetooth@vger.kernel.org>; Tue,  8 Jul 2025 17:43:14 +0200 (CEST)
 From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v3 5/7] eir: Use strtoutf8 for device names
-Date: Tue,  8 Jul 2025 17:43:05 +0200
-Message-ID: <20250708154308.238963-6-frederic.danis@collabora.com>
+Subject: [PATCH BlueZ v3 6/7] shared/ad: Use strtoutf8 for name
+Date: Tue,  8 Jul 2025 17:43:06 +0200
+Message-ID: <20250708154308.238963-7-frederic.danis@collabora.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250708154308.238963-1-frederic.danis@collabora.com>
 References: <20250708154308.238963-1-frederic.danis@collabora.com>
@@ -68,34 +68,34 @@ Content-Transfer-Encoding: 8bit
 Truncate the string to first character before invalid UTF-8 one
 instead of replacing non ascii characters by spaces.
 ---
- src/eir.c | 11 +----------
- 1 file changed, 1 insertion(+), 10 deletions(-)
+ src/shared/ad.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/src/eir.c b/src/eir.c
-index 28b09653c..1e1f76952 100644
---- a/src/eir.c
-+++ b/src/eir.c
-@@ -127,19 +127,10 @@ static void eir_parse_uuid128(struct eir_data *eir, const uint8_t *data,
- static char *name2utf8(const uint8_t *name, uint8_t len)
+diff --git a/src/shared/ad.c b/src/shared/ad.c
+index 3f0064dd9..6952a0dab 100644
+--- a/src/shared/ad.c
++++ b/src/shared/ad.c
+@@ -276,7 +276,6 @@ static bool ad_replace_uuid128(struct bt_ad *ad, struct iovec *iov)
+ static bool ad_replace_name(struct bt_ad *ad, struct iovec *iov)
  {
  	char utf8_name[HCI_MAX_NAME_LENGTH + 2];
 -	int i;
--
--	if (g_utf8_validate((const char *) name, len, NULL))
--		return g_strndup((char *) name, len);
  
  	memset(utf8_name, 0, sizeof(utf8_name));
- 	strncpy(utf8_name, (char *) name, len);
--
+ 	strncpy(utf8_name, (const char *)iov->iov_base, iov->iov_len);
+@@ -284,11 +283,7 @@ static bool ad_replace_name(struct bt_ad *ad, struct iovec *iov)
+ 	if (strisutf8(utf8_name, iov->iov_len))
+ 		goto done;
+ 
 -	/* Assume ASCII, and replace all non-ASCII with spaces */
 -	for (i = 0; utf8_name[i] != '\0'; i++) {
 -		if (!isascii(utf8_name[i]))
 -			utf8_name[i] = ' ';
 -	}
-+	strtoutf8(utf8_name, len);
++	strtoutf8(utf8_name, iov->iov_len);
  
  	/* Remove leading and trailing whitespace characters */
- 	g_strstrip(utf8_name);
+ 	strstrip(utf8_name);
 -- 
 2.43.0
 
