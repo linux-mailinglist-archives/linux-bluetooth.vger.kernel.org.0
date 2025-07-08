@@ -1,75 +1,91 @@
-Return-Path: <linux-bluetooth+bounces-13698-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-13700-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20F4EAFC5F3
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Jul 2025 10:40:53 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F959AFC5FA
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Jul 2025 10:43:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9DE511892D39
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Jul 2025 08:40:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3B8ED188821B
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  8 Jul 2025 08:43:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0CA42BE03D;
-	Tue,  8 Jul 2025 08:39:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8DC22BE7A5;
+	Tue,  8 Jul 2025 08:43:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="a2TcwoJJ"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from relay15.mail.gandi.net (relay15.mail.gandi.net [217.70.178.235])
+Received: from out-21.smtp.github.com (out-21.smtp.github.com [192.30.252.204])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364F52BD016
-	for <linux-bluetooth@vger.kernel.org>; Tue,  8 Jul 2025 08:39:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.178.235
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076CE2BE046
+	for <linux-bluetooth@vger.kernel.org>; Tue,  8 Jul 2025 08:43:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.204
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751963997; cv=none; b=S7MWt3e6tszX436+4XygFU3Zsfa2KvKCW8d+dwKaCDA5onRw9jDbPXWLpYT5aD/LOs7S/ebpAUfEnjqnIVJb1zkwj63Veg4dYLwJoahg8/ajlFidiozRV1fUxtAYDqseqFsfkacyHzPVe7G4mPp5/a4+UreVV1r/o+c7fvfe2mU=
+	t=1751964196; cv=none; b=lNIEGeMfXDpkMLXH8SXnOdFHRuHr5HEJIfOaxLq01IgwR6psxIB7qumsbGmMYpfDPugKDUezzEBDcnWhjP8kq7z38Jwo+OMJ/YtRGF1PuGi6tdfM+IZ88TyGkO8d3urALChtdQV1fxnBl5sUgeBoH0Gnqs54PbBaaEbMAMprLNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751963997; c=relaxed/simple;
-	bh=tjJJgDT4N+kwUzCmU3btsy0jJ1F6wI64DYN3hiAjiys=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LSFqlyA3sZUnOg+2TJMYt/PfXHJJO6UtBPxIGI1T8A9exxTLVxpBkr8wBOLMa/75Dx5LIVeWWAdk+Kv6j7gGRGch0a7+02pu627+0DbjHHUc5XnJFZ7uZnfT+gEGPdN7UUj9TWRwwwwa2mD1D78EAlMl2E8CIQaMa2oRlusAbOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.178.235
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 7EB494313F
-	for <linux-bluetooth@vger.kernel.org>; Tue,  8 Jul 2025 08:39:53 +0000 (UTC)
-From: Bastien Nocera <hadess@hadess.net>
+	s=arc-20240116; t=1751964196; c=relaxed/simple;
+	bh=IWGPG8qiXQJAb9Z6pYsQVf0V8RRJMEYW7KInOU334Sk=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=UVV1T2D8HqlnKY4JDtyR2RO96eMES5B/ZT6BWJBM9RZ9gdwo8cEnwDx/fmUbIZzjwwlb3gcczOnbh2YQ0JvBuvjLAGHkqmx9i/H6xMOb3ZEUmeiAnpvXE9s2LHqoRXnbsOX1S2olH7PBJiJkAG9ZEGTW7b5/HbIQ5m4T7LY9JxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=a2TcwoJJ; arc=none smtp.client-ip=192.30.252.204
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
+Received: from github.com (hubbernetes-node-39ad0ba.ac4-iad.github.net [10.52.142.28])
+	by smtp.github.com (Postfix) with ESMTPA id 0178C7004E2
+	for <linux-bluetooth@vger.kernel.org>; Tue,  8 Jul 2025 01:43:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+	s=pf2023; t=1751964194;
+	bh=GjH8ue8PtSls4joyqfJuLaxJokN4ZHdFC3U5nQg5lhg=;
+	h=Date:From:To:Subject:List-Unsubscribe:From;
+	b=a2TcwoJJmHh+qhs7M7dH/iXEdfDUlx2+v5wcQk9LKwzH9LAHSEZoksWPbbXgjJ3nG
+	 6zGa+KbOB4S97ucQmVzQuDc2u0yp70SPepr4Rs3h7BmwIfiIuOQQwO4pgnoBmsg1Zt
+	 mFY37lsFZVWtmLiH0hYB4VwxyjCdMu7s1Vs5M4Zk=
+Date: Tue, 08 Jul 2025 01:43:13 -0700
+From: hadess <noreply@github.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 2/2] midi: Fix debug string
-Date: Tue,  8 Jul 2025 10:39:37 +0200
-Message-ID: <20250708083948.1822604-2-hadess@hadess.net>
-X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250708083948.1822604-1-hadess@hadess.net>
-References: <20250708083948.1822604-1-hadess@hadess.net>
+Message-ID: <bluez/bluez/push/refs/heads/979955/000000-060ed0@github.com>
+Subject: [bluez/bluez] 6eff2b: doc: Fix extra word in doc string
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-GND-State: clean
-X-GND-Score: 0
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefgedvvdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucenucfjughrpefhvffufffkofgjfhgggfestdekredtredttdenucfhrhhomhepuegrshhtihgvnhcupfhotggvrhgruceohhgruggvshhssehhrgguvghsshdrnhgvtheqnecuggftrfgrthhtvghrnhepkeetteegtedtheeiudeitddtteffleelhedtjeekleeuvdfgffdvveetteduhfeknecukfhppedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemjeduuggrmeefsggumedvtdgrleemudeffeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemjeduuggrmeefsggumedvtdgrleemudeffedphhgvlhhopeholhhimhhpihgtpdhmrghilhhfrhhomhephhgruggvshhssehhrgguvghsshdrnhgvthdpnhgspghrtghpthhtohepuddprhgtphhtthhopehlihhnuhigqdgslhhuvghtohhothhhsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
 
----
- profiles/midi/midi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+  Branch: refs/heads/979955
+  Home:   https://github.com/bluez/bluez
+  Commit: 6eff2b32273ac4dc3a9a117aca5a620c40760626
+      https://github.com/bluez/bluez/commit/6eff2b32273ac4dc3a9a117aca5a620c40760626
+  Author: Bastien Nocera <hadess@hadess.net>
+  Date:   2025-07-08 (Tue, 08 Jul 2025)
 
-diff --git a/profiles/midi/midi.c b/profiles/midi/midi.c
-index 944887acbb42..2ca8fe87f2f0 100644
---- a/profiles/midi/midi.c
-+++ b/profiles/midi/midi.c
-@@ -322,8 +322,8 @@ static int midi_accept(struct btd_service *service)
- 
- 	err = snd_seq_client_id(midi->seq_handle);
- 	if (err < 0) {
--		error("Could retrieve ALSA client: %s (%d)", snd_strerror(err),
--			err);
-+		error("Could not retrieve ALSA client: %s (%d)",
-+			snd_strerror(err), err);
- 		goto _err_handle;
- 	}
- 	midi->seq_client_id = err;
--- 
-2.50.0
+  Changed paths:
+    M doc/mesh-api.txt
 
+  Log Message:
+  -----------
+  doc: Fix extra word in doc string
+
+
+  Commit: 060ed0f185492c2404c99acab4883f127205d98a
+      https://github.com/bluez/bluez/commit/060ed0f185492c2404c99acab4883f127205d98a
+  Author: Bastien Nocera <hadess@hadess.net>
+  Date:   2025-07-08 (Tue, 08 Jul 2025)
+
+  Changed paths:
+    M profiles/midi/midi.c
+
+  Log Message:
+  -----------
+  midi: Fix debug string
+
+
+Compare: https://github.com/bluez/bluez/compare/6eff2b32273a%5E...060ed0f18549
+
+To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
