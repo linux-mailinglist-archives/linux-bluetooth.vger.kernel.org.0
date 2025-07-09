@@ -1,50 +1,50 @@
-Return-Path: <linux-bluetooth+bounces-13831-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-13836-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA6C2AFEB27
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  9 Jul 2025 16:05:19 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 33E9CAFEB24
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  9 Jul 2025 16:04:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CD41A5657A7
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  9 Jul 2025 14:00:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 870697BF16A
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  9 Jul 2025 14:03:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D3962E6136;
-	Wed,  9 Jul 2025 13:53:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0832C2EA172;
+	Wed,  9 Jul 2025 14:00:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="dPdDPeTs"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="StFjBngo"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-18.smtp.github.com (out-18.smtp.github.com [192.30.252.201])
+Received: from out-21.smtp.github.com (out-21.smtp.github.com [192.30.252.204])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E992E611B
-	for <linux-bluetooth@vger.kernel.org>; Wed,  9 Jul 2025 13:53:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35E882EA14D
+	for <linux-bluetooth@vger.kernel.org>; Wed,  9 Jul 2025 14:00:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.204
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752069236; cv=none; b=iMqBbT9We4DVF/mFKs9DVEecQa8koSpIHojLB95bpJO1KPJbJ5nxg/HawxpVT9I16O4EduSEpsHJeupwF+vxLHN/9lQTIVn8FYekWrdfcKR2y91iNpcO+uI6Isn9oIZxjlUnq+iQQKW2hIAmzKwDgYtRQZA9/alD1ulqB11ZIDw=
+	t=1752069643; cv=none; b=baO24mE1U4m4kUY910CYPFlVCKwal9nWgWoSHASX2eN48b7PLSMM18doSSF4RnJKT5hC/bSohKm6LhHy5cZ4p1GifvwMtA8O7QE3BoqVu8dhAI0h5CZFd7uWsd+yutq+e9N4vTUv1ijXNU8pZl3kfelM1ZX0WgAFf21oLfWzmLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752069236; c=relaxed/simple;
-	bh=loHKDWmtnjvWw6AAccnXXhxBzpkZb7aRhLRniQS1yzA=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=j2Q3OkevXMYQzJdwhetn0WMyQ4uXRpjvfyUIVl2E7eMlABuU7MU+4lZsOea5vTAagXpZ9WW2Slbr1jzg84du8KV7wraLSeu0P+vajWaom53f0wF6PJxrbxH21ey6L5SfXKj3ucpjh/EWCF/yH7nfBb8y+JqeLAegn8Eol0yM7vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=dPdDPeTs; arc=none smtp.client-ip=192.30.252.201
+	s=arc-20240116; t=1752069643; c=relaxed/simple;
+	bh=VjWw7EKumvWWBdf5TJWJIWA2uUGEwA0TYZ3QltJjDIQ=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=H3yIWB9gUbykrsLptTOMN6W4N7R8GuK2QKnx+VmiilGlKC2q8ojUzoHl32PmRUby49logkYQTx8annvg6kt3KrGdEXf8ScNIhyocD3QMt7d01eh4VjvmUjRUC1rFCWbwd2nKImXqqCdApm6pYv19CdDGsedxPOQ7lV9Au1hYLZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=StFjBngo; arc=none smtp.client-ip=192.30.252.204
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-4ecc5c8.va3-iad.github.net [10.48.176.37])
-	by smtp.github.com (Postfix) with ESMTPA id 38E14E1135
-	for <linux-bluetooth@vger.kernel.org>; Wed,  9 Jul 2025 06:53:54 -0700 (PDT)
+Received: from github.com (hubbernetes-node-e8a60f3.ac4-iad.github.net [10.52.158.15])
+	by smtp.github.com (Postfix) with ESMTPA id 55BF3700CD7
+	for <linux-bluetooth@vger.kernel.org>; Wed,  9 Jul 2025 07:00:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1752069234;
-	bh=t49GxS1vSsadwB/WnQr5banLpqMYBPJsmu4SEhEx3wU=;
+	s=pf2023; t=1752069641;
+	bh=QJ0eNK2ibEk/r1rAGJoitTfYK+DlXSJflyg6AfH00U0=;
 	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=dPdDPeTs7uPlWKSdc9GbTCo34//nJiUIEkSAasMPy8ifdKv1J1m5LNMvGFVOfQxZs
-	 uLjdqXFXLGo/Pn6eqrI98WNQ0fINumK6eOzbPJEUzft45TnG2XljEWJUiRqNJdfR4K
-	 BUvJubKNMM3ORj16FgRkHTeTQhXbCZu0OAiZx5c8=
-Date: Wed, 09 Jul 2025 06:53:54 -0700
+	b=StFjBngosRzMg2lW+eH4qNEtjmc3x4hE2V9xAR/vdXePMUDLUy6iQoj+C5j/ems7j
+	 TdxHZYd145LiohOungdIuIZgagrYN0h8mQk2xL4l3dtvpLEmemF6MnmafhkFb9k+76
+	 9pwtQfyCwfm/g5yibu/slcLTzhcyC+/+aEalduGo=
+Date: Wed, 09 Jul 2025 07:00:41 -0700
 From: BluezTestBot <noreply@github.com>
 To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/master/a3824b-09212f@github.com>
-Subject: [bluez/bluez] 80a6b9: btio: fix range validation of security level
+Message-ID: <bluez/bluez/push/refs/heads/980540/b00403-000000@github.com>
+Subject: [bluez/bluez]
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -57,78 +57,8 @@ Content-Transfer-Encoding: 7bit
 X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
 X-Auto-Response-Suppress: All
 
-  Branch: refs/heads/master
+  Branch: refs/heads/980540
   Home:   https://github.com/bluez/bluez
-  Commit: 80a6b91d758ac94d6b6d40250d68f06cd4a06097
-      https://github.com/bluez/bluez/commit/80a6b91d758ac94d6b6d40250d68f06cd4a06097
-  Author: Ismagil Iskakov <i.iskakov@omp.ru>
-  Date:   2025-07-09 (Wed, 09 Jul 2025)
-
-  Changed paths:
-    M btio/btio.c
-
-  Log Message:
-  -----------
-  btio: fix range validation of security level
-
-Arrays inside l2cap_set_lm/rfcomm_set_lm functions are of size 4,
-but the bounds check allows the value 4 for 'level'.
-
-
-  Commit: 77932f2dac1af0506e289703e43e057d21c40fce
-      https://github.com/bluez/bluez/commit/77932f2dac1af0506e289703e43e057d21c40fce
-  Author: Ismagil Iskakov <i.iskakov@omp.ru>
-  Date:   2025-07-09 (Wed, 09 Jul 2025)
-
-  Changed paths:
-    M profiles/audio/a2dp.c
-    M profiles/audio/avrcp.c
-    M profiles/audio/bass.c
-
-  Log Message:
-  -----------
-  profiles/audio: add nullity checks
-
-Cover bass_setup unsuccessful search and btd_device_get_service.
-This change is motivated by the other usages where checks for
-NULL exist.
-
-
-  Commit: 9432bfe81afd177be2778c65b640658f88b7ef28
-      https://github.com/bluez/bluez/commit/9432bfe81afd177be2778c65b640658f88b7ef28
-  Author: Ismagil Iskakov <i.iskakov@omp.ru>
-  Date:   2025-07-09 (Wed, 09 Jul 2025)
-
-  Changed paths:
-    M src/shared/bap.c
-    M src/shared/vcp.c
-
-  Log Message:
-  -----------
-  src/shared: add nullity checks
-
-Check util_iov_pull_mem where iov len is not verified
-beforehand. Check vcp_get_vcs for NULL.
-These changes are based on other usages where those
-checks exist.
-
-
-  Commit: 09212f9d110e268332041c6038895e581d73d4bd
-      https://github.com/bluez/bluez/commit/09212f9d110e268332041c6038895e581d73d4bd
-  Author: Ismagil Iskakov <i.iskakov@omp.ru>
-  Date:   2025-07-09 (Wed, 09 Jul 2025)
-
-  Changed paths:
-    M obexd/client/transfer.c
-
-  Log Message:
-  -----------
-  obexd/client: fix err condition causing memleak
-
-transfer_open returns 0 if an error occurs, condition corrected.
-
-
-Compare: https://github.com/bluez/bluez/compare/a3824b4aac0e...09212f9d110e
 
 To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
