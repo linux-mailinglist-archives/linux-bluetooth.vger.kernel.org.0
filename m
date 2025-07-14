@@ -1,49 +1,49 @@
-Return-Path: <linux-bluetooth+bounces-14022-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-14023-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 818E9B0493A
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 14 Jul 2025 23:17:40 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F15AB0493B
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 14 Jul 2025 23:17:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CE6941A67D2A
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 14 Jul 2025 21:17:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6C4141A67CF4
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 14 Jul 2025 21:18:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C01925B309;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D651266B59;
 	Mon, 14 Jul 2025 21:17:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="d8wteRoq"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="FlL1aslI"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-18.smtp.github.com (out-18.smtp.github.com [192.30.252.201])
+Received: from out-24.smtp.github.com (out-24.smtp.github.com [192.30.252.207])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B4F623643E
-	for <linux-bluetooth@vger.kernel.org>; Mon, 14 Jul 2025 21:17:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C7623C4E9
+	for <linux-bluetooth@vger.kernel.org>; Mon, 14 Jul 2025 21:17:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.207
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752527853; cv=none; b=GIP02BC9Lpbx/l/H/Y9xGQ4fHpwI91wtcix2fjp9Ib01Q/NaAD4E+qFudRRM+IH24swApIzqFJ2Gt/8ywl3cnfrKvKNq6oejKvkNFQy3QSRwJDgKHCuxsW+uSwxteS38e1gxcVF+f0NuvEb4B3qzwZ++J9YTs0NaRf2Nki0JmQs=
+	t=1752527854; cv=none; b=RKX0X9U5bwOaNG/9B1WK/Diw+nF+cDOT1pS200mj6IelCd+MbmeJUewNSSl6xlqWS8gSvS3NBeWs3aA7GL1pYM04D838p8j3leoEF2aq1znTvXGCfnFyUYYjF9Q2KNbNpQHq9I75MJi6lkuqlYASAUQo/j7iX89PpHBNKxgGUD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752527853; c=relaxed/simple;
-	bh=BLLPtwD3vXUbZy5OEIV9dEGJj3WyBRc2AP/0PI8KSbI=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=D0PrWee9R9/q4Ie17DrdXhtPmdM4DXdjo/oICyezTQqWNGQCw2xohX34LyV6Py9PZcpipVPyPiyjg39xPZMRvaa8A6wCNvAUL9E98adiTX/tHQ77cG6OL4FKmtMFFAhZcuuOOyOSOs1D7LlViv22H26hcpMswJfjGnxS0BZV2RA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=d8wteRoq; arc=none smtp.client-ip=192.30.252.201
+	s=arc-20240116; t=1752527854; c=relaxed/simple;
+	bh=L9mj9K54BVmc6OSQPVn0lX6+EfaJbpGp6uY7grkEbsw=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=ujYcedQY3yKb4eOCyW/sAgn0tRFOxJki1OEysLwoqp3DazBIg1qbIcw3oSOxzpKuOfswmRK5RyUtPGkMRCinAZuZs+KoJCQQFWfdhmv9Z27+B+YeP77FDtU8tDqDQZJnnBJyQJS8tGlYMy3urUCKSMkTI17peq0pYIRfE2ao+Jg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=FlL1aslI; arc=none smtp.client-ip=192.30.252.207
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-4bf8c1f.va3-iad.github.net [10.48.182.45])
-	by smtp.github.com (Postfix) with ESMTPA id 39C82E0CAE
+Received: from github.com (hubbernetes-node-cc2b0fa.ac4-iad.github.net [10.52.166.13])
+	by smtp.github.com (Postfix) with ESMTPA id D9041640B3B
 	for <linux-bluetooth@vger.kernel.org>; Mon, 14 Jul 2025 14:17:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
 	s=pf2023; t=1752527851;
-	bh=w9rLZfbgNiIYowZ5xxXDnFg75MfL2rV/TibJhsPAGTA=;
+	bh=WlUAQh3aZ9Kzn1fxFu+qqtkbE1oaMnxP6xsAKJWmWEU=;
 	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=d8wteRoqJVzP/pl6sTVnXvSfbR9MkzL6P+D2CJz4aIoAT0MFPijEQUpoGJWTHooy+
-	 OxmDdz19uncwW71i+ATuMybUW2JkTQgR+qWBG8z/Q7d+5Z4mHoLyMlfxYvAwO+SIxw
-	 lI8mo8eYUL69adrz8gR1NYA7CpJV4IH8MV9sDLH8=
+	b=FlL1aslI+gVKS8Iyc0nnryJedFRDRjUPgirmW/W2ICSSc3PdA4nHSMLxKLvfpUQtZ
+	 DRN3moUJVUUqAD0M3a/nRfktMkw9RxjQsK6VQGO9txqr98TCJoDH9bfpwyO09JUAR/
+	 /xIt5RoBKS5gia1cz9YlfopJzynJ6QBtt7dxm7Wc=
 Date: Mon, 14 Jul 2025 14:17:31 -0700
 From: BluezTestBot <noreply@github.com>
 To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/982161/f0a742-000000@github.com>
+Message-ID: <bluez/bluez/push/refs/heads/982133/2ef05e-000000@github.com>
 Subject: [bluez/bluez]
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
@@ -57,7 +57,7 @@ Content-Transfer-Encoding: 7bit
 X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
 X-Auto-Response-Suppress: All
 
-  Branch: refs/heads/982161
+  Branch: refs/heads/982133
   Home:   https://github.com/bluez/bluez
 
 To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
