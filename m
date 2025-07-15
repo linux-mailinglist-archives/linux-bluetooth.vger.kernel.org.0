@@ -1,239 +1,126 @@
-Return-Path: <linux-bluetooth+bounces-14062-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-14065-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 95176B0609B
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 15 Jul 2025 16:19:22 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A9A3BB0614E
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 15 Jul 2025 16:36:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7AB0D5A2ACB
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 15 Jul 2025 14:10:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 44AC4189895F
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 15 Jul 2025 14:31:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C32B32F0E41;
-	Tue, 15 Jul 2025 13:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32CAC2512FF;
+	Tue, 15 Jul 2025 14:27:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cNm3tN16"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DWxCK2fW"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3072E3382;
-	Tue, 15 Jul 2025 13:57:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014D1246BA1;
+	Tue, 15 Jul 2025 14:27:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752587879; cv=none; b=HCXk/D9N3ggMzooQsUam0q2osElr6H45JYLCmWnDGssgjtpfRbbCwmWBicToZqNz6AA0tK0ozZ8zf+ysNDhxu8byYqmDsv068VJhFsHZYOLup6Gih6Okx2zfGRM6yPIqLy1R/jf+Aufk7iEwKqsP2yqX2l+piC+NCbvVEJFZRU8=
+	t=1752589646; cv=none; b=Yy8yqzd+vDUPV+025xswRFn1mO0O+7npNm1RoKgcTLe708OCq/NsvUlP7la2zUNi/XGg3dQ0bFbEBJlAwXcEEDro3lruZkPGdC/ZcA4XkV+3dn/BhGJyugGPqsLgfTHhi9tfDcsqWkPe0sI8lkXRDHWQSb7rmMp0z2mXg1Cq4hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752587879; c=relaxed/simple;
-	bh=GDhrTQL5TCFnlFDRs1KqKPt46EOEW/acwXmtRFdmZr8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HhvvyzSx0IP68SmOJETNCg6CreaF9wON37bWgSleIzVGlA6U4FADFKNje3asNNa1RMHHCKy65BzV6KkZr4BOcY/Qv25SPSIe/RJQ2R77G1teYn12E54JZeI4RdJBtzS44wKuo0Ij1ncvfQ6bzX7yESjiGqtdw2iU7F2O5omGz2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cNm3tN16; arc=none smtp.client-ip=209.85.208.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-32ac42bb4e4so44864591fa.0;
-        Tue, 15 Jul 2025 06:57:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752587875; x=1753192675; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5wd3vZa0hBJt2XEf+/qd/yWCD7aOef+WZtT0Xwlp5EM=;
-        b=cNm3tN16nMzSp2NhYSMdPLp8v8iGOZRc/17OH8M2v3W+lcCAnTK7+hZZ0q5Q8hB44t
-         5EOUbsezzX8Dv++oalbsWLCJg0GInYX746gOL/h3GkYdu+ySu10EjcIohnfdqT/MgznK
-         IOXaNPfCrrdd+hBBmvuCgnpISPUdkAAW+muh0koS55GvdnsXVT+iUpFOdakdIIYl1/kF
-         HhhCEy9/m7UhNU6HtjojoKPpPB8W7tO3amGp1tnI/PpKQBOg3kbILSOI41/G2jhKZJuo
-         t8dM6myUsLiG1Kde/q/+xsMV+ASHnmgFm94qqCzjfprHD4yjpNfQ/VqfzKU/1BThLk2N
-         jzcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752587875; x=1753192675;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5wd3vZa0hBJt2XEf+/qd/yWCD7aOef+WZtT0Xwlp5EM=;
-        b=GfTZhB/3qMtO74fl9hFybXphU9ZVBJJfSVk5V4nb2BEbWEkoxYKiTi0uuBU9UieTXl
-         2JgLGjb3ItB9lH1MzSPvvDJxHQp0iQ6vKU9eHzM8TfWwBNzrTSCZ/D/faNB4lYJ/fIUW
-         BpYXj1YjaKReTGGCEXdBgoUSeva90tn/5KMmOcmUSt9CPMDKqlQmY05uGS0oPW0292xJ
-         BIMDuVbE6brq4l4QR+D32eHQMGugOlYOavZf4mkjzCPKKeGZpqPfuUu7gvEE1XTEoHG9
-         /vlrlGCTr2W81pFtIlTRtrNRYdk7J0UaoBnHP+3LgmKvQo/sbp/dlu9ICWJzFXi997cb
-         Bw9A==
-X-Forwarded-Encrypted: i=1; AJvYcCUlVN6ESVGi/9BDmm0ZmrvDvRIlhOlrZsXi/Be55OXkQu7Bj6+eN2la8bpcCTP8qwFimPkVp/zfCU2hI/dWcqE=@vger.kernel.org, AJvYcCVjX6b+QlcQlnuzLlSHf0eITHCa0RCPXKjxJr3FejMAIM9m2rHT2ppO9BUox9661a87qeZjEyjuEwelYLNy@vger.kernel.org, AJvYcCWEaK7QUwVPS5JS/PptGAv0MSZ9TRjzVx7pvrhkXWUg73hX/qQf6/XdOurtBPdBwd8tZQufjDRu@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywb9uAWVoEzpBy2cYzdWDUgJPhhjMW/iKh/phNgTEh8366b1zoP
-	4hGyR8ez8u4Tl0NTQZj9SL2yQyVacaId8K6Shi3XTflofpoUWMjAqyjqgHmIfpZ+r89X/hGkL++
-	4hoz5yAOCWIZekv3zG3whkt6L4TS+KPs=
-X-Gm-Gg: ASbGncsegktuFC0dvAElbfdsXemc5gEV9yfuo4CLvxaaa23ZfxDtYIyJOUl/I1824aL
-	3H6DG/1VB7vwCuS2G8KW5XpgVDVA2gybvGfsG/aZnFuJ3lvi8lfGLRwvWuDGPnYyRreyoLEOtxc
-	SNzD0qieZMloC0gq5qtn4BnSiC7Lgv+bHKuHETL2b1GJ/EItDyzbThjqoT0BqZjied95760DQkN
-	IoTSoggunL9kY9h
-X-Google-Smtp-Source: AGHT+IHrjPDlAh6yOR8TcwCHBt5GIJ+sm0Qq5QJRdLGApX1o9tf1uALm75s1vPQeoyoX4Xg8Ci6aSnoUpI9O+c49zNM=
-X-Received: by 2002:a2e:a585:0:b0:32a:6a85:f294 with SMTP id
- 38308e7fff4ca-3305346e497mr52038731fa.35.1752587875240; Tue, 15 Jul 2025
- 06:57:55 -0700 (PDT)
+	s=arc-20240116; t=1752589646; c=relaxed/simple;
+	bh=djpAuc7wGYIOtTCMVwhJ6yD9geIQKZMJqHGijKTNuuU=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=QDghrByTJj/5qJoodtZuku0SwwR4N2idhFgGEVZCcffoVK43wAnVTFq/FcQadrPsfbFaQdTszdsQUsO2S3WfW2r4hsZkqC/Wed+t/kPkkPRZwpDcyYKs0b1TeEoVsNgFGr05qvP6K/tnb+Q6KsaTku4LVov+aA2U6stTXJLL7mI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DWxCK2fW; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56FC78KA017093;
+	Tue, 15 Jul 2025 14:27:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=okSl5B6B9KXiMB8Qn17lLM
+	ruvxPlPKNxZPpbsU1wjxg=; b=DWxCK2fWkKWE/PdbW6Atw4WPgVsKZuTR8JCn+Q
+	KG4U0/qyRq3EtEWOluSKIERV7tgc1DZRYSWX1rG5gK7ElSFeBprIWdOWPRCD0d8N
+	AMltKpKLaFZmL4H/KuNmTbx2cYyc86nMVfAYV4W0kE8ql29l6srQ66Hw5RiupHGg
+	wkNTrNL2fycpoT9RpBWhBnjvdajRJuII4Wkf1FRSpNpyt+X98+eXm6dSvbnaNWJD
+	U2raDxQumNfbpeURoDbwRvML5/Uacnk5lCFeWiGf5fb1T/WM1zoDv7XGUDzSIXQh
+	vHHf48j+7pQXXsru1GNFVjLgYkUf1yjFICJBV4yAesrevd7g==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 47ufu88f1u-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 15 Jul 2025 14:27:11 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56FERAGS031324
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 15 Jul 2025 14:27:10 GMT
+Received: from hu-zijuhu-lv.qualcomm.com (10.49.16.6) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.10; Tue, 15 Jul 2025 07:27:10 -0700
+From: Zijun Hu <quic_zijuhu@quicinc.com>
+Subject: [PATCH 0/2] Bluetooth: btusb: Sort WCN6855 device IDs and add one
+ more ID
+Date: Tue, 15 Jul 2025 07:27:06 -0700
+Message-ID: <20250715-q_newid-v1-0-8a1120c61fc9@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250707-iso_ts-v4-1-0f0bb162a182@amlogic.com>
- <dc9925eceb0abe78f7bafe2ed183b0f90bdb3ac5.camel@iki.fi> <CABBYNZLFnbfdXjRV0taeTNF5bsey-WFf4TFsf_ox0FNuJbEutw@mail.gmail.com>
-In-Reply-To: <CABBYNZLFnbfdXjRV0taeTNF5bsey-WFf4TFsf_ox0FNuJbEutw@mail.gmail.com>
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Tue, 15 Jul 2025 09:57:42 -0400
-X-Gm-Features: Ac12FXz9AhULqH4a8J-A_3sZmWpMk2U8gWeHUwqOazDuZWQCCySLh9mXg6eAW-Q
-Message-ID: <CABBYNZL1Aicj15eYBgug4_KARK6xcd7eVKnzcE=vUK=mugUM4w@mail.gmail.com>
-Subject: Re: [PATCH v4] Bluetooth: ISO: Support SCM_TIMESTAMPING for ISO TS
-To: Pauli Virtanen <pav@iki.fi>
-Cc: yang.li@amlogic.com, Marcel Holtmann <marcel@holtmann.org>, 
-	Johan Hedberg <johan.hedberg@gmail.com>, "David S. Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Simon Horman <horms@kernel.org>, linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADpldmgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDc0NT3cL4vNTyzBRdc3MLgzRz82RDS4sUJaDqgqLUtMwKsEnRsbW1AK8
+ Vq99ZAAAA
+To: Marcel Holtmann <marcel@holtmann.org>,
+        Luiz Augusto von Dentz
+	<luiz.dentz@gmail.com>
+CC: Zijun Hu <zijun_hu@icloud.com>, <linux-bluetooth@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Zijun Hu <Zijun.Hu@oss.qualcomm.com>
+X-Mailer: b4 0.14.1
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzE1MDEzMiBTYWx0ZWRfXz0p6+COcokzd
+ rk0jusqpoanwwxjZXlFttTnVGah+0yfMwov49PfAuVUQVYet2pksQgAJFUG9bNOT/+jDPKye3yj
+ s1fVHkCRrFEw1UDsQWNYBtuJJnw7IILRZRTvUw73XlWBX1KRxzi+RyCO6TF4Rm4RK4Xtqjhz44w
+ 4AQymjHVyX2x16tdlkoXmVSkA4yDjOr3Hc0UOKTgLYh1IFXmhy0fEQW1h1YG7sIQHa+zePLMsAx
+ V5ZGJH2lNNwbfxwbLHbuTnrVe4wVOQdRDujY4R3tkexDxXXS0sqWD/9IiAouFpCTJSfbK40ZDNG
+ 8bK/XxwDTerM1SaVPwBWlPrUjmu6q/G9f14VpzZ76ZgTWPgus0MZgBNafrLDUCFQiHpmzXfSNQZ
+ lBYUjVdAS9JOXz/B+dmcifuC8mB9jbcAOqN9nsDfBe54m37I28pVlq+X9CZsbj7cbPFXB0Pk
+X-Proofpoint-ORIG-GUID: 3tRfHFH8KcfkyW8CnadZ5hiCENyNOSCC
+X-Proofpoint-GUID: 3tRfHFH8KcfkyW8CnadZ5hiCENyNOSCC
+X-Authority-Analysis: v=2.4 cv=f59IBPyM c=1 sm=1 tr=0 ts=6876653f cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=3H110R4YSZwA:10 a=IkcTkHD0fZMA:10 a=Wb1JkmetP80A:10 a=EUspDBNiAAAA:8
+ a=mvP_5nSk6tWnLvtW27UA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-15_03,2025-07-15_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 lowpriorityscore=0 malwarescore=0 spamscore=0 mlxscore=0
+ bulkscore=0 suspectscore=0 impostorscore=0 adultscore=0 priorityscore=1501
+ mlxlogscore=725 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2507150132
 
-Hi,
+This patch series is to:
+1) Sort WCN6855 device IDs by VID and PID
+2) Add one more WCN6855 device ID
 
-On Tue, Jul 15, 2025 at 9:37=E2=80=AFAM Luiz Augusto von Dentz
-<luiz.dentz@gmail.com> wrote:
->
-> Hi Pauli,
->
-> On Tue, Jul 15, 2025 at 9:30=E2=80=AFAM Pauli Virtanen <pav@iki.fi> wrote=
-:
-> >
-> > Hi Yang,
-> >
-> > ma, 2025-07-07 kello 10:38 +0800, Yang Li via B4 Relay kirjoitti:
-> > > From: Yang Li <yang.li@amlogic.com>
-> > >
-> > > User-space applications (e.g. PipeWire) depend on
-> > > ISO-formatted timestamps for precise audio sync.
-> > >
-> > > The ISO ts is based on the controller=E2=80=99s clock domain,
-> > > so hardware timestamping (hwtimestamp) must be used.
-> > >
-> > > Ref: Documentation/networking/timestamping.rst,
-> > > section 3.1 Hardware Timestamping.
-> > >
-> > > Signed-off-by: Yang Li <yang.li@amlogic.com>
-> > > ---
-> > > Changes in v4:
-> > > - Optimizing the code
-> > > - Link to v3: https://lore.kernel.org/r/20250704-iso_ts-v3-1-2328bc60=
-2961@amlogic.com
-> > >
-> > > Changes in v3:
-> > > - Change to use hwtimestamp
-> > > - Link to v2: https://lore.kernel.org/r/20250702-iso_ts-v2-1-723d199c=
-8068@amlogic.com
-> > >
-> > > Changes in v2:
-> > > - Support SOCK_RCVTSTAMPNS via CMSG for ISO sockets
-> > > - Link to v1: https://lore.kernel.org/r/20250429-iso_ts-v1-1-e586f30d=
-e6cb@amlogic.com
-> > > ---
-> > >  net/bluetooth/iso.c | 6 +++++-
-> > >  1 file changed, 5 insertions(+), 1 deletion(-)
-> > >
-> > > diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-> > > index fc22782cbeeb..677144bb6b94 100644
-> > > --- a/net/bluetooth/iso.c
-> > > +++ b/net/bluetooth/iso.c
-> > > @@ -2278,6 +2278,7 @@ static void iso_disconn_cfm(struct hci_conn *hc=
-on, __u8 reason)
-> > >  void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
-> > >  {
-> > >       struct iso_conn *conn =3D hcon->iso_data;
-> > > +     struct skb_shared_hwtstamps *hwts;
-> > >       __u16 pb, ts, len;
-> > >
-> > >       if (!conn)
-> > > @@ -2301,13 +2302,16 @@ void iso_recv(struct hci_conn *hcon, struct s=
-k_buff *skb, u16 flags)
-> > >               if (ts) {
-> > >                       struct hci_iso_ts_data_hdr *hdr;
-> > >
-> > > -                     /* TODO: add timestamp to the packet? */
-> > >                       hdr =3D skb_pull_data(skb, HCI_ISO_TS_DATA_HDR_=
-SIZE);
-> > >                       if (!hdr) {
-> > >                               BT_ERR("Frame is too short (len %d)", s=
-kb->len);
-> > >                               goto drop;
-> > >                       }
-> > >
-> > > +                     /*  Record the timestamp to skb*/
-> > > +                     hwts =3D skb_hwtstamps(skb);
-> > > +                     hwts->hwtstamp =3D us_to_ktime(le32_to_cpu(hdr-=
->ts));
-> >
-> > Several lines below there is
-> >
-> >         conn->rx_skb =3D bt_skb_alloc(len, GFP_KERNEL);
-> >         skb_copy_from_linear_data(skb, skb_put(conn->rx_skb, skb-
-> > >len),
-> >                                                   skb->len);
-> >
-> > so timestamp should be copied explicitly also into conn->rx_skb,
-> > otherwise it gets lost when you have ACL-fragmented ISO packets.
->
-> Yep, it is not that the code is completely wrong but it is operating
-> on the original skb not in the rx_skb as you said, that said is only
-> the first fragment that contains the ts header so we only have to do
-> it once in case that was not clear.
+Signed-off-by: Zijun Hu <Zijun.Hu@oss.qualcomm.com>
+---
+Zijun Hu (2):
+      Bluetooth: btusb: Sort WCN6855 device IDs by VID and PID
+      Bluetooth: btusb: Add one more ID 0x28de:0x1401 for Qualcomm WCN6855
 
-I might just do a fixup myself, something like the following:
+ drivers/bluetooth/btusb.c | 70 ++++++++++++++++++++++++-----------------------
+ 1 file changed, 36 insertions(+), 34 deletions(-)
+---
+base-commit: e96d7056e3dfdeab0105d5b3604eb8e8d1af0fe2
+change-id: 20250715-q_newid-7780f77c198d
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 0a951c6514af..f48fb62e640d 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -2374,6 +2374,13 @@ void iso_recv(struct hci_conn *hcon, struct
-sk_buff *skb, u16 flags)
-                skb_copy_from_linear_data(skb, skb_put(conn->rx_skb, skb->l=
-en),
-                                          skb->len);
-                conn->rx_len =3D len - skb->len;
-+
-+               /* Copy timestamp from skb to rx_skb if present */
-+               if (ts) {
-+                       hwts =3D skb_hwtstamps(conn->rx_skb);
-+                       hwts->hwtstamp =3D skb_hwtstamps(skb)->hwtstamp;
-+               }
-+
-                break;
+Best regards,
+-- 
+Zijun Hu <Zijun.Hu@oss.qualcomm.com>
 
-        case ISO_CONT:
-
-
-> > It could also be useful to write a simple test case that extracts the
-> > timestamp from CMSG, see for example how it was done for BT_PKT_SEQNUM:
-> > https://lore.kernel.org/linux-bluetooth/b98b7691e4ba06550bb8f275cad0635=
-bc9e4e8d2.1752511478.git.pav@iki.fi/
-> > bthost_send_iso() can take ts=3Dtrue and some timestamp value.
-> >
-> > > +
-> > >                       len =3D __le16_to_cpu(hdr->slen);
-> > >               } else {
-> > >                       struct hci_iso_data_hdr *hdr;
-> > >
-> > > ---
-> > > base-commit: b8db3a9d4daeb7ff6a56c605ad6eca24e4da78ed
-> > > change-id: 20250421-iso_ts-c82a300ae784
-> > >
-> > > Best regards,
-> >
-> > --
-> > Pauli Virtanen
->
->
->
-> --
-> Luiz Augusto von Dentz
-
-
-
---=20
-Luiz Augusto von Dentz
 
