@@ -1,90 +1,167 @@
-Return-Path: <linux-bluetooth+bounces-14096-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-14098-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 101CEB06AB4
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Jul 2025 02:45:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D6D77B06B2E
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Jul 2025 03:33:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5A34D17BC8D
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Jul 2025 00:45:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 264D21A65A93
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 16 Jul 2025 01:34:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8C4C137C52;
-	Wed, 16 Jul 2025 00:45:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 122B7264FB2;
+	Wed, 16 Jul 2025 01:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z//k9GyE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ABpw+shI"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F4A13B58A
-	for <linux-bluetooth@vger.kernel.org>; Wed, 16 Jul 2025 00:45:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01ACB24469A
+	for <linux-bluetooth@vger.kernel.org>; Wed, 16 Jul 2025 01:33:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752626709; cv=none; b=Fs9ujpRAijbCR+nrqrH0n+yPT1KaiomXcf6BEAxZWsRZuAy4NUIXeY+R0Raef37us/fD5CwqjcVvuXkNS32obEzWpfJJJPUyFPSSpIs5upYcy96/FqN6PQMD71a5dGPH5yX+6KY9ehWMgRczJAhNEelELAgIeb6oZT9X++Iv/5w=
+	t=1752629626; cv=none; b=EMQ8WKX/MZ7WFTIXwZ1FTuZydim83DXR/eAZY20cNUuzKoghaclYUI5PDGABt3IBm9+16t3J4MqipUqfuFSL3J9ErBBoeTFm2vOJneAePpNBh3mjx9kM+cU6IzqnY9m/RmzWflUbDY2RUnP4yXfg9Lu9KCATjFH9+2xR2yezYKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752626709; c=relaxed/simple;
-	bh=D5+FuZrKak9sawr7EgMP0XIAJ7ZtmlNNDfMO5aNKgDw=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=EsYbakpXRyiV6dJqaNKAH69uNSAxB9/iIe4zNorEmRqUGQ4r40NUL2mcWl64duoqJdhqeeyPnRVvIyCFY6UIWA22zzH4gPFPw+ykE9RJ7af4GFw5Z93m3OnEFnA1CzNiGflJmbdu8yd4YunGajv+Tg9P84p1wrjNhPXuBgwkRWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z//k9GyE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B11FBC4CEE3
-	for <linux-bluetooth@vger.kernel.org>; Wed, 16 Jul 2025 00:45:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752626708;
-	bh=D5+FuZrKak9sawr7EgMP0XIAJ7ZtmlNNDfMO5aNKgDw=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=Z//k9GyE0o+2kFRimlyj6kfaOlilgB5tIagu5LgvGC56ycTwPAgsX3mI+760IlwU6
-	 aOCRsCN1E8VtWxaCHpccxanqfuJROnOGIlbaJuV5mxN7FTyyspqnKKq7Kpcin5jXDV
-	 8ewdZWG619vvYnT5PobIdYWIOZeELM86I8OB70VwUJiOASsMCM87iNvzTSGMygR79n
-	 j0BTORhJZ1e/aPAQfJSpc+6VYTilYqNvW+UpMVrHueNNCkLqyhz8Sti1RkksDVcyYa
-	 CRhuhgEceXdBUN6PNwN7qIKsS0+h2/FtbXTpA0cZpCDthLZTy9lm/tj+a3RAG5sXyC
-	 CO5rY3WA1Zb7g==
-Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-	id A38E6C41613; Wed, 16 Jul 2025 00:45:08 +0000 (UTC)
-From: bugzilla-daemon@kernel.org
-To: linux-bluetooth@vger.kernel.org
-Subject: [Bug 220341] Bluetooth crashes about 30-40 minutes after I connect
- my headphones:  "Bluetooth: hci0: Hardware error 0x0a"
-Date: Wed, 16 Jul 2025 00:45:08 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: sameeross1994@gmail.com
-X-Bugzilla-Status: NEW
-X-Bugzilla-Resolution: 
-X-Bugzilla-Priority: P3
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-220341-62941-izjIQuXU3u@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-220341-62941@https.bugzilla.kernel.org/>
-References: <bug-220341-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+	s=arc-20240116; t=1752629626; c=relaxed/simple;
+	bh=YECuNjplq/a+RTjJR3jAumw4IzZbXOaOTJwOk17SpCU=;
+	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
+	 In-Reply-To:References; b=Ywzlov/syZbFsJfrNcZhe8Qio1h09+E8XNBch8BZQfdU31FKUgG7yGj+U4Mj41TOe+bkxuS8bDnV/mLj+mYBpzygRdttEKFoWo52xJ8dLwCid+KyhiTi1L5H4MiFihY1aWhlHiw2lBHctD6c28T3XqIFVQL0iz+cJPBXOEw+sK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ABpw+shI; arc=none smtp.client-ip=209.85.219.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6fad4a1dc33so52730846d6.1
+        for <linux-bluetooth@vger.kernel.org>; Tue, 15 Jul 2025 18:33:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752629623; x=1753234423; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=9nIntMBfkGUcnzFBET9zhp0I7hID4pQn8y6ePtwgXmM=;
+        b=ABpw+shIHe1CCyYaF5FexYK49vLZCvnx45XXjjrd9zBrLNf7jZd590F8EWp+yVwvzX
+         YT+ov+NotQ7gtEtVAcOu/axlrj+VIUgnOqH5okFK47Qc7WFDz9xhsLW975uaMxvi9JVU
+         zZ+y2KKrVay/AZ6jCCo1tXwqQUwApAr0ysjwiCfnAy0jfF3rAe474Oz0XChtByfDepNU
+         8mupMAMJX9oHAp8DGi1yiJySFd/GkWjEAo+TuQCkSyjrYNF51saIj+i2WcS4zUYjLiym
+         V//24hIc46gtRu59zErIwUAnd0NLuveck/7HjaFiFBWxrxeYcP5Jf4AA5mNr9myFLAis
+         TD+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752629623; x=1753234423;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9nIntMBfkGUcnzFBET9zhp0I7hID4pQn8y6ePtwgXmM=;
+        b=Bq7hxYE693sTqBHdTgJ/+sKm1/ySNglf5aXePvzPue8PBL5x8mqQmGieyBWu4A3mS7
+         HuMtyQbUms2DFPQVemm3+T7hgzjyt8b6nH62j+6DIoshWYPUc8f3IA6w/orpgtx0VlhW
+         m9BS9G4CxzEVelquPRxh2G/lrGJp+P1h3gj9heQJEpEYuKK5xY7k/MOWeaXyqlX6Tqcr
+         pdePkLqyFzxM790KE0v6wE/QCahU5qnF1QAxgO3AXk+ZpHi9zPcIp0wh3klj1M5p/jDJ
+         Fnp+dTnVHbsFCkEzkxYuF/nBs5hThAUXIWGHyTPHsTra2z9EgB+GobuoVX2thJWNj+/Q
+         47aQ==
+X-Gm-Message-State: AOJu0YyoPKHuypLzviBg8swM006gx0UkwJnXnZYfQ917TjD6rtXIMiOX
+	+yhDgfoUSGNuJ13gn3F8hy9/yAIF8Vot+wNrydT/cDIXix04vVCSJKQlsj8UIA==
+X-Gm-Gg: ASbGncvbGUjeg6XDSo9aMfiigJ6LmupUiNqsgc/kw55SyN+2Q3mSYDrlKUkw1eICReh
+	2hsW5ZfxlBA+dCLixgmNnjf3jjdDCcveY8U4rwZpU0NHjXxaupwWpINHqYzHT/pVqwX6qO8TLEu
+	Kzyquv+OZQF3tEEQLa7TrivvLJUOWpev+Mu2wjdyjD+jbfJFir8beL3+kKvt+sYGAMk0F41lh8o
+	muaMBmH2QDibalKgtBVPNDr0/hJnnCrBIIuE9lSdexoSEHYpALxWW28RUYdH0/ctKNyXegL+1UZ
+	KdTWzvafoE+5PR/KYbJHVXSOGoEmeKfkhCRB7O4xDaNGBCZFcM4hh7HEPGCBP0HYPHncX1bMQ45
+	41w2tG1Km5o55wI1ARYFgtjJ/N6MFBg==
+X-Google-Smtp-Source: AGHT+IHv/TfWZRIDs0yeP8Z+rtt+tFDJpgITE41eX+15nZHxi2T6CFPJrp8bUQEEgp9sllg7oicomw==
+X-Received: by 2002:a05:6214:e88:b0:704:7d1e:8448 with SMTP id 6a1803df08f44-704f6ae92f9mr12165446d6.29.1752629623229;
+        Tue, 15 Jul 2025 18:33:43 -0700 (PDT)
+Received: from [172.17.0.2] ([64.236.200.224])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4ab76bdb57fsm20851201cf.19.2025.07.15.18.33.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Jul 2025 18:33:42 -0700 (PDT)
+Message-ID: <68770176.050a0220.29b6f3.b416@mx.google.com>
+Date: Tue, 15 Jul 2025 18:33:42 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============2562033261185426669=="
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+From: bluez.test.bot@gmail.com
+To: linux-bluetooth@vger.kernel.org, ipravdin.official@gmail.com
+Subject: RE: [v2] Bluetooth: coredump: Use tmp buffer with dev_coredumpv
+In-Reply-To: <20250716003726.124975-2-ipravdin.official@gmail.com>
+References: <20250716003726.124975-2-ipravdin.official@gmail.com>
+Reply-To: linux-bluetooth@vger.kernel.org
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D220341
+--===============2562033261185426669==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
---- Comment #3 from sameer (sameeross1994@gmail.com) ---
-Time is there in the title, I missed it.
+This is automated email and please do not reply to this email!
 
---=20
-You may reply to this email to add a comment.
+Dear submitter,
 
-You are receiving this mail because:
-You are the assignee for the bug.=
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=982752
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PENDING   0.35 seconds
+GitLint                       PENDING   0.22 seconds
+SubjectPrefix                 PASS      0.10 seconds
+BuildKernel                   PASS      24.04 seconds
+CheckAllWarning               PASS      26.48 seconds
+CheckSparse                   PASS      29.78 seconds
+BuildKernel32                 PASS      23.93 seconds
+TestRunnerSetup               PASS      473.01 seconds
+TestRunner_l2cap-tester       PASS      25.06 seconds
+TestRunner_iso-tester         PASS      40.52 seconds
+TestRunner_bnep-tester        PASS      5.90 seconds
+TestRunner_mgmt-tester        FAIL      130.79 seconds
+TestRunner_rfcomm-tester      PASS      9.27 seconds
+TestRunner_sco-tester         PASS      14.68 seconds
+TestRunner_ioctl-tester       PASS      9.92 seconds
+TestRunner_mesh-tester        FAIL      11.38 seconds
+TestRunner_smp-tester         PASS      11.49 seconds
+TestRunner_userchan-tester    PASS      6.25 seconds
+IncrementalBuild              PENDING   0.66 seconds
+
+Details
+##############################
+Test: CheckPatch - PENDING
+Desc: Run checkpatch.pl script
+Output:
+
+##############################
+Test: GitLint - PENDING
+Desc: Run gitlint
+Output:
+
+##############################
+Test: TestRunner_mgmt-tester - FAIL
+Desc: Run mgmt-tester with test-runner
+Output:
+Total: 490, Passed: 485 (99.0%), Failed: 1, Not Run: 4
+
+Failed Test Cases
+LL Privacy - Add Device 2 (2 Devices to AL)          Failed       0.187 seconds
+##############################
+Test: TestRunner_mesh-tester - FAIL
+Desc: Run mesh-tester with test-runner
+Output:
+Total: 10, Passed: 8 (80.0%), Failed: 2, Not Run: 0
+
+Failed Test Cases
+Mesh - Send cancel - 1                               Timed out    2.162 seconds
+Mesh - Send cancel - 2                               Timed out    1.996 seconds
+##############################
+Test: IncrementalBuild - PENDING
+Desc: Incremental build with the patches in the series
+Output:
+
+
+
+---
+Regards,
+Linux Bluetooth
+
+
+--===============2562033261185426669==--
 
