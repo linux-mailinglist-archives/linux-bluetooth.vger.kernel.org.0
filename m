@@ -1,50 +1,66 @@
-Return-Path: <linux-bluetooth+bounces-14186-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-14188-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3490FB0C560
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 21 Jul 2025 15:40:02 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C18B7B0C77E
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 21 Jul 2025 17:24:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B8DF84E2991
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 21 Jul 2025 13:39:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2343A54263B
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 21 Jul 2025 15:24:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2C7C2D978A;
-	Mon, 21 Jul 2025 13:39:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5D1128F95E;
+	Mon, 21 Jul 2025 15:24:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rZmsxw8B"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nYEalOEO"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8AA2D9790
-	for <linux-bluetooth@vger.kernel.org>; Mon, 21 Jul 2025 13:39:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68882DFA29
+	for <linux-bluetooth@vger.kernel.org>; Mon, 21 Jul 2025 15:24:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753105189; cv=none; b=GL6Q5blXzEIB5wcYwXi509PHCAXZNhI753W91UeQ7khNp3rJpYhz7SARuMk5yPwzqJOakbcPJ66ZVuRqjBaT2ztdjDApqyhQOGSx1iUcKGs2fYarC/N6eh9Qq8Ty55vq9sX/MUZy0wxWNb5QaEvYgOblyRzruq4j9RWa6hhrEJ0=
+	t=1753111460; cv=none; b=RwMuRdOEF1CCmfurdWrXBufYbMjD++UdFXhwxdbdTq8zTNrS5qpPo2m7zOTZqkl5mIRlMHH3KijPPH0DbCrx5rbFlunVc6egfg5Us1p/RepShNavV36o4DrQvFy1YUAR+A/4XxNev/XK750CRCsCKtIiTu9P2OyIFltGiLfBIF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753105189; c=relaxed/simple;
-	bh=GG3ykHM7Mt/BkPsiYPIG6gTeWbY0Mhmtubb+kWu/T80=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=Afs2YlNjisxSeyvhDxUwvuBzpo5ayIo7FpDUnf813pjTXNMv5fKaoZqhPlN4qRNFpN0ISMh6ShqRNFM52F6ywJnjgV2QBEg2tIsfhaenOJZ/BvYZYkUIVh/LL38M36fR7r0Nji3gugMxt+aimKC2uZOMec3fNp9Df5GQ9lSxd70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rZmsxw8B; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCE67C4CEF6;
-	Mon, 21 Jul 2025 13:39:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753105188;
-	bh=GG3ykHM7Mt/BkPsiYPIG6gTeWbY0Mhmtubb+kWu/T80=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=rZmsxw8BiPVZgyIPCm5/WeDxdbu80Ffl+Mt4dnyXyiiPq7hkCj60szRh6pFjbXkye
-	 oAGumK2bANJ8b48znnRzhcu3gSK6V3x4O/coZB25vFXoFayDiKGG7fcKS3DRkLrK3Z
-	 GO1PMl1NuajtWCIVqRJvvnhH7ivgLdXhEbKOExIv9AgU5Ftypj1MmosG6N+2oQlqMr
-	 o2fFvzVI9mU1NYP1bMi1GtvKU/59DduFDJn4RjdSDzvu3yjUYEUM1QJ20fK0nfL0lr
-	 XcGKcs4RYYZgM829czNQBzP0ud44dQPaBGQNsoKoasOPqw6MaOTlKLMyu+zHmN69xG
-	 1F1+S/V5hPaxg==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id EAE0A383BF5D;
-	Mon, 21 Jul 2025 13:40:08 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1753111460; c=relaxed/simple;
+	bh=CBAhNkNHwtfhpo4wPw2bS+RDJNDV67jwBmC/pAqwmVE=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=UV13HSRdV1VYNHcIV4nX8xEuuSdb5lJTNAMyI7e+T4TXL7azbkKeahTMEJYS0RDYazLL8g2+1bpFBOX+bedaq7RjO9HEoUDRrVbD0IISnDbxIrIXdqDS+QPgVx2xhJJEcdNDeRtEA/I7GYxyeL0lWm/tBCqSosNJ3i/hNGGOU9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nYEalOEO; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 56LEf5bC012733
+	for <linux-bluetooth@vger.kernel.org>; Mon, 21 Jul 2025 15:24:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=Xq+0/mz7ZwRwvCtprx0Sa7
+	Fnzqmrk0YHOsShnzB/Erc=; b=nYEalOEO+K5ocmXbNUTxmb9iY2OGwaCyT9ZT9i
+	kkA5O6ry6ZkE8Vpk4w50fTODUcDaQPtgWrhbevbCU80XetqO70zgFUVeEn8LR2Cq
+	hMrxRubpX4GXLCG8NkUgunfgxvTreJxerc1Vf9IkqRKhikDXduUKjAzk6boJ7DUW
+	HWo3fGhl2id8ODBFrX7QCo9WuXp1AJhURyamTCM2xRJVvcVopcEdRTl1neFYvx8f
+	BCRAGsPDtBkQVZe3lH5hjlvdTwO9HtOYOhduQgeIgRK5+jKFNln8FG2dSMKoJ+My
+	pjg2ZNcrHZTdowq+p2q9ZI6D/d510slMSkx0S8UaJ7YcsBgw==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 481qh6g6fc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <linux-bluetooth@vger.kernel.org>; Mon, 21 Jul 2025 15:24:17 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 56LFOC7l010007
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <linux-bluetooth@vger.kernel.org>; Mon, 21 Jul 2025 15:24:12 GMT
+Received: from FGIANCAN1.eu.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.10; Mon, 21 Jul 2025 08:24:11 -0700
+From: Francesco Giancane <quic_fgiancan@quicinc.com>
+To: <linux-bluetooth@vger.kernel.org>
+CC: Francesco Giancane <quic_fgiancan@quicinc.com>
+Subject: [PATCH BlueZ 0/3] Keep component `bluetoothd` isolated
+Date: Mon, 21 Jul 2025 16:22:16 +0100
+Message-ID: <20250721152219.517-1-quic_fgiancan@quicinc.com>
+X-Mailer: git-send-email 2.49.0.windows.1
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -52,47 +68,66 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3 1/2] Bluetooth: btintel_pcie: Make driver wait for
- alive
- interrupt
-From: patchwork-bot+bluetooth@kernel.org
-Message-Id: 
- <175310520782.52701.10009254792730458350.git-patchwork-notify@kernel.org>
-Date: Mon, 21 Jul 2025 13:40:07 +0000
-References: <20250721094437.1163753-1-kiran.k@intel.com>
-In-Reply-To: <20250721094437.1163753-1-kiran.k@intel.com>
-To: Kiran K <kiran.k@intel.com>
-Cc: linux-bluetooth@vger.kernel.org, ravishankar.srivatsa@intel.com,
- chethan.tumkur.narayan@intel.com, chandrashekar.devegowda@intel.com,
- aluvala.sai.teja@intel.com
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=CZ4I5Krl c=1 sm=1 tr=0 ts=687e5ba1 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=Wb1JkmetP80A:10 a=12QLjomOgqP_XMqTEIEA:9
+X-Proofpoint-ORIG-GUID: C38Guc4D3mUwxe-3PfkbQB3kr1n3czZS
+X-Proofpoint-GUID: C38Guc4D3mUwxe-3PfkbQB3kr1n3czZS
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzIxMDEzNyBTYWx0ZWRfXyffjw3s3euck
+ h/OPfWmTW/2meUoWQAbjjeocp8v7O0JuabKCIpYVJQ0bGVRSJL/YaScqm6qafzfQgW10spHxfu1
+ tcuiIAGNlmWsy7AyA9lAoDgHZKkmzO6dpS3vbY5BSd3xPLNmgempGfKDNL7mme34JBhq6+0A66J
+ cxffiZtB6KD9ntlSxZ2agNhJ2kxFv2c3NmaYa6++Bu+p28SWABF3hqyuOvin7Qe8btJhq/2THx/
+ eYkmlqFS3F/oiuLSG7/Jdf3iVzJCdV6OgEt7dBmwcTjpKbtclNdqc7v2wLXOBR7pUDCr/T+k9NW
+ 7yec9dc/lBbhhwFjfgbzydYEUFcb1gtZl1WbY6v/TryJJo5Skq0rLYYHotYEX1Efunae4dURO7D
+ 5b6Cn1C7eFtWz4p/zzrAMCJA+NWovU8iLbMfa7Y3OogAHEjK2s6aIrb3saPv82fBcZEla5gS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-07-21_04,2025-07-21_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 suspectscore=0 mlxlogscore=967 impostorscore=0
+ clxscore=1011 mlxscore=0 lowpriorityscore=0 phishscore=0 adultscore=0
+ bulkscore=0 spamscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2507210137
 
-Hello:
+Hi,
 
-This series was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+I am posting this patch series to better decouple `bluetoothd` daemon
+and `libbluetooth`, as mentioned in the subject.
 
-On Mon, 21 Jul 2025 15:14:36 +0530 you wrote:
-> The firmware raises an alive interrupt upon receiving the HCI_RESET or
-> BTINTEL_HCI_OP_RESET (Intel reset - 0xfc01) command. This change fixes
-> the driver to properly wait for the alive interrupt to avoid driver
-> sending commands to firmware before it is ready to process.
-> 
-> For details on the handshake between the driver and firmware, refer to
-> commit 05c200c8f029 ("Bluetooth: btintel_pcie: Add handshake between
-> driver and firmware").
-> 
-> [...]
+I am introducing this change to make new BlueZ more granular.
+This will allow more control on which components are actually selected
+to build.
 
-Here is the summary with links:
-  - [v3,1/2] Bluetooth: btintel_pcie: Make driver wait for alive interrupt
-    https://git.kernel.org/bluetooth/bluetooth-next/c/3bf15df70a10
-  - [v3,2/2] Bluetooth: btintel_pcie: Fix Alive Context State Handling
-    https://git.kernel.org/bluetooth/bluetooth-next/c/b4e417d5d32c
+Major use case for this change is fixing circular dependencies when
+bootstrapping new builds where the whole build root is to be recreated
+(e.g. Yocto Project).
+In these scenarios, to have Bluetooth support enabled in Python,
+`libbluetooth` is required at build time to be present but the direct
+chain of dependencies would require a Python installation available,
+thus introducing circular dependency.
+Separating the library and header files from the rest allows build
+systems to break the dependency loop.
 
-You are awesome, thank you!
+`--enable-bluetoothd` flag is added to the `configure` script and
+it is keeping the same behavior as other flags.
+
+Francesco Giancane (3):
+  configure.ac: introduce `--enable-bluetoothd` flag
+  Makefile.am: build `bluetoothd` if enabled
+  README: document `--enable-bluetoothd` flag
+
+ Makefile.am  |  8 ++++++++
+ README       | 14 ++++++++++++++
+ configure.ac |  4 ++++
+ 3 files changed, 26 insertions(+)
+
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.49.0.windows.1
 
 
