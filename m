@@ -1,41 +1,41 @@
-Return-Path: <linux-bluetooth+bounces-14479-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-14481-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B35EB1D9A0
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  7 Aug 2025 16:05:13 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD781B1D99F
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  7 Aug 2025 16:05:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B2C801890C0A
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  7 Aug 2025 14:05:12 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EEC7E3B2FC4
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  7 Aug 2025 14:04:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89E56263C91;
-	Thu,  7 Aug 2025 14:04:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33ED4263F2D;
+	Thu,  7 Aug 2025 14:04:44 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490B42620E5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4911D2627F9
 	for <linux-bluetooth@vger.kernel.org>; Thu,  7 Aug 2025 14:04:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754575483; cv=none; b=nPNer/jdQO+S592WRAYk0/0TqW0/oEn0D5I/4fG5VLpU0OQSiwHRXoQ7uSYTctY0APhLPvJmLSNg6NJey60EovY5qYj6zFBM6OlSvf5aIrKVpYGarsB1/wvSo4k8lW1p+7QcL4n7SddPgCa7KMmQdwgon6IBKLgNTBgcWM/fqp8=
+	t=1754575483; cv=none; b=ByFEc91P6sGGZrIA9RbxCv94AfNn9G/f0OAvBtTb9PT0WOYvT5xDjhQFkuaOQCVwIyElesRg39x4zKIEACQarC2+omeIStHbe6nVRcMixF42uvVXSaO3n6ZQJKBH2IlRWgmO5oe1QsV4Q899nNWJXuGcyp7B6b21hH0ocGUDAYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1754575483; c=relaxed/simple;
-	bh=4+GUXERG9f81qlKj7AZfcSv0XyMMoKl4K6+vqsKkldE=;
+	bh=EuxBbAcmIgx4BtOGv4HRIjVimBZRa64puCPkBJmjqB4=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZbSzL6lclu5vRLEkuuXbf5+OJIo8X8FDfwbPqBuM+RiCWWhsHVJbpz9atMxx9S9ebgba3+kuZXoxS5M3Dg1m39T0rtb4gTex4/k4xr/TY5EzAiivbj1jIlIbG2HsCoKhl0uWGnFffUXw22fNuNshF+Zh3xvnosNXfDIDyWlyq50=
+	 MIME-Version:Content-Type; b=LHUTVPMUmZhC6SM4moxinQbgj/q80rh9Pr7O289lYKOKpFdeZxW/4tR2V/5Rkw9fLgM1lMFAuoykT+lR177aAtqZKyLXWWA7lJAmVn4Yb4lV+M+PQjml0x8jp+yq9jhSj89kYT4Sk/G2pho35QFX6H/xKmN0mq0kk0iscRdHbDc=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 13AE741D11
-	for <linux-bluetooth@vger.kernel.org>; Thu,  7 Aug 2025 14:04:33 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 44AA143A10
+	for <linux-bluetooth@vger.kernel.org>; Thu,  7 Aug 2025 14:04:34 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 2/3] client: Fix missing strdup/memset declarations
-Date: Thu,  7 Aug 2025 16:03:02 +0200
-Message-ID: <20250807140424.937218-3-hadess@hadess.net>
+Subject: [PATCH BlueZ 3/3] =?UTF-8?q?mesh:=20Fix=20'buf=E2=80=99=20may=20b?= =?UTF-8?q?e=20used=20uninitialized=20warning?=
+Date: Thu,  7 Aug 2025 16:03:03 +0200
+Message-ID: <20250807140424.937218-4-hadess@hadess.net>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250807140424.937218-1-hadess@hadess.net>
 References: <20250807140424.937218-1-hadess@hadess.net>
@@ -52,38 +52,34 @@ X-GND-Score: 0
 X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvdduuddvucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvufffkffojghfgggtgfesthekredtredtjeenucfhrhhomhepuegrshhtihgvnhcupfhotggvrhgruceohhgruggvshhssehhrgguvghsshdrnhgvtheqnecuggftrfgrthhtvghrnhepteegheeghfehhfdvkedutdfhffejjefgvdevgfekkeevleetheekhfetleelueefnecukfhppedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemjeduuggrmeefsggumedvtdgrleemudeffeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemjeduuggrmeefsggumedvtdgrleemudeffedphhgvlhhopeholhhimhhpihgtpdhmrghilhhfrhhomhephhgruggvshhssehhrgguvghsshdrnhgvthdpnhgspghrtghpthhtohepuddprhgtphhtthhopehlihhnuhigqdgslhhuvghtohhothhhsehvghgvrhdrkhgvrhhnvghlrdhorhhg
 X-GND-Sasl: hadess@hadess.net
 
-bluez/client/display.c: In function ‘rl_prompt_input’:
-bluez/client/display.c:112:24: error: implicit declaration of function ‘strdup’ [-Wimplicit-function-declaration]
-  112 |         saved_prompt = strdup(rl_prompt);
-      |                        ^~~~~~
-bluez/client/display.c:112:24: warning: incompatible implicit declaration of built-in function ‘strdup’ [-Wbuiltin-declaration-mismatch]
-bluez/client/display.c:119:9: error: implicit declaration of function ‘memset’ [-Wimplicit-function-declaration]
-  119 |         memset(prompt, 0, sizeof(prompt));
-      |         ^~~~~~
-bluez/client/display.c:24:1: note: include ‘<string.h>’ or provide a declaration of ‘memset’
-   23 | #include "display.h"
-  +++ |+#include <string.h>
-   24 |
-bluez/client/display.c:119:9: warning: incompatible implicit declaration of built-in function ‘memset’ [-Wbuiltin-declaration-mismatch]
-  119 |         memset(prompt, 0, sizeof(prompt));
-      |         ^~~~~~
-bluez/client/display.c:119:9: note: include ‘<string.h>’ or provide a declaration of ‘memset’
+../dist-unpack/bluez-5.83/tools/mesh/agent.c: In function ‘response_decimal’:
+../dist-unpack/bluez-5.83/tools/mesh/agent.c:94:9: warning: ‘buf’ may be used uninitialized [-Wmaybe-uninitialized]
+   94 |         bt_put_be32(atoi(input), buf);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from ../dist-unpack/bluez-5.83/tools/mesh/agent.c:20:
+../dist-unpack/bluez-5.83/lib/bluetooth/bluetooth.h:342:20: note: by argument 2 of type ‘const void *’ to ‘bt_put_be32’ declared here
+  342 | static inline void bt_put_be32(uint32_t val, const void *ptr)
+      |                    ^~~~~~~~~~~
+../dist-unpack/bluez-5.83/tools/mesh/agent.c:88:17: note: ‘buf’ declared here
+   88 |         uint8_t buf[DECIMAL_OOB_LEN];
+      |                 ^~~
 ---
- client/display.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/mesh/agent.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/client/display.c b/client/display.c
-index a590a1388d26..95b734c91594 100644
---- a/client/display.c
-+++ b/client/display.c
-@@ -17,6 +17,7 @@
- #include <stdlib.h>
- #include <stdarg.h>
- #include <stdbool.h>
-+#include <string.h>
- #include <ctype.h>
- #include <readline/readline.h>
+diff --git a/tools/mesh/agent.c b/tools/mesh/agent.c
+index 7a62f345dac7..4a2c6a0d88dd 100644
+--- a/tools/mesh/agent.c
++++ b/tools/mesh/agent.c
+@@ -85,7 +85,7 @@ static void response_hexadecimal(const char *input, void *user_data)
  
+ static void response_decimal(const char *input, void *user_data)
+ {
+-	uint8_t buf[DECIMAL_OOB_LEN];
++	uint8_t buf[DECIMAL_OOB_LEN] = {0};
+ 	uint16_t len = DECIMAL_OOB_LEN;
+ 
+ 	if (strlen(input) > pending_request.len)
 -- 
 2.50.0
 
