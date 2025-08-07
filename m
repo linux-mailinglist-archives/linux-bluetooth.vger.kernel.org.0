@@ -1,168 +1,323 @@
-Return-Path: <linux-bluetooth+bounces-14478-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-14480-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9AF81B1D460
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  7 Aug 2025 10:42:09 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 37E0BB1D99D
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  7 Aug 2025 16:05:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C5DAF564DC2
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  7 Aug 2025 08:42:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B231C3A6665
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  7 Aug 2025 14:04:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16F42255F53;
-	Thu,  7 Aug 2025 08:42:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="idpAxYJ+"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B266B25F998;
+	Thu,  7 Aug 2025 14:04:43 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB0623CB
-	for <linux-bluetooth@vger.kernel.org>; Thu,  7 Aug 2025 08:42:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 491DC262FCB
+	for <linux-bluetooth@vger.kernel.org>; Thu,  7 Aug 2025 14:04:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754556124; cv=none; b=nJGXE48phHVCbbBo93/obKujV+1zRPTd1xsF6+oGR+O/n7dXZzR78OZHcVIFlCyZ9GYgQ0yuQIHEkfz/fg/XPWP3GK3MHrTgjejypEQN76872FmzEIFJgaHUPkKsPEMQd7qq44FOKjroU1dYix4SarPa4MxR/c9r50xnhVTI4BU=
+	t=1754575483; cv=none; b=Y/4afsxLFkhEVW7wdt1TIoEdQLyy1nEujBYiVpjwA5ojn2qlNAYnreEfq0ZVUc5i/Eu8VfmqAUzGWMI0iPky1Qut9LtdQR3j4bnOi2+q50CNP4w842Ifh2D8wjMBsTk/QdK5NNYXbeY9XHWsOWyLkybvtnq9lqhWEF95I+85kIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754556124; c=relaxed/simple;
-	bh=bA02cbpJ7uu8X88G46nY7r6qYuLfT/czp4z01HOOwCY=;
-	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
-	 In-Reply-To:References; b=s/Uz+CVIxPTEiqoxcNGy59NxqJCgLsvYJFMnfQ9BCk5G5XyiWvahD2Fg9KThsNEqqZG4Ai9lceZNZ7O6+wuk5fFypyl78EQSlA/rX7wGbVVUv5hoLZk+Z+ETrjFaGrze4AFAprP5gKLLg5Xb/3kFsfQhvIcmlGD1Wrz9S18zxbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=idpAxYJ+; arc=none smtp.client-ip=209.85.222.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-7e278d8345aso79034585a.0
-        for <linux-bluetooth@vger.kernel.org>; Thu, 07 Aug 2025 01:42:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754556122; x=1755160922; darn=vger.kernel.org;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=DuRivbF7tZumNKOCWOyqXJx8ifOWkpEiyC7VzKmW4HQ=;
-        b=idpAxYJ+oTWjULAXTsdC+xSxXhhmHPMf1QTLR6urwYe7m7AHMQg+Rw21DzbrzWH7mB
-         e0bh8r3gSlIxUCHhS6M5kEMSJ88xJDCkBuQiRZbGspkP6/z02o5uBQXMIvxtnelYj2hG
-         8Pcbxq6FsYdz9ioE0UEw21LuWZqeWRvyntNc7wZlCu4f84IbngKnM5LbVgzIDUmINvf1
-         KLVX0eAwnXk25qKooxJ4p8CUwa5HuinRa3eKCmf3CdZQiRvk/BCNUfEruhfrbybFKAPs
-         7xLXgmkOXfZyKjjti0DXBg0GBmER140CBeqrwWv5TQh2pFW1nfMLi9FvW1TjBFEpIZEN
-         exPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754556122; x=1755160922;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DuRivbF7tZumNKOCWOyqXJx8ifOWkpEiyC7VzKmW4HQ=;
-        b=CRMpbTAv/5o7+y+dU+44MNiGKuRCPMVaHZaTGBVi7TrVREuYGcfO5QUyxIyiEBwog4
-         hdWiCU5iO9PN0Iau6DN/RFBvngvOlOPH4v+lCKAeOncwFapQACRY5C8LcSj05LpWuBGp
-         ssjIwYnvPMvFo9WvZviZMsmOE6KXGtNlSR5CF0pfOsMWJTp5hGVKan8UF8VW1lpayhu7
-         LcH1ftC+SVV5zAyg11HvMV68PvRbIut6kr4Tj8Eo/w5zKn1bhQd6xjJZbkKjqB96R4ne
-         Zc/ZDsPcnslpvWtq8mVn9SDgwKF5HYD1OkimlmQN78E1Br5cNISr7He2I1AoICnVACJf
-         AZ5w==
-X-Gm-Message-State: AOJu0YwmLIWxK95KbujtK9DzRMa47RB5YUN06zD016o2bYox3aqFWAu5
-	t3ZX9DkvZjLnK3jzMHNHigol9O91Wb428Pn+W7vrgE655m4vqitxAFlSkmC6qA==
-X-Gm-Gg: ASbGnctc+0wMowqtbUvA/eNoVoBSwDSAxqbBJVIzSmmBQM7vb/hpc0Y6O3fOf2mejx8
-	/nowUy7p6cosYNy0Ill2FjGAt/b/Xs9GOkEs+q/nf5FEdkj09gH4V6vNtwWnl38tBUtSURlMCeE
-	vZQPF/5y7qE5ieihfFttsvXuwSw/MnEk4bzk/joxKwOeusVt7lRJwVP9K6c+YzfXJwNRmAkRzCT
-	SIAf3o3qMrNLQC9Sb2SRTmiRCoLM+2UKxuibPj/4TkU5PB/jx6JTgin/Y/UjHng5mnF1cUbnWNO
-	5l2SPWuXLASktR3mZn3ZwPHWILSDo5PU03d11P5/HaAguzOromkYjU6ktcK2F42u74OKYC0dVb1
-	rjytqpb3j0Gb3pDgio9k6ceqByOw=
-X-Google-Smtp-Source: AGHT+IHyQPFKk6fEQAa8iXYcFWfsR2hn+yRBS6aBqyvGeEy5yXNczdt2XmB43buQz7AOodeI0UT4lw==
-X-Received: by 2002:a05:620a:198b:b0:7e8:2411:e837 with SMTP id af79cd13be357-7e82411ecbcmr134174085a.36.1754556121722;
-        Thu, 07 Aug 2025 01:42:01 -0700 (PDT)
-Received: from [172.17.0.2] ([20.109.39.50])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7e817311ad9sm193358585a.41.2025.08.07.01.42.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Aug 2025 01:42:01 -0700 (PDT)
-Message-ID: <689466d9.050a0220.24f207.60bc@mx.google.com>
-Date: Thu, 07 Aug 2025 01:42:01 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============3169416128356667932=="
+	s=arc-20240116; t=1754575483; c=relaxed/simple;
+	bh=9ZWEKsy4qjOUllnClon3V0nhr9IHoXZhZG57cvS3oDk=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=eoJBni5nLRfowaCkMcqZAiTnc60sL+ZgfVgPCiLYc4UIW8G8kx75ttqp7TK68U+1NFu6QnSMVtVoeXfOWzcHmixXmF/7JMbY3iCeSbr5BPzQYxlG1HoLRpGoNOIId09DTF+4RVXJPXjgL3bYVsMEL88J5nx3DoWqgyQzeT4iaFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 4AA9F44305
+	for <linux-bluetooth@vger.kernel.org>; Thu,  7 Aug 2025 14:04:33 +0000 (UTC)
+From: Bastien Nocera <hadess@hadess.net>
+To: linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ 0/3] Prepare for meson build system
+Date: Thu,  7 Aug 2025 16:03:00 +0200
+Message-ID: <20250807140424.937218-1-hadess@hadess.net>
+X-Mailer: git-send-email 2.50.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: bluez.test.bot@gmail.com
-To: linux-bluetooth@vger.kernel.org, yang.li@amlogic.com
-Subject: RE: Bluetooth: hci_sync: Prevent unintended PA sync when SID is 0xFF
-In-Reply-To: <20250807-sid_invalid-v1-1-94b3902a49e3@amlogic.com>
-References: <20250807-sid_invalid-v1-1-94b3902a49e3@amlogic.com>
-Reply-To: linux-bluetooth@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-GND-State: clean
+X-GND-Score: 0
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvdduuddvucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvufffkffogggtgfesthekredtredtjeenucfhrhhomhepuegrshhtihgvnhcupfhotggvrhgruceohhgruggvshhssehhrgguvghsshdrnhgvtheqnecuggftrfgrthhtvghrnhepgeeuvdegvdejtefghfehieeghedvteefjeehvddtjeeuhfetjeeiuddutddvhfeunecukfhppedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemjeduuggrmeefsggumedvtdgrleemudeffeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemjeduuggrmeefsggumedvtdgrleemudeffedphhgvlhhopeholhhimhhpihgtpdhmrghilhhfrhhomhephhgruggvshhssehhrgguvghsshdrnhgvthdpnhgspghrtghpthhtohepuddprhgtphhtthhopehlihhnuhigqdgslhhuvghtohhothhhsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-GND-Sasl: hadess@hadess.net
 
---===============3169416128356667932==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+2 build fixes, and the removal of the {lib,lib/bluetooth} hack
+in the Makefile.
 
-This is automated email and please do not reply to this email!
+Bastien Nocera (3):
+  build: Move library source to lib/bluetooth
+  client: Fix missing strdup/memset declarations
+  mesh: Fix 'buf’ may be used uninitialized warning
 
-Dear submitter,
+ .gitignore                       |  1 -
+ Makefile.am                      | 23 +++++++----------------
+ attrib/att.c                     |  4 ++--
+ attrib/gatt.c                    |  6 +++---
+ attrib/gattrib.c                 |  4 ++--
+ attrib/gatttool.c                | 10 +++++-----
+ attrib/interactive.c             |  6 +++---
+ attrib/utils.c                   | 10 +++++-----
+ btio/btio.c                      | 10 +++++-----
+ client/assistant.c               |  4 ++--
+ client/display.c                 |  1 +
+ client/mgmt.c                    | 14 +++++++-------
+ client/player.c                  |  6 +++---
+ emulator/b1ee.c                  |  4 ++--
+ emulator/btdev.c                 |  4 ++--
+ emulator/bthost.c                |  2 +-
+ emulator/bthost.h                |  2 +-
+ emulator/hciemu.c                |  4 ++--
+ emulator/le.c                    |  4 ++--
+ emulator/serial.c                |  4 ++--
+ emulator/server.c                |  4 ++--
+ emulator/smp.c                   |  4 ++--
+ emulator/vhci.c                  |  4 ++--
+ lib/{ => bluetooth}/bluetooth.c  |  0
+ lib/{ => bluetooth}/bluetooth.h  |  0
+ lib/{ => bluetooth}/bnep.h       |  0
+ lib/{ => bluetooth}/cmtp.h       |  0
+ lib/{ => bluetooth}/hci.c        |  0
+ lib/{ => bluetooth}/hci.h        |  0
+ lib/{ => bluetooth}/hci_lib.h    |  0
+ lib/{ => bluetooth}/hidp.h       |  0
+ lib/{ => bluetooth}/iso.h        |  0
+ lib/{ => bluetooth}/l2cap.h      |  0
+ lib/{ => bluetooth}/mgmt.h       |  0
+ lib/{ => bluetooth}/rfcomm.h     |  0
+ lib/{ => bluetooth}/sco.h        |  0
+ lib/{ => bluetooth}/sdp.c        |  0
+ lib/{ => bluetooth}/sdp.h        |  0
+ lib/{ => bluetooth}/sdp_lib.h    |  0
+ lib/{ => bluetooth}/uuid.c       |  2 +-
+ lib/{ => bluetooth}/uuid.h       |  0
+ mesh/main.c                      |  4 ++--
+ mesh/mesh-io-generic.c           |  4 ++--
+ mesh/mesh-io-mgmt.c              |  6 +++---
+ mesh/mesh-io.c                   |  4 ++--
+ mesh/mesh-mgmt.c                 |  4 ++--
+ monitor/a2dp.c                   |  2 +-
+ monitor/analyze.c                |  2 +-
+ monitor/att.c                    |  8 ++++----
+ monitor/avctp.c                  |  4 ++--
+ monitor/avdtp.c                  |  2 +-
+ monitor/bnep.c                   |  4 ++--
+ monitor/control.c                |  6 +++---
+ monitor/hcidump.c                |  6 +++---
+ monitor/intel.c                  |  4 ++--
+ monitor/l2cap.c                  |  4 ++--
+ monitor/msft.c                   |  4 ++--
+ monitor/packet.c                 |  8 ++++----
+ monitor/rfcomm.c                 |  4 ++--
+ monitor/sdp.c                    |  4 ++--
+ obexd/client/bluetooth.c         |  8 ++++----
+ obexd/client/map.c               |  2 +-
+ obexd/client/pbap.c              |  4 ++--
+ obexd/plugins/bluetooth.c        |  4 ++--
+ obexd/plugins/syncevolution.c    |  2 +-
+ peripheral/attach.c              |  6 +++---
+ peripheral/gap.c                 |  4 ++--
+ peripheral/gatt.c                |  6 +++---
+ plugins/admin.c                  |  4 ++--
+ plugins/autopair.c               |  4 ++--
+ plugins/hostname.c               |  4 ++--
+ plugins/neard.c                  |  6 +++---
+ plugins/policy.c                 |  8 ++++----
+ plugins/sixaxis.c                |  6 +++---
+ profiles/audio/a2dp.c            |  8 ++++----
+ profiles/audio/asha.c            |  6 +++---
+ profiles/audio/avctp.c           |  8 ++++----
+ profiles/audio/avdtp.c           |  8 ++++----
+ profiles/audio/avrcp.c           |  2 +-
+ profiles/audio/bap.c             | 10 +++++-----
+ profiles/audio/bass.c            |  6 +++---
+ profiles/audio/ccp.c             |  8 ++++----
+ profiles/audio/control.c         |  8 ++++----
+ profiles/audio/csip.c            |  8 ++++----
+ profiles/audio/mcp.c             |  8 ++++----
+ profiles/audio/media.c           |  8 ++++----
+ profiles/audio/micp.c            |  8 ++++----
+ profiles/audio/sink.c            |  4 ++--
+ profiles/audio/source.c          |  4 ++--
+ profiles/audio/transport.c       |  6 +++---
+ profiles/audio/vcp.c             |  8 ++++----
+ profiles/battery/bas.c           |  6 +++---
+ profiles/battery/battery.c       |  8 ++++----
+ profiles/cups/hcrp.c             |  8 ++++----
+ profiles/cups/main.c             |  6 +++---
+ profiles/cups/sdp.c              |  6 +++---
+ profiles/cups/spp.c              |  8 ++++----
+ profiles/deviceinfo/deviceinfo.c |  6 +++---
+ profiles/deviceinfo/dis.c        |  6 +++---
+ profiles/gap/gas.c               |  8 ++++----
+ profiles/health/hdp.c            |  6 +++---
+ profiles/health/hdp_manager.c    |  6 +++---
+ profiles/health/hdp_util.c       |  8 ++++----
+ profiles/health/mcap.c           |  2 +-
+ profiles/input/device.c          | 10 +++++-----
+ profiles/input/hog-lib.c         |  6 +++---
+ profiles/input/hog.c             |  6 +++---
+ profiles/input/manager.c         |  8 ++++----
+ profiles/input/server.c          |  6 +++---
+ profiles/midi/midi.c             |  6 +++---
+ profiles/network/bnep.c          |  8 ++++----
+ profiles/network/connection.c    |  8 ++++----
+ profiles/network/manager.c       |  8 ++++----
+ profiles/network/server.c        | 10 +++++-----
+ profiles/sap/manager.c           |  4 ++--
+ profiles/sap/server.c            |  6 +++---
+ profiles/scanparam/scan.c        |  6 +++---
+ profiles/scanparam/scpp.c        |  6 +++---
+ src/adapter.c                    |  4 ++--
+ src/adapter.h                    |  4 ++--
+ src/adv_monitor.c                |  4 ++--
+ src/advertising.c                |  6 +++---
+ src/agent.c                      |  4 ++--
+ src/battery.c                    |  2 +-
+ src/bearer.c                     |  4 ++--
+ src/device.c                     | 10 +++++-----
+ src/eir.c                        |  6 +++---
+ src/eir.h                        |  4 ++--
+ src/gatt-client.c                |  6 +++---
+ src/gatt-database.c              | 10 +++++-----
+ src/log.c                        |  4 ++--
+ src/main.c                       |  6 +++---
+ src/oui.c                        |  2 +-
+ src/plugin.c                     |  2 +-
+ src/profile.c                    |  8 ++++----
+ src/rfkill.c                     |  4 ++--
+ src/sdp-client.c                 |  6 +++---
+ src/sdp-xml.c                    |  4 ++--
+ src/sdpd-database.c              |  6 +++---
+ src/sdpd-request.c               |  8 ++++----
+ src/sdpd-server.c                |  8 ++++----
+ src/sdpd-service.c               |  6 +++---
+ src/service.c                    |  4 ++--
+ src/settings.c                   |  4 ++--
+ src/shared/ad.c                  |  4 ++--
+ src/shared/ad.h                  |  4 ++--
+ src/shared/asha.c                |  4 ++--
+ src/shared/att.c                 |  6 +++---
+ src/shared/bap.c                 |  4 ++--
+ src/shared/bass.c                |  4 ++--
+ src/shared/btp.c                 |  2 +-
+ src/shared/ccp.c                 |  6 +++---
+ src/shared/csip.c                |  4 ++--
+ src/shared/gap.c                 |  4 ++--
+ src/shared/gatt-client.c         |  4 ++--
+ src/shared/gatt-db.c             |  4 ++--
+ src/shared/gatt-helpers.c        |  4 ++--
+ src/shared/gatt-server.c         |  4 ++--
+ src/shared/log.c                 |  4 ++--
+ src/shared/mcp.c                 |  6 +++---
+ src/shared/mgmt.c                |  6 +++---
+ src/shared/micp.c                |  4 ++--
+ src/shared/tester.c              |  4 ++--
+ src/shared/util.c                |  2 +-
+ src/shared/vcp.c                 |  4 ++--
+ src/storage.c                    |  8 ++++----
+ src/uuid-helper.c                |  6 +++---
+ tools/advtest.c                  |  4 ++--
+ tools/avinfo.c                   |  8 ++++----
+ tools/avtest.c                   | 10 +++++-----
+ tools/bdaddr.c                   |  6 +++---
+ tools/bluetooth-player.c         |  4 ++--
+ tools/bnep-tester.c              |  6 +++---
+ tools/bneptest.c                 |  8 ++++----
+ tools/btattach.c                 |  6 +++---
+ tools/btgatt-client.c            | 10 +++++-----
+ tools/btgatt-server.c            | 10 +++++-----
+ tools/btiotest.c                 |  2 +-
+ tools/btmon-logger.c             |  4 ++--
+ tools/btpclient.c                |  2 +-
+ tools/btpclientctl.c             |  2 +-
+ tools/ciptool.c                  | 14 +++++++-------
+ tools/cltest.c                   |  8 ++++----
+ tools/hciattach.c                |  6 +++---
+ tools/hciattach_ath3k.c          |  6 +++---
+ tools/hciattach_bcm43xx.c        |  6 +++---
+ tools/hciattach_intel.c          |  6 +++---
+ tools/hciattach_qualcomm.c       |  6 +++---
+ tools/hciattach_st.c             |  2 +-
+ tools/hciattach_ti.c             |  6 +++---
+ tools/hciattach_tialt.c          |  6 +++---
+ tools/hciconfig.c                |  6 +++---
+ tools/hcidump.c                  |  4 ++--
+ tools/hcieventmask.c             |  6 +++---
+ tools/hcisecfilter.c             |  6 +++---
+ tools/hcitool.c                  |  6 +++---
+ tools/hwdb.c                     |  2 +-
+ tools/ioctl-tester.c             |  8 ++++----
+ tools/iso-tester.c               |  8 ++++----
+ tools/isotest.c                  | 10 +++++-----
+ tools/l2cap-tester.c             |  6 +++---
+ tools/l2ping.c                   |  8 ++++----
+ tools/l2test.c                   |  8 ++++----
+ tools/mcaptest.c                 |  8 ++++----
+ tools/mesh-gatt/gatt.c           |  4 ++--
+ tools/mesh-tester.c              | 10 +++++-----
+ tools/mesh/agent.c               |  4 ++--
+ tools/meshctl.c                  |  4 ++--
+ tools/mgmt-tester.c              | 10 +++++-----
+ tools/oobtest.c                  |  4 ++--
+ tools/parser/hci.c               |  4 ++--
+ tools/parser/l2cap.c             |  2 +-
+ tools/parser/lmp.c               |  4 ++--
+ tools/parser/parser.h            |  2 +-
+ tools/rctest.c                   | 12 ++++++------
+ tools/rfcomm-tester.c            |  6 +++---
+ tools/rfcomm.c                   |  8 ++++----
+ tools/sco-tester.c               |  6 +++---
+ tools/scotest.c                  |  4 ++--
+ tools/sdptool.c                  | 10 +++++-----
+ tools/smp-tester.c               |  6 +++---
+ tools/test-runner.c              |  6 +++---
+ tools/userchan-tester.c          |  6 +++---
+ unit/avctp.c                     |  2 +-
+ unit/avdtp.c                     |  2 +-
+ unit/avrcp-lib.c                 |  2 +-
+ unit/avrcp.c                     |  6 +++---
+ unit/test-avrcp.c                |  2 +-
+ unit/test-bap.c                  |  4 ++--
+ unit/test-bass.c                 |  4 ++--
+ unit/test-eir.c                  |  6 +++---
+ unit/test-gatt.c                 |  4 ++--
+ unit/test-gattrib.c              |  4 ++--
+ unit/test-hog.c                  |  4 ++--
+ unit/test-lib.c                  |  4 ++--
+ unit/test-mgmt.c                 |  4 ++--
+ unit/test-micp.c                 |  4 ++--
+ unit/test-sdp.c                  |  6 +++---
+ unit/test-uuid.c                 |  4 ++--
+ unit/test-vcp.c                  |  4 ++--
+ 240 files changed, 615 insertions(+), 624 deletions(-)
+ rename lib/{ => bluetooth}/bluetooth.c (100%)
+ rename lib/{ => bluetooth}/bluetooth.h (100%)
+ rename lib/{ => bluetooth}/bnep.h (100%)
+ rename lib/{ => bluetooth}/cmtp.h (100%)
+ rename lib/{ => bluetooth}/hci.c (100%)
+ rename lib/{ => bluetooth}/hci.h (100%)
+ rename lib/{ => bluetooth}/hci_lib.h (100%)
+ rename lib/{ => bluetooth}/hidp.h (100%)
+ rename lib/{ => bluetooth}/iso.h (100%)
+ rename lib/{ => bluetooth}/l2cap.h (100%)
+ rename lib/{ => bluetooth}/mgmt.h (100%)
+ rename lib/{ => bluetooth}/rfcomm.h (100%)
+ rename lib/{ => bluetooth}/sco.h (100%)
+ rename lib/{ => bluetooth}/sdp.c (100%)
+ rename lib/{ => bluetooth}/sdp.h (100%)
+ rename lib/{ => bluetooth}/sdp_lib.h (100%)
+ rename lib/{ => bluetooth}/uuid.c (99%)
+ rename lib/{ => bluetooth}/uuid.h (100%)
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=989014
+-- 
+2.50.0
 
----Test result---
-
-Test Summary:
-CheckPatch                    PENDING   0.38 seconds
-GitLint                       PENDING   0.33 seconds
-SubjectPrefix                 PASS      0.12 seconds
-BuildKernel                   PASS      24.16 seconds
-CheckAllWarning               PASS      26.81 seconds
-CheckSparse                   PASS      29.59 seconds
-BuildKernel32                 PASS      23.84 seconds
-TestRunnerSetup               PASS      480.63 seconds
-TestRunner_l2cap-tester       PASS      24.91 seconds
-TestRunner_iso-tester         PASS      37.85 seconds
-TestRunner_bnep-tester        PASS      6.04 seconds
-TestRunner_mgmt-tester        FAIL      126.92 seconds
-TestRunner_rfcomm-tester      PASS      9.28 seconds
-TestRunner_sco-tester         PASS      14.69 seconds
-TestRunner_ioctl-tester       PASS      10.11 seconds
-TestRunner_mesh-tester        FAIL      11.42 seconds
-TestRunner_smp-tester         PASS      11.96 seconds
-TestRunner_userchan-tester    PASS      6.43 seconds
-IncrementalBuild              PENDING   0.61 seconds
-
-Details
-##############################
-Test: CheckPatch - PENDING
-Desc: Run checkpatch.pl script
-Output:
-
-##############################
-Test: GitLint - PENDING
-Desc: Run gitlint
-Output:
-
-##############################
-Test: TestRunner_mgmt-tester - FAIL
-Desc: Run mgmt-tester with test-runner
-Output:
-Total: 490, Passed: 484 (98.8%), Failed: 2, Not Run: 4
-
-Failed Test Cases
-LL Privacy - Add Device 2 (2 Devices to AL)          Failed       0.176 seconds
-LL Privacy - Set Flags 3 (2 Devices to RL)           Failed       0.184 seconds
-##############################
-Test: TestRunner_mesh-tester - FAIL
-Desc: Run mesh-tester with test-runner
-Output:
-Total: 10, Passed: 8 (80.0%), Failed: 2, Not Run: 0
-
-Failed Test Cases
-Mesh - Send cancel - 1                               Timed out    2.098 seconds
-Mesh - Send cancel - 2                               Timed out    1.997 seconds
-##############################
-Test: IncrementalBuild - PENDING
-Desc: Incremental build with the patches in the series
-Output:
-
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============3169416128356667932==--
 
