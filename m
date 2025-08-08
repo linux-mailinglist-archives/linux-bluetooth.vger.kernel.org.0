@@ -1,34 +1,34 @@
-Return-Path: <linux-bluetooth+bounces-14512-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-14515-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADAE2B1EE83
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Aug 2025 20:51:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AD5EBB1EE85
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Aug 2025 20:51:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AAF25188CD67
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Aug 2025 18:51:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 973721895804
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Aug 2025 18:51:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B86EF2868B7;
-	Fri,  8 Aug 2025 18:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EE68287510;
+	Fri,  8 Aug 2025 18:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="kQYh4nkW"
+	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="j4tjb1zm"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [185.185.170.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC4F1F1317
-	for <linux-bluetooth@vger.kernel.org>; Fri,  8 Aug 2025 18:50:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB4D284B36
+	for <linux-bluetooth@vger.kernel.org>; Fri,  8 Aug 2025 18:51:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=185.185.170.37
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754679061; cv=pass; b=OaXQ+wx4eWlkcmAcNIlMzHefNAzozY7gZL4DCLsuLdEqNs8Ajl5ph3spQVd7Noi0Vb9wsWosW6fgUQxxHC9AZhLKzSX1ePE97y44rp5JCNo4RESu8UIMR/UGZfNriym7xEcKKP9tCplYZSu4DdYDcVHnOP++0ykaIhh5DtnW8LQ=
+	t=1754679061; cv=pass; b=QG8wtD3EUS3htZzZqFTfI5EunWBA0URiUoauEOgYkKaWHQOO9P3W0/e9dFXxlVN7ERqemDJc3Eeht5P6CM5XcvdklfuJxndHhaBTdIcyepnpIjZyAjyEurD8CDhSRIY4IPnzsJBorRMioBO0ILnYPg2580D3S9Roe/7mFtRgfwQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1754679061; c=relaxed/simple;
-	bh=6Oi509y+WY9lkQtUVJpPgY/DtxXT4DT4De/bmaEKOmU=;
+	bh=3G2QU/93WUe5aHPmAqCYkAc8ZUp388UMLVce/2x6dNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GSuPLPQVqvLuAnhVNxRB+nOlQvNjO7x846qE5ZL2GJZ83wDS9oCqKW3d76vOERsrHaJ6w/SLyNQ2OgCgvuOEARcISt1Fvra1sx1vjBBbARzJr1Kbw06HS4/Slk83tlPPd13O+0fa25psV/7wNqFm4xhyWmv4ouvJDRKQlfvuLHE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=kQYh4nkW; arc=pass smtp.client-ip=185.185.170.37
+	 MIME-Version; b=eqE/fIfyfSi/YDWEi3+aahKr63E48dpq2jwhB/UhCekt/Zz8zcU1E4w5QQw+j4lOr+db5eJ4BkhigwijDckItFmFnEcv+Rfs9rjaDEhg3uSnAHIQw2Gr+WueaXQKoooeSsvdLUb/bDdKTeYbic2/2jHvnQ4XkaPKpqsabQ7SPm0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=j4tjb1zm; arc=pass smtp.client-ip=185.185.170.37
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [193.138.7.158])
@@ -36,48 +36,48 @@ Received: from monolith.lan (unknown [193.138.7.158])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4bzClr1Q01z49Q1w;
-	Fri,  8 Aug 2025 21:50:48 +0300 (EEST)
+	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4bzClw2RwKz49Q3M;
+	Fri,  8 Aug 2025 21:50:52 +0300 (EEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
-	t=1754679048;
+	t=1754679052;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=jDhQn3j7D5PeQf5O10nPiOn7wL5HyLdHCMKXSNDffC4=;
-	b=kQYh4nkWBbYaR0avcj57m6MZxsFfUg9DuBV+jIRvQJcR+7IQ26l/Rv4mtZiZtKjIFBnXGA
-	6+xHV9BFLeC6yPTZ6VZZXiPwCXw+7vm4ClsQe49+sPYEUPoQTfEvScMJMW/zB57vDvZuoD
-	w3/Ne8QSMmKwbZoljMDcT2lfCwml9o4vx5JS+J2U+pXliOnQ0bpKGEMO3Sa8oqTRzDxUNF
-	s1tvIc9LeusY8rmY9xN0F7v/73kVpvfNqBKiDLEqABCydONmhtw3WKcrCtJ0z92qKMT+6c
-	tr3eK8FQY66WArFoKdYwKj0JDZG8NIvEfQDUzkd9XKiCYR0AW1gfLVtJ2JQw1Q==
+	bh=maFIXOeh9h1NTYsQUI/CX+ZCiIiBqC37CrtTzXxTQGU=;
+	b=j4tjb1zm5+WKAK6xg9rsq1hNXr3naaCkOCVaLTJoOCZkQpoIKRnVObd4WfqM/dRnroSYTV
+	IxtF87ziTWxcdh29slxMTpbnE0YpUYqNhLNjVkFbZwfFQ8wQh72p1cPchONsgjcSZypTrZ
+	D9HVht0hx03QvoqFwrQAb/cvDV1q8/v5Gbb6S7dzgDUJNb6gMLBR061CaVwBAo3ouT/ACF
+	+dbu9RVXpBESELyQ0P4sUwQ64RogzNWyLFyi4qn/HJ0CSiVnkzu+CMxZoBKauargy6woLT
+	1mchtAXqaxinRr+MAqcO1nZRhjDv4ZETjHShN1DfKyWUUSxs7HejUIQk4QsY4Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=lahtoruutu; t=1754679048;
+	s=lahtoruutu; t=1754679052;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=jDhQn3j7D5PeQf5O10nPiOn7wL5HyLdHCMKXSNDffC4=;
-	b=AcA5NddpwxS2HJEvvWv3941yFsjgPqUafq/ORSxNEhzrHpYAXtrN7tKf4fhl5yidacllCW
-	vMcjyWXFMUJ3bV+wuCmFAXZjWeIE5QjWmb4hy9Bm0bSZICkDTxusdqOLfjcUCQTWGthCTR
-	ie1C9pQ+oclUoblbq0e29To5PfTptWb5wrTAOPnrKVazd3KRE6KCMnnYS9Rzhh8O9suuia
-	BI8xzIBIzjtjA6QcQijmJ2WHGsdflGrXBeAZ7oq77Kaux8K4DcBHd+JvRnyijFfhC+X0+J
-	Hjvy+JKBgjcPaQgZycEstUQ7w9zl9cbIXO56CJXwrrf8DoVSgzO3h6znwFbriA==
+	bh=maFIXOeh9h1NTYsQUI/CX+ZCiIiBqC37CrtTzXxTQGU=;
+	b=kllDc6dk90I6JY00X9BBgQt8M8FaFealMxzLK/VX0bqvR5MLuIywfX7GgO95Rk6V4wowTq
+	EpAkSuK8kZKhjkOv1bUYlO0NARugdXTIalWzVFvUPWJc+0d2np60W9rWZvq31iOcQajU7L
+	KogYMthFtfd9WXdkYYOrQ17iUmKfJDK6b2jqlpDf6cBvGT9ZKnXj3UsK4lsAYP6s3sZVwH
+	bad/oKUuHPQvDNb96fLPtMg4rPZ6odHllTSS1ofEIW3ck6AYoAf7pRZz4NmFpx8DJIs5ug
+	McjDZHRcdITJzgzIMGXiYbsiQsirhb3OEGBfIlzome2rmYbdjBE0e6f6V8fkJw==
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
-ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1754679048; a=rsa-sha256;
+ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1754679052; a=rsa-sha256;
 	cv=none;
-	b=vd3QkKkmHKm7J+e/2h4LIO4NQxhGSsURhbbmPrrL3nrzNI2rqTimPk2OPFcK7eEH+d2SUh
-	9RCl8nhQEAiqwK+Ak5sA3B3YbRdKgVffEdwJviNsjzsDR8om3eDV5P0AQ82SKdwWeD0Zpf
-	GIWyNfZmtPGwOva5PVfHPWccE6+7i6E5HDDQQqQzFqdv5XssBfThxflh7c+S4fG4U6js0R
-	Z995k7hyddrtRidvRN8ZfYnldNYkCVJYf43XexOFfC1G+oTmI8bVpJLtlemD7IlpnEQjDv
-	fiN5qEyOiqBI70LiBCpys5jxczeK0C5fEo5S53KryFtc5hk+GlBUsb0n3+YvfQ==
+	b=nuyMYaed6wG4lz2342lPzM9rkXJP73xL9sOGbUUxE+QC7neAED8IziRnEnwv9JrFimEY4b
+	kOhvUlK5i8G2Q/4IRUAHayShDOWDqt8V8nZdz4YISG4zpXAWsB2pG88+Gf7mFudOKk2PhD
+	k+NVT1UYWHywonr0e0tZbVJAJHz9sMB0rScE6idOYZNn+WbazguVU8OtOMi+vLEOfTHajc
+	No533x5qJTU29y4cfScFEuqDo0jC8YoNWK0dfdYfcVNCM/sdfRCwI1mJMS25bUmflGOyzl
+	ep5dZpb5cjb7W7oM2ftegEuN+x+T/RanXYCrz4udfuDfgniombw6tv22FcI1Pw==
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ 1/7] bap: fix multiple release of stream when closing setup
-Date: Fri,  8 Aug 2025 21:50:33 +0300
-Message-ID: <ba4236637aba9c7bca5d93d375236e1fcdb8b9eb.1754678883.git.pav@iki.fi>
+Subject: [PATCH BlueZ 2/7] bap: send correct framing value to kernel
+Date: Fri,  8 Aug 2025 21:50:34 +0300
+Message-ID: <977aecec9f592232fb5dd9e65ab6b72ab19777ed.1754678883.git.pav@iki.fi>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <cover.1754678883.git.pav@iki.fi>
 References: <cover.1754678883.git.pav@iki.fi>
@@ -89,63 +89,25 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-If setup->closing, then the stream was already released and should not
-be released again.  Also, if stream is RELEASING on setup_close(),
-freeing the setup should be delayed until the stream exits that state.
-
-Fixes issue where setup is closed, stream goes RELEASING->CONFIG, the
-setup is freed and a duplicate release op is queued. Before that
-completes, the stream is reused for a new setup.  In this case, the new
-setup is incorrectly destroyed when the release op completes although it
-was intended to destroy the old setup.
+Get framing value to use from the QoS of the appropriate stream, instead
+of hardcoding unframed.
 ---
- profiles/audio/bap.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ profiles/audio/bap.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/profiles/audio/bap.c b/profiles/audio/bap.c
-index 3dc4cd92e..8413a5b38 100644
+index 8413a5b38..a75919102 100644
 --- a/profiles/audio/bap.c
 +++ b/profiles/audio/bap.c
-@@ -856,8 +856,9 @@ static bool release_stream(struct bt_bap_stream *stream)
+@@ -2750,6 +2750,8 @@ static void setup_create_ucast_io(struct bap_data *data,
+ 						qos[1]->ucast.cig_id;
+ 	iso_qos.ucast.cis = qos[0] ? qos[0]->ucast.cis_id :
+ 						qos[1]->ucast.cis_id;
++	iso_qos.ucast.framing = qos[0] ? qos[0]->ucast.framing :
++						qos[1]->ucast.framing;
  
- 	switch (bt_bap_stream_get_state(stream)) {
- 	case BT_BAP_STREAM_STATE_IDLE:
--	case BT_BAP_STREAM_STATE_RELEASING:
- 		return true;
-+	case BT_BAP_STREAM_STATE_RELEASING:
-+		return false;
- 	default:
- 		bt_bap_stream_release(stream, NULL, NULL);
- 		return false;
-@@ -990,6 +991,7 @@ static struct bap_setup *setup_new(struct bap_ep *ep)
- static void setup_free(void *data)
- {
- 	struct bap_setup *setup = data;
-+	bool closing = setup->closing;
- 
- 	DBG("%p", setup);
- 
-@@ -997,7 +999,7 @@ static void setup_free(void *data)
- 
- 	setup_ready(setup, -ECANCELED, 0);
- 
--	if (setup->closing && setup->close_cb)
-+	if (closing && setup->close_cb)
- 		setup->close_cb(setup, setup->close_cb_data);
- 
- 	if (setup->stream && setup->id) {
-@@ -1019,7 +1021,10 @@ static void setup_free(void *data)
- 
- 	bt_bap_stream_unlock(setup->stream);
- 
--	release_stream(setup->stream);
-+	if (!closing) {
-+		/* Release if not already done */
-+		release_stream(setup->stream);
-+	}
- 
- 	if (setup->ep)
- 		bap_update_cigs(setup->ep->data);
+ 	bap_iso_qos(qos[0], &iso_qos.ucast.in);
+ 	bap_iso_qos(qos[1], &iso_qos.ucast.out);
 -- 
 2.50.1
 
