@@ -1,34 +1,34 @@
-Return-Path: <linux-bluetooth+bounces-14516-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-14513-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7627FB1EE88
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Aug 2025 20:51:29 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 14468B1EE84
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Aug 2025 20:51:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E9EDD5852BB
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Aug 2025 18:51:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 116D61894FE2
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  8 Aug 2025 18:51:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A420428751B;
-	Fri,  8 Aug 2025 18:51:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 541B02874F8;
+	Fri,  8 Aug 2025 18:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="fVXAu606"
+	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="nV/Zav/G"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [185.185.170.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA82283FD3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA11222577
 	for <linux-bluetooth@vger.kernel.org>; Fri,  8 Aug 2025 18:51:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=185.185.170.37
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754679063; cv=pass; b=WPDmHKbbpaRrBwbzIlqxLwCC/LW+Ev0rnmQ0KAxJkZW0O8/oHbPkHUSlhsxu1CMDxx+/dXsyXkxyY1dXmaJMC1reewXQbbz79X+WGHAS4XbWFkvkm7gX/sI0Cgm3nnSV8mVPEj//vG6gS6oEMrOPNTs+oIaFnGNBLcoLePhhRcw=
+	t=1754679061; cv=pass; b=sMlvWIZf6Jp/ZPVNI32UtHPfJizh5krYdzKgzWvENpa1s0/w2T7l+n6JEECSXle79tfrL0kpGc0moIVhmR8oQ1JlEWSbngHowquESHe9UbWCHIkWuBkJ6p9vg5y6VkVsiL8EY929j5M6QJCGtMHitGjYn88HmaUDSl4ki88ochk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754679063; c=relaxed/simple;
-	bh=zsGWCvknZ0Q0AliH2uGp+zYJlpbO+dHA+3xTJwkWE9g=;
+	s=arc-20240116; t=1754679061; c=relaxed/simple;
+	bh=HSm58GNmOaM1n1ORMxneqNLmh0TWEDWEpX8YrzeessA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qLzt8We8fH21YHwW0RcodKhcnsxv+/nwFcgGM9LVd9+HSwQbSAMcNMANBU6JJYGZfiCQNJYeyK6MV+gEy5fE+Ry4IXdkq7l9mp5HbYogArZZCVU4ux7XVnzACxOQNsxfhARZW2YexT8EKXRgIhR64/d1jlNDwIjDB2DlOraEfrQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=fVXAu606; arc=pass smtp.client-ip=185.185.170.37
+	 MIME-Version; b=PgjFG/D94UWdvla5rMfcPYjr35iOlbklbC8FTmNT4w7sB/MUYXQRJdXqbqmUpat5/TBpjZ436Vx/ZeK2tWv2N879YMvMuO9PThmwVBFISNuMX0sX4SN7U1Q0Q93Y/33KPReQ+rPQW+D1Cb2j24t/CxhL96g5qE9t76OSsekLeKo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=nV/Zav/G; arc=pass smtp.client-ip=185.185.170.37
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [193.138.7.158])
@@ -36,7 +36,7 @@ Received: from monolith.lan (unknown [193.138.7.158])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4bzCly2k0yz49QF6;
+	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4bzCly3jYJz49QFd;
 	Fri,  8 Aug 2025 21:50:54 +0300 (EEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
 	t=1754679054;
@@ -44,40 +44,40 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=OsVKrWmnVcZ84q7Hm/t0fORLiir8DPkqMUd7DEgoxIk=;
-	b=fVXAu606vj9W+2e6LILto+uWnTlWFkas2BPCkVS9h8GoAHjY/k/Gpfa6e0N8sYphKmbhjN
-	3wkV48YMAVKYQJ0Ml0ovV35KUZEiwAEvKhpgk6ar/LranXYjwWTrZ093H1/50avgGcKQVU
-	lNwQKgCJ5QIdF42cC6o6gNLBBFX+9eAEC5epEiTasxt122/sdOCqth6+V/aPL9Ny3H1BBZ
-	EeFGE0J7Vsh4OluCbdITkWNtSxT9WVHkfBz7JaYJa1qcrCR4Skz3XT0SNG7UWvkJbWVLaL
-	rrsC1UjNx6wHcI1rqkYLJ7MQfEg0B5y2hmW9c49nshnB7nFCzZYbPsWGb7ChKg==
+	bh=QhbtBlfhQf+slAGlz1Dci4B82eKrvIkvHSOq4fbkvPg=;
+	b=nV/Zav/GTXb2UC9rRids4TsUHq+x/F6436uZYWScDiiGWczVSHRGB1UoQBA1AGxbC7oVjg
+	RllQFfyITRxjeBPLjaLkgSPcWMFi0sCO5Dzm0nuOdUebEidw0q7j6nPbai7okty2n806CR
+	OK+AZh0P/PTOmc1RNSoIkuZLm789a9LWik1X/S+kms9aSLdEzZ1fPeQvaklI+alLd6Jy/8
+	gb5qZVBJd6x99LftyscscjOFN72apWdF1blrewYfVrIUfepy1d4a04mw4Q9WdGMQfdFw3n
+	rdqzMnOdg9qgenUTaR5mcSkbS+LGbX+F5trhW8f2ZJ6X+a1HlojXOfKhOZBXQw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
 	s=lahtoruutu; t=1754679054;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=OsVKrWmnVcZ84q7Hm/t0fORLiir8DPkqMUd7DEgoxIk=;
-	b=KhNV919imxEL1ccrZXffuoAN+SPlaSChNylln5O0ITGJ79R/G9y7dX58AcmBc9Il851p86
-	pvghr9OWZZM6x7QcQre8Yl5Y6jtgMjZ2gW4KhzbgNdk7Xs4pJ/YXhp5RYu++v7mjD3Lsp4
-	NE9+nCzTGJ0EiuYoeIASGFQgbZgSSCHgeIMP58k4T4014+F7v2As9A9SK+D5emH7JmQ2BX
-	vvDvoNIJ/uMqSZnXk3hmBO90DpbFvS6BXhiTHUzvxu0Vy6O3CuFlaTq8H0SvCWLySqsf1Z
-	adrPf5+aIx25xbQdGU4WkbARv3/Xba+x9S19BLZSovPlQ3ntHLKyW7wSd485sw==
+	bh=QhbtBlfhQf+slAGlz1Dci4B82eKrvIkvHSOq4fbkvPg=;
+	b=V5U+AwWrCVFWdm2viHC67yGUvKW0+dR1InqP+dvPI4mOflbhyzULMP/8/a0t5EZ1OI68wQ
+	mEQxJvFRSCK6do+tKoxQ7AlENwobF1EyNGryF/Y6tN1kfWrOawkezn2k++AueEl297kr0p
+	Pmm0S13hUVSkqdQPSrNu78IJN8mL8GinzG/HHq4rZm/wE0g/HmrptOcVs0IiVx2CHi7wK/
+	970akwJel0CR/RwsEFkTSKtcG+xlsyc6PVIq4i0ZLRGUgg6KiRaGppvi1mEsdC22ueoMvF
+	Tb485MbouFiDpKwWMjBP2a/lWzQY3xDtnrAEqJwafRkuOqDY+d/4RBfCzpCCiQ==
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1754679054; a=rsa-sha256;
 	cv=none;
-	b=H5COOImtS3Ef9eQeM97J79dgJwMigUnOKmtPd8UoBn7VtRBXTHQSHaFEoOS8w8/qQKpcWh
-	CA3eO5UtUtiSYQmes2NEq1XgTO5manBvpdixKdwJBw/qLTmhQNKxMogFbLxfB+xgaLESn3
-	buSHMYOcuzdMqOpl9zqULCzddybbDi+VK8H3YLbTIuNkqK3+s29U6qc0I3F+RdUIebfRmA
-	UkWS4BC4z0fh9I2IrmgU+XHpAAjHfW+3g+w9CvvYkM3pLRpgb+iRYOwWOfkzFfgbjatIaa
-	Na73Q3F8xkoRRDK6ywrExH7UTvwvbczQITLE57+vwU4Jv6tA0lnvPxdi7JCaVQ==
+	b=Dq2E/rbg1CxKXjlnZ21zBE9WUSgGJNMowX39J6ysUCvwCTGNimFGTK+8PEyG2sAjKx5GXX
+	5NM53o1MrbVITCgLRRGfGNgi6PkrcAk/8FTlx2LVKvbH5o1zrVvA/h1FHYfm/jcovRGu/X
+	Zhl55b9a9+HGy2Rsu7kNW25LqFYJnnHGW7k1kXhPcjuBiVgDPWeTNQmUpUtc9GRzJV2I2V
+	Mxic/iEEv+QNUuEUcGXsuDxXt4Q6V5jPPw8nEZCL7A/X6meQ8faYOZHrUcU2p1wHoyx3++
+	GbAS5a0hZXwxErPyx6BAV00kl49Au9FHtu9lnYqOJymsq7GWsU24VVRI8XW+ag==
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ 6/7] bap: clear server streams when ucast disconnects
-Date: Fri,  8 Aug 2025 21:50:38 +0300
-Message-ID: <434f6ed736053d57f6f79fa11a26eedf31a07141.1754678883.git.pav@iki.fi>
+Subject: [PATCH BlueZ 7/7] shared/bap: check ASE state in find_ep_ucast
+Date: Fri,  8 Aug 2025 21:50:39 +0300
+Message-ID: <c97c2ccf18f493a390dc656210e653e68069accc.1754678883.git.pav@iki.fi>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <cover.1754678883.git.pav@iki.fi>
 References: <cover.1754678883.git.pav@iki.fi>
@@ -89,28 +89,36 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Streams are freed by bap_detach() without state change callback. Clear
-data->server_streams explicitly before bap_detach().
+ASE may be in non-configurable state also if it has no associated
+stream, eg. as a result of failed stream teardown or other misbehavior.
+Check also ASE state when selecting a "free" one.
 
-Fixes UAF due to stale stream pointers in server_streams.
+Fixes wrongly picking ASE that is not IDLE/CONFIG/QOS and cannot be
+configured.
 ---
- profiles/audio/bap.c | 3 +++
- 1 file changed, 3 insertions(+)
+ src/shared/bap.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/profiles/audio/bap.c b/profiles/audio/bap.c
-index a75919102..c463e6a8a 100644
---- a/profiles/audio/bap.c
-+++ b/profiles/audio/bap.c
-@@ -3768,6 +3768,9 @@ static int bap_disconnect(struct btd_service *service)
- 	queue_remove_all(data->snks, ep_remove, NULL, NULL);
- 	queue_remove_all(data->srcs, ep_remove, NULL, NULL);
+diff --git a/src/shared/bap.c b/src/shared/bap.c
+index c27e675ff..ed5c322b4 100644
+--- a/src/shared/bap.c
++++ b/src/shared/bap.c
+@@ -6224,6 +6224,15 @@ static bool find_ep_ucast(const void *data, const void *user_data)
+ 		}
+ 	}
  
-+	queue_destroy(data->server_streams, NULL);
-+	data->server_streams = NULL;
++	switch (ep->state) {
++	case BT_ASCS_ASE_STATE_IDLE:
++	case BT_ASCS_ASE_STATE_CONFIG:
++	case BT_ASCS_ASE_STATE_QOS:
++		break;
++	default:
++		return false;
++	}
 +
- 	bt_bap_detach(data->bap);
+ 	if (ep->dir != match->rpac->type)
+ 		return false;
  
- 	btd_service_disconnecting_complete(service, 0);
 -- 
 2.50.1
 
