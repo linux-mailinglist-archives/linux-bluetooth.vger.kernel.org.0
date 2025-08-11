@@ -1,89 +1,129 @@
-Return-Path: <linux-bluetooth+bounces-14578-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-14586-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 78E77B214FC
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Aug 2025 20:55:18 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA2E0B2160D
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Aug 2025 21:59:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7DF8D460BDA
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Aug 2025 18:55:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 84C30625D9B
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Aug 2025 19:59:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9677D2E2DCC;
-	Mon, 11 Aug 2025 18:55:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="GBQeax0a"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CD1A2D9EED;
+	Mon, 11 Aug 2025 19:59:02 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-28.smtp.github.com (out-28.smtp.github.com [192.30.252.211])
+Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5A32E284B
-	for <linux-bluetooth@vger.kernel.org>; Mon, 11 Aug 2025 18:55:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.211
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B205299AB3
+	for <linux-bluetooth@vger.kernel.org>; Mon, 11 Aug 2025 19:58:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754938513; cv=none; b=Rz+yn5DgtMeKjZrPPWPZSzsHEuY7SYHfqiZXeliyA9Qka2zQTjn1+Vkb7qYYkzIk8adFAPAlmqxqxgJr8aCB+/va5bgQKqEMhiVTrGk3N1bzEa+xhnvYcMVpUYiZyr6McmK5v+1rUQ43fCRCpdf+Z0JlkbXzlkl/XvCPthobOY4=
+	t=1754942341; cv=none; b=UC+AOoXwTI2JGadVdoP2cjdGbw4HzxS7cWLJ1wA8sUd4PldY51xqlnasdfMGaWLu/MYxb5vC5lViWKRKPzir9EypMVsd2Xur5SvlP17EtBtttKPGR/2tW7aqcXfbmErUPPYQG8Vk/c+41QqLC+wOh1mKO1AAQWy4FbwmON5diYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754938513; c=relaxed/simple;
-	bh=maF4k/oH0HQvUIPHAaOmGRS5WUbpl3JvXDSr11YK5Jk=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=s1U1QpxVEZWrnbayUavEQy642Ww9VOOIEEKs357ruFvCLELOELkB4lUk/QEpKgqi6qUR13jyItgqv/uVR6MZwqd/Ljmim07aeMgSWTcB/if/vy8lIIuoeoOtUbmssFyeKaKpgDt8yXkDJpDdm6MXVjPrpMl+zAvnluLA2v8PJsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=GBQeax0a; arc=none smtp.client-ip=192.30.252.211
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-1cf423f.ash1-iad.github.net [10.56.169.38])
-	by smtp.github.com (Postfix) with ESMTPA id 06ECC921158
-	for <linux-bluetooth@vger.kernel.org>; Mon, 11 Aug 2025 11:55:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1754938511;
-	bh=8RH3Zw5pS+z6GkvAKH+I8gvzRQ0SOfWBdPdNS3zYPWQ=;
-	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=GBQeax0aMkSzy3Dwvxq2cM/l+LdzCxVskgOZ1jH2IzrnDfQa6Of9z3fLe+tEYV/qx
-	 A8ACDXT/xYLF4jfVadIkMOeOvFXDp5CqMO75d73lLnBfGhYZlMMYY5amNdnfp5jXTv
-	 9uKBk8ZmkPVsUSjCDbhDWmVSkloXw7JKYT902NeM=
-Date: Mon, 11 Aug 2025 11:55:11 -0700
-From: Pauli Virtanen <noreply@github.com>
+	s=arc-20240116; t=1754942341; c=relaxed/simple;
+	bh=4R6ZNM4jrye2YNhGLN0owK83Viv709IfEMgFd3NpQBs=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=jLOwV/oEnCl2AS8UPtLOnW3EY4Sr1ddZWSZke4j98gU7sP6YMcWZUjwP3onkeFmS/ZlxtdFOwWj80rLH9sbfBKcwVFCIMJEiQGVscz1DkajrdfwGnIupJecc3Tf0Qd4swBPi/gCFsQdZ8dXLnsXBVqHV1C/5QBQ+9AZpPLfmPGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 2918A1F47E
+	for <linux-bluetooth@vger.kernel.org>; Mon, 11 Aug 2025 19:58:55 +0000 (UTC)
+From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/990189/000000-020772@github.com>
-Subject: [bluez/bluez] 020772: shared/bap: reset local ep state on stream
- detach
+Subject: [PATCH BlueZ 0/8] build: Add meson build system
+Date: Mon, 11 Aug 2025 21:53:41 +0200
+Message-ID: <20250811195850.1775759-1-hadess@hadess.net>
+X-Mailer: git-send-email 2.50.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-GND-State: clean
+X-GND-Score: 0
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeeffeehucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvufffkffogggtgfesthekredtredtjeenucfhrhhomhepuegrshhtihgvnhcupfhotggvrhgruceohhgruggvshhssehhrgguvghsshdrnhgvtheqnecuggftrfgrthhtvghrnhepfefggfffvefgveffuefghedufeehleefhfegfeeiueekhfegteetueehgfefvefgnecuffhomhgrihhnpehsvghrvhhitggvrdhinhenucfkphepvdgrtddumegvfeegmegvtgejfeemtghfvddtmeejudgurgemfegsugemvddtrgelmedufeefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvfeegmegvtgejfeemtghfvddtmeejudgurgemfegsugemvddtrgelmedufeefpdhhvghlohepohhlihhmphhitgdpmhgrihhlfhhrohhmpehhrgguvghssheshhgruggvshhsrdhnvghtpdhnsggprhgtphhtthhopedupdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-GND-Sasl: hadess@hadess.net
 
-  Branch: refs/heads/990189
-  Home:   https://github.com/bluez/bluez
-  Commit: 0207723b5472cff51698cdfbf39e3c559ac5806f
-      https://github.com/bluez/bluez/commit/0207723b5472cff51698cdfbf39e3c559ac5806f
-  Author: Pauli Virtanen <pav@iki.fi>
-  Date:   2025-08-11 (Mon, 11 Aug 2025)
+A couple of important notes:
+- the ell meson build changes still aren't upstream, so we're currently
+  relying on a fork, but that fork only impacts builds with vendored
+  ell, and meson
+- I can make similar change for autotools for the last 4 patches in
+  this patchset, just let me know whether you want them in the same
+  commit as the meson one, or separate ones. If they're not accepted,
+  I'll use them in the Fedora/RHEL packages, as those tools were
+  installed manually up until now.
 
-  Changed paths:
-    M src/shared/bap.c
+Bastien Nocera (8):
+  build: Add ell subproject
+  build: Add meson build system
+  build: Make more use of 'feature' options
+  build: Separate systemd and libsystemd dependencies
+  tools: Install gatttool if deprecated tools are enabled
+  tools: Install avinfo tool by default
+  tools: Install btmgmt along with other tools
+  emulator: Install the emulator if built
 
-  Log Message:
-  -----------
-  shared/bap: reset local ep state on stream detach
+ .gitignore                   |   1 -
+ .gitmodules                  |   3 +
+ attrib/meson.build           |  17 ++
+ btio/meson.build             |   1 +
+ client/meson.build           |  54 ++++++
+ completion/meson.build       |   3 +
+ doc/meson.build              |  41 +++++
+ emulator/meson.build         |  36 ++++
+ gdbus/meson.build            |  19 ++
+ gobex/meson.build            |   8 +
+ lib/meson.build              |  55 ++++++
+ mesh/meson.build             |  75 ++++++++
+ meson.build                  | 280 ++++++++++++++++++++++++++++
+ meson_options.txt            |  52 ++++++
+ monitor/meson.build          |  47 +++++
+ obexd/meson.build            | 121 +++++++++++++
+ peripheral/meson.build       |  13 ++
+ plugins/meson.build          |  29 +++
+ profiles/meson.build         | 170 +++++++++++++++++
+ src/meson.build              | 102 +++++++++++
+ src/shared/meson.build       |  80 ++++++++
+ subprojects/ell              |   1 +
+ test/meson.build             |  41 +++++
+ tools/mesh/meson.build       |  16 ++
+ tools/meson.build            | 341 +++++++++++++++++++++++++++++++++++
+ tools/mpris-proxy.service.in |   2 +-
+ unit/meson.build             | 111 ++++++++++++
+ 27 files changed, 1717 insertions(+), 2 deletions(-)
+ create mode 100644 .gitmodules
+ create mode 100644 attrib/meson.build
+ create mode 100644 btio/meson.build
+ create mode 100644 client/meson.build
+ create mode 100644 completion/meson.build
+ create mode 100644 doc/meson.build
+ create mode 100644 emulator/meson.build
+ create mode 100644 gdbus/meson.build
+ create mode 100644 gobex/meson.build
+ create mode 100644 lib/meson.build
+ create mode 100644 mesh/meson.build
+ create mode 100644 meson.build
+ create mode 100644 meson_options.txt
+ create mode 100644 monitor/meson.build
+ create mode 100644 obexd/meson.build
+ create mode 100644 peripheral/meson.build
+ create mode 100644 plugins/meson.build
+ create mode 100644 profiles/meson.build
+ create mode 100644 src/meson.build
+ create mode 100644 src/shared/meson.build
+ create mode 160000 subprojects/ell
+ create mode 100644 test/meson.build
+ create mode 100644 tools/mesh/meson.build
+ create mode 100644 tools/meson.build
+ create mode 100644 unit/meson.build
 
-When removing streams in bt_bap_detach(), they are detached directly
-without going through normal state transitions.  As BAP Unicast Server,
-this leaves local endpoints to the state they were in, so they persist
-if client connects again.  This is not wanted.
+-- 
+2.50.0
 
-For server streams, clear the local ASE state on detach.  At that point,
-the ASE is either already idle or the session is detached.
-
-Don't modify state of remote endpoints (BAP Client streams), as only
-remote server should do that.
-
-
-
-To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
