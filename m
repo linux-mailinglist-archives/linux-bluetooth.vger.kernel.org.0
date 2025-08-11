@@ -1,128 +1,102 @@
-Return-Path: <linux-bluetooth+bounces-14586-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-14579-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA2E0B2160D
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Aug 2025 21:59:23 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F8FAB21607
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Aug 2025 21:59:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 84C30625D9B
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Aug 2025 19:59:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7A78D1A238A2
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 11 Aug 2025 19:59:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CD1A2D9EED;
-	Mon, 11 Aug 2025 19:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 141882D94B4;
+	Mon, 11 Aug 2025 19:59:01 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B205299AB3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B27629BDA7
 	for <linux-bluetooth@vger.kernel.org>; Mon, 11 Aug 2025 19:58:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754942341; cv=none; b=UC+AOoXwTI2JGadVdoP2cjdGbw4HzxS7cWLJ1wA8sUd4PldY51xqlnasdfMGaWLu/MYxb5vC5lViWKRKPzir9EypMVsd2Xur5SvlP17EtBtttKPGR/2tW7aqcXfbmErUPPYQG8Vk/c+41QqLC+wOh1mKO1AAQWy4FbwmON5diYk=
+	t=1754942340; cv=none; b=I1mYjP3FP3mx4SpMGvpajPa5r70u7iBuKoEgTXWQYtshe6Q58xVbhC9nK0MGUCO1wyikDm30rwvSGSFI4pCfvJq8dJ3H6HnqISVrdY/V1GNv7N8aQdgD8jfEF7U6ElTK5awHkvd+jyXY2gWcqfqjnzz9AmgC6MducXrFEXRNtXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754942341; c=relaxed/simple;
-	bh=4R6ZNM4jrye2YNhGLN0owK83Viv709IfEMgFd3NpQBs=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=jLOwV/oEnCl2AS8UPtLOnW3EY4Sr1ddZWSZke4j98gU7sP6YMcWZUjwP3onkeFmS/ZlxtdFOwWj80rLH9sbfBKcwVFCIMJEiQGVscz1DkajrdfwGnIupJecc3Tf0Qd4swBPi/gCFsQdZ8dXLnsXBVqHV1C/5QBQ+9AZpPLfmPGw=
+	s=arc-20240116; t=1754942340; c=relaxed/simple;
+	bh=26NX/SnFSkjC60zCbqhJSdW2CrhnJQOXI7GXSSM/aqM=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=qfzM7hsStElBQVVfFzVtnTyiYIzXtyPpiHfDBJ2u4QY7InKgQ844VElSF6jp0DSTs4m7E+5CKgRQfLm8nsx+0vOQSgpAPXm1aUYjtiDgMLLlC5/TqIP7+4RCuWUfIVM8Gr3ZVvepQJOjEGk35Dk+pdz0jzELCMp8eN4+FNOcI14=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 2918A1F47E
-	for <linux-bluetooth@vger.kernel.org>; Mon, 11 Aug 2025 19:58:55 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 5F2A21F687
+	for <linux-bluetooth@vger.kernel.org>; Mon, 11 Aug 2025 19:58:56 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 0/8] build: Add meson build system
-Date: Mon, 11 Aug 2025 21:53:41 +0200
-Message-ID: <20250811195850.1775759-1-hadess@hadess.net>
+Subject: [PATCH BlueZ 1/8] build: Add ell subproject
+Date: Mon, 11 Aug 2025 21:53:42 +0200
+Message-ID: <20250811195850.1775759-2-hadess@hadess.net>
 X-Mailer: git-send-email 2.50.0
+In-Reply-To: <20250811195850.1775759-1-hadess@hadess.net>
+References: <20250811195850.1775759-1-hadess@hadess.net>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-GND-State: clean
 X-GND-Score: 0
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeeffeehucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvufffkffogggtgfesthekredtredtjeenucfhrhhomhepuegrshhtihgvnhcupfhotggvrhgruceohhgruggvshhssehhrgguvghsshdrnhgvtheqnecuggftrfgrthhtvghrnhepfefggfffvefgveffuefghedufeehleefhfegfeeiueekhfegteetueehgfefvefgnecuffhomhgrihhnpehsvghrvhhitggvrdhinhenucfkphepvdgrtddumegvfeegmegvtgejfeemtghfvddtmeejudgurgemfegsugemvddtrgelmedufeefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvfeegmegvtgejfeemtghfvddtmeejudgurgemfegsugemvddtrgelmedufeefpdhhvghlohepohhlihhmphhitgdpmhgrihhlfhhrohhmpehhrgguvghssheshhgruggvshhsrdhnvghtpdhnsggprhgtphhtthhopedupdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeeffeehucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpefhtedtgfehvdeufefhfeevkeefuddvtdevjeejjefftdegffeludevjeelueetkeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhgihhthhhusgdrtghomhenucfkphepvdgrtddumegvfeegmegvtgejfeemtghfvddtmeejudgurgemfegsugemvddtrgelmedufeefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvfeegmegvtgejfeemtghfvddtmeejudgurgemfegsugemvddtrgelmedufeefpdhhvghlohepohhlihhmphhitgdpmhgrihhlfhhrohhmpehhrgguvghssheshhgruggvshhsrdhnvghtpdhnsggprhgtphhtthhopedupdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
 X-GND-Sasl: hadess@hadess.net
 
-A couple of important notes:
-- the ell meson build changes still aren't upstream, so we're currently
-  relying on a fork, but that fork only impacts builds with vendored
-  ell, and meson
-- I can make similar change for autotools for the last 4 patches in
-  this patchset, just let me know whether you want them in the same
-  commit as the meson one, or separate ones. If they're not accepted,
-  I'll use them in the Fedora/RHEL packages, as those tools were
-  installed manually up until now.
+Add the ell library as a subproject. Rather than doing like autotools
+and relying on users checking out ell in a particular location, or
+install ell as a system shared library, use meson subprojects to build
+our own internal copy of ell if the user hasn't installed it
+system-wide.
 
-Bastien Nocera (8):
-  build: Add ell subproject
-  build: Add meson build system
-  build: Make more use of 'feature' options
-  build: Separate systemd and libsystemd dependencies
-  tools: Install gatttool if deprecated tools are enabled
-  tools: Install avinfo tool by default
-  tools: Install btmgmt along with other tools
-  emulator: Install the emulator if built
-
- .gitignore                   |   1 -
- .gitmodules                  |   3 +
- attrib/meson.build           |  17 ++
- btio/meson.build             |   1 +
- client/meson.build           |  54 ++++++
- completion/meson.build       |   3 +
- doc/meson.build              |  41 +++++
- emulator/meson.build         |  36 ++++
- gdbus/meson.build            |  19 ++
- gobex/meson.build            |   8 +
- lib/meson.build              |  55 ++++++
- mesh/meson.build             |  75 ++++++++
- meson.build                  | 280 ++++++++++++++++++++++++++++
- meson_options.txt            |  52 ++++++
- monitor/meson.build          |  47 +++++
- obexd/meson.build            | 121 +++++++++++++
- peripheral/meson.build       |  13 ++
- plugins/meson.build          |  29 +++
- profiles/meson.build         | 170 +++++++++++++++++
- src/meson.build              | 102 +++++++++++
- src/shared/meson.build       |  80 ++++++++
- subprojects/ell              |   1 +
- test/meson.build             |  41 +++++
- tools/mesh/meson.build       |  16 ++
- tools/meson.build            | 341 +++++++++++++++++++++++++++++++++++
- tools/mpris-proxy.service.in |   2 +-
- unit/meson.build             | 111 ++++++++++++
- 27 files changed, 1717 insertions(+), 2 deletions(-)
+Note that this currently points to a fork of ell with meson support
+added, this should be switched to the upstream repo when that support is
+merged. See:
+https://lore.kernel.org/ell/20250807134859.930870-1-hadess@hadess.net/T/
+---
+ .gitignore      | 1 -
+ .gitmodules     | 3 +++
+ subprojects/ell | 1 +
+ 3 files changed, 4 insertions(+), 1 deletion(-)
  create mode 100644 .gitmodules
- create mode 100644 attrib/meson.build
- create mode 100644 btio/meson.build
- create mode 100644 client/meson.build
- create mode 100644 completion/meson.build
- create mode 100644 doc/meson.build
- create mode 100644 emulator/meson.build
- create mode 100644 gdbus/meson.build
- create mode 100644 gobex/meson.build
- create mode 100644 lib/meson.build
- create mode 100644 mesh/meson.build
- create mode 100644 meson.build
- create mode 100644 meson_options.txt
- create mode 100644 monitor/meson.build
- create mode 100644 obexd/meson.build
- create mode 100644 peripheral/meson.build
- create mode 100644 plugins/meson.build
- create mode 100644 profiles/meson.build
- create mode 100644 src/meson.build
- create mode 100644 src/shared/meson.build
  create mode 160000 subprojects/ell
- create mode 100644 test/meson.build
- create mode 100644 tools/mesh/meson.build
- create mode 100644 tools/meson.build
- create mode 100644 unit/meson.build
 
+diff --git a/.gitignore b/.gitignore
+index d23a06af4b53..3da0ac680152 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -35,7 +35,6 @@ test-driver
+ test-suite.log
+ coverage.info
+ coverage
+-ell
+ 
+ lib/bluez.pc
+ src/builtin.h
+diff --git a/.gitmodules b/.gitmodules
+new file mode 100644
+index 000000000000..53881e4d8e3f
+--- /dev/null
++++ b/.gitmodules
+@@ -0,0 +1,3 @@
++[submodule "subprojects/ell"]
++	path = subprojects/ell
++	url = https://github.com/hadess/ell.git
+diff --git a/subprojects/ell b/subprojects/ell
+new file mode 160000
+index 000000000000..08bc5f26f210
+--- /dev/null
++++ b/subprojects/ell
+@@ -0,0 +1 @@
++Subproject commit 08bc5f26f2108a778a25222fdc60b931310ad68d
 -- 
 2.50.0
 
