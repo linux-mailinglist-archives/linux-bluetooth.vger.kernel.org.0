@@ -1,51 +1,50 @@
-Return-Path: <linux-bluetooth+bounces-14601-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-14602-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04D0CB21AE1
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 12 Aug 2025 04:41:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A7DB3B21AEA
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 12 Aug 2025 04:43:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 00A1A427542
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 12 Aug 2025 02:41:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5E5B94271A0
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 12 Aug 2025 02:43:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E55D02E3709;
-	Tue, 12 Aug 2025 02:41:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D37512E2DE8;
+	Tue, 12 Aug 2025 02:41:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="dm94ZIrJ"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="GeNL8/tG"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-17.smtp.github.com (out-17.smtp.github.com [192.30.252.200])
+Received: from out-21.smtp.github.com (out-21.smtp.github.com [192.30.252.204])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34F72E3711
-	for <linux-bluetooth@vger.kernel.org>; Tue, 12 Aug 2025 02:40:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E093C2E3B08
+	for <linux-bluetooth@vger.kernel.org>; Tue, 12 Aug 2025 02:41:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.204
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754966460; cv=none; b=bFbsD4I9YBDHtMZGnW9kZGFB7qK1gvFoco3tKSloO4Iw6B23t1bM8nI4S/HHVLJwGHLFSHpFn6pqW0n45xBl/CiMrQcnSDx/uHNFjq2vb5vtq6gRts6seC6he77FPEIe1xyeg7/OHaelAm6DjSBBZ7OpiVvadhp9xkS90T3aEYs=
+	t=1754966505; cv=none; b=PSq9aJcX58Y9HwQ0pbcWH/H46u1WNiFZx4DS08UI3z5e1qjMQtnw18QdB34ZY0aVCpGXZeVAkD2/VClbd3WJy/guEDjf2b/Nms5ofRc331Ud+rFAYMA9s4w5cpSc8EvtVQaWkZt1Ifj9kswnIcKBp/j9EuoGVvl83QSlfU+5Q6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754966460; c=relaxed/simple;
-	bh=XJaIErbix0mKF3rrbMkyKuIgGvGHQarw6zwzIfuveFc=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=ilijs5Dwkwxs9ppYQ/XExrxi+ttJlhTgniRc7QGWu5Ab+i1904pdxvVCm2MvJMFyXyA5kvihVDoKbbhWSbfEIXxHJFtFd3CVuS1cty0xvxbLTErg/uUWn7Evvs6IqD7Cp40kzE56QAATIOKgfy7j8PO0ZGsOxn8lcjDU8I4zW9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=dm94ZIrJ; arc=none smtp.client-ip=192.30.252.200
+	s=arc-20240116; t=1754966505; c=relaxed/simple;
+	bh=veUtu5MjmNVrtaxFMkFSSqmXRgrnm/MyfcGmozfSAnU=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=stCu03r9YxvdP050Zhy1q+q6b1LHv6FAK40hDnUUzcRbpGb9wxVqNRRwrRC+ztv6/GDqkFeSAUPGDhgjYkSbGIeoKOOj/Nlyo2ih+rnrtST9lDvSyRkU6FdpWQiMc9iiSVc5KR3PliEcCZ9e5k/Mdqr6fzPPD3kqCJMi5k1ozaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=GeNL8/tG; arc=none smtp.client-ip=192.30.252.204
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-b43dc93.va3-iad.github.net [10.48.141.37])
-	by smtp.github.com (Postfix) with ESMTPA id 025194E05E6
-	for <linux-bluetooth@vger.kernel.org>; Mon, 11 Aug 2025 19:40:58 -0700 (PDT)
+Received: from github.com (hubbernetes-node-6ff39f0.ac4-iad.github.net [10.52.14.19])
+	by smtp.github.com (Postfix) with ESMTPA id E3D23700931
+	for <linux-bluetooth@vger.kernel.org>; Mon, 11 Aug 2025 19:41:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1754966458;
-	bh=O6yuttQ8+dy7HJ5LgnMXCl43X84gwi+VPsWEXWZa4GE=;
+	s=pf2023; t=1754966502;
+	bh=se9JJhhXdPVEVa2pDElwS+StbcXwdegigHC9jWB3DcI=;
 	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=dm94ZIrJdDmhHeHifoAr1gngZchVBiltTCqR8CgwGnXl3KUzbc2W8aHzTTJ7PgyMB
-	 3CGGsBYBLLeAXlq6uiix5D8OSGE405o87yuyEjXCUs+QOcfeJ4u/Ex15JzlXEt2baL
-	 Hj8120hNO6mlx+p2TvtLm+/+AtyzctC9aNpZGeUQ=
-Date: Mon, 11 Aug 2025 19:40:58 -0700
-From: Pauli Virtanen <noreply@github.com>
+	b=GeNL8/tGLOfk+1ADKleoHje2I7Y6TqXFKJy06+ZcZ+ridTIGYjTXJAPjxkA2rk3Z0
+	 CbJFA27vnaz4w1e+Nzffcyw+Wq4qElBVuPwzwd045q7E5lieW9h0+KBUm7T/OEKCqU
+	 NeELJuhz4p66DcF2hbOC/YoP6oNYgQVe45rQq5sM=
+Date: Mon, 11 Aug 2025 19:41:42 -0700
+From: BluezTestBot <noreply@github.com>
 To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/master/013b34-8a304f@github.com>
-Subject: [bluez/bluez] 8a304f: shared/bap: reset local ep state on stream
- detach
+Message-ID: <bluez/bluez/push/refs/heads/990189/020772-000000@github.com>
+Subject: [bluez/bluez]
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -58,32 +57,8 @@ Content-Transfer-Encoding: 7bit
 X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
 X-Auto-Response-Suppress: All
 
-  Branch: refs/heads/master
+  Branch: refs/heads/990189
   Home:   https://github.com/bluez/bluez
-  Commit: 8a304f7fd9607850052fc6ac9c13c63c9d36205a
-      https://github.com/bluez/bluez/commit/8a304f7fd9607850052fc6ac9c13c63c9d36205a
-  Author: Pauli Virtanen <pav@iki.fi>
-  Date:   2025-08-11 (Mon, 11 Aug 2025)
-
-  Changed paths:
-    M src/shared/bap.c
-
-  Log Message:
-  -----------
-  shared/bap: reset local ep state on stream detach
-
-When removing streams in bt_bap_detach(), they are detached directly
-without going through normal state transitions.  As BAP Unicast Server,
-this leaves local endpoints to the state they were in, so they persist
-if client connects again.  This is not wanted.
-
-For server streams, clear the local ASE state on detach.  At that point,
-the ASE is either already idle or the session is detached.
-
-Don't modify state of remote endpoints (BAP Client streams), as only
-remote server should do that.
-
-
 
 To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
