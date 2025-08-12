@@ -1,167 +1,130 @@
-Return-Path: <linux-bluetooth+bounces-14609-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-14612-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2780B22368
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 12 Aug 2025 11:40:42 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11058B225F6
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 12 Aug 2025 13:36:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3A07C3AFDF2
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 12 Aug 2025 09:39:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AE4783ABCA1
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 12 Aug 2025 11:36:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18AFE2E92DC;
-	Tue, 12 Aug 2025 09:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A18292ED867;
+	Tue, 12 Aug 2025 11:36:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GrZFZWHO"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gKLOsrHB"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3642E88B7
-	for <linux-bluetooth@vger.kernel.org>; Tue, 12 Aug 2025 09:39:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7272D2E9ED8;
+	Tue, 12 Aug 2025 11:36:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754991564; cv=none; b=UMtGNnpkjubKjK5xKJAMvKPmA6Q15IECiIYKXD8CAA91QFYCNWDv4DfwmSeSdsqGAHqZnSqqZa9+E3Hb3Bfgk0CtwCkaGnX4p3ZVY1gYUDxL7MQk+7iUJ0hpPk+Yr8Y8QSL4T/rHNvm25mOZBnSBVebk53qmmZLIddDtwonvhoU=
+	t=1754998590; cv=none; b=N1bZQ2PBHfefU6A9FUSVIiZGqfJ6tfCWLni/5cYfjRDUDPP0LsHz2wAtKo9UtIlsiAutikjQDpQLvlTA2p4cXtdmRGuHR/btUjj3/Uaqt178+X5IIUVNZ2hvS5A5/Dp0J+ygsOEKhCR1GoN5tBaVoNT44ZrWsPSW55T6UzAAQL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754991564; c=relaxed/simple;
-	bh=kAgWGjWWM29rJqvBRFC2OOPU1ZzXPOTCxlnuEoxYcrg=;
-	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
-	 In-Reply-To:References; b=C3UIHPAXQ0WgBIT1chMBrFvCXlIuyePxsqWTPVfo4lN4i5vIzAAlVjyEWySQA/bAobGV8Yq3rPlSBC9y/1s0AfRz1Rq8Q5/8hNRAxPrBuCK1OW+QR/y4zOOq0nZ3Wqk9eJ19siKxsSuSFvAHdG3PXdd2U+Kjc/NcTNjGN0MlNJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GrZFZWHO; arc=none smtp.client-ip=209.85.222.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-7e62a1cbf82so361859785a.2
-        for <linux-bluetooth@vger.kernel.org>; Tue, 12 Aug 2025 02:39:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1754991561; x=1755596361; darn=vger.kernel.org;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=kAgWGjWWM29rJqvBRFC2OOPU1ZzXPOTCxlnuEoxYcrg=;
-        b=GrZFZWHOqqSGT3q0UAke4J9QD4DUNxEePv6A0M3cXmBE/wD2lCXpyZnc83ArrJRcap
-         a63eXS2g9a9UG6vZ67qst7I7mMkSs004ZWtR563DP+aEuo070wpCPgoGTiTd9fjEaeZk
-         rXM6ZYyDSDgHO7opi5yQCRT6Be9ngM3JxWyyIpSMVf1AYS9YP6K5ZV1+nZDse2XenbFx
-         oYaN30a1oOsee8tpJ6WnkHSNPZ4320d971br4e3mjP6Ub5r+VxZYMYmB1Iw04s+yVWcV
-         AMEKFK8PZGYZqN8iO+Z+iieyNdqjDfgFYciIFfuOV7NkdGMYCs53Gavn26fuxvytyEnk
-         eaNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754991561; x=1755596361;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kAgWGjWWM29rJqvBRFC2OOPU1ZzXPOTCxlnuEoxYcrg=;
-        b=P7cSGi/H6xsET59ZsaKEN1nbzFecYpFbeOmYy1ib0/i7d+2rVtiO66uPjBACoxnpQ0
-         RLxGGENno/zTqBliQ+9Eovf96EmK+WvI5oAco4cjq6K6jU0ckvI/473WfyTLnHnn6ZvQ
-         rVSNVGLII9dLjZ/Tf1FgJAEX+0C2J0HFNTOMeo3kEGlNqBSEmupdAIv9msLntl/idXwe
-         jpcOr+eh5TRePMDAbk7w51FtIAOX/FZrtZAooW9RRpCy72YufdRqRLLz0aCUfSgsjzla
-         ehKyU5kzp/NbFvNrMtR5dBICBXykySexuFjNG7QMI4Q/WAg2aQZO+iwae+p1dFeXI5rT
-         Z9Wg==
-X-Gm-Message-State: AOJu0YxRFdC+1X28/w0LO7KZpH8SCd/h3yNzc6CtFArIIMT9pfGMV0cF
-	94wtZOiEWhGl9tPtRTiViaVEljQW/aCoVgMO7yH+uiK7oaST1MeZujOkJImFg2Un
-X-Gm-Gg: ASbGncsP2IGHRUFMMmGlb8RhYJ5zjgZR9GsOSvrRw6VwZROG2sJcgGGHuwouxcz+vx5
-	XPLK8oYOyZGJmhoCwasBET8n4kmTl0X33mDpqAkRz5hR3Dx7kD6RlCEhLLdCWhRKAWLpjPrIq1u
-	26A4hSfUPvYvIAPFXOv2mFKI0e/I6+/jc6Dl7odDVMIydvbArUj9xtFaxdJ4LObD3S7SSBmwrTj
-	IvWkLGNlurLUzXXRuZzqKFPvX2fW7Yi1J/I5EBck1fM3AGWEvjUgSYOLDLRew3r88uiek8kkG2y
-	NyZpkIzfiiYZgSGjUc5MdkJSkPYoEvosQd6/RmpZOhHE1Z+V9guia2euxwcB25gguIN3N3VG17q
-	blIO19igqmxRN9hE0yBp2bq0si2pELc0=
-X-Google-Smtp-Source: AGHT+IH4UXSQxKeOhEmlZumoB6yEAfAp+Ykbug+9FgCD5jmStz7/nzx+rMDhTb4jmD1O0UrSO89dug==
-X-Received: by 2002:a05:620a:a905:b0:7e7:40f1:8d33 with SMTP id af79cd13be357-7e82c758067mr2161886285a.41.1754991561313;
-        Tue, 12 Aug 2025 02:39:21 -0700 (PDT)
-Received: from [172.17.0.2] ([172.174.221.229])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7e83e5d6a1bsm546977085a.13.2025.08.12.02.39.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Aug 2025 02:39:20 -0700 (PDT)
-Message-ID: <689b0bc8.050a0220.c6509.ec55@mx.google.com>
-Date: Tue, 12 Aug 2025 02:39:20 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============2214937862595383154=="
+	s=arc-20240116; t=1754998590; c=relaxed/simple;
+	bh=1j5yg+lSAHuLMhU3lbI0jIA24J98gX9/8b5M+zM8EUU=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=VKaMdMtGX8xNbjGH9NlV9gnwQuUm1LK/5+WVZZztLTuSRiJpWpRTU5wTdiE4YLvt+XRocD8hRBElzxTtFqXcNvSW+1v7+/75OFgaD1Z+lTtkp/VSQU3FdlJXpUItkYBWRxISfACcJta0csHY81hSnHBp3lfnqUfI/zqOtMotflk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gKLOsrHB; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57CAvfh7005909;
+	Tue, 12 Aug 2025 11:36:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=vjGxB8wpxqwFfJruwY3bBOQyHUoTNtgE82/
+	/yw6HIuQ=; b=gKLOsrHBzIdpUq5Eza245/LgaAID3I2X8Hgk4GeuyTR8G8tdG0L
+	5g97Fy9ZXSCzL69eZ5aENPiwn81cuh2Fg6/oAlzY1Y45yhoFeUH7KhkIWmBb/zbe
+	mOUUgxpdEC86xfCsQchzh3WOyBWEEQEfFX5J5CBs3vT+RNt0WqiQylZ1ul/jfgUk
+	ePrWHqYlZPHR/DpWsPdnQaRT56ykW8+rqLUnKmEJvWFz2xJPBDJkYGTyl15CDJ9A
+	qheWYCtmx7mMXIRVpjgwsZGMVlVNoFRF8G6CYedQ0NKyfX6P8QKQBT8h93+v9Rl5
+	rBcLt9OJPSAz2fwahhouDyWgq57fUVb1njA==
+Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ffhjks75-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 12 Aug 2025 11:36:27 +0000 (GMT)
+Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+	by APTAIPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 57CBaODP007939;
+	Tue, 12 Aug 2025 11:36:24 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 48dydkvfp4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 12 Aug 2025 11:36:24 +0000
+Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 57CBaN6t007936;
+	Tue, 12 Aug 2025 11:36:23 GMT
+Received: from bt-iot-sh02-lnx.ap.qualcomm.com (bt-iot-sh02-lnx.qualcomm.com [10.253.144.65])
+	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 57CBaNvj007934
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 12 Aug 2025 11:36:23 +0000
+Received: by bt-iot-sh02-lnx.ap.qualcomm.com (Postfix, from userid 4467449)
+	id D8D17223D5; Tue, 12 Aug 2025 19:36:22 +0800 (CST)
+From: Shuai Zhang <quic_shuaz@quicinc.com>
+To: linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc: quic_bt@quicinc.com, Shuai Zhang <quic_shuaz@quicinc.com>
+Subject: [PATCH 0/4] Fix SSR(Sub-System Restart) issues caused by BT_EN being pulled up by hardware
+Date: Tue, 12 Aug 2025 19:36:16 +0800
+Message-Id: <20250812113620.3135226-1-quic_shuaz@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: bluez.test.bot@gmail.com
-To: linux-bluetooth@vger.kernel.org, valorcool@gmail.com
-Subject: RE: Fix memory leak when adding GATT Characteristic
-In-Reply-To: <20250812080044.131526-2-valorcool@gmail.com>
-References: <20250812080044.131526-2-valorcool@gmail.com>
-Reply-To: linux-bluetooth@vger.kernel.org
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODExMDA3NCBTYWx0ZWRfX8RFQH6orgeia
+ vPqxRn7GL/x9kpHtZ1NAGFbPYVT1hb+Vzl50RShLIhq/mRbvuhq9mpRZF5tmj2q/KIni/nMsqAv
+ UVe5XqqyKz4qNxPm1JYDsdzw9BzpsDByI8/+ZdKKiqX/5ZEo79ei4AgPskXEoBpYwdeO7bz7s4d
+ 9oh5soqFjYWsFw2/7yC/eUXtAOazju9U+7lecVoGsJqXIApr0uUQWtOtcvvDTV/OgUpv8EwW7r5
+ Va0Ml2KK6shhmG/jO4IcSavKJNOSXpSs8N0phac+AmEX08FMRT5XSYoiBAb2T1xpSoGO39s1ZIX
+ 3JkLwJyxwzbRfMEZbfh7FyN5hvlL0es2e9dTMFNzkXMOxFRKmQq2ZQbjm12RFr5wi6e7Pr4FB6b
+ kw6GBcQM
+X-Proofpoint-GUID: 4cBojP7PceuRmHwqAMSv0oKW7mFZ5iOi
+X-Authority-Analysis: v=2.4 cv=TJFFS0la c=1 sm=1 tr=0 ts=689b273b cx=c_pps
+ a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8 a=CCsBk6LTjx9FGpkNJm0A:9
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: 4cBojP7PceuRmHwqAMSv0oKW7mFZ5iOi
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-12_06,2025-08-11_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 suspectscore=0 adultscore=0 impostorscore=0 malwarescore=0
+ phishscore=0 clxscore=1015 spamscore=0 bulkscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508110074
 
---===============2214937862595383154==
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: base64
+This patch series addresses issues encountered during SSR when
+the BT_EN pin is pulled up by hardware. The main issues fixed are:
 
-VGhpcyBpcyBhdXRvbWF0ZWQgZW1haWwgYW5kIHBsZWFzZSBkbyBub3QgcmVwbHkgdG8gdGhpcyBl
-bWFpbCEKCkRlYXIgc3VibWl0dGVyLAoKVGhhbmsgeW91IGZvciBzdWJtaXR0aW5nIHRoZSBwYXRj
-aGVzIHRvIHRoZSBsaW51eCBibHVldG9vdGggbWFpbGluZyBsaXN0LgpUaGlzIGlzIGEgQ0kgdGVz
-dCByZXN1bHRzIHdpdGggeW91ciBwYXRjaCBzZXJpZXM6ClBXIExpbms6aHR0cHM6Ly9wYXRjaHdv
-cmsua2VybmVsLm9yZy9wcm9qZWN0L2JsdWV0b290aC9saXN0Lz9zZXJpZXM9OTkwNDA3CgotLS1U
-ZXN0IHJlc3VsdC0tLQoKVGVzdCBTdW1tYXJ5OgpDaGVja1BhdGNoICAgICAgICAgICAgICAgICAg
-ICBQRU5ESU5HICAgMC4zMSBzZWNvbmRzCkdpdExpbnQgICAgICAgICAgICAgICAgICAgICAgIFBF
-TkRJTkcgICAwLjIzIHNlY29uZHMKQnVpbGRFbGwgICAgICAgICAgICAgICAgICAgICAgUEFTUyAg
-ICAgIDIwLjI0IHNlY29uZHMKQmx1ZXpNYWtlICAgICAgICAgICAgICAgICAgICAgUEFTUyAgICAg
-IDI1MjcuMjUgc2Vjb25kcwpNYWtlQ2hlY2sgICAgICAgICAgICAgICAgICAgICBGQUlMICAgICAg
-MTEuNjkgc2Vjb25kcwpNYWtlRGlzdGNoZWNrICAgICAgICAgICAgICAgICBGQUlMICAgICAgMTYx
-LjM1IHNlY29uZHMKQ2hlY2tWYWxncmluZCAgICAgICAgICAgICAgICAgRkFJTCAgICAgIDE5OS44
-MiBzZWNvbmRzCkNoZWNrU21hdGNoICAgICAgICAgICAgICAgICAgIFBBU1MgICAgICAzMDkuNDQg
-c2Vjb25kcwpibHVlem1ha2VleHRlbGwgICAgICAgICAgICAgICBQQVNTICAgICAgMTI4LjA3IHNl
-Y29uZHMKSW5jcmVtZW50YWxCdWlsZCAgICAgICAgICAgICAgUEVORElORyAgIDAuNDAgc2Vjb25k
-cwpTY2FuQnVpbGQgICAgICAgICAgICAgICAgICAgICBQQVNTICAgICAgOTIwLjU0IHNlY29uZHMK
-CkRldGFpbHMKIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjClRlc3Q6IENoZWNrUGF0Y2gg
-LSBQRU5ESU5HCkRlc2M6IFJ1biBjaGVja3BhdGNoLnBsIHNjcmlwdApPdXRwdXQ6CgojIyMjIyMj
-IyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMKVGVzdDogR2l0TGludCAtIFBFTkRJTkcKRGVzYzogUnVu
-IGdpdGxpbnQKT3V0cHV0OgoKIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjClRlc3Q6IE1h
-a2VDaGVjayAtIEZBSUwKRGVzYzogUnVuIEJsdWV6IE1ha2UgQ2hlY2sKT3V0cHV0OgoKLi90ZXN0
-LWRyaXZlcjogbGluZSAxMDc6IDMwNTg0IEFib3J0ZWQgICAgICAgICAgICAgICAgIChjb3JlIGR1
-bXBlZCkgIiRAIiA+ICRsb2dfZmlsZSAyPiYxCi4vdGVzdC1kcml2ZXI6IGxpbmUgMTA3OiAzMDYx
-MyBBYm9ydGVkICAgICAgICAgICAgICAgICAoY29yZSBkdW1wZWQpICIkQCIgPiAkbG9nX2ZpbGUg
-Mj4mMQouL3Rlc3QtZHJpdmVyOiBsaW5lIDEwNzogMzA2MjIgQWJvcnRlZCAgICAgICAgICAgICAg
-ICAgKGNvcmUgZHVtcGVkKSAiJEAiID4gJGxvZ19maWxlIDI+JjEKLi90ZXN0LWRyaXZlcjogbGlu
-ZSAxMDc6IDMwNjMxIEFib3J0ZWQgICAgICAgICAgICAgICAgIChjb3JlIGR1bXBlZCkgIiRAIiA+
-ICRsb2dfZmlsZSAyPiYxCi4vdGVzdC1kcml2ZXI6IGxpbmUgMTA3OiAzMDY0MCBBYm9ydGVkICAg
-ICAgICAgICAgICAgICAoY29yZSBkdW1wZWQpICIkQCIgPiAkbG9nX2ZpbGUgMj4mMQptYWtlWzNd
-OiAqKiogW01ha2VmaWxlOjk5Mzc6IHRlc3Qtc3VpdGUubG9nXSBFcnJvciAxCm1ha2VbMl06ICoq
-KiBbTWFrZWZpbGU6MTAwNDU6IGNoZWNrLVRFU1RTXSBFcnJvciAyCm1ha2VbMV06ICoqKiBbTWFr
-ZWZpbGU6MTA0Njc6IGNoZWNrLWFtXSBFcnJvciAyCm1ha2U6ICoqKiBbTWFrZWZpbGU6MTA0Njk6
-IGNoZWNrXSBFcnJvciAyCiMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIwpUZXN0OiBNYWtl
-RGlzdGNoZWNrIC0gRkFJTApEZXNjOiBSdW4gQmx1ZXogTWFrZSBEaXN0Y2hlY2sKT3V0cHV0OgoK
-UGFja2FnZSBjdXBzIHdhcyBub3QgZm91bmQgaW4gdGhlIHBrZy1jb25maWcgc2VhcmNoIHBhdGgu
-ClBlcmhhcHMgeW91IHNob3VsZCBhZGQgdGhlIGRpcmVjdG9yeSBjb250YWluaW5nIGBjdXBzLnBj
-Jwp0byB0aGUgUEtHX0NPTkZJR19QQVRIIGVudmlyb25tZW50IHZhcmlhYmxlCk5vIHBhY2thZ2Ug
-J2N1cHMnIGZvdW5kCi4uLy4uL3Rlc3QtZHJpdmVyOiBsaW5lIDEwNzogNTEwNDQgQWJvcnRlZCAg
-ICAgICAgICAgICAgICAgKGNvcmUgZHVtcGVkKSAiJEAiID4gJGxvZ19maWxlIDI+JjEKLi4vLi4v
-dGVzdC1kcml2ZXI6IGxpbmUgMTA3OiA1MTA3MSBBYm9ydGVkICAgICAgICAgICAgICAgICAoY29y
-ZSBkdW1wZWQpICIkQCIgPiAkbG9nX2ZpbGUgMj4mMQouLi8uLi90ZXN0LWRyaXZlcjogbGluZSAx
-MDc6IDUxMDgwIEFib3J0ZWQgICAgICAgICAgICAgICAgIChjb3JlIGR1bXBlZCkgIiRAIiA+ICRs
-b2dfZmlsZSAyPiYxCi4uLy4uL3Rlc3QtZHJpdmVyOiBsaW5lIDEwNzogNTEyNzQgQWJvcnRlZCAg
-ICAgICAgICAgICAgICAgKGNvcmUgZHVtcGVkKSAiJEAiID4gJGxvZ19maWxlIDI+JjEKLi4vLi4v
-dGVzdC1kcml2ZXI6IGxpbmUgMTA3OiA1MTM0MiBBYm9ydGVkICAgICAgICAgICAgICAgICAoY29y
-ZSBkdW1wZWQpICIkQCIgPiAkbG9nX2ZpbGUgMj4mMQptYWtlWzRdOiAqKiogW01ha2VmaWxlOjk5
-Mzc6IHRlc3Qtc3VpdGUubG9nXSBFcnJvciAxCm1ha2VbM106ICoqKiBbTWFrZWZpbGU6MTAwNDU6
-IGNoZWNrLVRFU1RTXSBFcnJvciAyCm1ha2VbMl06ICoqKiBbTWFrZWZpbGU6MTA0Njc6IGNoZWNr
-LWFtXSBFcnJvciAyCm1ha2VbMV06ICoqKiBbTWFrZWZpbGU6MTA0Njk6IGNoZWNrXSBFcnJvciAy
-Cm1ha2U6ICoqKiBbTWFrZWZpbGU6MTAzOTA6IGRpc3RjaGVja10gRXJyb3IgMQojIyMjIyMjIyMj
-IyMjIyMjIyMjIyMjIyMjIyMjIyMKVGVzdDogQ2hlY2tWYWxncmluZCAtIEZBSUwKRGVzYzogUnVu
-IEJsdWV6IE1ha2UgQ2hlY2sgd2l0aCBWYWxncmluZApPdXRwdXQ6Cgp0b29scy9tZ210LXRlc3Rl
-ci5jOiBJbiBmdW5jdGlvbiDigJhtYWlu4oCZOgp0b29scy9tZ210LXRlc3Rlci5jOjEyOTA3OjU6
-IG5vdGU6IHZhcmlhYmxlIHRyYWNraW5nIHNpemUgbGltaXQgZXhjZWVkZWQgd2l0aCDigJgtZnZh
-ci10cmFja2luZy1hc3NpZ25tZW50c+KAmSwgcmV0cnlpbmcgd2l0aG91dAoxMjkwNyB8IGludCBt
-YWluKGludCBhcmdjLCBjaGFyICphcmd2W10pCiAgICAgIHwgICAgIF5+fn4KLi90ZXN0LWRyaXZl
-cjogbGluZSAxMDc6IDY5NDYzIEFib3J0ZWQgICAgICAgICAgICAgICAgIChjb3JlIGR1bXBlZCkg
-IiRAIiA+ICRsb2dfZmlsZSAyPiYxCi4vdGVzdC1kcml2ZXI6IGxpbmUgMTA3OiA2OTQ5OSBBYm9y
-dGVkICAgICAgICAgICAgICAgICAoY29yZSBkdW1wZWQpICIkQCIgPiAkbG9nX2ZpbGUgMj4mMQou
-L3Rlc3QtZHJpdmVyOiBsaW5lIDEwNzogNjk1MDggQWJvcnRlZCAgICAgICAgICAgICAgICAgKGNv
-cmUgZHVtcGVkKSAiJEAiID4gJGxvZ19maWxlIDI+JjEKLi90ZXN0LWRyaXZlcjogbGluZSAxMDc6
-IDY5NDkwIEFib3J0ZWQgICAgICAgICAgICAgICAgIChjb3JlIGR1bXBlZCkgIiRAIiA+ICRsb2df
-ZmlsZSAyPiYxCi4vdGVzdC1kcml2ZXI6IGxpbmUgMTA3OiA2OTUxNyBBYm9ydGVkICAgICAgICAg
-ICAgICAgICAoY29yZSBkdW1wZWQpICIkQCIgPiAkbG9nX2ZpbGUgMj4mMQptYWtlWzNdOiAqKiog
-W01ha2VmaWxlOjk5Mzc6IHRlc3Qtc3VpdGUubG9nXSBFcnJvciAxCm1ha2VbMl06ICoqKiBbTWFr
-ZWZpbGU6MTAwNDU6IGNoZWNrLVRFU1RTXSBFcnJvciAyCm1ha2VbMV06ICoqKiBbTWFrZWZpbGU6
-MTA0Njc6IGNoZWNrLWFtXSBFcnJvciAyCm1ha2U6ICoqKiBbTWFrZWZpbGU6MTA0Njk6IGNoZWNr
-XSBFcnJvciAyCiMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIwpUZXN0OiBJbmNyZW1lbnRh
-bEJ1aWxkIC0gUEVORElORwpEZXNjOiBJbmNyZW1lbnRhbCBidWlsZCB3aXRoIHRoZSBwYXRjaGVz
-IGluIHRoZSBzZXJpZXMKT3V0cHV0OgoKCgotLS0KUmVnYXJkcywKTGludXggQmx1ZXRvb3RoCgo=
+1. Timeout when sending reset command.
+2. IBS state of host and controller not being synchronized.
+3. Multiple triggers of SSR generating only one coredump file.
+4. SSR process failed due to tx_idle_timer timeout
 
---===============2214937862595383154==--
+Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
+
+
+Shuai Zhang (4):
+  driver: bluetooth: hci_qca: fix ssr fail when BT_EN is pulled up by hw
+  driver: bluetooth: hci_qca: fix host IBS state after SSR
+  driver: bluetooth: hci_qca: Multiple triggers of SSR only generate one
+    coredump file
+  driver: bluetooth: hci_qca: SSR(Sub-System Restart)process failed due
+    to tx_idle_timer timeout
+
+ drivers/bluetooth/hci_qca.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
+
+-- 
+2.34.1
+
 
