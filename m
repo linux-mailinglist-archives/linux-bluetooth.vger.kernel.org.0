@@ -1,145 +1,117 @@
-Return-Path: <linux-bluetooth+bounces-14614-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-14617-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6A03B225F9
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 12 Aug 2025 13:37:16 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 29E02B2260B
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 12 Aug 2025 13:41:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5A341173319
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 12 Aug 2025 11:36:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A7559172DCD
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 12 Aug 2025 11:41:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA2FA2EE5ED;
-	Tue, 12 Aug 2025 11:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CD352ED870;
+	Tue, 12 Aug 2025 11:40:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gLbpccFc"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X00eJGlh"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F541EF0A6;
-	Tue, 12 Aug 2025 11:36:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF28028725A
+	for <linux-bluetooth@vger.kernel.org>; Tue, 12 Aug 2025 11:40:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754998591; cv=none; b=mDeRV6xIMqhYJNv0qHksD2FpTsZXCqofpL/U/r4Wy4fnz30Jk2HengOC8PFzVpmC+nKjO3nd9K4m7a5NlRJz4TIMfo+anS97wEPB2mjIBj/g+Le2Q/fb3zNCdPlfOOJ/WXHYmdA84x5EoYxIZ8P/oyy46NJGotiiU5awShn52l8=
+	t=1754998855; cv=none; b=fzdQ6zByjHQhaPW76UXUMsOs7KOMQcDUsOQ+hW9AgMWuvpo1CpOnyBdnvBeOUvGS6l5frulpqFN2ogbJNLKSckaF4pSurloFKPwmK8QRMW6a32Y5j8Zf3BrVtYcobw52YU9Fk+PxtfLRnYeKZu1YgKP8CVzpIe/TFwdnhtG6Csw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754998591; c=relaxed/simple;
-	bh=XrrTaQC2x0LJ3m2PgZHSfof9kgFnUUKG0+ebuJ2ih6s=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=H5DPhpoz04CGihtY9FCE1Ut0JqUg76eZFGW1wspHmKWuZ4ZDM4U4//Nv1YigAqFOeBz/ip/WHl7K3t8UAZuZFHvtAC/JXb2f1oG7ZKaActXfcQVPqXCIKYrfI2JCbxsbiODdwsjTDVfzQbWpsB9baBtkNTgTpGjxBffKy/uyfOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gLbpccFc; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57CAveog029539;
-	Tue, 12 Aug 2025 11:36:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=OZJdTzgLVZQ
-	H3wPGatNmiWGfzAWQMrSyZVVHIlxHMIM=; b=gLbpccFcnNI2nxI2XaRLGRIBzjs
-	bsvPxrcWueQrctuP/MP+yWy32T7v5g01Oywsf4Qmh9YXWJJ/GS1OciSFgcfSSPa9
-	YKgD9MCl58X7BnZU30OdtpaGctykztkfe/+xzK/hHJv7yLDB0k9Mkc/Hto2hIeYJ
-	GJHB1B0WzfryLyrJSgghaVg6RBdP0CJOgO6wqKdCYgyf1PD44TbJqfEhhNimSH0S
-	aNdYjd9zeJyJP+WwE1onD0Fg1J1PRF84y9FCuIyMpKXBJycMk55uWoUSiZorXknQ
-	1vONEaVz7/SQpOlbq4JQHLiba0C2AvK43MjyQMieSNPxex0QsGh1dD+HIlg==
-Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48dy3g7wtx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Aug 2025 11:36:29 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 57CBaPli003754;
-	Tue, 12 Aug 2025 11:36:27 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 48dydm4r5d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Aug 2025 11:36:27 +0000
-Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 57CBaRQH003777;
-	Tue, 12 Aug 2025 11:36:27 GMT
-Received: from bt-iot-sh02-lnx.ap.qualcomm.com (bt-iot-sh02-lnx.qualcomm.com [10.253.144.65])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 57CBaQCY003776
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 12 Aug 2025 11:36:27 +0000
-Received: by bt-iot-sh02-lnx.ap.qualcomm.com (Postfix, from userid 4467449)
-	id E25DF223D5; Tue, 12 Aug 2025 19:36:25 +0800 (CST)
-From: Shuai Zhang <quic_shuaz@quicinc.com>
-To: linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc: quic_bt@quicinc.com, Shuai Zhang <quic_shuaz@quicinc.com>
-Subject: [PATCH 4/4] driver: bluetooth: hci_qca: SSR(Sub-System Restart)process failed due to tx_idle_timer timeout
-Date: Tue, 12 Aug 2025 19:36:20 +0800
-Message-Id: <20250812113620.3135226-5-quic_shuaz@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250812113620.3135226-1-quic_shuaz@quicinc.com>
-References: <20250812113620.3135226-1-quic_shuaz@quicinc.com>
+	s=arc-20240116; t=1754998855; c=relaxed/simple;
+	bh=GqdhrFSt/7ahP4x+gVQkLyk5eFFRSy4XSrszPs0qa6E=;
+	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
+	 In-Reply-To:References; b=XBSHddNCyi5dS9RaiJKiYYUpY8JvO2qfEZCNLyVZAD/4lXGmSoULmskHzHHCU1P8apCeckjV8mwKicEBz5gpoqhTTzOHtYceYyx1SNGTLh7Zo0W1NdWBhAKwhJy2g8+xHGu+Sf7MR90fwEkPmOuUxdkb+E3Xgec+f/aZfMxxGFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X00eJGlh; arc=none smtp.client-ip=209.85.215.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-b429abd429aso2865653a12.1
+        for <linux-bluetooth@vger.kernel.org>; Tue, 12 Aug 2025 04:40:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754998853; x=1755603653; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=GqdhrFSt/7ahP4x+gVQkLyk5eFFRSy4XSrszPs0qa6E=;
+        b=X00eJGlhatcrNs+J1IW24TF4CrT7ZNClrHVvzpf/b4fNAsjdr2ou3gwggrv+2zwUs4
+         2vWvvS8ZEMEjNKIqMN8V4+HephFt8UlZpIoZzXiPaAjmZfQyxY2UXi0f5nP2MZztOOsz
+         X7soq+wWb1K7RsrdYBPICGcWGW7Z0Pv3TgKBxQjeZr0g4v+vPU7n2hnnSLI2xc2+Cqp7
+         mVdDGXMbr4e77mRROLt5US728hvFVcgaNpha2MuNJDA8nnBd9CigjOSpZlcydZRuftn6
+         jgr7ZpM5bV+Qv7mXYqD/PlZJJV5JQCXbKt0JNnZM6Sanv9SL+9znpWIXxsPX6mc+ELTl
+         COcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754998853; x=1755603653;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GqdhrFSt/7ahP4x+gVQkLyk5eFFRSy4XSrszPs0qa6E=;
+        b=lyxAGcs6S/eXUH/r/BQVzupkqHZOdFIRfDpGJsdXCqNBtFSJ9VAl5y3W4rzDeFGXR1
+         /bf2oIDK5hwCrmor5smFlTOm39KtngCaliUleGnzjmRmANxIVUlMbq7sDIsbjC2dQq0C
+         JYmYlNRVfM2seDZfbBVGWMPwCzXQ2sc19NHcdJT/ZscrhtUATUaZThF4jmS23lkh/3wQ
+         cZDJ90ku+EmoJYueeQ77Ba8M6/rrAY0f977yR1dMiQCq+pF3OW1ttT0O9mNqT5culDRh
+         MjZ6zBe5+aFk26ZhAIkQ/mvc0LW2R+dLmIPdItxqnQha/jcswh6ISR//AgmsjhcmS5Wl
+         YJOQ==
+X-Gm-Message-State: AOJu0Yya9U3KVQOAPCKnHr82ZEqUyDywlT0kwMM0W8eTV+RcwkYnUZ9S
+	7hUU3O3hQXgPLvSfRSvkajmYeSDniSwEwhiMJtMCm/HozN+prbhF7c14z4zk1w==
+X-Gm-Gg: ASbGncvmJ/IFBIatDCbPOH2Fgu3WPvbCreUq0B+TIYHK6jlDBWqmvFKjD0VDq5mee3t
+	OYhAVN9egTuUdTZ8BVdK7OTLGxQQWJK7Pezu+vVyNhc4vuDj00i/Q3wW2lDINM15fauQjWrRNwX
+	wgaRj1I2dgiqQ5saYohcjiGe2KyEWXGDQtk2VmcWbOeEdv8bvcEhGyP//3rtlVWlY/UCt+uCXhf
+	zw+Gzv/BpVsrJaeRB+OaSvx2jxW3rzvBZU/D23m2ZwJEZfGIYYXzJ+PrSZ0VTSzg1mfOkhCxlGM
+	vDfhAwK2h/OgUx3jPtKy/Tcwagg6tvJNczNlZ/Q4oBMCwlpHOyJSzUwc/49l+vfNlYBtQAqL93A
+	o7L+AfaVYhPVAsh8/vJnIy2aOZQ==
+X-Google-Smtp-Source: AGHT+IHaVqB+QZybrelhXrqEZ2JrFoYN/WC1fHtNinQreLBCD/xNjuMFS9vvhSMiOtkvBzlN6ndCNA==
+X-Received: by 2002:a17:903:4b4b:b0:242:3105:1788 with SMTP id d9443c01a7336-242fc3a55ddmr36338295ad.45.1754998852617;
+        Tue, 12 Aug 2025 04:40:52 -0700 (PDT)
+Received: from [172.17.0.2] ([68.220.58.7])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-241e89768fcsm298276045ad.82.2025.08.12.04.40.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Aug 2025 04:40:52 -0700 (PDT)
+Message-ID: <689b2844.170a0220.3914a1.557e@mx.google.com>
+Date: Tue, 12 Aug 2025 04:40:52 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============2581586356662072813=="
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=X4lSKHTe c=1 sm=1 tr=0 ts=689b273d cx=c_pps
- a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8 a=7-08G_DUf5nQLP0U7KQA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODA5MDAzMSBTYWx0ZWRfX6iCg/U+xMisO
- nCfqn5Vk0BU6JaHDYckcH7rUMeFXl7EQELTk5cejeT2m0fVw0GvEW+h7b1i88qL7l6mywLgVjeW
- YgDSJ9mzALC/QfhcI7BsAu+0GKdYUkmiYWxQtSdohrULnAetNAJk07s93vIds025aRsdIGimK1g
- R4u+0QP5aRW5TAgvSap2H4bWAgP1TcmAEJN8kFLTyvPaCawzr7zFWTTHApxaP1f0OL4eWd8m1HN
- d9XEbz7Tj/Lhfdt1NxJJ0RLcm0r4dLjB9MtZFAaXA8pNLYZmW+UkIchPnQLP7vYMNzgvpay5TWH
- a+nwBAGiPIExF0laUDQebhPCZA8JSKf9u/fLjNNz9VW47c5a0mqUVZTPzERjUJp8ZMck/PWEedy
- FkSmRNXq
-X-Proofpoint-GUID: g9Gl2Wc0gu724vWVMWraWnzUklCVYqJ9
-X-Proofpoint-ORIG-GUID: g9Gl2Wc0gu724vWVMWraWnzUklCVYqJ9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-12_06,2025-08-11_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 clxscore=1015 malwarescore=0 adultscore=0
- spamscore=0 bulkscore=0 suspectscore=0 impostorscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508090031
+From: bluez.test.bot@gmail.com
+To: linux-bluetooth@vger.kernel.org, kiran.k@intel.com
+Subject: RE: [v3,1/2] Bluetooth: btintel_pcie: Refactor Device Coredump
+In-Reply-To: <20250812114704.1596969-1-kiran.k@intel.com>
+References: <20250812114704.1596969-1-kiran.k@intel.com>
+Reply-To: linux-bluetooth@vger.kernel.org
 
-When the SSR (Sub-System Restart) duration exceeds 2 seconds, it triggers
-host tx_idle_timeout, which sets host TX state to sleep. due to the
-hardware pulling up bt_en, the firmware is not downloaded after the SSR.
-As a result, the controller does not enter sleep mode. Consequently,
-when the host sends a command afterward, it sends 0xFD to the controller,
-but the controller does not respond, leading to a command timeout.
+--===============2581586356662072813==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-So reset tx_idle_timer after SSR to prevent host enter TX IBS_Sloeep mode.
+This is an automated email and please do not reply to this email.
 
-Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
+Dear Submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+While preparing the CI tests, the patches you submitted couldn't be applied to the current HEAD of the repository.
+
+----- Output -----
+
+error: patch failed: drivers/bluetooth/btintel_pcie.c:15
+error: drivers/bluetooth/btintel_pcie.c: patch does not apply
+hint: Use 'git am --show-current-patch' to see the failed patch
+
+Please resolve the issue and submit the patches again.
+
+
 ---
- drivers/bluetooth/hci_qca.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+Regards,
+Linux Bluetooth
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 33c2dd7b8..1fb8eea09 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1668,6 +1668,15 @@ static void qca_hw_error(struct hci_dev *hdev, u8 code)
- 	if (!test_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks)) {
- 		clear_bit(QCA_SSR_TRIGGERED, &qca->flags);
- 		clear_bit(QCA_IBS_DISABLED, &qca->flags);
-+		/*
-+		 * When the SSR (Sub-System Restart) duration exceeds 2 seconds,
-+		 * it triggers host tx_idle_timeout, which sets host TX state
-+		 * to sleep. Reset tx_idle_timer after SSR to prevent
-+		 * host enter TX IBS_Sloeep mode.
-+		 */
-+		mod_timer(&qca->tx_idle_timer, jiffies +
-+			  msecs_to_jiffies(qca->tx_idle_delay));
-+
- 		qca->tx_ibs_state = HCI_IBS_TX_AWAKE;
- 		qca->memdump_state = QCA_MEMDUMP_IDLE;
- 		msleep(50);
--- 
-2.34.1
 
+--===============2581586356662072813==--
 
