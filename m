@@ -1,411 +1,718 @@
-Return-Path: <linux-bluetooth+bounces-14801-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-14804-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D7AA0B2C59D
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 19 Aug 2025 15:30:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5CFC8B2C5DA
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 19 Aug 2025 15:40:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A7299177D6A
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 19 Aug 2025 13:24:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9D20A16591C
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 19 Aug 2025 13:34:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B83CA2EB860;
-	Tue, 19 Aug 2025 13:23:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E7FD33EAE9;
+	Tue, 19 Aug 2025 13:33:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mlksJY99"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="KE3+8EzP"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1980E2EB847
-	for <linux-bluetooth@vger.kernel.org>; Tue, 19 Aug 2025 13:23:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3171D2EB853
+	for <linux-bluetooth@vger.kernel.org>; Tue, 19 Aug 2025 13:33:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755609803; cv=none; b=EHuJcCuF1a2CLBfd0SIExFZNZrzyNN4DnjNKsWCvXgoJ9VFuPYqlziFyAgAyY/TbYY5qaNBtKCXf1s3fupSPaVVhcbPgohZpOyxWPrCMvtqBMFop0kL3NBXXyyd9mK/5JTGJxb1MN4PBeCnzoNuZq2H1+6Awn+yxwBEUXIFGNho=
+	t=1755610414; cv=none; b=WpLxCPp2xBUJHHqLLYyMVhd0LW9MmK3UgY2k6LfHsJYF01CQVCUxNCcckeGRFglSRtAqU6mjqG9HjzxDWr0ro7H4YhkLq6cdlkDWcoUlx254Ls0w6icV2tGvL2zKuA429gTJIxvRY4ZdZGyo0A/SWSQlLvmEpK1TehWkRGv2ZYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755609803; c=relaxed/simple;
-	bh=J8OzK0AJruu7OZok6cV/oWjVRn6qpjqIigdbCCDcARc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UoPokEucvV0oLnyOESOH+fYBfHSVsx+2285HV5cv2LFM5Q4Qb+VJFX1OspD3UxE43Sa1aLs6l+/f5dS6q62Td2xC5X+1yzUxVk0OOUtI/53AG9PGuchcWWvefUSWdQIFmkRmJ6fN46epCG8TL0ymG5HQ7Lfsdg26a6FklLT6osI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mlksJY99; arc=none smtp.client-ip=209.85.208.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-333f8ef8483so40207921fa.1
-        for <linux-bluetooth@vger.kernel.org>; Tue, 19 Aug 2025 06:23:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755609799; x=1756214599; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mJTH5IA8lZnNx912y02bTqIgmoAXtN/hrbV0sCcztbY=;
-        b=mlksJY99wwMephj3+VKiieoBa51T+Cstp5XujAxT1fRYqBlw4c1seYRuB/Rt0cSD7W
-         LuAkOsm2ZRLm9yhPK7HbXyHYNveF1k0NMv/WZUZMo7sqGNKt90+lRX45fO1j/+60hupl
-         PUOasNtUIho+sGlpkXd8fhvwh7e9GRZiOdAzOB1ICU0v9NAW6+7zN9S3WRb6YUVqP6Re
-         8iDrcPeAFP960WUr6samQocvaDoaer74zNmE+uvSdvBwQhC+wZ2AJ6iWpo9aSt9CZaFB
-         BaxkweSyNKT0eL3D3vZmHY2sj/uJ1+3JE/Okao4Mzzxj6KIsKXktpe/DR8WdbwK2XstB
-         hkaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755609799; x=1756214599;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mJTH5IA8lZnNx912y02bTqIgmoAXtN/hrbV0sCcztbY=;
-        b=luIyF5x+8zrJ/Ox+ko0eE5lLOf7NdP3nDVbTPhUF0Nthtzv9FIZFBYeGVBLgbT8RH0
-         9iC6Q++kzXxwysRDCWadualJE2RUmtNH1dSE5gw8xc1q8A5e43TcdqTft/zobUoi9JuD
-         C3eCGF9Zt48l1FN1Q3sUqQcE6524Bg2GGOClvsMNpj4ErNmfiCbVnbWOKvWWyi0QRt4U
-         EDMFMBqaa1OoU4LztfPPS7H2qbTs4nIMKUj3GjjlFroz2jJw6BpRzAcUPcSbp0YBOIIo
-         Z3NzK82ogbjr7Mmr3Hw9WcFBCEnIDjj8hHCBPAn08QAUI+SMPCuE7KtL9EPQIb4z8jy/
-         4t9A==
-X-Gm-Message-State: AOJu0YxJrJVvN4ctfxTQg5WzRCsm9yCrf5G0/4n0sRux0hlBwhrXAwI8
-	rL9tgI0pf2T3CqbdPAJFD6vpTGbg0khjqBqakr8L2tDOpAEc1b1W3M6WSSyIkzpiLCfqQ0/B8Hi
-	AFtL34CogVIQ5NPPcBtC+9x5EbFu3p2elC1m9emw=
-X-Gm-Gg: ASbGncu+BkxxpkPFDBul84X7D5/06umIoYvkUQ1DDfLYv4JgbFOn/V03URY1MT8DpR+
-	9ZtYArY8w81m6F/ZEnHjRhqH9kpGzJHpctlXNtupdRNW6omEFXFmZpPfip3RA0RcjBq5Hloq/2B
-	umnAujA3J3QYpXzNvR2gUcsUci4pSL0u9eazz5Na20fZ/2Po3zxhgoviPBOpI7tmPr0IHv7s0v9
-	5TdXkGEO1gyzEainMUyiySrdKc=
-X-Google-Smtp-Source: AGHT+IE6YtrBjJdt0F5GaQ8YzlLVp2K6T+rzDa5CcBEjenmyQDQyGS7ZlkckwHV4I5/AuQgFVTc91W7QSvm4/jYaAKw=
-X-Received: by 2002:a05:651c:2111:b0:32a:6aa0:2173 with SMTP id
- 38308e7fff4ca-3353068053bmr6247761fa.20.1755609798644; Tue, 19 Aug 2025
- 06:23:18 -0700 (PDT)
+	s=arc-20240116; t=1755610414; c=relaxed/simple;
+	bh=7jq1glaS2G52Wp6aYGb8GLQZ/dN70OWScD0UlZBfDZs=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Cpa3D+7DQy86AXskngCQP00MFshbBAyQPIpyKRE1jkMMgImztHZ3Vkx9tcuUXjy0d3JacnxNGnGGBIlFOCaaD47PwdgGv723Kn1/8RIdfY8VM+81pH9/2ep+ICy4FuRsc5vxlBB8sAp+X1OYTptPHBB2uYjncHiaAG1mwdrMv4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=KE3+8EzP; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1755610410;
+	bh=7jq1glaS2G52Wp6aYGb8GLQZ/dN70OWScD0UlZBfDZs=;
+	h=From:To:Subject:Date:From;
+	b=KE3+8EzPJWYbQEa2dVHQA7M8yhgDLZniaKTWbQsQ4W5TR4tFJ+MpampaTAA2hUYmx
+	 fsWvH38RCFlY3jfsPBTHzze0msqeic5SCbSgElxwtbBmg+li6Lwcd7sbp0yrH8IKzf
+	 pX1yrgI9jWWuosMPlbtdt8TNfxj1R8mQJAHw3IwwJmGB8KwhTjvMwVvZuDkXJhJ29H
+	 gGp3vOZGx6de5xkgjrwQ6OhnZFaEAri64jK+ACPsyCTPvvZIlZgjCz1MhCo1VPcGPh
+	 9IEN4FQMaXF7crQ92/kIweH137Ufip6QMnJb1j2jkRaVely03Oqokxi19GYRD6CkXm
+	 pMnNBPJH8MUSA==
+Received: from fdanis-ThinkPad-X1.. (2a02-8428-aF44-1001-110B-4649-b903-4EDe.rev.sfr.net [IPv6:2a02:8428:af44:1001:110b:4649:b903:4ede])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: fdanis)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 3505117E0A49
+	for <linux-bluetooth@vger.kernel.org>; Tue, 19 Aug 2025 15:33:30 +0200 (CEST)
+From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
+To: linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ RESEND 1/4] shared/hfp: Add HF SLC connection function
+Date: Tue, 19 Aug 2025 15:33:18 +0200
+Message-ID: <20250819133321.382279-1-frederic.danis@collabora.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250813-adapter-sync-bcast-v1-1-4a739f99c156@amlogic.com>
- <CABBYNZLU1pA_YJ4KRvrD2SYYv+dDHr9=bN1ZgruZNvc4eurPdw@mail.gmail.com>
- <a07d9f1c-d39f-4c5f-a964-a9cb3d608a66@amlogic.com> <CABBYNZJkH8+-k9KjmVs=0v8moEEWRNdDUXJDFrMT-+wu8pvKOQ@mail.gmail.com>
- <93d84f99-85f3-4593-87d7-f4f0c3d9f16f@amlogic.com>
-In-Reply-To: <93d84f99-85f3-4593-87d7-f4f0c3d9f16f@amlogic.com>
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Tue, 19 Aug 2025 09:23:06 -0400
-X-Gm-Features: Ac12FXxP2ChpV4KdcnAI2c2Jz3U6qLfU7b7hD0GM8H4-I6UNFVQUPjg-NEhqkt0
-Message-ID: <CABBYNZLDpmkobZPbejxxU7ns=DfzmRhXWLYPghpf0iR3mDHTGA@mail.gmail.com>
-Subject: Re: [PATCH bluez] As a BIS sink role, BlueZ currently defaults to
- synchronizing with the first broadcast source device discovered by the le
- discovery procedure. This behavior may not align with user expectations, as
- it removes control over the target device selection.
-To: Ye He <ye.he@amlogic.com>
-Cc: Linux Bluetooth <linux-bluetooth@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-Hi,
+This implements the minimal SLC connection exchange, i.e. AT+BRSF,
+AT+CIND=?, AT+CIND? and AT+CMER=3,0,0,1 requested to complete the
+Service Level Connection Establishment.
+---
+ src/shared/hfp.c | 508 +++++++++++++++++++++++++++++++++++++++++++++++
+ src/shared/hfp.h |  69 +++++++
+ 2 files changed, 577 insertions(+)
 
-On Tue, Aug 19, 2025 at 3:41=E2=80=AFAM Ye He <ye.he@amlogic.com> wrote:
->
-> Hi Luiz,
->
-> Hi,
->
-> On Fri, Aug 15, 2025 at 6:04=E2=80=AFAM Ye He <ye.he@amlogic.com> wrote:
->
-> Hi Luiz,
->
-> Hi,
->
-> On Wed, Aug 13, 2025 at 3:12=E2=80=AFAM Ye He via B4 Relay
-> <devnull+ye.he.amlogic.com@kernel.org> wrote:
->
-> From: Ye He <ye.he@amlogic.com>
->
-> This patch introduces a new SyncBroadcast method to the device1 interface=
-,
-> allowing users to explicitly choose which broadcast source device to
-> synchronize with.
->
-> Hold on, why do you think we don't have a explicit way to select the
-> broadcast to synchronize? Have you read Transport.Select
-> documentation:
->
-> https://github.com/bluez/bluez/blob/master/doc/org.bluez.MediaTransport.r=
-st#void-select
->
-> Also if the plan is to introduce another method to enumerate
-> MediaTransport for Broadcaster I don't think it is a good idea since
-> it affect scan state anyway and then we have the problem that the
-> device needs to be discovered first in order to have an object.
->
->
-> As far as I understand, the Transport.Select method is intended
-> for selecting a BIS to synchronize with when there are multiple
-> BISes within a broadcast device.
->
-> However, if there are multiple broadcast devices, BlueZ currently
-> defaults to synchronizing with the first one it encounters during
-> the LE discovery procedure, which may not what the user expects.
->
-> By introducing a new SyncBroadcast method in device1, the application
-> layer could choose the target one to synchronize with from cached
-> broadcast devices based on their own criteria =E2=80=94 for example, choo=
-sing
-> the device with the strongest RSSI or device with custom UUIDs.
->
-> You are confusing PA Sync with BIG Sync, during the general discovery
-> what BlueZ does is a short lived PA Sync to discover the streams
-> configuration (BASE), it _doesn't_ do a BIG sync, then the user can
-> use Transport.Select to select which stream(s) to synchronize.
->
->
-> I'm sorry for previously confusing PA sync with BIG sync. After reviewing=
- the
-> BIS synchronization process, I believe the actual issue I encountered is =
-that
-> when multiple BIS source devices are present, BlueZ currently establishes=
- PA
-> sync with the first device it discovers by default.
+diff --git a/src/shared/hfp.c b/src/shared/hfp.c
+index df6eab35d..c1bcb61cf 100644
+--- a/src/shared/hfp.c
++++ b/src/shared/hfp.c
+@@ -25,6 +25,12 @@
+ #include "src/shared/io.h"
+ #include "src/shared/hfp.h"
+ 
++#define DBG(_hfp, fmt, arg...) \
++	hfp_debug(_hfp->debug_callback, _hfp->debug_data, "%s:%s() " fmt, \
++						__FILE__, __func__, ## arg)
++
++#define HFP_HF_FEATURES	(HFP_HF_FEAT_ESCO_S4_T2)
++
+ struct hfp_gw {
+ 	int ref_count;
+ 	int fd;
+@@ -50,6 +56,16 @@ struct hfp_gw {
+ 	bool destroyed;
+ };
+ 
++typedef void (*ciev_func_t)(uint8_t val, void *user_data);
++
++struct indicator {
++	uint8_t index;
++	uint32_t min;
++	uint32_t max;
++	uint32_t val;
++	ciev_func_t cb;
++};
++
+ struct hfp_hf {
+ 	int ref_count;
+ 	int fd;
+@@ -73,6 +89,17 @@ struct hfp_hf {
+ 
+ 	bool in_disconnect;
+ 	bool destroyed;
++
++	struct hfp_hf_callbacks *callbacks;
++	void *callbacks_data;
++
++	uint32_t features;
++	struct indicator ag_ind[HFP_INDICATOR_LAST];
++	bool service;
++	uint8_t signal;
++	bool roaming;
++	uint8_t battchg;
++
+ };
+ 
+ struct cmd_handler {
+@@ -101,6 +128,19 @@ struct event_handler {
+ 	hfp_hf_result_func_t callback;
+ };
+ 
++static void hfp_debug(hfp_debug_func_t debug_func, void *debug_data,
++						const char *format, ...)
++{
++	va_list ap;
++
++	if (!debug_func || !format)
++		return;
++
++	va_start(ap, format);
++	util_debug_va(debug_func, debug_data, format, ap);
++	va_end(ap);
++}
++
+ static void destroy_cmd_handler(void *data)
+ {
+ 	struct cmd_handler *handler = data;
+@@ -1527,3 +1567,471 @@ bool hfp_hf_disconnect(struct hfp_hf *hfp)
+ 
+ 	return io_shutdown(hfp->io);
+ }
++
++static void ciev_service_cb(uint8_t val, void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++
++	DBG(hfp, "%u", val);
++
++	if (val < hfp->ag_ind[HFP_INDICATOR_SERVICE].min ||
++			val > hfp->ag_ind[HFP_INDICATOR_SERVICE].max) {
++		DBG(hfp, "hf: Incorrect state %u:", val);
++		return;
++	}
++
++	hfp->service = val;
++	if (hfp->callbacks && hfp->callbacks->update_indicator)
++		hfp->callbacks->update_indicator(HFP_INDICATOR_SERVICE, val,
++							hfp->callbacks_data);
++}
++
++static void ciev_call_cb(uint8_t val, void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++
++	DBG(hfp, "%u", val);
++
++	if (val < hfp->ag_ind[HFP_INDICATOR_CALL].min ||
++			val > hfp->ag_ind[HFP_INDICATOR_CALL].max) {
++		DBG(hfp, "hf: Incorrect call state %u:", val);
++		return;
++	}
++}
++
++static void ciev_callsetup_cb(uint8_t val, void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++
++	DBG(hfp, "%u", val);
++
++	if (val < hfp->ag_ind[HFP_INDICATOR_CALLSETUP].min ||
++			val > hfp->ag_ind[HFP_INDICATOR_CALLSETUP].max) {
++		DBG(hfp, "hf: Incorrect call setup state %u:", val);
++		return;
++	}
++}
++
++static void ciev_callheld_cb(uint8_t val, void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++
++	DBG(hfp, "%u", val);
++
++	if (val < hfp->ag_ind[HFP_INDICATOR_CALLHELD].min ||
++			val > hfp->ag_ind[HFP_INDICATOR_CALLHELD].max) {
++		DBG(hfp, "hf: Incorrect call held state %u:", val);
++		return;
++	}
++}
++
++static void ciev_signal_cb(uint8_t val, void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++
++	DBG(hfp, "%u", val);
++
++	if (val < hfp->ag_ind[HFP_INDICATOR_SIGNAL].min ||
++			val > hfp->ag_ind[HFP_INDICATOR_SIGNAL].max) {
++		DBG(hfp, "hf: Incorrect signal value %u:", val);
++		return;
++	}
++
++	hfp->signal = val;
++	if (hfp->callbacks && hfp->callbacks->update_indicator)
++		hfp->callbacks->update_indicator(HFP_INDICATOR_SIGNAL, val,
++							hfp->callbacks_data);
++}
++
++static void ciev_roam_cb(uint8_t val, void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++
++	DBG(hfp, "%u", val);
++
++	if (val < hfp->ag_ind[HFP_INDICATOR_ROAM].min ||
++			val > hfp->ag_ind[HFP_INDICATOR_ROAM].max) {
++		DBG(hfp, "hf: Incorrect roaming state %u:", val);
++		return;
++	}
++
++	hfp->roaming = val;
++	if (hfp->callbacks && hfp->callbacks->update_indicator)
++		hfp->callbacks->update_indicator(HFP_INDICATOR_ROAM, val,
++							hfp->callbacks_data);
++}
++
++static void ciev_battchg_cb(uint8_t val, void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++
++	DBG(hfp, "%u", val);
++
++	if (val < hfp->ag_ind[HFP_INDICATOR_BATTCHG].min ||
++			val > hfp->ag_ind[HFP_INDICATOR_BATTCHG].max) {
++		DBG(hfp, "hf: Incorrect battery charge value %u:", val);
++		return;
++	}
++
++	hfp->battchg = val;
++	if (hfp->callbacks && hfp->callbacks->update_indicator)
++		hfp->callbacks->update_indicator(HFP_INDICATOR_BATTCHG, val,
++							hfp->callbacks_data);
++}
++
++static void set_indicator_value(uint8_t index, unsigned int val,
++	struct indicator *ag_ind, struct hfp_hf *hfp)
++{
++	int i;
++
++	for (i = 0; i < HFP_INDICATOR_LAST; i++) {
++		if (index != ag_ind[i].index)
++			continue;
++
++		ag_ind[i].val = val;
++		ag_ind[i].cb(val, hfp);
++		return;
++	}
++}
++
++static void slc_cmer_resp(enum hfp_result result, enum hfp_error cme_err,
++	void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++
++	DBG(hfp, "");
++
++	if (result != HFP_RESULT_OK) {
++		DBG(hfp, "hf: CMER error: %d", result);
++		goto failed;
++	}
++
++	if (hfp->callbacks->session_ready)
++		hfp->callbacks->session_ready(HFP_RESULT_OK, 0,
++						hfp->callbacks_data);
++	return;
++
++failed:
++	if (hfp->callbacks->session_ready)
++		hfp->callbacks->session_ready(result, cme_err,
++						hfp->callbacks_data);
++}
++
++static void slc_cind_status_cb(struct hfp_context *context,
++	void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++	uint8_t index = 1;
++
++	while (hfp_context_has_next(context)) {
++		uint32_t val;
++
++		if (!hfp_context_get_number(context, &val)) {
++			DBG(hfp, "hf: Error on CIND status response");
++			return;
++		}
++
++		set_indicator_value(index++, val, hfp->ag_ind, hfp);
++	}
++}
++
++static void slc_cind_status_resp(enum hfp_result result,
++	enum hfp_error cme_err,
++	void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++
++	DBG(hfp, "");
++
++	hfp_hf_unregister(hfp, "+CIND");
++
++	if (result != HFP_RESULT_OK) {
++		DBG(hfp, "hf: CIND error: %d", result);
++		goto failed;
++	}
++
++	/* Continue with SLC creation */
++	if (!hfp_hf_send_command(hfp, slc_cmer_resp, hfp,
++		"AT+CMER=3,0,0,1")) {
++		DBG(hfp, "hf: Could not send AT+CMER");
++		result = HFP_RESULT_ERROR;
++		goto failed;
++	}
++
++	return;
++
++failed:
++	if (hfp->callbacks->session_ready)
++		hfp->callbacks->session_ready(result, cme_err,
++						hfp->callbacks_data);
++}
++
++static void set_indicator_parameters(struct hfp_hf *hfp, uint8_t index,
++	const char *indicator,
++	unsigned int min,
++	unsigned int max)
++{
++	struct indicator *ag_ind = hfp->ag_ind;
++
++	DBG(hfp, "%s, %i", indicator, index);
++
++	if (strcmp("service", indicator) == 0) {
++		if (min != 0 || max != 1) {
++			DBG(hfp, "hf: Invalid min/max values for service,"
++				" expected (0,1) got (%u,%u)", min, max);
++			return;
++		}
++		ag_ind[HFP_INDICATOR_SERVICE].index = index;
++		ag_ind[HFP_INDICATOR_SERVICE].min = min;
++		ag_ind[HFP_INDICATOR_SERVICE].max = max;
++		ag_ind[HFP_INDICATOR_SERVICE].cb = ciev_service_cb;
++		return;
++	}
++
++	if (strcmp("call", indicator) == 0) {
++		if (min != 0 || max != 1) {
++			DBG(hfp, "hf: Invalid min/max values for call,"
++				" expected (0,1) got (%u,%u)", min, max);
++			return;
++		}
++		ag_ind[HFP_INDICATOR_CALL].index = index;
++		ag_ind[HFP_INDICATOR_CALL].min = min;
++		ag_ind[HFP_INDICATOR_CALL].max = max;
++		ag_ind[HFP_INDICATOR_CALL].cb = ciev_call_cb;
++		return;
++	}
++
++	if (strcmp("callsetup", indicator) == 0) {
++		if (min != 0 || max != 3) {
++			DBG(hfp, "hf: Invalid min/max values for callsetup,"
++				" expected (0,3) got (%u,%u)", min, max);
++			return;
++		}
++		ag_ind[HFP_INDICATOR_CALLSETUP].index = index;
++		ag_ind[HFP_INDICATOR_CALLSETUP].min = min;
++		ag_ind[HFP_INDICATOR_CALLSETUP].max = max;
++		ag_ind[HFP_INDICATOR_CALLSETUP].cb = ciev_callsetup_cb;
++		return;
++	}
++
++	if (strcmp("callheld", indicator) == 0) {
++		if (min != 0 || max != 2) {
++			DBG(hfp, "hf: Invalid min/max values for callheld,"
++				" expected (0,2) got (%u,%u)", min, max);
++			return;
++		}
++		ag_ind[HFP_INDICATOR_CALLHELD].index = index;
++		ag_ind[HFP_INDICATOR_CALLHELD].min = min;
++		ag_ind[HFP_INDICATOR_CALLHELD].max = max;
++		ag_ind[HFP_INDICATOR_CALLHELD].cb = ciev_callheld_cb;
++		return;
++	}
++
++	if (strcmp("signal", indicator) == 0) {
++		if (min != 0 || max != 5) {
++			DBG(hfp, "hf: Invalid min/max values for signal,"
++				" expected (0,5) got (%u,%u)", min, max);
++			return;
++		}
++		ag_ind[HFP_INDICATOR_SIGNAL].index = index;
++		ag_ind[HFP_INDICATOR_SIGNAL].min = min;
++		ag_ind[HFP_INDICATOR_SIGNAL].max = max;
++		ag_ind[HFP_INDICATOR_SIGNAL].cb = ciev_signal_cb;
++		return;
++	}
++
++	if (strcmp("roam", indicator) == 0) {
++		if (min != 0 || max != 1) {
++			DBG(hfp, "hf: Invalid min/max values for roam,"
++				" expected (0,1) got (%u,%u)", min, max);
++			return;
++		}
++		ag_ind[HFP_INDICATOR_ROAM].index = index;
++		ag_ind[HFP_INDICATOR_ROAM].min = min;
++		ag_ind[HFP_INDICATOR_ROAM].max = max;
++		ag_ind[HFP_INDICATOR_ROAM].cb = ciev_roam_cb;
++		return;
++	}
++
++	if (strcmp("battchg", indicator) == 0) {
++		if (min != 0 || max != 5) {
++			DBG(hfp, "hf: Invalid min/max values for battchg,"
++				" expected (0,5) got (%u,%u)", min, max);
++			return;
++		}
++		ag_ind[HFP_INDICATOR_BATTCHG].index = index;
++		ag_ind[HFP_INDICATOR_BATTCHG].min = min;
++		ag_ind[HFP_INDICATOR_BATTCHG].max = max;
++		ag_ind[HFP_INDICATOR_BATTCHG].cb = ciev_battchg_cb;
++		return;
++	}
++
++	DBG(hfp, "hf: Unknown indicator: %s", indicator);
++}
++
++static void slc_cind_cb(struct hfp_context *context, void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++	int index = 1;
++
++	DBG(hfp, "");
++
++	while (hfp_context_has_next(context)) {
++		char name[255];
++		unsigned int min, max;
++
++		/* e.g ("callsetup",(0-3)) */
++		if (!hfp_context_open_container(context))
++			break;
++
++		if (!hfp_context_get_string(context, name, sizeof(name))) {
++			DBG(hfp, "hf: Could not get string");
++			goto failed;
++		}
++
++		if (!hfp_context_open_container(context)) {
++			DBG(hfp, "hf: Could not open container");
++			goto failed;
++		}
++
++		if (!hfp_context_get_range(context, &min, &max)) {
++			if (!hfp_context_get_number(context, &min)) {
++				DBG(hfp, "hf: Could not get number");
++				goto failed;
++			}
++
++			if (!hfp_context_get_number(context, &max)) {
++				DBG(hfp, "hf: Could not get number");
++				goto failed;
++			}
++		}
++
++		if (!hfp_context_close_container(context)) {
++			DBG(hfp, "hf: Could not close container");
++			goto failed;
++		}
++
++		if (!hfp_context_close_container(context)) {
++			DBG(hfp, "hf: Could not close container");
++			goto failed;
++		}
++
++		set_indicator_parameters(hfp, index, name, min, max);
++		index++;
++	}
++
++	return;
++
++failed:
++	DBG(hfp, "hf: Error on CIND response");
++}
++
++static void slc_cind_resp(enum hfp_result result, enum hfp_error cme_err,
++	void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++
++	DBG(hfp, "");
++
++	hfp_hf_unregister(hfp, "+CIND");
++
++	if (result != HFP_RESULT_OK) {
++		DBG(hfp, "hf: CIND error: %d", result);
++		goto failed;
++	}
++
++	/* Continue with SLC creation */
++	if (!hfp_hf_register(hfp, slc_cind_status_cb, "+CIND", hfp,
++			NULL)) {
++		DBG(hfp, "hf: Could not register +CIND");
++		result = HFP_RESULT_ERROR;
++		goto failed;
++	}
++
++	if (!hfp_hf_send_command(hfp, slc_cind_status_resp, hfp,
++			"AT+CIND?")) {
++		DBG(hfp, "hf: Could not send AT+CIND?");
++		result = HFP_RESULT_ERROR;
++		goto failed;
++	}
++
++	return;
++
++failed:
++	if (hfp->callbacks->session_ready)
++		hfp->callbacks->session_ready(result, cme_err,
++						hfp->callbacks_data);
++}
++
++static void slc_brsf_cb(struct hfp_context *context, void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++	unsigned int feat;
++
++	DBG(hfp, "");
++
++	if (hfp_context_get_number(context, &feat))
++		hfp->features = feat;
++}
++
++static void slc_brsf_resp(enum hfp_result result, enum hfp_error cme_err,
++	void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++
++	DBG(hfp, "");
++
++	hfp_hf_unregister(hfp, "+BRSF");
++
++	if (result != HFP_RESULT_OK) {
++		DBG(hfp, "BRSF error: %d", result);
++		goto failed;
++	}
++
++	/* Continue with SLC creation */
++	if (!hfp_hf_register(hfp, slc_cind_cb, "+CIND", hfp, NULL)) {
++		DBG(hfp, "hf: Could not register for +CIND");
++		result = HFP_RESULT_ERROR;
++		goto failed;
++	}
++
++	if (!hfp_hf_send_command(hfp, slc_cind_resp, hfp, "AT+CIND=?")) {
++		DBG(hfp, "hf: Could not send AT+CIND command");
++		result = HFP_RESULT_ERROR;
++		goto failed;
++	}
++
++	return;
++
++failed:
++	if (hfp->callbacks->session_ready)
++		hfp->callbacks->session_ready(result, cme_err,
++						hfp->callbacks_data);
++}
++
++bool hfp_hf_session_register(struct hfp_hf *hfp,
++				struct hfp_hf_callbacks *callbacks,
++				void *callbacks_data)
++{
++	if (!hfp)
++		return false;
++
++	hfp->callbacks = callbacks;
++	hfp->callbacks_data = callbacks_data;
++
++	return true;
++}
++
++bool hfp_hf_session(struct hfp_hf *hfp)
++{
++	DBG(hfp, "");
++
++	if (!hfp)
++		return false;
++
++	if (!hfp_hf_register(hfp, slc_brsf_cb, "+BRSF", hfp, NULL))
++		return false;
++
++	return hfp_hf_send_command(hfp, slc_brsf_resp, hfp,
++					"AT+BRSF=%u", HFP_HF_FEATURES);
++}
+diff --git a/src/shared/hfp.h b/src/shared/hfp.h
+index 600d084a7..f54b86a92 100644
+--- a/src/shared/hfp.h
++++ b/src/shared/hfp.h
+@@ -10,6 +10,34 @@
+ 
+ #include <stdbool.h>
+ 
++#define HFP_HF_FEAT_ECNR				0x00000001
++#define HFP_HF_FEAT_3WAY				0x00000002
++#define HFP_HF_FEAT_CLIP				0x00000004
++#define HFP_HF_FEAT_VOICE_RECOGNITION			0x00000008
++#define HFP_HF_FEAT_REMOTE_VOLUME_CONTROL		0x00000010
++#define HFP_HF_FEAT_ENHANCED_CALL_STATUS		0x00000020
++#define HFP_HF_FEAT_ENHANCED_CALL_CONTROL		0x00000040
++#define HFP_HF_FEAT_CODEC_NEGOTIATION			0x00000080
++#define HFP_HF_FEAT_HF_INDICATORS			0x00000100
++#define HFP_HF_FEAT_ESCO_S4_T2				0x00000200
++#define HFP_HF_FEAT_ENHANCED_VOICE_RECOGNITION_STATUS	0x00000400
++#define HFP_HF_FEAT_VOICE_RECOGNITION_TEXT		0x00000800
++
++#define HFP_AG_FEAT_3WAY				0x00000001
++#define HFP_AG_FEAT_ECNR				0x00000002
++#define HFP_AG_FEAT_VOICE_RECOGNITION			0x00000004
++#define HFP_AG_FEAT_IN_BAND_RING_TONE			0x00000008
++#define HFP_AG_FEAT_ATTACH_VOICE_TAG			0x00000010
++#define HFP_AG_FEAT_REJECT_CALL				0x00000020
++#define HFP_AG_FEAT_ENHANCED_CALL_STATUS		0x00000040
++#define HFP_AG_FEAT_ENHANCED_CALL_CONTROL		0x00000080
++#define HFP_AG_FEAT_EXTENDED_RES_CODE			0x00000100
++#define HFP_AG_FEAT_CODEC_NEGOTIATION			0x00000200
++#define HFP_AG_FEAT_HF_INDICATORS			0x00000400
++#define HFP_AG_FEAT_ESCO_S4_T2				0x00000800
++#define HFP_AG_FEAT_ENHANCED_VOICE_RECOGNITION_STATUS	0x00001000
++#define HFP_AG_FEAT_VOICE_RECOGNITION_TEXT		0x00001000
++
+ enum hfp_result {
+ 	HFP_RESULT_OK		= 0,
+ 	HFP_RESULT_CONNECT	= 1,
+@@ -57,6 +85,35 @@ enum hfp_gw_cmd_type {
+ 	HFP_GW_CMD_TYPE_COMMAND
+ };
+ 
++enum hfp_indicator {
++	HFP_INDICATOR_SERVICE = 0,
++	HFP_INDICATOR_CALL,
++	HFP_INDICATOR_CALLSETUP,
++	HFP_INDICATOR_CALLHELD,
++	HFP_INDICATOR_SIGNAL,
++	HFP_INDICATOR_ROAM,
++	HFP_INDICATOR_BATTCHG,
++	HFP_INDICATOR_LAST
++};
++
++enum hfp_call {
++	CIND_CALL_NONE = 0,
++	CIND_CALL_IN_PROGRESS
++};
++
++enum hfp_call_setup {
++	CIND_CALLSETUP_NONE = 0,
++	CIND_CALLSETUP_INCOMING,
++	CIND_CALLSETUP_DIALING,
++	CIND_CALLSETUP_ALERTING
++};
++
++enum hfp_call_held {
++	CIND_CALLHELD_NONE = 0,
++	CIND_CALLHELD_HOLD_AND_ACTIVE,
++	CIND_CALLHELD_HOLD
++};
++
+ struct hfp_context;
+ 
+ typedef void (*hfp_result_func_t)(struct hfp_context *context,
+@@ -128,6 +185,13 @@ typedef void (*hfp_response_func_t)(enum hfp_result result,
+ 
+ struct hfp_hf;
+ 
++struct hfp_hf_callbacks {
++	void (*session_ready)(enum hfp_result result, enum hfp_error cme_err,
++							void *user_data);
++	void (*update_indicator)(enum hfp_indicator indicator, uint32_t val,
++							void *user_data);
++};
++
+ struct hfp_hf *hfp_hf_new(int fd);
+ 
+ struct hfp_hf *hfp_hf_ref(struct hfp_hf *hfp);
+@@ -146,3 +210,8 @@ bool hfp_hf_register(struct hfp_hf *hfp, hfp_hf_result_func_t callback,
+ bool hfp_hf_unregister(struct hfp_hf *hfp, const char *prefix);
+ bool hfp_hf_send_command(struct hfp_hf *hfp, hfp_response_func_t resp_cb,
+ 				void *user_data, const char *format, ...);
++
++bool hfp_hf_session_register(struct hfp_hf *hfp,
++				struct hfp_hf_callbacks *callbacks,
++				void *callbacks_data);
++bool hfp_hf_session(struct hfp_hf *hfp);
+-- 
+2.43.0
 
-That is not the entire explanation, the PA sync is done for every
-Broadcast found, not just the first:
-
-https://github.com/bluez/bluez/blob/master/profiles/audio/bap.c#L3651
-
-> In this case, the application layer has no way to select the target broad=
-cast
-> device =E2=80=94 it can only accept the one that BlueZ chooses by default=
- for creating
-> PA sync. To address this limitation, I suggest introducing a new method
-> (e.g., Device1.SyncPA) that would allow applications to explicitly select=
- the
-> desired device for PA synchronization.
->
-> Signed-off-by: Ye He <ye.he@amlogic.com>
-> ---
->  doc/org.bluez.Device.rst | 15 +++++++++++++++
->  plugins/neard.c          |  2 +-
->  src/adapter.c            |  4 ++--
->  src/device.c             | 39 ++++++++++++++++++++++++++++++++++++---
->  src/device.h             |  3 ++-
->  5 files changed, 56 insertions(+), 7 deletions(-)
->
-> diff --git a/doc/org.bluez.Device.rst b/doc/org.bluez.Device.rst
-> index 61c394dd2d0b371fe10508b8e64087ed87a2e6e0..44d929e8850659cdfbcafa81f=
-18dd44e4aa53d03 100644
-> --- a/doc/org.bluez.Device.rst
-> +++ b/doc/org.bluez.Device.rst
-> @@ -155,6 +155,21 @@ Possible errors:
->  :org.bluez.Error.NotConnected:
->  :org.bluez.Error.DoesNotExist:
->
-> +void SyncBroadcast() [experimental]
-> +```````````````````````````````````
-> +
-> +Initiates synchronization with a broadcast source device that contains B=
-roadcast
-> +Announcements UUID. This method can be used on devices that are capable =
-of
-> +broadcast synchronization.
->
-> +If the device is not capable of broadcast synchronization, this method w=
-ill
-> +fail with `org.bluez.Error.NotSupported`.
-> +
-> +Possible errors:
-> +
-> +:org.bluez.Error.Failed:
-> +:org.bluez.Error.NotSupported:
-> +
->  Signals
->  -------
->
-> diff --git a/plugins/neard.c b/plugins/neard.c
-> index c84934025cd8541bf604efe9520c1c3e9c83068f..8c231a8e84b0090b450f3b61e=
-75cc4d4c6e4a14f 100644
-> --- a/plugins/neard.c
-> +++ b/plugins/neard.c
-> @@ -633,7 +633,7 @@ static void store_params(struct btd_adapter *adapter,=
- struct btd_device *device,
->         }
->
->         if (params->services)
-> -               device_add_eir_uuids(device, params->services);
-> +               device_add_eir_uuids(device, params->services, true);
->
->         if (params->hash) {
->                 btd_adapter_add_remote_oob_data(adapter, &params->address=
-,
-> diff --git a/src/adapter.c b/src/adapter.c
-> index b771cf66ade30dcfe0a6fa41cd28f1ba46bed5a4..b12d75c815ee936aeaf3210f9=
-7831eee8ee945a2 100644
-> --- a/src/adapter.c
-> +++ b/src/adapter.c
-> @@ -1740,7 +1740,7 @@ static void discovery_cleanup(struct btd_adapter *a=
-dapter, int timeout)
->                 next =3D g_slist_next(l);
->
->                 if (device_is_temporary(dev) && !device_is_connectable(de=
-v)
-> -                       && !btd_device_is_connected(dev))
-> +                       && !btd_device_is_connected(dev) && !btd_device_i=
-s_bcast_syncable(dev))
->                         btd_adapter_remove_device(adapter, dev);
->         }
->  }
-> @@ -7452,7 +7452,7 @@ void btd_adapter_device_found(struct btd_adapter *a=
-dapter,
->                                                         eir_data.did_prod=
-uct,
->                                                         eir_data.did_vers=
-ion);
->
-> -       device_add_eir_uuids(dev, eir_data.services);
-> +       device_add_eir_uuids(dev, eir_data.services, false);
->
->         if (adapter->discovery_list)
->                 g_slist_foreach(adapter->discovery_list, filter_duplicate=
-_data,
-> diff --git a/src/device.c b/src/device.c
-> index 0179c3dab603ece0faedfd122c87b99f35a2ca6e..410a051391529799d83102d3e=
-8b041a264fd415a 100644
-> --- a/src/device.c
-> +++ b/src/device.c
-> @@ -78,6 +78,8 @@
->
->  #define RSSI_THRESHOLD         8
->
-> +#define BCAAS_UUID_STR "00001852-0000-1000-8000-00805f9b34fb"
-> +
->  static DBusConnection *dbus_conn =3D NULL;
->  static unsigned service_state_cb_id;
->
-> @@ -2356,7 +2358,7 @@ done:
->         dev->connect =3D NULL;
->  }
->
-> -void device_add_eir_uuids(struct btd_device *dev, GSList *uuids)
-> +void device_add_eir_uuids(struct btd_device *dev, GSList *uuids, bool pr=
-obe)
->  {
->         GSList *l;
->         GSList *added =3D NULL;
-> @@ -2372,7 +2374,8 @@ void device_add_eir_uuids(struct btd_device *dev, G=
-SList *uuids)
->                 dev->eir_uuids =3D g_slist_append(dev->eir_uuids, g_strdu=
-p(str));
->         }
->
-> -       device_probe_profiles(dev, added);
-> +       if (probe)
-> +               device_probe_profiles(dev, added);
->  }
->
->  static void add_manufacturer_data(void *data, void *user_data)
-> @@ -2411,7 +2414,7 @@ static void add_service_data(void *data, void *user=
-_data)
->                 return;
->
->         l =3D g_slist_append(NULL, sd->uuid);
-> -       device_add_eir_uuids(dev, l);
-> +       device_add_eir_uuids(dev, l, false);
->         g_slist_free(l);
->
->         g_dbus_emit_property_changed(dbus_conn, dev->path,
-> @@ -3488,6 +3491,21 @@ static DBusMessage *get_service_records(DBusConnec=
-tion *conn, DBusMessage *msg,
->         return reply;
->  }
->
-> +static DBusMessage *sync_broadcast_device(DBusConnection *conn, DBusMess=
-age *msg,
-> +                                                       void *user_data)
-> +{
-> +       struct btd_device *dev =3D user_data;
-> +
-> +       DBG("Sync with broadcast device %s", batostr(&dev->bdaddr));
-> +
-> +       if (!btd_device_is_bcast_syncable(dev))
-> +               return btd_error_not_supported(msg);
-> +
-> +       btd_device_add_uuid(dev, BCAAS_UUID_STR);
-> +
-> +       return dbus_message_new_method_return(msg);
-> +}
-> +
->  static const GDBusMethodTable device_methods[] =3D {
->         { GDBUS_ASYNC_METHOD("Disconnect", NULL, NULL, dev_disconnect) },
->         { GDBUS_ASYNC_METHOD("Connect", NULL, NULL, dev_connect) },
-> @@ -3500,6 +3518,7 @@ static const GDBusMethodTable device_methods[] =3D =
-{
->         { GDBUS_EXPERIMENTAL_METHOD("GetServiceRecords", NULL,
->                                     GDBUS_ARGS({ "Records", "aay" }),
->                                     get_service_records) },
-> +       { GDBUS_EXPERIMENTAL_ASYNC_METHOD("SyncBroadcast", NULL, NULL, sy=
-nc_broadcast_device) },
->         { }
->  };
->
-> @@ -3654,6 +3673,20 @@ bool btd_device_bdaddr_type_connected(struct btd_d=
-evice *dev, uint8_t type)
->         return dev->le_state.connected;
->  }
->
-> +bool btd_device_is_bcast_syncable(struct btd_device *dev)
-> +{
-> +       if (dev->bredr_state.connected || dev->le_state.connected)
-> +               return false;
-> +
-> +       for (GSList *l =3D dev->eir_uuids; l !=3D NULL; l =3D l->next) {
-> +               const char *str =3D l->data;
-> +               if (bt_uuid_strcmp(str, BCAAS_UUID_STR) =3D=3D 0)
-> +                       return true;
-> +       }
-> +
-> +       return false;
-> +}
-> +
->  static void clear_temporary_timer(struct btd_device *dev)
->  {
->         if (dev->temporary_timer) {
-> diff --git a/src/device.h b/src/device.h
-> index 9e7c30ad71864932d3da2211f30e3c7ffc4b02f7..70f4dc1a11a12bce4514fcfa3=
-62c713d4d2a5235 100644
-> --- a/src/device.h
-> +++ b/src/device.h
-> @@ -76,7 +76,7 @@ void btd_device_gatt_set_service_changed(struct btd_dev=
-ice *device,
->                                                 uint16_t start, uint16_t =
-end);
->  bool device_attach_att(struct btd_device *dev, GIOChannel *io);
->  void btd_device_add_uuid(struct btd_device *device, const char *uuid);
-> -void device_add_eir_uuids(struct btd_device *dev, GSList *uuids);
-> +void device_add_eir_uuids(struct btd_device *dev, GSList *uuids, bool pr=
-obe);
->  void device_set_manufacturer_data(struct btd_device *dev, GSList *list,
->                                                         bool duplicate);
->  void device_set_service_data(struct btd_device *dev, GSList *list,
-> @@ -110,6 +110,7 @@ void device_set_tx_power(struct btd_device *device, i=
-nt8_t tx_power);
->  void device_set_flags(struct btd_device *device, uint8_t flags);
->  bool btd_device_is_connected(struct btd_device *dev);
->  bool btd_device_bearer_is_connected(struct btd_device *dev);
-> +bool btd_device_is_bcast_syncable(struct btd_device *dev);
->  bool btd_device_bdaddr_type_connected(struct btd_device *dev, uint8_t ty=
-pe);
->  uint8_t btd_device_get_bdaddr_type(struct btd_device *dev);
->  bool device_is_retrying(struct btd_device *device);
->
-> ---
-> base-commit: 9cdbad590b7476b83e2ef240a486fd5159251be8
-> change-id: 20250813-adapter-sync-bcast-871fb45c702a
->
-> Best regards,
-> --
-> Ye He <ye.he@amlogic.com>
->
->
->
->
-> --
-> Luiz Augusto von Dentz
->
->
-> --
-> Luiz Augusto von Dentz
-
-
-
---=20
-Luiz Augusto von Dentz
 
