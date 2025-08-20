@@ -1,173 +1,718 @@
-Return-Path: <linux-bluetooth+bounces-14826-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-14822-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4BDFB2DE28
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 20 Aug 2025 15:45:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1EBF4B2DE07
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 20 Aug 2025 15:39:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 423E316390A
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 20 Aug 2025 13:41:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 21F4617DD35
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 20 Aug 2025 13:36:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 875BE31E0E4;
-	Wed, 20 Aug 2025 13:41:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7067332779C;
+	Wed, 20 Aug 2025 13:33:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="PLaLeOyt"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A54B2E11AB;
-	Wed, 20 Aug 2025 13:41:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=141.14.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 819D3327789
+	for <linux-bluetooth@vger.kernel.org>; Wed, 20 Aug 2025 13:33:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755697271; cv=none; b=MLLOVtCz/cpLYLzwGZbjDla+Lmp9VguD3DPzUZQb41URxwibqrFMjKcP/uTcQdrPt15k7Kjj+W/ADroIdUMIuKA1IWe0BUYJ8OcHb0v06b8ADJzWbIPzgmhFVXhYIFW0KV7gR6zlllgNrIJ6yvkEDTOujS2BollhH0T4ILH0Spg=
+	t=1755696831; cv=none; b=TJXsM7oPsnwdhXtnYEc51OX7X5Az/hVN0/2mhrVo5QEuE9zt7va69+77ZKZviDGQFt9ppIBwX+UhJauXP5x5NkEX8xQhMCNbu0259Kj3DYHc401tbErUPM1HITxZcvI3y1OttsDZftQWOi9Y+7r733CEpYDyHNtfLA7iE9faUXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755697271; c=relaxed/simple;
-	bh=pMj0gp/2bA+b9eRsCiy6AKLGAvEUd3cDvU67rP19T+8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=msW2tEEBIqXyb9ruzhBrO0NbgYhdHR9vxWshCMSyUrd5zXIc7YKuuzCv1QRwPBZ65tXdp0eGn4Y56QcVWmH/A1JCFDAJEVickTHRn8/JlRmuP+sVWG48SCkhzio0zlDe2bjBxlP4Pt3xQZB4WL6ZZoecko8m1hBHO2oXG4hf5EY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de; spf=pass smtp.mailfrom=molgen.mpg.de; arc=none smtp.client-ip=141.14.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=molgen.mpg.de
-Received: from [141.14.220.42] (g42.guest.molgen.mpg.de [141.14.220.42])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	s=arc-20240116; t=1755696831; c=relaxed/simple;
+	bh=7jq1glaS2G52Wp6aYGb8GLQZ/dN70OWScD0UlZBfDZs=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=M5ETZKgW39UWU4taKIGE6rzT/RAXKrfil/pKDRdu65dAo04+/GfOzCz+3uWZwzED2Uk3o/v7oEQwDQzwhdpsW82CPESb3MlcEd9J4UPJQ2Sb06TtRcf89JVQCu/RLe9Y8sWi0rZ6dMd77rMXeLDXG6OTYwEIrIP0WGnTTfhOfDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=PLaLeOyt; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1755696828;
+	bh=7jq1glaS2G52Wp6aYGb8GLQZ/dN70OWScD0UlZBfDZs=;
+	h=From:To:Subject:Date:From;
+	b=PLaLeOytFP6T5Rfv/Ntl+1Qsr5l4C8+L1GAX9lW8JztjnDrWun6B/+FxIPoIr/RJk
+	 x591MKX1PTOc3LxxdLiPX5y6hxSaCwqVqCF0DcGpqA9FJvomUELtc4ZxeYXZ6aLNyW
+	 Qu2iE7vuFeOUJRbYRTpy7s5ukoXWGMDGb70XZGD0rBh5AsmkcyqA+Fxc3C4RY8Gv9j
+	 RwibC4BX+1s35o7iakA496sX5aWC4H6cqCzJk+1KdsLEc6D4PIazCqnu+TkNsWKF33
+	 3UfGmcFA08xyyU6Kv15O1WCSVG30TZ+YiAC+M9CViG/Tvki7MEEB56ooUreJOFUR6w
+	 7jwRPrU2kLr0A==
+Received: from fdanis-ThinkPad-X1.. (2A02-8428-af44-1001-e86C-1c83-BFB8-e1aE.rev.sfr.net [IPv6:2a02:8428:af44:1001:e86c:1c83:bfb8:e1ae])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	(Authenticated sender: pmenzel)
-	by mx.molgen.mpg.de (Postfix) with ESMTPSA id 0770360288273;
-	Wed, 20 Aug 2025 15:32:22 +0200 (CEST)
-Message-ID: <0c0a6b05-edc6-4e3e-8db5-c48f732d12f2@molgen.mpg.de>
-Date: Wed, 20 Aug 2025 15:32:21 +0200
+	(Authenticated sender: fdanis)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id E1F4917E0483
+	for <linux-bluetooth@vger.kernel.org>; Wed, 20 Aug 2025 15:33:47 +0200 (CEST)
+From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
+To: linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ v2 1/4] shared/hfp: Add HF SLC connection function
+Date: Wed, 20 Aug 2025 15:33:35 +0200
+Message-ID: <20250820133338.1158203-1-frederic.danis@collabora.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5] Fix SSR(SubSystem Restart) fail when BT_EN is pulled
- up by hw
-To: Shuai Zhang <quic_shuaz@quicinc.com>
-Cc: linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- quic_bt@quicinc.com
-References: <20250820120641.1622351-1-quic_shuaz@quicinc.com>
-Content-Language: en-US
-From: Paul Menzel <pmenzel@molgen.mpg.de>
-In-Reply-To: <20250820120641.1622351-1-quic_shuaz@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-Dear Shuai,
+This implements the minimal SLC connection exchange, i.e. AT+BRSF,
+AT+CIND=?, AT+CIND? and AT+CMER=3,0,0,1 requested to complete the
+Service Level Connection Establishment.
+---
+ src/shared/hfp.c | 508 +++++++++++++++++++++++++++++++++++++++++++++++
+ src/shared/hfp.h |  69 +++++++
+ 2 files changed, 577 insertions(+)
 
+diff --git a/src/shared/hfp.c b/src/shared/hfp.c
+index df6eab35d..c1bcb61cf 100644
+--- a/src/shared/hfp.c
++++ b/src/shared/hfp.c
+@@ -25,6 +25,12 @@
+ #include "src/shared/io.h"
+ #include "src/shared/hfp.h"
+ 
++#define DBG(_hfp, fmt, arg...) \
++	hfp_debug(_hfp->debug_callback, _hfp->debug_data, "%s:%s() " fmt, \
++						__FILE__, __func__, ## arg)
++
++#define HFP_HF_FEATURES	(HFP_HF_FEAT_ESCO_S4_T2)
++
+ struct hfp_gw {
+ 	int ref_count;
+ 	int fd;
+@@ -50,6 +56,16 @@ struct hfp_gw {
+ 	bool destroyed;
+ };
+ 
++typedef void (*ciev_func_t)(uint8_t val, void *user_data);
++
++struct indicator {
++	uint8_t index;
++	uint32_t min;
++	uint32_t max;
++	uint32_t val;
++	ciev_func_t cb;
++};
++
+ struct hfp_hf {
+ 	int ref_count;
+ 	int fd;
+@@ -73,6 +89,17 @@ struct hfp_hf {
+ 
+ 	bool in_disconnect;
+ 	bool destroyed;
++
++	struct hfp_hf_callbacks *callbacks;
++	void *callbacks_data;
++
++	uint32_t features;
++	struct indicator ag_ind[HFP_INDICATOR_LAST];
++	bool service;
++	uint8_t signal;
++	bool roaming;
++	uint8_t battchg;
++
+ };
+ 
+ struct cmd_handler {
+@@ -101,6 +128,19 @@ struct event_handler {
+ 	hfp_hf_result_func_t callback;
+ };
+ 
++static void hfp_debug(hfp_debug_func_t debug_func, void *debug_data,
++						const char *format, ...)
++{
++	va_list ap;
++
++	if (!debug_func || !format)
++		return;
++
++	va_start(ap, format);
++	util_debug_va(debug_func, debug_data, format, ap);
++	va_end(ap);
++}
++
+ static void destroy_cmd_handler(void *data)
+ {
+ 	struct cmd_handler *handler = data;
+@@ -1527,3 +1567,471 @@ bool hfp_hf_disconnect(struct hfp_hf *hfp)
+ 
+ 	return io_shutdown(hfp->io);
+ }
++
++static void ciev_service_cb(uint8_t val, void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++
++	DBG(hfp, "%u", val);
++
++	if (val < hfp->ag_ind[HFP_INDICATOR_SERVICE].min ||
++			val > hfp->ag_ind[HFP_INDICATOR_SERVICE].max) {
++		DBG(hfp, "hf: Incorrect state %u:", val);
++		return;
++	}
++
++	hfp->service = val;
++	if (hfp->callbacks && hfp->callbacks->update_indicator)
++		hfp->callbacks->update_indicator(HFP_INDICATOR_SERVICE, val,
++							hfp->callbacks_data);
++}
++
++static void ciev_call_cb(uint8_t val, void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++
++	DBG(hfp, "%u", val);
++
++	if (val < hfp->ag_ind[HFP_INDICATOR_CALL].min ||
++			val > hfp->ag_ind[HFP_INDICATOR_CALL].max) {
++		DBG(hfp, "hf: Incorrect call state %u:", val);
++		return;
++	}
++}
++
++static void ciev_callsetup_cb(uint8_t val, void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++
++	DBG(hfp, "%u", val);
++
++	if (val < hfp->ag_ind[HFP_INDICATOR_CALLSETUP].min ||
++			val > hfp->ag_ind[HFP_INDICATOR_CALLSETUP].max) {
++		DBG(hfp, "hf: Incorrect call setup state %u:", val);
++		return;
++	}
++}
++
++static void ciev_callheld_cb(uint8_t val, void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++
++	DBG(hfp, "%u", val);
++
++	if (val < hfp->ag_ind[HFP_INDICATOR_CALLHELD].min ||
++			val > hfp->ag_ind[HFP_INDICATOR_CALLHELD].max) {
++		DBG(hfp, "hf: Incorrect call held state %u:", val);
++		return;
++	}
++}
++
++static void ciev_signal_cb(uint8_t val, void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++
++	DBG(hfp, "%u", val);
++
++	if (val < hfp->ag_ind[HFP_INDICATOR_SIGNAL].min ||
++			val > hfp->ag_ind[HFP_INDICATOR_SIGNAL].max) {
++		DBG(hfp, "hf: Incorrect signal value %u:", val);
++		return;
++	}
++
++	hfp->signal = val;
++	if (hfp->callbacks && hfp->callbacks->update_indicator)
++		hfp->callbacks->update_indicator(HFP_INDICATOR_SIGNAL, val,
++							hfp->callbacks_data);
++}
++
++static void ciev_roam_cb(uint8_t val, void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++
++	DBG(hfp, "%u", val);
++
++	if (val < hfp->ag_ind[HFP_INDICATOR_ROAM].min ||
++			val > hfp->ag_ind[HFP_INDICATOR_ROAM].max) {
++		DBG(hfp, "hf: Incorrect roaming state %u:", val);
++		return;
++	}
++
++	hfp->roaming = val;
++	if (hfp->callbacks && hfp->callbacks->update_indicator)
++		hfp->callbacks->update_indicator(HFP_INDICATOR_ROAM, val,
++							hfp->callbacks_data);
++}
++
++static void ciev_battchg_cb(uint8_t val, void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++
++	DBG(hfp, "%u", val);
++
++	if (val < hfp->ag_ind[HFP_INDICATOR_BATTCHG].min ||
++			val > hfp->ag_ind[HFP_INDICATOR_BATTCHG].max) {
++		DBG(hfp, "hf: Incorrect battery charge value %u:", val);
++		return;
++	}
++
++	hfp->battchg = val;
++	if (hfp->callbacks && hfp->callbacks->update_indicator)
++		hfp->callbacks->update_indicator(HFP_INDICATOR_BATTCHG, val,
++							hfp->callbacks_data);
++}
++
++static void set_indicator_value(uint8_t index, unsigned int val,
++	struct indicator *ag_ind, struct hfp_hf *hfp)
++{
++	int i;
++
++	for (i = 0; i < HFP_INDICATOR_LAST; i++) {
++		if (index != ag_ind[i].index)
++			continue;
++
++		ag_ind[i].val = val;
++		ag_ind[i].cb(val, hfp);
++		return;
++	}
++}
++
++static void slc_cmer_resp(enum hfp_result result, enum hfp_error cme_err,
++	void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++
++	DBG(hfp, "");
++
++	if (result != HFP_RESULT_OK) {
++		DBG(hfp, "hf: CMER error: %d", result);
++		goto failed;
++	}
++
++	if (hfp->callbacks->session_ready)
++		hfp->callbacks->session_ready(HFP_RESULT_OK, 0,
++						hfp->callbacks_data);
++	return;
++
++failed:
++	if (hfp->callbacks->session_ready)
++		hfp->callbacks->session_ready(result, cme_err,
++						hfp->callbacks_data);
++}
++
++static void slc_cind_status_cb(struct hfp_context *context,
++	void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++	uint8_t index = 1;
++
++	while (hfp_context_has_next(context)) {
++		uint32_t val;
++
++		if (!hfp_context_get_number(context, &val)) {
++			DBG(hfp, "hf: Error on CIND status response");
++			return;
++		}
++
++		set_indicator_value(index++, val, hfp->ag_ind, hfp);
++	}
++}
++
++static void slc_cind_status_resp(enum hfp_result result,
++	enum hfp_error cme_err,
++	void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++
++	DBG(hfp, "");
++
++	hfp_hf_unregister(hfp, "+CIND");
++
++	if (result != HFP_RESULT_OK) {
++		DBG(hfp, "hf: CIND error: %d", result);
++		goto failed;
++	}
++
++	/* Continue with SLC creation */
++	if (!hfp_hf_send_command(hfp, slc_cmer_resp, hfp,
++		"AT+CMER=3,0,0,1")) {
++		DBG(hfp, "hf: Could not send AT+CMER");
++		result = HFP_RESULT_ERROR;
++		goto failed;
++	}
++
++	return;
++
++failed:
++	if (hfp->callbacks->session_ready)
++		hfp->callbacks->session_ready(result, cme_err,
++						hfp->callbacks_data);
++}
++
++static void set_indicator_parameters(struct hfp_hf *hfp, uint8_t index,
++	const char *indicator,
++	unsigned int min,
++	unsigned int max)
++{
++	struct indicator *ag_ind = hfp->ag_ind;
++
++	DBG(hfp, "%s, %i", indicator, index);
++
++	if (strcmp("service", indicator) == 0) {
++		if (min != 0 || max != 1) {
++			DBG(hfp, "hf: Invalid min/max values for service,"
++				" expected (0,1) got (%u,%u)", min, max);
++			return;
++		}
++		ag_ind[HFP_INDICATOR_SERVICE].index = index;
++		ag_ind[HFP_INDICATOR_SERVICE].min = min;
++		ag_ind[HFP_INDICATOR_SERVICE].max = max;
++		ag_ind[HFP_INDICATOR_SERVICE].cb = ciev_service_cb;
++		return;
++	}
++
++	if (strcmp("call", indicator) == 0) {
++		if (min != 0 || max != 1) {
++			DBG(hfp, "hf: Invalid min/max values for call,"
++				" expected (0,1) got (%u,%u)", min, max);
++			return;
++		}
++		ag_ind[HFP_INDICATOR_CALL].index = index;
++		ag_ind[HFP_INDICATOR_CALL].min = min;
++		ag_ind[HFP_INDICATOR_CALL].max = max;
++		ag_ind[HFP_INDICATOR_CALL].cb = ciev_call_cb;
++		return;
++	}
++
++	if (strcmp("callsetup", indicator) == 0) {
++		if (min != 0 || max != 3) {
++			DBG(hfp, "hf: Invalid min/max values for callsetup,"
++				" expected (0,3) got (%u,%u)", min, max);
++			return;
++		}
++		ag_ind[HFP_INDICATOR_CALLSETUP].index = index;
++		ag_ind[HFP_INDICATOR_CALLSETUP].min = min;
++		ag_ind[HFP_INDICATOR_CALLSETUP].max = max;
++		ag_ind[HFP_INDICATOR_CALLSETUP].cb = ciev_callsetup_cb;
++		return;
++	}
++
++	if (strcmp("callheld", indicator) == 0) {
++		if (min != 0 || max != 2) {
++			DBG(hfp, "hf: Invalid min/max values for callheld,"
++				" expected (0,2) got (%u,%u)", min, max);
++			return;
++		}
++		ag_ind[HFP_INDICATOR_CALLHELD].index = index;
++		ag_ind[HFP_INDICATOR_CALLHELD].min = min;
++		ag_ind[HFP_INDICATOR_CALLHELD].max = max;
++		ag_ind[HFP_INDICATOR_CALLHELD].cb = ciev_callheld_cb;
++		return;
++	}
++
++	if (strcmp("signal", indicator) == 0) {
++		if (min != 0 || max != 5) {
++			DBG(hfp, "hf: Invalid min/max values for signal,"
++				" expected (0,5) got (%u,%u)", min, max);
++			return;
++		}
++		ag_ind[HFP_INDICATOR_SIGNAL].index = index;
++		ag_ind[HFP_INDICATOR_SIGNAL].min = min;
++		ag_ind[HFP_INDICATOR_SIGNAL].max = max;
++		ag_ind[HFP_INDICATOR_SIGNAL].cb = ciev_signal_cb;
++		return;
++	}
++
++	if (strcmp("roam", indicator) == 0) {
++		if (min != 0 || max != 1) {
++			DBG(hfp, "hf: Invalid min/max values for roam,"
++				" expected (0,1) got (%u,%u)", min, max);
++			return;
++		}
++		ag_ind[HFP_INDICATOR_ROAM].index = index;
++		ag_ind[HFP_INDICATOR_ROAM].min = min;
++		ag_ind[HFP_INDICATOR_ROAM].max = max;
++		ag_ind[HFP_INDICATOR_ROAM].cb = ciev_roam_cb;
++		return;
++	}
++
++	if (strcmp("battchg", indicator) == 0) {
++		if (min != 0 || max != 5) {
++			DBG(hfp, "hf: Invalid min/max values for battchg,"
++				" expected (0,5) got (%u,%u)", min, max);
++			return;
++		}
++		ag_ind[HFP_INDICATOR_BATTCHG].index = index;
++		ag_ind[HFP_INDICATOR_BATTCHG].min = min;
++		ag_ind[HFP_INDICATOR_BATTCHG].max = max;
++		ag_ind[HFP_INDICATOR_BATTCHG].cb = ciev_battchg_cb;
++		return;
++	}
++
++	DBG(hfp, "hf: Unknown indicator: %s", indicator);
++}
++
++static void slc_cind_cb(struct hfp_context *context, void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++	int index = 1;
++
++	DBG(hfp, "");
++
++	while (hfp_context_has_next(context)) {
++		char name[255];
++		unsigned int min, max;
++
++		/* e.g ("callsetup",(0-3)) */
++		if (!hfp_context_open_container(context))
++			break;
++
++		if (!hfp_context_get_string(context, name, sizeof(name))) {
++			DBG(hfp, "hf: Could not get string");
++			goto failed;
++		}
++
++		if (!hfp_context_open_container(context)) {
++			DBG(hfp, "hf: Could not open container");
++			goto failed;
++		}
++
++		if (!hfp_context_get_range(context, &min, &max)) {
++			if (!hfp_context_get_number(context, &min)) {
++				DBG(hfp, "hf: Could not get number");
++				goto failed;
++			}
++
++			if (!hfp_context_get_number(context, &max)) {
++				DBG(hfp, "hf: Could not get number");
++				goto failed;
++			}
++		}
++
++		if (!hfp_context_close_container(context)) {
++			DBG(hfp, "hf: Could not close container");
++			goto failed;
++		}
++
++		if (!hfp_context_close_container(context)) {
++			DBG(hfp, "hf: Could not close container");
++			goto failed;
++		}
++
++		set_indicator_parameters(hfp, index, name, min, max);
++		index++;
++	}
++
++	return;
++
++failed:
++	DBG(hfp, "hf: Error on CIND response");
++}
++
++static void slc_cind_resp(enum hfp_result result, enum hfp_error cme_err,
++	void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++
++	DBG(hfp, "");
++
++	hfp_hf_unregister(hfp, "+CIND");
++
++	if (result != HFP_RESULT_OK) {
++		DBG(hfp, "hf: CIND error: %d", result);
++		goto failed;
++	}
++
++	/* Continue with SLC creation */
++	if (!hfp_hf_register(hfp, slc_cind_status_cb, "+CIND", hfp,
++			NULL)) {
++		DBG(hfp, "hf: Could not register +CIND");
++		result = HFP_RESULT_ERROR;
++		goto failed;
++	}
++
++	if (!hfp_hf_send_command(hfp, slc_cind_status_resp, hfp,
++			"AT+CIND?")) {
++		DBG(hfp, "hf: Could not send AT+CIND?");
++		result = HFP_RESULT_ERROR;
++		goto failed;
++	}
++
++	return;
++
++failed:
++	if (hfp->callbacks->session_ready)
++		hfp->callbacks->session_ready(result, cme_err,
++						hfp->callbacks_data);
++}
++
++static void slc_brsf_cb(struct hfp_context *context, void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++	unsigned int feat;
++
++	DBG(hfp, "");
++
++	if (hfp_context_get_number(context, &feat))
++		hfp->features = feat;
++}
++
++static void slc_brsf_resp(enum hfp_result result, enum hfp_error cme_err,
++	void *user_data)
++{
++	struct hfp_hf *hfp = user_data;
++
++	DBG(hfp, "");
++
++	hfp_hf_unregister(hfp, "+BRSF");
++
++	if (result != HFP_RESULT_OK) {
++		DBG(hfp, "BRSF error: %d", result);
++		goto failed;
++	}
++
++	/* Continue with SLC creation */
++	if (!hfp_hf_register(hfp, slc_cind_cb, "+CIND", hfp, NULL)) {
++		DBG(hfp, "hf: Could not register for +CIND");
++		result = HFP_RESULT_ERROR;
++		goto failed;
++	}
++
++	if (!hfp_hf_send_command(hfp, slc_cind_resp, hfp, "AT+CIND=?")) {
++		DBG(hfp, "hf: Could not send AT+CIND command");
++		result = HFP_RESULT_ERROR;
++		goto failed;
++	}
++
++	return;
++
++failed:
++	if (hfp->callbacks->session_ready)
++		hfp->callbacks->session_ready(result, cme_err,
++						hfp->callbacks_data);
++}
++
++bool hfp_hf_session_register(struct hfp_hf *hfp,
++				struct hfp_hf_callbacks *callbacks,
++				void *callbacks_data)
++{
++	if (!hfp)
++		return false;
++
++	hfp->callbacks = callbacks;
++	hfp->callbacks_data = callbacks_data;
++
++	return true;
++}
++
++bool hfp_hf_session(struct hfp_hf *hfp)
++{
++	DBG(hfp, "");
++
++	if (!hfp)
++		return false;
++
++	if (!hfp_hf_register(hfp, slc_brsf_cb, "+BRSF", hfp, NULL))
++		return false;
++
++	return hfp_hf_send_command(hfp, slc_brsf_resp, hfp,
++					"AT+BRSF=%u", HFP_HF_FEATURES);
++}
+diff --git a/src/shared/hfp.h b/src/shared/hfp.h
+index 600d084a7..f54b86a92 100644
+--- a/src/shared/hfp.h
++++ b/src/shared/hfp.h
+@@ -10,6 +10,34 @@
+ 
+ #include <stdbool.h>
+ 
++#define HFP_HF_FEAT_ECNR				0x00000001
++#define HFP_HF_FEAT_3WAY				0x00000002
++#define HFP_HF_FEAT_CLIP				0x00000004
++#define HFP_HF_FEAT_VOICE_RECOGNITION			0x00000008
++#define HFP_HF_FEAT_REMOTE_VOLUME_CONTROL		0x00000010
++#define HFP_HF_FEAT_ENHANCED_CALL_STATUS		0x00000020
++#define HFP_HF_FEAT_ENHANCED_CALL_CONTROL		0x00000040
++#define HFP_HF_FEAT_CODEC_NEGOTIATION			0x00000080
++#define HFP_HF_FEAT_HF_INDICATORS			0x00000100
++#define HFP_HF_FEAT_ESCO_S4_T2				0x00000200
++#define HFP_HF_FEAT_ENHANCED_VOICE_RECOGNITION_STATUS	0x00000400
++#define HFP_HF_FEAT_VOICE_RECOGNITION_TEXT		0x00000800
++
++#define HFP_AG_FEAT_3WAY				0x00000001
++#define HFP_AG_FEAT_ECNR				0x00000002
++#define HFP_AG_FEAT_VOICE_RECOGNITION			0x00000004
++#define HFP_AG_FEAT_IN_BAND_RING_TONE			0x00000008
++#define HFP_AG_FEAT_ATTACH_VOICE_TAG			0x00000010
++#define HFP_AG_FEAT_REJECT_CALL				0x00000020
++#define HFP_AG_FEAT_ENHANCED_CALL_STATUS		0x00000040
++#define HFP_AG_FEAT_ENHANCED_CALL_CONTROL		0x00000080
++#define HFP_AG_FEAT_EXTENDED_RES_CODE			0x00000100
++#define HFP_AG_FEAT_CODEC_NEGOTIATION			0x00000200
++#define HFP_AG_FEAT_HF_INDICATORS			0x00000400
++#define HFP_AG_FEAT_ESCO_S4_T2				0x00000800
++#define HFP_AG_FEAT_ENHANCED_VOICE_RECOGNITION_STATUS	0x00001000
++#define HFP_AG_FEAT_VOICE_RECOGNITION_TEXT		0x00001000
++
+ enum hfp_result {
+ 	HFP_RESULT_OK		= 0,
+ 	HFP_RESULT_CONNECT	= 1,
+@@ -57,6 +85,35 @@ enum hfp_gw_cmd_type {
+ 	HFP_GW_CMD_TYPE_COMMAND
+ };
+ 
++enum hfp_indicator {
++	HFP_INDICATOR_SERVICE = 0,
++	HFP_INDICATOR_CALL,
++	HFP_INDICATOR_CALLSETUP,
++	HFP_INDICATOR_CALLHELD,
++	HFP_INDICATOR_SIGNAL,
++	HFP_INDICATOR_ROAM,
++	HFP_INDICATOR_BATTCHG,
++	HFP_INDICATOR_LAST
++};
++
++enum hfp_call {
++	CIND_CALL_NONE = 0,
++	CIND_CALL_IN_PROGRESS
++};
++
++enum hfp_call_setup {
++	CIND_CALLSETUP_NONE = 0,
++	CIND_CALLSETUP_INCOMING,
++	CIND_CALLSETUP_DIALING,
++	CIND_CALLSETUP_ALERTING
++};
++
++enum hfp_call_held {
++	CIND_CALLHELD_NONE = 0,
++	CIND_CALLHELD_HOLD_AND_ACTIVE,
++	CIND_CALLHELD_HOLD
++};
++
+ struct hfp_context;
+ 
+ typedef void (*hfp_result_func_t)(struct hfp_context *context,
+@@ -128,6 +185,13 @@ typedef void (*hfp_response_func_t)(enum hfp_result result,
+ 
+ struct hfp_hf;
+ 
++struct hfp_hf_callbacks {
++	void (*session_ready)(enum hfp_result result, enum hfp_error cme_err,
++							void *user_data);
++	void (*update_indicator)(enum hfp_indicator indicator, uint32_t val,
++							void *user_data);
++};
++
+ struct hfp_hf *hfp_hf_new(int fd);
+ 
+ struct hfp_hf *hfp_hf_ref(struct hfp_hf *hfp);
+@@ -146,3 +210,8 @@ bool hfp_hf_register(struct hfp_hf *hfp, hfp_hf_result_func_t callback,
+ bool hfp_hf_unregister(struct hfp_hf *hfp, const char *prefix);
+ bool hfp_hf_send_command(struct hfp_hf *hfp, hfp_response_func_t resp_cb,
+ 				void *user_data, const char *format, ...);
++
++bool hfp_hf_session_register(struct hfp_hf *hfp,
++				struct hfp_hf_callbacks *callbacks,
++				void *callbacks_data);
++bool hfp_hf_session(struct hfp_hf *hfp);
+-- 
+2.43.0
 
-Thank you for the improved version. The commit message summary/title 
-still has the space missing before the ( and should be prefixed with 
-`Bluetooth:` to pass the linters.
-
-Am 20.08.25 um 14:06 schrieb Shuai Zhang:
-> When the host actively triggers SSR and collects coredump data,
-> the Bluetooth stack sends a reset command to the controller. However, due
-> to the inability to clear the QCA_SSR_TRIGGERED and QCA_IBS_DISABLED bits,
-> the reset command times out.
-> 
-> To address this, this patch clears the QCA_SSR_TRIGGERED and
-> QCA_IBS_DISABLED flags and adds a 50ms delay after SSR, but only when
-> HCI_QUIRK_NON_PERSISTENT_SETUP is not set. This ensures the controller
-> completes the SSR process when BT_EN is always high due to hardware.
-> 
-> For the purpose of HCI_QUIRK_NON_PERSISTENT_SETUP, please refer to
-> commit 740011cfe948 ("Bluetooth: Add new quirk for non-persistent setup
-> settings")
-
-Missing dot/period at the end.
-
-Also, the comment in `include/net/bluetooth/hci.h` is more helpful to me 
-than the commit.
-
-> The HCI_QUIRK_NON_PERSISTENT_SETUP quirk is associated with BT_EN,
-> and its presence can be used to determine whether BT_EN is defined in DTS.
-> 
-> After SSR, host will not download the firmware, causing
-> controller to remain in the IBS_WAKE state. Host needs
-> to synchronize with the controller to maintain proper operation.
-> 
-> Multiple triggers of SSR only first generate coredump file,
-> duo to memcoredump_flag no clear.
-
-due to
-
-> add clear coredump flag when ssr completed.
-> 
-> When the SSR duration exceeds 2 seconds, it triggers
-> host tx_idle_timeout, which sets host TX state to sleep. due to the
-> hardware pulling up bt_en, the firmware is not downloaded after the SSR.
-> As a result, the controller does not enter sleep mode. Consequently,
-> when the host sends a command afterward, it sends 0xFD to the controller,
-> but the controller does not respond, leading to a command timeout.
-> 
-> So reset tx_idle_timer after SSR to prevent host enter TX IBS_Sloeep mode.
-
-Sleep
-
-> Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
-> ---
->   drivers/bluetooth/hci_qca.c | 31 +++++++++++++++++++++++++++++++
->   1 file changed, 31 insertions(+)
-> 
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> index 4e56782b0..403d65952 100644
-> --- a/drivers/bluetooth/hci_qca.c
-> +++ b/drivers/bluetooth/hci_qca.c
-> @@ -1653,6 +1653,37 @@ static void qca_hw_error(struct hci_dev *hdev, u8 code)
->   		skb_queue_purge(&qca->rx_memdump_q);
->   	}
->   
-> +	/*
-> +	 * If the BT chip's bt_en pin is connected to a 3.3V power supply via
-> +	 * hardware and always stays high, driver cannot control the bt_en pin.
-> +	 * As a result, during SSR(SubSystem Restart), QCA_SSR_TRIGGERED and
-
-Missing space before (.
-
-> +	 * QCA_IBS_DISABLED flags cannot be cleared, which leads to a reset
-> +	 * command timeout.
-> +	 * Add an msleep delay to ensure controller completes the SSR process.
-> +	 *
-> +	 * Host will not download the firmware after SSR, controller to remain
-> +	 * in the IBS_WAKE state, and the host needs to synchronize with it
-> +	 *
-> +	 * Since the bluetooth chip has been reset, clear the memdump state.
-> +	 */
-> +	if (!test_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks)) {
-> +		/*
-> +		 * When the SSR (Sub-System Restart) duration exceeds 2 seconds,
-> +		 * it triggers host tx_idle_delay, which sets host TX state
-> +		 * to sleep. Reset tx_idle_timer after SSR to prevent
-> +		 * host enter TX IBS_Sloeep mode.
-
-Sleep?
-
-> +		 */
-> +		mod_timer(&qca->tx_idle_timer, jiffies +
-> +				  msecs_to_jiffies(qca->tx_idle_delay));
-> +		msleep(50);
-
-Add a comment, why 50 ms and not 20 ms or 100 ms?
-
-> +
-> +		clear_bit(QCA_SSR_TRIGGERED, &qca->flags);
-> +		clear_bit(QCA_IBS_DISABLED, &qca->flags);
-> +
-> +		qca->tx_ibs_state = HCI_IBS_TX_AWAKE;
-> +		qca->memdump_state = QCA_MEMDUMP_IDLE;
-> +	}
-> +
->   	clear_bit(QCA_HW_ERROR_EVENT, &qca->flags);
->   }
->   
-
-
-Kind regards,
-
-Paul
 
