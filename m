@@ -1,86 +1,84 @@
-Return-Path: <linux-bluetooth+bounces-14863-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-14865-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70E2DB2F948
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 21 Aug 2025 15:04:42 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F694B2F978
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 21 Aug 2025 15:08:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D5FDB5E1D29
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 21 Aug 2025 12:59:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4C9311CE6EB6
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 21 Aug 2025 13:01:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE55831DD93;
-	Thu, 21 Aug 2025 12:59:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA0F532255E;
+	Thu, 21 Aug 2025 13:00:17 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay1-d.mail.gandi.net (relay1-d.mail.gandi.net [217.70.183.193])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C7D2C859
-	for <linux-bluetooth@vger.kernel.org>; Thu, 21 Aug 2025 12:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4BE322535
+	for <linux-bluetooth@vger.kernel.org>; Thu, 21 Aug 2025 13:00:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755781145; cv=none; b=juoI4CfFSXbTy6947NR4oNXGaqzLKcaDvxK/RYlrxk41xcNLovW2t08z7xGAJJjJKxQp1S8oYlX6jsahRpCl4UXCTjhdvTTaREF01y9I7PmdV5r3tgUenqQtZM5lA9ag56z29gcvHVJwgXfPp8saGG5ud46pUEepH+6hHdDG/lw=
+	t=1755781217; cv=none; b=Fp7+ca6iCjcxkTR48JeGMv0QIWkyG/xHJDTW8x9yE1/vBkQSUbdzeH0pidt8zKz9PUHAgdI+nMa8R4wVgHBW1q77QWVCfZUp6glGdb5KKvTySZI/KeSWb11fGbR3293p3CNir2pJ0dqBv9p+tBrmx+FXThw+fZYuPfck+RariKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755781145; c=relaxed/simple;
-	bh=juQBixTOgXI65hlq3vIVFDz89GFrzUEHOpRc7JAJaSU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uTNU8ylx0cnLFjJh/sTZA9tG+3uoCDh8/ukwZ3G4dN40bUOc+2hkPSl0sIRKUvpCHpO6CXZhR4SG7J2GX+pe3AtOV/3y9l1bq1ovorEjn9F6lkqppHyDCiWidG7MxX99QLxFMu2zEwdJPYdyLb+mlHgi0PLCiqhuwZGwe4O/s2A=
+	s=arc-20240116; t=1755781217; c=relaxed/simple;
+	bh=p0znKIhiriPva1T4ijztiFnWSdCYaZ70WJEDk7wzmV4=;
+	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=brWllq63hEmbox9iSCwaB34KtIWWZGzWR1dRN3pFheXOvBBUqSJM5Cwp2rWQ8yyxwI5C1mMZnakOK6gSqr7Wm5OU9P73oPOJCoqDWThHzu2h87A8z8A332OWNOHKs072usoSsVTb2EXMWTvwTsK+5zbwBcuxoJllbM7Wgbu0Emo=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.193
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 5FEEA44310;
-	Thu, 21 Aug 2025 12:58:55 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id A275644327;
+	Thu, 21 Aug 2025 13:00:13 +0000 (UTC)
+Message-ID: <ad8d173b591d701707107bb98902922583e7d61b.camel@hadess.net>
+Subject: Re: [PATCH BlueZ 0/2] Cable pairing support for DualSense
 From: Bastien Nocera <hadess@hadess.net>
-To: linux-bluetooth@vger.kernel.org
-Cc: Egor Vorontsov <sdoregor@sdore.me>
-Subject: [PATCH BlueZ 2/2] sixaxis: Initiate pairing for all cable pairing devices
-Date: Thu, 21 Aug 2025 14:57:22 +0200
-Message-ID: <20250821125844.963198-3-hadess@hadess.net>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250821125844.963198-1-hadess@hadess.net>
-References: <20250821125844.963198-1-hadess@hadess.net>
+To: Egor Vorontsov <sdoregor@sdore.me>, linux-bluetooth@vger.kernel.org
+Date: Thu, 21 Aug 2025 15:00:13 +0200
+In-Reply-To: <20250603095617.92785-1-sdoregor@sdore.me>
+References: <20250603095617.92785-1-sdoregor@sdore.me>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2 (3.56.2-1.fc42) 
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 X-GND-State: clean
 X-GND-Score: 0
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduiedufedtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomhepuegrshhtihgvnhcupfhotggvrhgruceohhgruggvshhssehhrgguvghsshdrnhgvtheqnecuggftrfgrthhtvghrnhepveethfelveejffetkeelheehueejlefhvdehteehgfeghfekgfdvfefhgeekieetnecukfhppedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemjeduuggrmeefsggumedvtdgrleemudeffeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemjeduuggrmeefsggumedvtdgrleemudeffedphhgvlhhopeholhhimhhpihgtpdhmrghilhhfrhhomhephhgruggvshhssehhrgguvghsshdrnhgvthdpnhgspghrtghpthhtohepvddprhgtphhtthhopehlihhnuhigqdgslhhuvghtohhothhhsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshguohhrvghgohhrsehsughorhgvrdhmvg
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduiedufedtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhepkffuhffvffgjfhgtgfgfggesthhqredttderjeenucfhrhhomhepuegrshhtihgvnhcupfhotggvrhgruceohhgruggvshhssehhrgguvghsshdrnhgvtheqnecuggftrfgrthhtvghrnhepgedvheevleekveetkeehtdfhgfeltdejtdffkeefieejveeuvdelffegvdejudegnecuffhomhgrihhnpehgvghnthhoohdrohhrghenucfkphepvdgrtddumegvfeegmegvtgejfeemtghfvddtmeejudgurgemfegsugemvddtrgelmedufeefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvfeegmegvtgejfeemtghfvddtmeejudgurgemfegsugemvddtrgelmedufeefpdhhvghloheplgfkrfhvieemvdgrtddumegvfeegmegvtgejfeemtghfvddtmeejudgurgemfegsugemvddtrgelmedufeefngdpmhgrihhlfhhrohhmpehhrgguvghssheshhgruggvshhsrdhnvghtpdhnsggprhgtphhtthhopedvpdhrtghpthhtohepshguohhrvghgohhrsehsughorhgvrdhmvgdprhgtphhtthhopehlihhnuhigqdgslhhuvghtohhothhhsehvghgvrhdrkhgvrhhnvghlrdhorhhg
 X-GND-Sasl: hadess@hadess.net
 
-Fix the cable pairing not being triggered on DualShock 4 controllers.
+On Tue, 2025-06-03 at 12:56 +0300, Egor Vorontsov wrote:
+> I have figured out the DualSense pairing to be pretty similar to that
+> of DualShock 4. Successfully tested with a DualSense, from CLI and
+> via GNOME Control Center.
+>=20
+> As a side discussion, don't we also have to add the DS4 constant
+> at L398 (that's with this patch) for it to be supported as well?
+> An article at Gentoo Wiki [1] suggests that DS4 pairing cannot
+> currently be done the cable way. I don't currently have a way to
+> verify this myself, though.
+>=20
+> [1]: https://wiki.gentoo.org/wiki/Sony_DualShock#DualShock_4
 
-Note that this still requires an authorisation when connecting through
-Bluetooth the first time as we're not exchanging linkkeys. Sixaxis/PS3
-controllers aren't paired, so don't have that problem.
----
- plugins/sixaxis.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+My guess is that the DS4 cable-pairing support stopped working when the
+kernel migrated from hid-sony to hid-playstation (and devices changed
+names...).
 
-diff --git a/plugins/sixaxis.c b/plugins/sixaxis.c
-index 22dc634da0f8..27bc09815b31 100644
---- a/plugins/sixaxis.c
-+++ b/plugins/sixaxis.c
-@@ -300,11 +300,11 @@ static void agent_auth_cb(DBusError *derr, void *user_data)
- 	if (closure->type == CABLE_PAIRING_SIXAXIS) {
- 		btd_device_set_record(closure->device, HID_UUID,
- 						 SIXAXIS_HID_SDP_RECORD);
-+	}
- 
--		device_set_cable_pairing(closure->device, true);
-+	device_set_cable_pairing(closure->device, true);
- 
--		server_set_cable_pairing(adapter_bdaddr, true);
--	}
-+	server_set_cable_pairing(adapter_bdaddr, true);
- 
- 	ba2str(&closure->bdaddr, device_addr);
- 	ba2str(&central_bdaddr, central_addr);
--- 
-2.50.1
+I sent patches which fix that in my local testing.
 
+>=20
+> Egor Vorontsov (2):
+> =C2=A0 profiles/input: Add cable pairing constants for DualSense
+> =C2=A0 plugins/sixaxis: Implement cable pairing for DualSense
+>=20
+> =C2=A0plugins/sixaxis.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 107
+> +++++++++++++++++++++++++++++++++++++--
+> =C2=A0profiles/input/server.c=C2=A0 |=C2=A0=C2=A0 3 +-
+> =C2=A0profiles/input/sixaxis.h |=C2=A0 25 +++++++++
+> =C2=A03 files changed, 131 insertions(+), 4 deletions(-)
 
