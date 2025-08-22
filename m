@@ -1,64 +1,95 @@
-Return-Path: <linux-bluetooth+bounces-14914-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-14916-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2AC71B31B1B
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Aug 2025 16:19:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E9AABB31C7E
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Aug 2025 16:48:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 01CA9605DD2
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Aug 2025 14:14:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 69B9C64822E
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 22 Aug 2025 14:41:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF81E3074AC;
-	Fri, 22 Aug 2025 14:14:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F9B03101BD;
+	Fri, 22 Aug 2025 14:39:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="iChXCPKs"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GT6Bm49j"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-26.smtp.github.com (out-26.smtp.github.com [192.30.252.209])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF70A2A8C1
-	for <linux-bluetooth@vger.kernel.org>; Fri, 22 Aug 2025 14:13:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.209
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E7CF305E33;
+	Fri, 22 Aug 2025 14:39:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755872041; cv=none; b=R0OJjSorztf7FEv1Cr7tG9FYEIuRKFcE9PILV9pakM0P126kq38TdR4ynFOqO9Sj34YseTqgTyga5Z9+3uvD4Ol/X6WUoI9Kz8FXI9mY/3vxBSrj+3y39ovmTblfD62TZ6vANXfgxcbW2xm/KSsId3b+NnPtXfgy6zpN1gRLqWc=
+	t=1755873598; cv=none; b=XTXC0n3v3+Fo/Oxkq0z5IHyOq/h0fKiYBJzga9Ecvh2GCaOq73ACI6VxU41Y7fdHnBpftpdyi1lVjfVdpE+Fmkw/FAPWyYA2dVtBG9zzFa/b5TnSMihzCtIk3eBx9AWqduRR5q0xE05BWTRhkbLFRunjZJLkVRhrYBKdyIomekI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755872041; c=relaxed/simple;
-	bh=dTSfSKS2sFAxdn0w/Us+4+ZcP888ZT6no9D3FlKuJi0=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=lPVYb0M7xmoiBnyCHgVIbFpGMsaF7EtR9dIBwc9AA56f2VubMEY+rHOWpU/AnNT7NEelDuEFwcvq5i470ODKRYg/1El/ajjw2P+FPJwr/ru+cK9k4NrKP/L/+jfQRs8JqwSjADchnMsQqDLyLAKGl8Z1dvU/pxtYjdNVVR7qgkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=iChXCPKs; arc=none smtp.client-ip=192.30.252.209
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-7407999.ash1-iad.github.net [10.56.226.69])
-	by smtp.github.com (Postfix) with ESMTPA id 28D37600405
-	for <linux-bluetooth@vger.kernel.org>; Fri, 22 Aug 2025 07:13:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1755872039;
-	bh=AiSvjtbezzHQHIZIJMaX85bfiBM7F148odquw/41av0=;
-	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=iChXCPKsPzeEPxKcEEuOnRRvLS/cWTZbs4pssfBxTWlGUlvhGb+3R4JMarGSJ7zPK
-	 rDW6JWpsLDkUafLYa3aezAH3CQr04UCsj4P+9iAD4iE4LyfiO/gkXq4cH93kOHbB4U
-	 GPwKl2gFqAeaTUr0InGZ+nC2OqMZyg7RGbsUVzZk=
-Date: Fri, 22 Aug 2025 07:13:59 -0700
-From: BluezTestBot <noreply@github.com>
-To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/994029/2b5b44-000000@github.com>
-Subject: [bluez/bluez]
+	s=arc-20240116; t=1755873598; c=relaxed/simple;
+	bh=excmmn0rLz8jDLo6G5LPnwtgNJIKp38iA06yY5tt/ow=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=cW5jUiddVciVfg3NnKdlYIVdSpb++xWZTr8N9XdTkJx2nIrxasEMl1Z7qPJ8YZ7kQLpHcQsnSPl/Xe6xwOYuygP+/rxRSi4u5O9/ZGN/y6z/rP4Ig2PBka/dN142IunOE3Syf3eoJW0kGqwD7FkFXnpK4Nzd+4wRLoh6obJlbI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GT6Bm49j; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C51A4C4CEED;
+	Fri, 22 Aug 2025 14:39:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1755873597;
+	bh=excmmn0rLz8jDLo6G5LPnwtgNJIKp38iA06yY5tt/ow=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=GT6Bm49jh0UkAPm9GbxeW2EqxFGUhAg4Eb18z5SyqD8G4kcEnk5ErjAg2iOLKSVoT
+	 5gwAZy8rdjXcBozw49l0RaCY8hEhip2ArQ6Sox5bPt/n5yCtHol8dwI3qwd3dFS4R4
+	 Y6din6QooeQRvbrgm2fUqNeimb2BmL7mgTMgOWQXcRWyKyRwlehOsX8UbEBTsqnEWF
+	 c3agk86kO0oiBIaHvcq+iyTjxIt3pKYYsC/KS3nFgtTpVwUXsHAW+V5Qtuw68LOn0K
+	 pDFnP5NBpIQo+zrhM7qP+uVBYhKV9AgDDY3bEKrB/Lisa9xD8d+yu5Z7hx+gAxFhfU
+	 I7uytKwf0rcgA==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id EAFB4383BF6A;
+	Fri, 22 Aug 2025 14:40:07 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v2] Bluetooth: hci_sync: fix set_local_name race condition
+From: patchwork-bot+bluetooth@kernel.org
+Message-Id: 
+ <175587360675.1857936.2078613470430464551.git-patchwork-notify@kernel.org>
+Date: Fri, 22 Aug 2025 14:40:06 +0000
+References: <20250822092055.286475-1-pashpakovskii@salutedevices.com>
+In-Reply-To: <20250822092055.286475-1-pashpakovskii@salutedevices.com>
+To: Pavel Shpakovskiy <pashpakovskii@salutedevices.com>
+Cc: marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+ davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+ horms@kernel.org, brian.gix@intel.com, linux-bluetooth@vger.kernel.org,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+ kernel@salutedevices.com
 
-  Branch: refs/heads/994029
-  Home:   https://github.com/bluez/bluez
+Hello:
 
-To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
+This patch was applied to bluetooth/bluetooth-next.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+
+On Fri, 22 Aug 2025 12:20:55 +0300 you wrote:
+> Function set_name_sync() uses hdev->dev_name field to send
+> HCI_OP_WRITE_LOCAL_NAME command, but copying from data to hdev->dev_name
+> is called after mgmt cmd was queued, so it is possible that function
+> set_name_sync() will read old name value.
+> 
+> This change adds name as a parameter for function hci_update_name_sync()
+> to avoid race condition.
+> 
+> [...]
+
+Here is the summary with links:
+  - [v2] Bluetooth: hci_sync: fix set_local_name race condition
+    https://git.kernel.org/bluetooth/bluetooth-next/c/c49a788e88e4
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
 
