@@ -1,246 +1,121 @@
-Return-Path: <linux-bluetooth+bounces-14948-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-14951-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0D3DB34A5E
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 25 Aug 2025 20:32:24 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F141FB34A90
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 25 Aug 2025 20:43:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8FC27188EBD1
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 25 Aug 2025 18:32:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AA2253BE0DC
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 25 Aug 2025 18:43:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 997DF3019A0;
-	Mon, 25 Aug 2025 18:32:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43866307ACC;
+	Mon, 25 Aug 2025 18:43:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ITeOuApq"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="WvlW/Qlk"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-21.smtp.github.com (out-21.smtp.github.com [192.30.252.204])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C41A267B02
-	for <linux-bluetooth@vger.kernel.org>; Mon, 25 Aug 2025 18:32:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 654403595C
+	for <linux-bluetooth@vger.kernel.org>; Mon, 25 Aug 2025 18:43:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.204
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756146738; cv=none; b=bsbcK0qJng7TFTiJ5/hAIilomOORtb0HFLs1UXP8+GgObjkcgKCwO4X+aXaAOvcsZDHzxkIkJQd6oU2vwWUtZH52h7TGohCNz4GyISqaeq4SMWsW1K5ILVx9BsAJq9O1sg/MvCNzDOy4rULFwxlNHA7n8SsT4nTNVVjfQz2Au5o=
+	t=1756147415; cv=none; b=h4b0JfMuEMm/EN2dSkSkT0dXZMcZ2HGl/8Ih/IPuEW5J0ifNJt4fMCXyMomwTr8uurJ7SyNZRNUMYonh9gNxu1Zr+yjmM+7Wsf1kN+fypI5abgm12XwA3f+zPwomnh3S3VcPmd3FOysSIdv2jDginDkZ08IheKlJXzwqpL6sX5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756146738; c=relaxed/simple;
-	bh=1tg8l6+khk7nLfpBc8svcbaYdM78T0diWvudBuDD4Z0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gi3Vck64yBfsi6PwZ4jR1V/GanBgd4gYWgu8y/p3PTLCO8Nns0tJPPRUCrxYecm5VLlaDarRHIxe6hf1BdDwFParF1Eom+iWbh/gbgQCeGhMn428dw8LKrgKnzS7Dg/5bBrBTVVJP4PZDIFYWXtDf5N/b1k6+xDr9qUcYJwuc9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ITeOuApq; arc=none smtp.client-ip=209.85.208.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-3367f35d11aso6818771fa.0
-        for <linux-bluetooth@vger.kernel.org>; Mon, 25 Aug 2025 11:32:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756146734; x=1756751534; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yvdp4JqGysaLrKcj3oNCIDf7jqI3nCJz968KqZoTuW8=;
-        b=ITeOuApqmB2z0gdEeiUBVcHxFl7xC6snk3zVI6313kiavumceJx4VQNtho/AAWeL3B
-         a+XVxxIRWE3ZmH0gO9WpDAmO+zYpFXQZ5JVRTnB/6lbcU2FR/m3wnWLs8aL2VdhXuAmG
-         EPqdw84wQJEcqnju+obdkhsdSy8KtoHn+TZqNlIgI0y8Cxu3d1FuKdV0FPpUyKt5sI7A
-         zfDFeT5H2k3uoPryjSBoy78J0LjD2r4ND5vQr0vB5AMp4llK6Ady6GQt+9orjBrIW+5B
-         hMUPHmeseZnLslH5A3kXB64MxoT0AKQObSa4h+L/wWkJUCPCakpc3FYnyj50jqPi+y/x
-         n7qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756146734; x=1756751534;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yvdp4JqGysaLrKcj3oNCIDf7jqI3nCJz968KqZoTuW8=;
-        b=CFcZ8eR5tXsP+VW2reawE2f8Qn4I+VyCgitbv99vh2J1hfejeU2G3Ylb7NN3atW69f
-         aZcXHMK2dJ6jgCut7MirJWxOvfINAqrrRLOd2mf/vycSoAqLI3059ioB0qeJ2rMRrJ3c
-         yd0iWbHQTCC1QuPbmEnoG0d3rwzJP+dOwkl8EiFbyYTpgPUFuHi1+LMUpcc/c1lyOpPa
-         DtRqWrdueNVsrWn1EJRlpH7/RjOaqoaK5oZ6Ajkmv3ReshPOaMnqnLy3m8kKgz04cLLU
-         dVt74V3oms4eLFCbn46kXNSevhgbGNLUesoATh4Iz1StR4+yljW8h0/8LWgwCdRtEfwW
-         0HMA==
-X-Gm-Message-State: AOJu0Yy0DTGQvlLkkhq6wkc1lGuvoCYdCkkUcUYvWAIz97KdqtWSJOxm
-	TKOaY0OROBhfJN70un2ZKfqK0g4aiZPbeg51qWyppeYW5ZKSFPTFv0SZQm0W61vUStTX2tzUMMB
-	xrda1ziGQJJ6v2Zy3YcQNX8y5i5FdjEEZ+GXpex0=
-X-Gm-Gg: ASbGnctY0I5RAJHyFjPfAA/HBBnat9jG1kTDal9/dZxeQgFGzgivqfNPOu/1AgZ5n1g
-	V5g6WtqX/z8VCEhntJ+OioWShUvDYefb523kjpQ5MNHAfqV4tA341cBw/v1ckeT3q6h6hmolgdX
-	v/6WiuC5KEQlaBkhluHZQcydnddOsT65M6oFMaBzMWEq2kUNCw1j1YPakpee3m8gVmIayiG0v9j
-	PZ4RTrU0KAREVvoJZpm4cjVlMcdTAXZolHjJMuiUE2d+4aLxURV39V4
-X-Google-Smtp-Source: AGHT+IGMq9Tkr6cwUVUeTvCVRpFeXBOiGlYzOIAqiYbG1q6TYMcLImO7YtgfZWbztG+5GMU2nNJPMzYL2wXVZpB0XcA=
-X-Received: by 2002:a2e:be0d:0:b0:332:2c2a:63bf with SMTP id
- 38308e7fff4ca-33650feee6bmr36573951fa.20.1756146733736; Mon, 25 Aug 2025
- 11:32:13 -0700 (PDT)
+	s=arc-20240116; t=1756147415; c=relaxed/simple;
+	bh=A9ddoh1vjfMNcEJycUDG0mggK03z8XYT8TTnqq2JYiU=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=JWxCOIlPC6aelpBEEWSoPdfEQjLHn+f/NlY0kbN8078tT66/lD3R1VW+wiJRI5Wjl6Q8ue2B+G4MoQw9vHllAg9pYb4Fx+yn6hx3iRmZEMYauu2W5vHRrAsj/VoWd2sVE/fXqHV3nGDqO9DQYNt8zNHr23oAyszYatRpkDdhUn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=WvlW/Qlk; arc=none smtp.client-ip=192.30.252.204
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
+Received: from github.com (hubbernetes-node-1a4ae3d.ac4-iad.github.net [10.52.125.82])
+	by smtp.github.com (Postfix) with ESMTPA id 8B17F7009A1
+	for <linux-bluetooth@vger.kernel.org>; Mon, 25 Aug 2025 11:43:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+	s=pf2023; t=1756147413;
+	bh=TtjQjJgExoXXvgShJyH8Q2Jwl6aZqdY7aqEz/FuE4JM=;
+	h=Date:From:To:Subject:List-Unsubscribe:From;
+	b=WvlW/Qlk9A1c/77mWMTgh/n6iXZ2rVonbQ8VRIcxm3aNyL1iH51cbFaoiqtw6K8+C
+	 811BfbXffZHqUFB+p7YTd+rzMIDi9g3xwSxohhp1++f2guqnQ4GdXCUymh2FtaOzUU
+	 CbmVsnEZv+DtsE7Yr4z94Nz/OtvGR7qZK9AEHRaA=
+Date: Mon, 25 Aug 2025 11:43:33 -0700
+From: Arkadiusz Bokowy <noreply@github.com>
+To: linux-bluetooth@vger.kernel.org
+Message-ID: <bluez/bluez/push/refs/heads/995364/000000-95b108@github.com>
+Subject: [bluez/bluez] 12d7c4: lib: Add missing includes in bluetooth/hci.h
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <20250825172504.339117-1-arkadiusz.bokowy@gmail.com>
-In-Reply-To: <20250825172504.339117-1-arkadiusz.bokowy@gmail.com>
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Mon, 25 Aug 2025 14:32:01 -0400
-X-Gm-Features: Ac12FXyJOjWwz46rMVlS_m0WTFxXwdZbJrb085iMcLWABVLQSW4mtDbo3rfT1c8
-Message-ID: <CABBYNZKazQ0zROk1+gs5=U+zaZDwkMmD01MTYLuMZ3VUaoZZQg@mail.gmail.com>
-Subject: Re: [PATCH] Bluetooth: btusb: Fixup quirk for reading ext features on
- some Barrot controllers
-To: Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>
-Cc: linux-bluetooth@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
 
-Hi Arkadiusz,
+  Branch: refs/heads/995364
+  Home:   https://github.com/bluez/bluez
+  Commit: 12d7c41fa726fe800c84b92efe87901dbaefa04c
+      https://github.com/bluez/bluez/commit/12d7c41fa726fe800c84b92efe879=
+01dbaefa04c
+  Author: Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>
+  Date:   2025-08-25 (Mon, 25 Aug 2025)
 
-On Mon, Aug 25, 2025 at 1:25=E2=80=AFPM Arkadiusz Bokowy
-<arkadiusz.bokowy@gmail.com> wrote:
->
-> Apparently, some Barrot based USB Bluetooth dongles erroneously sent one
-> extra random byte for the HCI_OP_READ_LOCAL_EXT_FEATURES command. The
-> consequence of that is that the next HCI transfer is misaligned by one
-> byte causing undefined behavior. In most cases the response event for the
-> next command fails with random error code.
->
-> Since the HCI_OP_READ_LOCAL_EXT_FEATURES command is used during HCI
-> controller initialization, the initialization fails rendering the USB
-> dongle not usable.
->
-> > [59.464099] usb 1-1.3: new full-speed USB device number 11 using xhci_h=
-cd
-> > [59.561617] usb 1-1.3: New USB device found, idVendor=3D33fa, idProduct=
-=3D0012, bcdDevice=3D88.91
-> > [59.561642] usb 1-1.3: New USB device strings: Mfr=3D0, Product=3D2, Se=
-rialNumber=3D0
-> > [59.561656] usb 1-1.3: Product: UGREEN BT6.0 Adapter
-> > [61.720116] Bluetooth: hci1: command 0x1005 tx timeout
-> > [61.720167] Bluetooth: hci1: Opcode 0x1005 failed: -110
->
-> This patch was not tested with the 33fa:0010 device, however, Internet
-> search suggest that the cause for the issue with this particular device
-> is exactly the same, e.g.: https://github.com/bluez/bluez/issues/1326
+  Changed paths:
+    M lib/bluetooth/hci.h
 
-This issue above seem to be something different though, it looks like
-there is some fragmentation of the response but then in the meantime
-we send another command (HCI_OP_READ_BUFFER_SIZE 0x1005) and that
-times out, so the description and the code changes don't really seem
-to match.
+  Log Message:
+  -----------
+  lib: Add missing includes in bluetooth/hci.h
 
-> Signed-off-by: Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>
-> ---
->  drivers/bluetooth/btusb.c   | 30 ++++++++++++++++++++++++++++++
->  include/net/bluetooth/hci.h |  9 +++++++++
->  2 files changed, 39 insertions(+)
->
-> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-> index 8085fabad..b89efe482 100644
-> --- a/drivers/bluetooth/btusb.c
-> +++ b/drivers/bluetooth/btusb.c
-> @@ -66,6 +66,7 @@ static struct usb_driver btusb_driver;
->  #define BTUSB_INTEL_BROKEN_INITIAL_NCMD BIT(25)
->  #define BTUSB_INTEL_NO_WBS_SUPPORT     BIT(26)
->  #define BTUSB_ACTIONS_SEMI             BIT(27)
-> +#define BTUSB_BARROT                   BIT(28)
->
->  static const struct usb_device_id btusb_table[] =3D {
->         /* Generic Bluetooth USB device */
-> @@ -810,6 +811,10 @@ static const struct usb_device_id quirks_table[] =3D=
- {
->         { USB_DEVICE(0x0cb5, 0xc547), .driver_info =3D BTUSB_REALTEK |
->                                                      BTUSB_WIDEBAND_SPEEC=
-H },
->
-> +       /* Barrot Technology Bluetooth devices */
-> +       { USB_DEVICE(0x33fa, 0x0010), .driver_info =3D BTUSB_BARROT },
-> +       { USB_DEVICE(0x33fa, 0x0012), .driver_info =3D BTUSB_BARROT },
-> +
->         /* Actions Semiconductor ATS2851 based devices */
->         { USB_DEVICE(0x10d7, 0xb012), .driver_info =3D BTUSB_ACTIONS_SEMI=
- },
->
-> @@ -1120,6 +1125,21 @@ static void btusb_qca_reset(struct hci_dev *hdev)
->         btusb_reset(hdev);
->  }
->
-> +static int btusb_barrot_urb_quirk(struct btusb_data *data, struct sk_buf=
-f *skb)
-> +{
-> +       struct hci_dev *hdev =3D data->hdev;
-> +       struct hci_ev_cmd_complete *ev;
-> +
-> +       if (hci_test_quirk(hdev, HCI_QUIRK_FIXUP_LOCAL_EXT_FEATURES_URB_B=
-UFFER) &&
-> +           hci_event_hdr(skb)->evt =3D=3D HCI_EV_CMD_COMPLETE) {
-> +               ev =3D (struct hci_ev_cmd_complete *)(hci_event_hdr(skb) =
-+ 1);
-> +               if (__le16_to_cpu(ev->opcode) =3D=3D HCI_OP_READ_LOCAL_EX=
-T_FEATURES)
-> +                       return 1;
-> +       }
-> +
-> +       return 0;
-> +}
-> +
->  static inline void btusb_free_frags(struct btusb_data *data)
->  {
->         unsigned long flags;
-> @@ -1192,6 +1212,13 @@ static int btusb_recv_intr(struct btusb_data *data=
-, void *buffer, int count)
->                 }
->
->                 if (!hci_skb_expect(skb)) {
-> +                       /* Discard one extra byte sent by some Barrot USB
-> +                        * controllers. Otherwise, the rest of the transf=
-er
-> +                        * will be misaligned by one byte.
-> +                        */
-> +                       if (btusb_barrot_urb_quirk(data, skb) && count =
-=3D=3D 1)
-> +                               count =3D 0;
-> +
->                         /* Complete frame */
->                         btusb_recv_event(data, skb);
->                         skb =3D NULL;
-> @@ -4218,6 +4245,9 @@ static int btusb_probe(struct usb_interface *intf,
->                 hci_set_quirk(hdev, HCI_QUIRK_BROKEN_WRITE_AUTH_PAYLOAD_T=
-IMEOUT);
->         }
->
-> +       if (id->driver_info & BTUSB_BARROT)
-> +               hci_set_quirk(hdev, HCI_QUIRK_FIXUP_LOCAL_EXT_FEATURES_UR=
-B_BUFFER);
-> +
->         if (!reset)
->                 hci_set_quirk(hdev, HCI_QUIRK_RESET_ON_CLOSE);
->
-> diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-> index df1847b74..ec9b47a39 100644
-> --- a/include/net/bluetooth/hci.h
-> +++ b/include/net/bluetooth/hci.h
-> @@ -351,6 +351,15 @@ enum {
->          */
->         HCI_QUIRK_BROKEN_READ_ENC_KEY_SIZE,
->
-> +       /*
-> +        * When this quirk is set, the URB buffer with response event for=
- the
-> +        * HCI_OP_READ_LOCAL_EXT_FEATURES command needs to be trimmed by =
-one byte.
-> +        * This is required for some Barrot controllers which erroneously=
- transfer
-> +        * an extra random byte at the end of the buffer which misaligns =
-the rest
-> +        * of the HCI communication.
-> +        */
-> +       HCI_QUIRK_FIXUP_LOCAL_EXT_FEATURES_URB_BUFFER,
-> +
->         /*
->          * When this quirk is set, the reserved bits of Primary/Secondary=
-_PHY
->          * inside the LE Extended Advertising Report events are discarded=
-.
-> --
-> 2.47.2
->
->
+Compilation fails when using bluetooth/hci.h without other includes.
+
+> /usr/include/bluetooth/hci.h:310:9: error: unknown type name =E2=80=98u=
+int8_t=E2=80=99
+>   310 |         uint8_t         lap[3];
+>       |         ^~~~~~~
+> ...
+> /usr/include/bluetooth/hci.h:383:9: error: unknown type name =E2=80=98b=
+daddr_t=E2=80=99; did you mean =E2=80=98daddr_t=E2=80=99?
+>   383 |         bdaddr_t        bdaddr;
+>       |         ^~~~~~~~
+> ...
 
 
---=20
-Luiz Augusto von Dentz
+  Commit: 95b1086bb07bf75682e4e5f65dbd81700e7f4ccf
+      https://github.com/bluez/bluez/commit/95b1086bb07bf75682e4e5f65dbd8=
+1700e7f4ccf
+  Author: Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>
+  Date:   2025-08-25 (Mon, 25 Aug 2025)
+
+  Changed paths:
+    M lib/bluetooth/hci_lib.h
+
+  Log Message:
+  -----------
+  lib: Add missing includes in bluetooth/hci_lib.h
+
+Compilation fails when using bluetooth/hci_lib.h without other includes.
+
+> /usr/include/bluetooth/hci_lib.h:21:9: error: unknown type name =E2=80=98=
+uint16_t=E2=80=99
+>    21 |         uint16_t ogf;
+>       |         ^~~~~~~~
+> ...
+> /usr/include/bluetooth/hci_lib.h:182:27: error: =E2=80=98HCI_VENDOR_PKT=
+=E2=80=99 undeclared
+>   182 |         hci_set_bit((t =3D=3D HCI_VENDOR_PKT) ? 0 : (t & HCI_FL=
+T_TYPE_BITS), &f->type_mask);
+>       |                           ^~~~~~~~~~~~~~
+
+
+Compare: https://github.com/bluez/bluez/compare/12d7c41fa726%5E...95b1086=
+bb07b
+
+To unsubscribe from these emails, change your notification settings at ht=
+tps://github.com/bluez/bluez/settings/notifications
 
