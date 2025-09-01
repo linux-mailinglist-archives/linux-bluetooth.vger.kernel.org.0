@@ -1,120 +1,146 @@
-Return-Path: <linux-bluetooth+bounces-15122-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-15124-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0686B3D69C
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  1 Sep 2025 04:20:47 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A369CB3EB80
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  1 Sep 2025 17:53:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5C8D43B54CB
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  1 Sep 2025 02:20:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7AF3F166202
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  1 Sep 2025 15:49:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 953B61A9FB5;
-	Mon,  1 Sep 2025 02:20:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FCA426D4F8;
+	Mon,  1 Sep 2025 15:49:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=cs.stanford.edu header.i=@cs.stanford.edu header.b="ihoikpdX"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="bVKdy4Mb"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp1.cs.Stanford.EDU (smtp1.cs.stanford.edu [171.64.64.25])
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A164194124
-	for <linux-bluetooth@vger.kernel.org>; Mon,  1 Sep 2025 02:20:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=171.64.64.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A66D32F75E
+	for <linux-bluetooth@vger.kernel.org>; Mon,  1 Sep 2025 15:49:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756693243; cv=none; b=cuC3pyozbaMzKELrzPeydc+ML5r8rexQQw41brHHZfSIOofHiqf7sGH8s8uokE6MNCPJEHfGEw3RFN8tSR6CH7bbt6T/rYpKAOrgpUDEjZXBeprXMRwKmoCcy7gAcWixuc/DsCN2Cm22K/4bUCZTQpzQE4+gL87Ps/qazwGoFjs=
+	t=1756741765; cv=none; b=FJiq3ALQ4skSOoXRhy8xJwJ9vW5Kxv97fxrOKLWxES5ETvpSqQE0XFyMEHvv+sJ98KcQw1Fhg3l//42paVXw4r4xdFP97Z1Z+2uwto7APZQS7ljCTTQKaqSVAmq4ef7rZoDdSs5VeqbHWmwlaDuqYEBgCmLKzL5kJuR+HesxW+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756693243; c=relaxed/simple;
-	bh=JT8xpHm5akD0SVc+wble1gZNpbaz8K54nMXqsQ2BeDs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WOK6F3r92XqQaH/wCv5uTrFrwINWdWyNcBxhjiI3WB7uC2/juONV9iFcv+Qn+p174g3k1n0tkxLi+xO1ASej1pq/JMSd6/kJlIS3KAcnAP15EESEVodcZ3K6NbefV9Ozf/zALfwVCFqKj+P4hN6yknfBBBNwbdb01FKCX6N8Rek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cs.stanford.edu; spf=pass smtp.mailfrom=cs.stanford.edu; dkim=pass (2048-bit key) header.d=cs.stanford.edu header.i=@cs.stanford.edu header.b=ihoikpdX; arc=none smtp.client-ip=171.64.64.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cs.stanford.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cs.stanford.edu
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=cs.stanford.edu; s=cs2308; h=In-Reply-To:Content-Transfer-Encoding:
-	Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:
-	Sender:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=ucGLHetyfvHvORDISd/LhKKU2NT0oX5XnMJyBYchNJs=; t=1756693241; x=1757557241; 
-	b=ihoikpdX9gKP1ctStIORSGXvJCtlbIlr338I6AHZMZ44fngMcfuAHPqWwuc63f9bT8H0D3IgSvG
-	GTY0dr2cIvlheMZraWTPhgN/nFVwpDa3hQSQb7tMIKMSXtFALucfIw04z09p/Kgp6a7FAaRVSkQe2
-	5ghfNNqeK4FaEBUw1U0XNViMbIRLPtcRZUSZWrCgZ68UjbIVU2WwZqvorAgkGxpx9P2L9bcmCVooB
-	23k3x58McxrU33Dkzosz8kz8psR6yZV8MwrJKm+2xE0fFLxhRQMY4Hrwq0sW56lthmVFH254UtNo1
-	2q6+fh5qkKtmOBTHIWWds/T87AL+F+MdFCdg==;
-Received: from 135-180-5-199.fiber.dynamic.sonic.net ([135.180.5.199]:58629 helo=macbookair.lan)
-	by smtp1.cs.Stanford.EDU with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <jgnieto@cs.stanford.edu>)
-	id 1usu9t-0001Iv-Bg; Sun, 31 Aug 2025 19:20:37 -0700
-Date: Sun, 31 Aug 2025 19:20:14 -0700
-From: Javier Nieto <jgnieto@cs.stanford.edu>
-To: Paul Menzel <pmenzel@molgen.mpg.de>
-Cc: luiz.dentz@gmail.com, marcel@holtmann.org,
-	linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] Bluetooth: hci_h5: implement CRC data integrity
-Message-ID: <aLUC3u3ZrF35nIb6@macbookair.lan>
-References: <20250827043254.26611-1-jgnieto@cs.stanford.edu>
- <a261ed13-4c0b-43cf-b177-d33272626d25@molgen.mpg.de>
+	s=arc-20240116; t=1756741765; c=relaxed/simple;
+	bh=27JkvEVwybGLCURQdc8esFuoMQUaFGQYwHpIfw2UsqY=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=VHEqFmTVhwfw4dVPh/oY4Fwzbp9cSQCxDe5R2kMRfbE4siuCJJ8wt+oZXnAZ88PbHg0sf0ZHIQ9o/bEcHcZ7pj9pVUZVu6hu6bR3snWmhDYPenVoJPyx0cH9VSIq7qRqOSWrzr3wykaeNVRzIwpZVDFdpC1eoKpf5dHagq8PYjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=bVKdy4Mb; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1756741761;
+	bh=27JkvEVwybGLCURQdc8esFuoMQUaFGQYwHpIfw2UsqY=;
+	h=From:To:Subject:Date:From;
+	b=bVKdy4MbytEg4upKek0ESOkLHTUDxAEAOzLWx8zYttHPkdeZ+X/TmN2S7ncF0f7TR
+	 2DgQrfiktO9jlX6vN7VR9ElA3lU/vTLFW6jbjGvZopWfqGwSgxxMh0eubOepyAqVaJ
+	 B1OiO6MSNrmXVSpn+0yT4dtIO2pJf+urwDIA+Org9KWQYQ8VeHiIHWOO7zEHpRxHM4
+	 WB78J51UgBxLg5BaGJa+7MWo/GlLcI1POnFhDKPnpzBvuM08WqKyQp5ChLzFgy+V9b
+	 62lMIAeqcYpwKkI6N62vlphldmdfvnUlV5FWOAM3L4sp+u11AagJZLW9pOF6kDu/q+
+	 W+m0Km2nXoPmQ==
+Received: from fdanis-ThinkPad-X1.. (2a02-8428-af44-1001-5631-59f6-fA6F-7AAD.rev.sfr.net [IPv6:2a02:8428:af44:1001:5631:59f6:fa6f:7aad])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: fdanis)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 10C2117E0483
+	for <linux-bluetooth@vger.kernel.org>; Mon,  1 Sep 2025 17:49:21 +0200 (CEST)
+From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
+To: linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ 1/3] unit/test-hfp: Re-order TS tests in alphabetical order
+Date: Mon,  1 Sep 2025 17:49:01 +0200
+Message-ID: <20250901154903.187038-1-frederic.danis@collabora.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <a261ed13-4c0b-43cf-b177-d33272626d25@molgen.mpg.de>
-X-Spam-Score: 0.8
-X-Scan-Signature: f69c4e6b4bf914f22ae37cd490358bf0
 
-Dear Paul,
+This will simplify when looking for a test.
+---
+ unit/test-hfp.c | 42 +++++++++++++++++++++---------------------
+ 1 file changed, 21 insertions(+), 21 deletions(-)
 
-Thanks for the review!
+diff --git a/unit/test-hfp.c b/unit/test-hfp.c
+index 9be1b05ae..0a6828b7c 100644
+--- a/unit/test-hfp.c
++++ b/unit/test-hfp.c
+@@ -771,15 +771,7 @@ static void hf_update_indicator(enum hfp_indicator indicator, uint32_t val,
+ 		return;
+ 	}
+ 
+-	if (g_str_equal(test_name, "/HFP/HF/TRS/BV-01-C")) {
+-		context->session.step++;
+-		g_assert_cmpint(indicator, ==, HFP_INDICATOR_SERVICE);
+-		g_assert_cmpint(val, ==, context->session.step % 2);
+-
+-		if (context->session.step == 3)
+-			context->data->response_func(HFP_RESULT_OK, 0,
+-								context);
+-	} else if (g_str_equal(test_name, "/HFP/HF/PSI/BV-01-C")) {
++	if (g_str_equal(test_name, "/HFP/HF/PSI/BV-01-C")) {
+ 		g_assert_cmpint(indicator, ==, HFP_INDICATOR_SIGNAL);
+ 		g_assert_cmpint(val, ==, 3);
+ 		context->data->response_func(HFP_RESULT_OK, 0, context);
+@@ -795,6 +787,14 @@ static void hf_update_indicator(enum hfp_indicator indicator, uint32_t val,
+ 		g_assert_cmpint(indicator, ==, HFP_INDICATOR_BATTCHG);
+ 		g_assert_cmpint(val, ==, 3);
+ 		context->data->response_func(HFP_RESULT_OK, 0, context);
++	} else if (g_str_equal(test_name, "/HFP/HF/TRS/BV-01-C")) {
++		context->session.step++;
++		g_assert_cmpint(indicator, ==, HFP_INDICATOR_SERVICE);
++		g_assert_cmpint(val, ==, context->session.step % 2);
++
++		if (context->session.step == 3)
++			context->data->response_func(HFP_RESULT_OK, 0,
++								context);
+ 	}
+ }
+ 
+@@ -1008,18 +1008,6 @@ int main(int argc, char *argv[])
+ 			MINIMAL_SLC_SESSION,
+ 			data_end());
+ 
+-	/* Transfer Registration Status - HF */
+-	define_hf_test("/HFP/HF/TRS/BV-01-C", test_hf_session,
+-			NULL, test_hf_session_done,
+-			MINIMAL_SLC_SESSION,
+-			frg_pdu('\r', '\n', '+', 'C', 'I', 'E', 'V', ':'),
+-			frg_pdu(' ', '1', ',', '1', '\r', '\n'),
+-			frg_pdu('\r', '\n', '+', 'C', 'I', 'E', 'V', ':'),
+-			frg_pdu(' ', '1', ',', '0', '\r', '\n'),
+-			frg_pdu('\r', '\n', '+', 'C', 'I', 'E', 'V', ':'),
+-			frg_pdu(' ', '1', ',', '1', '\r', '\n'),
+-			data_end());
+-
+ 	/* Transfer Signal Strength Indication - HF */
+ 	define_hf_test("/HFP/HF/PSI/BV-01-C", test_hf_session,
+ 			NULL, test_hf_session_done,
+@@ -1046,5 +1034,17 @@ int main(int argc, char *argv[])
+ 			frg_pdu(' ', '7', ',', '3', '\r', '\n'),
+ 			data_end());
+ 
++	/* Transfer Registration Status - HF */
++	define_hf_test("/HFP/HF/TRS/BV-01-C", test_hf_session,
++			NULL, test_hf_session_done,
++			MINIMAL_SLC_SESSION,
++			frg_pdu('\r', '\n', '+', 'C', 'I', 'E', 'V', ':'),
++			frg_pdu(' ', '1', ',', '1', '\r', '\n'),
++			frg_pdu('\r', '\n', '+', 'C', 'I', 'E', 'V', ':'),
++			frg_pdu(' ', '1', ',', '0', '\r', '\n'),
++			frg_pdu('\r', '\n', '+', 'C', 'I', 'E', 'V', ':'),
++			frg_pdu(' ', '1', ',', '1', '\r', '\n'),
++			data_end());
++
+ 	return tester_run();
+ }
+-- 
+2.43.0
 
-On Wed, Aug 27, 2025 at 12:56:50PM +0200, Paul Menzel wrote:
-
-> Any btmon trace?
-
-The presence of CRC is limited to the H5 layer, so it is not visible on
-btmon. However, I did advertise and connect to a few devices while
-running btmon and everything worked and looked as normal. I also ensured
-that CRC was being used by adding temporary debugging prints.
-
-> I´d add the above to the proper commit message.
-
-Should I resubmit the patch as v2?
-
-> >   static u8 h5_cfg_field(struct h5 *h5)
-> >   {
-> > -	/* Sliding window size (first 3 bits) */
-> > -	return h5->tx_win & 0x07;
-> > +	/* Sliding window size (first 3 bits) and CRC request (fifth bit). */
-> > +	return (h5->tx_win & 0x07) | 0x10;
-> 
-> Could a macro be defined for the CRC request bit?
-
-I thought about this, but decided against it since 0x10 is only used
-here and in one other place. Also, the existing code does not define a
-macro for the window size bits 0x07. I am not opposed to adding it if
-someone feels strongly about it though.
-
-> The diff looks good. Feel free to carry:
-> 
-> Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-> 
-> 
-> Kind regards,
-> 
-> Paul
-
-I see that my patch fails a few test cases because it fails to link
-crc-ccitt. Do you know whether this is a problem with my patch or the
-test environment and where the code for the tests is found?
-
-Thanks again for your feedback.
-
-Javier
 
