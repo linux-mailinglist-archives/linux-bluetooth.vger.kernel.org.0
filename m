@@ -1,156 +1,150 @@
-Return-Path: <linux-bluetooth+bounces-15235-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-15237-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6D03B52EA5
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Sep 2025 12:36:51 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B641DB52ECE
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Sep 2025 12:43:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 344673B9DAF
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Sep 2025 10:35:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 749C3168B4A
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Sep 2025 10:43:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93AA6320CC5;
-	Thu, 11 Sep 2025 10:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 196FC3101D4;
+	Thu, 11 Sep 2025 10:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="GLKzP3K3"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="erJNcdJA"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from out-20.smtp.github.com (out-20.smtp.github.com [192.30.252.203])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C6C320CD6
-	for <linux-bluetooth@vger.kernel.org>; Thu, 11 Sep 2025 10:30:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC553101AD
+	for <linux-bluetooth@vger.kernel.org>; Thu, 11 Sep 2025 10:42:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.203
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757586646; cv=none; b=UUUaCKtfe4WEh/UrJzmHxSpFavr/RkZl0chK7NVvtEdopUw0Qk377v6cXA3aLAdGc/MWYJGEU3PqV0YIJz/sEUMANGVdU5OM6lHz4RaiJFBsf7BsWsVklUcEHU95H+vMhrReeu9GZUNhlSJNYaFkOSW5KM3Ye7uAKtSjTPdpZuE=
+	t=1757587374; cv=none; b=tvUujIgqQyh4o8jHaJ51AcuxZdE4Qf4VyGv+F4HfQnY99uLCZjKitx5A6g+hOvEuBbaPOYiIl8wJydLWJzSW17IOwHw/EOynpeN4LhqHzutIokRHANMAc7So8dISWcVz9hhfzPkuHUMttZVsQ1yxdZnn87hQG5jHLE24PZ8ObAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757586646; c=relaxed/simple;
-	bh=vDZExDsYvd85jrARvydvhIWPHpWJS3wS6H6cytQw5Cw=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BlFCmrOQyolibOyITKDQpkju4scSvZF7NA4nRvFwYUx9zZxKjLNxEDCpdyIcLroUMGh8RiedHaSuJ3szzsjPnvjgqi3ze6V6C3BvXmh1YrtCkruQ3q+NNrnkyEO7ABRMoQAJ9rTcPta6aS32oEGt4DWxBU8sANao/0B+bMvTNbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=GLKzP3K3; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1757586643;
-	bh=vDZExDsYvd85jrARvydvhIWPHpWJS3wS6H6cytQw5Cw=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=GLKzP3K30dyVDJRy6CsHHZK7Ojo8yeExu+acGaEiT7Ou5MJT090wbhGgxSWSvH42P
-	 RuAXYbDF8I29+JfPCHZKSwVw2DmnebpkTgKYwIqm6FIT/ckAlET6U8S1TSSJDCxqtD
-	 cCqUM7bxRS1MFcSfravGFTeNOjVMrsAAMJC7aV/ukRVQ2hx+WBWhQnC0oNK4b7MfPz
-	 0z+nQC9wjY1pUaoLABFxKw7oVLA18GKVYFn/FIanMkSdGkcgvCPl4x6P8W7B8Mwmwh
-	 4rui1VTv2zQENYUztTBt2+Pfd2sp4xdqg3ZkqlBcAbHISWsKs8hUVM1h3H5YAjwn04
-	 lmWXmYEsuN2fQ==
-Received: from fdanis-ThinkPad-X1.. (2a02-8428-af44-1001-E0e2-6802-CeeF-9413.rev.sfr.net [IPv6:2a02:8428:af44:1001:e0e2:6802:ceef:9413])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: fdanis)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id F026A17E090D
-	for <linux-bluetooth@vger.kernel.org>; Thu, 11 Sep 2025 12:30:42 +0200 (CEST)
-From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
+	s=arc-20240116; t=1757587374; c=relaxed/simple;
+	bh=G8i5itB5n+rNsyurbAu8GhdhbevR0oAWEYRNzA/D9B0=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=NC5jnNmfwEPxhw3+5fgIF8h+T5yKDgqbqeLd6cdAOPLvd+t2kxqjxZPKwatIWcwFOvjq8Rupwr/qizt/anG7WkuiDumtGS+nb6/Vo80w4jsqBtsn2Kdacza0inKcgHf+d/L9/Egll0f5JhPIbtEgf9a5X7ytorWa7x23EWEe1os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=erJNcdJA; arc=none smtp.client-ip=192.30.252.203
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
+Received: from github.com (hubbernetes-node-31b3d7a.va3-iad.github.net [10.48.178.39])
+	by smtp.github.com (Postfix) with ESMTPA id 0384A8C06E5
+	for <linux-bluetooth@vger.kernel.org>; Thu, 11 Sep 2025 03:42:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+	s=pf2023; t=1757587372;
+	bh=7BbyYTpJQzVSemj11D3Emh1NEaAFbW4ogfsnQmwytbM=;
+	h=Date:From:To:Subject:List-Unsubscribe:From;
+	b=erJNcdJAq9uWYzXarzZApz06lazevBf/VO/x86b8cFKCW1xBGndMqsxxWS3GdDRs9
+	 VwNc4TNRSCuerIgXEJaQXwGeUJQesvFkoVOpEhPUmxC4LPWqS1CNaEce3ji/xzyjae
+	 w8CiCYZxDoNKY/JxS23/nQnTDdhZ0yrEa31//9Q0=
+Date: Thu, 11 Sep 2025 03:42:52 -0700
+From: fdanis-oss <noreply@github.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 4/4] unit/test-hfp: Add Call Line Identification test for HF
-Date: Thu, 11 Sep 2025 12:28:40 +0200
-Message-ID: <20250911102840.2090361-4-frederic.danis@collabora.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250911102840.2090361-1-frederic.danis@collabora.com>
-References: <20250911102840.2090361-1-frederic.danis@collabora.com>
+Message-ID: <bluez/bluez/push/refs/heads/1001291/000000-6b4247@github.com>
+Subject: [bluez/bluez] b79d2c: shared/hfp: Add Operator name support
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
+
+  Branch: refs/heads/1001291
+  Home:   https://github.com/bluez/bluez
+  Commit: b79d2cb9de144e30c87ce89af547e5f787b2cc03
+      https://github.com/bluez/bluez/commit/b79d2cb9de144e30c87ce89af547e=
+5f787b2cc03
+  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
+  Date:   2025-09-11 (Thu, 11 Sep 2025)
+
+  Changed paths:
+    M src/shared/hfp.c
+    M src/shared/hfp.h
+
+  Log Message:
+  -----------
+  shared/hfp: Add Operator name support
+
+Send AT+COPS=3D3,0 at the end of the SLC creation to set the format of
+the operator selection to long alphanumeric, then query the currently
+selected operator name from the AG.
+
+Register +COPS handler to call the update_operator callback on event.
+
+
+  Commit: 89e0dd83a8b141ef7229a0e825a0b0a8bc93168f
+      https://github.com/bluez/bluez/commit/89e0dd83a8b141ef7229a0e825a0b=
+0a8bc93168f
+  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
+  Date:   2025-09-11 (Thu, 11 Sep 2025)
+
+  Changed paths:
+    M unit/test-hfp.c
+
+  Log Message:
+  -----------
+  unit/test-hfp: Add Operator name test for HF
+
+This add the following test:
+- HFP/HF/PSI/BV-04-C
+  Verify that the HF can query the currently selected operator name.
+
+Improve MINIMAL_SLC_SESSION macro to be able to set the service, call,
+callsetup and callheld indicators at connection time.
+
+
+  Commit: 8c0d2fc8cb841a8943ee6127b77dbd48f4c282fb
+      https://github.com/bluez/bluez/commit/8c0d2fc8cb841a8943ee6127b77db=
+d48f4c282fb
+  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
+  Date:   2025-09-11 (Thu, 11 Sep 2025)
+
+  Changed paths:
+    M src/shared/hfp.c
+    M src/shared/hfp.h
+
+  Log Message:
+  -----------
+  shared/hfp: Add Call Line Identification support
+
+Send AT+CLIP=3D1 at the end of the SLC creation to enable CLIP event.
+Register +CLIP handler to call the update_call_line_id callback on event.=
+
+
+During incoming call notifications, i.e. after +CIEV:<callsetup>,1
+event which creates a new call object, the reception of +CLIP event
+will update the line_id and type of the call object.
+
+
+  Commit: 6b424722aa82bf6b389dd6c675e94e19c8d86519
+      https://github.com/bluez/bluez/commit/6b424722aa82bf6b389dd6c675e94=
+e19c8d86519
+  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
+  Date:   2025-09-11 (Thu, 11 Sep 2025)
+
+  Changed paths:
+    M unit/test-hfp.c
+
+  Log Message:
+  -----------
+  unit/test-hfp: Add Call Line Identification test for HF
 
 This add the following test:
 - HFP/HF/CLI/BV-01-C
   Verify that the HF receives the caller ID.
----
- unit/test-hfp.c | 49 ++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 48 insertions(+), 1 deletion(-)
 
-diff --git a/unit/test-hfp.c b/unit/test-hfp.c
-index 8ab6c7bf5..060230196 100644
---- a/unit/test-hfp.c
-+++ b/unit/test-hfp.c
-@@ -730,7 +730,8 @@ static void test_hf_robustness(gconstpointer data)
- 	raw_pdu('\r', '\n', '+', 'C', 'O', 'P', 'S', ':', ' '), \
- 	frg_pdu('0', ',', '0', ',', '\"', 'T', 'E', 'S', 'T'), \
- 	frg_pdu('\"', '\r', '\n'), \
--	frg_pdu('\r', '\n', 'O', 'K', '\r', '\n')
-+	frg_pdu('\r', '\n', 'O', 'K', '\r', '\n'), \
-+	raw_pdu('\r', '\n', 'O', 'K', '\r', '\n')
- 
- static void hf_session_ready_cb(enum hfp_result res, enum hfp_error cme_err,
- 							void *user_data)
-@@ -812,10 +813,44 @@ static void hf_update_operator(const char *operator_name, void *user_data)
- 		g_assert_cmpstr(operator_name, ==, "TEST");
- }
- 
-+static void hf_call_added(uint id, enum hfp_call_status status,
-+							void *user_data)
-+{
-+	struct context *context = user_data;
-+	const char *test_name = context->data->test_name;
-+
-+	if (tester_use_debug())
-+		tester_debug("call %d added: status %u", id, status);
-+
-+	if (g_str_equal(test_name, "/HFP/HF/CLI/BV-01-C")) {
-+		g_assert_cmpint(id, ==, 1);
-+		g_assert_cmpint(status, ==, CALL_STATUS_INCOMING);
-+	}
-+}
-+
-+static void hf_call_line_id_updated(uint id, const char *number,
-+							unsigned int type,
-+							void *user_data)
-+{
-+	struct context *context = user_data;
-+	const char *str;
-+
-+	if (tester_use_debug())
-+		tester_debug("call %d line id updated: %s, %u", id, number,
-+									type);
-+	g_assert_cmpint(id, ==, 1);
-+	g_assert_cmpstr(number, ==, "1234567");
-+	g_assert_cmpint(type, ==, 129);
-+	str = hfp_hf_call_get_number(context->hfp_hf, id);
-+	g_assert_cmpstr(number, ==, str);
-+}
-+
- static struct hfp_hf_callbacks hf_session_callbacks = {
- 	.session_ready = hf_session_ready_cb,
- 	.update_indicator = hf_update_indicator,
- 	.update_operator = hf_update_operator,
-+	.call_added = hf_call_added,
-+	.call_line_id_updated = hf_call_line_id_updated,
- };
- 
- static void test_hf_session_done(enum hfp_result res, enum hfp_error cme_err,
-@@ -1023,6 +1058,18 @@ int main(int argc, char *argv[])
- 			MINIMAL_SLC_SESSION('0', '0', '0', '0'),
- 			data_end());
- 
-+	/* Calling Line Identification - HF */
-+	define_hf_test("/HFP/HF/CLI/BV-01-C", test_hf_session,
-+			NULL, test_hf_session_done,
-+			MINIMAL_SLC_SESSION('1', '0', '0', '0'),
-+			frg_pdu('\r', '\n', '+', 'C', 'I', 'E', 'V', ':', ' ',
-+				'3', ',', '1', '\r', '\n'),
-+			frg_pdu('\r', '\n', 'R', 'I', 'N', 'G', '\r', '\n'),
-+			frg_pdu('\r', '\n', '+', 'C', 'L', 'I', 'P', ':',
-+				'\"', '1', '2', '3', '4', '5', '6', '7', '\"',
-+				',', '1', '2', '9', ',', ',', '\r', '\n'),
-+			data_end());
-+
- 	/* Transfer Signal Strength Indication - HF */
- 	define_hf_test("/HFP/HF/PSI/BV-01-C", test_hf_session,
- 			NULL, test_hf_session_done,
--- 
-2.43.0
 
+Compare: https://github.com/bluez/bluez/compare/b79d2cb9de14%5E...6b42472=
+2aa82
+
+To unsubscribe from these emails, change your notification settings at ht=
+tps://github.com/bluez/bluez/settings/notifications
 
