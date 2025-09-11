@@ -1,482 +1,208 @@
-Return-Path: <linux-bluetooth+bounces-15246-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-15248-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8049B53606
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Sep 2025 16:44:20 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0143CB53714
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Sep 2025 17:13:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DBAE51B226B5
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Sep 2025 14:44:03 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5C2787AD67E
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Sep 2025 15:11:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B708342C88;
-	Thu, 11 Sep 2025 14:43:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31C8434A33D;
+	Thu, 11 Sep 2025 15:13:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BpOfmz3T"
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=ariel.dalessandro@collabora.com header.b="Tp0xnrD2"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916491FDA82
-	for <linux-bluetooth@vger.kernel.org>; Thu, 11 Sep 2025 14:43:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757601802; cv=none; b=U3zbm1uYnbZL1H4TgIgs1CQr2k3byoueseKFS1BdnKyLX5cU80rCJjR1cwnR26a2aTltOkyGITVKPEaPfi7ac8N6sfaPuDgi3MASBVElvDgRRlRkHm9xSAS8jF2tbs9hmZGEPLo3P1Nokc2v3R9tFNQx3lULfDgabIM7o/i6/SE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757601802; c=relaxed/simple;
-	bh=/+BVBW1o6uXOjGb866ReT4fHE4vwimbw8dcL8NjWBg0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hBzebpJKc9S9XTATQTxecy1US/5RUWw+IVmpUhPsLhrxQQmHIv8ik1cc8Vtx8YB7RuokA3QgV0pNuQnUFbXGmw+42MWIgjKyKEZfQ+nccfRZkDBCoUpfErONdGte0tgfVT1ZJlqgLZQ8agrTrI4a78IX4DbgSCMnytXmH2DPnP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BpOfmz3T; arc=none smtp.client-ip=209.85.208.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-33808d9e10bso6909071fa.0
-        for <linux-bluetooth@vger.kernel.org>; Thu, 11 Sep 2025 07:43:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757601799; x=1758206599; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YUTFwX95G05mGBHJ2lezf4cfA0gobUSCHRF05pyVcio=;
-        b=BpOfmz3TDWa3o7XgKmHVZftEtUgwg9vtw7F4Kx1MAvT/fNpLCaWKkhWi2GHcOtGZxV
-         mXBuyJJelbgi1CYTTlFpDmRlzbIjZYfyGGpiAs6kOKH1OVMspULTc43ekcbfzZbnWaTT
-         Hc1yxBxtBW/aRAukHF5gDsmRL0Qgxn2gh0+709BWrApNNUCQj4xM66dEqX7UfkLvROJ3
-         Zvew7Gezg6LfUWZwphPr3q2ISnGzDx90zvdLc39IIkcPWsawGdz096nPGtA/+f6nuVlt
-         90n+pGoirwiTgHdv3CsRZCw5q/aBsMES4fFYye7j2gAKPsqJOj0rC7VWregxALLF3pgh
-         GS0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757601799; x=1758206599;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YUTFwX95G05mGBHJ2lezf4cfA0gobUSCHRF05pyVcio=;
-        b=pI9Nq7f6aZSKGqXwGrGVejTs9kxD4v40TgN0yxmN0f92lnGA0w6tFWAavJdmOiuvsO
-         f9p1RrMvuW772ao4Gj0/BZ8L5NguzK6RfQ+fXtbnjvHBN8mJU0YuPx0JJcgLPz4pVgN0
-         2VRs9SvpNOkVYGGRJEmX//Y3qs7JP5vu3lU3gWrBcRCeQtNLx50gGOPZwzEm64dZgnWn
-         2o0d+bmghKwqKtyNknxjjklOedFr5UHO6K9npHRRtl4qIpjej4mcAp1LoVUTGD4zkjEM
-         KabJU7X76Z5PIZsWyJOqScKdeEcX7PJi9R4uONjF54li8zWPl3YbtzEHdPqcJSyOusC4
-         MZLw==
-X-Gm-Message-State: AOJu0YwchKVpMBk5LBHvJzj8O2zcJpcpfDvVn7EViozK8Lde/Yazmwxg
-	DrFOGB2Jr+hQaqnIqqzCBJEKnsSIgCF41FnRMaWwea8Z+IRmYs5ctTPqQJvOwMWbNFxFQNmB+40
-	CXZ9E8zHTOcB+sd9N3vEnfike8YgKGRM=
-X-Gm-Gg: ASbGncvKqS0FUjHW/7hIwa+5DwmIhV78dNlE3ng847lQKNAylI11CQflsvXsr1e7EtF
-	kp3LHetFupe3iW/WfXa9tg80rXjZlq+8nW0NzBeGV89/Y4aCHLKe8H9sQZZjti9z82/Xt6qcgQ7
-	g5hYATxQ8+Qir2Fy5NagrNZ3ft0d5Qbwfa1rZs8C1LA/KDpLuMdGMUwkKT04IHLYh5z3p7uAZwH
-	5pE1ajIiaA9wAE2TJjMOilWwap9STUDuUak7MDbQTkagOgtuBQLXW/9
-X-Google-Smtp-Source: AGHT+IFXv0TpYoweDyT/ddNCSYLa0UUcQ6/K44V8+143/n3f47z7KUVAK/SSRfwDt8H+lF//MKhtDi4yFTfhmPgoOCE=
-X-Received: by 2002:a2e:b8c7:0:b0:346:684a:e210 with SMTP id
- 38308e7fff4ca-34e32af46ddmr10963001fa.10.1757601798133; Thu, 11 Sep 2025
- 07:43:18 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C2FE15746E;
+	Thu, 11 Sep 2025 15:13:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757603592; cv=pass; b=hqh3e5WQh6x+lCeKEymzLyrYR7a/ZOA0qo+fAC3o4o5fNLB+Us9J4SNMez5hCeCRXGBLqhvxNNWf09f20m/+HyZWoJbPVwdajZ9HWFvbCqLlQ8TTqL2aEXegK92ib0FIT33rTKX83PRnRmRpnnkfp49V8erk/ba4uJzLXQh+mbQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757603592; c=relaxed/simple;
+	bh=dPiSK05fxe+FuQby1ebrZdrIQ9EXZx7N4NljlqZ2c2U=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=oS/k0DkoOhvLPDWRDqvH16uRVp73hvXAOWgqluoZnVklb3eubfX6TLMph/fhEAZHzjuA2FpTBWtBKsNkE4Q3bPFMR0q9ftrpNziLsANUkHKGKmX5UNl/bmFHviMg+Aymuu+cPa2EB4qb9i9hoAz1jA4QSR1FUccObPrGnlog45g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=ariel.dalessandro@collabora.com header.b=Tp0xnrD2; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+ARC-Seal: i=1; a=rsa-sha256; t=1757603532; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=B9IGFw7LplNPOkZEq5rg//uOHf2EjeiJHVJse7seMUTzZIMxYd1TVrOZN0zUbq5Xq33L+9q9+TqFilkErBnjfaa/NpughWfaUjECxVa+0PaEb+YDKAdGNrY++tuNVVIv/wj8tJU+KqRR3v9zzmvdP6gOS405s9ICJ1bawZoNf0E=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1757603532; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=4E1gkCV3bUB24+jEbYd5O83SC/ksIpy9YseSb1Bd3iA=; 
+	b=OYspCStGN7dInL2eQAJ59H16VwPLP5z4wWe5Nr6htKYI4pPJuPUYGIV4faEbAdxSfzVEwkFgj+ZF3SmcHreJc8qUT/uzUAHUdyXtnkWOokhqUalCV4rW9dIvNsZfNzhRjZLbbMNHmz9gEQaCCxIvVLYhrFc0Y2lAOG7iIOnvWyc=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=ariel.dalessandro@collabora.com;
+	dmarc=pass header.from=<ariel.dalessandro@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1757603532;
+	s=zohomail; d=collabora.com; i=ariel.dalessandro@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=4E1gkCV3bUB24+jEbYd5O83SC/ksIpy9YseSb1Bd3iA=;
+	b=Tp0xnrD2zRi58CffU5G3TaTiLbJcAER4BZDZ/9WPboVLvTu6uzg9VYi/ZTt2X5qw
+	PMD8pJ8vo2CnYFCkcKqSC4Ganw2/UNoxh4q3T1CUWsieDlvzRf8LKJqusv5Qlx+IBze
+	ExFMJOuw5cTRX/uVEXriSe7jqmq8yEDKe+84VPaw=
+Received: by mx.zohomail.com with SMTPS id 1757603530466436.8737694403886;
+	Thu, 11 Sep 2025 08:12:10 -0700 (PDT)
+From: Ariel D'Alessandro <ariel.dalessandro@collabora.com>
+To: airlied@gmail.com,
+	amergnat@baylibre.com,
+	andrew+netdev@lunn.ch,
+	andrew-ct.chen@mediatek.com,
+	angelogioacchino.delregno@collabora.com,
+	ariel.dalessandro@collabora.com,
+	broonie@kernel.org,
+	chunkuang.hu@kernel.org,
+	conor+dt@kernel.org,
+	davem@davemloft.net,
+	dmitry.torokhov@gmail.com,
+	edumazet@google.com,
+	flora.fu@mediatek.com,
+	heiko@sntech.de,
+	houlong.wei@mediatek.com,
+	jeesw@melfas.com,
+	kernel@collabora.com,
+	krzk+dt@kernel.org,
+	kuba@kernel.org,
+	lgirdwood@gmail.com,
+	linus.walleij@linaro.org,
+	louisalexis.eyraud@collabora.com,
+	luiz.dentz@gmail.com,
+	maarten.lankhorst@linux.intel.com,
+	marcel@holtmann.org,
+	matthias.bgg@gmail.com,
+	mchehab@kernel.org,
+	minghsiu.tsai@mediatek.com,
+	mripard@kernel.org,
+	p.zabel@pengutronix.de,
+	pabeni@redhat.com,
+	robh@kernel.org,
+	sean.wang@kernel.org,
+	simona@ffwll.ch,
+	support.opensource@diasemi.com,
+	tiffany.lin@mediatek.com,
+	tzimmermann@suse.de,
+	yunfei.dong@mediatek.com
+Cc: devicetree@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-bluetooth@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
+	linux-input@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-media@vger.kernel.org,
+	linux-mediatek@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	linux-sound@vger.kernel.org,
+	netdev@vger.kernel.org
+Subject: [PATCH v2 00/12] MediaTek dt-bindings sanitization (MT8173)
+Date: Thu, 11 Sep 2025 12:09:49 -0300
+Message-ID: <20250911151001.108744-1-ariel.dalessandro@collabora.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250911135301.1538126-1-pwaago@cisco.com>
-In-Reply-To: <20250911135301.1538126-1-pwaago@cisco.com>
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Thu, 11 Sep 2025 10:43:05 -0400
-X-Gm-Features: Ac12FXxSVTTMJGMbOGHLYzjKSmxTBkM9MtIK2lKJlgH0AhdhAAtbC7stW4XPRHY
-Message-ID: <CABBYNZLBJ_Q6S+OGam-Q92Agbe0HK5dX4WxFrFpnntcDhu1gow@mail.gmail.com>
-Subject: Re: [PATCH BlueZ] audio: Add support for specific error codes for
- A2DP configuration
-To: =?UTF-8?Q?Per_Waag=C3=B8?= <pwaago@cisco.com>, Pauli Virtanen <pav@iki.fi>
-Cc: linux-bluetooth@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
 
-Hi Per,
+This patch series continues the effort to address Device Tree validation
+warnings for MediaTek platforms, with a focus on MT8173. It follows the
+initial cleanup series by Angelo [0].
 
-On Thu, Sep 11, 2025 at 9:56=E2=80=AFAM Per Waag=C3=B8 <pwaago@cisco.com> w=
-rote:
->
-> The A2DP specification defines error codes that shall be used if
-> the codec capabilities contain improper settings. This change allows
-> clients to trigger the sending of these specific error codes by
-> returning the corresponding error messages from
-> MediaEndpoint1.SetConfiguration.
->
-> This update is fully backwards compatible: clients passing other error
-> messages will continue to receive the default error code as before. On
-> older BlueZ versions, these new errors will also result in the default
-> error code, enabling clients to implement support for the new errors
-> without breaking compatibility.
+Similarly to the ongoing MT8183 work done by Julien Massot, this patchset
+eliminates several of the remaining warnings by improving or converting DT
+bindings to YAML, adding missing properties, and updating device tree files
+accordingly.
 
-While I can see the value for debugging I doubt we could do any
-handling of these errors, so the result would be the same regardless
-of what error is sent back it is not recoverable.
+[0] https://www.spinics.net/lists/kernel/msg5780177.html
 
-@Pauli Virtanen Perhaps you can give some feedback regarding these
-codes, would pipewire be interested in generating specific error
-codes? Some of them seems to be SBC specific like bitpool.
+Changes in v2:
+* Wrapped commit messages to 75 columns line wrap.
+* Replaced "YAML" by "DT schema" in patches subject and content.
+* mt8173-mdp: Fixed properties: compatible, clocks, iommus and
+  mediatek,vpu.
+* mt8173-vpu: Fixed line wrap. Dropped memory-region property description.
+* mediatek,mmsys: Dropped patch as it's not a binding issue.
+* mediatek,od: Rewrote commit log with details on DT schema users missing
+  the related property. Rewrote mediatek,gce-client-reg property.
+* mediatek,ufoe: Rewrote commit log with details on DT schema users missing
+  the related property. Rewrote mediatek,gce-client-reg property.
+* marvell,sd8897-bt: Moved to net/bluetooth/. Added missing ref to
+  bluetooth-controller.yaml. Dropped example. Updated reference in another
+  file. Minor fixes in properties.
+* mediatek,mt8173-rt5650: Dropped unnecessary quotes and unused label.
+* dlg,da9211: Dropped enable-gpios description. Rewrote generic example
+  node names. Minor fixes in properties.
+* melfas,mip4_ts: Dropped unnecessary quotes. Added "active high" to
+  ce-gpios property description.
+* mediatek,jpeg: Dropped patch as it doesn't apply.
 
-> This change enables passing A2DP/SNK/AVP/* and A2DP/SRC/AVP/*
-> qualification tests.
-> ---
->  doc/org.bluez.MediaEndpoint.rst | 37 ++++++++++++++++
->  profiles/audio/a2dp.c           | 78 ++++++++++++++++++++++++++++++---
->  profiles/audio/a2dp.h           |  5 ++-
->  profiles/audio/avdtp.c          |  4 +-
->  profiles/audio/media.c          | 20 +++++----
->  src/error.h                     | 38 ++++++++++++++++
->  6 files changed, 165 insertions(+), 17 deletions(-)
->
-> diff --git a/doc/org.bluez.MediaEndpoint.rst b/doc/org.bluez.MediaEndpoin=
-t.rst
-> index 474cc1160..2721d473e 100644
-> --- a/doc/org.bluez.MediaEndpoint.rst
-> +++ b/doc/org.bluez.MediaEndpoint.rst
-> @@ -54,6 +54,43 @@ be configured and the properties must contain the foll=
-owing properties:
->
->         See **org.bluez.MediaTransport(5)** QoS property.
->
-> +       Possible errors:
-> +               :org.bluez.Error.A2DP.InvalidCodecType:
-> +               :org.bluez.Error.A2DP.NotSupportedCodecType:
-> +               :org.bluez.Error.A2DP.InvalidSamplingFrequency:
-> +               :org.bluez.Error.A2DP.NotSupportedSamplingFrequency:
-> +               :org.bluez.Error.A2DP.InvalidChannelMode:
-> +               :org.bluez.Error.A2DP.NotSupportedChannelMode:
-> +               :org.bluez.Error.A2DP.InvalidSubbands:
-> +               :org.bluez.Error.A2DP.NotSupportedSubbands:
-> +               :org.bluez.Error.A2DP.InvalidAllocationMethod:
-> +               :org.bluez.Error.A2DP.NotSupportedAllocationMethod:
-> +               :org.bluez.Error.A2DP.InvalidMinimumBitpoolValue:
-> +               :org.bluez.Error.A2DP.NotSupportedMinimumBitpoolValue:
-> +               :org.bluez.Error.A2DP.InvalidMaximumBitpoolValue:
-> +               :org.bluez.Error.A2DP.NotSupportedMaximumBitpoolValue:
-> +               :org.bluez.Error.A2DP.InvalidInvalidLayer:
-> +               :org.bluez.Error.A2DP.NotSupportedLayer:
-> +               :org.bluez.Error.A2DP.NotSupporterdCRC:
-> +               :org.bluez.Error.A2DP.NotSupporterdMPF:
-> +               :org.bluez.Error.A2DP.NotSupporterdVBR:
-> +               :org.bluez.Error.A2DP.InvalidBitRate:
-> +               :org.bluez.Error.A2DP.NotSupportedBitRate:
-> +               :org.bluez.Error.A2DP.InvalidObjectType:
-> +               :org.bluez.Error.A2DP.NotSupportedObjectType:
-> +               :org.bluez.Error.A2DP.InvalidChannels:
-> +               :org.bluez.Error.A2DP.NotSupportedChannels:
-> +               :org.bluez.Error.A2DP.InvalidVersion:
-> +               :org.bluez.Error.A2DP.NotSupportedVersion:
-> +               :org.bluez.Error.A2DP.NotSupportedMaximumSUL:
-> +               :org.bluez.Error.A2DP.InvalidBlockLength:
-> +               :org.bluez.Error.A2DP.InvalidCPType:
-> +               :org.bluez.Error.A2DP.InvalidCPFormat:
-> +               :org.bluez.Error.A2DP.InvalidCodecParameter:
-> +               :org.bluez.Error.A2DP.NotSupportedCodecParameter:
-> +               :org.bluez.Error.A2DP.InvalidDRC:
-> +               :org.bluez.Error.A2DP.NotSupportedDRC:
+Signed-off-by: Ariel D'Alessandro <ariel.dalessandro@collabora.com>
 
-Introducing a error domain for A2DP is probably a good idea, but this
-only applies to endpoints that are A2DP specific, so this need to be
-adjusted to e.g.: possible for A2DP or something like that, also I
-don't know how the client would be able to tell it can return these
-errors? Or the expectation is that the client can start sending them
-immediately since the old behavior will convert them to
-AVDTP_UNSUPPORTED_CONFIGURATION anyway?
+Ariel D'Alessandro (12):
+  dt-bindings: media: Convert MediaTek mt8173-mdp bindings to DT schema
+  dt-bindings: media: Convert MediaTek mt8173-vpu bindings to DT schema
+  dt-bindings: net: Convert Marvell 8897/8997 bindings to DT schema
+  dt-bindings: ASoC: Convert MediaTek RT5650 codecs bindings to DT
+    schema
+  dt-bindings: display: mediatek,od: Add mediatek,gce-client-reg
+    property
+  dt-bindings: display: mediatek,ufoe: Add mediatek,gce-client-reg
+    property
+  arm64: dts: mediatek: mt8173: Fix mt8173-pinctrl node names
+  dt-bindings: pinctrl: mt65xx: Allow gpio-line-names
+  dt-bindings: regulator: Convert Dialog DA9211 Regulators to DT schema
+  arm64: dts: mediatek: mt8173-elm: Drop unused bank supply
+  dt-bindings: soc: mediatek: pwrap: Add power-domains property
+  dt-bindings: input: Convert MELFAS MIP4 Touchscreen to DT schema
 
-While at it split the commit to have the documentation changes as a
-separate change.
+ .../display/mediatek/mediatek,od.yaml         |  14 ++
+ .../display/mediatek/mediatek,ufoe.yaml       |  15 ++
+ .../input/touchscreen/melfas,mip4_ts.yaml     |  56 +++++
+ .../input/touchscreen/melfas_mip4.txt         |  20 --
+ .../bindings/media/mediatek,mt8173-mdp.yaml   | 169 +++++++++++++++
+ .../bindings/media/mediatek,mt8173-vpu.yaml   |  74 +++++++
+ .../bindings/media/mediatek-mdp.txt           |  95 --------
+ .../bindings/media/mediatek-vpu.txt           |  31 ---
+ .../net/bluetooth/marvell,sd8897-bt.yaml      |  79 +++++++
+ .../devicetree/bindings/net/btusb.txt         |   2 +-
+ .../bindings/net/marvell-bt-8xxx.txt          |  83 -------
+ .../pinctrl/mediatek,mt65xx-pinctrl.yaml      |   2 +
+ .../devicetree/bindings/regulator/da9211.txt  | 205 ------------------
+ .../bindings/regulator/dlg,da9211.yaml        | 104 +++++++++
+ .../bindings/soc/mediatek/mediatek,pwrap.yaml |  15 ++
+ .../sound/mediatek,mt8173-rt5650.yaml         |  73 +++++++
+ .../bindings/sound/mt8173-rt5650.txt          |  31 ---
+ .../dts/rockchip/rk3288-veyron-fievel.dts     |   2 +-
+ .../boot/dts/rockchip/rk3288-veyron-jaq.dts   |   2 +-
+ .../boot/dts/mediatek/mt8173-elm-hana.dtsi    |   2 +-
+ arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi  |  33 ++-
+ arch/arm64/boot/dts/mediatek/mt8173-evb.dts   |  14 +-
+ arch/arm64/boot/dts/mediatek/mt8173.dtsi      |  14 +-
+ 23 files changed, 633 insertions(+), 502 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/input/touchscreen/melfas,mip4_ts.yaml
+ delete mode 100644 Documentation/devicetree/bindings/input/touchscreen/melfas_mip4.txt
+ create mode 100644 Documentation/devicetree/bindings/media/mediatek,mt8173-mdp.yaml
+ create mode 100644 Documentation/devicetree/bindings/media/mediatek,mt8173-vpu.yaml
+ delete mode 100644 Documentation/devicetree/bindings/media/mediatek-mdp.txt
+ delete mode 100644 Documentation/devicetree/bindings/media/mediatek-vpu.txt
+ create mode 100644 Documentation/devicetree/bindings/net/bluetooth/marvell,sd8897-bt.yaml
+ delete mode 100644 Documentation/devicetree/bindings/net/marvell-bt-8xxx.txt
+ delete mode 100644 Documentation/devicetree/bindings/regulator/da9211.txt
+ create mode 100644 Documentation/devicetree/bindings/regulator/dlg,da9211.yaml
+ create mode 100644 Documentation/devicetree/bindings/sound/mediatek,mt8173-rt5650.yaml
+ delete mode 100644 Documentation/devicetree/bindings/sound/mt8173-rt5650.txt
 
->  array{byte} SelectConfiguration(array{byte} capabilities)
->  `````````````````````````````````````````````````````````
->
-> diff --git a/profiles/audio/a2dp.c b/profiles/audio/a2dp.c
-> index c0a53eae9..661843a89 100644
-> --- a/profiles/audio/a2dp.c
-> +++ b/profiles/audio/a2dp.c
-> @@ -157,6 +157,73 @@ static GSList *servers =3D NULL;
->  static GSList *setups =3D NULL;
->  static unsigned int cb_id =3D 0;
->
-> +struct a2dp_error {
-> +       const char *error_name;
-> +       uint8_t error_code;
-> +};
-> +
-> +#define A2DP_ERROR_PREFIX ERROR_INTERFACE ".A2DP."
-> +
-> +static struct a2dp_error config_errors[] =3D {
-> +       {"InvalidCodecType", A2DP_INVALID_CODEC_TYPE},
-> +       {"NotSupportedCodecType", A2DP_NOT_SUPPORTED_CODEC_TYPE},
-> +       {"InvalidSamplingFrequency", A2DP_INVALID_SAMPLING_FREQUENCY},
-> +       {"NotSupportedSamplingFrequency",
-> +                               A2DP_NOT_SUPPORTED_SAMPLING_FREQUENCY},
-> +       {"InvalidChannelMode", A2DP_INVALID_CHANNEL_MODE},
-> +       {"NotSupportedChannelMode", A2DP_NOT_SUPPORTED_CHANNEL_MODE},
-> +       {"InvalidSubbands", A2DP_INVALID_SUBBANDS},
-> +       {"NotSupportedSubbands", A2DP_NOT_SUPPORTED_SUBBANDS},
-> +       {"InvalidAllocationMethod", A2DP_INVALID_ALLOCATION_METHOD},
-> +       {"NotSupportedAllocationMethod", A2DP_NOT_SUPPORTED_ALLOCATION_ME=
-THOD},
-> +       {"InvalidMinimumBitpoolValue",
-> +                               A2DP_INVALID_MINIMUM_BITPOOL_VALUE},
-> +       {"NotSupportedMinimumBitpoolValue",
-> +                               A2DP_NOT_SUPPORTED_MINIMUM_BITPOOL_VALUE}=
-,
-> +       {"InvalidMaximumBitpoolValue", A2DP_INVALID_MAXIMUM_BITPOOL_VALUE=
-},
-> +       {"NotSupportedMaximumBitpoolValue",
-> +                               A2DP_NOT_SUPPORTED_MAXIMUM_BITPOOL_VALUE}=
-,
-> +       {"InvalidInvalidLayer", A2DP_INVALID_INVALID_LAYER},
-> +       {"NotSupportedLayer", A2DP_NOT_SUPPORTED_LAYER},
-> +       {"NotSupporterdCRC", A2DP_NOT_SUPPORTERD_CRC},
-> +       {"NotSupporterdMPF", A2DP_NOT_SUPPORTERD_MPF},
-> +       {"NotSupporterdVBR", A2DP_NOT_SUPPORTERD_VBR},
-> +       {"InvalidBitRate", A2DP_INVALID_BIT_RATE},
-> +       {"NotSupportedBitRate", A2DP_NOT_SUPPORTED_BIT_RATE},
-> +       {"InvalidObjectType", A2DP_INVALID_OBJECT_TYPE},
-> +       {"NotSupportedObjectType", A2DP_NOT_SUPPORTED_OBJECT_TYPE},
-> +       {"InvalidChannels", A2DP_INVALID_CHANNELS},
-> +       {"NotSupportedChannels", A2DP_NOT_SUPPORTED_CHANNELS},
-> +       {"InvalidVersion", A2DP_INVALID_VERSION},
-> +       {"NotSupportedVersion", A2DP_NOT_SUPPORTED_VERSION},
-> +       {"NotSupportedMaximumSUL", A2DP_NOT_SUPPORTED_MAXIMUM_SUL},
-> +       {"InvalidBlockLength", A2DP_INVALID_BLOCK_LENGTH},
-> +       {"InvalidCPType", A2DP_INVALID_CP_TYPE},
-> +       {"InvalidCPFormat", A2DP_INVALID_CP_FORMAT},
-> +       {"InvalidCodecParameter", A2DP_INVALID_CODEC_PARAMETER},
-> +       {"NotSupportedCodecParameter", A2DP_NOT_SUPPORTED_CODEC_PARAMETER=
-},
-> +       {"InvalidDRC", A2DP_INVALID_DRC},
-> +       {"NotSupportedDRC", A2DP_NOT_SUPPORTED_DRC}
-> +};
-> +
-> +uint8_t a2dp_parse_config_error(const char *error_name)
-> +{
-> +       size_t prefix_length;
-> +       size_t i;
-> +
-> +       prefix_length =3D strlen(A2DP_ERROR_PREFIX);
-> +       if (strncmp(A2DP_ERROR_PREFIX, error_name, prefix_length))
-> +               return AVDTP_UNSUPPORTED_CONFIGURATION;
-> +
-> +       error_name +=3D prefix_length;
-> +       for (i =3D 0; i < ARRAY_SIZE(config_errors); i++) {
-> +               if (strcmp(config_errors[i].error_name, error_name) =3D=
-=3D 0)
-> +                       return config_errors[i].error_code;
-> +       }
-> +
-> +       return AVDTP_UNSUPPORTED_CONFIGURATION;
-> +}
-> +
->  static struct a2dp_setup *setup_ref(struct a2dp_setup *setup)
->  {
->         setup->ref++;
-> @@ -688,11 +755,10 @@ done:
->         return FALSE;
->  }
->
-> -static void endpoint_setconf_cb(struct a2dp_setup *setup, gboolean ret)
-> +static void endpoint_setconf_cb(struct a2dp_setup *setup, uint8_t error_=
-code)
->  {
-> -       if (ret =3D=3D FALSE)
-> -               setup_error_init(setup, AVDTP_MEDIA_CODEC,
-> -                                       AVDTP_UNSUPPORTED_CONFIGURATION);
-> +       if (error_code !=3D 0)
-> +               setup_error_init(setup, AVDTP_MEDIA_CODEC, error_code);
->
->         auto_config(setup);
->         setup_unref(setup);
-> @@ -865,11 +931,11 @@ static gboolean endpoint_getcap_ind(struct avdtp *s=
-ession,
->         return TRUE;
->  }
->
-> -static void endpoint_open_cb(struct a2dp_setup *setup, gboolean ret)
-> +static void endpoint_open_cb(struct a2dp_setup *setup, uint8_t error_cod=
-e)
->  {
->         int err =3D error_to_errno(setup->err);
->
-> -       if (ret =3D=3D FALSE) {
-> +       if (error_code !=3D 0) {
->                 setup->stream =3D NULL;
->                 finalize_setup_errno(setup, -EPERM, finalize_config, NULL=
-);
->                 goto done;
-> diff --git a/profiles/audio/a2dp.h b/profiles/audio/a2dp.h
-> index c698bc983..afa02c12d 100644
-> --- a/profiles/audio/a2dp.h
-> +++ b/profiles/audio/a2dp.h
-> @@ -15,7 +15,8 @@ struct a2dp_setup;
->
->  typedef void (*a2dp_endpoint_select_t) (struct a2dp_setup *setup, void *=
-ret,
->                                         int size);
-> -typedef void (*a2dp_endpoint_config_t) (struct a2dp_setup *setup, gboole=
-an ret);
-> +typedef void (*a2dp_endpoint_config_t) (struct a2dp_setup *setup,
-> +                                       uint8_t error_code);
->
->  struct a2dp_endpoint {
->         const char *(*get_name) (struct a2dp_sep *sep, void *user_data);
-> @@ -70,6 +71,8 @@ unsigned int a2dp_select_capabilities(struct avdtp *ses=
-sion,
->  unsigned int a2dp_config(struct avdtp *session, struct a2dp_sep *sep,
->                                 a2dp_config_cb_t cb, GSList *caps,
->                                 void *user_data);
-> +uint8_t a2dp_parse_config_error(const char *error_name);
-> +
->  unsigned int a2dp_resume(struct avdtp *session, struct a2dp_sep *sep,
->                                 a2dp_stream_cb_t cb, void *user_data);
->  unsigned int a2dp_suspend(struct avdtp *session, struct a2dp_sep *sep,
-> diff --git a/profiles/audio/avdtp.c b/profiles/audio/avdtp.c
-> index 30648251f..ed4e22b26 100644
-> --- a/profiles/audio/avdtp.c
-> +++ b/profiles/audio/avdtp.c
-> @@ -1494,8 +1494,8 @@ static void setconf_cb(struct avdtp *session, struc=
-t avdtp_stream *stream,
->         struct conf_rej rej;
->
->         if (err !=3D NULL) {
-> -               rej.error =3D AVDTP_UNSUPPORTED_CONFIGURATION;
-> -               rej.category =3D err->err.error_code;
-> +               rej.error =3D err->err.error_code;
-> +               rej.category =3D AVDTP_UNSUPPORTED_CONFIGURATION;
->                 avdtp_send(session, session->in_cmd.transaction,
->                            AVDTP_MSG_TYPE_REJECT, AVDTP_SET_CONFIGURATION=
-,
->                            &rej, sizeof(rej));
-> diff --git a/profiles/audio/media.c b/profiles/audio/media.c
-> index 9b3042c18..332f643bb 100644
-> --- a/profiles/audio/media.c
-> +++ b/profiles/audio/media.c
-> @@ -333,7 +333,7 @@ static void endpoint_reply(DBusPendingCall *call, voi=
-d *user_data)
->         DBusMessage *reply;
->         DBusMessageIter args, props;
->         DBusError err;
-> -       gboolean value;
-> +       uint8_t error_code;
->         void *ret =3D NULL;
->         int size =3D -1;
->
-> @@ -356,8 +356,12 @@ static void endpoint_reply(DBusPendingCall *call, vo=
-id *user_data)
->
->                 if (dbus_message_is_method_call(request->msg,
->                                         MEDIA_ENDPOINT_INTERFACE,
-> -                                       "SetConfiguration"))
-> +                                       "SetConfiguration")) {
->                         endpoint_remove_transport(endpoint, request->tran=
-sport);
-> +                       error_code =3D a2dp_parse_config_error(err.name);
-> +                       ret =3D &error_code;
-> +                       size =3D 1;
-> +               }
->
->                 dbus_error_free(&err);
->                 goto done;
-> @@ -390,8 +394,8 @@ static void endpoint_reply(DBusPendingCall *call, voi=
-d *user_data)
->         }
->
->         size =3D 1;
-> -       value =3D TRUE;
-> -       ret =3D &value;
-> +       error_code =3D 0;
-> +       ret =3D &error_code;
->
->  done:
->         dbus_message_unref(reply);
-> @@ -634,9 +638,9 @@ static void config_cb(struct media_endpoint *endpoint=
-, void *ret, int size,
->                                                         void *user_data)
->  {
->         struct a2dp_config_data *data =3D user_data;
-> -       gboolean *ret_value =3D ret;
-> +       uint8_t *ret_value =3D ret;
->
-> -       data->cb(data->setup, ret_value ? *ret_value : FALSE);
-> +       data->cb(data->setup, ret_value ? *ret_value : 1);
->  }
->
->  static int set_config(struct a2dp_sep *sep, uint8_t *configuration,
-> @@ -1098,7 +1102,7 @@ static void pac_config_cb(struct media_endpoint *en=
-dpoint, void *ret, int size,
->                                                         void *user_data)
->  {
->         struct pac_config_data *data =3D user_data;
-> -       gboolean *ret_value =3D ret;
-> +       uint8_t *error_code =3D ret;
->         struct media_transport *transport;
->
->         /* If transport was cleared, configuration was cancelled */
-> @@ -1106,7 +1110,7 @@ static void pac_config_cb(struct media_endpoint *en=
-dpoint, void *ret, int size,
->         if (!transport)
->                 return;
->
-> -       data->cb(data->stream, ret_value ? 0 : -EINVAL);
-> +       data->cb(data->stream, error_code =3D=3D 0 ? 0 : -EINVAL);
->  }
->
->  static struct media_transport *pac_ucast_config(struct bt_bap_stream *st=
-ream,
-> diff --git a/src/error.h b/src/error.h
-> index 47602d39b..8157795c2 100644
-> --- a/src/error.h
-> +++ b/src/error.h
-> @@ -88,3 +88,41 @@ DBusMessage *btd_error_profile_unavailable(DBusMessage=
- *msg);
->  DBusMessage *btd_error_failed(DBusMessage *msg, const char *str);
->  DBusMessage *btd_error_bredr_errno(DBusMessage *msg, int err);
->  DBusMessage *btd_error_le_errno(DBusMessage *msg, int err);
-> +
-> +enum a2dp_error_codes : uint8_t {
-> +       A2DP_INVALID_CODEC_TYPE =3D 0xc1,
-> +       A2DP_NOT_SUPPORTED_CODEC_TYPE =3D 0xc2,
-> +       A2DP_INVALID_SAMPLING_FREQUENCY =3D 0xc3,
-> +       A2DP_NOT_SUPPORTED_SAMPLING_FREQUENCY =3D 0xc4,
-> +       A2DP_INVALID_CHANNEL_MODE =3D 0xc5,
-> +       A2DP_NOT_SUPPORTED_CHANNEL_MODE =3D 0xc6,
-> +       A2DP_INVALID_SUBBANDS =3D 0xc7,
-> +       A2DP_NOT_SUPPORTED_SUBBANDS =3D 0xc8,
-> +       A2DP_INVALID_ALLOCATION_METHOD =3D 0xc9,
-> +       A2DP_NOT_SUPPORTED_ALLOCATION_METHOD =3D 0xca,
-> +       A2DP_INVALID_MINIMUM_BITPOOL_VALUE =3D 0xcb,
-> +       A2DP_NOT_SUPPORTED_MINIMUM_BITPOOL_VALUE =3D 0xcc,
-> +       A2DP_INVALID_MAXIMUM_BITPOOL_VALUE =3D 0xcd,
-> +       A2DP_NOT_SUPPORTED_MAXIMUM_BITPOOL_VALUE =3D 0xce,
-> +       A2DP_INVALID_INVALID_LAYER =3D 0xcf,
-> +       A2DP_NOT_SUPPORTED_LAYER =3D 0xd0,
-> +       A2DP_NOT_SUPPORTERD_CRC =3D 0xd1,
-> +       A2DP_NOT_SUPPORTERD_MPF =3D 0xd2,
-> +       A2DP_NOT_SUPPORTERD_VBR =3D 0xd3,
-> +       A2DP_INVALID_BIT_RATE =3D 0xd4,
-> +       A2DP_NOT_SUPPORTED_BIT_RATE =3D 0xd5,
-> +       A2DP_INVALID_OBJECT_TYPE =3D 0xd6,
-> +       A2DP_NOT_SUPPORTED_OBJECT_TYPE =3D 0xd7,
-> +       A2DP_INVALID_CHANNELS =3D 0xd8,
-> +       A2DP_NOT_SUPPORTED_CHANNELS =3D 0xd9,
-> +       A2DP_INVALID_VERSION =3D 0xda,
-> +       A2DP_NOT_SUPPORTED_VERSION =3D 0xdb,
-> +       A2DP_NOT_SUPPORTED_MAXIMUM_SUL =3D 0xdc,
-> +       A2DP_INVALID_BLOCK_LENGTH =3D 0xdd,
-> +       A2DP_INVALID_CP_TYPE =3D 0xe0,
-> +       A2DP_INVALID_CP_FORMAT =3D 0xe1,
-> +       A2DP_INVALID_CODEC_PARAMETER =3D 0xe2,
-> +       A2DP_NOT_SUPPORTED_CODEC_PARAMETER =3D 0xe3,
-> +       A2DP_INVALID_DRC =3D 0xe4,
-> +       A2DP_NOT_SUPPORTED_DRC =3D 0xe5,
-> +};
+-- 
+2.50.1
 
-Hmm, I guess there should be part of a2dp.h since this error header is
-about D-Bus not A2DP codes.
-
-> --
-> 2.43.0
->
->
-
-
---=20
-Luiz Augusto von Dentz
 
