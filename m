@@ -1,58 +1,58 @@
-Return-Path: <linux-bluetooth+bounces-15412-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-15410-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29631B8865F
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 19 Sep 2025 10:24:32 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 73A5CB88659
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 19 Sep 2025 10:24:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D8DB5527F67
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 19 Sep 2025 08:24:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3C96B1C83FD4
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 19 Sep 2025 08:24:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7AAED2FF64B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F0662FF167;
 	Fri, 19 Sep 2025 08:24:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="A26p32Zo"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="pyY/cKKQ"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C7E2ECD2B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C042ECD15
 	for <linux-bluetooth@vger.kernel.org>; Fri, 19 Sep 2025 08:24:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758270252; cv=none; b=AEHc8oFCYuPewQx2YaEqF1wZzyOvCl9xl41Ne3nm8Vk6gl2oLohtCLBOLfi3p4Fjy1DbxPXSpPBVzvQlPbogR0n6EbC0p0reR84WwtJ/78LoVyN1XJAy/iDxLG75LPLZ7c+K39zdgwSDeDAWU7VnaYD3RFRZXJSV54KyKAcEa/Y=
+	t=1758270252; cv=none; b=TIUu5gCJqI74RYGri4V5jrhIQbCRat9sfMnn+vLM85vuce6HW0gOCllrVRpCMz+a99Zog4hgU6qxIaw5vdqLp1r2XyjsEmknV+xYat6TDhs17i74FMh1lDqc9wG+pKN713/z70LR10r1Cp3Ntj37ZrvXRmEKBxzo/ygGZn6LvZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1758270252; c=relaxed/simple;
-	bh=dIJSr7wPkygpuV2ZSUbFKZdt4yUlX1byEZP0cMO+DDY=;
+	bh=XLcnXAfjObqeuIAUA2+60qsGQEZ8StQJJqa9cy/hqAo=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=luaIOolP8kQ7feOQsAxIPk03C/Oq2Lu64l4ai2QEQQPZvcKD7Jpn/6d8e41jvv+VzJe+br+Y961fMcERZnUWe/NO82i8cMTjNLbObtrtyquUzfzKxlyPv0jYbS3RfoWr91WkpCP4Y81gtW3yh8h+UVl1JtsaA6wDCEFJxBXaE5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=A26p32Zo; arc=none smtp.client-ip=148.251.105.195
+	 MIME-Version:Content-Type; b=JFgQBUmEE28xhXN5y2kTg9CkNtZSZustM+D9qbE5XmtcWwnGiPAPoWtTq+v84HH+sexQp3LbzZBBltVgPcxRp3J37V1cskaQF52YOPtRPPL64+aWOZFWUXAtXDsPE09l6VJSprrnGiiirmT2Ux9smE8nEAfmk2EDQNMxyGOFCqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=pyY/cKKQ; arc=none smtp.client-ip=148.251.105.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1758270248;
-	bh=dIJSr7wPkygpuV2ZSUbFKZdt4yUlX1byEZP0cMO+DDY=;
+	s=mail; t=1758270249;
+	bh=XLcnXAfjObqeuIAUA2+60qsGQEZ8StQJJqa9cy/hqAo=;
 	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=A26p32Zo4ILbM4JXYybyUzDIXLIdo6djNGyBD2ozhpIRj1RL3l3RXNvme5oBR95JR
-	 1+e6T9WBLwZM0x8aTrx0s4/GbiOKZDtFqRiIL1/vaerI96K31onHXaMIi4jKUwTOx1
-	 KsIsL7MppwhfveCgVz0Ksxq1QTt+3WPRpycTzX5ISbhxaDudvHO4GK3Gjnh4P/xDjQ
-	 PrRuwZEZSt5AqEWD6qOs82t0AApTOzRTnKN9SHjvhGsJDM1MxNc9o+rDEjuIo0pA9J
-	 uRad2gjsb1ACfTgggA7E6tZypBH2ENCxKW02Ug6sQwOWuIJP7+t5lyP23WoJ5D3IpP
-	 bscQZJXEb0yZw==
+	b=pyY/cKKQBS1VNXcVR2Tf4EdlKbiqZ6HKQzUbEjhV8rc/2O9OaNCoDhH0yYH6cmVtb
+	 t6YsTVie5y8SDghyewOQf9Uo/52ARh6G/bZ+5tYmCSyS9IRs5u2bZbmDsI/tcA6Ahe
+	 igDOz+eSyA/av7F9Khy4H29anx85kK92WmBy8ZZS+LlzI8Xg847AN3j99tDVR7bZHf
+	 StmJTyRcpn7JfH6WFerc44PbannJ7+zXmOTnsQSlLzz8rx3G5TE9naetRUtEYWnfJ2
+	 wfqsycFeCrMpoCxPYIjwlxY49PkaMlrui7FBro6cUERUPvUhKw/vEB3VStlI/WqU21
+	 xjqrvbLH9SMbw==
 Received: from fdanis-ThinkPad-X1.. (unknown [IPv6:2a02:8428:af44:1001:17f0:5da3:acf8:a3c1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: fdanis)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id A5B4617E05BE
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id EEE5817E12BB
 	for <linux-bluetooth@vger.kernel.org>; Fri, 19 Sep 2025 10:24:08 +0200 (CEST)
 From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 2/5] unit/test-hfp: Add Answer Incoming Call tests for HF
-Date: Fri, 19 Sep 2025 10:23:31 +0200
-Message-ID: <20250919082334.1443310-2-frederic.danis@collabora.com>
+Subject: [PATCH BlueZ 3/5] shared/hfp: Add Call hangup support
+Date: Fri, 19 Sep 2025 10:23:32 +0200
+Message-ID: <20250919082334.1443310-3-frederic.danis@collabora.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250919082334.1443310-1-frederic.danis@collabora.com>
 References: <20250919082334.1443310-1-frederic.danis@collabora.com>
@@ -65,152 +65,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-This add the following tests:
-- HFP/HF/ICA/BV-04-C
-  Verify the incoming call is answered from HF, no in-band ring.
-- HFP/HF/ICA/BV-06-C
-  Verify the incoming call is answered from AG, no in-band ring.
 ---
- unit/test-hfp.c | 91 ++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 90 insertions(+), 1 deletion(-)
+ src/shared/hfp.c | 25 +++++++++++++++++++++++++
+ src/shared/hfp.h |  3 +++
+ 2 files changed, 28 insertions(+)
 
-diff --git a/unit/test-hfp.c b/unit/test-hfp.c
-index 060230196..adbcfd2fc 100644
---- a/unit/test-hfp.c
-+++ b/unit/test-hfp.c
-@@ -733,6 +733,12 @@ static void test_hf_robustness(gconstpointer data)
- 	frg_pdu('\r', '\n', 'O', 'K', '\r', '\n'), \
- 	raw_pdu('\r', '\n', 'O', 'K', '\r', '\n')
+diff --git a/src/shared/hfp.c b/src/shared/hfp.c
+index 7e35f239a..133bff248 100644
+--- a/src/shared/hfp.c
++++ b/src/shared/hfp.c
+@@ -2446,3 +2446,28 @@ bool hfp_hf_call_answer(struct hfp_hf *hfp, uint id,
  
-+static void hf_cmd_complete(enum hfp_result res, enum hfp_error cme_err,
-+							void *user_data)
-+{
-+	g_assert_cmpint(res, ==, HFP_RESULT_OK);
-+}
-+
- static void hf_session_ready_cb(enum hfp_result res, enum hfp_error cme_err,
- 							void *user_data)
- {
-@@ -822,7 +828,9 @@ static void hf_call_added(uint id, enum hfp_call_status status,
- 	if (tester_use_debug())
- 		tester_debug("call %d added: status %u", id, status);
- 
--	if (g_str_equal(test_name, "/HFP/HF/CLI/BV-01-C")) {
-+	if (g_str_equal(test_name, "/HFP/HF/CLI/BV-01-C") ||
-+		g_str_equal(test_name, "/HFP/HF/ICA/BV-04-C") ||
-+		g_str_equal(test_name, "/HFP/HF/ICA/BV-06-C")) {
- 		g_assert_cmpint(id, ==, 1);
- 		g_assert_cmpint(status, ==, CALL_STATUS_INCOMING);
- 	}
-@@ -833,6 +841,7 @@ static void hf_call_line_id_updated(uint id, const char *number,
- 							void *user_data)
- {
- 	struct context *context = user_data;
-+	const char *test_name = context->data->test_name;
- 	const char *str;
- 
- 	if (tester_use_debug())
-@@ -843,6 +852,43 @@ static void hf_call_line_id_updated(uint id, const char *number,
- 	g_assert_cmpint(type, ==, 129);
- 	str = hfp_hf_call_get_number(context->hfp_hf, id);
- 	g_assert_cmpstr(number, ==, str);
-+
-+	if (g_str_equal(test_name, "/HFP/HF/ICA/BV-04-C")) {
-+		bool ret;
-+
-+		if (tester_use_debug())
-+			tester_debug("call %d: answering call", id);
-+		ret = hfp_hf_call_answer(context->hfp_hf, id, hf_cmd_complete,
-+								context);
-+		g_assert(ret);
-+	}
-+}
-+
-+static void hf_call_removed(uint id, void *user_data)
-+{
-+	if (tester_use_debug())
-+		tester_debug("call %d removed", id);
-+	g_assert_cmpint(id, ==, 1);
-+}
-+
-+static void hf_call_status_updated(uint id, enum hfp_call_status status,
-+							void *user_data)
-+{
-+	struct context *context = user_data;
-+	const char *test_name = context->data->test_name;
-+
-+	if (tester_use_debug())
-+		tester_debug("call %d updated: status %u", id, status);
-+
-+	if (g_str_equal(test_name, "/HFP/HF/ICA/BV-04-C") ||
-+		g_str_equal(test_name, "/HFP/HF/ICA/BV-06-C")) {
-+		const char *number;
-+
-+		g_assert_cmpint(id, ==, 1);
-+		g_assert_cmpint(status, ==, CALL_STATUS_ACTIVE);
-+		number = hfp_hf_call_get_number(context->hfp_hf, id);
-+		g_assert_cmpstr(number, ==, "1234567");
-+	}
+ 	return hfp_hf_send_command(hfp, resp_cb, user_data, "ATA");
  }
- 
- static struct hfp_hf_callbacks hf_session_callbacks = {
-@@ -850,6 +896,8 @@ static struct hfp_hf_callbacks hf_session_callbacks = {
- 	.update_indicator = hf_update_indicator,
- 	.update_operator = hf_update_operator,
- 	.call_added = hf_call_added,
-+	.call_removed = hf_call_removed,
-+	.call_status_updated = hf_call_status_updated,
- 	.call_line_id_updated = hf_call_line_id_updated,
- };
- 
-@@ -1070,6 +1118,47 @@ int main(int argc, char *argv[])
- 				',', '1', '2', '9', ',', ',', '\r', '\n'),
- 			data_end());
- 
-+	/* Answer Incoming call on HF, no in-band ring - HF */
-+	define_hf_test("/HFP/HF/ICA/BV-04-C", test_hf_session,
-+			NULL, test_hf_session_done,
-+			MINIMAL_SLC_SESSION('1', '0', '0', '0'),
-+			frg_pdu('\r', '\n', '+', 'C', 'I', 'E', 'V', ':', ' ',
-+				'3', ',', '1', '\r', '\n'),
-+			frg_pdu('\r', '\n', 'R', 'I', 'N', 'G', '\r', '\n'),
-+			frg_pdu('\r', '\n', '+', 'C', 'L', 'I', 'P', ':',
-+				'\"', '1', '2', '3', '4', '5', '6', '7', '\"',
-+				',', '1', '2', '9', ',', ',', '\r', '\n'),
-+			raw_pdu('\r', '\n', 'O', 'K', '\r', '\n'),
-+			frg_pdu('\r', '\n', '+', 'C', 'I', 'E', 'V', ':', ' ',
-+				'2', ',', '1', '\r', '\n'),
-+			frg_pdu('\r', '\n', '+', 'C', 'I', 'E', 'V', ':', ' ',
-+				'3', ',', '0', '\r', '\n'),
-+			frg_pdu('\r', '\n', '+', 'C', 'I', 'E', 'V', ':', ' ',
-+				'2', ',', '0', '\r', '\n'),
-+			data_end());
 +
-+	/* Answer Incoming call on AG, no in-band ring - HF */
-+	define_hf_test("/HFP/HF/ICA/BV-06-C", test_hf_session,
-+			NULL, test_hf_session_done,
-+			MINIMAL_SLC_SESSION('1', '0', '0', '0'),
-+			frg_pdu('\r', '\n', '+', 'C', 'I', 'E', 'V', ':', ' ',
-+				'3', ',', '1', '\r', '\n'),
-+			frg_pdu('\r', '\n', 'R', 'I', 'N', 'G', '\r', '\n'),
-+			frg_pdu('\r', '\n', '+', 'C', 'L', 'I', 'P', ':',
-+				'\"', '1', '2', '3', '4', '5', '6', '7', '\"',
-+				',', '1', '2', '9', ',', ',', '\r', '\n'),
-+			frg_pdu('\r', '\n', 'R', 'I', 'N', 'G', '\r', '\n'),
-+			frg_pdu('\r', '\n', '+', 'C', 'L', 'I', 'P', ':',
-+				'\"', '1', '2', '3', '4', '5', '6', '7', '\"',
-+				',', '1', '2', '9', ',', ',', '\r', '\n'),
-+			frg_pdu('\r', '\n', '+', 'C', 'I', 'E', 'V', ':', ' ',
-+				'2', ',', '1', '\r', '\n'),
-+			frg_pdu('\r', '\n', '+', 'C', 'I', 'E', 'V', ':', ' ',
-+				'3', ',', '0', '\r', '\n'),
-+			frg_pdu('\r', '\n', '+', 'C', 'I', 'E', 'V', ':', ' ',
-+				'2', ',', '0', '\r', '\n'),
-+			data_end());
++bool hfp_hf_call_hangup(struct hfp_hf *hfp, uint id,
++				hfp_response_func_t resp_cb,
++				void *user_data)
++{
++	struct hf_call *call;
 +
- 	/* Transfer Signal Strength Indication - HF */
- 	define_hf_test("/HFP/HF/PSI/BV-01-C", test_hf_session,
- 			NULL, test_hf_session_done,
++	DBG(hfp, "");
++
++	if (!hfp)
++		return false;
++
++	call = queue_find(hfp->calls, call_id_match, UINT_TO_PTR(id));
++	if (!call) {
++		DBG(hfp, "hf: no call with id: %u", id);
++		return false;
++	}
++
++	if (call_setup_match(call, NULL) || call_active_match(call, NULL)) {
++		return hfp_hf_send_command(hfp, resp_cb, user_data,
++								"AT+CHUP");
++	}
++
++	return false;
++}
+diff --git a/src/shared/hfp.h b/src/shared/hfp.h
+index c623e48e6..4b171ad88 100644
+--- a/src/shared/hfp.h
++++ b/src/shared/hfp.h
+@@ -240,3 +240,6 @@ const char *hfp_hf_call_get_number(struct hfp_hf *hfp, uint id);
+ bool hfp_hf_call_answer(struct hfp_hf *hfp, uint id,
+ 				hfp_response_func_t resp_cb,
+ 				void *user_data);
++bool hfp_hf_call_hangup(struct hfp_hf *hfp, uint id,
++				hfp_response_func_t resp_cb,
++				void *user_data);
 -- 
 2.43.0
 
