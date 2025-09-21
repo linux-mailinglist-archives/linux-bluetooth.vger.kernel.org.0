@@ -1,34 +1,34 @@
-Return-Path: <linux-bluetooth+bounces-15440-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-15441-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C937AB8E3B7
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 21 Sep 2025 21:15:05 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 60CCDB8E3BD
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 21 Sep 2025 21:15:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B1757189822B
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 21 Sep 2025 19:15:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 886FC18993A5
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 21 Sep 2025 19:15:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28D11258ED9;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCA0B268C42;
 	Sun, 21 Sep 2025 19:14:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="JoVFs1i/"
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="xka1+ab9"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F171F4289
-	for <linux-bluetooth@vger.kernel.org>; Sun, 21 Sep 2025 19:14:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C10C2367AD
+	for <linux-bluetooth@vger.kernel.org>; Sun, 21 Sep 2025 19:14:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758482095; cv=pass; b=iULr0omVgWO+vTLBl5CUR5sVYigeiGmdCsndAxkRQkiVq8BiZefxHi1ZMkU4l7u08eMSPUYTlLNxUAS67Cw1NGk/8syDtFZ4lGHpK6pB6ycd97tTnUxsBUeojUnuo4cN42VnaDwztGM1WNTKjn/tkv+K2rR0kDhTk+wMnZxo7NM=
+	t=1758482096; cv=pass; b=STLRY0ywx/DfgWIUcxsL1/iNUVRelovwvvuNzd57lYvb+7pdvPXw3WztajI++4jn4f3wqY0Nbv1V9FbHYfG8f9m7LP3+cDaiaB3wYRXL3An17c4XwxqZjcCKp23LlcmoODWpujqSs6eemSVRZp35TQ87T/YuUpULvrXtREpB5ZY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758482095; c=relaxed/simple;
-	bh=jpuw9iX+EZA6yUHJBZ7CjZaRSuZSqm+frEdEJA5XKVg=;
+	s=arc-20240116; t=1758482096; c=relaxed/simple;
+	bh=Ez1oPeNZwLs2nokT9Oz1Pryz7GpoL2ZAw9SiN2cW8Cw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E/83n0TvV+b+oAgWG+WCb0sRY4BRGZgBVuXSNyb18w+FY7jtvXSKCdQemnbFtsR4ddFDcSCPBmp9TYh7u45K/Mxll1KZtCGTaG8T0bcL+Al7txF4p5KUKC4K69vni3MnHkO/WaDT/pMxU3k+sOTBIztfa7+xafFndAExXQL/Nw0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=JoVFs1i/; arc=pass smtp.client-ip=195.140.195.201
+	 MIME-Version; b=GMpQBD5Xm1IjqT/12xRMbMwQ6wlX9MBb1j0+H7oBnh6MW8w3+aNdN+FuivIAbtXuQIGOqp6oJXQDjfCO9Dxa8woqAiR7QTnovo7nnEs9SxljJ50tFbvdaCljhdLD1udq7MUDNYXhX7wPFNFPSF4YKmMuUHB4Q8RMK/rkIH9F7g8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=xka1+ab9; arc=pass smtp.client-ip=195.140.195.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [193.138.7.158])
@@ -36,7 +36,7 @@ Received: from monolith.lan (unknown [193.138.7.158])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4cVGCB0cSyz106X;
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4cVGCB4vcDz107P;
 	Sun, 21 Sep 2025 22:14:46 +0300 (EEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
 	t=1758482086;
@@ -44,33 +44,33 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=VnyqrQQVB17l3OF2vl7cQZzHv6Zj/EhQElE0vYlv0AQ=;
-	b=JoVFs1i/Fkw8p0QNarOV1Ryisf9a3zbphEe9HTJna74GbolT9xUV+pVz3HQg0kPZpESyuJ
-	5b3Cu5MJBQlTbrMF6p7OCf8FbJ/Jk9SK9nGZYd349SmbDhn029Azm4YnsIzdryndBteHli
-	Sy5xpWw+EgCpGQI/bg8fBGValfwXWtQ=
+	bh=F1/oO1dAiOR7l6TBKj1ymR7yCcH8SkT44VeHHiW//Lg=;
+	b=xka1+ab9R1AC5OQirvKWoqOJC0nqWa1Jp2A9RS2n6Xdgmn97CKu9NChU1dqxy9iaW6jnnz
+	D+RKn746hBcv7mdPjeyaTiOEm6A4EZZXPD2jmXYEaieH/OqHWXwQoFgogHCxylHDlNcyaV
+	LsdOYI0wRULhz5wqXuJiT2KA7wIYFcI=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
 	s=meesny; t=1758482086;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=VnyqrQQVB17l3OF2vl7cQZzHv6Zj/EhQElE0vYlv0AQ=;
-	b=AVeFfBh/Z/u7CZ/xrxulmEXYxvzQTK5Dt3WqtW72F9spP4ZiDa8JMefi+U5ccTiiY9RB8j
-	zLnf1HkGu+A6eNQSsaSf6JZmvUDf0Af1eM2yENk42GptLxMdeMajLasN7wtYY+T6TrvDdm
-	mBDQpRCySXqsTFljpYsCD1gffQJTgnk=
+	bh=F1/oO1dAiOR7l6TBKj1ymR7yCcH8SkT44VeHHiW//Lg=;
+	b=ocW9byNL8d4gwqnBqsVaUTRxWOIgB41CxHuquQXJb11EEFEVcFUXUvSLBsNCUcAYAu/VbJ
+	udh+ChfOURaEf2vMk2Z0qj7kEElXAgnRB3+kMUFHX1V4vj/EGinP8YMP7/7q6AoCQzB1e0
+	wE34Qd2fwzTJLHtThapv3fM3oWVnHIg=
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 ARC-Seal: i=1; s=meesny; d=iki.fi; t=1758482086; a=rsa-sha256; cv=none;
-	b=FEpYKm2ah/aHA6MMYwLsIObWqh8ADNXXbHrGSAAwD4P+ui8qNO+9Kb/WepD4ReoLJFvUW2
-	MMIuBOYplKZmg+0CnQsXt/vXxBQPt+pI0t1X7b9VX5hfc9bhdYHk9mj32/8QyhvpyxDv8O
-	UGncl2Vuz600N/IeP0KZvhks6bnfMTM=
+	b=FIIhFHql97dDLiUJyh11CZ9AjJXBQv2kJYog4oUQPW/ncPel2pVuuUub09rCr1JFRtqIdp
+	j97v0eDvLfFTWAr5ypQ3XHq08URBgZM7BTCJ3s2O+f5YaSDICTPXCqA49vWukgX5eQcHoH
+	ujX9aylhMurx5cGwW3G8Q5rQ/IZFOGQ=
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [RFC PATCH 01/24] Bluetooth: ISO: free rx_skb if not consumed
-Date: Sun, 21 Sep 2025 22:14:16 +0300
-Message-ID: <0c01df0dbdda659b4b75e5422f6f54bb8cf7f169.1758481869.git.pav@iki.fi>
+Subject: [RFC PATCH 02/24] Bluetooth: ISO: don't leak skb in ISO_CONT RX
+Date: Sun, 21 Sep 2025 22:14:17 +0300
+Message-ID: <c898fec290b68d341f4b47232c69f2125f9c3f8d.1758481869.git.pav@iki.fi>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1758481869.git.pav@iki.fi>
 References: <cover.1758481869.git.pav@iki.fi>
@@ -82,26 +82,29 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-If iso_conn is freed when RX is incomplete, free any leftover skb piece.
+For ISO_CONT RX, the data from skb is copied to conn->rx_skb, but the
+skb is leaked.
+
+Free skb after copying its data.
 
 Signed-off-by: Pauli Virtanen <pav@iki.fi>
 ---
- net/bluetooth/iso.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/iso.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 5c68c0ea7d97..d63d4d6f874c 100644
+index d63d4d6f874c..f5a9a13317df 100644
 --- a/net/bluetooth/iso.c
 +++ b/net/bluetooth/iso.c
-@@ -111,6 +111,8 @@ static void iso_conn_free(struct kref *ref)
- 	/* Ensure no more work items will run since hci_conn has been dropped */
- 	disable_delayed_work_sync(&conn->timeout_work);
+@@ -2420,7 +2420,7 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
+ 		skb_copy_from_linear_data(skb, skb_put(conn->rx_skb, skb->len),
+ 					  skb->len);
+ 		conn->rx_len -= skb->len;
+-		return;
++		break;
  
-+	kfree_skb(conn->rx_skb);
-+
- 	kfree(conn);
- }
- 
+ 	case ISO_END:
+ 		skb_copy_from_linear_data(skb, skb_put(conn->rx_skb, skb->len),
 -- 
 2.51.0
 
