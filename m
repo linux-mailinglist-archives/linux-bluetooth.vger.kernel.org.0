@@ -1,34 +1,34 @@
-Return-Path: <linux-bluetooth+bounces-15459-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-15461-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8220BB8E3F3
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 21 Sep 2025 21:16:50 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BDE26B8E3F5
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 21 Sep 2025 21:16:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 689E27AC607
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 21 Sep 2025 19:15:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B121A18994B3
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 21 Sep 2025 19:17:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A29D274B58;
-	Sun, 21 Sep 2025 19:16:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37D0B275B15;
+	Sun, 21 Sep 2025 19:16:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="AUHetMAD"
+	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="AMKdIA/N"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [185.185.170.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8B62F37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9251D54D8
 	for <linux-bluetooth@vger.kernel.org>; Sun, 21 Sep 2025 19:16:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=185.185.170.37
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758482188; cv=pass; b=tEVOxiQtg7qiNMMz/wtB42TRqA4bcvWI9flKAtwt2nLPwklC0Uy372GQoEHGTHDowLVnEmDwBLYYi6TZ/4UyIhZ/ELZihq7aN3trpmeKUw1zt4UHJByUEofKWbf213Q5ZS63ciqav7wvaf9SKOjR6RT1arwLayvvUkhYKaHCQ/0=
+	t=1758482189; cv=pass; b=U/kepIhZPHGAFyxNauedbBkjVWeWV3UClj2T8kOsq4mXQ19cRL/GPv860bZCdeN9t5krSBgQaKbn2WAvWutXSuYZ2CjEVSUb2RExrVCOIlACqOZ2CpJbtPC05g/h1WQhjI+2mHWhjVFwYA0L0gD+i2qCx5qOjPwMH0hB8BgWtGo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758482188; c=relaxed/simple;
-	bh=J9AGxjyMXkfaEL0XELxlfmoPoDKedldfBDbMTbbvIV0=;
+	s=arc-20240116; t=1758482189; c=relaxed/simple;
+	bh=Rcl0lSobJsebOelxc0E0tz3K6bWUQI8jvDHlqTx7RXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=afgyS3dt0k7ITm1EJAoyaCe8YhWB8YwmdAoYematMBiXBhiAytEinFaFduAEhMTP8FU/SfozEcH+AhUCTYt4RBd2GMj539SfnYDJiSh1m5bjh7tfq+LyaVJPHLJlg9vyMb2tj3bAtua9v/wyzM3tqqQrL4qlEByLpfrq0A4HLpo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=AUHetMAD; arc=pass smtp.client-ip=185.185.170.37
+	 MIME-Version; b=F+dzfpTMT2X2mu5XW7danzAEpu8tmH1OnvqrQQDOeSma7jqg0qOcUKukDT/pZOODSkHojyk7m3QHct7AYROpDFR3d8ut/5Irkum7nHj/67NwlX1Psq/XbtSmxV3EtlmQXMozDmSYe0JK/nF6ywj4ExXjVBt17URiKBYs8RaMu0I=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=AMKdIA/N; arc=pass smtp.client-ip=185.185.170.37
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [193.138.7.138])
@@ -36,48 +36,48 @@ Received: from monolith.lan (unknown [193.138.7.138])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4cVGF26FmZz49QMh;
-	Sun, 21 Sep 2025 22:16:22 +0300 (EEST)
+	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4cVGF308Knz49QMw;
+	Sun, 21 Sep 2025 22:16:23 +0300 (EEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
-	t=1758482182;
+	t=1758482183;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Ao1/U3YWDMQBhoOl/mwnjELq3upwDLxV570cbArlqpk=;
-	b=AUHetMADBFpNkH4gbiFJ26M4DJzyRopns8JSJhQk5k51TkfuAmsNUyV/GVNX+R1p8es2UE
-	NgMXzuG0l854V3cS9MZ6xH4uzmbGcob4fja+awraiDoJvz7zjroI0Y82xXkU8tKF78K+Dt
-	2kKMMADc2IPc6DuvEQcy5G733xk9nVTWi+IbcEiQ44W1NnK7t9QE8kovjuY/n414LRegkD
-	tyNtIFNcSAaa8T02SOkknjc0gFaubrpfsP5J7pwQ4Pp5jEUFy95dniITIIvevrglTuf9+B
-	IKP7hT7j0PlBK5/9+88RKV89Uafp0eYr2couDDj2+XuyfqJ/F9MaOVISzD6X6Q==
+	bh=XRIhh1xr1wOcyYRVbNi7ajCuM1d3+qIvwGyRwxAPXQQ=;
+	b=AMKdIA/NCaEd6rxdXUM/2feO0athSkZukgNPpJfTVaZyKgSFxlbD01Rmholzg45RgknUiM
+	HqRMBfoPHnbt5F90BcqSK8DcsD0BbuycZvQ+SQ5beEidkTwUWdhECivrOl0ddrNTun0uZO
+	Rp7ND8gxyuEZes91kCp8vPxLTG2TIu0SM0OVfDR7bDyO5ivVAMaZcUE4XmSkSYiaew2ot6
+	1f5a3bbj/qIgIOHF9IJAYVyMAOmelGE8+VO+WvyQobbJob/5lduDwIMO6DMgZs0pZKME15
+	FW6BvNBlqqSI7YeenKh0WFs9iokU7GBrfo751wQLhxH5oWME5rUWoxjcVmMO+A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=lahtoruutu; t=1758482182;
+	s=lahtoruutu; t=1758482183;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Ao1/U3YWDMQBhoOl/mwnjELq3upwDLxV570cbArlqpk=;
-	b=ilQTEZDvATy1tIxn4kdoWxRa5eIzOTxd/HHgFqYbcChc5ir7LUi1jttYgy9fWmzk018TQY
-	vTqd1RGgiqigmS/wl7S/Li8WP6r5nzJIi9oiFRZHUUJz+vOEoKlZzGneDfFAjNcDbq4Xow
-	UmULsEnC8hHNIz0v3IVkhp/MTWFKvbgCuo/9jNf5BUwkr04jWO0XqZdmcWLG3ySSDr3Ykz
-	jZwfZHJg0m3OUCTR/ASEwu0d/VXSZW+lbyK7LI7CfKtkzM2U8uqsjU5T3XG/o/tBNyJYYQ
-	7jZMekmt1y2Y+nWLGDYP69GImbHuY/Xb40t+hw4n8hi6Fv69TnEBQdvE5/nf8Q==
-ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1758482182; a=rsa-sha256;
+	bh=XRIhh1xr1wOcyYRVbNi7ajCuM1d3+qIvwGyRwxAPXQQ=;
+	b=c4YGwdbg/FlVrSXwN11kus3SW01FX7BYfut7jpQi0kxWTzauBxnYk0MkQrwAy5s1+7ze/c
+	FAlwGdjuUJTN3wsOkYFAvfyuM2qSvCEiB0kMn0LDY1MsK9aFKbjjH21dgMviTJMOed4WXB
+	XIUEcdus3RWh3M8f/Of6bMmaG78gs4hA8ajfeFthRITBZvQ7wEznnqd/WZF8eIyWT4J2jM
+	S4kYr4M9DX+/+PyAXIRXvaSC14jcckrDqJg7YTLnNsn0BsFs6VgjgsSoScMJBVqS5r/mQz
+	q2kRI1OZ4cOk7aTUAgdw4ZZIXhWZHAts7RO4aRq3nq1w06SZuG0ZD/GMC+tvGg==
+ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1758482183; a=rsa-sha256;
 	cv=none;
-	b=WDg2iMoF0iJYg0/ZAbhSoUbDo3/FS9bp3ObtglnGVfhvqhHIngtQATTsfarBjGcdBxh6NF
-	zkH67HpRMcISA0X9zgJOKAIhTSfXqzCBa5TkixqDXc1k76vIGZUSWnnUA6gk2xaL1MMKBd
-	11x++g1uuEZP0o39ggxbSkxZFMoxzC/UIfND8tXpccxP+Xk91/OTaTUfyN7kDesOliNc9E
-	7IjjW89oqs1xTLaYqelK+kLaeACIWQN2pTWCsUgMwoidwhtEza+xA98o6uIWLqoI3Kqlvm
-	sZF8QpmMF4WQpzYpDAEuSomdwSPGRam28OjofSZiarpuEUThWRIzi2jLwnYp1A==
+	b=CdteWwzM/aPFeWwmR6XqqcPJ8Gt0nBokUL9w6kMvOBgjWov6F3ruUmK1/iItddNv6H3uGd
+	PqIqYth347nFhizO5tti/IurGxib4qBMgd3Mpo5PAqI0CszILdXnSKPzKi3a1Lxe+TbEN/
+	WJ1XTZhnI9QdbaNZ6ntHrX1FXGq6PnY135uIUFx+lXKC7gFoZ4IrreiWfWNFTLajJWIqs4
+	jhUk9EhWomdorhp+/aqwF3qvKafb2h7O9BlS2Osiayq/Mp+rtigoLRH/J6SRryzO+ZJfv8
+	MRjtqvUP94GguyWxiMO8DL+65r5DfxP5/L6PtE1Jr348zKvPufbewLThLhxcxA==
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [RFC PATCH 22/24] Bluetooth: hci_sync: lock properly in hci_le_pa/big_create_sync
-Date: Sun, 21 Sep 2025 22:16:06 +0300
-Message-ID: <72b17f12919aa7be73df14ff607e7c8d94ea8f4c.1758481869.git.pav@iki.fi>
+Subject: [RFC PATCH 23/24] Bluetooth: hci_sync: fix locking in hci_disconnect_sync
+Date: Sun, 21 Sep 2025 22:16:07 +0300
+Message-ID: <4229c4f3fc77e4003a2a6e45463ac58a0e95c819.1758481869.git.pav@iki.fi>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1758481869.git.pav@iki.fi>
 References: <cover.1758481869.git.pav@iki.fi>
@@ -89,111 +89,27 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-hci_dev_lock_sync() should be held while accessing hci_conn, and its
-validity needs to be checked after any waiting subroutines.
+Caller of hci_disconnect_sync() shall hold hdev->lock.
 
 Signed-off-by: Pauli Virtanen <pav@iki.fi>
 ---
- net/bluetooth/hci_sync.c | 39 +++++++++++++++++++++++++++++++++++----
- 1 file changed, 35 insertions(+), 4 deletions(-)
+ net/bluetooth/hci_sync.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
 diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 2d79667f16cd..0717d53c2e33 100644
+index 0717d53c2e33..a07bf168594a 100644
 --- a/net/bluetooth/hci_sync.c
 +++ b/net/bluetooth/hci_sync.c
-@@ -7153,14 +7153,22 @@ static int hci_le_pa_create_sync(struct hci_dev *hdev, void *data)
- 	struct bt_iso_qos *qos = &conn->iso_qos;
- 	int err;
- 
--	if (!hci_conn_valid(hdev, conn))
-+	hci_dev_lock_sync(hdev);
-+
-+	if (!hci_conn_valid(hdev, conn)) {
-+		hci_dev_unlock_sync(hdev);
- 		return -ECANCELED;
-+	}
- 
--	if (conn->sync_handle != HCI_SYNC_HANDLE_INVALID)
-+	if (conn->sync_handle != HCI_SYNC_HANDLE_INVALID) {
-+		hci_dev_unlock_sync(hdev);
- 		return -EINVAL;
-+	}
- 
--	if (hci_dev_test_and_set_flag(hdev, HCI_PA_SYNC))
-+	if (hci_dev_test_and_set_flag(hdev, HCI_PA_SYNC)) {
-+		hci_dev_unlock_sync(hdev);
- 		return -EBUSY;
-+	}
- 
- 	/* Stop scanning if SID has not been set and active scanning is enabled
- 	 * so we use passive scanning which will be scanning using the allow
-@@ -7173,6 +7181,11 @@ static int hci_le_pa_create_sync(struct hci_dev *hdev, void *data)
- 		hci_discovery_set_state(hdev, DISCOVERY_STOPPED);
+@@ -5581,10 +5581,7 @@ static int hci_disconnect_sync(struct hci_dev *hdev, struct hci_conn *conn,
+ 		/* This is a BIS connection, hci_conn_del will
+ 		 * do the necessary cleanup.
+ 		 */
+-		hci_dev_lock(hdev);
+ 		hci_conn_failed(conn, reason);
+-		hci_dev_unlock(hdev);
+-
+ 		return 0;
  	}
- 
-+	if (!hci_conn_valid(hdev, conn)) {
-+		err = -ECANCELED;
-+		goto done;
-+	}
-+
- 	/* Mark HCI_CONN_CREATE_PA_SYNC so hci_update_passive_scan_sync can
- 	 * program the address in the allow list so PA advertisements can be
- 	 * received.
-@@ -7181,6 +7194,11 @@ static int hci_le_pa_create_sync(struct hci_dev *hdev, void *data)
- 
- 	hci_update_passive_scan_sync(hdev);
- 
-+	if (!hci_conn_valid(hdev, conn)) {
-+		err = -ECANCELED;
-+		goto done;
-+	}
-+
- 	/* SID has not been set listen for HCI_EV_LE_EXT_ADV_REPORT to update
- 	 * it.
- 	 */
-@@ -7192,6 +7210,11 @@ static int hci_le_pa_create_sync(struct hci_dev *hdev, void *data)
- 			goto done;
- 	}
- 
-+	if (!hci_conn_valid(hdev, conn)) {
-+		err = -ECANCELED;
-+		goto done;
-+	}
-+
- 	memset(&cp, 0, sizeof(cp));
- 	cp.options = qos->bcast.options;
- 	cp.sid = conn->sid;
-@@ -7221,6 +7244,8 @@ static int hci_le_pa_create_sync(struct hci_dev *hdev, void *data)
- 				      0, NULL, HCI_CMD_TIMEOUT);
- 
- done:
-+	hci_dev_unlock_sync(hdev);
-+
- 	hci_dev_clear_flag(hdev, HCI_PA_SYNC);
- 
- 	/* Update passive scan since HCI_PA_SYNC flag has been cleared */
-@@ -7268,8 +7293,12 @@ static int hci_le_big_create_sync(struct hci_dev *hdev, void *data)
- 	struct bt_iso_qos *qos = &conn->iso_qos;
- 	int err;
- 
--	if (!hci_conn_valid(hdev, conn))
-+	hci_dev_lock_sync(hdev);
-+
-+	if (!hci_conn_valid(hdev, conn)) {
-+		hci_dev_unlock_sync(hdev);
- 		return -ECANCELED;
-+	}
- 
- 	set_bit(HCI_CONN_CREATE_BIG_SYNC, &conn->flags);
- 
-@@ -7302,6 +7331,8 @@ static int hci_le_big_create_sync(struct hci_dev *hdev, void *data)
- 	if (err == -ETIMEDOUT)
- 		hci_le_big_terminate_sync(hdev, cp->handle);
- 
-+	hci_dev_unlock_sync(hdev);
-+
- 	return err;
- }
  
 -- 
 2.51.0
