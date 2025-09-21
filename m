@@ -1,34 +1,34 @@
-Return-Path: <linux-bluetooth+bounces-15446-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-15453-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AAD66B8E3CD
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 21 Sep 2025 21:15:39 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8103AB8E3DF
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 21 Sep 2025 21:15:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0C5307ABAEA
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 21 Sep 2025 19:13:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 59918188B556
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 21 Sep 2025 19:16:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3926C27702B;
-	Sun, 21 Sep 2025 19:15:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE887279DC0;
+	Sun, 21 Sep 2025 19:15:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="f2a/ReGC"
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="QEQL1D0h"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D78274669
-	for <linux-bluetooth@vger.kernel.org>; Sun, 21 Sep 2025 19:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61D15275872
+	for <linux-bluetooth@vger.kernel.org>; Sun, 21 Sep 2025 19:14:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758482099; cv=pass; b=SxyyAvo9mzcMNppkuXHsZQ5nxmDXhbNIcWzKlFkgPOeA35SXB5GmIGraOU9TS4jTu+8NmaB4QCyWJxxV1mdF/cXGh1gNtKggEJ0l2v/22N0HfVJrNgJ7+bGHFRLc+2FjxtpSCJyUN3LzmP4yhikweNDOysJbWVQQcwnClf6atyY=
+	t=1758482101; cv=pass; b=U+5oWS7+zKwZ14ECGGPcXrOeZPx7pBGKVn5l7cu5SiQryDbTJFmaLz+t8zmsziS5TolXfA75r4NrxyPHCaAuNLSxig2bbiIMv8fUSSZEttTgXfd41ko2PIIYOA39CU2X+1N9hblG5YoAKWFfyim+74C4rrZftl6NtHOahgJQ0xc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758482099; c=relaxed/simple;
-	bh=tGSyaf+bHQPMBwL3pNAXluBMpv0OFoca/ngZ5PJdSw4=;
+	s=arc-20240116; t=1758482101; c=relaxed/simple;
+	bh=v8TJwGOuy68GEeb8FeBm6TGN4zIPD5OWtt1sQ5oeUxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MEL/IsA5qnITlC/TS41GN6aCqkWEcD8ZD4f145KUl6IWCH+mV5pdtakBeznce6iYtCujy/ERlAPqwBPV8P0YS8c7Fl1+yVgH82NUEF5JrmTXMS90Hb8tDCY6x2LXNDfvknbnzy0oTFggfBZWbo5dlulCeHTmsk62EVnIwM6CbIU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=f2a/ReGC; arc=pass smtp.client-ip=195.140.195.201
+	 MIME-Version; b=FR9YXK+RRMctfAzm3x79qPVgF5oazHxcCH1W/Oer6tPdAkdt/F+NKbh2mrR/744f021irXsxWTL+lFmd1TFsPdwDgGtfyRG7IMTjHttCZPpL1eB3VjGvbTuWe5f8UK6UbnjIGMXyBDoQQyXdDIQQQLkNiKL2btqO0M7g+kBq0fw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=QEQL1D0h; arc=pass smtp.client-ip=195.140.195.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [193.138.7.158])
@@ -36,41 +36,41 @@ Received: from monolith.lan (unknown [193.138.7.158])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4cVGCD6GHqz10H4;
-	Sun, 21 Sep 2025 22:14:48 +0300 (EEST)
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4cVGCF0tTFz10Fb;
+	Sun, 21 Sep 2025 22:14:49 +0300 (EEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
 	t=1758482089;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=eqZCgepMpVdYOQnZoI2FZQiKh1D/AoecqVF++woOdCI=;
-	b=f2a/ReGC3Gry44bE0vzuAVvDRnu9ZAJRBxUkw58CmujmcxyTsa/XC2zfK2sKBkWQSPMGpR
-	e7nvsWSMnbxCuIM2W2lCsMwWpqXRca6Y6EefE8GRYY5cYdMPOxu2yoUQzmZWYrksAD53pA
-	X7bwHfnuVTO7zhB4BhLaw1kxNndtTIU=
+	bh=9Wfo7rjAMqx7bFb7kWVywivsY2g41WIozW8EKhDOOKs=;
+	b=QEQL1D0h4zyfYZeCfNzd+zYDbVnyYDn1veHdG9OqJKb10LvEVHP99loq/ZI1aBpwhYLqQi
+	ah8yJRRGU+LoXBeK3YQtl3lLddzlLAN4tKHYIdL9IhTMDshZyWOfjgwl6Ihow4eoBlLjpj
+	/EIitIm3liQIfJ7WqfAJGhfQDJp0yIU=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
 	s=meesny; t=1758482089;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=eqZCgepMpVdYOQnZoI2FZQiKh1D/AoecqVF++woOdCI=;
-	b=rkmR8EcXAHgCnGvIaX/3wgGfS9xUYc5TYA7BvkrZLe/jgXLIWh5yRNZgepaz3p5b6uPgiK
-	F3rS2Ot8wzYDliZuxMHPL1+lRJ1eWh99ZJuduLxx1fr4UcaHWazlDb4QvV6961eXny0Bv2
-	vvSvJ2WpxB05kKX8sUu8J9bNjhnwVRM=
+	bh=9Wfo7rjAMqx7bFb7kWVywivsY2g41WIozW8EKhDOOKs=;
+	b=nvp6uAfKvMUlGS6OGDDOPbsof/0UK1EYoFE/YGnf+obqkoHKDW6TdThJsyq3OLbH4+R3yJ
+	gMTAHd1/qT807EWtNdyFNbK5vtoXUX6HYgOEdTGPzZ67Ssl/0Lk1hAzEjqa1LEEWggK16V
+	ueRVogBhd7tVUXWUhJE4zZ5SunErTes=
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 ARC-Seal: i=1; s=meesny; d=iki.fi; t=1758482089; a=rsa-sha256; cv=none;
-	b=v3oTRsrPxca+mZdh08h5bWyFXMQP5/24/umiUCGzwhMf2fnsrEXks/qoCsZc4b6SbU35Kr
-	zE4oXC4jgp/7I+WIivguZ9VJVeCZnGFndLWuD/LA6AXd/9vaK6xXnlFtAZkdF0U+DEaE2O
-	ahlqWk1nrkGCqfuYcK4wocExWLfEqno=
+	b=u0sYNKWXecnoNOZ4Xsx/oNZ5qc3j2TaWmvOgzkdEyuwT7kaUFZKS38ApOXltx955cHhZnz
+	yXZdIoEl/lWBmz4IGL1HQtHSH+6gkUByT+PzmVR2Ov+IzY3tw8upERxs8mazToRQZT6GQZ
+	U/3qmKZY0CzwNWWHlubxmytsDE9XBDc=
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [RFC PATCH 10/24] Bluetooth: hci_conn: extend conn_hash lookup RCU critical sections
-Date: Sun, 21 Sep 2025 22:14:25 +0300
-Message-ID: <b31306a3db524ad8170e41dc38f37a5119df04ca.1758481869.git.pav@iki.fi>
+Subject: [RFC PATCH 11/24] Bluetooth: hci_core: add lockdep check to hci_conn_hash lookups
+Date: Sun, 21 Sep 2025 22:14:26 +0300
+Message-ID: <f76d0c07ec1927ce8c097f3895a785fddef11266.1758481869.git.pav@iki.fi>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1758481869.git.pav@iki.fi>
 References: <cover.1758481869.git.pav@iki.fi>
@@ -82,46 +82,217 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When doing hci_conn_hash lookups with only RCU, extend critical section
-to cover also the handling of the return value.
+Callers of conn_hash lookup functions that return hci_conn*, shall hold
+hdev->lock/rcu_read_lock covering dereferencing and other usage of the
+returned conn. Cf. BUG!!! in Documentation/RCU/whatisRCU.rst
 
-This avoids any concurrent hci_conn_del from deleting the conn before we
-are done dereferencing it.
+This makes builds with CONFIG_PROVE_RCU emit lockdep splats if these
+functions are called without appropriate locks.
 
-Fixes: a091289218202 ("Bluetooth: hci_conn: Fix hci_le_set_cig_params")
+The lookup functions actually should instead not do rcu_read_lock() but
+list_for_each_entry_rcu(c, &h->list, list, lockdep_is_held(&hdev->lock))
+leaving locking to the caller. However, for now just emit lockdep
+warning, in case there are remaining unconverted callsites.
+
 Signed-off-by: Pauli Virtanen <pav@iki.fi>
 ---
- net/bluetooth/hci_conn.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 1d914d95cb6d..b6c3ee60024f 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1813,9 +1813,13 @@ static int set_cig_params_sync(struct hci_dev *hdev, void *data)
- 	u8 aux_num_cis = 0;
- 	u8 cis_id;
- 
-+	rcu_read_lock();
-+
- 	conn = hci_conn_hash_lookup_cig(hdev, cig_id);
--	if (!conn)
-+	if (!conn) {
-+		rcu_read_unlock();
- 		return 0;
-+	}
- 
- 	qos = &conn->iso_qos;
- 	pdu->cig_id = cig_id;
-@@ -1854,6 +1858,8 @@ static int set_cig_params_sync(struct hci_dev *hdev, void *data)
+Notes:
+    There's been several UAF from hci_conn* being deleted concurrently.
+    
+    It's probably a good idea to add these lockdep warnings in the
+    hci_conn_hash functions, and to fix up whatever they reveal.
+    
+    RFC since probably should fix the issues these reveal...  I have an
+    unfinished patch series that fixes up the lockdep splats these checks
+    generate.
+    
+    Locking in hci_sync maybe needs some redesign there.
+    
+    General pattern is just
+    
+        hci_dev_lock(hdev); /* or rcu_read_lock() */
+        conn = hci_conn_hash_lookup_xxx(hdev, ...);
+        if (!conn) {
+            hci_dev_unlock(hdev);
+            return -ENOENT;
+        }
+        do_something(stuff);
+        hci_dev_unlock(hdev);
+    
+    or
+    
+        rcu_read_lock();
+        conn = hci_conn_hash_lookup_xxx(hdev, ...);
+        if (conn)
+            hci_conn_get(conn);
+        rcu_read_unlock();
+        if (!conn)
+            return -ENOENT;
+        do_something(conn);
+        hci_conn_put(conn);
+
+ include/net/bluetooth/hci_core.h | 42 ++++++++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
+
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 2924c2bf2a98..b0f2adfdd5b4 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -1060,6 +1060,18 @@ static inline void hci_conn_hash_del(struct hci_dev *hdev, struct hci_conn *c)
  	}
- 	pdu->num_cis = aux_num_cis;
+ }
  
-+	rcu_read_unlock();
++/* TODO: later on, remove all rcu_read_lock() in lookups and use instead
++ * list_for_each_entry_rcu(c, &h->list, list, lockdep_is_held(&hdev->lock))
++ */
++#ifdef CONFIG_PROVE_RCU
++#define HCI_CONN_HASH_LOCKDEP_CHECK(hdev)				\
++	RCU_LOCKDEP_WARN(!lockdep_is_held(&(hdev)->lock) &&		\
++			 !rcu_read_lock_held(),				\
++			 "wrong hci_conn* locking")
++#else
++#define HCI_CONN_HASH_LOCKDEP_CHECK(hdev) do { } while (0 && (hdev))
++#endif
 +
- 	if (!pdu->num_cis)
- 		return 0;
+ static inline unsigned int hci_conn_num(struct hci_dev *hdev, __u8 type)
+ {
+ 	struct hci_conn_hash *h = &hdev->conn_hash;
+@@ -1141,6 +1153,8 @@ static inline struct hci_conn *hci_conn_hash_lookup_bis(struct hci_dev *hdev,
+ 	struct hci_conn_hash *h = &hdev->conn_hash;
+ 	struct hci_conn  *c;
  
++	HCI_CONN_HASH_LOCKDEP_CHECK(hdev);
++
+ 	rcu_read_lock();
+ 
+ 	list_for_each_entry_rcu(c, &h->list, list) {
+@@ -1163,6 +1177,8 @@ hci_conn_hash_lookup_create_pa_sync(struct hci_dev *hdev)
+ 	struct hci_conn_hash *h = &hdev->conn_hash;
+ 	struct hci_conn  *c;
+ 
++	HCI_CONN_HASH_LOCKDEP_CHECK(hdev);
++
+ 	rcu_read_lock();
+ 
+ 	list_for_each_entry_rcu(c, &h->list, list) {
+@@ -1189,6 +1205,8 @@ hci_conn_hash_lookup_per_adv_bis(struct hci_dev *hdev,
+ 	struct hci_conn_hash *h = &hdev->conn_hash;
+ 	struct hci_conn  *c;
+ 
++	HCI_CONN_HASH_LOCKDEP_CHECK(hdev);
++
+ 	rcu_read_lock();
+ 
+ 	list_for_each_entry_rcu(c, &h->list, list) {
+@@ -1213,6 +1231,8 @@ static inline struct hci_conn *hci_conn_hash_lookup_handle(struct hci_dev *hdev,
+ 	struct hci_conn_hash *h = &hdev->conn_hash;
+ 	struct hci_conn  *c;
+ 
++	HCI_CONN_HASH_LOCKDEP_CHECK(hdev);
++
+ 	rcu_read_lock();
+ 
+ 	list_for_each_entry_rcu(c, &h->list, list) {
+@@ -1232,6 +1252,8 @@ static inline struct hci_conn *hci_conn_hash_lookup_ba(struct hci_dev *hdev,
+ 	struct hci_conn_hash *h = &hdev->conn_hash;
+ 	struct hci_conn  *c;
+ 
++	HCI_CONN_HASH_LOCKDEP_CHECK(hdev);
++
+ 	rcu_read_lock();
+ 
+ 	list_for_each_entry_rcu(c, &h->list, list) {
+@@ -1253,6 +1275,8 @@ static inline struct hci_conn *hci_conn_hash_lookup_role(struct hci_dev *hdev,
+ 	struct hci_conn_hash *h = &hdev->conn_hash;
+ 	struct hci_conn  *c;
+ 
++	HCI_CONN_HASH_LOCKDEP_CHECK(hdev);
++
+ 	rcu_read_lock();
+ 
+ 	list_for_each_entry_rcu(c, &h->list, list) {
+@@ -1274,6 +1298,8 @@ static inline struct hci_conn *hci_conn_hash_lookup_le(struct hci_dev *hdev,
+ 	struct hci_conn_hash *h = &hdev->conn_hash;
+ 	struct hci_conn  *c;
+ 
++	HCI_CONN_HASH_LOCKDEP_CHECK(hdev);
++
+ 	rcu_read_lock();
+ 
+ 	list_for_each_entry_rcu(c, &h->list, list) {
+@@ -1300,6 +1326,8 @@ static inline struct hci_conn *hci_conn_hash_lookup_cis(struct hci_dev *hdev,
+ 	struct hci_conn_hash *h = &hdev->conn_hash;
+ 	struct hci_conn  *c;
+ 
++	HCI_CONN_HASH_LOCKDEP_CHECK(hdev);
++
+ 	rcu_read_lock();
+ 
+ 	list_for_each_entry_rcu(c, &h->list, list) {
+@@ -1332,6 +1360,8 @@ static inline struct hci_conn *hci_conn_hash_lookup_cig(struct hci_dev *hdev,
+ 	struct hci_conn_hash *h = &hdev->conn_hash;
+ 	struct hci_conn  *c;
+ 
++	HCI_CONN_HASH_LOCKDEP_CHECK(hdev);
++
+ 	rcu_read_lock();
+ 
+ 	list_for_each_entry_rcu(c, &h->list, list) {
+@@ -1355,6 +1385,8 @@ static inline struct hci_conn *hci_conn_hash_lookup_big(struct hci_dev *hdev,
+ 	struct hci_conn_hash *h = &hdev->conn_hash;
+ 	struct hci_conn  *c;
+ 
++	HCI_CONN_HASH_LOCKDEP_CHECK(hdev);
++
+ 	rcu_read_lock();
+ 
+ 	list_for_each_entry_rcu(c, &h->list, list) {
+@@ -1379,6 +1411,8 @@ hci_conn_hash_lookup_big_sync_pend(struct hci_dev *hdev,
+ 	struct hci_conn_hash *h = &hdev->conn_hash;
+ 	struct hci_conn  *c;
+ 
++	HCI_CONN_HASH_LOCKDEP_CHECK(hdev);
++
+ 	rcu_read_lock();
+ 
+ 	list_for_each_entry_rcu(c, &h->list, list) {
+@@ -1403,6 +1437,8 @@ hci_conn_hash_lookup_big_state(struct hci_dev *hdev, __u8 handle, __u16 state,
+ 	struct hci_conn_hash *h = &hdev->conn_hash;
+ 	struct hci_conn  *c;
+ 
++	HCI_CONN_HASH_LOCKDEP_CHECK(hdev);
++
+ 	rcu_read_lock();
+ 
+ 	list_for_each_entry_rcu(c, &h->list, list) {
+@@ -1426,6 +1462,8 @@ hci_conn_hash_lookup_pa_sync_big_handle(struct hci_dev *hdev, __u8 big)
+ 	struct hci_conn_hash *h = &hdev->conn_hash;
+ 	struct hci_conn  *c;
+ 
++	HCI_CONN_HASH_LOCKDEP_CHECK(hdev);
++
+ 	rcu_read_lock();
+ 
+ 	list_for_each_entry_rcu(c, &h->list, list) {
+@@ -1449,6 +1487,8 @@ hci_conn_hash_lookup_pa_sync_handle(struct hci_dev *hdev, __u16 sync_handle)
+ 	struct hci_conn_hash *h = &hdev->conn_hash;
+ 	struct hci_conn  *c;
+ 
++	HCI_CONN_HASH_LOCKDEP_CHECK(hdev);
++
+ 	rcu_read_lock();
+ 
+ 	list_for_each_entry_rcu(c, &h->list, list) {
+@@ -1518,6 +1558,8 @@ static inline struct hci_conn *hci_lookup_le_connect(struct hci_dev *hdev)
+ 	struct hci_conn_hash *h = &hdev->conn_hash;
+ 	struct hci_conn  *c;
+ 
++	HCI_CONN_HASH_LOCKDEP_CHECK(hdev);
++
+ 	rcu_read_lock();
+ 
+ 	list_for_each_entry_rcu(c, &h->list, list) {
 -- 
 2.51.0
 
