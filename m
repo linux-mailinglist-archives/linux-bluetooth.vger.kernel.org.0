@@ -1,34 +1,34 @@
-Return-Path: <linux-bluetooth+bounces-15458-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-15455-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B59EB8E3F0
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 21 Sep 2025 21:16:46 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A148B8E3E7
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 21 Sep 2025 21:16:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2BE553A5796
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 21 Sep 2025 19:16:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2D13118995CF
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 21 Sep 2025 19:17:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CE222749C0;
-	Sun, 21 Sep 2025 19:16:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30BF7256C7E;
+	Sun, 21 Sep 2025 19:16:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="O7s8ytXl"
+	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="kMJujSig"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [185.185.170.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9F4268C42
-	for <linux-bluetooth@vger.kernel.org>; Sun, 21 Sep 2025 19:16:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2BC434BA2E
+	for <linux-bluetooth@vger.kernel.org>; Sun, 21 Sep 2025 19:16:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=185.185.170.37
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758482188; cv=pass; b=ejsfLXu2yvqgarMUdzOVF260RLmeuUZZRRMBIAD43ozNa+fU6/qBfNtdcgyniAdLzYb2UrkrxmtMs5gnvSqofi8RUyzNoMUauhzmH45gdEJHT363rPYiqs1B14GFghtm5r3NEcvWwx1dice813a4mcid3PBIMqhQcVIVQ86BvJs=
+	t=1758482185; cv=pass; b=ZqbuZt0GVP4rft5dypoIdlnZYoV0DaZXbRVKXg6sZh9igW1XlZems4Fh6EgT4tiXys7GhLUg3s9XEcgYgQa/KHPMQBjzhkcD7g5MgNBIrc6Mt9AMXjuzOybaAU4+EHTMClNUbhEluqjBj+dOjpr+LTQk75lUiAqUTs9UQRfeoQ4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758482188; c=relaxed/simple;
-	bh=XBUNbQiu4SqDOiplkYb+brbsUBuvusq1/pHRwatB22E=;
+	s=arc-20240116; t=1758482185; c=relaxed/simple;
+	bh=8UtvLui3VPgPkB2DayLIovQMS3KlBvtLip9S08bWBd8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=psAWNup9j+Q5xNXtrp7vyyXA59KzNMx8wPtL+rBkuGtmHPPpBroysiaSO7ARYApyqy18yOG4gKkeRrxO4h7JXxBQwHYd/KywnD0Jpy2BXJrPwkBLNy43TgYDfPyvjEl9oGHfihbH/QzmTAnIKTCPfsx+JuynbnankIqTFf6td3g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=O7s8ytXl; arc=pass smtp.client-ip=185.185.170.37
+	 MIME-Version; b=mnlVTgH6GOX+G6BfAcmsqAkmNuw2dy6nubkij+dFPJzBTggTs46nsflJVf7E2bg+grOH61JeB0gPgE+IkiZxnar1ldmO4m+okWFrXHSsg6YCgkWYLiETmD9rFoOIJZgMR2kfDh0XbPN3NHtSo7Jl6YqrrgBew/xdq+v+b02wO9k=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=kMJujSig; arc=pass smtp.client-ip=185.185.170.37
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [193.138.7.138])
@@ -36,48 +36,48 @@ Received: from monolith.lan (unknown [193.138.7.138])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4cVGDw1svgz49QJY;
-	Sun, 21 Sep 2025 22:16:16 +0300 (EEST)
+	by lahtoruutu.iki.fi (Postfix) with ESMTPSA id 4cVGF02znzz49QJh;
+	Sun, 21 Sep 2025 22:16:20 +0300 (EEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
-	t=1758482176;
+	t=1758482180;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=b8BLFayz8jAhyZ4yguOrjhRk9uQgtfduglr/R8JTMeU=;
-	b=O7s8ytXlu3FwYeWzRsuW8x8zhO4LLxMcdq0zahxYV+BQ1CKa8VrA266EOwYySLKF+EtTxs
-	LRv0qf3gbF9Ja6XLyBlXk34ZSNA4KPf1JKeLW7d/HXpzboYTKQzA7YluNbD5saonUOeX9T
-	HqgO/nNPiX6PTAhyq+etJV17mOKniI0j/qtlXD4IqY1w8fVVindQsuS4rZ/fZNurUdNF2V
-	RBgp/1+Tp/zEmAMzYoVwxs+UP/Btr5V5Huq4FVqNrafb6ZzOHw7wGiF2ffS6VlNdeW4jPG
-	8bBRy7EGRbzMSKPkljqclXLj5fMq9m05UwPjMeMfZxuKY612Vc5z2wENuuyVYA==
+	bh=WlNIOVEZcO1bNLLmIgp/NHukjNx6RClBCg6JgRk0A7w=;
+	b=kMJujSignXS2FQVYmkjL8zev90QLR4SSrjv0D7ejYPMJ583YECRQ6bOipm442s85lggUuw
+	QKRomhHtXchiAbYQmIqHe9jCFbRxV9a1K/9MvJ6g4UpLe83yDVc45k9KCL3h/KYCEd8Y/K
+	pkIJXU1mLRTmPN2ZfVs0vVJNaxeiQ7f4qNS3jD7kgs2kwgmdPoLPfCrgr1YYvynFfU1+74
+	nsEEmbjFnbmGXWnC8z1uPF2CHZcC/J6B18YoBJLV+ENGVXoyf1mtrfUAGJjh4n4zwUVkwn
+	aFZ+pspbD+t9iz5KgawjqXE7za056wq21gM4pcfE7th8Ocacg2rx0V0kketajA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=lahtoruutu; t=1758482176;
+	s=lahtoruutu; t=1758482180;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=b8BLFayz8jAhyZ4yguOrjhRk9uQgtfduglr/R8JTMeU=;
-	b=LPHgyhQjhPdQb5epXI4dWKhRL6MxEdTaYFNI0YXf45IAIqYhTAYAqZv6ihVR3UnMlhfKse
-	pff1ZmTxIXKjVduxo+78TRW7/6GMs19ZY/nrjpx1tmfMcmmJrEX9ojTmQO/OM6LtI49b2M
-	yK/PkAL+L041G8UD0itv2PaRyKpyinvf1kYGuSpeGY0KWCeCu18SbUr0hH/GI6pxKPOpqT
-	KGnNjRvT8OxeH9e0GgeSK7syrSwkFOzo+4Dp65SFBLJkcdc3Jkt1hnSQuFsyqZT442Im+B
-	3x/lmI5Sg3a3zYKnpe3BH0SqiU9J+Te9JWe3GMBouebNqyL9iRRk7JD/49XDyA==
-ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1758482176; a=rsa-sha256;
+	bh=WlNIOVEZcO1bNLLmIgp/NHukjNx6RClBCg6JgRk0A7w=;
+	b=UWjXZgUKhuTHt7xXWvJnJkfOoaHmcWWtZIVhvzL3DfhMGbTkrjUi5zUnigdgb1MTGF2oMt
+	djKk3PboTLl8aoY+wTUoOQ+Q7tCA/vlHXZj8Oqu9VJZ0O3XnTn7st8a6qFl1wzHDupooG5
+	mJjOhjgARNDltwEtrpfL5uL/QBsy3OYU5rv8YE++NXuUBYVDQ4nMSyWOen5Z1LkuiefrVW
+	hzbrcJr9KwLPznikOMcqZlNyrapUu0p19x+ZmJNH8Rcz8v2laURhKIP4K0aRASCgD6rUJu
+	8JYxJDiy2wz+ZuUI9R3iv8+KCfz3X9aAXl3vV2hbRlUuqTZ6j+/GjkoYB1/EjA==
+ARC-Seal: i=1; s=lahtoruutu; d=iki.fi; t=1758482180; a=rsa-sha256;
 	cv=none;
-	b=KSEle5oHr4e2KHR3hi4f2u9vbvSuo9mHZUquNP8v0urlY78O624aErwgcKlUV1+9VuIg6z
-	8arppIavVSzYUN2+kmeNid9WBReDK1lWKyCv09u+1HpkImh6YkLXHyPn0pqrkz38LktazZ
-	l9JbNwX+Pl5rEOjK4KLMbfmloMhgCZO2UkeT66vth5gNEvixDIdEjzzfB35iK9bj6F4Hhb
-	EteICvJjieuWKcnl8DyPcTFi5BbxFa8RETSvR8XvJK9TzXAAca7aaYK5rIKUEXy9p7XuNB
-	R+pqIFQEqjTGY8M3kPRCaIZ4YKpy1bBzgBP+TsAyjiCeLt9xvt2M2xDl24A9cA==
+	b=LIwXkaQg//Mx3hCt3xLfqRx9XSX3w464m7ls6xqrpPhfG19tGlZfXcU1XAcei+cB3FbnvO
+	rnYGCUjxsGBEp6akJtUeh2CorNz18zNTy3jpvABR2wpPOvD9RiO3kzqEJeHPikt/dN8f/k
+	jEvLApyFss2n10iDSNbJl58L2LmQwETBDmjt9c16i9CG4sUmLq200+ExbZk0Db9X+L3z+0
+	2Dw8b+QPlytkYzRr+HIaFuvrZ82/31c4yVAFYIn1suT6ReYw1rKvTIEFzo1kDmRHx9wM6M
+	RS23uf5/f9a36YVpcggcYoU5HdAVRW2MTD8jg+iIQFaoyPh0JmP8qQbfH39vSw==
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [RFC PATCH 16/24] Bluetooth: L2CAP: fix hci_conn_valid() usage
-Date: Sun, 21 Sep 2025 22:16:00 +0300
-Message-ID: <c35d10c737c3828fc0180d503665ea378818a1cd.1758481869.git.pav@iki.fi>
+Subject: [RFC PATCH 17/24] Bluetooth: hci_sync: add helper for hdev locking across waits
+Date: Sun, 21 Sep 2025 22:16:01 +0300
+Message-ID: <a9e4e1c91a3b551f3ca57dfe816ed271e7da8c26.1758481869.git.pav@iki.fi>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1758481869.git.pav@iki.fi>
 References: <cover.1758481869.git.pav@iki.fi>
@@ -89,32 +89,100 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hold RCU lock while queuing to ensure conn remains valid.
+Add hci_dev_lock/unlock_sync, for holding hdev->lock except when waiting
+request completion on hdev->req_wait_q.
+
+This makes writing hci_sync subroutines somewhat simpler, as the lock
+needs to be acquired only on top level.  Routines will however still
+have to recheck conditions after waits.
 
 Signed-off-by: Pauli Virtanen <pav@iki.fi>
 ---
- net/bluetooth/l2cap_core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/net/bluetooth/hci_core.h |  2 ++
+ include/net/bluetooth/hci_sync.h |  4 ++++
+ net/bluetooth/hci_sync.c         | 26 ++++++++++++++++++++++++++
+ 3 files changed, 32 insertions(+)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 9370b7bd226a..9086c86adb2c 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -949,10 +949,14 @@ static void l2cap_send_acl(struct l2cap_conn *conn, struct sk_buff *skb,
- 			   u8 flags)
- {
- 	/* Check if the hcon still valid before attempting to send */
-+	rcu_read_lock();
-+
- 	if (hci_conn_valid(conn->hcon->hdev, conn->hcon))
- 		hci_send_acl(conn->hchan, skb, flags);
- 	else
- 		kfree_skb(skb);
-+
-+	rcu_read_unlock();
- }
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 1e9b27b3b108..10960462c5dd 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -533,6 +533,8 @@ struct hci_dev {
+ 	struct sk_buff		*req_skb;
+ 	struct sk_buff		*req_rsp;
  
- static void l2cap_send_cmd(struct l2cap_conn *conn, u8 ident, u8 code, u16 len,
++	bool			req_hdev_locked;
++
+ 	void			*smp_data;
+ 	void			*smp_bredr_data;
+ 
+diff --git a/include/net/bluetooth/hci_sync.h b/include/net/bluetooth/hci_sync.h
+index e352a4e0ef8d..eabc423b210e 100644
+--- a/include/net/bluetooth/hci_sync.h
++++ b/include/net/bluetooth/hci_sync.h
+@@ -188,3 +188,7 @@ int hci_le_conn_update_sync(struct hci_dev *hdev, struct hci_conn *conn,
+ 
+ int hci_connect_pa_sync(struct hci_dev *hdev, struct hci_conn *conn);
+ int hci_connect_big_sync(struct hci_dev *hdev, struct hci_conn *conn);
++
++void hci_dev_lock_sync(struct hci_dev *hdev);
++void hci_dev_unlock_sync(struct hci_dev *hdev);
++void hci_assert_lock_sync_held(struct hci_dev *hdev);
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 8fe2f5b73040..5391c1bb17f0 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -20,6 +20,25 @@
+ #include "aosp.h"
+ #include "leds.h"
+ 
++void hci_dev_lock_sync(struct hci_dev *hdev)
++{
++	hci_dev_lock(hdev);
++	lockdep_assert(!hdev->req_hdev_locked);
++	hdev->req_hdev_locked = true;
++}
++
++void hci_dev_unlock_sync(struct hci_dev *hdev)
++{
++	lockdep_assert(hdev->req_hdev_locked);
++	hdev->req_hdev_locked = false;
++	hci_dev_unlock(hdev);
++}
++
++void hci_assert_lock_sync_held(struct hci_dev *hdev)
++{
++	lockdep_assert(lockdep_is_held(&hdev->lock) && hdev->req_hdev_locked);
++}
++
+ static void hci_cmd_sync_complete(struct hci_dev *hdev, u8 result, u16 opcode,
+ 				  struct sk_buff *skb)
+ {
+@@ -159,6 +178,7 @@ struct sk_buff *__hci_cmd_sync_sk(struct hci_dev *hdev, u16 opcode, u32 plen,
+ {
+ 	struct hci_request req;
+ 	struct sk_buff *skb;
++	bool locked = READ_ONCE(hdev->req_hdev_locked);
+ 	int err = 0;
+ 
+ 	bt_dev_dbg(hdev, "Opcode 0x%4.4x", opcode);
+@@ -173,10 +193,16 @@ struct sk_buff *__hci_cmd_sync_sk(struct hci_dev *hdev, u16 opcode, u32 plen,
+ 	if (err < 0)
+ 		return ERR_PTR(err);
+ 
++	if (locked)
++		hci_dev_unlock(hdev);
++
+ 	err = wait_event_interruptible_timeout(hdev->req_wait_q,
+ 					       hdev->req_status != HCI_REQ_PEND,
+ 					       timeout);
+ 
++	if (locked)
++		hci_dev_lock(hdev);
++
+ 	if (err == -ERESTARTSYS)
+ 		return ERR_PTR(-EINTR);
+ 
 -- 
 2.51.0
 
