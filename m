@@ -1,75 +1,81 @@
-Return-Path: <linux-bluetooth+bounces-15581-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-15583-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id EAC29BB1811
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 01 Oct 2025 20:34:16 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 40865BB1922
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 01 Oct 2025 21:14:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D0C667A2BB2
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  1 Oct 2025 18:32:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EDA043C6C15
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  1 Oct 2025 19:14:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19AB32D6E49;
-	Wed,  1 Oct 2025 18:33:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D2142D94A0;
+	Wed,  1 Oct 2025 19:14:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=ariel.dalessandro@collabora.com header.b="HHdG3Ruz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZcnYjc8e"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD732D5934;
-	Wed,  1 Oct 2025 18:33:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759343632; cv=pass; b=Bw8b2rfxTyy5qRgEobY1LJTZZlUpJl3/ca4wo8OJTq2yHiDpqGfumCpxqePL0VZZXZqz3hCk59Hl9teLKluppoOegooS4ajDfA/JaBvHm/nKpQIdv0tWLlEaJeFcmM0ENprD4BMVNOQrHOaNG0WGZc6C+z8BXNB/W1sHT9sgnmM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759343632; c=relaxed/simple;
-	bh=6XPuX0m01ZFf2GseM0abEL1RU1m4cMag66VApjnqATw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=A3BgHzDZ6LLvGjUSPAMQWWVv7cPWdiDnNiRqCJxQRLHXIEXOyog0YjvyaZISb7ONuRn1Uz7m+LgUs3NF4irc/u63SR5x8rhy4FbAjY80gIW+bzzxUAUXOb5ZNXPtNluWRq09OFITS/2RV6VPWyn7K02lmXXVT8pAuBpflnH+oUU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=ariel.dalessandro@collabora.com header.b=HHdG3Ruz; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-ARC-Seal: i=1; a=rsa-sha256; t=1759343611; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=gXAEQVDCK74OK0TzgTvTVA+MUfiCZiPJSqtb6A0RzFDlVAzkGWfdzklQ8xaf+QQ1bDrbZhTRe+Axr4oTSkK4UFTZNMkcDg2ZE2OqqeYTZjGoQXR8hf2OQ9iVPBNkpe93v4cjguLw3w8hIh7OYGF8/fX59rz0xB0+pVXtv5I8JGE=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1759343611; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=5Tf1KRNvIh/o3Lawrm1/DSWDlI3pzmdrutlzoqFE9jM=; 
-	b=WVl7sfPLoh73cyvsUaNf5DoDdmjA7cK0cAPKbo7E/XC4dwdGklj0IphxKz0vqB54Q8oFOWbzul0VEH/ek5nZGf7/AxDi4vuWGewAPd2CJ3s46kdnOZcZCFu8ZkuR+CZsBRQ+ZCK8ggaTzCv5d+Gjku6JgdNwjTLbbV6iVviJ4QU=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=ariel.dalessandro@collabora.com;
-	dmarc=pass header.from=<ariel.dalessandro@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1759343611;
-	s=zohomail; d=collabora.com; i=ariel.dalessandro@collabora.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=5Tf1KRNvIh/o3Lawrm1/DSWDlI3pzmdrutlzoqFE9jM=;
-	b=HHdG3Ruz4P6R9QgHFOYqkeIpbu1ln3qlPVXfSOXm7OUfyiZxyfaHqX0E5Khr3HWK
-	e+KQ1qOKYMrdkKpHO9hHjAxLH2HiXhKn+Vlc2JMYrVvli3IKwLze0hSbbbwWZO4mY4l
-	rqPFhfYx8Uko3TPhwfbvvwhHDKkwVP0viKtOYakE=
-Received: by mx.zohomail.com with SMTPS id 1759343610165605.9822601405356;
-	Wed, 1 Oct 2025 11:33:30 -0700 (PDT)
-From: Ariel D'Alessandro <ariel.dalessandro@collabora.com>
-To: andrew+netdev@lunn.ch,
-	angelogioacchino.delregno@collabora.com,
-	ariel.dalessandro@collabora.com,
-	conor+dt@kernel.org,
-	davem@davemloft.net,
-	edumazet@google.com,
-	krzk+dt@kernel.org,
-	kuba@kernel.org,
-	luiz.dentz@gmail.com,
-	pabeni@redhat.com,
-	robh@kernel.org
-Cc: devicetree@vger.kernel.org,
-	kernel@collabora.com,
-	linux-bluetooth@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org
-Subject: [PATCH v3] dt-bindings: net: Convert Marvell 8897/8997 bindings to DT schema
-Date: Wed,  1 Oct 2025 15:33:20 -0300
-Message-ID: <20251001183320.83221-1-ariel.dalessandro@collabora.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12CB023D7DB
+	for <linux-bluetooth@vger.kernel.org>; Wed,  1 Oct 2025 19:14:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.48
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1759346049; cv=none; b=ORVbQMVVBrAQ2mrmE4CywWr8h9UJsADukf0mzrEsl+B73+6HvQzHCPsHW2Tt4/E5/rT5aeQu4sN2t9Gj8MBsPejiaOOj2IYFhU93TCfU7bA/Xnt1CG3XoXVr4WDDw6YPaXtQE9x/ufXFM/kDsdpaLidz+fclwZVHUA7XYR4UkXU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1759346049; c=relaxed/simple;
+	bh=Vp8+nDxvW86pQu8RGuVwHY6xJ8y4xgUYXaw5TvhL5dk=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=X32konWkSDJZLELWaeUnFqhN3NqKDumYNtIMr1cYCXG6cOSg8x6dB8SCU1KGFnCISKEpjU3M5E8Hgu3Tzdw93L2Kkida4161dqAnxa3IYpruH/LWFBZPonO8lhAZvVF7R4n3LAhWge2ecy8lQxLdkpPkGcoZJJL5lnG4zwfCZps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZcnYjc8e; arc=none smtp.client-ip=209.85.217.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-5a7b2a6b13bso194530137.3
+        for <linux-bluetooth@vger.kernel.org>; Wed, 01 Oct 2025 12:14:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759346042; x=1759950842; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=k4KmjXlprKlKWtD6bAGA48qdfhbb68+3/VncPBUfg2M=;
+        b=ZcnYjc8eq4bMBvJu7tjYBJQYXaOng4pw3p7YWiYTdllZ1zousEGO95XXDYF3g5TENm
+         ehEOdpTmzQWhQWR5TnY9Rh1ipBNM+nkInK4BcF1pSA+AxY47RUqJDduz36rb1cgbdWKh
+         6YuHfDrGk+coRgvlgOzeVN/8dXIoIETeU8KiSuaDuvrrORjAIVrZLE/xfUsaeycILKjP
+         tXydOXZ+tYIQjap+rCwT337TSUftMQeZmP5e0gZ8AyLbSWaWLOPZuZmkCRVv01F10rc5
+         ZR9mUqlf7D7+tenJ+/45qTN4VEGxQDtp6fXs1GOon9YXYMmAn4+XhqE5e4f4qj+zgaip
+         eC7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759346042; x=1759950842;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=k4KmjXlprKlKWtD6bAGA48qdfhbb68+3/VncPBUfg2M=;
+        b=Yk2utQW6P/PHnwiYGe0FLrK4MirZpum9ZeC2exn7x9fYuxkDUUZeyNM0yzP2TYaLYx
+         VwEzv4PoYpT9Km+wE8pnlYmaiC8P15NU3uowOE5c4xnLHvlToDicJlQOVm+a064rTka5
+         svq+yWPXQ0Mv2IeSIxvBUNecOdxq9rSOgCuby9sGQHA9bmjVmp0teRh16DkLqxEOSTWQ
+         wJJTp90SdnH/Xv+1YzxMHpQu8MkQcHdJKkq7bSQYL0L/oNilReHOZm7e4TlvfkBmiSRT
+         c74QnHhzDQHtFN+Bi1CLaExD3cIdeXbzt4dlwgOSPjwZbuEzHj3LlqIj/YirMe7BhO2c
+         mp2A==
+X-Gm-Message-State: AOJu0YztoNtw/Y2799RiE9I+qksqQKHMmw5HtlSBFTTSjom3rFdw2S3H
+	sWaiM6JjFuasQv/0I1IjJiQ4x1zj2+Rg6sUdj47/qKyRYJMXZf7OXmSXkUvixeEE
+X-Gm-Gg: ASbGncsjXKPNrOvTrgz/QFNxfHQqrnNcRTxSVzSRH3+UJoDGXD/LgzYmMLb6vYH5aHM
+	g4BwFpwEaueBt3DkI5m9YedmUieWk6OACrnu/CxBMKOoat9QkyggrT/nQY2kxWAJl54wFDhIPnK
+	zQVawKtPU4jgty24yPcFSzxXQib+54heeISd0ONUfnOwYgIGbiyZl8uoUtp5VKfFPVBN6JVQizF
+	L8y6Sqpj4eHQmDkY9dJi0oq1eKjhK0poe0NGqJuHm5UExLXru3b+vpbU69KjAs6s67cFM79Is1X
+	AVlOcFDH0EYqwWPoSHnAJ1oLD6U4KD/pgbTaZYLEKd/DtWCa5BqVI2Xwy6D8guk2Z6Zxq3x3NMv
+	kHu38QYurEahK4fvOrrn2Y2bgaVyo+tBQhbaHOrIo4t4PtDdmkcKKSV/BRpg9r/08rb6F8How7E
+	1sXg9T0OyQQoAMDptWvKd/NdiC
+X-Google-Smtp-Source: AGHT+IGfBReiDDe90kOeVc1VJG3DS4y978u8e5ws+xsYRA4R5mGqSN58bo3Gf72qT4glRmQhaY3Z7Q==
+X-Received: by 2002:a05:6102:32cf:b0:522:826e:7bfe with SMTP id ada2fe7eead31-5d3fe4e4acdmr2479051137.5.1759346042213;
+        Wed, 01 Oct 2025 12:14:02 -0700 (PDT)
+Received: from lvondent-mobl5 (syn-050-089-067-214.res.spectrum.com. [50.89.67.214])
+        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-5d40c4eb7bcsm110004137.3.2025.10.01.12.14.00
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Oct 2025 12:14:01 -0700 (PDT)
+From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+To: linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ v1 1/2] shared/bass: Fix permissions not requiring encryption
+Date: Wed,  1 Oct 2025 15:13:51 -0400
+Message-ID: <20251001191352.77542-1-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
@@ -78,212 +84,39 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
 
-Convert the existing text-based DT bindings for Marvell 8897/8997
-(sd8897/sd8997) bluetooth devices controller to a DT schema.
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-While here, bindings for "usb1286,204e" (USB interface) are dropped from
-the DT   schema definition as these are currently documented in file [0].
+Both Broadcast Audio Scan Control Point and Broadcast Receive State do
+require encryption:
 
-[0] Documentation/devicetree/bindings/net/btusb.txt
-
-Signed-off-by: Ariel D'Alessandro <ariel.dalessandro@collabora.com>
+https://www.bluetooth.com/wp-content/uploads/Files/Specification/HTML/24670-BASS-html5/out/en/index-en.html#UUID-dd95da9a-6ac0-3f45-7e34-13fa9e04d41c
 ---
- .../net/bluetooth/marvell,sd8897-bt.yaml      | 79 ++++++++++++++++++
- .../devicetree/bindings/net/btusb.txt         |  2 +-
- .../bindings/net/marvell-bt-8xxx.txt          | 83 -------------------
- 3 files changed, 80 insertions(+), 84 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/net/bluetooth/marvell,sd8897-bt.yaml
- delete mode 100644 Documentation/devicetree/bindings/net/marvell-bt-8xxx.txt
+ src/shared/bass.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/net/bluetooth/marvell,sd8897-bt.yaml b/Documentation/devicetree/bindings/net/bluetooth/marvell,sd8897-bt.yaml
-new file mode 100644
-index 0000000000000..a307c64cfa4d6
---- /dev/null
-+++ b/Documentation/devicetree/bindings/net/bluetooth/marvell,sd8897-bt.yaml
-@@ -0,0 +1,79 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/net/bluetooth/marvell,sd8897-bt.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Marvell 8897/8997 (sd8897/sd8997) bluetooth devices (SDIO)
-+
-+maintainers:
-+  - Ariel D'Alessandro <ariel.dalessandro@collabora.com>
-+
-+allOf:
-+  - $ref: /schemas/net/bluetooth/bluetooth-controller.yaml#
-+
-+properties:
-+  compatible:
-+    enum:
-+      - marvell,sd8897-bt
-+      - marvell,sd8997-bt
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  marvell,cal-data:
-+    $ref: /schemas/types.yaml#/definitions/uint8-array
-+    description:
-+      Calibration data downloaded to the device during initialization.
-+    maxItems: 28
-+
-+  marvell,wakeup-pin:
-+    $ref: /schemas/types.yaml#/definitions/uint16
-+    description:
-+      Wakeup pin number of the bluetooth chip. Used by firmware to wakeup host
-+      system.
-+
-+  marvell,wakeup-gap-ms:
-+    $ref: /schemas/types.yaml#/definitions/uint16
-+    description:
-+      Wakeup latency of the host platform. Required by the chip sleep feature.
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+
-+    mmc {
-+        vmmc-supply = <&wlan_en_reg>;
-+        bus-width = <4>;
-+        cap-power-off-card;
-+        keep-power-in-suspend;
-+
-+        #address-cells = <1>;
-+        #size-cells = <0>;
-+
-+        bluetooth@2 {
-+            compatible = "marvell,sd8897-bt";
-+            reg = <2>;
-+            interrupt-parent = <&pio>;
-+            interrupts = <119 IRQ_TYPE_LEVEL_LOW>;
-+
-+            marvell,cal-data = /bits/ 8 <
-+                0x37 0x01 0x1c 0x00 0xff 0xff 0xff 0xff 0x01 0x7f 0x04 0x02
-+                0x00 0x00 0xba 0xce 0xc0 0xc6 0x2d 0x00 0x00 0x00 0x00 0x00
-+                0x00 0x00 0xf0 0x00>;
-+            marvell,wakeup-pin = /bits/ 16 <0x0d>;
-+            marvell,wakeup-gap-ms = /bits/ 16 <0x64>;
-+        };
-+    };
-+
-+...
-diff --git a/Documentation/devicetree/bindings/net/btusb.txt b/Documentation/devicetree/bindings/net/btusb.txt
-index f546b1f7dd6d2..a68022a57c51e 100644
---- a/Documentation/devicetree/bindings/net/btusb.txt
-+++ b/Documentation/devicetree/bindings/net/btusb.txt
-@@ -14,7 +14,7 @@ Required properties:
- 
- 
- Also, vendors that use btusb may have device additional properties, e.g:
--Documentation/devicetree/bindings/net/marvell-bt-8xxx.txt
-+Documentation/devicetree/bindings/net/bluetooth/marvell,sd8897-bt.yaml
- 
- Optional properties:
- 
-diff --git a/Documentation/devicetree/bindings/net/marvell-bt-8xxx.txt b/Documentation/devicetree/bindings/net/marvell-bt-8xxx.txt
-deleted file mode 100644
-index 957e5e5c2927c..0000000000000
---- a/Documentation/devicetree/bindings/net/marvell-bt-8xxx.txt
-+++ /dev/null
-@@ -1,83 +0,0 @@
--Marvell 8897/8997 (sd8897/sd8997) bluetooth devices (SDIO or USB based)
--------
--The 8997 devices supports multiple interfaces. When used on SDIO interfaces,
--the btmrvl driver is used and when used on USB interface, the btusb driver is
--used.
--
--Required properties:
--
--  - compatible : should be one of the following:
--	* "marvell,sd8897-bt" (for SDIO)
--	* "marvell,sd8997-bt" (for SDIO)
--	* "usb1286,204e"      (for USB)
--
--Optional properties:
--
--  - marvell,cal-data: Calibration data downloaded to the device during
--		      initialization. This is an array of 28 values(u8).
--		      This is only applicable to SDIO devices.
--
--  - marvell,wakeup-pin: It represents wakeup pin number of the bluetooth chip.
--		        firmware will use the pin to wakeup host system (u16).
--  - marvell,wakeup-gap-ms: wakeup gap represents wakeup latency of the host
--		      platform. The value will be configured to firmware. This
--		      is needed to work chip's sleep feature as expected (u16).
--  - interrupt-names: Used only for USB based devices (See below)
--  - interrupts : specifies the interrupt pin number to the cpu. For SDIO, the
--		 driver will use the first interrupt specified in the interrupt
--		 array. For USB based devices, the driver will use the interrupt
--		 named "wakeup" from the interrupt-names and interrupt arrays.
--		 The driver will request an irq based on this interrupt number.
--		 During system suspend, the irq will be enabled so that the
--		 bluetooth chip can wakeup host platform under certain
--		 conditions. During system resume, the irq will be disabled
--		 to make sure unnecessary interrupt is not received.
--
--Example:
--
--IRQ pin 119 is used as system wakeup source interrupt.
--wakeup pin 13 and gap 100ms are configured so that firmware can wakeup host
--using this device side pin and wakeup latency.
--
--Example for SDIO device follows (calibration data is also available in
--below example).
--
--&mmc3 {
--	vmmc-supply = <&wlan_en_reg>;
--	bus-width = <4>;
--	cap-power-off-card;
--	keep-power-in-suspend;
--
--	#address-cells = <1>;
--	#size-cells = <0>;
--	btmrvl: bluetooth@2 {
--		compatible = "marvell,sd8897-bt";
--		reg = <2>;
--		interrupt-parent = <&pio>;
--		interrupts = <119 IRQ_TYPE_LEVEL_LOW>;
--
--		marvell,cal-data = /bits/ 8 <
--			0x37 0x01 0x1c 0x00 0xff 0xff 0xff 0xff 0x01 0x7f 0x04 0x02
--			0x00 0x00 0xba 0xce 0xc0 0xc6 0x2d 0x00 0x00 0x00 0x00 0x00
--			0x00 0x00 0xf0 0x00>;
--		marvell,wakeup-pin = /bits/ 16 <0x0d>;
--		marvell,wakeup-gap-ms = /bits/ 16 <0x64>;
--	};
--};
--
--Example for USB device:
--
--&usb_host1_ohci {
--    #address-cells = <1>;
--    #size-cells = <0>;
--
--    mvl_bt1: bt@1 {
--	compatible = "usb1286,204e";
--	reg = <1>;
--	interrupt-parent = <&gpio0>;
--	interrupt-names = "wakeup";
--	interrupts = <119 IRQ_TYPE_LEVEL_LOW>;
--	marvell,wakeup-pin = /bits/ 16 <0x0d>;
--	marvell,wakeup-gap-ms = /bits/ 16 <0x64>;
--    };
--};
+diff --git a/src/shared/bass.c b/src/shared/bass.c
+index 4b4fe8adf762..19cc9531d617 100644
+--- a/src/shared/bass.c
++++ b/src/shared/bass.c
+@@ -1223,7 +1223,7 @@ static void bcast_recv_new(struct bt_bass_db *bdb, int i)
+ 	bt_uuid16_create(&uuid, BCAST_RECV_STATE_UUID);
+ 	bcast_recv_state->attr =
+ 		gatt_db_service_add_characteristic(bdb->service, &uuid,
+-				BT_ATT_PERM_READ,
++				BT_ATT_PERM_READ | BT_ATT_PERM_READ_ENCRYPT,
+ 				BT_GATT_CHRC_PROP_READ |
+ 				BT_GATT_CHRC_PROP_NOTIFY,
+ 				bass_bcast_recv_state_read, NULL,
+@@ -1252,7 +1252,7 @@ static void bass_new(struct bt_bass_db *bdb)
+ 	bdb->bcast_audio_scan_cp =
+ 		gatt_db_service_add_characteristic(bdb->service,
+ 				&uuid,
+-				BT_ATT_PERM_WRITE,
++				BT_ATT_PERM_WRITE | BT_ATT_PERM_WRITE_ENCRYPT,
+ 				BT_GATT_CHRC_PROP_WRITE |
+ 				BT_GATT_CHRC_PROP_WRITE_WITHOUT_RESP,
+ 				NULL, bass_bcast_audio_scan_cp_write,
 -- 
 2.51.0
 
