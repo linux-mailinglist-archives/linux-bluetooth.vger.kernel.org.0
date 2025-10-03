@@ -1,34 +1,34 @@
-Return-Path: <linux-bluetooth+bounces-15638-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-15642-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 22C92BB7A84
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 03 Oct 2025 19:09:27 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 26BFABB7A90
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 03 Oct 2025 19:09:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CBA1819E68D1
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Oct 2025 17:09:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CE31C42306E
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Oct 2025 17:09:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3A2E2D8DBD;
-	Fri,  3 Oct 2025 17:09:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3637B2D876C;
+	Fri,  3 Oct 2025 17:09:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="NmnGMrhK"
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="NBjd7lUW"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5742D8387
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D6C2D879E
 	for <linux-bluetooth@vger.kernel.org>; Fri,  3 Oct 2025 17:09:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759511354; cv=pass; b=rDrZ8j6rcoALscoMz9Q5JTVqe0qvHYx+yPBqm3Bx6RW0Zm/PjMRKWFUUVXH0s9Y86PCSgpr8i+LgnJMWxygRP7Ucgd0JJK50Z1P73MvxB9oWOVBquLyF+6rvOE48QiNuPvZDY+a/BYfrOtLGjj27ufmuJF3uS5wfwos0OlJhFGY=
+	t=1759511355; cv=pass; b=WPgiesYm/B6ISYA51quuoOBWLH6xNiZvag9woeuOUzIvrdjJHnK9IOrr0uJzfV1LLIkbGIs5+9YQJhXebIttXk/8warcYzEEMj2LDMpDlj3a4tYHj3rDi88okYlMKTJsmDgWMhoOKFcz9nXum58zmFMDgIz/hdjYjxaG8GYmhHA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759511354; c=relaxed/simple;
-	bh=aWOP7BNFXzlnprPXih+WM4QGQC7nnUoPQxaHNoLCFb8=;
+	s=arc-20240116; t=1759511355; c=relaxed/simple;
+	bh=mr794x+EgpA8wKQAiqgW62ECs13tgXhE5DFdkGVffrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cIOscVw2oaMP7Y8tLIKtlJ4oDAQHby74soR8PqFsk9hap213B9PvaCNPKoiAduIno56jwclS/ToeCfSZKYv/xsZz+EahiG+o0o0OKDmAy+MuQ1MWdmgkzeDtG9q4bizU8X6ywxGz/IGcXpjdckrHAL6zbuZfSXYmMCyK2ksZavk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=NmnGMrhK; arc=pass smtp.client-ip=195.140.195.201
+	 MIME-Version; b=aT1hwX19S/0wxOMIG8Dgl/X6/GBvpfR304EculwxRY5aDX7Glm9kh4NWaOlEhtDf9+0WrOD+LXIcXaDNhSOFjmsQkyiHvROj9LZ8xl+818Rj6ohrwLGqyVvuTdlHBlGBjTyFovLjJgYoFLgDuriBgc1DUuAXFdBy//D71CC68rE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=NBjd7lUW; arc=pass smtp.client-ip=195.140.195.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [IPv6:2a0c:f040:0:2790::a01d])
@@ -36,7 +36,7 @@ Received: from monolith.lan (unknown [IPv6:2a0c:f040:0:2790::a01d])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4cdZrY2bw6zySF;
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4cdZrY45ZPz10Hg;
 	Fri,  3 Oct 2025 20:09:01 +0300 (EEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
 	t=1759511341;
@@ -44,33 +44,33 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=HSpTaeyDmjhJ1TAV9eSKwgqnOg+WXWSvV2xqyUivqSU=;
-	b=NmnGMrhKQJnt8gOiA+9HGtVCkYBOZfpKjx388nMzAxeKyXJ7yQZZra9zf3UVtuB2ToZn6r
-	JHVnvhCK0l6HoxUqESzwewcuzWA7PrQ3poCNaSiiAaTqtWtDt9eMro/Jl1/9ff7tVUrsAU
-	45OXRWAKOpMxzMFcsbfR08sOonUTsr4=
+	bh=BPoRNi6JZELGSdfGlYG0GYgM3Ux9ihP11AWeuR4IIWI=;
+	b=NBjd7lUWtM8Wb82nX0QVk0MsUAhIgWgPqS5/P2K8RxvfG9LjOoD1SMqQ8dPpsTqCrn31hD
+	zkep4wncmDj80R/2piUezghzNag71IjZmeKfFpG+wdybJEpV9Dei+kmFsK3+AYbkRL853c
+	KPVbdPp37FxF6jgx850huQO1BcIXr5o=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
 	s=meesny; t=1759511341;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=HSpTaeyDmjhJ1TAV9eSKwgqnOg+WXWSvV2xqyUivqSU=;
-	b=t9E9oIYB/GH9447lufoCOl7Fo+C9vJuwGK2OZCiaO4gxxiyg3BXnkKmadLr34ldanZ22PH
-	mecaMVLN0gd5frKOvnE1OKVOn8tU5hmEXCO0PZUFsndyW/0cOf5OkIs//Dubco3Hq3PB6w
-	pYIAS3KcHxFGRjmwsX5ZLRDiuK3ToW8=
+	bh=BPoRNi6JZELGSdfGlYG0GYgM3Ux9ihP11AWeuR4IIWI=;
+	b=JfNQC0tMlbg3ZLPN5ubphvpZ7jgB8YBPgwHSoHv7PeCvhKpkfs+hR+3YDMh7ESqeczwl8u
+	inuoq3sThq+gMpRySde7GKpOvfiCoWamxJN8fnrfjBAmmBqcJ1EZOTZKcevRiVnWnKQdNg
+	9gX18RxE6+YRb2eQbaqTYI3JP3KRHKQ=
 ARC-Seal: i=1; s=meesny; d=iki.fi; t=1759511341; a=rsa-sha256; cv=none;
-	b=d1yxqnfhcgJPPij5WKb+EJEohhacQHQtcUIFY1M71wrZhWj0+6VvyOcGd2ameV0nWElvNx
-	dOD3qdFp2moE7nr8wm4YnIlrRL2GaPXDHi/DdlbHH1YswxxUey0seZc1g9Qjj7LnTzIDJ8
-	1zJUeIvoHDpP79Os7aB5ZHyKDPBin74=
+	b=xUSZiERRymsHCJQRvq3jaHUnG8sNXbSxnVwRm0QO5uO8NCGA5fptL/ItBKUI8wEAl2dDql
+	p5ovcfsdm0/5t9C1qZ32E93ZyQ2ScTCIozdvcUbM2Flc3CyRKPPLLjgzphA6WDp1usbB5F
+	Yhznxmu0nqPxyQoTYbx54KHCDM12i6A=
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH 8/9] Bluetooth: hci_conn: hold reference in abort_conn_sync
-Date: Fri,  3 Oct 2025 20:08:51 +0300
-Message-ID: <11051c427367f5f086e7bc81e64912e616c6197c.1759511032.git.pav@iki.fi>
+Subject: [PATCH 9/9] Bluetooth: hci_sync: hold references in hci_sync callbacks
+Date: Fri,  3 Oct 2025 20:08:52 +0300
+Message-ID: <5256570006cf5beb4b27018edd65beeccb700709.1759511032.git.pav@iki.fi>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1759511032.git.pav@iki.fi>
 References: <cover.1759511032.git.pav@iki.fi>
@@ -85,47 +85,158 @@ Content-Transfer-Encoding: 8bit
 hci_conn_valid() should not be used on potentially freed hci_conn
 pointers, as relying on kalloc not reusing addresses is bad practice.
 
-Hold a hci_conn reference for the queue job so the pointer is not freed
+Hold a hci_conn reference for queued jobs so the pointers are not freed
 too early.
 
-This also avoids potential UAF during abort_conn_sync().
+This also avoids potential UAF if the conn would be freed while the jobs
+are running.
 
 Fixes: 881559af5f5c5 ("Bluetooth: hci_sync: Attempt to dequeue connection attempt")
 Signed-off-by: Pauli Virtanen <pav@iki.fi>
 ---
- net/bluetooth/hci_conn.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ net/bluetooth/hci_sync.c | 55 +++++++++++++++++++++++++++++++---------
+ 1 file changed, 43 insertions(+), 12 deletions(-)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 10dba0cac78b..2e12c918da0a 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -2933,6 +2933,13 @@ static int abort_conn_sync(struct hci_dev *hdev, void *data)
- 	return hci_abort_conn_sync(hdev, conn, conn->abort_reason);
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index c5a618b30131..8832f1c6875c 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -6955,12 +6955,23 @@ static int hci_acl_create_conn_sync(struct hci_dev *hdev, void *data)
+ 					conn->conn_timeout, NULL);
  }
  
-+static void abort_conn_destroy(struct hci_dev *hdev, void *data, int err)
++static void hci_acl_create_conn_sync_complete(struct hci_dev *hdev, void *data,
++					      int err)
 +{
 +	struct hci_conn *conn = data;
 +
 +	hci_conn_put(conn);
 +}
 +
- int hci_abort_conn(struct hci_conn *conn, u8 reason)
+ int hci_connect_acl_sync(struct hci_dev *hdev, struct hci_conn *conn)
  {
- 	struct hci_dev *hdev = conn->hdev;
-@@ -2973,7 +2980,10 @@ int hci_abort_conn(struct hci_conn *conn, u8 reason)
- 	 * as a result to MGMT_OP_DISCONNECT/MGMT_OP_UNPAIR which does
- 	 * already queue its callback on cmd_sync_work.
- 	 */
--	err = hci_cmd_sync_run_once(hdev, abort_conn_sync, conn, NULL);
-+	err = hci_cmd_sync_run_once(hdev, abort_conn_sync, hci_conn_get(conn),
-+				    abort_conn_destroy);
+ 	int err;
+ 
+-	err = hci_cmd_sync_queue_once(hdev, hci_acl_create_conn_sync, conn,
+-				      NULL);
++	err = hci_cmd_sync_queue_once(hdev, hci_acl_create_conn_sync,
++				      hci_conn_get(conn),
++				      hci_acl_create_conn_sync_complete);
 +	if (err)
 +		hci_conn_put(conn);
  	return (err == -EEXIST) ? 0 : err;
  }
  
+@@ -6971,36 +6982,41 @@ static void create_le_conn_complete(struct hci_dev *hdev, void *data, int err)
+ 	bt_dev_dbg(hdev, "err %d", err);
+ 
+ 	if (err == -ECANCELED)
+-		return;
++		goto done;
+ 
+ 	hci_dev_lock(hdev);
+ 
+ 	if (!hci_conn_valid(hdev, conn))
+-		goto done;
++		goto unlock;
+ 
+ 	if (!err) {
+ 		hci_connect_le_scan_cleanup(conn, 0x00);
+-		goto done;
++		goto unlock;
+ 	}
+ 
+ 	/* Check if connection is still pending */
+ 	if (conn != hci_lookup_le_connect(hdev))
+-		goto done;
++		goto unlock;
+ 
+ 	/* Flush to make sure we send create conn cancel command if needed */
+ 	flush_delayed_work(&conn->le_conn_timeout);
+ 	hci_conn_failed(conn, bt_status(err));
+ 
+-done:
++unlock:
+ 	hci_dev_unlock(hdev);
++done:
++	hci_conn_put(conn);
+ }
+ 
+ int hci_connect_le_sync(struct hci_dev *hdev, struct hci_conn *conn)
+ {
+ 	int err;
+ 
+-	err = hci_cmd_sync_queue_once(hdev, hci_le_create_conn_sync, conn,
++	err = hci_cmd_sync_queue_once(hdev, hci_le_create_conn_sync,
++				      hci_conn_get(conn),
+ 				      create_le_conn_complete);
++	if (err)
++		hci_conn_put(conn);
+ 	return (err == -EEXIST) ? 0 : err;
+ }
+ 
+@@ -7048,7 +7064,7 @@ static void create_pa_complete(struct hci_dev *hdev, void *data, int err)
+ 	bt_dev_dbg(hdev, "err %d", err);
+ 
+ 	if (err == -ECANCELED)
+-		return;
++		goto done;
+ 
+ 	hci_dev_lock(hdev);
+ 
+@@ -7072,6 +7088,8 @@ static void create_pa_complete(struct hci_dev *hdev, void *data, int err)
+ 
+ unlock:
+ 	hci_dev_unlock(hdev);
++done:
++	hci_conn_put(conn);
+ }
+ 
+ static int hci_le_pa_create_sync(struct hci_dev *hdev, void *data)
+@@ -7161,8 +7179,11 @@ int hci_connect_pa_sync(struct hci_dev *hdev, struct hci_conn *conn)
+ {
+ 	int err;
+ 
+-	err = hci_cmd_sync_queue_once(hdev, hci_le_pa_create_sync, conn,
++	err = hci_cmd_sync_queue_once(hdev, hci_le_pa_create_sync,
++				      hci_conn_get(conn),
+ 				      create_pa_complete);
++	if (err)
++		hci_conn_put(conn);
+ 	return (err == -EEXIST) ? 0 : err;
+ }
+ 
+@@ -7173,10 +7194,17 @@ static void create_big_complete(struct hci_dev *hdev, void *data, int err)
+ 	bt_dev_dbg(hdev, "err %d", err);
+ 
+ 	if (err == -ECANCELED)
+-		return;
++		goto done;
++
++	hci_dev_lock(hdev);
+ 
+ 	if (hci_conn_valid(hdev, conn))
+ 		clear_bit(HCI_CONN_CREATE_BIG_SYNC, &conn->flags);
++
++	hci_dev_unlock(hdev);
++
++done:
++	hci_conn_put(conn);
+ }
+ 
+ static int hci_le_big_create_sync(struct hci_dev *hdev, void *data)
+@@ -7227,7 +7255,10 @@ int hci_connect_big_sync(struct hci_dev *hdev, struct hci_conn *conn)
+ {
+ 	int err;
+ 
+-	err = hci_cmd_sync_queue_once(hdev, hci_le_big_create_sync, conn,
++	err = hci_cmd_sync_queue_once(hdev, hci_le_big_create_sync,
++				      hci_conn_get(conn),
+ 				      create_big_complete);
++	if (err)
++		hci_conn_put(conn);
+ 	return (err == -EEXIST) ? 0 : err;
+ }
 -- 
 2.51.0
 
