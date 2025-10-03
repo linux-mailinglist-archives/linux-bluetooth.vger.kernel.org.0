@@ -1,34 +1,34 @@
-Return-Path: <linux-bluetooth+bounces-15639-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-15640-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D6EEBB7A87
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 03 Oct 2025 19:09:30 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id DF417BB7A8D
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 03 Oct 2025 19:09:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CC0634227A8
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Oct 2025 17:09:28 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id C235D4EE023
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Oct 2025 17:09:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDBA82D8DDB;
-	Fri,  3 Oct 2025 17:09:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 269402D8387;
+	Fri,  3 Oct 2025 17:09:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="nk0erPTW"
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="GXqC66HZ"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0DE22D8DA3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB142D8DA7
 	for <linux-bluetooth@vger.kernel.org>; Fri,  3 Oct 2025 17:09:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759511354; cv=pass; b=hg0Ali27XoQiShVClO5kI9bsMnZHgb/xGyK+D7VgSq0gQ9te2cEjpt8w1tDKAgBcirLM0NC8xuQNiQro/iruUM600u3BYYBYO3VHT8gFO4tTP1VC4nTal7GNQ9213qt7EOsi2UW6BMuBdu5MTKHwFdabWYUhbNILyA5mIPzpZpU=
+	t=1759511354; cv=pass; b=rp20bAG6ph5HbYv3K8qxeXzZ+8WtYevoXp65cpIKvqSnwZT4lya9ccJJqPtv/eNV6kWofhKV+rebIOPVRGoa1AEJwF0CJp9Fb7bE8ZGBzVcmi+hUE3wRubISvXli26lmzy6Q0GfvLPT1TxhDqmg+Au4iMZmSGmII9MUKSV6eg0U=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1759511354; c=relaxed/simple;
-	bh=nBDdp6W36jqff+p4De6X620mf5ZkxiT1+hwTluYiffI=;
+	bh=Jy4IttjxJPEl9KpUw4kEH/+boGUGt1oeP/nVS2iIXhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AVt0k5WOi5vppqs9fEzK+1nuW0LaMruGHebFiEHo5N2J2XGbAQZsB5bkdWyC9JicvzrWJZKva62gOMlmXfmoVyjTPRpJ5ubzpanLqmSiIHmHOPZFZgV0Jbf48fp6+plAg9PZH+gbTql19hMHz/I2dSxOE7s9zPxPvWDKHSRo6UU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=nk0erPTW; arc=pass smtp.client-ip=195.140.195.201
+	 MIME-Version; b=lb6G5hwEBrN50TuChWOkKVY6Kg/Eq3CouLDbZIDJHdRyBG0DMF3YqU5/5vzsIC5iV4dPTsPGG+1FqbnBUN8NNveJ7R+kgN/WXHxAmH9fMUfItQHpByifYjl/8vrw9eyaKqL894t//i9a3cn4P4KgV0/W+CwospzAD0jhx7KuMAU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=GXqC66HZ; arc=pass smtp.client-ip=195.140.195.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [IPv6:2a0c:f040:0:2790::a01d])
@@ -36,41 +36,41 @@ Received: from monolith.lan (unknown [IPv6:2a0c:f040:0:2790::a01d])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4cdZrX6S29z10BH;
-	Fri,  3 Oct 2025 20:09:00 +0300 (EEST)
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4cdZrY0xRYz10BK;
+	Fri,  3 Oct 2025 20:09:01 +0300 (EEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
 	t=1759511341;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=FpNY/35KpAMkA77dJzjufTjsC1KNZWcwDuCssy1kjbE=;
-	b=nk0erPTWI9niL/DCpg473F3ue9k/hdy4eKNUJNr47L3Dq7ff8HH2v/S7R31HT5hGYsjL6J
-	ee2iVLVPxcMbS4BDucuJ6JQpkY0JGfwsfgjIswa4mRL1HNrM+SwqWUR6E005Kxq23LjVKb
-	Gk41EwCbQq3rZGPG95m/tM7J1ERG7+4=
+	bh=WacZwXiYX9lq6QfwdaUPn8mRnjzRxH5qyHXxQhdZdNw=;
+	b=GXqC66HZz0lMrG91cjW5z8sRLroePCJLls4F7wV5KkyGflpNZyheGQObva9GlcZO6RDzgU
+	l5lAgsMnpclCnmIabVOg++YqtWB7p8TDNuCTZkuKcNiKXdAjiL3acb+XCfnZ1LAAKISEox
+	MHaLV4XgXQko73kPRngKOp8xE8EySp0=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
 	s=meesny; t=1759511341;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=FpNY/35KpAMkA77dJzjufTjsC1KNZWcwDuCssy1kjbE=;
-	b=YJ8eTlJCppQzQAVRluWPOSMQ5k9vC3rsYrn/FFV6/bTx5J+sRtJkyerlXivVDVs3L3kejB
-	xs8XJRL9fVKQuAiScbX3M2wGbbzkOGseUeSFaULX+SMyvTj9A8VvTB4+xnXSGyhtZfKt8o
-	ROmVY/YdBHn3D1Fc57DfxF4puSH8P+Y=
+	bh=WacZwXiYX9lq6QfwdaUPn8mRnjzRxH5qyHXxQhdZdNw=;
+	b=HGevIH1ewbY7d9upsXA+R+RGvZDJasC/ccWBdkH8bmQNdHKJ4bYoD6hKydrMlxzC2kdI8Q
+	5zMKADZA5usY07OXuHdMJ9BaPpXyk1KmScuf00Nl8ibe/V9cxtuqenblmzR64fWf7/aqX8
+	JGyRi1LKEx7YK2ryrcTCnfTKNoBgOSU=
 ARC-Seal: i=1; s=meesny; d=iki.fi; t=1759511341; a=rsa-sha256; cv=none;
-	b=Kgwvncc6dYQzwtKlW8ekCoGCiQFIfen8imRwtCEq2vopy2stFPy1TUsnNhzGNRsr6cvh6D
-	LW+kaW6gjlcFr/xH0W1tGl5DxulLhSG+1MwNpbFobU/2Yq3rlhg/bOA2bVrjtehW3mUvc8
-	wnpNUJ/BKhvptB70OFe9RONA1izvizM=
+	b=NOj2HEwABDMWGg5LccDaWiPEnOS7PzaFgCuH3mKaZXMN+a9yYueVtvMHKdMlZI+4qp9aDi
+	k94ygwt570+i5Tf3i0r5nK0ADZLbpCCTMselqMJOZDSeyByX6D/RyOtbdMRAhvTW+wJWZu
+	aT1v0aG7vW977LS2r5T9KZNjzvIQnOs=
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH 6/9] Bluetooth: hci_sync: make hci_cmd_sync_run* indicate if item was added
-Date: Fri,  3 Oct 2025 20:08:49 +0300
-Message-ID: <2764d5a03e98718b6208fa4082d42ac86dda697b.1759511032.git.pav@iki.fi>
+Subject: [PATCH 7/9] Bluetooth: hci_sync: hci_cmd_sync_queue_once() return -EEXIST if exists
+Date: Fri,  3 Oct 2025 20:08:50 +0300
+Message-ID: <af365be23583fb8060f03af477cea24fdcd8f5d6.1759511032.git.pav@iki.fi>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1759511032.git.pav@iki.fi>
 References: <cover.1759511032.git.pav@iki.fi>
@@ -82,74 +82,104 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-hci_cmd_sync_run_once() needs to indicate whether a queue item was
-added, so caller can know if callbacks are called.  Change the function
-to return -EEXIST if queue item already exists.
+hci_cmd_sync_queue_once() needs to indicate whether a queue item was
+added, so caller can know if callbacks are called.
 
-hci_cmd_sync_run() may run the work immediately. If so, make it behave
-as if item was queued successfully. Change it to call also destroy() and
-return 0.
-
-Modify all callsites vs. the changes.
+Change the function to return -EEXIST if queue item already exists.
+Modify all callsites to handle that.
 
 Signed-off-by: Pauli Virtanen <pav@iki.fi>
 ---
- net/bluetooth/hci_conn.c |  4 +++-
- net/bluetooth/hci_sync.c | 13 ++++++++++---
- 2 files changed, 13 insertions(+), 4 deletions(-)
+ net/bluetooth/hci_sync.c | 37 ++++++++++++++++++++++++++-----------
+ 1 file changed, 26 insertions(+), 11 deletions(-)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index af17884fdf75..10dba0cac78b 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -2936,6 +2936,7 @@ static int abort_conn_sync(struct hci_dev *hdev, void *data)
- int hci_abort_conn(struct hci_conn *conn, u8 reason)
- {
- 	struct hci_dev *hdev = conn->hdev;
-+	int err;
- 
- 	/* If abort_reason has already been set it means the connection is
- 	 * already being aborted so don't attempt to overwrite it.
-@@ -2972,7 +2973,8 @@ int hci_abort_conn(struct hci_conn *conn, u8 reason)
- 	 * as a result to MGMT_OP_DISCONNECT/MGMT_OP_UNPAIR which does
- 	 * already queue its callback on cmd_sync_work.
- 	 */
--	return hci_cmd_sync_run_once(hdev, abort_conn_sync, conn, NULL);
-+	err = hci_cmd_sync_run_once(hdev, abort_conn_sync, conn, NULL);
-+	return (err == -EEXIST) ? 0 : err;
- }
- 
- void hci_setup_tx_timestamp(struct sk_buff *skb, size_t key_offset,
 diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index bf68da42e664..1764f61fc520 100644
+index 1764f61fc520..c5a618b30131 100644
 --- a/net/bluetooth/hci_sync.c
 +++ b/net/bluetooth/hci_sync.c
-@@ -801,8 +801,15 @@ int hci_cmd_sync_run(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
- 		return -ENETDOWN;
- 
- 	/* If on cmd_sync_work then run immediately otherwise queue */
--	if (current_work() == &hdev->cmd_sync_work)
--		return func(hdev, data);
-+	if (current_work() == &hdev->cmd_sync_work) {
-+		int err;
-+
-+		err = func(hdev, data);
-+		if (destroy)
-+			destroy(hdev, data, err);
-+
-+		return 0;
-+	}
- 
- 	return hci_cmd_sync_submit(hdev, func, data, destroy);
- }
-@@ -818,7 +825,7 @@ int hci_cmd_sync_run_once(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
- 			  void *data, hci_cmd_sync_work_destroy_t destroy)
+@@ -780,7 +780,7 @@ int hci_cmd_sync_queue_once(struct hci_dev *hdev, hci_cmd_sync_work_func_t func,
+ 			    void *data, hci_cmd_sync_work_destroy_t destroy)
  {
  	if (hci_cmd_sync_lookup_entry(hdev, func, data, destroy))
 -		return 0;
 +		return -EEXIST;
  
- 	return hci_cmd_sync_run(hdev, func, data, destroy);
+ 	return hci_cmd_sync_queue(hdev, func, data, destroy);
+ }
+@@ -3294,6 +3294,8 @@ static int update_passive_scan_sync(struct hci_dev *hdev, void *data)
+ 
+ int hci_update_passive_scan(struct hci_dev *hdev)
+ {
++	int err;
++
+ 	/* Only queue if it would have any effect */
+ 	if (!test_bit(HCI_UP, &hdev->flags) ||
+ 	    test_bit(HCI_INIT, &hdev->flags) ||
+@@ -3303,8 +3305,9 @@ int hci_update_passive_scan(struct hci_dev *hdev)
+ 	    hci_dev_test_flag(hdev, HCI_UNREGISTER))
+ 		return 0;
+ 
+-	return hci_cmd_sync_queue_once(hdev, update_passive_scan_sync, NULL,
+-				       NULL);
++	err = hci_cmd_sync_queue_once(hdev, update_passive_scan_sync, NULL,
++				      NULL);
++	return (err == -EEXIST) ? 0 : err;
+ }
+ 
+ int hci_write_sc_support_sync(struct hci_dev *hdev, u8 val)
+@@ -6954,8 +6957,11 @@ static int hci_acl_create_conn_sync(struct hci_dev *hdev, void *data)
+ 
+ int hci_connect_acl_sync(struct hci_dev *hdev, struct hci_conn *conn)
+ {
+-	return hci_cmd_sync_queue_once(hdev, hci_acl_create_conn_sync, conn,
+-				       NULL);
++	int err;
++
++	err = hci_cmd_sync_queue_once(hdev, hci_acl_create_conn_sync, conn,
++				      NULL);
++	return (err == -EEXIST) ? 0 : err;
+ }
+ 
+ static void create_le_conn_complete(struct hci_dev *hdev, void *data, int err)
+@@ -6991,8 +6997,11 @@ static void create_le_conn_complete(struct hci_dev *hdev, void *data, int err)
+ 
+ int hci_connect_le_sync(struct hci_dev *hdev, struct hci_conn *conn)
+ {
+-	return hci_cmd_sync_queue_once(hdev, hci_le_create_conn_sync, conn,
+-				       create_le_conn_complete);
++	int err;
++
++	err = hci_cmd_sync_queue_once(hdev, hci_le_create_conn_sync, conn,
++				      create_le_conn_complete);
++	return (err == -EEXIST) ? 0 : err;
+ }
+ 
+ int hci_cancel_connect_sync(struct hci_dev *hdev, struct hci_conn *conn)
+@@ -7150,8 +7159,11 @@ static int hci_le_pa_create_sync(struct hci_dev *hdev, void *data)
+ 
+ int hci_connect_pa_sync(struct hci_dev *hdev, struct hci_conn *conn)
+ {
+-	return hci_cmd_sync_queue_once(hdev, hci_le_pa_create_sync, conn,
+-				       create_pa_complete);
++	int err;
++
++	err = hci_cmd_sync_queue_once(hdev, hci_le_pa_create_sync, conn,
++				      create_pa_complete);
++	return (err == -EEXIST) ? 0 : err;
+ }
+ 
+ static void create_big_complete(struct hci_dev *hdev, void *data, int err)
+@@ -7213,6 +7225,9 @@ static int hci_le_big_create_sync(struct hci_dev *hdev, void *data)
+ 
+ int hci_connect_big_sync(struct hci_dev *hdev, struct hci_conn *conn)
+ {
+-	return hci_cmd_sync_queue_once(hdev, hci_le_big_create_sync, conn,
+-				       create_big_complete);
++	int err;
++
++	err = hci_cmd_sync_queue_once(hdev, hci_le_big_create_sync, conn,
++				      create_big_complete);
++	return (err == -EEXIST) ? 0 : err;
  }
 -- 
 2.51.0
