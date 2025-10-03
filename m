@@ -1,34 +1,34 @@
-Return-Path: <linux-bluetooth+bounces-15635-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-15633-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D685BB7A78
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 03 Oct 2025 19:09:19 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3FE36BB7A75
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 03 Oct 2025 19:09:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id B0F934EBAFA
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Oct 2025 17:09:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0C14D19E6A32
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  3 Oct 2025 17:09:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88AF22D877D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5989C2D8776;
 	Fri,  3 Oct 2025 17:09:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="pV/JlZEE"
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="McNssdXv"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1798A2D838A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1788D2D8379
 	for <linux-bluetooth@vger.kernel.org>; Fri,  3 Oct 2025 17:09:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759511351; cv=pass; b=flf9UI5FmsXCqWW3fP06RolLwSvo5PRrK8Mh6Zv/x2e1cVFlLZGGxTt2+CNHIv4VnSOTy8WlJK+WvQ7OcjofPMBS9o//9HjVNsnHUTvYZJv0VwIVZCAxVXZfE773M9tYTYJkgmWc8/32qtoWI6jeJsey/doHQn/EK7C4o2Y/V6U=
+	t=1759511350; cv=pass; b=ma77M0YdAbLutMQL4MXs7oi/5zPLRGbR2hEmBF7MT1GlhQpHXxncyH3pAlbo1AedeBqAILsyfvV9ZrRXrq8ywkOFThu7a+CeirqKH3DjeL4+fPkVDReQVmyPHHCu0ibnukdAmJoSjVjD0JONq2hMeK6/vLFa6zGeXRKgDEabps8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759511351; c=relaxed/simple;
-	bh=PeHklEXfMLmHDfuEGHlYS0yc2yOjdfvcLTxAznoHBnI=;
+	s=arc-20240116; t=1759511350; c=relaxed/simple;
+	bh=Ra5UiGci3XQAAeGii0p3xiRpm7VByNVHWI/yl0NTgAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cBws9ZcBIYXSKG/o2uA6pdUAOX/EiZOoJfeVrCoOyrydNaiJqDCQ1Ot7louPlkAe8quKqqX4OUoezXxMUcEY5tpbUPy1EnYaxCAjnrDXJt/bmAdH5NBLrO0YF2Sh+/NUTJzLbnEgcZEnkfwU/Dg8znOlE92nv29R+80RnMKAQsc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=pV/JlZEE; arc=pass smtp.client-ip=195.140.195.201
+	 MIME-Version; b=II2sOqWPWycykcNmxoGDBh/SCovSggZPSIZFBSyNsdANIlubxkvj/Nw3B502s/zVRedMQN8oGEqcnrYHtcClIrA+nrw+Q4XiQEHN8POdEE42WOphHTwAUJsnngyLhfzIa8T41BVZ5YadEftriBhz38Ej8uAtGzJpdPBFYruIe7k=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=McNssdXv; arc=pass smtp.client-ip=195.140.195.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [IPv6:2a0c:f040:0:2790::a01d])
@@ -36,41 +36,41 @@ Received: from monolith.lan (unknown [IPv6:2a0c:f040:0:2790::a01d])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4cdZrW2TbzzyT7;
-	Fri,  3 Oct 2025 20:08:59 +0300 (EEST)
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4cdZrX0Bngzyjq;
+	Fri,  3 Oct 2025 20:09:00 +0300 (EEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
-	t=1759511339;
+	t=1759511340;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=S4BFaq6Qb9TqOmTvUt19qGCV0zJv4d8GPP+5R1SZHVo=;
-	b=pV/JlZEEd3594pv9Uil88wmNMTddmmW2D74t4onvPk0CRX5qfviN+Dqsw/niNg3wGh39JX
-	Gxja6qeb9e//ZaKryJt97ggLXyw56glRjWXaKkfedjOJjgthWkOWajDDzTerTBodiaZ/O9
-	wzwKjS8Z5VdIiOFQoF4Vhl2E//PPa1w=
+	bh=SteIcmBmdFC2jNVDJIUpxhD8/IHF1WdnsqXMTY/AcTU=;
+	b=McNssdXvOBb/OrmpwYnNjsXdlnVogTqA4rPEd8qaLwGpJFXCXK9zhIkRPD6kAzFE6aBJ9O
+	9WioX6+d6Gj0CI6P3uNrEnU04nztJcXLbrLt7quo7dJ8S5Db6aBpgqLoSxi6U2jOyGBNxt
+	P6Fmmw7a9T2ZpglCZGYCP3a5kO5NtIw=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=meesny; t=1759511339;
+	s=meesny; t=1759511340;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=S4BFaq6Qb9TqOmTvUt19qGCV0zJv4d8GPP+5R1SZHVo=;
-	b=H/oBMtD7G+3vfq1O+gUQbL/x9szd7RXQ3QMVhf5tFXj3pk9XRjpV6jth1sfoxKgcc7nLJA
-	N27qfef6U20wfQgx4BJnIm3cjzaanTBWSj9lQKZ8aZE/F2zSC16w/5mhOYwzqQNNy+Hy5O
-	RXUxqFhYM8Tsa0eqLG0r9MqgSI0csJg=
-ARC-Seal: i=1; s=meesny; d=iki.fi; t=1759511339; a=rsa-sha256; cv=none;
-	b=a1THRXDnaVwBFXJEqZw1S854+pXnx27S4cOw24mmgWN/vXZKRUC3lG8D4Tcbgy31h/cjF6
-	5vOkMU32PeNcKLrNTM//OpNoskOAV6BmYTKuvpaN/8QHgf9dIsTASyKcqfs/j0UIGpGK0T
-	En9GZbUfKeqOThSSL0t/Erl0AExJ5ms=
+	bh=SteIcmBmdFC2jNVDJIUpxhD8/IHF1WdnsqXMTY/AcTU=;
+	b=BIgdJFBvofSid5Lvt2+WWFIHa4cC4A9J4PZW7IUFCYFWPeSQpsuPfV750HWZz+O98yMHmV
+	cyke0XNCTheWqY6PVEwyeUDzLFK3vAoOFl5XQO2pFEGyg/X8VmC3L/d+kC1AThAIEXRX4U
+	VOsTCNCSpEECh0bNZlNM63oMI80dUJg=
+ARC-Seal: i=1; s=meesny; d=iki.fi; t=1759511340; a=rsa-sha256; cv=none;
+	b=UGv9skj8DbjL42nT988lQLgl3BJ3EFDnSAKtgaP+rfX9qy9E5t6QbBbtdJCChUwkozht8p
+	gvdDDFO9j8wjviNuZ2sAycL6MalByyiTbxGI8NDIwgbhkX5SzHieD61z0vlwZPmEGqGCZ4
+	m4f/ErvzDiaAkZ0lIE0cFHoWxZyqjd0=
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH 1/9] Bluetooth: hci_event: extend hdev lock in hci_le_remote_conn_param_req_evt
-Date: Fri,  3 Oct 2025 20:08:44 +0300
-Message-ID: <b0de78d5d1cced515f680d7323aae09c31586884.1759511032.git.pav@iki.fi>
+Subject: [PATCH 2/9] Bluetooth: hci_conn: take hdev lock in set_cig_params_sync
+Date: Fri,  3 Oct 2025 20:08:45 +0300
+Message-ID: <76828eb8b9b1e5b1596c77f9a08336edcaae2753.1759511032.git.pav@iki.fi>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1759511032.git.pav@iki.fi>
 References: <cover.1759511032.git.pav@iki.fi>
@@ -82,84 +82,43 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Cover conn lookup and field access with hdev lock in
-hci_le_remote_conn_param_req_evt.
+Take hdev lock to prevent hci_conn from being deleted or modified
+concurrently.
 
-This avoids any concurrent deletion of the conn before we are done
-dereferencing it.
-
-Fixes: 95118dd4edfec ("Bluetooth: hci_event: Use of a function table to handle LE subevents")
+Fixes: a091289218202 ("Bluetooth: hci_conn: Fix hci_le_set_cig_params")
 Signed-off-by: Pauli Virtanen <pav@iki.fi>
 ---
- net/bluetooth/hci_event.c | 33 ++++++++++++++++++++-------------
- 1 file changed, 20 insertions(+), 13 deletions(-)
+ net/bluetooth/hci_conn.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 1dabf5a7ae18..91da067e7997 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -6620,25 +6620,31 @@ static void hci_le_remote_conn_param_req_evt(struct hci_dev *hdev, void *data,
- 	latency = le16_to_cpu(ev->latency);
- 	timeout = le16_to_cpu(ev->timeout);
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index 111f0e37b672..af17884fdf75 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -1813,9 +1813,13 @@ static int set_cig_params_sync(struct hci_dev *hdev, void *data)
+ 	u8 aux_num_cis = 0;
+ 	u8 cis_id;
  
 +	hci_dev_lock(hdev);
 +
- 	hcon = hci_conn_hash_lookup_handle(hdev, handle);
--	if (!hcon || hcon->state != BT_CONNECTED)
--		return send_conn_param_neg_reply(hdev, handle,
--						 HCI_ERROR_UNKNOWN_CONN_ID);
-+	if (!hcon || hcon->state != BT_CONNECTED) {
-+		send_conn_param_neg_reply(hdev, handle,
-+					  HCI_ERROR_UNKNOWN_CONN_ID);
-+		goto unlock;
+ 	conn = hci_conn_hash_lookup_cig(hdev, cig_id);
+-	if (!conn)
++	if (!conn) {
++		hci_dev_unlock(hdev);
+ 		return 0;
 +	}
  
--	if (max > hcon->le_conn_max_interval)
--		return send_conn_param_neg_reply(hdev, handle,
--						 HCI_ERROR_INVALID_LL_PARAMS);
-+	if (max > hcon->le_conn_max_interval) {
-+		send_conn_param_neg_reply(hdev, handle,
-+					  HCI_ERROR_INVALID_LL_PARAMS);
-+		goto unlock;
-+	}
- 
--	if (hci_check_conn_params(min, max, latency, timeout))
--		return send_conn_param_neg_reply(hdev, handle,
--						 HCI_ERROR_INVALID_LL_PARAMS);
-+	if (hci_check_conn_params(min, max, latency, timeout)) {
-+		send_conn_param_neg_reply(hdev, handle,
-+					  HCI_ERROR_INVALID_LL_PARAMS);
-+		goto unlock;
-+	}
- 
- 	if (hcon->role == HCI_ROLE_MASTER) {
- 		struct hci_conn_params *params;
- 		u8 store_hint;
- 
--		hci_dev_lock(hdev);
--
- 		params = hci_conn_params_lookup(hdev, &hcon->dst,
- 						hcon->dst_type);
- 		if (params) {
-@@ -6651,8 +6657,6 @@ static void hci_le_remote_conn_param_req_evt(struct hci_dev *hdev, void *data,
- 			store_hint = 0x00;
- 		}
- 
--		hci_dev_unlock(hdev);
--
- 		mgmt_new_conn_param(hdev, &hcon->dst, hcon->dst_type,
- 				    store_hint, min, max, latency, timeout);
+ 	qos = &conn->iso_qos;
+ 	pdu->cig_id = cig_id;
+@@ -1854,6 +1858,8 @@ static int set_cig_params_sync(struct hci_dev *hdev, void *data)
  	}
-@@ -6666,6 +6670,9 @@ static void hci_le_remote_conn_param_req_evt(struct hci_dev *hdev, void *data,
- 	cp.max_ce_len = 0;
+ 	pdu->num_cis = aux_num_cis;
  
- 	hci_send_cmd(hdev, HCI_OP_LE_CONN_PARAM_REQ_REPLY, sizeof(cp), &cp);
-+
-+unlock:
 +	hci_dev_unlock(hdev);
- }
++
+ 	if (!pdu->num_cis)
+ 		return 0;
  
- static void hci_le_direct_adv_report_evt(struct hci_dev *hdev, void *data,
 -- 
 2.51.0
 
