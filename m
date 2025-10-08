@@ -1,44 +1,44 @@
-Return-Path: <linux-bluetooth+bounces-15714-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-15723-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD8B7BC40A6
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 08 Oct 2025 11:00:59 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id D11F3BC40BE
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 08 Oct 2025 11:01:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BD7D43BB3DF
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Oct 2025 09:00:56 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 7E566352B5D
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Oct 2025 09:01:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 930BD258CE2;
-	Wed,  8 Oct 2025 09:00:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08A232F5478;
+	Wed,  8 Oct 2025 09:00:58 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from mslow3.mail.gandi.net (mslow3.mail.gandi.net [217.70.178.249])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C064D213236
-	for <linux-bluetooth@vger.kernel.org>; Wed,  8 Oct 2025 09:00:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DE1E2F4A18
+	for <linux-bluetooth@vger.kernel.org>; Wed,  8 Oct 2025 09:00:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.178.249
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759914053; cv=none; b=rhEiXSEIsLbWyGPz63iDuuqNKzLg3wK2uzr3iRv4Rz2z0bsT9QBoJiZpx41dstzPLwFd9he02c8s6SlijbUkbQ7I/CTDxBAIKdiMQGk2QBEnL7wivMbJOMIk6LxWyEs2hENBIzsgtc6ernwQtUiFVcX2jnG6MRx9grjkPX53joQ=
+	t=1759914057; cv=none; b=o1g7gC3HrSnjri9zLfpeYZTCe3wD44MLhF7Ne9Gm49JVdpCyAwe5o5GEL0qcGqs20ucYWPBDPWj5MhmHlFz58wp+scvkr5tdIw0cxc0KDsyY1LzWwXN/n74K0pUvOrZHtNAQtvWVMHiQIRvaTfe1c9xKMNKPixquZu1VOAWGU5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759914053; c=relaxed/simple;
-	bh=lMsXoTkEgHsGKpEHhNta42TA2Qxr3KAutn8nGwXfskk=;
+	s=arc-20240116; t=1759914057; c=relaxed/simple;
+	bh=+ltYsXlcVLhJ3IiDDkcSc6p5PI9u+syE5cx8gSLFCp0=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NLKVjslOvfZtTLYT3ceL+OZDjW00mbd1QrnSMSRWabhUcvYJbmQEzzgMsmxLy6Wj4SvPqm6AmB4T+hoeGwg9aqLwlmIgwrUXFYJIf4JqZARiLawvfKxc6pVjNapmggGBa4vUYnmKnJ055K9k4AhCbmQzCP9WduuPBgsN9W8Qutg=
+	 MIME-Version; b=S2WNf9MUs+gKal2NZqFoZqHYMlUiBwo5ahcRhvUAzFgCgzlbg2e8IoQDosfClMXPIm0EnfnbtnjRWRxMC9j5vR5VOpRLT35Xts1e5L1Yg664fLs3+XoPjn8BZGEvfJ+VQlBkgN/jCThVtWdfvsg005ZxYKEQacp5KZxq4Qppecw=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.178.249
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
 Received: from relay7-d.mail.gandi.net (relay7-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::227])
-	by mslow3.mail.gandi.net (Postfix) with ESMTP id 57FFC584F36
-	for <linux-bluetooth@vger.kernel.org>; Wed,  8 Oct 2025 08:50:51 +0000 (UTC)
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 57755431DC
+	by mslow3.mail.gandi.net (Postfix) with ESMTP id 6F89E584F3B
+	for <linux-bluetooth@vger.kernel.org>; Wed,  8 Oct 2025 08:50:52 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 97835441F3
 	for <linux-bluetooth@vger.kernel.org>; Wed,  8 Oct 2025 08:50:44 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v2 4/9] build: Separate systemd and libsystemd dependencies
-Date: Wed,  8 Oct 2025 10:40:51 +0200
-Message-ID: <20251008085034.2178394-5-hadess@hadess.net>
+Subject: [PATCH BlueZ v2 5/9] tools: Install gatttool if deprecated tools are enabled
+Date: Wed,  8 Oct 2025 10:40:52 +0200
+Message-ID: <20251008085034.2178394-6-hadess@hadess.net>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251008085034.2178394-1-hadess@hadess.net>
 References: <20251008085034.2178394-1-hadess@hadess.net>
@@ -51,41 +51,25 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-One is to install systemd service files, the other to enable deeper
-logind integration into obexd.
+Fixes:
+https://bugzilla.redhat.com/show_bug.cgi?id=1141909
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=720486
 ---
- meson.build       | 3 ++-
- meson_options.txt | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ tools/meson.build | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/meson.build b/meson.build
-index 25a5bb780edc..5fce108e4317 100644
---- a/meson.build
-+++ b/meson.build
-@@ -135,7 +135,8 @@ readline_dep = dependency('readline',
-   required: get_option('client').enabled() or
-     get_option('mesh').enabled())
- systemd_dep = dependency('systemd', required: get_option('systemd'))
--libsystemd_dep = dependency('libsystemd', required: get_option('systemd'))
-+libsystemd_dep = dependency('libsystemd',
-+  required: get_option('obex').enabled() and get_option('logind').enabled())
- ell_dep = dependency('ell',
-   version: '>= 0.39',
-   required: get_option('btpclient').enabled() or get_option('mesh').enabled(),
-diff --git a/meson_options.txt b/meson_options.txt
-index aae4f377f0a2..6a39e2ceabec 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -6,7 +6,8 @@ option('tests', type: 'feature', value: 'auto', description: 'Enable testing too
- option('tools', type: 'feature', value: 'enabled', description: 'Enable Bluetooth tools')
- option('monitor', type: 'feature', value: 'enabled', description: 'Enable Bluetooth monitor')
- option('client', type: 'feature', value: 'enabled', description: 'Enable command line client')
--option('systemd', type: 'feature', value: 'enabled', description: 'Enable systemd integration')
-+option('systemd', type: 'feature', value: 'enabled', description: 'Install systemd service files')
-+option('logind', type: 'feature', value: 'enabled', description: 'Enable logind integration in obexd')
- option('udev', type: 'feature', value: 'enabled', description: 'Enable udev device support')
- option('datafiles', type: 'feature', value: 'enabled', description: 'Install configuration and data files')
- option('manpages', type: 'feature', value: 'auto', description: 'Enable building of manual pages')
+diff --git a/tools/meson.build b/tools/meson.build
+index 5e73b048c118..3e8f7ad439dd 100644
+--- a/tools/meson.build
++++ b/tools/meson.build
+@@ -231,6 +231,7 @@ if get_option('tools').enabled()
+     executable('gatttool',
+       sources: gatttool_sources,
+       dependencies: [ libbluetooth_internal_dep, libshared_glib_dep, readline_dep ],
++      install: true
+     )
+     executable('hciattach',
+       sources: [
 -- 
 2.51.0
 
