@@ -1,44 +1,44 @@
-Return-Path: <linux-bluetooth+bounces-15735-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-15733-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6743DBC47BA
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 08 Oct 2025 13:00:20 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id B4339BC47B6
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 08 Oct 2025 13:00:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A244519E08F8
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Oct 2025 11:00:43 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 9CD354E3896
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  8 Oct 2025 11:00:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C4EF2F7446;
-	Wed,  8 Oct 2025 11:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CC5A2F617D;
+	Wed,  8 Oct 2025 11:00:03 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from mslow3.mail.gandi.net (mslow3.mail.gandi.net [217.70.178.249])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72202F6592
-	for <linux-bluetooth@vger.kernel.org>; Wed,  8 Oct 2025 11:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7898B2F657C
+	for <linux-bluetooth@vger.kernel.org>; Wed,  8 Oct 2025 11:00:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.178.249
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759921204; cv=none; b=l9xzTT+QtEsrbDYZ5i/XHvCgrtnHoOYJaslAw0zn2piNICg43/Iea2RnOT1l/roHqMULYG7E4/sTGP8bhzZKI7SAlEgXJspFAobKq3OQDcK9sZNCZzXjosr125Srswvl/LRy3iV4cojvKOJ6eS+6iLRREAORLcDZD33C9EmirfE=
+	t=1759921203; cv=none; b=iKDYi2glfZEO0AIdYXC5RD8ZoZ5GoK1BwXXQCd3bKn/VAjPPhapwQINVBqgqgvcPBvLx1fbHwcPJuT3caT4hvFNK8t7ZXpNDVOuHizQQHnZ7se2ba8aN/oqhVvobGsi7jMsh7+/ivRM3+sRQoiKp+TF9yW0/36KcgZ4fjW9KLIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759921204; c=relaxed/simple;
-	bh=4YD16ZOGkqrbvWkwBUG+4puUgJAqz+6bB9Clckt+w18=;
+	s=arc-20240116; t=1759921203; c=relaxed/simple;
+	bh=sivdIeBMjGHmxVIczXuUnhpPqHFjlSHod8sAdJ+fEqo=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CPECAoljw+yp5uIb9moAx9dkWCxsMk9HtQNNmV6F0TJl/OHKlIiPiEt96kmsNFaDp3cmwiqh5ZSWbTh/wtrv0qmLiezhcH5CPYe777djiNLsvfhyr8zpYcM5FJKK2GWEGK/hGQHY0dWBlxMSYpxecytPtZ41TFoC0tPGJ2/hDfs=
+	 MIME-Version; b=dEZHRK7AiU1Y7hA1/K3+mfriuoWSnGhEYsL5Savjm7AFYhi/2sKKsoNdC5pk6y5dQk8n7qmp1RKMuMsMn1oQmhVx/zpoUn2XJcEmM4dRhFPjL5hfmoz57bNXDcc8DDwBP6y0bZ3QveM/qsz6yXjAs4iqe/XyDgF4Wb49TsTpbic=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.178.249
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::228])
-	by mslow3.mail.gandi.net (Postfix) with ESMTP id 72105582F90
+Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [217.70.183.201])
+	by mslow3.mail.gandi.net (Postfix) with ESMTP id 6EC5F582F39
 	for <linux-bluetooth@vger.kernel.org>; Wed,  8 Oct 2025 10:41:50 +0000 (UTC)
-Received: by mail.gandi.net (Postfix) with ESMTPSA id D940643B09
-	for <linux-bluetooth@vger.kernel.org>; Wed,  8 Oct 2025 10:41:42 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 26A7043B20
+	for <linux-bluetooth@vger.kernel.org>; Wed,  8 Oct 2025 10:41:43 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v3 07/10] tools: Install btmgmt along with other tools
-Date: Wed,  8 Oct 2025 12:40:22 +0200
-Message-ID: <20251008104132.2206963-8-hadess@hadess.net>
+Subject: [PATCH BlueZ v3 08/10] emulator: Install the emulator if built
+Date: Wed,  8 Oct 2025 12:40:23 +0200
+Message-ID: <20251008104132.2206963-9-hadess@hadess.net>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251008104132.2206963-1-hadess@hadess.net>
 References: <20251008104132.2206963-1-hadess@hadess.net>
@@ -51,27 +51,26 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-btmgmt is not installed by default, but it is useful for debugging
-some issues and to set the MAC address on HCIs which don't have their
-MAC address configured.
+It's useful for testing.
 ---
- tools/meson.build | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ emulator/meson.build | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/meson.build b/tools/meson.build
-index 66156ab0224b..9ca76079325e 100644
---- a/tools/meson.build
-+++ b/tools/meson.build
-@@ -171,7 +171,8 @@ if get_option('tools').enabled()
-   if readline_dep.found()
-     executable('btmgmt',
-       sources: [ 'btmgmt.c', '../src/uuid-helper.c', '../client/display.c', '../client/mgmt.c' ],
--      dependencies: [ libbluetooth_internal_dep, libshared_mainloop_dep, readline_dep ]
-+      dependencies: [ libbluetooth_internal_dep, libshared_mainloop_dep, readline_dep ],
-+      install: true
-     )
-     executable('obex-client-tool',
-       sources: [ 'obex-client-tool.c', gobex_sources, btio_sources ],
+diff --git a/emulator/meson.build b/emulator/meson.build
+index bc038becc567..55d77e40319d 100644
+--- a/emulator/meson.build
++++ b/emulator/meson.build
+@@ -17,7 +17,9 @@ if get_option('tests').enabled()
+       'smp.c',
+       'phy.c',
+       'le.c' ],
+-    dependencies: [ libbluetooth_internal_dep, libshared_mainloop_dep, glib_dep ]
++    dependencies: [ libbluetooth_internal_dep, libshared_mainloop_dep, glib_dep ],
++    install: true,
++    install_dir: pkglibexecdir
+   )
+ 
+   executable('b1ee',
 -- 
 2.51.0
 
