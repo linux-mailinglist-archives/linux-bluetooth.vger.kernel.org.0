@@ -1,41 +1,41 @@
-Return-Path: <linux-bluetooth+bounces-15756-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-15758-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0D9BBC8861
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 09 Oct 2025 12:36:35 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 66EA3BC886D
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 09 Oct 2025 12:36:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 319033E396A
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  9 Oct 2025 10:36:30 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id F39B14EA73A
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  9 Oct 2025 10:36:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 535852DE71B;
-	Thu,  9 Oct 2025 10:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12EE12DECA0;
+	Thu,  9 Oct 2025 10:36:17 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay0.mail.gandi.net (relay0.mail.gandi.net [217.70.178.220])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B59422C21C9
-	for <linux-bluetooth@vger.kernel.org>; Thu,  9 Oct 2025 10:36:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 782D42D8785
+	for <linux-bluetooth@vger.kernel.org>; Thu,  9 Oct 2025 10:36:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.178.220
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760006176; cv=none; b=igTl6h/+VrSwm3N3G/lTSYf/RWsIx4v1mhNoICy3hohDlLCP89sRGsxdCnUHyB37yYp+k5CyMk7gSpfjm/8c1XbmqZUsaAfcRa2D4sJ44pfQAIVnJP0tuJNujQKUMlJz1YJewZD9NpC6cIMpkea9ibq1s9rSRfqPBuHaRHCKouo=
+	t=1760006176; cv=none; b=RPYlsD5grchoxqWgDTtXecuFf99exSDIdVH7sUUERZleTFuB3xEjWBNrB519UHS3ksWemEHNkufYKxPoaXi7QgC7IiNena7ObYtNOmWGor+D36viLZ3Q24wyKMGNgvUS0FhDXO00kQFdyZHA4Aa/SpQr5dNKMkuGrId2zwyNmVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1760006176; c=relaxed/simple;
-	bh=+ltYsXlcVLhJ3IiDDkcSc6p5PI9u+syE5cx8gSLFCp0=;
+	bh=opfzhPW9GwIGipeBNvo5QFVuKN1DcbhNFhcqppwdhMk=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=maG0tOc13eDvZL3/YEIyeveyMNc7HMsOoiCYBpsTdhFoBup342gMXerYB86bqmmDZp26oZCK+x3Tt3GumSFsTjxUxTpNMnSS/p9ArZiFYzI6hn47RQFfnVVCI0FZDXR7UJ0J59a9E4TcefudUqxExuxlfCPF63sVlq03FNtSgTY=
+	 MIME-Version; b=fNY88b8XXhZHthp0rEV0TjMqa2Srp87xxEM+Hm6+sMVzTMzcdehEWMBE6A7RQIqdWsqcnP6e3r4bpKwc2UnivWP4sxIBsxvHe/rovw98CvBEz+UzE6BAPgOxLpMb2SA9QLZPJ1LLx4/JMgfXHjU0xmJ2zcgyrasTqimKCC+9Lt4=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.178.220
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 372FB434CE
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 8F9EB434D0
 	for <linux-bluetooth@vger.kernel.org>; Thu,  9 Oct 2025 10:36:05 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v4 05/10] tools: Install gatttool if deprecated tools are enabled
-Date: Thu,  9 Oct 2025 12:33:28 +0200
-Message-ID: <20251009103554.2417973-6-hadess@hadess.net>
+Subject: [PATCH BlueZ v4 06/10] tools: Install avinfo tool by default
+Date: Thu,  9 Oct 2025 12:33:29 +0200
+Message-ID: <20251009103554.2417973-7-hadess@hadess.net>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251009103554.2417973-1-hadess@hadess.net>
 References: <20251009103554.2417973-1-hadess@hadess.net>
@@ -47,25 +47,36 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
+It's used for checking which audio codecs are supported by a Bluetooth
+audio device, which is more useful now that PulseAudio/PipeWire support
+alternative codecs like LDAC or aptX).
+
 Fixes:
-https://bugzilla.redhat.com/show_bug.cgi?id=1141909
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=720486
+https://bugzilla.redhat.com/show_bug.cgi?id=1699680
 ---
- tools/meson.build | 1 +
- 1 file changed, 1 insertion(+)
+ tools/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/tools/meson.build b/tools/meson.build
-index 5e73b048c118..3e8f7ad439dd 100644
+index 3e8f7ad439dd..66156ab0224b 100644
 --- a/tools/meson.build
 +++ b/tools/meson.build
-@@ -231,6 +231,7 @@ if get_option('tools').enabled()
-     executable('gatttool',
-       sources: gatttool_sources,
-       dependencies: [ libbluetooth_internal_dep, libshared_glib_dep, readline_dep ],
-+      install: true
-     )
-     executable('hciattach',
-       sources: [
+@@ -82,7 +82,6 @@ if get_option('hid2hci').enabled()
+ endif
+ 
+ tools_names = [
+-  'avinfo',
+   'avtest',
+   'scotest',
+   'hwdb',
+@@ -103,6 +102,7 @@ tools_names = [
+ ]
+ 
+ inst_tools_names = [
++  'avinfo',
+   'rctest',
+   'l2test',
+   'l2ping',
 -- 
 2.51.0
 
