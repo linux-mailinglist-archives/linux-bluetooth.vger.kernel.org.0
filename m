@@ -1,44 +1,44 @@
-Return-Path: <linux-bluetooth+bounces-15841-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-15843-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 45256BD2243
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Oct 2025 10:48:24 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36B33BD2249
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Oct 2025 10:48:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 955A51899583
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Oct 2025 08:48:47 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 25EA94EE3A3
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 13 Oct 2025 08:48:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A9B652FB966;
-	Mon, 13 Oct 2025 08:48:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB9B42FB614;
+	Mon, 13 Oct 2025 08:48:07 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from mslow3.mail.gandi.net (mslow3.mail.gandi.net [217.70.178.249])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 805EF2FB616
-	for <linux-bluetooth@vger.kernel.org>; Mon, 13 Oct 2025 08:48:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560BB2FB610
+	for <linux-bluetooth@vger.kernel.org>; Mon, 13 Oct 2025 08:48:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.178.249
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760345286; cv=none; b=BtcNWCSIAMyPkw56ruObdLlKvemyaDZtXiu28hxsySYguF5DOt9ak8E6UKOrIIZJDkzsyPuyjCMTBWxTu9BqNANLIqrGR9J7FNrkbN9ck6ukBzUSnLOjC7zF9M0rfER8xRGLPfrAAG8aH5yBiAETlIyHXi+mGAbjnR6VXm6KjjE=
+	t=1760345287; cv=none; b=o46IzBhd2AsdIZ2mC2cEnPHRr8Ht1b21aGUM1SHVq55TwyY5uxEwmDmVsciQPN2eS7/1qyLUKayj/eNjufdjhSCsCy9N4LtRuk0okrkHcCa7QhzMeWtIgHMGAcxB84g4o3XD7PMrGXT43cUSyqQ0ysETjihuHaFDV3lbttHIhtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760345286; c=relaxed/simple;
-	bh=opfzhPW9GwIGipeBNvo5QFVuKN1DcbhNFhcqppwdhMk=;
+	s=arc-20240116; t=1760345287; c=relaxed/simple;
+	bh=4YD16ZOGkqrbvWkwBUG+4puUgJAqz+6bB9Clckt+w18=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MLA5leZNcNjRbdL7UXxR+AUIFheYx1vV1g2k+2uJLfHmkl+cgSidZ0PvLU4esVpNyH9ADa6A5SPOuQNAUeSS5q+NZqYUaY8Ty6dGXe8arZl6LmOznttwLn7YJj3iy8zu1ox/Sgc8N0QX1XWkRmVHPJDnrkgORggMxpaNrFL3clQ=
+	 MIME-Version; b=LiiNJez5ihI9kQk+CnarPW6etVrwtPujGQNIR5qsIlCygAug1brF/ZsPJ9YwEy2b82liY46T54xmAnsTq9QT4TXNgdXgkLyOAobt2pXHgAQ5WhmyabE3coP0bXs/C1tV4vQ7f9om0Ey4RrZIyJz/sIpoMtV5ze3uqTu6NRhF7rQ=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.178.249
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
-	by mslow3.mail.gandi.net (Postfix) with ESMTP id 7123B582122
+Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::225])
+	by mslow3.mail.gandi.net (Postfix) with ESMTP id 6A8E7582120
 	for <linux-bluetooth@vger.kernel.org>; Mon, 13 Oct 2025 08:33:16 +0000 (UTC)
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 04BC141CFA
-	for <linux-bluetooth@vger.kernel.org>; Mon, 13 Oct 2025 08:33:08 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 3EABA43292
+	for <linux-bluetooth@vger.kernel.org>; Mon, 13 Oct 2025 08:33:09 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v5 6/9] tools: Install avinfo tool by default
-Date: Mon, 13 Oct 2025 10:32:16 +0200
-Message-ID: <20251013083259.3152260-7-hadess@hadess.net>
+Subject: [PATCH BlueZ v5 7/9] tools: Install btmgmt along with other tools
+Date: Mon, 13 Oct 2025 10:32:17 +0200
+Message-ID: <20251013083259.3152260-8-hadess@hadess.net>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251013083259.3152260-1-hadess@hadess.net>
 References: <20251013083259.3152260-1-hadess@hadess.net>
@@ -51,36 +51,27 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 
-It's used for checking which audio codecs are supported by a Bluetooth
-audio device, which is more useful now that PulseAudio/PipeWire support
-alternative codecs like LDAC or aptX).
-
-Fixes:
-https://bugzilla.redhat.com/show_bug.cgi?id=1699680
+btmgmt is not installed by default, but it is useful for debugging
+some issues and to set the MAC address on HCIs which don't have their
+MAC address configured.
 ---
- tools/meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/meson.build | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/tools/meson.build b/tools/meson.build
-index 3e8f7ad439dd..66156ab0224b 100644
+index 66156ab0224b..9ca76079325e 100644
 --- a/tools/meson.build
 +++ b/tools/meson.build
-@@ -82,7 +82,6 @@ if get_option('hid2hci').enabled()
- endif
- 
- tools_names = [
--  'avinfo',
-   'avtest',
-   'scotest',
-   'hwdb',
-@@ -103,6 +102,7 @@ tools_names = [
- ]
- 
- inst_tools_names = [
-+  'avinfo',
-   'rctest',
-   'l2test',
-   'l2ping',
+@@ -171,7 +171,8 @@ if get_option('tools').enabled()
+   if readline_dep.found()
+     executable('btmgmt',
+       sources: [ 'btmgmt.c', '../src/uuid-helper.c', '../client/display.c', '../client/mgmt.c' ],
+-      dependencies: [ libbluetooth_internal_dep, libshared_mainloop_dep, readline_dep ]
++      dependencies: [ libbluetooth_internal_dep, libshared_mainloop_dep, readline_dep ],
++      install: true
+     )
+     executable('obex-client-tool',
+       sources: [ 'obex-client-tool.c', gobex_sources, btio_sources ],
 -- 
 2.51.0
 
