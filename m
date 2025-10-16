@@ -1,152 +1,181 @@
-Return-Path: <linux-bluetooth+bounces-15920-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-15923-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 48F8EBE16A4
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 Oct 2025 06:14:28 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 740BBBE1706
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 Oct 2025 06:37:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E3E3C4E30C2
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 Oct 2025 04:14:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2D7CF427E89
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 16 Oct 2025 04:37:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD2B320F09C;
-	Thu, 16 Oct 2025 04:14:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F2681D6187;
+	Thu, 16 Oct 2025 04:37:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Af4Km3UJ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ndWT1bzQ"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56BBA323E
-	for <linux-bluetooth@vger.kernel.org>; Thu, 16 Oct 2025 04:14:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AD8D13AC1
+	for <linux-bluetooth@vger.kernel.org>; Thu, 16 Oct 2025 04:37:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760588058; cv=none; b=q/tisfrf7cWFeEQYXkVLrjxEHfUmOdbuvSTEHGVIp/lx5RFdpkg21CU0502sEvI2HKciXBVjXnRveP2gyddxYQbNKXKEUBxQ19DQc0sBhfowYO+MUAB9URWnW1FeBdOX5ZOtITCfZ+GlpXXSzp0y6203viylcfLLvxkCGXM3a5Q=
+	t=1760589465; cv=none; b=cgVQAwZEcCdAfIqE61WsQdGgtXEoRUlcLtaREAVFO0EeE/h4MkRjVGdiLbaFHgOLVwN//sCJj40WII1Bx9RFlamgEpzuglsVTVb/QZMG5fcxnCvLfzBe5kj9QwDqYlg4wW7G3zauz6zsbggkyS6+T/IRhlGHIQlDIxkl84N5CmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760588058; c=relaxed/simple;
-	bh=TQkMk1eC8FnHMd8vHLXqQPK3DcHSP9vOwpFkgHTI+X8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=UjBZ917Be7GoYO89AfYmebm4RAX/aIGIuN/e63NGRCGxOKmEIJGJ2LRY+9FMMx+RDrhkb34FGxkpngH/+LFJSQXJTZaZ7eLTQt/EXCg5fJJXrG9cOfSqv4mWoa55uqCx3IX39xanCO29dHPCsKsci19uVQm4OtEgv6JSdvcG97I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Af4Km3UJ; arc=none smtp.client-ip=198.175.65.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1760588057; x=1792124057;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=TQkMk1eC8FnHMd8vHLXqQPK3DcHSP9vOwpFkgHTI+X8=;
-  b=Af4Km3UJXU4BK0rfKstjZWNC1G42JUAyGLyVn0TD+sxh9a0i2uqmEhch
-   4mhSXuZNzSRv+pWjnFWFxwvDCbgZblEoriLvr52SYalDWIeSLiChUguxS
-   aD8ZYS+KI7g/uTIfmvWPvfq+cg7QWmrqFm23g+YMksgJqzsmRywZbX4S/
-   C61cHj//ICCrEfyyxgeuvknQPWVKXTJSkyXF4OZxq8BeWJXezApuLmOKx
-   GnrfNwPhLlg+hm2tKuybJ4bK9Fq43UIuFrruw10Q6dHmwThEbSzswTAri
-   gNtLV/K1ID5bp7U0PG4JUWdKtIjaxQX02AWaI+xbkLsug1z2EmZmpWKT9
-   Q==;
-X-CSE-ConnectionGUID: t3WYghlOTjKnSKiaqOfI8g==
-X-CSE-MsgGUID: vARFsWnfRACkZYjSPrycbg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11583"; a="73052561"
-X-IronPort-AV: E=Sophos;i="6.19,233,1754982000"; 
-   d="scan'208";a="73052561"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Oct 2025 21:14:16 -0700
-X-CSE-ConnectionGUID: bYYtYPYZS9WIN4H2KLZDZg==
-X-CSE-MsgGUID: kf0t2fhwTheOuJ+TZutkHg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,233,1754982000"; 
-   d="scan'208";a="206047687"
-Received: from intel-lenovo-legion-y540-15irh-pg0.iind.intel.com ([10.224.186.95])
-  by fmviesa002.fm.intel.com with ESMTP; 15 Oct 2025 21:14:13 -0700
-From: Kiran K <kiran.k@intel.com>
-To: linux-bluetooth@vger.kernel.org
-Cc: ravishankar.srivatsa@intel.com,
-	chethan.tumkur.narayan@intel.com,
-	Kiran K <kiran.k@intel.com>,
-	Sai Teja Aluvala <aluvala.sai.teja@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>
-Subject: [PATCH v2] Bluetooth: btintel_pcie: Fix event packet loss issue
-Date: Thu, 16 Oct 2025 10:00:43 +0530
-Message-ID: <20251016043043.2582230-1-kiran.k@intel.com>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1760589465; c=relaxed/simple;
+	bh=lECOeypc0XfhwJpE/LoMcIG33aU9h48baG1lnbPRnPk=;
+	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
+	 In-Reply-To:References; b=UaWRlDUAaILequgBF47mPcRTBv2sqZFPYrYkKIUKqAi7YpRBROoBQy5+Q5hNXFHpGD6LInEvwUQFVbpEDN0gTUR5qR11H0EoGYUETZIX/MVj5YHGv1p55Ge3hzuCQK3RCGSYCw8svbgZXGd1lRVwD25pNfSAX6wH149pNAR4EUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ndWT1bzQ; arc=none smtp.client-ip=209.85.222.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-87808473c3bso69586285a.1
+        for <linux-bluetooth@vger.kernel.org>; Wed, 15 Oct 2025 21:37:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760589463; x=1761194263; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=EDKiybD6tqD2kv/H3ti/ZYmMr4jPRb4aCdSuPEKH34s=;
+        b=ndWT1bzQEyCSGXuNiM3ZlSedc67Hbu4NMgf6TSUUoarsJmnxY9tIo1yhKlYeKoqbIT
+         2hWqu30bSR3Q0m8Tcl1Uces/69F+ZCh5PWFFiuFNYNU1IyOcvyit0TIcFxLhccNhci8Z
+         p9+Qo5OlDshIsT+LrOS8Y2KLWOlGTx9pl44jWoam4sjk7SnbUAHdIXJEvz6z3dbet05H
+         nJew7PUJqrELEBzpqv5m9os3lm7zjwg827vRKkWK52Y2JDhExAo5h0SAildEP7/DbU08
+         EskxlPtNRE6nWe/qtVrALkHnC61jZwJw0ivCoVTSqowsrCYYxdmuv2I0tRkeK+n6qOYg
+         qenQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760589463; x=1761194263;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EDKiybD6tqD2kv/H3ti/ZYmMr4jPRb4aCdSuPEKH34s=;
+        b=GwtIOtnV7WuQ1roiOoB3KoDOAuNTP8yAoAKy4PXD93mzvTZHwZBU26aqH0JhAgcjbB
+         SQBUJsD2hJuiUrqNNjcmjTIDAfOdUvMCgoDKB+eRy87BMdEQRG658lykSQ2PJVK73zat
+         gWKrbWJHRavkzIGOVPR8h7RyYKeOFaBHXSnVPPlpljmkukeY0OGq+oxJgY/DKL6XJaL2
+         UM4VBCpFs8yWtbd0r6bc47pPBG9Wgsewit+I73DZL/cpA3Y/GQGNKfNGi1TbnQtdgW2Z
+         psZkHN1B+TLrEV98X/p9kU7q8Iuwvs4kM5CmnGWJbfs3Xo8kNEEOt0/Eb+l2hV/vTNqT
+         ENAg==
+X-Gm-Message-State: AOJu0Yx+N5imEzlwk6koQn3rof3wKF+UVHik77mF16sOV0FZ4/baQgAd
+	4/9v6u/bPLiGYh7nngWSTwAxu/2yYCGxTEzio+L1hn7dLSUgF6eUstG0udOMwA==
+X-Gm-Gg: ASbGnctvSQl2FHdbvYFc2K2ASsHZ2PdAsYUHddlv4Kp/Yb4kXxiBUiDWKG0rXsIsG9g
+	oY4Hjw2PBlyIqagRs65R5s9Z6gbE+udnm1D9tD8vSZ8uP4hQThpZuLvQr9KgXEnodTFWb0kqhvF
+	HZirrXQY6rEyhSq3wpOze7MNiNvW4wDvS30bZHdJvCIdLvmOTVfJxJBUXIFKFeQiOx7guEgrPsE
+	tBv73hayYLlQ/u+svPmbd+rMXilKHq3TQ3nOna2R270X1wWW2eios4Il6GP+GQVWaLBMzp9Xuuc
+	Lv/XDOB/CdXqwz6vpC9bKWSwq0U5Yf8WShvP+BfTJg3WfeKB2/yK8TZVE2rNrnE83d3tSHeLkBA
+	oYS3DziQPuSUnAVTfsxC0JKY1gTdYFvQNxSrn/LHyaukTNsNbLjCPWsvjzjqUDVyi9lopAKzsqw
+	pQ7S5IYCDZORnOxJBtiKwIOlmnltQ=
+X-Google-Smtp-Source: AGHT+IFF+KRFasIjzVoCTU1udT+9ihlH1ABcEWN3JHaPDeRvaEY8SwJPRhxkddpVkbmSue1obesXnw==
+X-Received: by 2002:a05:622a:593:b0:4d3:a453:c503 with SMTP id d75a77b69052e-4e6ead7c972mr458949641cf.84.1760589462687;
+        Wed, 15 Oct 2025 21:37:42 -0700 (PDT)
+Received: from [172.17.0.2] ([172.172.87.82])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4e88c63c8fbsm20367761cf.3.2025.10.15.21.37.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Oct 2025 21:37:42 -0700 (PDT)
+Message-ID: <68f07696.c80a0220.1d0562.6619@mx.google.com>
+Date: Wed, 15 Oct 2025 21:37:42 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="===============3379913203492721458=="
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From: bluez.test.bot@gmail.com
+To: linux-bluetooth@vger.kernel.org, kiran.k@intel.com
+Subject: RE: [v2] Bluetooth: btintel_pcie: Fix event packet loss issue
+In-Reply-To: <20251016043043.2582230-1-kiran.k@intel.com>
+References: <20251016043043.2582230-1-kiran.k@intel.com>
+Reply-To: linux-bluetooth@vger.kernel.org
 
-In the current btintel_pcie driver implementation, when an interrupt is
-received, the driver checks for the alive cause before the TX/RX cause.
-Handling the alive cause involves resetting the TX/RX queue indices.
-This flow works correctly when the causes are mutually exclusive.
-However, if both cause bits are set simultaneously, the alive cause
-resets the queue indices, resulting in an event packet drop and a
-command timeout. To fix this issue, the driver is modified to handle all
-other causes before checking for the alive cause.
+--===============3379913203492721458==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-Test case:
-Issue is seen with stress reboot scenario - 50x run
+This is automated email and please do not reply to this email!
 
-[20.337589] Bluetooth: hci0: Device revision is 0
-[20.346750] Bluetooth: hci0: Secure boot is enabled
-[20.346752] Bluetooth: hci0: OTP lock is disabled
-[20.346752] Bluetooth: hci0: API lock is enabled
-[20.346752] Bluetooth: hci0: Debug lock is disabled
-[20.346753] Bluetooth: hci0: Minimum firmware build 1 week 10 2014
-[20.346754] Bluetooth: hci0: Bootloader timestamp 2023.43 buildtype 1 build 11631
-[20.359070] Bluetooth: hci0: Found device firmware: intel/ibt-00a0-00a1-iml.sfi
-[20.371499] Bluetooth: hci0: Boot Address: 0xb02ff800
-[20.385769] Bluetooth: hci0: Firmware Version: 166-34.25
-[20.538257] Bluetooth: hci0: Waiting for firmware download to complete
-[20.554424] Bluetooth: hci0: Firmware loaded in 178651 usecs
-[21.081588] Bluetooth: hci0: Timeout (500 ms) on tx completion
-[21.096541] Bluetooth: hci0: Failed to send frame (-62)
-[21.110240] Bluetooth: hci0: sending frame failed (-62)
-[21.138551] Bluetooth: hci0: Failed to send Intel Reset command
-[21.170153] Bluetooth: hci0: Intel Soft Reset failed (-62)
+Dear submitter,
 
-Signed-off-by: Kiran K <kiran.k@intel.com>
-Signed-off-by: Sai Teja Aluvala <aluvala.sai.teja@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Fixes: c2b636b3f788 ("Bluetooth: btintel_pcie: Add support for PCIe transport")
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=1012156
+
+---Test result---
+
+Test Summary:
+CheckPatch                    PENDING   0.32 seconds
+GitLint                       PENDING   0.23 seconds
+SubjectPrefix                 PASS      0.13 seconds
+BuildKernel                   PASS      25.32 seconds
+CheckAllWarning               PASS      28.24 seconds
+CheckSparse                   PASS      31.36 seconds
+BuildKernel32                 PASS      25.55 seconds
+TestRunnerSetup               PASS      506.24 seconds
+TestRunner_l2cap-tester       PASS      24.56 seconds
+TestRunner_iso-tester         PASS      80.19 seconds
+TestRunner_bnep-tester        PASS      6.32 seconds
+TestRunner_mgmt-tester        FAIL      117.96 seconds
+TestRunner_rfcomm-tester      PASS      11.16 seconds
+TestRunner_sco-tester         PASS      14.53 seconds
+TestRunner_ioctl-tester       FAIL      10.42 seconds
+TestRunner_mesh-tester        FAIL      12.34 seconds
+TestRunner_smp-tester         PASS      8.58 seconds
+TestRunner_userchan-tester    PASS      6.53 seconds
+IncrementalBuild              PENDING   0.97 seconds
+
+Details
+##############################
+Test: CheckPatch - PENDING
+Desc: Run checkpatch.pl script
+Output:
+
+##############################
+Test: GitLint - PENDING
+Desc: Run gitlint
+Output:
+
+##############################
+Test: TestRunner_mgmt-tester - FAIL
+Desc: Run mgmt-tester with test-runner
+Output:
+Total: 490, Passed: 481 (98.2%), Failed: 5, Not Run: 4
+
+Failed Test Cases
+Pair Device - Legacy Success 1                       Failed       0.199 seconds
+Pair Device - Sec Mode 3 Success 1                   Failed       0.169 seconds
+Pair Device - Legacy Reject 2                        Failed       0.151 seconds
+Read Exp Feature - Success                           Failed       0.110 seconds
+LL Privacy - Add Device 3 (AL is full)               Failed       0.214 seconds
+##############################
+Test: TestRunner_ioctl-tester - FAIL
+Desc: Run ioctl-tester with test-runner
+Output:
+Total: 28, Passed: 26 (92.9%), Failed: 2, Not Run: 0
+
+Failed Test Cases
+Connection List                                      Failed       1.068 seconds
+Connection Info                                      Failed       0.150 seconds
+##############################
+Test: TestRunner_mesh-tester - FAIL
+Desc: Run mesh-tester with test-runner
+Output:
+Total: 10, Passed: 8 (80.0%), Failed: 2, Not Run: 0
+
+Failed Test Cases
+Mesh - Send cancel - 1                               Timed out    2.692 seconds
+Mesh - Send cancel - 2                               Timed out    1.996 seconds
+##############################
+Test: IncrementalBuild - PENDING
+Desc: Incremental build with the patches in the series
+Output:
+
+
+
 ---
-changes in v2:
-- Update commit message with test case details and dmesg.
+Regards,
+Linux Bluetooth
 
- drivers/bluetooth/btintel_pcie.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
-index 6d3963bd56a9..a075d8ec4677 100644
---- a/drivers/bluetooth/btintel_pcie.c
-+++ b/drivers/bluetooth/btintel_pcie.c
-@@ -1467,11 +1467,6 @@ static irqreturn_t btintel_pcie_irq_msix_handler(int irq, void *dev_id)
- 	if (intr_hw & BTINTEL_PCIE_MSIX_HW_INT_CAUSES_GP1)
- 		btintel_pcie_msix_gp1_handler(data);
- 
--	/* This interrupt is triggered by the firmware after updating
--	 * boot_stage register and image_response register
--	 */
--	if (intr_hw & BTINTEL_PCIE_MSIX_HW_INT_CAUSES_GP0)
--		btintel_pcie_msix_gp0_handler(data);
- 
- 	/* For TX */
- 	if (intr_fh & BTINTEL_PCIE_MSIX_FH_INT_CAUSES_0) {
-@@ -1487,6 +1482,12 @@ static irqreturn_t btintel_pcie_irq_msix_handler(int irq, void *dev_id)
- 			btintel_pcie_msix_tx_handle(data);
- 	}
- 
-+	/* This interrupt is triggered by the firmware after updating
-+	 * boot_stage register and image_response register
-+	 */
-+	if (intr_hw & BTINTEL_PCIE_MSIX_HW_INT_CAUSES_GP0)
-+		btintel_pcie_msix_gp0_handler(data);
-+
- 	/*
- 	 * Before sending the interrupt the HW disables it to prevent a nested
- 	 * interrupt. This is done by writing 1 to the corresponding bit in
--- 
-2.43.0
-
+--===============3379913203492721458==--
 
