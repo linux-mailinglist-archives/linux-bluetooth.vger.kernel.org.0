@@ -1,49 +1,49 @@
-Return-Path: <linux-bluetooth+bounces-15986-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-15988-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46BB3BFC49B
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 Oct 2025 15:52:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6FAE0BFC4B6
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 Oct 2025 15:53:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A61DE1885EEC
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 Oct 2025 13:51:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4A8981A61613
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 Oct 2025 13:51:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B626334887E;
-	Wed, 22 Oct 2025 13:50:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B75134B406;
+	Wed, 22 Oct 2025 13:50:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YWyr7Hjk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PK+HT6xq"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34EE9347FC2;
-	Wed, 22 Oct 2025 13:50:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12A934B1AD;
+	Wed, 22 Oct 2025 13:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761141030; cv=none; b=bJk5TKmfleLspugxyI1oChJXyjwCw2NaHG/dCEO2v+Z2pQeR74TkXHDk02KBdf7ixfXKQP1TzZD2puaMOXEawsnQQmOBUpwqzuxtQ/V1F9B8XXFeOwVk1v4jBfoufPLfBHWZsGqv0Tu2ykXT5I6zAK2wn3fY/GEBhtgcpOEobFQ=
+	t=1761141033; cv=none; b=sVRQekfvqjcDlmKfvtzkNSnkKgD6agDNmi/8Ltpyjt3lBPdlVN9yNLTT5PpyA0D75gSyPBUjl1fejLxg+pvfonJFTMaV5iyMN5CmzomOidDLhu98UXkp549v1K5lXR5mAmJNZ5lFyfk4saXd9IPSKSCn6HXc3Of5J04g63osn6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761141030; c=relaxed/simple;
-	bh=4q54NyL9BUJnCJ65isVEm3uQJQT5pbbLzT96h2CIzbw=;
+	s=arc-20240116; t=1761141033; c=relaxed/simple;
+	bh=4bqIxQwaYwiGicJXcXxKfKTqZFmjRYMc8Clxky5cxcU=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=VckuzHjQDUrCePBhwHyy9qgyXjhtqPRcNnzX+PgR9V62nLqj56XwTFnYZZE1GzQ9++UTyLMRwzHLg4eGK98cTjLfo84DKJmDue+cULA413mT4ajuqkr9XcIEHKwUg++PP30iHkemjJAXO5JrtWOLv0WQJmgBlVBs9JEXOemWLrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YWyr7Hjk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B374BC4CEF5;
-	Wed, 22 Oct 2025 13:50:29 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=Hja8QR4bmaaIc7Vbzx4z/0xXo2DV4eWG3e3s2SzyPyz836v2gEj3wL+d631ltczRNy6m+rHMwmo+L/6TZoKFOzeU/Qx4rRr6OTY7i/z7z4OAFQ/7pNuGXCUM61V4mlHVLV+/spT2N7EPenFvnXoM93BtrKRzLonvkMnlenfNVmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PK+HT6xq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 658C3C4CEE7;
+	Wed, 22 Oct 2025 13:50:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761141029;
-	bh=4q54NyL9BUJnCJ65isVEm3uQJQT5pbbLzT96h2CIzbw=;
+	s=k20201202; t=1761141032;
+	bh=4bqIxQwaYwiGicJXcXxKfKTqZFmjRYMc8Clxky5cxcU=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=YWyr7Hjk0uAHY3sKgeXvhwKG78pVsDenMZJcSGrxmKJcRnZCRIkd6++4oqzQJAbbx
-	 KK41fh3yO45kfrWgUNrtmTd06QE6VuaUkGNVaAUvMDCMUY9ShTTpD8qMF6EIoS8Ua/
-	 olWILwGewGyr6ekC3JWRnr0imSo+sD2kkLd3Ba1814l2ajdhJ/0LnNmr5R7tqRxZww
-	 SbDGOW0FEfwEGeXI02aq6+ur8wH3bbOtevxz4EGCcAPhoxLxxf8WQZeV8c5pcxxFm3
-	 umNYMM/F1NSelhlBumeT3jTrelaU3vt3wuFhYIn4F1TlLqtmlotnFJQlYtgBX02i0Y
-	 A7zZjnBm+OU1w==
+	b=PK+HT6xqI/oVLZAk6t66sKLs08HHqVELEU+iFdbPOtLDLM6bo2ljgtegQPaUxv4e/
+	 hD4EXuU9Dm+BmBcKdzskHrvc5kYVmu8Mk9JSlYZsyy0H7oLgadOsnKhC99u3b7+O43
+	 a2HHPV38hlWvyYKSQ+Qu+KW2/TCEqqsPKD2aFzjp63cYDx/20wUWNbsgnBn53dyogA
+	 n2AFtbvS4LPt7iiv6Puph/tM4Xl/EF8J3NzwLw2yoE4Y0b2+NlAfy2HqS4MaP6BDVg
+	 ex/00O9+R5r0xBheGRF7fqqdpv0aLJ3aZKY13dgRKPCnXjFRoWbJPxn+uuGz9zV5ux
+	 BNpR7CJBeYgeA==
 Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id EAE133A78A5D;
-	Wed, 22 Oct 2025 13:50:11 +0000 (UTC)
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id ADD033A78A5D;
+	Wed, 22 Oct 2025 13:50:14 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
@@ -52,39 +52,38 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 RESEND 0/2] Add two new ID for MediaTek's Bluetooth
+Subject: Re: [PATCH v2 1/1] Bluetooth: btusb: Reclassify Qualcomm WCN6855
+ debug
+ packets
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <176114101049.1909224.7135864082942324713.git-patchwork-notify@kernel.org>
-Date: Wed, 22 Oct 2025 13:50:10 +0000
-References: <20251015033150.498866-1-chris.lu@mediatek.com>
-In-Reply-To: <20251015033150.498866-1-chris.lu@mediatek.com>
-To: Chris Lu <chris.lu@mediatek.com>
-Cc: marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
- sean.wang@mediatek.com, will-cy.Lee@mediatek.com, ss.wu@mediatek.com,
- steve.lee@mediatek.com, linux-bluetooth@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-mediatek@lists.infradead.org
+ <176114101324.1909224.4267593158133917211.git-patchwork-notify@kernel.org>
+Date: Wed, 22 Oct 2025 13:50:13 +0000
+References: <20251007153315.72565-1-pascal.giard@etsmtl.ca>
+In-Reply-To: <20251007153315.72565-1-pascal.giard@etsmtl.ca>
+To: Pascal Giard <evilynux@gmail.com>
+Cc: marcel@holtmann.org, luiz.dentz@gmail.com,
+ linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+ pascal.giard@etsmtl.ca
 
 Hello:
 
-This series was applied to bluetooth/bluetooth-next.git (master)
+This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Wed, 15 Oct 2025 11:31:48 +0800 you wrote:
-> In response to the customer's request, add the following two
-> VID/PID to the USB driver table so that btusb driver can support
-> the corresponding MT7920/MT7922 modules.
+On Tue,  7 Oct 2025 11:33:15 -0400 you wrote:
+> Some Qualcomm Bluetooth controllers, e.g., QCNFA765 with WCN6855
+> chip, send debug packets as ACL frames with header 0x2EDC.
+> The kernel misinterprets these as malformed ACL packets, causing
+> repeated errors:
 > 
-> 1. VID/PID 0489/e135 for MT7920
-> 2. VID/PID 0489/e170 for MT7922
+>   Bluetooth: hci0: ACL packet for unknown connection handle 3804
 > 
 > [...]
 
 Here is the summary with links:
-  - [v2,RESEND,1/2] Bluetooth: btusb: MT7920: Add VID/PID 0489/e135
-    https://git.kernel.org/bluetooth/bluetooth-next/c/bb9da27b29d0
-  - [v2,RESEND,2/2] Bluetooth: btusb: MT7922: Add VID/PID 0489/e170
-    https://git.kernel.org/bluetooth/bluetooth-next/c/042b9b4c55c7
+  - [v2,1/1] Bluetooth: btusb: Reclassify Qualcomm WCN6855 debug packets
+    https://git.kernel.org/bluetooth/bluetooth-next/c/dc74e6550388
 
 You are awesome, thank you!
 -- 
