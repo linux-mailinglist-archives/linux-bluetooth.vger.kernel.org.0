@@ -1,49 +1,49 @@
-Return-Path: <linux-bluetooth+bounces-15988-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-15987-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FAE0BFC4B6
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 Oct 2025 15:53:15 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B75EBFC68D
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 Oct 2025 16:12:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4A8981A61613
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 Oct 2025 13:51:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7C34E6E07B3
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 22 Oct 2025 13:50:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B75134B406;
-	Wed, 22 Oct 2025 13:50:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBE7934AAE2;
+	Wed, 22 Oct 2025 13:50:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PK+HT6xq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YcGDhePn"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12A934B1AD;
-	Wed, 22 Oct 2025 13:50:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C59E34A781;
+	Wed, 22 Oct 2025 13:50:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761141033; cv=none; b=sVRQekfvqjcDlmKfvtzkNSnkKgD6agDNmi/8Ltpyjt3lBPdlVN9yNLTT5PpyA0D75gSyPBUjl1fejLxg+pvfonJFTMaV5iyMN5CmzomOidDLhu98UXkp549v1K5lXR5mAmJNZ5lFyfk4saXd9IPSKSCn6HXc3Of5J04g63osn6k=
+	t=1761141031; cv=none; b=i+fMdICEQE1IYhqFw042w0sikCemQtP/kW/WU0oy+emr1WsNm9utcLBf7GyE7OX7nrMoaM7TrDB8V/NjblLFG7SZBh7oHk9YYrRO5X0buanQxh06XhQ8G2x9Ya5InDaGMT4Jj8iGB0a3VnXX+3E6Vpc5HUCegYiEDuDYx6j//Vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761141033; c=relaxed/simple;
-	bh=4bqIxQwaYwiGicJXcXxKfKTqZFmjRYMc8Clxky5cxcU=;
+	s=arc-20240116; t=1761141031; c=relaxed/simple;
+	bh=yR4QhepfDm1tpuRaTKak6V+6k9BrgzLnsAOajKYDbMw=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=Hja8QR4bmaaIc7Vbzx4z/0xXo2DV4eWG3e3s2SzyPyz836v2gEj3wL+d631ltczRNy6m+rHMwmo+L/6TZoKFOzeU/Qx4rRr6OTY7i/z7z4OAFQ/7pNuGXCUM61V4mlHVLV+/spT2N7EPenFvnXoM93BtrKRzLonvkMnlenfNVmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PK+HT6xq; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 658C3C4CEE7;
-	Wed, 22 Oct 2025 13:50:32 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=T9elrzng944rc+jobzvN7UniBNU8+peeO0dz1vrEVRPOJjPRKnl6tpfzZTMYA8zUrnAi+QJWs1JO3vtaDME5S6douv8TSKCzgzLOX/0y9MzzY5EAGgIIFYmTeo/+q8MbESOtuxU+gxtfnOBZnDsSrtujpV4QJJJUJUq3FdIY4vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YcGDhePn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC009C4CEF5;
+	Wed, 22 Oct 2025 13:50:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761141032;
-	bh=4bqIxQwaYwiGicJXcXxKfKTqZFmjRYMc8Clxky5cxcU=;
+	s=k20201202; t=1761141031;
+	bh=yR4QhepfDm1tpuRaTKak6V+6k9BrgzLnsAOajKYDbMw=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=PK+HT6xqI/oVLZAk6t66sKLs08HHqVELEU+iFdbPOtLDLM6bo2ljgtegQPaUxv4e/
-	 hD4EXuU9Dm+BmBcKdzskHrvc5kYVmu8Mk9JSlYZsyy0H7oLgadOsnKhC99u3b7+O43
-	 a2HHPV38hlWvyYKSQ+Qu+KW2/TCEqqsPKD2aFzjp63cYDx/20wUWNbsgnBn53dyogA
-	 n2AFtbvS4LPt7iiv6Puph/tM4Xl/EF8J3NzwLw2yoE4Y0b2+NlAfy2HqS4MaP6BDVg
-	 ex/00O9+R5r0xBheGRF7fqqdpv0aLJ3aZKY13dgRKPCnXjFRoWbJPxn+uuGz9zV5ux
-	 BNpR7CJBeYgeA==
+	b=YcGDhePnAHppfE1Kq8bxB9Ll6lwUkKSEgujxZ7U5D8kBvl7OqroqDZ6VaFVvA6nZh
+	 j+y2SSHCvigKUjeqYX2aTnHuTdz+qSebSjzMobu0mvyfZbj40//ISB1llF8W8lF6uv
+	 TZYVllSfsEsvoYM9zUV9OC369FDqeHLsosxxN1wFPMco3DbtJqDhCoUeKYZqm4M8NP
+	 KXeWIMZBf49jOoKI+zj2mowfHNMW4ClEgygCtE8Ij/tVuV5wQ8oR3nWRw9BCblKHm2
+	 Ospzup9R6vG8VxgiFSGluGaR3szk8kH7M2nmgz7j65w0AqzVpiaqyunTbLEa3tKQ74
+	 7tSlv1ZWUAvzQ==
 Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id ADD033A78A5D;
-	Wed, 22 Oct 2025 13:50:14 +0000 (UTC)
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 33D573A78A5D;
+	Wed, 22 Oct 2025 13:50:13 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
@@ -52,38 +52,64 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 1/1] Bluetooth: btusb: Reclassify Qualcomm WCN6855
- debug
- packets
+Subject: Re: [PATCH 1/1] Bluetooth: btusb: Add new VID/PID 2b89/6275 for
+ RTL8761BUV
 From: patchwork-bot+bluetooth@kernel.org
 Message-Id: 
- <176114101324.1909224.4267593158133917211.git-patchwork-notify@kernel.org>
-Date: Wed, 22 Oct 2025 13:50:13 +0000
-References: <20251007153315.72565-1-pascal.giard@etsmtl.ca>
-In-Reply-To: <20251007153315.72565-1-pascal.giard@etsmtl.ca>
-To: Pascal Giard <evilynux@gmail.com>
-Cc: marcel@holtmann.org, luiz.dentz@gmail.com,
- linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
- pascal.giard@etsmtl.ca
+ <176114101199.1909224.4793353503702509453.git-patchwork-notify@kernel.org>
+Date: Wed, 22 Oct 2025 13:50:11 +0000
+References: <20251006084647.19902-1-liqb365@163.com>
+In-Reply-To: <20251006084647.19902-1-liqb365@163.com>
+To: Chingbin Li <liqb365@163.com>
+Cc: pmenzel@molgen.mpg.de, marcel@holtmann.org, luiz.dentz@gmail.com,
+ linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
 
 Hello:
 
 This patch was applied to bluetooth/bluetooth-next.git (master)
 by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-On Tue,  7 Oct 2025 11:33:15 -0400 you wrote:
-> Some Qualcomm Bluetooth controllers, e.g., QCNFA765 with WCN6855
-> chip, send debug packets as ACL frames with header 0x2EDC.
-> The kernel misinterprets these as malformed ACL packets, causing
-> repeated errors:
+On Mon,  6 Oct 2025 16:46:47 +0800 you wrote:
+> Add VID 2b89 & PID 6275 for Realtek RTL8761BUV USB Bluetooth chip.
 > 
->   Bluetooth: hci0: ACL packet for unknown connection handle 3804
+> The information in /sys/kernel/debug/usb/devices about the Bluetooth
+> device is listed as the below.
+> 
+> T:  Bus=01 Lev=01 Prnt=01 Port=02 Cnt=01 Dev#=  6 Spd=12   MxCh= 0
+> D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+> P:  Vendor=2b89 ProdID=6275 Rev= 2.00
+> S:  Manufacturer=Realtek
+> S:  Product=Bluetooth Radio
+> S:  SerialNumber=00E04C239987
+> C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
+> I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+> E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+> E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+> I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+> I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+> I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+> I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+> I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+> I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+> E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+> E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
 > 
 > [...]
 
 Here is the summary with links:
-  - [v2,1/1] Bluetooth: btusb: Reclassify Qualcomm WCN6855 debug packets
-    https://git.kernel.org/bluetooth/bluetooth-next/c/dc74e6550388
+  - [1/1] Bluetooth: btusb: Add new VID/PID 2b89/6275 for RTL8761BUV
+    https://git.kernel.org/bluetooth/bluetooth-next/c/1a5264d0c46e
 
 You are awesome, thank you!
 -- 
