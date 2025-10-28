@@ -1,111 +1,135 @@
-Return-Path: <linux-bluetooth+bounces-16148-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-16150-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2B7CC162B9
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Oct 2025 18:34:01 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3CE6C16418
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Oct 2025 18:44:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id DFF6F506EA2
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Oct 2025 17:30:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7E24F3BE886
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 28 Oct 2025 17:40:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2A9334DCF7;
-	Tue, 28 Oct 2025 17:29:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C5CF34AB12;
+	Tue, 28 Oct 2025 17:40:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t/3AKvVQ"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="Jb7YK/tX"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF9334DCCC;
-	Tue, 28 Oct 2025 17:29:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F2D934A768
+	for <linux-bluetooth@vger.kernel.org>; Tue, 28 Oct 2025 17:40:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761672557; cv=none; b=qq+RW3quRyYI7iu7eUV9lfsKikl79B80nbVaWFaLyXHOYSCRsqLqBitlXKErGNVDVrtGrMQHGZSU8nx51df5ciuIk+hNZh8Uk/shk31PqmGk5YpzUk8Y5M5PqGni4zKp6RQCT7ixVAB7M6qw5Y0BoGdF3Z8rboGhdpy7zL5LeqI=
+	t=1761673223; cv=none; b=sctK3WKN57l6bGxweLkFmaof+m2yvrAupxAYFKkf4A1WhNqxirAvBQDmV2mZPbtT1Xxs2dwYuNNJFWczdCPUFCfmibUkm6R/sNInk+RPrNLFSp1onpVtCzGNd3EMMtf++RrqdV5tvlNV0lVdSulH75ilGlsuhLEWtDVW7bEc944=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761672557; c=relaxed/simple;
-	bh=SlOKNstFKaaueGB/AyFAzTIoP+zBnaPGWTaBaVu1fkQ=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=W058wy+/9o8zkPwKvDcwgWQsGDXBUqcx04rUOIyOKNzfBJbPNFhIbiwXJ/Ww9S9hQrxKt/avslNIOn4+osC4jNqFfOSylbjI180VLyXfb9xcc9VghkjVKk4rbOFM34kY5XQufYX51npBFZCcxJBafjN73i0yM0LCWJi5FptBySc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t/3AKvVQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1B70C4CEE7;
-	Tue, 28 Oct 2025 17:29:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761672557;
-	bh=SlOKNstFKaaueGB/AyFAzTIoP+zBnaPGWTaBaVu1fkQ=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=t/3AKvVQ1KXN9kvnKPWdfOqWlob+mnSxNXEvmiOf9/qqQYc4Z79xWahxulUJfenuE
-	 lXdRPedcl7tlT1NX9zq3q1oPbMhExe+x18Mv9OGAepn7hz55VHXO981766u7QaBz8J
-	 mYNH6AP28nH4RVpwBuelWUOR+18iRyXAQJ3LtNWfQkdvPr3Vqfr4DhoyjWMjwUZzbU
-	 hXrWNoN8gasQaeI6uMhSXBbixfiTtx6/XM0MGRMwg8Ab8L7iHGJouf/wpsDgBr+3qu
-	 UtixOUt/AAHy3xe0hJKZ2OD7H3aA1a5HPaXfNLnf3vu9cOBk5VAT1plrQi2sXK+cnv
-	 K7qIE6yTp/ONQ==
-Date: Tue, 28 Oct 2025 12:29:15 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1761673223; c=relaxed/simple;
+	bh=aXUMeXzMr7+pu8Yf59D4UfcQD82Ccm+D67e+43HI4bE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pxo0ICrkdWvSLHTLwxJiW2Ek+wVvqvrC8+2DWoq46vBVlcO/i2uFqb4IhcpSA8EleNC/B9nfse8Enl+TDHMsVSr119JxAfN/BcqqHWQqdZ+sjrD9FXsxHMm5BJ2lXW9ykldMs3bFHRUoTpmVcXylmWCQclJkcF4gSkGV8S2kM68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=Jb7YK/tX; arc=none smtp.client-ip=209.85.208.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-378ddb31efaso74623391fa.3
+        for <linux-bluetooth@vger.kernel.org>; Tue, 28 Oct 2025 10:40:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1761673218; x=1762278018; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=I1dDT+Kuo18gW/vAs5pcbkOprB45nObDwGH/xrxPOiA=;
+        b=Jb7YK/tX/NExrWrnnfEsvBKPDaXpc/KVGXJh1wkHCo4Zfs/c/o0rSwNvp11ctUHn0m
+         Y2c/NFQCsQQpy7HyA24SMs5VAkyjRHaVj6cx52it3B5UwRa5FwpvqMmGjS+BCtlukMfG
+         Um6dQl8jszRUVksnp6ZuaksjsS0ApRauEtN2aUIeeXDFbsCz16g/8ARsSTZyfFQvQm0k
+         rkNZxp7xYTscP6u9+d9+7qs1ITpxYc1tf60x/tHJHk6omM8I9vkni4qVhyOx/zWpj4cR
+         w7GLMo1m8WVXIC720BeQ9aH/dSvIrJ7qvIjqHLbQPOL4qD4/C65l5N1hFAF8ScwUn8O2
+         ApfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761673218; x=1762278018;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=I1dDT+Kuo18gW/vAs5pcbkOprB45nObDwGH/xrxPOiA=;
+        b=uDjc5YC38M6e2QvUK1MaDinaqLGkkoweWWCt2V3AGK/8V775YHZyqATnE5qDZ8Sdyh
+         kRqPXP936e4xrNc7hBVACy7fBnmrLFvnRtVDdckbl6O4RQV/8b24mKTHIJ7G1y+v/snT
+         93RIXuPKWO422+YcrfRlpyN6LXtuajTMp+6bBXv5XzeX+0MjAK+CibLn3X51wgzYXl+z
+         xtv5eL60UZlC+Pt59fG8myjlUXFuZfMBdijgeStati/ECvY1ABPY966w8Z4OsI1KHLhD
+         E9huBr0ujAejuoUcyyRtDaWOixKJQA435zki+Y8UeRw9HEPzc9HtfGbpXIeid5FVViqa
+         9g6Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWlG2D3adpkrX3IeYb6ZvrrIZCZW3DZlsLfaeTpnclr+j+/YYUZUxuiTvfBUMiaVm8tUwmOxutjvswVOOBN4EM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwR3yWZWlpQbfpLff8Mbiv53+XAvQenfdQg5W9CKtK9O2oV3WBe
+	AgJ1eDZX2EVGJp73bfQMktK0yZmBMv/KW839CLpZlzbGIUyeUoKQhJzSM0nSJT064cbIRs4vMbH
+	AtdP1y/12LscKKpZZqbHXgFiASFoX0iQrW5gWmQGaTA==
+X-Gm-Gg: ASbGncvy0e2s8b8CIhGTnBnG9B4n0nhOi6ta4y3GcCqTywU180HSdnI5Jyh9XrOzku+
+	13EXmDObyBI0rUElc/UMblsjCUtopd0VNdFSKzL5HEAyINEptJtXBa0Tast38e71zTXQniEVH7y
+	P0sk4yaEcOQ3WLowEOZereflcMD5eqc8ZB621fduXj3w8dxQfPVBbVzUXRENg/SN9BMNaGWyQGo
+	KgZk/+qySIVUQjhJWG7SGr/FbcBnC3JNkq8VK9qrgTn15gR9zgvqvkpPCaeEXaNBBUmjowRbZTy
+	01QE6vsb8o04Ujy0Z2H4Zan/AYI=
+X-Google-Smtp-Source: AGHT+IFNOY7fS5NXoOFhyNJtmea1wSytgnH4oBkJVvZ9r27nhCdq6OSaGfOh73lSEWuOWGB7Asbt73QW9CvKZgTz/nE=
+X-Received: by 2002:a05:651c:4347:10b0:338:10c9:5871 with SMTP id
+ 38308e7fff4ca-37a052c83admr689201fa.34.1761673218316; Tue, 28 Oct 2025
+ 10:40:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
- Marcel Holtmann <marcel@holtmann.org>, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, 
- Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Rocky Liao <quic_rjliao@quicinc.com>, linux-bluetooth@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>
+References: <20251028155320.135347-3-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20251028155320.135347-3-krzysztof.kozlowski@linaro.org>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Tue, 28 Oct 2025 18:40:06 +0100
+X-Gm-Features: AWmQ_bkhwYP_3u9-JoVziAs2Bk2afMmvyoh0mwlsnq_68htCAVlTBlNvVkP6s1g
+Message-ID: <CAMRc=MewE_wRrKsbo94GuwrO2D=1L==3ceJBKXQXvLgiqhd7Dw@mail.gmail.com>
+Subject: Re: [PATCH v2] Bluetooth: MAINTAINERS: Add Bartosz Golaszewski as
+ Qualcomm hci_qca maintainer
 To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20251028-dt-bindings-qcom-bluetooth-v1-6-524a978e3cda@linaro.org>
-References: <20251028-dt-bindings-qcom-bluetooth-v1-0-524a978e3cda@linaro.org>
- <20251028-dt-bindings-qcom-bluetooth-v1-6-524a978e3cda@linaro.org>
-Message-Id: <176167254795.2794822.10305900307376723190.robh@kernel.org>
-Subject: Re: [PATCH 06/12] dt-bindings: bluetooth: qcom,wcn3990-bt: Split
- to separate schema
+Cc: Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
-On Tue, 28 Oct 2025 16:31:55 +0100, Krzysztof Kozlowski wrote:
-> One big Qualcomm Bluetooth schema is hardly manageable: it lists all
-> possible properties (19 supplies).  Split qcom,wcn3990-bt to separate
-> bindings, so device schema will be easier to read/maintain and list only
-> relevant properties.
-> 
-> This binding is very similar to qcom,wcn3950-bt, however devices have
-> additional VDD_CH1 supply.
-> 
+On Tue, Oct 28, 2025 at 4:53=E2=80=AFPM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> There are no dedicated maintainers of Qualcomm hci_qca Bluetooth
+> drivers, but there should be, because these are actively used on many
+> old and new platforms.  Bartosz Golaszewski agreed to take care of this
+> code.
+>
+> Cc: Bartosz Golaszewski <brgl@bgdev.pl>
+> Cc: Marcel Holtmann <marcel@holtmann.org>
+> Cc: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+> Link: https://lore.kernel.org/r/CAMRc=3DMdqAATOcDPhd=3Du0vOb8nLxSRd7N8rLG=
+LO8F5Ywq3+=3DJCw@mail.gmail.com/
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>
 > ---
->  .../bindings/net/bluetooth/qcom,wcn3990-bt.yaml    | 66 ++++++++++++++++++++++
->  .../bindings/net/bluetooth/qualcomm-bluetooth.yaml | 40 -------------
->  2 files changed, 66 insertions(+), 40 deletions(-)
-> 
+>
+> Changes in v2:
+> Don't orphan, add Bartosz.
+> ---
+>  MAINTAINERS | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 8abdc0e50699..8a2c5fb0ba55 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -21145,6 +21145,7 @@ F:      Documentation/devicetree/bindings/net/qco=
+m,bam-dmux.yaml
+>  F:     drivers/net/wwan/qcom_bam_dmux.c
+>
+>  QUALCOMM BLUETOOTH DRIVER
+> +M:     Bartosz Golaszewski <brgl@bgdev.pl>
+>  L:     linux-arm-msm@vger.kernel.org
+>  S:     Maintained
+>  F:     drivers/bluetooth/btqca.[ch]
+> --
+> 2.48.1
+>
 
-My bot found errors running 'make dt_binding_check' on your patch:
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-Lexical error: Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.example.dts:24.42-58 Unexpected 'GPIO_ACTIVE_HIGH'
-Lexical error: Documentation/devicetree/bindings/net/bluetooth/qualcomm-bluetooth.example.dts:25.42-58 Unexpected 'GPIO_ACTIVE_HIGH'
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20251028-dt-bindings-qcom-bluetooth-v1-6-524a978e3cda@linaro.org
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
