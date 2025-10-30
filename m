@@ -1,158 +1,404 @@
-Return-Path: <linux-bluetooth+bounces-16195-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-16197-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15109C21602
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 Oct 2025 18:08:08 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 724FEC21680
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 Oct 2025 18:13:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id C197C4EDB95
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 Oct 2025 17:02:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3F9CF42101E
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 30 Oct 2025 17:10:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FA323678B3;
-	Thu, 30 Oct 2025 17:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6546F31A554;
+	Thu, 30 Oct 2025 17:10:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f0IxmXp8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lrd0EO0A"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
+Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com [209.85.222.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C3634D93C
-	for <linux-bluetooth@vger.kernel.org>; Thu, 30 Oct 2025 17:01:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17A7A21D3E8
+	for <linux-bluetooth@vger.kernel.org>; Thu, 30 Oct 2025 17:10:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761843728; cv=none; b=uQXWLLPc8fJyUcoSzsHxcbXagCUnoGkmSkNETR/wbNLah2REWxBlYM9tUYx0GLMGRxUrbJuKdG9XIbJCoiV4fb0/4sbk0HYrMW8BZpx9LBTWj+kfYR5+i6r0FnS7VqWxpC2CxXUD1qp0cgqkS+rGBnqGyRAoIYcA7yL78WQJZqA=
+	t=1761844223; cv=none; b=DZoRTIKvpgbV6Xe3R7H0ndJGECVHYQgwbVGCTfr+oGCK+0Tq514CmcjDMlMo9o+vy5+jSVkVXoBD/bBeZBz5E8GHop4KOn6L2P3pG3WHfPvtKLnD1ZLANrwZgBNt01BB4UqhB+0BbVdBXK84ASB6a9Jry6437XhC/ERG5dXDxDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761843728; c=relaxed/simple;
-	bh=P4sVJs6TvIwOIW2e2Pns+l2C0s5WyImyZ8xUb1FLRzY=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rz0zVzA02cSQwLXrkGb+fyiWNaoWIdOi2mV6X/vLN8QAC574n6W8REWzRDlb4fJ/Acda8rCjtAq7wswacjhQUVAYPIRbE1q3r+t1yU+UXH1tX6j4Rx9pJKHXr9ud2qyPAO+yRu8qmLbnh+tnehxhw0PVYfHbo9Hl02XMs1rKDDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f0IxmXp8; arc=none smtp.client-ip=209.85.217.46
+	s=arc-20240116; t=1761844223; c=relaxed/simple;
+	bh=46jgwChTy9oouaOih4+ppJqjTTTcaRqhSu4DuvWDW8Q=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=BfbhBMOF0YUJYeR+RJdgX0UmEknvc0TXIef8lpg/9Hs4A5Z5pucw1dlM3nMgEAsiwvfDtotniEKo8Kv3hbhgpc+BQlpyUH6aRJG8js/dUyHll3Z6/DntnvLaAS3lRJbaJ1LGUF+qqIPeJSDe8Y+eUevwXhO8/EKZQzZJGjJCfbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lrd0EO0A; arc=none smtp.client-ip=209.85.222.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-5d967b67003so1546355137.2
-        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Oct 2025 10:01:42 -0700 (PDT)
+Received: by mail-ua1-f46.google.com with SMTP id a1e0cc1a2514c-9350507caaaso419432241.0
+        for <linux-bluetooth@vger.kernel.org>; Thu, 30 Oct 2025 10:10:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761843701; x=1762448501; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=I51elFZXgkbCyenDZZVaSGBFbw1PPbSY/OrMUb2uVr4=;
-        b=f0IxmXp8/DdaA1yw96GiVyPUF7H/klAGLH+geSUhBnAMm1GTPLICUVTAzmeZrLuDL+
-         47FPmvT/FWh7oiocQ37I+cyxeW5Gou6ig4qoLzgEu2JurB9rOg/z5oOkGrGERn3XQeSy
-         C8NHri5f5HTnO8xmuY7waaohbQ1cfOjm4p2IMUCoA9PSNQbK7Cha+G6Zj8SZw/oDmCF3
-         vrWaTB61Chi2UITKq8T5DeCnK+Ak+Wtp8D6X4a7Gpaxpj1buj9OQVxhqQKPCboBdSda4
-         +ZvUIAgSDFjzhgzD224nMlh3bnHqVDLXsw7OMtESj9XR3O4Gur0Tl985yLLbJpeAvtQ0
-         qRBQ==
+        d=gmail.com; s=20230601; t=1761844220; x=1762449020; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=uL67FGCk/lr9u25lehd/nvHjiiHvswjlrIHTQYxUf7c=;
+        b=Lrd0EO0APQAfYF+PujOxG4JEs7a5+c1fp46wVo/P911Rt1kxpUv4Btgad8buXs55FX
+         TenvCjcZ2X6j7PDTjwPQZJf9yACK2nHRhSZ6NdvZVzsZ5SmEy4Ar+tixEjp/7xqUpi4w
+         lBT7spRyaLsmMzb/NiWVGxFFQkhL+iChvvZdzo7MyZ2kmkoLjKiT1pDXpPnplC2eG71q
+         H9/KlJoUmTGfThNGNZM/ul/fznPv3eLvOE76DEzyCsWtO5QLbNhfFD5UrQrdQAMET1iC
+         fmkAOu3KRDR9ozudqROdb9gg0lCEqkAdrphOxtrfhQeM4NIc2oZMHW+WntaUFafYE6SE
+         F87w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761843701; x=1762448501;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=I51elFZXgkbCyenDZZVaSGBFbw1PPbSY/OrMUb2uVr4=;
-        b=av2fS/mG/7NToWSVBu+ETcRRv6t+tQ7jyrL/FOeukvgVnoYKnYiXCf27zwtQT6rxab
-         VaWCWl8AITot377GCMP15jCYvEzSXDPsOeJN4o76dEgfcEMTg7CvROXJM0aO5YGhKr4u
-         rXLvvTLCWL3L9j+f/Aj+Cgs0UTmhJG74mYAbFusIKjgAPH+fi4YgDGkswVs7Q+MVO3u3
-         R5Qe+NHaJN8pVwXzhNr67fqQZMR+D0NyNFJfwPBbcDwC4A01OHUHHfPBJ6czHt6Uba2+
-         0T2+Dk8Z4dPnpwI+QLRr4ZWAbJNIVtv2RSf0ZwBTNsYmaC0JluP/2lwmJZ8D6w45bc8C
-         hwvw==
-X-Gm-Message-State: AOJu0YwzGjWWlmXRD1WFXDJM+nWR9MPN5LRIKHnTCNDVGGdBVOo7SR1r
-	p9ZYhEWAU835H9BhK4PFyVNL+2Bb5ePRf9erQl7YPlr78BoJfPBpRE+5woOBBVje
-X-Gm-Gg: ASbGncupefEvLpqnWOndhDY0D1JVACmI/Xs1V+biI6ixxF0eWvQ65xDZp+bqY+JlLZd
-	pNIoWvVjuhGX65piEHr4+bQ0KMVbFhU8qL0zv5k43lDnDJL8WPopb8eTXceCxFmR0nNBsNvFCeE
-	hDrhr2GxrCnjlKBdgbaCMp18UBa54Krw/6rYCZtQMJCS1lVstYaMkmyeidr1r0NwWX17yTCjrPp
-	fhdQJYKjTRc98Exu4cMkav6XHT7QOIjvvSqRg73z+Jk+tWRzVLwreYLc2eY/R1ctsuR6AUuEIzq
-	pFPCmE0OkrZiVwzLZemjtPrX+0srom86ajuqlQbdkDFUD8n+TjcADEnimOvSCD67SRBqgSN6s2R
-	Y2WxoV8uc5skIcQBniuAbOgictQ5PrU6EsmuWddYzKo7CwIYrh3FFlqftgUzmZ82TR3lVN9UlDV
-	TRniI=
-X-Google-Smtp-Source: AGHT+IF+tSizRwAnMDBQ0k++xccFax4QAICuU/D/cIZ2UExkgjPN2saGhZyLNagAe0mVcoAZhFX/IA==
-X-Received: by 2002:a05:6102:32c1:b0:5d4:1e69:fdbe with SMTP id ada2fe7eead31-5dbb11f99b7mr111746137.3.1761843696381;
-        Thu, 30 Oct 2025 10:01:36 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1761844220; x=1762449020;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uL67FGCk/lr9u25lehd/nvHjiiHvswjlrIHTQYxUf7c=;
+        b=rcwisCPKVi9DOEfgbLpyOBenS47DLcwDNhHOVpeWSj1kw1qcnfUNaXq2hfNkLuDC3F
+         1bohonKfu27o+GEbrCjuMmgxF+eKbAs9wnLyLt1EQy+mtzIkORh5FaSDiTJOiBFpqilO
+         vNH2A9s7xkIkdJAm99t4DxB1K/Nq+finWQgomCkrke17+cJ3Idx2nLg+w/+rxjwrTtvX
+         b3VdygA+0XoBvDrT+UhTvYNbseZyE649Oh06Bh54WhNnhGoa16pMfxpXmWZpAhwFocx0
+         jXnV5yA8Pu8PsGr96oi/dDaoef+y21Lzw1a3mVoC+3Eqbw8d9as2qeZgqXNE1N3zPIWV
+         BalA==
+X-Gm-Message-State: AOJu0YwnCGMVLYmrMN0mLFkJoLfPJioVlzpbvFcOBWVBctpTCLoopun4
+	N89U6K1o8RG/za3SYZCi6SCMM2p68ULKjXPjGUC+EkipTZyl0x06QRXsXdKEYEq9
+X-Gm-Gg: ASbGncu7esnSROxOgh5MNsJQzCUiC0fsoWYYrfPw/CcZfZi067z2alrs2CGngnKqhdf
+	K5nOn0ml4H5HaztgAx3iKMkrVtEHwmuf0mblF+ksehLV+hMrqEV6GI+XFfjigs4VqKDOixgPGW+
+	K0ZNsFm6XZYRQJb6Y7Cg3GWx1BREBxW1FOG0PbxB23FZ6Qfrv4rFywxO+voTluBuxomkHSGrbKX
+	kp3suaZx6gLDWeShm37rrA0piFkF+zGlyOtyuphKPpsTV7lPxR9DWqYu9Kl6E5T8mrySMuRSaUy
+	+hXMhUYC4/H2QsplvfxLsfzObxWHsZ1IsHOYdhcAScon/zaHsCxAmb7B8H3hRwNJ47EPQyLJ7yC
+	sLpZ37zV/uvzkbNSuntBJ4qLKDTdNo/zXLNdaNCHMH5mRurnfBqpJSdJa9hVHudeP4DPxQHofgp
+	kNcmPTcNpsje5YQw==
+X-Google-Smtp-Source: AGHT+IGncBoumgMXTsQScLbqSxNVmtTsc/8kVR3QZ/irGl1MTWkFUkhFDIAkE8GdW7I9myjAxALNuQ==
+X-Received: by 2002:a05:6102:cc6:b0:5db:26e6:68d5 with SMTP id ada2fe7eead31-5dbb12fbeaamr107316137.27.1761844220091;
+        Thu, 30 Oct 2025 10:10:20 -0700 (PDT)
 Received: from lvondent-mobl5 ([50.89.67.214])
-        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-9350197756csm811781241.11.2025.10.30.10.01.34
+        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-5db4e4e3b4fsm6277463137.1.2025.10.30.10.10.17
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Oct 2025 10:01:35 -0700 (PDT)
+        Thu, 30 Oct 2025 10:10:19 -0700 (PDT)
 From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v1 2/2] btdev: Fix crash on BIG cleanup
-Date: Thu, 30 Oct 2025 13:01:26 -0400
-Message-ID: <20251030170126.251566-2-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ v2] monitor: Add decoding support for LL Extended Feature Set
+Date: Thu, 30 Oct 2025 13:10:09 -0400
+Message-ID: <20251030171009.253408-1-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251030170126.251566-1-luiz.dentz@gmail.com>
-References: <20251030170126.251566-1-luiz.dentz@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This fixes the following crash:
+This adds support for decoding LL Extended Feature Set introduced in 6.0
+that adds the following:
 
-Invalid read of size 8
-   at 0x400F26F: le_big_free (btdev.c:606)
-   by 0x4024636: queue_remove_all (queue.c:341)
-   by 0x40246C2: queue_destroy (queue.c:60)
-   by 0x401B7C9: btdev_destroy (btdev.c:7820)
-   by 0x400CFBF: hciemu_client_destroy (hciemu.c:301)
-   by 0x4024636: queue_remove_all (queue.c:341)
-   by 0x40246C2: queue_destroy (queue.c:60)
-   by 0x400DA91: hciemu_unref (hciemu.c:441)
-   by 0x40072F2: test_post_teardown (iso-tester.c:701)
-   by 0x402BB0A: tester_teardown_complete (tester.c:713)
-   by 0x402BB41: default_teardown (tester.c:266)
-   by 0x402B43B: teardown_callback (tester.c:434)
+Commands:
+
+ - HCI_LE_Read_All_Local_Supported_­Features(0x2087)(Feature:47,1)
+ - HCI_LE_Read_All_Remote_Features(0x2088)(Feature:47,2)
+
+Events:
+
+ - HCI_LE_Read_All_Remote_Features_Complete(0x2b)(Mask bit:42)
 ---
- emulator/btdev.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ monitor/bt.h     |  24 +++++++
+ monitor/packet.c | 160 +++++++++++++++++++++++++++++++++++++++++------
+ 2 files changed, 166 insertions(+), 18 deletions(-)
 
-diff --git a/emulator/btdev.c b/emulator/btdev.c
-index 8c72a24290c6..c53db7040d39 100644
---- a/emulator/btdev.c
-+++ b/emulator/btdev.c
-@@ -6863,7 +6863,7 @@ static int cmd_term_big_complete(struct btdev *dev, const void *data,
+diff --git a/monitor/bt.h b/monitor/bt.h
+index ca91f7fefc84..9ca3e7c88fb1 100644
+--- a/monitor/bt.h
++++ b/monitor/bt.h
+@@ -2952,6 +2952,21 @@ struct bt_hci_rsp_le_read_iso_link_quality {
+ 	uint32_t duplicated_packets;
+ } __attribute__ ((packed));
+ 
++#define BT_HCI_CMD_LE_READ_ALL_LOCAL_FEATURES	0x2087
++#define BT_HCI_BIT_LE_READ_ALL_LOCAL_FEATURES	BT_HCI_CMD_BIT(47, 2)
++struct bt_hci_rsp_le_read_all_local_features {
++	uint8_t  status;
++	uint8_t  page;
++	uint8_t  features[248];
++} __attribute__ ((packed));
++
++#define BT_HCI_CMD_LE_READ_ALL_REMOTE_FEATURES	0x2088
++#define BT_HCI_BIT_LE_READ_ALL_REMOTE_FEATURES	BT_HCI_CMD_BIT(47, 3)
++struct bt_hci_cmd_le_read_all_remote_features {
++	uint16_t handle;
++	uint8_t  pages;
++} __attribute__ ((packed));
++
+ #define BT_HCI_CMD_LE_CS_RD_LOC_SUPP_CAP	0x2089
+ #define BT_HCI_BIT_LE_CS_RD_LOC_SUPP_CAP	BT_HCI_CMD_BIT(20, 5)
+ struct bt_hci_rsp_le_cs_rd_loc_supp_cap {
+@@ -3990,6 +4005,15 @@ struct bt_hci_evt_le_big_info_adv_report {
+ 	uint8_t  encryption;
+ } __attribute__ ((packed));
+ 
++#define BT_HCI_EVT_LE_READ_ALL_REMOTE_FEATURES_COMPLETE	0x2B
++struct bt_hci_evt_le_read_all_remote_features_complete {
++	uint8_t  status;
++	uint16_t handle;
++	uint8_t  max_pages;
++	uint8_t  valid_pages;
++	uint8_t  features[248];
++} __attribute__ ((packed));
++
+ #define BT_HCI_EVT_LE_CS_RD_REM_SUPP_CAP_COMPLETE	(0x2C)
+ struct bt_hci_evt_le_cs_rd_rem_supp_cap_complete {
+ 	uint8_t status;
+diff --git a/monitor/packet.c b/monitor/packet.c
+index 22708689fe03..b4da6653f4a2 100644
+--- a/monitor/packet.c
++++ b/monitor/packet.c
+@@ -2765,7 +2765,7 @@ static const struct bitfield_data features_page2[] = {
+ 	{ }
+ };
+ 
+-static const struct bitfield_data features_le[] = {
++static const struct bitfield_data features_le_0[] = {
+ 	{  0, "LE Encryption"					},
+ 	{  1, "Connection Parameter Request Procedure"		},
+ 	{  2, "Extended Reject Indication"			},
+@@ -2806,9 +2806,24 @@ static const struct bitfield_data features_le[] = {
+ 	{ 37, "Connection Subrating"				},
+ 	{ 38, "Connection Subrating (Host Support)"		},
+ 	{ 39, "Channel Classification"				},
++	{ 40, "Advertising Coding Selection"			},
++	{ 41, "Advertising Coding Selection (Host Support)"	},
++	{ 42, "Decision-Based Advertising Filtering"		},
++	{ 43, "Periodic Advertising with Responses - Advertiser"},
++	{ 44, "Periodic Advertising with Responses - Scanner"	},
++	{ 45, "Unsegmented Framed Mode"				},
++	{ 46, "Channel Sounding"				},
++	{ 47, "Channel Sounding (Host Support)"			},
++	{ 48, "Channel Sounding Tone Quality Indication"	},
++	{ 63, "LL Extended Feature Set"				},
+ 	{ }
+ };
+ 
++static const struct bitfield_data features_le_1[] = {
++	{ 0, "Monitoring Advertisers"				},
++	{ 1, "Frame Space Update"				},
++};
++
+ static const struct bitfield_data features_msft[] = {
+ 	{  0, "RSSI Monitoring feature for BR/EDR"		},
+ 	{  1, "RSSI Monitoring feature for LE connections"	},
+@@ -2819,20 +2834,35 @@ static const struct bitfield_data features_msft[] = {
+ 	{ }
+ };
+ 
++static void print_features_subpage(uint8_t subpages,
++					const uint8_t *features_array,
++					uint64_t *features)
++{
++	int i, j;
++	char str[16];
++
++	for (i = 0; i < subpages; i++) {
++		for (j = 0; j < 8; j++)
++			features[i] |= ((uint64_t) features_array[i * 8 + j])
++					<< (j * 8);
++		sprintf(str, "Features[%u]", i);
++		print_hex_field(str, &features_array[i * 8], 8);
++	}
++}
++
+ static void print_features(uint8_t page, const uint8_t *features_array,
+ 								uint8_t type)
  {
- 	const struct bt_hci_cmd_le_term_big *cmd = data;
- 	struct bt_hci_evt_le_big_terminate rsp;
--	struct le_big *big;
-+	struct le_big *big, *rbig;
- 	struct btdev_conn *conn;
- 	struct btdev *remote = NULL;
+ 	const struct bitfield_data *features_table = NULL;
+-	uint64_t mask, features = 0;
+-	char str[41];
++	uint64_t mask, features[3] = {};
++	uint8_t subpages = 1;
+ 	int i;
  
-@@ -6875,7 +6875,6 @@ static int cmd_term_big_complete(struct btdev *dev, const void *data,
+-	for (i = 0; i < 8; i++) {
+-		sprintf(str + (i * 5), " 0x%2.2x", features_array[i]);
+-		features |= ((uint64_t) features_array[i]) << (i * 8);
+-	}
++	/* LE pages 1-10 are 192 bits (24 octets) each */
++	if (type == 0x01 && page)
++		subpages = 3;
  
- 	big = queue_find(dev->le_big, match_big_handle,
- 			UINT_TO_PTR(cmd->handle));
--
- 	if (!big)
- 		return 0;
+-	print_field("Features:%s", str);
++	print_features_subpage(subpages, features_array, features);
  
-@@ -6892,14 +6891,17 @@ static int cmd_term_big_complete(struct btdev *dev, const void *data,
- 
- 			remote = conn->link->dev;
- 
--			big = queue_find(remote->le_big, match_bis, conn->link);
--			if (big) {
-+			rbig = queue_find(remote->le_big, match_bis,
-+							conn->link);
-+			if (rbig) {
- 				memset(&evt, 0, sizeof(evt));
--				evt.big_handle = big->handle;
-+				evt.big_handle = rbig->handle;
- 				evt.reason = cmd->reason;
- 				le_meta_event(remote,
- 						BT_HCI_EVT_LE_BIG_SYNC_LOST,
- 						&evt, sizeof(evt));
-+				queue_remove(remote->le_big, rbig);
-+				le_big_free(rbig);
- 			}
+ 	switch (type) {
+ 	case 0x00:
+@@ -2851,8 +2881,10 @@ static void print_features(uint8_t page, const uint8_t *features_array,
+ 	case 0x01:
+ 		switch (page) {
+ 		case 0:
+-			features_table = features_le;
++			features_table = features_le_0;
+ 			break;
++		case 1:
++			features_table = features_le_1;
  		}
+ 		break;
+ 	case 0xf0:
+@@ -2867,10 +2899,13 @@ static void print_features(uint8_t page, const uint8_t *features_array,
+ 	if (!features_table)
+ 		return;
  
+-	mask = print_bitfield(2, features, features_table);
+-	if (mask)
+-		print_text(COLOR_UNKNOWN_FEATURE_BIT, "  Unknown features "
+-						"(0x%16.16" PRIx64 ")", mask);
++	for (i = 0; i < subpages; i++) {
++		mask = print_bitfield(2, features[i], features_table);
++		if (mask)
++			print_text(COLOR_UNKNOWN_FEATURE_BIT,
++				"  Unknown features (0x%16.16" PRIx64 ")",
++				mask);
++	}
+ }
+ 
+ void packet_print_features_lmp(const uint8_t *features, uint8_t page)
+@@ -3199,11 +3234,29 @@ static const struct bitfield_data events_le_table[] = {
+ 	{ 27, "LE Terminate BIG Complete"		},
+ 	{ 28, "LE BIG Sync Established Complete"	},
+ 	{ 29, "LE BIG Sync Lost"			},
+-	{ 30, "LE Request Peer SCA Complete"},
+-	{ 31, "LE Path Loss Threshold"		},
+-	{ 32, "LE Transmit Power Reporting"	},
+-	{ 33, "LE BIG Info Advertising Report"	},
++	{ 30, "LE Request Peer SCA Complete"		},
++	{ 31, "LE Path Loss Threshold"			},
++	{ 32, "LE Transmit Power Reporting"		},
++	{ 33, "LE BIG Info Advertising Report"		},
+ 	{ 34, "LE Subrate Change"			},
++	{ 35, "LE Periodic Advertising Sync Established v2"},
++	{ 36, "LE Periodic Advertising Report v2"	},
++	{ 37, "LE Periodic Advertising Sync Transfer Received" },
++	{ 38, "LE Periodic Advertising Subevent Data Request" },
++	{ 39, "LE Periodic Advertising Response Report" },
++	{ 40, "LE Enhanced Connection Complete v2"	},
++	{ 41, "LE CIS Established v2"			},
++	{ 42, "LE Read All Remote Features Complete"	},
++	{ 43, "LE CS Read Remote Supported Capabilities Complete" },
++	{ 44, "LE CS Read Remote FAE Table Complete"	},
++	{ 45, "LE CS Security Enable Complete"		},
++	{ 46, "LE CS Config Complete"			},
++	{ 47, "LE CS Procedure Enable Complete"		},
++	{ 48, "LE CS Subevent Result"			},
++	{ 49, "LE CS Subevent Result Continue"		},
++	{ 50, "LE CS Test End Complete"			},
++	{ 51, "LE Monitored Advertisers Report"		},
++	{ 52, "LE Frame Space Update Complete"		},
+ 	{ }
+ };
+ 
+@@ -9128,7 +9181,7 @@ static void le_set_host_feature_cmd(uint16_t index, const void *data,
+ 	print_field("Bit Number: %u", cmd->bit_number);
+ 
+ 	mask = print_bitfield(2, (((uint64_t) 1) << cmd->bit_number),
+-							features_le);
++							features_le_0);
+ 	if (mask)
+ 		print_text(COLOR_UNKNOWN_FEATURE_BIT, "  Unknown features "
+ 						"(0x%16.16" PRIx64 ")", mask);
+@@ -9167,6 +9220,41 @@ static void status_le_read_iso_link_quality_rsp(uint16_t index,
+ 	print_field("Duplicated packets %d", rsp->duplicated_packets);
+ }
+ 
++static void print_le_ext_features(const uint8_t features[248], uint8_t pages)
++{
++	int i;
++
++	/* Page 0 containing bits 0 to 63 (octets 0 to 7) */
++	print_features(0, features, 0x01);
++
++	/* 10 pages of 192 bits (24 octets) each */
++	for (i = 0; i < pages && i < 10; i++)
++		print_features(i + 1, &features[i * 24 + 8], 0x01);
++}
++
++static void le_read_all_local_features_rsp(uint16_t index, const void *data,
++							uint8_t size)
++{
++	const struct bt_hci_rsp_le_read_all_local_features *rsp = data;
++
++	print_status(rsp->status);
++
++	if (size == 1)
++		return;
++
++	print_field("Page: %d", rsp->page);
++	print_le_ext_features(rsp->features, rsp->page);
++}
++
++static void le_read_all_remote_features(uint16_t index, const void *data,
++							uint8_t size)
++{
++	const struct bt_hci_cmd_le_read_all_remote_features *cmd = data;
++
++	print_handle(cmd->handle);
++	print_field("Pages: %d", cmd->pages);
++}
++
+ static const struct bitfield_data cs_roles_supp_table[] = {
+ 	{ 0, "Initiator"	},
+ 	{ 1, "Reflector"	},
+@@ -10629,6 +10717,19 @@ static const struct opcode_data opcode_table[] = {
+ 				sizeof(
+ 				struct bt_hci_rsp_le_read_iso_link_quality),
+ 				true },
++	{ BT_HCI_CMD_LE_READ_ALL_LOCAL_FEATURES,
++			BT_HCI_BIT_LE_READ_ALL_LOCAL_FEATURES,
++			"LE Read All Local Features",
++			null_cmd, 0, true,
++			le_read_all_local_features_rsp,
++			sizeof(struct bt_hci_rsp_le_read_all_local_features),
++			true },
++	{ BT_HCI_CMD_LE_READ_ALL_REMOTE_FEATURES,
++			BT_HCI_BIT_LE_READ_ALL_REMOTE_FEATURES,
++			"LE Read All Remote Features",
++			le_read_all_remote_features,
++			sizeof(struct bt_hci_cmd_le_read_all_remote_features),
++			true, status_rsp, 1, true },
+ 	{ BT_HCI_CMD_LE_CS_RD_LOC_SUPP_CAP, BT_HCI_BIT_LE_CS_RD_LOC_SUPP_CAP,
+ 				"LE CS Read Local Supported Capabilities",
+ 				NULL, 0, false,
+@@ -12558,6 +12659,24 @@ static void le_big_info_evt(struct timeval *tv, uint16_t index,
+ 	print_field("Encryption: 0x%02x", evt->encryption);
+ }
+ 
++static void le_read_all_remote_features_complete_evt(struct timeval *tv,
++					uint16_t index, const void *data,
++					uint8_t size)
++{
++	const struct bt_hci_evt_le_read_all_remote_features_complete *evt =
++									data;
++
++	print_status(evt->status);
++
++	if (size == 1)
++		return;
++
++	print_handle(evt->handle);
++	print_field("Max Pages: 0x%2.2x", evt->max_pages);
++	print_field("Valid Pages: 0x%2.2x", evt->valid_pages);
++	print_le_ext_features(evt->features, evt->valid_pages);
++}
++
+ static void le_cs_rd_rem_supp_cap_complete_evt(struct timeval *tv,
+ 				uint16_t index, const void *data, uint8_t size)
+ {
+@@ -13325,6 +13444,11 @@ static const struct subevent_data le_meta_event_table[] = {
+ 		"LE Broadcast Isochronous Group Info Advertising Report",
+ 		le_big_info_evt,
+ 		sizeof(struct bt_hci_evt_le_big_info_adv_report) },
++	{ BT_HCI_EVT_LE_READ_ALL_REMOTE_FEATURES_COMPLETE,
++		"LE CS Read All Remote Features Complete",
++		le_read_all_remote_features_complete_evt,
++		sizeof(struct bt_hci_evt_le_read_all_remote_features_complete),
++		true },
+ 	{ BT_HCI_EVT_LE_CS_RD_REM_SUPP_CAP_COMPLETE,
+ 		"LE CS Read Remote Supported Capabilities Complete",
+ 		le_cs_rd_rem_supp_cap_complete_evt,
 -- 
 2.51.0
 
