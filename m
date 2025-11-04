@@ -1,126 +1,116 @@
-Return-Path: <linux-bluetooth+bounces-16294-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-16295-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A9F4C30508
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 04 Nov 2025 10:43:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 23C47C30529
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 04 Nov 2025 10:45:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 037E142135A
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  4 Nov 2025 09:28:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CB4423BB797
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  4 Nov 2025 09:35:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2551C3112D3;
-	Tue,  4 Nov 2025 09:28:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62E852D061C;
+	Tue,  4 Nov 2025 09:35:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="NUwyAmXF"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="FkmeLo23"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from out-17.smtp.github.com (out-17.smtp.github.com [192.30.252.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E76A2BCF41
-	for <linux-bluetooth@vger.kernel.org>; Tue,  4 Nov 2025 09:28:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D85721FF47
+	for <linux-bluetooth@vger.kernel.org>; Tue,  4 Nov 2025 09:35:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762248504; cv=none; b=kmTazmZFGmxTBR5wKquruJo0hK5cPev9v2wFKz8Qy+YHjUQFYWApm0PX4PgHOSZ48g2yvrCCqvBcjb7EdPA4j8BXKOf8TGTYJeHWihOrcpqCrtOXMbD79N9BxHLlrkVfvVmIlzMcs1Z4PriTRqVnyyYAVcVnwhDcg6QoIDM+tho=
+	t=1762248907; cv=none; b=IvcVklLiq2nVCT3FZ2SJZIeybdSiutju46r/ha3AK1CnDW6Rji7DkVU8zpGuTgekwBHzukza2RQQ63Nh9qqWAwCJCP9csE8HhEdi5hWUHzAlQB0qRFdbfsuU3L37PPAdJEa+vWtBTOfURaf0xToF832FO0Fu4tRNfYCgKMvyLMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762248504; c=relaxed/simple;
-	bh=7UfYqu9WBBUxUDphr6biE12F/To0cfKACGyurH4kdVg=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HV5TUWb38yKkGE6U284A6C+pb5txI1IJSN1BqU73S7B/VBtSh1QH0Q/ocYlrXv+QGEw830bXu5v8tomOLV9Z/5Lx+YMh8ieT2XZw9P1xEwi2wEuJ1+vN03hsuZDZB8XuMnJ39sE4LSjEpj/4wtG4VOmQ0Orm7LfmVI/bQ3PbPfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=NUwyAmXF; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1762248494;
-	bh=7UfYqu9WBBUxUDphr6biE12F/To0cfKACGyurH4kdVg=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=NUwyAmXFJe41Xh7LqKh4A1C6NZ+9n+DKuIH1ZaMu0QMKla7PoQkaVw0fWajDhoxxD
-	 S1d1XaqDhB7JkQhjxheXVXccjEIxbEPiNOdwiuSureEiN7s66RJBa19B+W2TnxggSg
-	 VCJ5aJtK8OSDGHNzNkPFzcKg4SyTSDhrZ5YU+O39Elms4W07vyhthqouawsMGhP7H0
-	 BIGwUPzTFINHvZDeVtU4LYOd7YhTKqFUqhhfbSQI9YUgnm5ZJBsEi5+ZccXRL7KkwZ
-	 p1exOEdBSwXgWF4Ukxso/f16yau/QvCYwkji+uNBPOOtPBp5t80jFrdxIiGu4+Sygg
-	 ast19RgCftOrA==
-Received: from fdanis-ThinkPad-X1.. (2a02-8428-AF44-1001-2EF7-962e-01c6-D201.rev.sfr.net [IPv6:2a02:8428:af44:1001:2ef7:962e:1c6:d201])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: fdanis)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 5360B17E13BC
-	for <linux-bluetooth@vger.kernel.org>; Tue,  4 Nov 2025 10:28:14 +0100 (CET)
-From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
+	s=arc-20240116; t=1762248907; c=relaxed/simple;
+	bh=3SzvjszGPWhwQfI1UpdxhnTgg/RWlHBdrxr/o6gbEms=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=Ucjoh2oXEdpVq1amRfvKKXSy6+S8Fb3iZSbaIoGqyKjYntxh3S+WPLAjo1sg3HVApFlGHzc6urON/nrfgw0MV7oX9jaKTFK9lp/xxFNKwKajqwPQh3Z+ZLDOt7FPK2dNNF8ghjgGwc0bkZq6FU51EME3ULUXz1aXXypt74wsEWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=FkmeLo23; arc=none smtp.client-ip=192.30.252.200
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
+Received: from github.com (hubbernetes-node-5cab7ce.va3-iad.github.net [10.48.160.12])
+	by smtp.github.com (Postfix) with ESMTPA id 9F7914E08B6
+	for <linux-bluetooth@vger.kernel.org>; Tue,  4 Nov 2025 01:35:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+	s=pf2023; t=1762248905;
+	bh=Pced2S7IA78OK4uElmcKvfuNejVB76LUqp2pxBwJFHE=;
+	h=Date:From:To:Subject:List-Unsubscribe:From;
+	b=FkmeLo23HTy1FrppCWhqvbhH1k2GEkGLNo4gAgIa8oSAqIswOeVeWzZs/NX/DK/ix
+	 JkYH0jwHUIHpW060zdzf3ZgyeavMGXRYY5f5TGrdtI4Ygo/RQV0nU2NwrmgSNYjpxc
+	 2MAlYpnEHeo9XmMxCSTnIpYFNPw3XfrMXsB5H6V8=
+Date: Tue, 04 Nov 2025 01:35:05 -0800
+From: fdanis-oss <noreply@github.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 3/3] unit/test-hfp: Add ECNR off test
-Date: Tue,  4 Nov 2025 10:28:08 +0100
-Message-ID: <20251104092808.128726-3-frederic.danis@collabora.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251104092808.128726-1-frederic.danis@collabora.com>
-References: <20251104092808.128726-1-frederic.danis@collabora.com>
+Message-ID: <bluez/bluez/push/refs/heads/1019334/000000-b64ffc@github.com>
+Subject: [bluez/bluez] 5b73fa: shared/hfp: Add extended response code enabling
+ co...
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
+
+  Branch: refs/heads/1019334
+  Home:   https://github.com/bluez/bluez
+  Commit: 5b73fa75afda34e2b6e5ac432a8fe30644852b3e
+      https://github.com/bluez/bluez/commit/5b73fa75afda34e2b6e5ac432a8fe=
+30644852b3e
+  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
+  Date:   2025-11-04 (Tue, 04 Nov 2025)
+
+  Changed paths:
+    M src/shared/hfp.c
+    M unit/test-hfp.c
+
+  Log Message:
+  -----------
+  shared/hfp: Add extended response code enabling command
+
+
+  Commit: 672e75a3ae9ed566e73a553c88e6b81bb4e8fa18
+      https://github.com/bluez/bluez/commit/672e75a3ae9ed566e73a553c88e6b=
+81bb4e8fa18
+  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
+  Date:   2025-11-04 (Tue, 04 Nov 2025)
+
+  Changed paths:
+    M src/shared/hfp.c
+    M unit/test-hfp.c
+
+  Log Message:
+  -----------
+  shared/hfp: Add NREC disable command
+
+
+  Commit: b64ffc18fdc99ef6eab126548e15e71d91cb5715
+      https://github.com/bluez/bluez/commit/b64ffc18fdc99ef6eab126548e15e=
+71d91cb5715
+  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
+  Date:   2025-11-04 (Tue, 04 Nov 2025)
+
+  Changed paths:
+    M unit/test-hfp.c
+
+  Log Message:
+  -----------
+  unit/test-hfp: Add ECNR off test
 
 This add the following test:
 - /HFP/HF/ENO/BV-01-C
   Verify that the HF can disable the EC/NR function of the AG.
----
- unit/test-hfp.c | 23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/unit/test-hfp.c b/unit/test-hfp.c
-index 94553d62c..c3f9ac4d0 100644
---- a/unit/test-hfp.c
-+++ b/unit/test-hfp.c
-@@ -787,6 +787,9 @@ static void hf_session_ready_cb(enum hfp_result res, enum hfp_error cme_err,
- 	g_assert_cmpint(res, ==, HFP_RESULT_OK);
- 	context->session.completed = true;
- 
-+	if (tester_use_debug())
-+		tester_debug("HF session ready");
-+
- 	if (g_str_equal(test_name, "/HFP/HF/OCL/BV-01-C")) {
- 		bool ret;
- 
-@@ -998,7 +1001,8 @@ static void hf_call_line_id_updated(uint id, const char *number,
- 	str = hfp_hf_call_get_number(context->hfp_hf, id);
- 	g_assert_cmpstr(number, ==, str);
- 
--	if (g_str_equal(test_name, "/HFP/HF/ICA/BV-01-C") ||
-+	if (g_str_equal(test_name, "/HFP/HF/ENO/BV-01-C") ||
-+		g_str_equal(test_name, "/HFP/HF/ICA/BV-01-C") ||
- 		g_str_equal(test_name, "/HFP/HF/ICA/BV-02-C") ||
- 		g_str_equal(test_name, "/HFP/HF/ICA/BV-03-C") ||
- 		g_str_equal(test_name, "/HFP/HF/ICA/BV-04-C") ||
-@@ -1368,6 +1372,23 @@ int main(int argc, char *argv[])
- 				',', '1', '2', '9', ',', ',', '\r', '\n'),
- 			data_end());
- 
-+	/* Disable EC/NR on the AG - HF */
-+	define_hf_test("/HFP/HF/ENO/BV-01-C", test_hf_session,
-+			NULL, test_hf_session_done,
-+			FULL_SLC_SESSION('1', '0', '0', '0'),
-+			frg_pdu('\r', '\n', '+', 'C', 'I', 'E', 'V', ':', ' ',
-+				'3', ',', '1', '\r', '\n'),
-+			frg_pdu('\r', '\n', 'R', 'I', 'N', 'G', '\r', '\n'),
-+			frg_pdu('\r', '\n', '+', 'C', 'L', 'I', 'P', ':',
-+				'\"', '1', '2', '3', '4', '5', '6', '7', '\"',
-+				',', '1', '2', '9', ',', ',', '\r', '\n'),
-+			raw_pdu('\r', '\n', 'O', 'K', '\r', '\n'),
-+			frg_pdu('\r', '\n', '+', 'C', 'I', 'E', 'V', ':', ' ',
-+				'2', ',', '1', '\r', '\n'),
-+			frg_pdu('\r', '\n', '+', 'C', 'I', 'E', 'V', ':', ' ',
-+				'3', ',', '0', '\r', '\n'),
-+			data_end());
-+
- 	/* Incoming call, in-band ring - HF */
- 	define_hf_test("/HFP/HF/ICA/BV-01-C", test_hf_session,
- 			NULL, test_hf_session_done,
--- 
-2.43.0
 
+Compare: https://github.com/bluez/bluez/compare/5b73fa75afda%5E...b64ffc1=
+8fdc9
+
+To unsubscribe from these emails, change your notification settings at ht=
+tps://github.com/bluez/bluez/settings/notifications
 
