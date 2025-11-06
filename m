@@ -1,137 +1,192 @@
-Return-Path: <linux-bluetooth+bounces-16369-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-16372-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF6B2C3B961
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 06 Nov 2025 15:11:06 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BE39C3BB40
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 06 Nov 2025 15:24:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 37981623514
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Nov 2025 14:01:28 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 05D1C350AE6
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Nov 2025 14:24:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1982733B978;
-	Thu,  6 Nov 2025 14:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACA4034C98F;
+	Thu,  6 Nov 2025 14:19:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EBLkbcjM"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="otBIPjaF"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018B9339718;
-	Thu,  6 Nov 2025 14:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F27D30EF8F;
+	Thu,  6 Nov 2025 14:19:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762437673; cv=none; b=RLfOwXqurg3FaThdpY8ad/9WtJFlBb6Er27o9alO7MXsmgVMqyTSb0P/6yp/6GbCHoQhAf8l9CPfJKb3ymGvhS2hKzEVh0xjHx5e5GCleX0uyda/Ypd2Q4ldJQnNoQGbOxAYB/V3fCxHFWzvXW2Pfk7EG8StYgqvHG2q/mKMmhw=
+	t=1762438750; cv=none; b=X46eHII+B4dIbQhEYpGZ4urJDKfCuyRE3+QmhYGVZAwZwoLz5hyAgxYTsWOu2nqnm1AUF7JnP1R0MmM7+NRmb901/UBuixMfchWyxRP8oc3NgOJd8Yh3cgb1kFFheoh4QdRAB7X3QWpflByW9BYPf8sJFnYZMJ87d7/K24Keimk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762437673; c=relaxed/simple;
-	bh=oJ3Y3umJJuTYkVLa7IX8rSNPkpCHjgK3xP+LjKIL0xs=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=VDPPdbEswbAR0NdKfagmzFqddauBye3LBJmTSqG/ccUdICzs2MqRWukl0T9zq+F6dTBS+nKjv0b/s4gc/pnfGXUyP2kuS0j82ewXhYLuNjBpi8uHMtxFjGsK9QQjvWCgGd5AnKtA6p0wGL0F/Zb8bpfjQgEOAdcBvXJqqM2bNgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EBLkbcjM; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1762438750; c=relaxed/simple;
+	bh=xeNaC0f2NZK0/hHTlDUwQ4kSxndyb7w5Ep+As9A8308=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=UBJQrr9jPoEP0vQMv8fd2mTmhkiz1C7PkK6u/pKHdoO3YJjaIEol969DpCjBzWtKFisRiFPc8l7+lzRTcPi8HmNzuXNFcovfzXiTgLSbiwke/0Q/LNFfimKDFD43S92pWt9M8+0HpY+a8fOKsIfuVgWByKVyaxARS6+TJwc5J8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=otBIPjaF; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A68jb7k2326852;
-	Thu, 6 Nov 2025 14:01:08 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A691D482389835;
+	Thu, 6 Nov 2025 14:19:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=Q68OE4XvQa1
-	fhjTTa225mcPU+T82tSrdGoN3KFgnP1E=; b=EBLkbcjMIW0YM0P+Yh55sVBwgmZ
-	r/jBrh/Y0Yi3bmkSwkIH0cc1tzs/dAwr73Owoob9HaEtkBIqWuJDip/qLT1jVMUm
-	F+L9TgIke2CVSCuuNhnxcd8K82B9zgkfw8wnUVZuoWxj2+t57i0FoiEqq4pL9Og8
-	OLgKidkthrqU78H2UWBk4VL1ak93kPLDskE1UGo7mzgXIB6qDAA1BOmubRjijC7k
-	T9G9o0BHXWfRh+/DURYNVl8T9XRWRwvhrAU3TJuGOnb8jC5ziVa0IYS/H5YWWm8a
-	RBRQPgs0upg7i8k3jtEqbCqBB0tyJXyrONEG2UpENoQ6jddKfUqeeRgdgzQ==
-Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a8h0v233k-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	QZ10Ag4gjfnxqE0SHZIEWVP/xy51PCcDJPNPWfm+s3M=; b=otBIPjaFbn4G2Fv/
+	JgonaUmjGEB0J0ArM5qD9qu7Yh4KY27CGfcmiSJFel4FDB1uwPniA+gr6Pl0hJvX
+	SBAHJ0BZLLiVbcdUk5dkbU002iVfO1Ci+LXWodWuaO0WdjlIiWQXo44A0IcKQJ/y
+	hwJ0CgZuuZm4Cets7WbFWkpUNLRm20D86hobBWcwGygKjSHOQBVzRGDA9DMpgCUD
+	sa2MTnSBTczRbrh7/7SDjdfnZ1DBILS7DDeSUsXteMQgK2XvkAI3H8/nZcImUyiS
+	RTnpzMmKusiB2DyY6hkoUBA3/haQtz+2v5ZN17Fj55v+60nplm6WFd43uQzfcWpU
+	t3kGnQ==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a8h9ut4pg-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 06 Nov 2025 14:01:08 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 5A6E15Jb032322;
-	Thu, 6 Nov 2025 14:01:05 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 4a5b9n0b8w-1
+	Thu, 06 Nov 2025 14:19:05 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5A6EJ4In013643
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 06 Nov 2025 14:01:05 +0000
-Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5A6E15Db032310;
-	Thu, 6 Nov 2025 14:01:05 GMT
-Received: from bt-iot-sh02-lnx.ap.qualcomm.com (bt-iot-sh02-lnx.qualcomm.com [10.253.144.65])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 5A6E14fK032306
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 06 Nov 2025 14:01:05 +0000
-Received: by bt-iot-sh02-lnx.ap.qualcomm.com (Postfix, from userid 4467449)
-	id 31C6623282; Thu,  6 Nov 2025 22:01:04 +0800 (CST)
-From: Shuai Zhang <quic_shuaz@quicinc.com>
-To: dmitry.baryshkov@oss.qualcomm.com, marcel@holtmann.org,
-        luiz.dentz@gmail.com
-Cc: linux-bluetooth@vger.kernel.org, stable@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_chejiang@quicinc.com, Shuai Zhang <quic_shuaz@quicinc.com>
-Subject: [PATCH v2 2/2] Bluetooth: hci_qca: Convert timeout from jiffies to ms
-Date: Thu,  6 Nov 2025 22:01:03 +0800
-Message-Id: <20251106140103.1406081-3-quic_shuaz@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251106140103.1406081-1-quic_shuaz@quicinc.com>
-References: <20251106140103.1406081-1-quic_shuaz@quicinc.com>
+	Thu, 6 Nov 2025 14:19:04 GMT
+Received: from [10.239.96.215] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Thu, 6 Nov
+ 2025 06:19:01 -0800
+Message-ID: <000027d7-279c-4c3a-b438-5af5b657578d@quicinc.com>
+Date: Thu, 6 Nov 2025 22:18:58 +0800
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/1] Bluetooth: btusb: add default nvm file
+To: Marcel Holtmann <marcel@holtmann.org>,
+        Luiz Augusto von Dentz
+	<luiz.dentz@gmail.com>
+CC: <linux-bluetooth@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <stable@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_chejiang@quicinc.com>, <quic_jiaymao@quicinc.com>,
+        <quic_chezhou@quicinc.com>
+References: <20251104112441.2667316-1-quic_shuaz@quicinc.com>
+ <20251104112441.2667316-2-quic_shuaz@quicinc.com>
+Content-Language: en-US
+From: Shuai Zhang <quic_shuaz@quicinc.com>
+In-Reply-To: <20251104112441.2667316-2-quic_shuaz@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: GK9Ismagdda_8o5sVgRZ8YcAmVOj2msS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA2MDExMCBTYWx0ZWRfX2IjdQPqnNT+x
- lFIUXySiWmA9hFb4yZEx5eWwrRaqmwskkq5txuMqcoupUu0fCiQXiutZ/jd1v4YKJPGu+RTtduw
- yhtjqrvaj3BqRBisIAPrZcAGcL8FDgFuSF1e+KGQCyb4uRD2YVtqcdvN/PXsgfb389bx1PtiL18
- A62lhT0754L2VFkXSfP2/TW+M/q8eNW0YWNO4s4rkXHrvCZPRA/Lgmq5LeZgPmB8tBvjGFeT844
- nl/ocs+c77U710InMUEfjZHThNInaxBxW0Jc8jRxjVlh9444XDJaf55cTLuQdt979X4rX2ftPZk
- 0HDqlcV4WpU9kjfbf1uJU2VtPuOl/l6n2d6lt7EFeDI3zDkAjqMgwtoYhhDHlTo5INc0ptHAsgB
- QHRuriFnu6ZVfQVRe5h3g+ixqJlEzQ==
-X-Proofpoint-GUID: GK9Ismagdda_8o5sVgRZ8YcAmVOj2msS
-X-Authority-Analysis: v=2.4 cv=PoyergM3 c=1 sm=1 tr=0 ts=690caa24 cx=c_pps
- a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
- a=eLiQT_JKY73VEPCCN3QA:9 a=TjNXssC_j7lpFel5tvFf:22 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Authority-Analysis: v=2.4 cv=R5UO2NRX c=1 sm=1 tr=0 ts=690cae59 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
+ a=7vm6EOYB4fWX4Y2RDsUA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+ a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-ORIG-GUID: 6pcs3dpxy3JDAuJ26T0eHaHZxKkC1v2A
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA2MDExMyBTYWx0ZWRfX8HGeGLw9mfco
+ m09p0NEoj5k9RuuMQrsujDRFeuHIlsNvGX9Ai1DjNEvTshWrD5ZpY5kiVhPAZBlxSkdmUzPm/qW
+ xqYyXy8wNf78NEXG+FW7ZkSvHnmNwB3C/EeVHXCL8AvzS7+y7/XQT1GhKArH5AJv0KQUOr+esrj
+ myidjfsK2CzsTNpPBSnKaIJQj2dmfLyBHsk70K5pJXufBW0jBiowJe6Q3CoTd3TuRFQYtljFUZv
+ va0+V9j8UfTuddxaOaKqgPC7Fx4/rn0Jfz6nccFRQagMfLWlJWELdCizivdbi5u+B+b6r+VrP8G
+ DXFzJpih8CcVHMue5BgJiDnMDz5sHOZrx/k2HpDPgji8fUfhrtEB4fAq2LDJpFsnmtsiCxfUETX
+ m+d8MZ6zaTw24oY0WCxVFvhrWtr9Yw==
+X-Proofpoint-GUID: 6pcs3dpxy3JDAuJ26T0eHaHZxKkC1v2A
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-11-06_03,2025-11-06_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 clxscore=1015 priorityscore=1501 phishscore=0 spamscore=0
- adultscore=0 impostorscore=0 malwarescore=0 bulkscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511060110
+ clxscore=1015 impostorscore=0 phishscore=0 adultscore=0 spamscore=0
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 suspectscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2511060113
 
-Since the timer uses jiffies as its unit rather than ms, the timeout value
-must be converted from ms to jiffies when configuring the timer. Otherwise,
-the intended 8s timeout is incorrectly set to approximately 33s.
+Dear Luiz
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
----
- drivers/bluetooth/hci_qca.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 11/4/2025 7:24 PM, Shuai Zhang wrote:
+> If no NVM file matches the board_id, load the default NVM file.
+> 
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
+> ---
+>  drivers/bluetooth/btusb.c | 26 +++++++++++++++++---------
+>  1 file changed, 17 insertions(+), 9 deletions(-)
+> 
+> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+> index dcbff7641..020dbb0ab 100644
+> --- a/drivers/bluetooth/btusb.c
+> +++ b/drivers/bluetooth/btusb.c
+> @@ -3482,15 +3482,14 @@ static int btusb_setup_qca_load_rampatch(struct hci_dev *hdev,
+>  }
+>  
+>  static void btusb_generate_qca_nvm_name(char *fwname, size_t max_size,
+> -					const struct qca_version *ver)
+> +					const struct qca_version *ver,
+> +					u16 board_id)
+>  {
+>  	u32 rom_version = le32_to_cpu(ver->rom_version);
+>  	const char *variant, *fw_subdir;
+>  	int len;
+> -	u16 board_id;
+>  
+>  	fw_subdir = qca_get_fw_subdirectory(ver);
+> -	board_id = qca_extract_board_id(ver);
+>  
+>  	switch (le32_to_cpu(ver->ram_version)) {
+>  	case WCN6855_2_0_RAM_VERSION_GF:
+> @@ -3517,14 +3516,14 @@ static void btusb_generate_qca_nvm_name(char *fwname, size_t max_size,
+>  
+>  static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
+>  				    struct qca_version *ver,
+> -				    const struct qca_device_info *info)
+> +				    const struct qca_device_info *info,
+> +				    u16 board_id)
+>  {
+>  	const struct firmware *fw;
+>  	char fwname[80];
+>  	int err;
+>  
+> -	btusb_generate_qca_nvm_name(fwname, sizeof(fwname), ver);
+> -
+> +	btusb_generate_qca_nvm_name(fwname, sizeof(fwname), ver, board_id);
+>  	err = request_firmware(&fw, fwname, &hdev->dev);
+>  	if (err) {
+>  		bt_dev_err(hdev, "failed to request NVM file: %s (%d)",
+> @@ -3606,10 +3605,19 @@ static int btusb_setup_qca(struct hci_dev *hdev)
+>  	btdata->qca_dump.controller_id = le32_to_cpu(ver.rom_version);
+>  
+>  	if (!(status & QCA_SYSCFG_UPDATED)) {
+> -		err = btusb_setup_qca_load_nvm(hdev, &ver, info);
+> -		if (err < 0)
+> -			return err;
+> +		u16 board_id = qca_extract_board_id(&ver);
+>  
+> +		err = btusb_setup_qca_load_nvm(hdev, &ver, info, board_id);
+> +		if (err < 0) {
+> +			//if the board id is not 0, try to load the defalut nvm file
+> +			if (err == -ENOENT && board_id != 0) {
+> +				err = btusb_setup_qca_load_nvm(hdev, &ver, info, 0);
+> +				if (err < 0)
+> +					return err;
+> +			} else {
+> +				return err;
+> +			}
+> +		}
+>  		/* WCN6855 2.1 and later will reset to apply firmware downloaded here, so
+>  		 * wait ~100ms for reset Done then go ahead, otherwise, it maybe
+>  		 * cause potential enable failure.
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index fa6be1992..c14b2fa9d 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1602,7 +1602,7 @@ static void qca_wait_for_dump_collection(struct hci_dev *hdev)
- 	struct qca_data *qca = hu->priv;
- 
- 	wait_on_bit_timeout(&qca->flags, QCA_MEMDUMP_COLLECTION,
--			    TASK_UNINTERRUPTIBLE, MEMDUMP_TIMEOUT_MS);
-+			    TASK_UNINTERRUPTIBLE, msecs_to_jiffies(MEMDUMP_TIMEOUT_MS));
- 
- 	clear_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
- }
--- 
-2.34.1
+Please let me know if there are any updates or if modifications are needed.
+Thank you!
 
+Best regards,
+Shuai
 
