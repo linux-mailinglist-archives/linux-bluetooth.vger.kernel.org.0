@@ -1,130 +1,130 @@
-Return-Path: <linux-bluetooth+bounces-16368-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-16371-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id C5910C398F1
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 06 Nov 2025 09:21:29 +0100 (CET)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3FC54C3B89F
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 06 Nov 2025 15:02:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 87E094F3079
-	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Nov 2025 08:21:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 580C01886902
+	for <lists+linux-bluetooth@lfdr.de>; Thu,  6 Nov 2025 14:02:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2D562DECC6;
-	Thu,  6 Nov 2025 08:20:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C007033CEAE;
+	Thu,  6 Nov 2025 14:01:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eIVeu+pr"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B358145FE0;
-	Thu,  6 Nov 2025 08:20:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=141.14.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D111E1DFC;
+	Thu,  6 Nov 2025 14:01:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762417258; cv=none; b=M2HmijW+fRDp8zYxn0hnt48tftZqe6mthajB0xvX9//m7VuTq+LuG18x8J539S7UVJxoBhUhDZXLsYHk4JiB+4D2fBkkidxK4lf0IZsy4RazYQbJr49g5maaRFXoG74j8WpePuxdwkjSrlUCcN5ZleQ2JncNs4HvECMT/benqVY=
+	t=1762437674; cv=none; b=djIUXGZwM9VMYH73Baq6yYscQvqnCJluiFv69rtySUjzHlwly57cWvIKZxLNywQ8ShRRim5fJ22KOomZ8ZefmKYZobeu3LZ573MX7ZLStx+FVqNye1VcvzhxfdAyUvQNP8cxpqK+cOkn/YRRU3Kyj67V06ObRduJMH8UcoAo2/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762417258; c=relaxed/simple;
-	bh=bzftEQMHIbrle4PpjKjVweYDTBuSFswg2bS1Elm1yNk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ADkNjasKUVdOFhQg2jgWv6ue2m7KLuvHupp5HXAran5KKW1hupHFkj3xGtRBY7oQevv9SZuZxiXx5PpJKtYCx5EI/YEPIzUkIYgcJCL3sGrHKWTqdlhzioWJmAsNjLBsX8UzUhPY2iHGrsRED7Zeusk1NztWl+YnhGE3V23kb+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de; spf=pass smtp.mailfrom=molgen.mpg.de; arc=none smtp.client-ip=141.14.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=molgen.mpg.de
-Received: from [192.168.0.192] (ip5f5af781.dynamic.kabel-deutschland.de [95.90.247.129])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: pmenzel)
-	by mx.molgen.mpg.de (Postfix) with ESMTPSA id 3978A61CC3FED;
-	Thu, 06 Nov 2025 09:20:42 +0100 (CET)
-Message-ID: <f756b92a-272e-4d33-9126-0ce891df6ac0@molgen.mpg.de>
-Date: Thu, 6 Nov 2025 09:20:40 +0100
+	s=arc-20240116; t=1762437674; c=relaxed/simple;
+	bh=w8ux3UU1qUImmYc7/0F2KiQG8mMGQLFrfKHnxT1jTSM=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Dnau51//XCYqR15MrlArYra2F8A/eWkvgW+mD7vzhSEyxDDXibqjlaGVo14cFQ13oFmZYv9lwayDPhKMK1uALX0ZkN9JvE33lp1grWc5u4KN9+Rknp3dPcbGF2PYSER62xiIhfZK10sUHCqZmwBu/Y97J9iW+C7vSacj/z1Dqgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eIVeu+pr; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5A66t1ZD3155451;
+	Thu, 6 Nov 2025 14:01:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=Yk3FPKoQfimlpMwrmbVN1ZN6gwnsqaCR6YW
+	2iDpIoe0=; b=eIVeu+prXCD6S6+8gtJQSrjnbq8QtDkUlUweZsQ8QKdjpd9RvWs
+	KHdvtydjqcqMYCwrUqSb9iJ10X4hoa5GeL6eZiNQZjLGhGNXlE7TjgcW5C5ENJg7
+	+aWv2Ap05whikVu2NADAbB7cXRYeA4QjGChigdv2ksTCUW325iDSoTCRN14FMzza
+	DssVO8jvjOowUnqEM9WIhVgJuPaf+uqIRJWNrOlcRIzukPnftQGd6YCVPeK0hFtj
+	0CFHFAeoVDQ2ywz/XiU3hIRxnbc+o/ObEym1oUw7W3fAxWw6aUl39CxUmO5Hwf45
+	7QKkztWEeia3j9MUBNbsM0H4xgxjegkKiqQ==
+Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4a8pu0h514-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 06 Nov 2025 14:01:08 +0000 (GMT)
+Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+	by APTAIPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 5A6E15vC032323;
+	Thu, 6 Nov 2025 14:01:05 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 4a5b9n0b8x-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 06 Nov 2025 14:01:05 +0000
+Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5A6E15s9032309;
+	Thu, 6 Nov 2025 14:01:05 GMT
+Received: from bt-iot-sh02-lnx.ap.qualcomm.com (bt-iot-sh02-lnx.qualcomm.com [10.253.144.65])
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 5A6E146h032307
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 06 Nov 2025 14:01:05 +0000
+Received: by bt-iot-sh02-lnx.ap.qualcomm.com (Postfix, from userid 4467449)
+	id 2AB44231FB; Thu,  6 Nov 2025 22:01:04 +0800 (CST)
+From: Shuai Zhang <quic_shuaz@quicinc.com>
+To: dmitry.baryshkov@oss.qualcomm.com, marcel@holtmann.org,
+        luiz.dentz@gmail.com
+Cc: linux-bluetooth@vger.kernel.org, stable@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_chejiang@quicinc.com, Shuai Zhang <quic_shuaz@quicinc.com>
+Subject: [PATCH v2 0/2] Fix SSR unable to wake up bug
+Date: Thu,  6 Nov 2025 22:01:01 +0800
+Message-Id: <20251106140103.1406081-1-quic_shuaz@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] Bluetooth: iso: Fix UAF on iso_sock_disconn
-To: Yang Li <yang.li@amlogic.com>
-Cc: Marcel Holtmann <marcel@holtmann.org>,
- Johan Hedberg <johan.hedberg@gmail.com>,
- Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
- linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20251106-kernel_panic-v2-1-f4ee57845eec@amlogic.com>
-Content-Language: en-US
-From: Paul Menzel <pmenzel@molgen.mpg.de>
-In-Reply-To: <20251106-kernel_panic-v2-1-f4ee57845eec@amlogic.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTA2MDExMCBTYWx0ZWRfX8t4QKvmvugYg
+ TFJbs9NCIJJq3M//4dgVk+Mocfq4vA0yQdn9i13mkmhUTwehpUmVU0vzB+btIBHvPsBwc+BcXT3
+ a+HFgdcstMWXfjXDxoqKN+PbCu8/9Ls6+TkPGO1YAHBpMrXYAfUAwQ9RUO2isgtGCeiP65rneRQ
+ rshHgtnV3Cz2yZ7kti5YkEZa+ys/txeGbQpIq5RWpsQiKzHqjhphcmYQAl/Na4bUYgsbmgSmDrs
+ MlIA+hESZUDcxPvidjh5qD5P+b7lBKAwev3RnHucIhPev05tRRof3+BWjd+CbEvSGVRRS6xaQIK
+ 5qQ1C9Sfq1ug35nxMVbOCzVh5QK6L2ZaNyLDRW+lO8E7ootVCOlynV8bvRH+P2XZuDpWPbldWZw
+ rgB0k99KUUCc0Pw82gzgv4Wkq87axw==
+X-Authority-Analysis: v=2.4 cv=bIYb4f+Z c=1 sm=1 tr=0 ts=690caa24 cx=c_pps
+ a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
+ a=nga8D478eWHIXYdf7xwA:9 a=TjNXssC_j7lpFel5tvFf:22 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-ORIG-GUID: WK9rgGOLRK-_Q0fNoKJsMdLt9FLFPerp
+X-Proofpoint-GUID: WK9rgGOLRK-_Q0fNoKJsMdLt9FLFPerp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-06_03,2025-11-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 bulkscore=0 adultscore=0 impostorscore=0 lowpriorityscore=0
+ phishscore=0 priorityscore=1501 spamscore=0 malwarescore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511060110
 
-Dear Yang,
+This patch series fixes delayed hw_error handling during SSR.
 
+Patch 1 adds a wakeup to ensure hw_error is processed promptly after coredump collection.
+Patch 2 corrects the timeout unit from jiffies to ms.
 
-Thank you for the patch.
+Changes v2:
+- Split timeout conversion into a separate patch.
+- Clarified commit messages and added test case description.
+- Link to v1
+  https://lore.kernel.org/all/20251104112601.2670019-1-quic_shuaz@quicinc.com/
 
-Am 06.11.25 um 03:40 schrieb Yang Li via B4 Relay:
-> From: Yang Li <yang.li@amlogic.com>
-> 
-> When the phone stops audio sharing, it terminates the BIG first
-> and then sends BASS modify and remove operation codes to clear
-> the shared BIG. If a BIG sync lost event occurs at the same time,
-> the BIG connection may already be deleted. Releasing the socket
-> in this case can lead to a NULL connection pointer.
-> 
-> kernel panic: Unable to handle kernel read from unreadable
-> memory at virtual address 00000000000003d8
-> Call trace:
->   iso_sock_disconn+0x110/0x1c8
->   __iso_sock_close+0x50/0x164
->   iso_sock_release+0x48/0xf0
->   __sock_release+0x40/0xb4
->   sock_close+0x18/0x28
->   __fput+0xd8/0x28c
->   __fput_sync+0x50/0x5c
->   __arm64_sys_close+0x38/0x7c
->   invoke_syscall+0x48/0x118
->   el0_svc_common.constprop.0+0x40/0xe0
->   do_el0_svc_compat+0x1c/0x34
->   el0_svc_compat+0x30/0x88
->   el0t_32_sync_handler+0x90/0x140
->   el0t_32_sync+0x198/0x19c
-> 
-> Signed-off-by: Yang Li <yang.li@amlogic.com>
-> ---
-> Changes in v2:
-> - Add description about this problem
-> - Link to v1: https://lore.kernel.org/r/20251105-kernel_panic-v1-1-88637054c6b9@amlogic.com
-> ---
->   net/bluetooth/iso.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-> index 74ec7d125c88..89c7700ceb81 100644
-> --- a/net/bluetooth/iso.c
-> +++ b/net/bluetooth/iso.c
-> @@ -838,14 +838,14 @@ static void __iso_sock_close(struct sock *sk)
->   	case BT_CONNECT:
->   	case BT_CONNECTED:
->   	case BT_CONFIG:
-> -		if (iso_pi(sk)->conn->hcon)
-> +		if (iso_pi(sk)->conn && iso_pi(sk)->conn->hcon)
->   			iso_sock_disconn(sk);
->   		else
->   			iso_chan_del(sk, ECONNRESET);
->   		break;
->   
->   	case BT_CONNECT2:
-> -		if (iso_pi(sk)->conn->hcon &&
-> +		if (iso_pi(sk)->conn && iso_pi(sk)->conn->hcon &&
->   		    (test_bit(HCI_CONN_PA_SYNC, &iso_pi(sk)->conn->hcon->flags) ||
->   		    test_bit(HCI_CONN_PA_SYNC_FAILED, &iso_pi(sk)->conn->hcon->flags)))
->   			iso_sock_disconn(sk);
+Shuai Zhang (2):
+  Bluetooth: qca: Fix delayed hw_error handling due to missing wakeup
+    during SSR
+  Bluetooth: hci_qca: Convert timeout from jiffies to ms
 
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+ drivers/bluetooth/hci_qca.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
+-- 
+2.34.1
 
-Kind regards,
-
-Paul
 
