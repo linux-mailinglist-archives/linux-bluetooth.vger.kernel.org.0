@@ -1,102 +1,102 @@
-Return-Path: <linux-bluetooth+bounces-16508-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-16512-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 67F31C4EC07
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 11 Nov 2025 16:20:40 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id D58D0C4EEB4
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 11 Nov 2025 17:03:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id C8FA334613A
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 11 Nov 2025 15:20:39 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id A3DC14E5446
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 11 Nov 2025 16:03:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5E2635F8A5;
-	Tue, 11 Nov 2025 15:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B7CB3557F8;
+	Tue, 11 Nov 2025 16:03:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="a0ux4AcL"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
+Received: from mail-244104.protonmail.ch (mail-244104.protonmail.ch [109.224.244.104])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F5034251D
-	for <linux-bluetooth@vger.kernel.org>; Tue, 11 Nov 2025 15:20:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=141.14.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6AB36B061
+	for <linux-bluetooth@vger.kernel.org>; Tue, 11 Nov 2025 16:03:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.104
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762874432; cv=none; b=rmR+HLuaLvszotZuwBv2FathndqaGuMKVlVUgYPdZrIF6qdUZ0p6l3LWnHxe+88qhCmCakEFDJhyYVdjagMoGfIBQkVc6ZAp+yE28cXJTldMUNdcQ0RWnt7i8A/QFA+dB/IvGuhuJfAODCfrNFr9esnYJb43NYGmpdK/1UPoscc=
+	t=1762876993; cv=none; b=n+up3b46lSGyzekn0pl8K1VUH18duV5Aquxq7uYkcK/g8yh+AcTWy9UI1NmbVEDsz2YdOx96RRSNvJgwc7kKmNDYgA0Qp2YV87crkmGwztSozmz2nkbRBLHvm8Viv89xCOCUO/7o9qC0d1Tt1+mKSOrC4HLxMht6vBJmlalFZXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762874432; c=relaxed/simple;
-	bh=4PewdndPEIfnySWdVktM9Y2ob9TPBpZ9mM8pYOuUtOw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BgqxKXRLKnv5W4yIv7fYClRS1QhXOcTlAv3ivyLiKvoaptgj9XQDGcaiydH/UKGhJjsrBTj8AR809CYmNFYd20xlB/tJs2CAZy1JKTMVfYzIyl+XfXYjakv1XDv7ZNw9C4MZy31dYO2wtf38ML97IXiJs4BDiUqtbcwJMhsm9Nk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de; spf=pass smtp.mailfrom=molgen.mpg.de; arc=none smtp.client-ip=141.14.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=molgen.mpg.de
-Received: from [141.14.220.42] (g42.guest.molgen.mpg.de [141.14.220.42])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: pmenzel)
-	by mx.molgen.mpg.de (Postfix) with ESMTPSA id CAE2D61CC3FEF;
-	Tue, 11 Nov 2025 16:20:15 +0100 (CET)
-Message-ID: <78ccae43-731d-4cee-868d-50d3c5842ea8@molgen.mpg.de>
-Date: Tue, 11 Nov 2025 16:20:14 +0100
+	s=arc-20240116; t=1762876993; c=relaxed/simple;
+	bh=ic0buBK4GzRnzE6aeyF6/yYI6YDb1PCWQ3Lfs60yfAE=;
+	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=dlj8V2dg9fnWaQu4aI349CGa6yH9bf8m3wIZd167yuVuh6N2i4X/+F0WsXbWUbKnCqpU8Mj3iHpaVm1YBmhZ0gcOjWLLkjeO/N+Iv9v5W4SazDpbkxPj3j8tdeA0wk2UrfeWM6+ZKnA4NIVBNfHnxZ4O8615OIzXSE3kBIrBCsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=a0ux4AcL; arc=none smtp.client-ip=109.224.244.104
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1762876658; x=1763135858;
+	bh=IV/CgGDu9OzCAZJkFRD5Yh0fT1Fb19PCHVA+Uap1TUY=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=a0ux4AcLmt9xSRDtn0QT9H7UYVYpv6OuIB6OHDpZ88ocn5VTPf53VifkS40lKJRuJ
+	 d3fWHDV+AFRFN1TDeKUCcxwX0q9Kj6M9p8d+c+8LfmX3LnJZjUG2b0JOHrwQH/r55h
+	 2G6+0beJgLRA/3ZwCVMVFvQuYSSUcryyIIA4dO6Fy15xERCWU5qIasU6XOjnlqVLcZ
+	 eIPEThyatmEt2QqZmQhIwPpfIqmnK2x7BNgN+ppgfwGvJYtuqhdqAq4ZS9HjJ2V2TO
+	 oYLGnNilheIwDfkEgHYk3dqGnphzU7r46GawhVma3E0Y3eWxj74WDXEqFAqsfX9yD+
+	 JlvxzTdqJdWBw==
+Date: Tue, 11 Nov 2025 15:57:32 +0000
+To: "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>, "luiz.dentz@gmail.com" <luiz.dentz@gmail.com>
+From: Alfred Wingate <parona@protonmail.com>
+Cc: Alfred Wingate <parona@protonmail.com>
+Subject: [PATCH v2 BlueZ 0/3] build: Fix distcheck while installing org.bluez.obex.service with --disable-system
+Message-ID: <20251111155644.11675-1-parona@protonmail.com>
+Feedback-ID: 25092314:user:proton
+X-Pm-Message-ID: 4ccd84683f7d4824b046a4d56c338738f00ef6fc
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drivers/bluetooth: btbcm: Use kmalloc_array() to prevent
- overflow
-To: Ayaan Mirza Baig <ayaanmirzabaig85@gmail.com>
-Cc: marcel@holtmann.org, luiz.dentz@gmail.com, linux-bluetooth@vger.kernel.org
-References: <20251111142041.229145-1-ayaanmirzabaig85@gmail.com>
-Content-Language: de-DE
-From: Paul Menzel <pmenzel@molgen.mpg.de>
-In-Reply-To: <20251111142041.229145-1-ayaanmirzabaig85@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Dear Ayaan,
+From: Alfred Wingate <parona@protonmail.com>
 
+Pkg-config variables give absolute paths with system prefixes, causing prob=
+lems
+for distcheck which wants to install everything in its own prefix. To cope =
+with
+this lets give distcheck its own configure arguments with its own prefix va=
+riable
+already included.
 
-Thank you for your patch.
+https://www.gnu.org/software/automake/manual/html_node/DISTCHECK_005fCONFIG=
+URE_005fFLAGS.html
 
+This allows reverting the previous workaround that stopped installing the o=
+bex
+dbus service on non systemd targets.
 
-Am 11.11.25 um 15:20 schrieb Ayaan Mirza Baig:
-> Replace the open-coded multiplication in kmalloc() with a call
-> to kmalloc_array() to prevent potential integer overflows.
+https://github.com/bluez/bluez/issues/806
 
-Excuse my ignorance, how would that overflow happen? How is the 
-generated code different?
+---
+Changed in v2:
+- Use AM_DISTCHECK_CONFIGURE_FLAGS as instructed in automake documentation.
+- Simplify fix to only set dbus variables and explicitly disable cups as
+  well.
+---
 
-> This is a mechanical change, replacing BCM_FW_NAME_LEN with
-> the type-safe sizeof(*fw_name) as the element size
+Alfred Wingate (3):
+  build: use AM_DISTCHECK_CONFIGURE_FLAGS
+  build: Fix distcheck by hardcoding non absolute paths
+  build: obexd: Revert "Fix make distcheck"
 
-I’d add a dot/period at the end of the sentence.
-
-> Signed-off-by: Ayaan Mirza Baig <ayaanmirzabaig85@gmail.com>
-> ---
->   drivers/bluetooth/btbcm.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/bluetooth/btbcm.c b/drivers/bluetooth/btbcm.c
-> index 3a3a56ddbb06..d33cc70eec66 100644
-> --- a/drivers/bluetooth/btbcm.c
-> +++ b/drivers/bluetooth/btbcm.c
-> @@ -642,7 +642,9 @@ int btbcm_initialize(struct hci_dev *hdev, bool *fw_load_done, bool use_autobaud
->   		snprintf(postfix, sizeof(postfix), "-%4.4x-%4.4x", vid, pid);
->   	}
->   
-> -	fw_name = kmalloc(BCM_FW_NAME_COUNT_MAX * BCM_FW_NAME_LEN, GFP_KERNEL);
-> +	fw_name = kmalloc_array(BCM_FW_NAME_COUNT_MAX,
-> +		sizeof(*fw_name),
-> +		GFP_KERNEL);
->   	if (!fw_name)
->   		return -ENOMEM;
->   
+ Makefile.am    | 11 +++++++++--
+ Makefile.obexd |  7 ++++---
+ 2 files changed, 13 insertions(+), 5 deletions(-)
 
 
-Kind regards,
+base-commit: 5e41d1e1d361e7288964e4c2c5ed90736025662f
+--=20
+2.51.2
 
-Paul
+
 
