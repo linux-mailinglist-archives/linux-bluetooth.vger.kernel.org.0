@@ -1,681 +1,425 @@
-Return-Path: <linux-bluetooth+bounces-16595-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-16597-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9EFF0C5927E
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Nov 2025 18:29:19 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 53A9CC590FB
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Nov 2025 18:17:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 202A14EEFF3
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Nov 2025 16:49:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 69D0B3BCCDC
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 13 Nov 2025 17:09:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1C1536404D;
-	Thu, 13 Nov 2025 16:40:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E7A735E52E;
+	Thu, 13 Nov 2025 16:55:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aUE5Rn3e"
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="dpPSojcJ"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 472CA3624CC
-	for <linux-bluetooth@vger.kernel.org>; Thu, 13 Nov 2025 16:40:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763052013; cv=none; b=mYG5Z7HbzEan4ydDamA0+VCG2+Xbq/To7g6b/4SEfUkc9NKFWZKoubI9eylTTdi6e2DxrSgIMcUAIeWBGcdhgNrSTusa/a89AWpoXxBCRBIiK84o+bEWxJkU+59dUt5bslHiL05gJXcRo/x/Cin56TUS0nL+1EZnAly3r5UfFls=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763052013; c=relaxed/simple;
-	bh=MoT63F523lZ3XcWwTYUI/frNRTNYjalqQyi9p3mV4yU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fwN6LvUiOxMs0u7Gcvsf8ay5Q2ohuV+OjABQIxf5yeSx0fpSG5NN7spHML+ly0rbeORh/npg9Od/Lw8yqgFOzRLtVFq3uWSIbo528ywH3o/SoBHpv9deUyDm3+MQITeP39kUAi+aXNs8bMg9MamDyKbxr53xhtr8/BrV/PWH/2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aUE5Rn3e; arc=none smtp.client-ip=209.85.208.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-37a5bc6b491so8271441fa.0
-        for <linux-bluetooth@vger.kernel.org>; Thu, 13 Nov 2025 08:40:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763052009; x=1763656809; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eLAGLaCugnCTN2oRwoHyf5ow2hdQsL+E/DRXxp/S13E=;
-        b=aUE5Rn3epwG8+JlSbHKBLxVOhd7lyrYiexUOM2nEdQZ2P0pbFyO3TQkXfjifYC+Yn0
-         SXFiODEu/Gt7UnRIx0rpfccUzuNP0jgxzz0AS58xzFBJejNl2zQBGPKEbUrskMTnqHUd
-         D/sktnejolix5iX+ZZ3QhTFhZJJJ2WTeIuimOKjuy7+HKk8IWKltpLTkVcXzMlKfYyTs
-         KWTDigd93nc2ozZ+fGZqwfnd3Mt9z/I5smbH60YvgK0/0K0ey7+fbFt0262NZarmyI7L
-         t3c/Q7AXuxRfIxtyO4rkDXoAhGhSOEq0mrkpCC6wnnGSSR7jkGxBAyyfBhaG7mMrQ0jR
-         6ndA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763052009; x=1763656809;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=eLAGLaCugnCTN2oRwoHyf5ow2hdQsL+E/DRXxp/S13E=;
-        b=Lijg1UMTUhB5hfSFozBJxb5ZbanHTpyCMjK+JR87iqiEIj5jVntoV4PDCmMQjjsCXC
-         4Fe1F4TqawegKlv2JtdVh8wKojWgvFPE+5VWRf/dH71yOBGQejlmVhDhm8yWr1xOjGU2
-         4bxD1U3uAltJgkmOosj3A/D+A41L5pAMDxaovV/XlY5rYZl//SyjSbACbxQUiR/+2Q9w
-         oqz0CUxjn69/gU/g508oDOHQrnuk6WBoeWpwyKZe6+xvChxqwvDbPFo0rS7InRJL6qR4
-         RWalNneTVnlDHhTvggwiaeSwsMQ+Ij7N8j3IVHZQzbabGGCzohxrHn3tnt4WtePNl+29
-         xQQg==
-X-Gm-Message-State: AOJu0YzgfP13FaBzCMWwbLrhfcgz5tazgrFV5F8wnKhU1wtZ2H46OEex
-	4mLGVitY8uBXC2xSBfN3iKm3dqMpOmjme/RFnOlSVZTfAtGWixlgjIY71wfy0ZCJ/D9/Ztr1rhU
-	COnF4s3wncQELlFC15RrgqSiNc9qPgVjA2w==
-X-Gm-Gg: ASbGnctdhhEagGMX2p/ZS34j7XnrYIxojhDMRr8/kSoQHxRu8IjhFMZHoWDde+ROca0
-	DPfHgKnCPyFfFlkDH93OWQHYQHponjJ0Pm1CgqTmnrVNK0TXT3QycOG3bzd5xloGZHSlXvU/ESn
-	akXR++mYNK4cjb/0OXQZRdjdbPknBFzDVJt3q0eJ9zqo+bAEbVV9/hZk3GYJ7gqLQVVVPkshooD
-	TEHe4/bq5aKEEKCbiHbsQNDkwUDPb1rwRYw003zvjVCP7zOL8hT5D6O2fFLcO8+OFtG8A==
-X-Google-Smtp-Source: AGHT+IFPNvHYdmFA4qWeNPmN89nrXTJ+/AfRMGXUdnwXlK3Axu1u+RgyVjzqmIBzAJqfTpJL2IUkJzUlQxmyUoocx24=
-X-Received: by 2002:a2e:9550:0:b0:37a:4c29:3aa1 with SMTP id
- 38308e7fff4ca-37b8c39f960mr17375491fa.38.1763052009026; Thu, 13 Nov 2025
- 08:40:09 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B182D3218
+	for <linux-bluetooth@vger.kernel.org>; Thu, 13 Nov 2025 16:55:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1763052922; cv=pass; b=ERFDz0ro4Sc8l9w+NJ5Q+OGvEtg8zFE2roQsUNnyj60Xq9lLGvaNvHxcmJdBbgpnVVSS1Km6BEOqZBgzsGzSPRZ8yafAQsNykfJT1w7VoLf+6bVT9uQbh6b8rOA2cGA5hXjw+MI56cafo5sXUc1qF2sZXVTnPcAnJ9FhxC73d2M=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1763052922; c=relaxed/simple;
+	bh=8ucAUgEjoo4c9BKMug16Cb0Nm963jX/m3tQUeBANjfs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=HcYyxBZIXVRHebALr3xmFOVi4CkgOW5zqIfAcjeOB5ImioJyrKdeAPaIEWYXIG8VNpUmCCnWIXOxNImwzWY1dyCzeIQ1Qcas9nfAkizuCV56tq3sF7FiF1xu/fCIcfm+oVd3M/+GXt4uB+qHDGlVYBgr3qtMl3+MHmCW3i7ZkJQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=dpPSojcJ; arc=pass smtp.client-ip=195.140.195.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
+Received: from monolith.lan (unknown [IPv6:2a02:ed04:3581:4::d001])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: pav)
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4d6mbm27LFzyVW;
+	Thu, 13 Nov 2025 18:55:16 +0200 (EET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
+	t=1763052916;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=KB24Y6nvzkj3Pg/Shh7CT9wDtJ2tzhBtITreHpULze4=;
+	b=dpPSojcJQC8gxoqYZbBjrhyZacWHtNvzsYlAm7yNdnkJPcaUtCv0phid0Hmt6lliZWkZUX
+	FERWKg9/QGUwaLALGkjW9aUhSDcbhBdo21xiVAGUTZsbD/ZFNfi8Fz9Y5t+7wpglvaxh/i
+	nVNZq/8cU0mwzTL3dRk2YROv1Qbi4bs=
+ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1763052916;
+	b=sJlsYAxzWxo7edjfgOR6Z98oZBNsD1RsDIVEtzNhD3x14pEU8eRAykOLaUUhWMJ9Y1aQOV
+	b2aN8N66kknCFBm+G4zwHcBrRC6aynZCqYZyXXqEuPBE6hEo5fcMlcxZmISdDuBKXGcjxh
+	SPLzAjlFQ/72wiZenWZJZTnA6zpb5+g=
+ARC-Authentication-Results: i=1;
+	ORIGINATING;
+	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
+	s=meesny; t=1763052916;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=KB24Y6nvzkj3Pg/Shh7CT9wDtJ2tzhBtITreHpULze4=;
+	b=KjHWEcVxxp8BR6hZCuzz/lJlZIq6+QVCoOBHEt2lI47DmccYbjUGu7++fzltkv6e2fqEiD
+	spyL+VCkMDH5xocDXvkbvEOa3D4pXDcLJcQ1L09yxsieS8rMNvhMP2LnTWk+nIZlozBo8j
+	jLFyu8IbJZXMSGEEPl2584n6QZ+x6G4=
+From: Pauli Virtanen <pav@iki.fi>
+To: linux-bluetooth@vger.kernel.org
+Cc: Pauli Virtanen <pav@iki.fi>
+Subject: [PATCH BlueZ v2 1/4] shared/bap: fix channel allocation logic in bt_bap_select()
+Date: Thu, 13 Nov 2025 18:55:09 +0200
+Message-ID: <69ef74b5d531804f4f793f42032da508d1497d1b.1763052876.git.pav@iki.fi>
+X-Mailer: git-send-email 2.51.1
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251113-bearer-impl-v2-1-c3e825cc6758@amlogic.com>
-In-Reply-To: <20251113-bearer-impl-v2-1-c3e825cc6758@amlogic.com>
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Thu, 13 Nov 2025 11:39:56 -0500
-X-Gm-Features: AWmQ_blAhjWlI3iOJlMH4C3Ke6HusFIvkoni1_n28iwINwb7DM5Wq_jX_bAL6Pk
-Message-ID: <CABBYNZKgJEMviz6ffcs9K2kbqZK9fS3r81R5vT6xs_4LNjuC5g@mail.gmail.com>
-Subject: Re: [PATCH bluez v2] bearer: Implement Connect/Disconnect methods
-To: ye.he@amlogic.com
-Cc: Linux Bluetooth <linux-bluetooth@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi,
+bt_bap_select() does not correctly determine the need for multi-stream
+configurations 6,7,8,9,11(i), as its result depends on whether Audio
+Locations is read before or after the PACs, doesn't work with general
+location bits, etc.
 
-On Wed, Nov 12, 2025 at 10:43=E2=80=AFPM Ye He via B4 Relay
-<devnull+ye.he.amlogic.com@kernel.org> wrote:
->
-> From: Ye He <ye.he@amlogic.com>
->
-> This patch provides implementations for the Connect and Disconnect
-> methods of the org.bluez.Bearer.LE1 and org.bluez.Bearer.BREDR1
-> interfaces.
->
-> Signed-off-by: Ye He <ye.he@amlogic.com>
-> ---
-> Changes in v2:
-> - Fix build error & warning.
-> - Link to v1: https://patch.msgid.link/20251111-bearer-impl-v1-1-f4158514=
-4218@amlogic.com
-> ---
->  src/bearer.c |  57 ++++++++++++-
->  src/device.c | 271 ++++++++++++++++++++++++++++++++++++++++++++++++-----=
-------
->  src/device.h |   4 +
->  3 files changed, 280 insertions(+), 52 deletions(-)
->
-> diff --git a/src/bearer.c b/src/bearer.c
-> index 9723b59e2e7b39b2974e258363aa0ace95862651..c18d134e5783108ce048e3f52=
-f17da835387b245 100644
-> --- a/src/bearer.c
-> +++ b/src/bearer.c
-> @@ -40,6 +40,8 @@ struct btd_bearer {
->         struct btd_device *device;
->         uint8_t type;
->         const char *path;
-> +       GSList *disconnects; /* disconnects message */
-> +       GSList *connects; /* connects message */
+Fix the procedure to be simpler: create streams for all locations, up to
+a specific number of channels.  By default, limit to max 2 channels per
+direction for compatibility (BAP doesn't have explicit AC with larger
+channel counts.) Also simplify the code.
 
-Use struct queue for storing the connect/disconnect requests.
+Ignore lpac Locations when selecting: the value mostly makes sense for
+Unicast Server role, but Client and Server cannot use the same value as
+only a few bits can be set. As Client, we should be able to configure
+any Location bits.  The sound server can simply ignore our suggested
+channel allocation if really needed, or use SetConfiguration() API to
+build custom configurations.
+---
 
->  };
->
->  static void bearer_free(void *data)
-> @@ -52,14 +54,46 @@ static void bearer_free(void *data)
->  static DBusMessage *bearer_connect(DBusConnection *conn, DBusMessage *ms=
-g,
->                                                         void *user_data)
->  {
-> -       /* TODO */
-> +       struct btd_bearer *bearer =3D user_data;
-> +
-> +       if (btd_device_bdaddr_type_connected(bearer->device, bearer->type=
-)) {
-> +               if (msg)
-> +                       return btd_error_already_connected(msg);
-> +               return NULL;
-> +       }
-> +
-> +       if (bearer->connects) {
-> +               if (msg)
-> +                       return btd_error_in_progress(msg);
-> +               return NULL;
-> +       }
-> +
-> +       if (msg)
-> +               bearer->connects =3D g_slist_append(bearer->connects,
-> +                                               dbus_message_ref(msg));
-> +
-> +       device_request_connect_bearer(bearer->device, bearer->type, msg);
-> +
->         return NULL;
->  }
->
->  static DBusMessage *bearer_disconnect(DBusConnection *conn, DBusMessage =
-*msg,
->                                                         void *user_data)
->  {
-> -       /* TODO */
-> +       struct btd_bearer *bearer =3D user_data;
-> +
-> +       if (!btd_device_bdaddr_type_connected(bearer->device, bearer->typ=
-e)) {
-> +               if (msg)
-> +                       return btd_error_not_connected(msg);
-> +               return NULL;
-> +       }
-> +
-> +       if (msg)
-> +               bearer->disconnects =3D g_slist_append(bearer->disconnect=
-s,
-> +                                               dbus_message_ref(msg));
-> +
-> +       device_request_disconnect_bearer(bearer->device, bearer->type, ms=
-g);
-> +
->         return NULL;
->  }
->
-> @@ -200,9 +234,19 @@ void btd_bearer_bonded(struct btd_bearer *bearer)
->
->  void btd_bearer_connected(struct btd_bearer *bearer)
->  {
-> +       DBusMessage *msg;
-> +
->         if (!bearer || !bearer->path)
->                 return;
->
-> +       while (bearer->connects) {
-> +               msg =3D bearer->connects->data;
-> +               g_dbus_send_reply(btd_get_dbus_connection(), msg,
-> +                                               DBUS_TYPE_INVALID);
-> +               bearer->connects =3D g_slist_remove(bearer->connects, msg=
-);
-> +               dbus_message_unref(msg);
-> +       }
-> +
->         g_dbus_emit_property_changed(btd_get_dbus_connection(), bearer->p=
-ath,
->                                         bearer_interface(bearer->type),
->                                         "Connected");
-> @@ -212,10 +256,19 @@ void btd_bearer_disconnected(struct btd_bearer *bea=
-rer, uint8_t reason)
->  {
->         const char *name;
->         const char *message;
-> +       DBusMessage *msg;
->
->         if (!bearer || !bearer->path)
->                 return;
->
-> +       while (bearer->disconnects) {
-> +               msg =3D bearer->disconnects->data;
-> +               g_dbus_send_reply(btd_get_dbus_connection(), msg,
-> +                                               DBUS_TYPE_INVALID);
-> +               bearer->disconnects =3D g_slist_remove(bearer->disconnect=
-s, msg);
-> +               dbus_message_unref(msg);
-> +       }
-> +
->         g_dbus_emit_property_changed(btd_get_dbus_connection(), bearer->p=
-ath,
->                                         bearer_interface(bearer->type),
->                                         "Connected");
-> diff --git a/src/device.c b/src/device.c
-> index 91b6cc0c65eaae8058cd445c0942ffee57289f0d..b05c508674f194c3c6b0cef96=
-f6ac3bc6a300d9a 100644
-> --- a/src/device.c
-> +++ b/src/device.c
-> @@ -250,7 +250,8 @@ struct btd_device {
->         bool            temporary;
->         bool            connectable;
->         bool            cable_pairing;
-> -       unsigned int    disconn_timer;
-> +       unsigned int    disconn_bredr_timer;
-> +       unsigned int    disconn_le_timer;
->         unsigned int    discov_timer;
->         unsigned int    temporary_timer;        /* Temporary/disappear ti=
-mer */
->         struct browse_req *browse;              /* service discover reque=
-st */
-> @@ -315,8 +316,13 @@ static const uint16_t uuid_list[] =3D {
->         0
->  };
->
-> +static bool disconnect_le(gpointer user_data);
-> +static bool disconnect_bredr(gpointer user_data);
->  static int device_browse_gatt(struct btd_device *device, DBusMessage *ms=
-g);
->  static int device_browse_sdp(struct btd_device *device, DBusMessage *msg=
-);
-> +static void device_set_auto_connect(struct btd_device *device, gboolean =
-enable);
-> +static DBusMessage *connect_profiles(struct btd_device *dev,
-> +                       uint8_t bdaddr_type, DBusMessage *msg, const char=
- *uuid);
->
->  static struct bearer_state *get_state(struct btd_device *dev,
->                                                         uint8_t bdaddr_ty=
-pe)
-> @@ -922,8 +928,11 @@ static void device_free(gpointer user_data)
->                 sdp_list_free(device->tmp_records,
->                                         (sdp_free_func_t) sdp_record_free=
-);
->
-> -       if (device->disconn_timer)
-> -               timeout_remove(device->disconn_timer);
-> +       if (device->disconn_bredr_timer)
-> +               timeout_remove(device->disconn_bredr_timer);
-> +
-> +       if (device->disconn_le_timer)
-> +               timeout_remove(device->disconn_le_timer);
->
->         if (device->discov_timer)
->                 timeout_remove(device->discov_timer);
-> @@ -1903,23 +1912,6 @@ static gboolean dev_property_set_exists(const GDBu=
-sPropertyTable *property,
->         return !queue_isempty(device->sirks);
->  }
->
-> -static bool disconnect_all(gpointer user_data)
-> -{
-> -       struct btd_device *device =3D user_data;
-> -
-> -       device->disconn_timer =3D 0;
-> -
-> -       if (device->bredr_state.connected)
-> -               btd_adapter_disconnect_device(device->adapter, &device->b=
-daddr,
-> -                                                               BDADDR_BR=
-EDR);
-> -
-> -       if (device->le_state.connected)
-> -               btd_adapter_disconnect_device(device->adapter, &device->b=
-daddr,
-> -                                                       device->bdaddr_ty=
-pe);
-> -
-> -       return FALSE;
-> -}
-> -
->  int device_block(struct btd_device *device, gboolean update_only)
->  {
->         int err =3D 0;
-> @@ -1927,10 +1919,15 @@ int device_block(struct btd_device *device, gbool=
-ean update_only)
->         if (device->blocked)
->                 return 0;
->
-> -       if (device->disconn_timer > 0)
-> -               timeout_remove(device->disconn_timer);
-> +       if (device->disconn_le_timer > 0)
-> +               timeout_remove(device->disconn_le_timer);
-> +
-> +       if (device->disconn_bredr_timer > 0)
-> +               timeout_remove(device->disconn_bredr_timer);
-> +
-> +       disconnect_bredr(device);
->
-> -       disconnect_all(device);
-> +       disconnect_le(device);
->
->         while (device->services !=3D NULL) {
->                 struct btd_service *service =3D device->services->data;
-> @@ -2022,6 +2019,28 @@ static void dev_disconn_service(gpointer a, gpoint=
-er b)
->         btd_service_disconnect(a);
->  }
->
-> +static void dev_disconnect_watches_notify(struct btd_device *device)
-> +{
-> +       if (!device || !device->watches)
-> +               return;
-> +
-> +       while (device->watches) {
-> +               struct btd_disconnect_data *data =3D device->watches->dat=
-a;
-> +
-> +               if (data->watch)
-> +                       /* temporary is set if device is going to be remo=
-ved */
-> +                       data->watch(device, device->temporary,
-> +                                                       data->user_data);
-> +
-> +               /* Check if the watch has been removed by callback functi=
-on */
-> +               if (!g_slist_find(device->watches, data))
-> +                       continue;
-> +
-> +               device->watches =3D g_slist_remove(device->watches, data)=
-;
-> +               g_free(data);
-> +       }
-> +}
-> +
->  void device_request_disconnect(struct btd_device *device, DBusMessage *m=
-sg)
->  {
->         if (device->bonding)
-> @@ -2055,7 +2074,7 @@ void device_request_disconnect(struct btd_device *d=
-evice, DBusMessage *msg)
->                 device->disconnects =3D g_slist_append(device->disconnect=
-s,
->                                                 dbus_message_ref(msg));
->
-> -       if (device->disconn_timer)
-> +       if (device->disconn_bredr_timer && device->disconn_le_timer)
->                 return;
->
->         g_slist_foreach(device->services, dev_disconn_service, NULL);
-> @@ -2063,21 +2082,7 @@ void device_request_disconnect(struct btd_device *=
-device, DBusMessage *msg)
->         g_slist_free(device->pending);
->         device->pending =3D NULL;
->
-> -       while (device->watches) {
-> -               struct btd_disconnect_data *data =3D device->watches->dat=
-a;
-> -
-> -               if (data->watch)
-> -                       /* temporary is set if device is going to be remo=
-ved */
-> -                       data->watch(device, device->temporary,
-> -                                                       data->user_data);
-> -
-> -               /* Check if the watch has been removed by callback functi=
-on */
-> -               if (!g_slist_find(device->watches, data))
-> -                       continue;
-> -
-> -               device->watches =3D g_slist_remove(device->watches, data)=
-;
-> -               g_free(data);
-> -       }
-> +       dev_disconnect_watches_notify(device);
->
->         if (!btd_device_is_connected(device)) {
->                 if (msg)
-> @@ -2085,14 +2090,166 @@ void device_request_disconnect(struct btd_device=
- *device, DBusMessage *msg)
->                 return;
->         }
->
-> -       device->disconn_timer =3D timeout_add_seconds(DISCONNECT_TIMER,
-> -                                                       disconnect_all,
-> +       if (!device->disconn_bredr_timer)
-> +               device->disconn_bredr_timer =3D timeout_add_seconds(
-> +                                                       DISCONNECT_TIMER,
-> +                                                       disconnect_bredr,
-> +                                                       device, NULL);
-> +
-> +       if (!device->disconn_le_timer)
-> +               device->disconn_le_timer =3D timeout_add_seconds(
-> +                                                       DISCONNECT_TIMER,
-> +                                                       disconnect_le,
->                                                         device, NULL);
->  }
->
->  bool device_is_disconnecting(struct btd_device *device)
->  {
-> -       return device->disconn_timer > 0;
-> +       return (device->disconn_le_timer > 0) ||
-> +                               (device->disconn_bredr_timer > 0);
-> +}
-> +
-> +static void dev_disconn_bearer_service(gpointer a, gpointer b)
-> +{
-> +       struct btd_service *service =3D a;
-> +       uint8_t type =3D *(uint8_t *)b;
-> +       struct btd_profile *profile;
-> +       bt_uuid_t uuid;
-> +
-> +       profile =3D btd_service_get_profile(service);
-> +       if (!profile)
-> +               return;
-> +
-> +       if (!profile->remote_uuid)
-> +               return;
-> +
-> +       if (bt_string_to_uuid(&uuid, profile->remote_uuid) !=3D 0)
-> +               return;
-> +
-> +       switch (type) {
-> +       case BDADDR_BREDR:
-> +               if (uuid.value.u16 < 0x1100 || uuid.value.u16 > 0x11FF)
-> +                       return;
-> +               break;
-> +       case BDADDR_LE_PUBLIC:
-> +       case BDADDR_LE_RANDOM:
-> +               if (uuid.value.u16 < 0x1800 || uuid.value.u16 > 0x18FF)
-> +                       return;
-> +               break;
-> +       default:
-> +               DBG("Unsupported bearer addr type: %u", type);
-> +               return;
-> +       }
-> +
-> +       DBG("Disconnecting profile %s (UUID 0x%04x) for bearer addr type =
-%u",
-> +           profile->name ?: "(unknown)", uuid.value.u16, type);
-> +
-> +       btd_service_disconnect(service);
-> +}
-> +
-> +static bool disconnect_bredr(gpointer user_data)
-> +{
-> +       struct btd_device *device =3D user_data;
-> +
-> +       device->disconn_bredr_timer =3D 0;
-> +
-> +       if (device->bredr_state.connected)
-> +               btd_adapter_disconnect_device(device->adapter, &device->b=
-daddr,
-> +                                                               BDADDR_BR=
-EDR);
-> +
-> +       return FALSE;
-> +}
-> +
-> +static bool disconnect_le(gpointer user_data)
-> +{
-> +       struct btd_device *device =3D user_data;
-> +
-> +       device->disconn_le_timer =3D 0;
-> +
-> +       if (device->le_state.connected)
-> +               btd_adapter_disconnect_device(device->adapter, &device->b=
-daddr,
-> +                                                       device->bdaddr_ty=
-pe);
-> +
-> +       return FALSE;
-> +}
-> +
-> +void device_request_disconnect_bearer(struct btd_device *device,
-> +                               uint8_t bdaddr_type, DBusMessage *msg)
-> +{
-> +       if (device->bonding)
-> +               bonding_request_cancel(device->bonding);
-> +
-> +       if (device->browse) {
-> +               if ((device->browse->type =3D=3D BROWSE_SDP &&
-> +                       bdaddr_type =3D=3D BDADDR_BREDR) ||
-> +                       (device->browse->type =3D=3D BROWSE_GATT &&
-> +                       bdaddr_type !=3D BDADDR_BREDR))
-> +                       browse_request_cancel(device->browse);
-> +       }
-> +
-> +       g_slist_foreach(device->services, dev_disconn_bearer_service,
-> +                                       &bdaddr_type);
-> +
-> +       dev_disconnect_watches_notify(device);
-> +
-> +       if (bdaddr_type =3D=3D BDADDR_BREDR) {
-> +               g_slist_free(device->pending);
-> +               device->pending =3D NULL;
-> +
-> +               if (device->disconn_bredr_timer)
-> +                       return;
-> +
-> +               device->disconn_bredr_timer =3D timeout_add_seconds(
-> +                                                       DISCONNECT_TIMER,
-> +                                                       disconnect_bredr,
-> +                                                       device, NULL);
-> +       } else {
-> +               if (device->att_io) {
-> +                       g_io_channel_shutdown(device->att_io, FALSE, NULL=
-);
-> +                       g_io_channel_unref(device->att_io);
-> +                       device->att_io =3D NULL;
-> +               }
-> +
-> +               if (device->disconn_le_timer)
-> +                       return;
-> +
-> +               device->disconn_le_timer =3D timeout_add_seconds(
-> +                                                       DISCONNECT_TIMER,
-> +                                                       disconnect_le,
-> +                                                       device, NULL);
-> +       }
-> +}
-> +
-> +void device_request_connect_bearer(struct btd_device *device,
-> +                               uint8_t bdaddr_type, DBusMessage *msg)
-> +{
-> +       int err;
-> +
-> +       if (device->bonding) {
-> +               g_dbus_send_message(dbus_conn, btd_error_in_progress(msg)=
-);
-> +               return;
-> +       }
-> +
-> +       if (bdaddr_type =3D=3D BDADDR_BREDR)
-> +               connect_profiles(device, bdaddr_type, msg, NULL);
-> +       else {
-> +               if (device->le_state.connected) {
-> +                       dbus_message_new_method_return(msg);
-> +                       return;
-> +               }
-> +
-> +               btd_device_set_temporary(device, false);
-> +
-> +               if (device->disable_auto_connect) {
-> +                       device->disable_auto_connect =3D FALSE;
-> +                       device_set_auto_connect(device, TRUE);
-> +               }
-> +
-> +               err =3D device_connect_le(device);
-> +               if (err < 0)
-> +                       g_dbus_send_message(dbus_conn,
-> +                               btd_error_failed(msg, strerror(-err)));
-> +       }
->  }
->
->  static void add_set(void *data, void *user_data)
-> @@ -3880,17 +4037,24 @@ void device_remove_connection(struct btd_device *=
-device, uint8_t bdaddr_type,
->         if (!state->connected)
->                 return;
->
-> +       if (bdaddr_type =3D=3D BDADDR_BREDR) {
-> +               if (device->disconn_bredr_timer > 0) {
-> +                       timeout_remove(device->disconn_bredr_timer);
-> +                       device->disconn_bredr_timer =3D 0;
-> +               }
-> +       } else {
-> +               if (device->disconn_le_timer > 0) {
-> +                       timeout_remove(device->disconn_le_timer);
-> +                       device->disconn_le_timer =3D 0;
-> +               }
-> +       }
-> +
->         state->connected =3D false;
->         state->initiator =3D false;
->         device->general_connect =3D FALSE;
->
->         device_set_svc_refreshed(device, false);
->
-> -       if (device->disconn_timer > 0) {
-> -               timeout_remove(device->disconn_timer);
-> -               device->disconn_timer =3D 0;
-> -       }
-> -
->         /* This could be executed while the client is waiting for Connect=
-() but
->          * att_connect_cb has not been invoked.
->          * In that case reply the client that the connection failed.
-> @@ -5359,9 +5523,16 @@ void device_remove(struct btd_device *device, gboo=
-lean remove_stored)
->         device->pending =3D NULL;
->
->         if (btd_device_is_connected(device)) {
-> -               if (device->disconn_timer > 0)
-> -                       timeout_remove(device->disconn_timer);
-> -               disconnect_all(device);
-> +               if (device->disconn_bredr_timer > 0) {
-> +                       timeout_remove(device->disconn_bredr_timer);
-> +                       device->disconn_bredr_timer =3D 0;
-> +               }
-> +               if (device->disconn_le_timer > 0) {
-> +                       timeout_remove(device->disconn_le_timer);
-> +                       device->disconn_le_timer =3D 0;
-> +               }
-> +               disconnect_bredr(device);
-> +               disconnect_le(device);
->         }
->
->         clear_temporary_timer(device);
-> diff --git a/src/device.h b/src/device.h
-> index 6ed8affa0d4a9274d30cac9b48e8a6826edefd64..f756fbbd4abfda467a669a38a=
-95ddbcf586d8ff6 100644
-> --- a/src/device.h
-> +++ b/src/device.h
-> @@ -141,6 +141,10 @@ void device_remove_connection(struct btd_device *dev=
-ice, uint8_t bdaddr_type,
->                                                         uint8_t reason);
->  void device_request_disconnect(struct btd_device *device, DBusMessage *m=
-sg);
->  bool device_is_disconnecting(struct btd_device *device);
-> +void device_request_disconnect_bearer(struct btd_device *device,
-> +                                       uint8_t bdaddr_type, DBusMessage =
-*msg);
-> +void device_request_connect_bearer(struct btd_device *device,
-> +                                       uint8_t bdaddr_type, DBusMessage =
-*msg);
+Notes:
+    v2:
+    - fix getting number of ASEs
 
-I thinking in implementing this as part of bearer.c to minimize the
-chance of affecting existing code and causing regression, we have
-already struct btd_bearer that can be used to store timers, etc, what
-perhaps we will need to do is to either make struct btd_device
-definition available or have some helper functions to access the
-necessary information, in either case the changes to device.c should
-be as minimal as possible since that is already overloaded with so
-many things I don't think adding another one really helps us in the
-long run.
+ profiles/audio/bap.c |   3 +-
+ src/shared/bap.c     | 205 +++++++++++++++++++++----------------------
+ src/shared/bap.h     |   7 +-
+ 3 files changed, 104 insertions(+), 111 deletions(-)
 
->  void device_set_ltk(struct btd_device *device, const uint8_t val[16],
->                                 bool central, uint8_t enc_size);
->  bool btd_device_get_ltk(struct btd_device *device, uint8_t val[16],
->
-> ---
-> base-commit: 5e41d1e1d361e7288964e4c2c5ed90736025662f
-> change-id: 20251111-bearer-impl-5f7e396174aa
->
-> Best regards,
-> --
-> Ye He <ye.he@amlogic.com>
->
->
->
+diff --git a/profiles/audio/bap.c b/profiles/audio/bap.c
+index 85bba9543..ec3502b06 100644
+--- a/profiles/audio/bap.c
++++ b/profiles/audio/bap.c
+@@ -1919,7 +1919,8 @@ static bool pac_select(struct bt_bap_pac *lpac, struct bt_bap_pac *rpac,
+ 		queue_push_tail(select->eps, ep);
+ 	}
+ 
+-	bt_bap_select(lpac, rpac, &select->remaining, select_cb, ep);
++	bt_bap_select(data->bap, lpac, rpac, 0, &select->remaining,
++								select_cb, ep);
+ 
+ 	return true;
+ }
+diff --git a/src/shared/bap.c b/src/shared/bap.c
+index a18f393f7..b779f6716 100644
+--- a/src/shared/bap.c
++++ b/src/shared/bap.c
+@@ -204,11 +204,6 @@ struct bt_bap {
+ 	void *user_data;
+ };
+ 
+-struct bt_bap_chan {
+-	uint8_t count;
+-	uint32_t location;
+-};
+-
+ struct bt_bap_pac {
+ 	struct bt_bap_db *bdb;
+ 	char *name;
+@@ -3848,50 +3843,6 @@ static void *ltv_merge(struct iovec *data, struct iovec *cont)
+ 	return util_iov_append(data, cont->iov_base, cont->iov_len);
+ }
+ 
+-static void bap_pac_chan_add(struct bt_bap_pac *pac, uint8_t count,
+-				uint32_t location)
+-{
+-	struct bt_bap_chan *chan;
+-
+-	if (!pac->channels)
+-		pac->channels = queue_new();
+-
+-	chan = new0(struct bt_bap_chan, 1);
+-	chan->count = count;
+-	chan->location = location;
+-
+-	queue_push_tail(pac->channels, chan);
+-}
+-
+-static void bap_pac_foreach_channel(size_t i, uint8_t l, uint8_t t, uint8_t *v,
+-					void *user_data)
+-{
+-	struct bt_bap_pac *pac = user_data;
+-
+-	if (!v)
+-		return;
+-
+-	bap_pac_chan_add(pac, *v, bt_bap_pac_get_locations(pac));
+-}
+-
+-static void bap_pac_update_channels(struct bt_bap_pac *pac, struct iovec *data)
+-{
+-	uint8_t type = 0x03;
+-
+-	if (!data)
+-		return;
+-
+-	util_ltv_foreach(data->iov_base, data->iov_len, &type,
+-				bap_pac_foreach_channel, pac);
+-
+-	/* If record didn't set a channel count but set a location use that as
+-	 * channel count.
+-	 */
+-	if (queue_isempty(pac->channels) && pac->qos.location)
+-		bap_pac_chan_add(pac, pac->qos.location, pac->qos.location);
+-
+-}
+-
+ static void bap_pac_merge(struct bt_bap_pac *pac, struct iovec *data,
+ 					struct iovec *metadata)
+ {
+@@ -3901,9 +3852,6 @@ static void bap_pac_merge(struct bt_bap_pac *pac, struct iovec *data,
+ 	else
+ 		pac->data = util_iov_dup(data, 1);
+ 
+-	/* Update channels */
+-	bap_pac_update_channels(pac, data);
+-
+ 	/* Merge metadata into existing record */
+ 	if (pac->metadata)
+ 		ltv_merge(pac->metadata, metadata);
+@@ -4845,6 +4793,8 @@ static void read_source_pac_loc(bool success, uint8_t att_ecode,
+ 
+ 	pacs->source_loc_value = get_le32(value);
+ 
++	DBG(bap, "PACS Source Locations: 0x%08x", pacs->source_loc_value);
++
+ 	/* Resume reading sinks if supported but for some reason is empty */
+ 	if (pacs->source && queue_isempty(bap->rdb->sources)) {
+ 		uint16_t value_handle;
+@@ -4878,6 +4828,8 @@ static void read_sink_pac_loc(bool success, uint8_t att_ecode,
+ 
+ 	pacs->sink_loc_value = get_le32(value);
+ 
++	DBG(bap, "PACS Sink Locations: 0x%08x", pacs->sink_loc_value);
++
+ 	/* Resume reading sinks if supported but for some reason is empty */
+ 	if (pacs->sink && queue_isempty(bap->rdb->sinks)) {
+ 		uint16_t value_handle;
+@@ -4911,6 +4863,9 @@ static void read_pac_context(bool success, uint8_t att_ecode,
+ 
+ 	pacs->sink_context_value = le16_to_cpu(ctx->snk);
+ 	pacs->source_context_value = le16_to_cpu(ctx->src);
++
++	DBG(bap, "PACS Sink Context: 0x%04x", pacs->sink_context_value);
++	DBG(bap, "PACS Source Context: 0x%04x", pacs->source_context_value);
+ }
+ 
+ static void read_pac_supported_context(bool success, uint8_t att_ecode,
+@@ -4934,6 +4889,11 @@ static void read_pac_supported_context(bool success, uint8_t att_ecode,
+ 
+ 	pacs->supported_sink_context_value = le16_to_cpu(ctx->snk);
+ 	pacs->supported_source_context_value = le16_to_cpu(ctx->src);
++
++	DBG(bap, "PACS Supported Sink Context: 0x%04x",
++					pacs->supported_sink_context_value);
++	DBG(bap, "PACS Supported Source Context: 0x%04x",
++					pacs->supported_source_context_value);
+ }
+ 
+ static void foreach_pacs_char(struct gatt_db_attribute *attr, void *user_data)
+@@ -6113,12 +6073,55 @@ static bool match_pac(struct bt_bap_pac *lpac, struct bt_bap_pac *rpac,
+ 	return false;
+ }
+ 
+-int bt_bap_select(struct bt_bap_pac *lpac, struct bt_bap_pac *rpac,
+-			int *count, bt_bap_pac_select_t func,
+-			void *user_data)
++static void bap_pac_ltv_ch_counts(size_t i, uint8_t l, uint8_t t, uint8_t *v,
++								void *user_data)
+ {
+-	const struct queue_entry *lchan, *rchan;
+-	int selected = 0;
++	uint8_t *mask = user_data;
++
++	if (v)
++		*mask |= *v;
++}
++
++static uint8_t bap_pac_ch_counts(struct bt_bap_pac *pac)
++{
++	uint8_t type = 0x03;
++	uint8_t mask = 0;
++
++	if (!pac->data)
++		return 0;
++
++	util_ltv_foreach(pac->data->iov_base, pac->data->iov_len, &type,
++						bap_pac_ltv_ch_counts, &mask);
++
++	if (!mask)
++		mask = 0x01;  /* default (BAP v1.0.1 Sec 4.3.1) */
++
++	return mask;
++}
++
++static unsigned int bap_count_eps(struct queue *eps, uint8_t dir)
++{
++	const struct queue_entry *entry;
++	unsigned int count = 0;
++
++	for (entry = queue_get_entries(eps); entry; entry = entry->next) {
++		struct bt_bap_endpoint *ep = entry->data;
++
++		if (ep->dir == dir)
++			count++;
++	}
++
++	return count;
++}
++
++int bt_bap_select(struct bt_bap *bap,
++			struct bt_bap_pac *lpac, struct bt_bap_pac *rpac,
++			unsigned int max_channels, int *count,
++			bt_bap_pac_select_t func, void *user_data)
++{
++	uint32_t locations;
++	uint8_t ch_counts;
++	unsigned int num_ase;
+ 
+ 	if (!lpac || !rpac || !func)
+ 		return -EINVAL;
+@@ -6126,66 +6129,54 @@ int bt_bap_select(struct bt_bap_pac *lpac, struct bt_bap_pac *rpac,
+ 	if (!lpac->ops || !lpac->ops->select)
+ 		return -EOPNOTSUPP;
+ 
+-	for (lchan = queue_get_entries(lpac->channels); lchan;
+-					lchan = lchan->next) {
+-		struct bt_bap_chan *lc = lchan->data;
+-		struct bt_bap_chan map = *lc;
+-		int i;
++	if (!max_channels)
++		max_channels = 2;  /* By default: don't go beyond BAP AC */
+ 
+-		for (i = 0, rchan = queue_get_entries(rpac->channels); rchan;
+-					rchan = rchan->next, i++) {
+-			struct bt_bap_chan *rc = rchan->data;
++	ch_counts = bap_pac_ch_counts(lpac) & bap_pac_ch_counts(rpac);
++	locations = bt_bap_pac_get_locations(rpac);
++	num_ase = bap_count_eps(bap->remote_eps, rpac->type);
+ 
+-			/* Try matching the channel count */
+-			if (!(map.count & rc->count))
+-				break;
++	/* Fallback to unspecified/mono allocation if nothing is matching */
++	if (!locations || !ch_counts) {
++		lpac->ops->select(lpac, rpac, 0, &rpac->qos, func, user_data,
++							lpac->user_data);
++		if (count)
++			(*count)++;
++		return 0;
++	}
+ 
+-			/* Check if location was set otherwise attempt to
+-			 * assign one based on the number of channels it
+-			 * supports.
+-			 */
+-			if (!rc->location) {
+-				rc->location = bt_bap_pac_get_locations(rpac);
+-				/* If channel count is 1 use a single
+-				 * location
+-				 */
+-				if (rc->count == 0x01)
+-					rc->location &= BIT(i);
+-			}
++	/* Allocate all locations to streams */
++	while (num_ase) {
++		uint32_t allocation = 0, alloc = 0;
++		unsigned int i, n;
+ 
+-			/* Try matching the channel location */
+-			if (!(map.location & rc->location))
++		/* Put max number of channels per stream */
++		for (i = 0, n = 0; i < 32 && n < 8; ++i) {
++			uint32_t loc = (1LL << i);
++
++			if (!(locations & loc))
+ 				continue;
+ 
+-			lpac->ops->select(lpac, rpac, map.location &
+-						rc->location, &rpac->qos,
+-						func, user_data,
+-						lpac->user_data);
+-			selected++;
++			alloc |= loc;
++			if ((BIT(n) & ch_counts) && n < max_channels)
++				allocation = alloc;
+ 
+-			/* Check if there are any channels left to select */
+-			map.count &= ~(map.count & rc->count);
+-			/* Check if there are any locations left to select */
+-			map.location &= ~(map.location & rc->location);
+-
+-			if (!map.count || !map.location)
+-				break;
+-
+-			/* Check if device require AC*(i) settings */
+-			if (rc->count == 0x01)
+-				map.count = map.count >> 1;
++			++n;
+ 		}
+-	}
+ 
+-	/* Fallback to no channel allocation since none could be matched. */
+-	if (!selected) {
+-		lpac->ops->select(lpac, rpac, 0, &rpac->qos, func, user_data,
+-					lpac->user_data);
+-		selected++;
+-	}
++		if (!allocation)
++			break;
+ 
+-	if (count)
+-		*count += selected;
++		/* Configure stream */
++		lpac->ops->select(lpac, rpac, allocation, &rpac->qos,
++					func, user_data, lpac->user_data);
++		if (count)
++			(*count)++;
++
++		locations &= ~allocation;
++		max_channels -= __builtin_popcount(allocation);
++		num_ase--;
++	}
+ 
+ 	return 0;
+ }
+diff --git a/src/shared/bap.h b/src/shared/bap.h
+index efeed604d..80e91f10a 100644
+--- a/src/shared/bap.h
++++ b/src/shared/bap.h
+@@ -172,9 +172,10 @@ void bt_bap_pac_set_user_data(struct bt_bap_pac *pac, void *user_data);
+ void *bt_bap_pac_get_user_data(struct bt_bap_pac *pac);
+ 
+ /* Stream related functions */
+-int bt_bap_select(struct bt_bap_pac *lpac, struct bt_bap_pac *rpac,
+-			int *count, bt_bap_pac_select_t func,
+-			void *user_data);
++int bt_bap_select(struct bt_bap *bap,
++			struct bt_bap_pac *lpac, struct bt_bap_pac *rpac,
++			unsigned int max_channels, int *count,
++			bt_bap_pac_select_t func, void *user_data);
+ 
+ void bt_bap_cancel_select(struct bt_bap_pac *lpac, bt_bap_pac_select_t func,
+ 			void *user_data);
+-- 
+2.51.1
 
-
---=20
-Luiz Augusto von Dentz
 
