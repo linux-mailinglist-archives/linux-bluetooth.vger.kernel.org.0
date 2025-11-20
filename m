@@ -1,112 +1,139 @@
-Return-Path: <linux-bluetooth+bounces-16824-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-16826-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9E4BC7585A
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Nov 2025 18:02:31 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C494C758E7
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Nov 2025 18:10:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 2D25B4E1D6F
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Nov 2025 16:55:06 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id E84D7359D14
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 20 Nov 2025 17:07:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41C9A36C5A1;
-	Thu, 20 Nov 2025 16:54:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oK/ZXygo"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63F2B3590BD;
+	Thu, 20 Nov 2025 17:05:53 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DDE12874F5;
-	Thu, 20 Nov 2025 16:54:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8E4E33C1A8;
+	Thu, 20 Nov 2025 17:05:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=141.14.17.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763657688; cv=none; b=nQkNr8b/SeBmWR9nNJs/4q+MLjh8bLlMWsdYtP1MOOZzVEYWrG5v/rTIUxJ8WmfkT5/u65cPVb003gG6GmpBlvKsZjLBROEjgrXWqRaVLY9MJEzGPRycbqSyh0gSMofFAzZJXKL2BCixFN6+TT/EvONsz24XnqyG12y48XMLMLE=
+	t=1763658351; cv=none; b=guM4ZD3DaUYI3cHLmUQ4sZkuDjZ1YXODlpxYkFBir3xxV2CBpVHhsb/tH+gKmtaNMpOEEpgd8Zz20Lrr5cvGDrJ5s7xL/2LvMm/QHYd264lnpBXFTId7LEtPe1xAG4OR4E7ppJRZ0KqphlcUHchDdvu87FXfwjYZ5MHyQYkY0/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763657688; c=relaxed/simple;
-	bh=7RlJgO0bn3IQUwfaWF5A5gBBgoG4DUcrllB7yObH7KY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UjN7Hqoe+pMesYYl59SHEntNwfZYOVitWNTMLuvlKYzaWUgyMe/ktib/t1TNEKXLG4CWBh1H5dBZ8MSwXzT6jJvtfd7YlH1w+UKoAZJfenNfWuZJUfHy2zNd0zWa8LrmMZrbwGZXgYjmEbvlIayEHHaY0dQBOygiVmfFnaa6N2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oK/ZXygo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51418C4CEF1;
-	Thu, 20 Nov 2025 16:54:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763657687;
-	bh=7RlJgO0bn3IQUwfaWF5A5gBBgoG4DUcrllB7yObH7KY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=oK/ZXygo0+HJVRL1dGc2x1xDyykr2qJuxy9hlNMyPRPzGG+8NMayKfzWmw+R6Bks7
-	 zyojuibYxSUmBoBY9wjhfb43NO9giDXA7vx8gBMfjr/8LQIaYvRMvZ6ACsHiMbgzjq
-	 NJDFuGV9RKFcdQSEb1JDDEnFUjd6YM3rGWae0hwPLnbeyaa9wGYyYQLhF03Umc4WFb
-	 PW2ADyTK72HpLutxMVJhk+HkKz5au0EeujP3qdGrmz/HHsPtUrYEgxIe5LPgjDlp6q
-	 S1ZWqQPLybPUdcut5h8hQjJWD3waRP3UuCTKe4LWXvgHNEg+YNEh8YNZwLZ8v4xnk7
-	 S8RktxhAFysUw==
-Date: Thu, 20 Nov 2025 22:24:24 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Rob Herring <robh@kernel.org>
-Cc: manivannan.sadhasivam@oss.qualcomm.com, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
-	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>, 
-	Hans de Goede <hansg@kernel.org>, Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, 
-	Mark Pearson <mpearson-lenovo@squebb.ca>, "Derek J. Clark" <derekjohn.clark@gmail.com>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	Bartosz Golaszewski <brgl@bgdev.pl>, linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-kbuild@vger.kernel.org, platform-driver-x86@vger.kernel.org, linux-pci@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
-	linux-pm@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH 6/9] serdev: Skip registering serdev devices from DT is
- external connector is used
-Message-ID: <blqs5xugab5kumljzrt26dvyhnun2pmpeu4y727xoz3vrponrt@bbxqnl55zhky>
-References: <20251112-pci-m2-e-v1-0-97413d6bf824@oss.qualcomm.com>
- <20251112-pci-m2-e-v1-6-97413d6bf824@oss.qualcomm.com>
- <CAL_JsqKBcXH0EWguto3EFY2cJ5p=8VUZczMHz1u5fNFocv-AmA@mail.gmail.com>
- <cjtnoqjr3v5o64caa6unllb2e2csyvybr6vnzwuqqrl453bgz7@drqmfkfbn5xg>
- <CAL_JsqLoD5GiiGgWTEa6-g8VwyuPTko-ewe5CKPBWMgHDnKaHg@mail.gmail.com>
+	s=arc-20240116; t=1763658351; c=relaxed/simple;
+	bh=zOzBlVRGWjXj/eLJL63dPaCE0EqtsPjRY+ol2qCqdbk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=CaXckNd1gg+xAQixNHJFIW9e4pII/RDx4t2R3r9+DdabBx+ZIngcCTR9EdbmdnTrWKU6wEjJtfCtRuiSheisJbiQiWzG+R5F8LQNv64XbGkyEZMwc9qMW3PA5cnJdkSmkTNVMxjTN4QEQvIBUNdNdDVXsU69DAaLn7f7qhhWLwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de; spf=pass smtp.mailfrom=molgen.mpg.de; arc=none smtp.client-ip=141.14.17.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=molgen.mpg.de
+Received: from [141.14.220.42] (g42.guest.molgen.mpg.de [141.14.220.42])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: pmenzel)
+	by mx.molgen.mpg.de (Postfix) with ESMTPSA id CF5FF61CC3FE1;
+	Thu, 20 Nov 2025 18:04:36 +0100 (CET)
+Message-ID: <be1cbae6-f868-4939-a1c1-fd66e2c6b23e@molgen.mpg.de>
+Date: Thu, 20 Nov 2025 18:04:32 +0100
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAL_JsqLoD5GiiGgWTEa6-g8VwyuPTko-ewe5CKPBWMgHDnKaHg@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] Bluetooth: btusb: mediatek: Avoid
+ btusb_mtk_claim_iso_intf() NULL deref
+To: Douglas Anderson <dianders@chromium.org>
+Cc: Marcel Holtmann <marcel@holtmann.org>,
+ Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Thorsten Leemhuis <regressions@leemhuis.info>, regressions@lists.linux.dev,
+ incogcyberpunk@proton.me, johan.hedberg@gmail.com, sean.wang@mediatek.com,
+ stable@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-mediatek@lists.infradead.org
+References: <20251120081227.v3.1.I1ae7aebc967e52c7c4be7aa65fbd81736649568a@changeid>
+Content-Language: en-US
+From: Paul Menzel <pmenzel@molgen.mpg.de>
+In-Reply-To: <20251120081227.v3.1.I1ae7aebc967e52c7c4be7aa65fbd81736649568a@changeid>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Nov 20, 2025 at 10:22:16AM -0600, Rob Herring wrote:
-> On Wed, Nov 19, 2025 at 7:33 AM Manivannan Sadhasivam <mani@kernel.org> wrote:
-> >
-> > On Tue, Nov 18, 2025 at 07:03:51AM -0600, Rob Herring wrote:
-> > > On Wed, Nov 12, 2025 at 8:45 AM Manivannan Sadhasivam via B4 Relay
-> > > <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org> wrote:
-> > > >
-> > > > From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> > > >
-> > > > If an external connector like M.2 is connected to the serdev controller
-> > > > in DT, then the serdev devices will be created dynamically by the connector
-> > > > driver. So skip registering devices from DT node as there will be no
-> > > > statically defined devices.
-> > >
-> > > You could still have statically defined devices. You are just choosing
-> > > to probe them later from the connector driver.
-> > >
-> >
-> > The point of coming up with the M.2 binding is to avoid hardcoding the devices
-> > in DT. So static devices are ruled out IMO.
+Dear Douglas,
+
+
+Thank you for your patch.
+
+Am 20.11.25 um 17:12 schrieb Douglas Anderson:
+> In btusb_mtk_setup(), we set `btmtk_data->isopkt_intf` to:
+>    usb_ifnum_to_if(data->udev, MTK_ISO_IFNUM)
 > 
-> Until you have any one of the reasons we have PCIe devices described
-> even when in a standard slot. Take your pick. An ethernet adapter that
-> omits an EEPROM for the MAC address.
+> That function can return NULL in some cases. Even when it returns
+> NULL, though, we still go on to call btusb_mtk_claim_iso_intf().
 > 
+> As of commit e9087e828827 ("Bluetooth: btusb: mediatek: Add locks for
+> usb_driver_claim_interface()"), calling btusb_mtk_claim_iso_intf()
+> when `btmtk_data->isopkt_intf` is NULL will cause a crash because
+> we'll end up passing a bad pointer to device_lock(). Prior to that
+> commit we'd pass the NULL pointer directly to
+> usb_driver_claim_interface() which would detect it and return an
+> error, which was handled.
+> 
+> Resolve the crash in btusb_mtk_claim_iso_intf() by adding a NULL check
+> at the start of the function. This makes the code handle a NULL
+> `btmtk_data->isopkt_intf` the same way it did before the problematic
+> commit (just with a slight change to the error message printed).
+> 
+> Reported-by: IncogCyberpunk <incogcyberpunk@proton.me>
+> Closes: http://lore.kernel.org/r/a380d061-479e-4713-bddd-1d6571ca7e86@leemhuis.info
+> Fixes: e9087e828827 ("Bluetooth: btusb: mediatek: Add locks for usb_driver_claim_interface()")
+> Cc: stable@vger.kernel.org
+> Tested-by: IncogCyberpunk <incogcyberpunk@proton.me>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+> 
+> Changes in v3:
+> - Added Cc to stable.
+> - Added IncogCyberpunk Tested-by tag.
+> - v2: https://patch.msgid.link/20251119092641.v2.1.I1ae7aebc967e52c7c4be7aa65fbd81736649568a@changeid
+> 
+> Changes in v2:
+> - Rebase atop commit 529ac8e706c3 ("Bluetooth: ... mtk iso interface")
+> - v1: https://patch.msgid.link/20251119085354.1.I1ae7aebc967e52c7c4be7aa65fbd81736649568a@changeid
+> 
+>   drivers/bluetooth/btusb.c | 5 +++++
+>   1 file changed, 5 insertions(+)
+> 
+> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+> index fcc62e2fb641..683ac02e964b 100644
+> --- a/drivers/bluetooth/btusb.c
+> +++ b/drivers/bluetooth/btusb.c
+> @@ -2751,6 +2751,11 @@ static void btusb_mtk_claim_iso_intf(struct btusb_data *data)
+>   	if (!btmtk_data)
+>   		return;
+>   
+> +	if (!btmtk_data->isopkt_intf) {
+> +		bt_dev_err(data->hdev, "Can't claim NULL iso interface");
 
-Hmm, I didn't envision the need to have static and dynamic devices at the same
-time. So you are suggesting to first look for the static devices and then look
-for graph port at the end?
+As an error is printed now, what should be done about? Do drivers need 
+fixing? Is it broken hardware?
 
-- Mani
+> +		return;
+> +	}
+> +
+>   	/*
+>   	 * The function usb_driver_claim_interface() is documented to need
+>   	 * locks held if it's not called from a probe routine. The code here
 
--- 
-மணிவண்ணன் சதாசிவம்
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+
+
+Kind regards,
+
+Paul
 
