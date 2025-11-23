@@ -1,34 +1,34 @@
-Return-Path: <linux-bluetooth+bounces-16859-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-16861-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A158C7E366
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 23 Nov 2025 17:18:01 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id B839BC7E36C
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 23 Nov 2025 17:18:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id EE440348807
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 23 Nov 2025 16:18:00 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 99D2B4E1A70
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 23 Nov 2025 16:18:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74ABE2D97A4;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECAA42D9ECB;
 	Sun, 23 Nov 2025 16:17:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="lJJjsY7P"
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="ciBQZDV9"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD9B2D9494
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D552D94AB
 	for <linux-bluetooth@vger.kernel.org>; Sun, 23 Nov 2025 16:17:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763914656; cv=pass; b=KqkE0tl4cK/Z0H+3fJlN1dMzrQcmxEhgArwKNr3u0I8ldFqeWhkDr2/SQsDy7RVtqsqL7Yme4na5dixYV+j4YmoArFE9B5ZW3cxtgDRUaEO62e7WdfdNw73TApxThFa1m7SBzHsE7sAHp4DrCl6aUVyOvglu0W8llCE6nyQU/x4=
+	t=1763914656; cv=pass; b=VZmWPVijiNZKotkfXnfKahqQ6HUKkwWDtrjm3JrZRgpqZLo+E+wa0+/ylrqS3ltCFk15texnftaE4IHBFGLL8Qt6OZmslMxCQd13fmdrnV1bpmTNx3niRA/WU3lsaI1SkqJ2Z+PDNFN8igaiU4qflV/7HstQ23nR0VMnWb074XQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1763914656; c=relaxed/simple;
-	bh=uaGzC/0sNrqKKTAHNzCfLKApuKUiGA8BxQP0c3H6f5A=;
+	bh=r0myELQibG8aj4n79mQbyKqyt50zAwVxGidugmiEB98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UaQxN8t+TedolTRvTN5lbi2OvZbSkwTpVz1O40b5P+W74svjFjGUYk3jF1gjevH2ovUqAdSRtT8BXiA5n20eImxOZIuEOxhQOqzoj4lBbIe+4cBSbi6Kzy5w6yawXny0q0swufifpbtiLt9rbtvK56vRNdez3Ov7Nag2IDccXfw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=lJJjsY7P; arc=pass smtp.client-ip=195.140.195.201
+	 MIME-Version; b=n6SU4D9tUdwoECmKcxgcBKpsP4WLtGls+WHjDOV747kRytJywHq9dWBcqUd8Kep1AlpzpTanyT7vpvrWCcN6WpaMy0+5zkt4ESHXqQHh4Z04ZRMhH+l4m6oueEjDl5cK/FHsQKRj+YjmgdYSFg14PoBqpGuKAQ4PlQU3m43fJ/4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=ciBQZDV9; arc=pass smtp.client-ip=195.140.195.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [IPv6:2a02:ed04:3581:4::d001])
@@ -36,41 +36,41 @@ Received: from monolith.lan (unknown [IPv6:2a02:ed04:3581:4::d001])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4dDvHY0bPRz10HY;
-	Sun, 23 Nov 2025 18:17:28 +0200 (EET)
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4dDvHZ0fmRz10Kr;
+	Sun, 23 Nov 2025 18:17:29 +0200 (EET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
-	t=1763914649;
+	t=1763914650;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=3VNUjSRNHtfnCLdTt9ar4v3ct0BojFsZu/7DZq5nxms=;
-	b=lJJjsY7PSjibqKYet4xxTde3ePAx1j80eDApq49MwQGbPASloHN6K+onYxGuJONMHegJgo
-	6sZseMSCWXyD1aH5UPIo8pyZvbaQcGpkMvhduNnaMlcYZFngR+w7UGfj+bHTP2VYeupNYU
-	Oz+37kR6gUTHwdU0eSheMdxJGLFXIoA=
-ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1763914649;
-	b=nDg/x+lnzYorAI5PyTEhUUfrzZ0eW/phqxd+pffNzIEXBnJAO+aCqWnL4iDPJXLpZDxUle
-	XnABSSte8WgtM5WYuUUBdzKstx6x0MAZWHLNZd4NNsJqrdw5kDVlnOQ0GxPuLxDTp1nO3Y
-	1cKVZCEfYra2gHLRVMG1/GlQjzR5upk=
+	bh=bXXm1RcPM7U8GvvVFQFZIVV036m9Yvw0k00Yl0Baw7g=;
+	b=ciBQZDV9CWPOifo6pIvE3ksq1gDXfNO4P9N7Iv8D1l1Y2VviCPFlHFmP9yMZfwG40EBiUR
+	luBwCK5/SbqgxPVbt64wuWWMwQ/heOJ8uUjLfxaOJCl1i7x8OVaTlSPIRBlBhaP/DNNQUu
+	rsngLjJyiQy+r/mfEB10I2GW7vcP3mQ=
+ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1763914650;
+	b=GzUfcCQe4cFrSfGS+W8qZ2vN6l2PtpSWeUKyMR5SURAaN+pzqbHCTG80cu3ub4lTbIiLuy
+	9SCmbd1uScMqUC74yyuw/5/rxw5N6VUaDEg4Y/QqTdbjbllX0nLE+WhVbXJLlt+xBFVbqi
+	nTeo9uAvZke5ovje4KVyfyVLtittPvk=
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=meesny; t=1763914649;
+	s=meesny; t=1763914650;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=3VNUjSRNHtfnCLdTt9ar4v3ct0BojFsZu/7DZq5nxms=;
-	b=AkQulpKruM7Hh5MBoQO0JLkV8fF0g+cguIziDC2M0VE/c5IM2Lf34IvyOMx1pLW45KE75N
-	QFRTo9FBiBl2XlN2KcXIqVTZVE1r3Dy6Ea3xMJokb6/aIkiOZpNraQQTSIoYCosSfPNj0q
-	AEMEXnSLv0QMFA270CLqlaiR/8VPz8Y=
+	bh=bXXm1RcPM7U8GvvVFQFZIVV036m9Yvw0k00Yl0Baw7g=;
+	b=rmtAqbjG0SRAUWysAdHMDXpGEzjeePaf8hzX/UHJt9JF1otuSo+rUmpKWOAkzQIzbdxiij
+	belCOJfovcNos0eAnxUGh7B14Oss4xWiR1td/HPAxvrE+AELiH5vVWAP6aeKCaniVbmdWw
+	y15Z89r0hefDLLBZylJIl3lVW0dZyd8=
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ 08/10] bap: unicast client wait for GMAP service
-Date: Sun, 23 Nov 2025 18:17:13 +0200
-Message-ID: <ff501455f8b6df9e6a118e2664f87b150853531e.1763914558.git.pav@iki.fi>
+Subject: [PATCH BlueZ 09/10] doc: org.bluez.MediaEndpoint: add SupportedFeatures
+Date: Sun, 23 Nov 2025 18:17:14 +0200
+Message-ID: <5cdb0dfff2fef6a269b6e3b990059ea8966df086.1763914558.git.pav@iki.fi>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <cover.1763914558.git.pav@iki.fi>
 References: <cover.1763914558.git.pav@iki.fi>
@@ -82,24 +82,119 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Wait until GMAP properties (if any) are read before configuring
-endpoints and transports as BAP Client.
+Add SupportedFeatures field for indicating TMAP & GMAP roles and
+features.
 ---
- profiles/audio/bap.c | 1 +
- 1 file changed, 1 insertion(+)
+ doc/org.bluez.MediaEndpoint.rst | 99 +++++++++++++++++++++++++++++++++
+ 1 file changed, 99 insertions(+)
 
-diff --git a/profiles/audio/bap.c b/profiles/audio/bap.c
-index 73c5cfc74..17a040a71 100644
---- a/profiles/audio/bap.c
-+++ b/profiles/audio/bap.c
-@@ -3821,6 +3821,7 @@ static int bap_accept(struct btd_service *service)
+diff --git a/doc/org.bluez.MediaEndpoint.rst b/doc/org.bluez.MediaEndpoint.rst
+index c1ce1d562..dd4f03e0d 100644
+--- a/doc/org.bluez.MediaEndpoint.rst
++++ b/doc/org.bluez.MediaEndpoint.rst
+@@ -299,3 +299,102 @@ Indicates QoS capabilities.
+ :uint32 PreferredMaximumDelay:
  
- 	queue_push_tail(data->wait_services, NULL);
- 	wait_service_add(data, TMAS_UUID);
-+	wait_service_add(data, GMAS_UUID);
- 	wait_service_add(data, VCS_UUID);
- 
- 	btd_service_connecting_complete(service, 0);
+ 	Indicates endpoint preferred maximum presentation delay.
++
++array{string} SupportedFeatures [readonly, ISO only, experimental]
++``````````````````````````````````````````````````````````````````
++
++List of strings that represent supported features.
++
++Possible values:
++
++:"tmap-cg":
++
++	TMAP Call Gateway
++
++:"tmap-ct":
++
++	TMAP Call Terminal
++
++:"tmap-ums":
++
++	TMAP Unicast Media Sender
++
++:"tmap-umr":
++
++	TMAP Unicast Media Receiver
++
++:"tmap-bms":
++
++	TMAP Broadcast Media Sender
++
++:"tmap-bmr":
++
++	TMAP Broadcast Media Receiver
++
++:"gmap-ugg":
++
++	GMAP Unicast Game Gateway
++
++:"gmap-ugt":
++
++	GMAP Unicast Game Terminal
++
++:"gmap-bgs":
++
++	GMAP Broadcast Game Sender
++
++:"gmap-bgr":
++
++	GMAP Broadcast Game Receiver
++
++:"gmap-ugg-multiplex":
++
++	GMAP UGG Multiplex feature support
++
++:"gmap-ugg-96kbps-source":
++
++	GMAP UGG 96 kbps Source feature support
++
++:"gmap-ugg-multisink":
++
++	GMAP UGG Multisink feature support
++
++:"gmap-ugt-source":
++
++	GMAP UGT Source feature support
++
++:"gmap-ugt-80kbps-souce":
++
++	GMAP UGT 80 kbps Source feature support
++
++:"gmap-ugt-sink":
++
++	GMAP UGT Sink feature support
++
++:"gmap-ugt-64kbps-sink":
++
++	GMAP UGT 64 kbps Sink feature support
++
++:"gmap-ugt-multiplex":
++
++	GMAP UGT Multiplex feature support
++
++:"gmap-ugt-multisink":
++
++	GMAP UGT Multisink feature support
++
++:"gmap-ugt-multisource":
++
++	GMAP UGT Multisource feature support
++
++:"gmap-bgs-96kbps":
++
++	GMAP BGS 96 kbps feature support
++
++:"gmap-bgr-multisink":
++
++	GMAP BGR Multisink feature support
++
++:"gmap-bgr-multiplex":
++
++	GMAP BGR Multiplex feature support
 -- 
 2.51.1
 
