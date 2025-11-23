@@ -1,194 +1,242 @@
-Return-Path: <linux-bluetooth+bounces-16860-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-16863-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42995C7E369
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 23 Nov 2025 17:18:07 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9DFF3C7E444
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 23 Nov 2025 17:38:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id BE75134887E
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 23 Nov 2025 16:18:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4BF253A7F9A
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 23 Nov 2025 16:38:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D96E82D9EC4;
-	Sun, 23 Nov 2025 16:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 884732D6E61;
+	Sun, 23 Nov 2025 16:38:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="mYmpESUB"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="AKNWMeVB"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
+Received: from out-25.smtp.github.com (out-25.smtp.github.com [192.30.252.208])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2182D94A9
-	for <linux-bluetooth@vger.kernel.org>; Sun, 23 Nov 2025 16:17:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763914656; cv=pass; b=tZGraL+eN9Ny15p67tnMCKk47nm9p81tOvv74zpUo1hF9jWkcudQpnT96W/ihNEFIOTYkBrNA2pY0h2xr8N1JGriwPgy238cseZzeVGX5SlWAzBgy8YzDuWs1OCXYHUFmtwP5KudNQLUvVAbP2pDK7laOfzUzgVZ8I352EJb0ek=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763914656; c=relaxed/simple;
-	bh=+edoYo6A6Hq7kmuecoDOLdSV4sk+Z6/gB8+AcoiUVXc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hFEELJvnQCFEzLlMjfA+Pyo2+f8r99Aewiz9gFODmqjiIzgk6B41bvVoq1jUJjZNqFkgpvdQLgGHf6jhHFlfzuvUhVlEQ+gGROP/gEVSW89t2PrZrKx6R7a3vYxbQcaDSuKeXn7oM04NWnVSZCc5D3LF0XobLEvYAgdBvSyHh60=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=mYmpESUB; arc=pass smtp.client-ip=195.140.195.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
-Received: from monolith.lan (unknown [IPv6:2a02:ed04:3581:4::d001])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: pav)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4dDvHb0lT7z10LB;
-	Sun, 23 Nov 2025 18:17:30 +0200 (EET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
-	t=1763914651;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ZW0wYwApKFCamVBZvEiCZpBHiYv+lf0uflLK+IHb7ak=;
-	b=mYmpESUB7ypvHiqaumqhzXJvTy9e7m8SgLJYhAGgUG66GUYTaM6iVu021cWsAyK2Drj/7f
-	9g+5/tZgIhgHgv/pwLCaolKA4OP4sRd9/fxYK8D3vlZtWKQUZrzIMCLZR8Rmu24kX6EpOi
-	VkCmzqungAGiBsUjkLAEY0iEvZ11N8Y=
-ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1763914651;
-	b=cdCJbixhjCEeEcfuMQEb9k4pWxd29J9aK0aXm9/N6S0SrUjobylCsDKDGMYOP0hsBqQAGP
-	j3AotsUCL0Tf6bwJYmrJbyOdhZw6qrASqE2IUGn69SspHycVcwT+JXiFLd+hRzqc6+BsFr
-	8qckgYEXXxqbWCUjJjvTxb/1hIxz5kk=
-ARC-Authentication-Results: i=1;
-	ORIGINATING;
-	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=meesny; t=1763914651;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ZW0wYwApKFCamVBZvEiCZpBHiYv+lf0uflLK+IHb7ak=;
-	b=hdLaSZx2OwDcjuGGK5RCAHX1jqEdX53Q7t9PHmhFEHfApkKkaiG4sN/Ibli5d9MWD6vcgZ
-	4YttHfqsCG1y/VBxWa2KH4jg5lEK7bq2hvpXy1ILjzFGL4gMuPkLTMoVo5CkxwUD2gCGCC
-	498GYmxt+2G0O7VGh6TJqmVQ0Yn8BRU=
-From: Pauli Virtanen <pav@iki.fi>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDF5722579E
+	for <linux-bluetooth@vger.kernel.org>; Sun, 23 Nov 2025 16:38:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.208
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1763915924; cv=none; b=rNASYAMKxS6t0NzOFOP3sX3ufTqaVuyqgToqgSm7AZtqq9qOXg69Rzx2K3kIOmskVMc/FMg68L94Xx88LPC/qMpFTVqCrfMxBt1wrq5ZA59N2kVTW8pg/5Uc7V8BmPzbwnTS9jx4PiVy3QJTIPdBa/aZQj2mCXnaniQSO2x3y9U=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1763915924; c=relaxed/simple;
+	bh=PqATHG24rYFtdd8mdkaSgl4+Jqs0J+/X/nx2sriFmXo=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=GV1NGRq5/Zvyx+PvQzE13IG7kRroAYMPNJbPFCmoYQI1wFsuasrQ/alfMvkCmlANosw172jFPJrwjQF5NEwjbqIoY80ZChwVoqwwfbWI01T+LD8Kl4evq3TLnqcbk4t28l78YjUYB0pdrL+B1VxzTPzR662rxV1AzLL0Zo5SYOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=AKNWMeVB; arc=none smtp.client-ip=192.30.252.208
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
+Received: from github.com (hubbernetes-node-58caf4e.ash1-iad.github.net [10.56.168.37])
+	by smtp.github.com (Postfix) with ESMTPA id 810FB14022C
+	for <linux-bluetooth@vger.kernel.org>; Sun, 23 Nov 2025 08:38:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+	s=pf2023; t=1763915920;
+	bh=KVSrSswUF8mMFiRhCglXYdxm0/tY2/tsffD24dwZkr8=;
+	h=Date:From:To:Subject:List-Unsubscribe:From;
+	b=AKNWMeVBS8TRwLnS33u2H4Ikt3gp7mJv7uhzbHht0MYO2CNYfO6/QTWKompBHu1vB
+	 lQaWD+oiUEYSeCg3Ptf28dGt8gjvJBXF4pcGt8tmP00/Ew/3aLb+CnitdUGKsDEK3J
+	 gQ/JQFO260WvCkDnSRisAduJQeHsghT+Idtgw9hI=
+Date: Sun, 23 Nov 2025 08:38:40 -0800
+From: Pauli Virtanen <noreply@github.com>
 To: linux-bluetooth@vger.kernel.org
-Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ 10/10] bap: add SupportedFeatures for MediaEndpoints
-Date: Sun, 23 Nov 2025 18:17:15 +0200
-Message-ID: <65982084a3541bc79f18db20bd0d9e4e9b6079ff.1763914558.git.pav@iki.fi>
-X-Mailer: git-send-email 2.51.1
-In-Reply-To: <cover.1763914558.git.pav@iki.fi>
-References: <cover.1763914558.git.pav@iki.fi>
+Message-ID: <bluez/bluez/push/refs/heads/1026711/000000-f5872e@github.com>
+Subject: [bluez/bluez] 80e60b: shared/tmap: add TMAP Service
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
+
+  Branch: refs/heads/1026711
+  Home:   https://github.com/bluez/bluez
+  Commit: 80e60b4f55c27a4fa56176ea669c24ca68bb825a
+      https://github.com/bluez/bluez/commit/80e60b4f55c27a4fa56176ea669c24ca68bb825a
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2025-11-23 (Sun, 23 Nov 2025)
+
+  Changed paths:
+    M Makefile.am
+    M lib/bluetooth/uuid.h
+    A src/shared/tmap.c
+    A src/shared/tmap.h
+
+  Log Message:
+  -----------
+  shared/tmap: add TMAP Service
+
+TMAP Service is just a simple service with a Role bitmask.
+
+The value can be used to figure out which TMAP roles the remote device
+claims it supports (matters for available mandatory features).  Also can
+advertise the same for remote clients.
+
+
+  Commit: ea90fd37dfc6a4649e5585d2c678492d5ecaa2be
+      https://github.com/bluez/bluez/commit/ea90fd37dfc6a4649e5585d2c678492d5ecaa2be
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2025-11-23 (Sun, 23 Nov 2025)
+
+  Changed paths:
+    M .gitignore
+    M Makefile.am
+    A unit/test-tmap.c
+
+  Log Message:
+  -----------
+  test-tmap: add test for TMAP Service
+
+Add tests on TMAP service for reading the role attribute.
+
+
+  Commit: 99953b4fc0a922993c686558d8137786cd41bfad
+      https://github.com/bluez/bluez/commit/99953b4fc0a922993c686558d8137786cd41bfad
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2025-11-23 (Sun, 23 Nov 2025)
+
+  Changed paths:
+    M Makefile.plugins
+    M configure.ac
+    A profiles/audio/tmap.c
+
+  Log Message:
+  -----------
+  tmap: add TMAP profile
+
+Read TMAP Role from remote devices and enable advertising the value for
+local services.
+
+
+  Commit: 575d6e7d4de2fc416f98e8da3942888844b6aa4d
+      https://github.com/bluez/bluez/commit/575d6e7d4de2fc416f98e8da3942888844b6aa4d
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2025-11-23 (Sun, 23 Nov 2025)
+
+  Changed paths:
+    M profiles/audio/bap.c
+
+  Log Message:
+  -----------
+  bap: have unicast client wait for VCS & TMAS
+
+Have unicast client to wait for VCS and TMAS before creating endpoints
+and transports, so that their information is available at that point.
+
+
+  Commit: e0db0211999d9cca745c4f84034529429c2a9f0b
+      https://github.com/bluez/bluez/commit/e0db0211999d9cca745c4f84034529429c2a9f0b
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2025-11-23 (Sun, 23 Nov 2025)
+
+  Changed paths:
+    M Makefile.am
+    M lib/bluetooth/uuid.h
+    A src/shared/gmap.c
+    A src/shared/gmap.h
+
+  Log Message:
+  -----------
+  shared/gmap: add GMAP Service
+
+GMAP Service is just a simple service with bitmasks.
+
+The values can be used to figure out which GMAP roles and features the
+remote device claims it supports (matters for available mandatory
+features).  Also can advertise the same for remote clients.
+
+
+  Commit: e68d2fb43c391f16b4a3d3ba5b6e577396cdd389
+      https://github.com/bluez/bluez/commit/e68d2fb43c391f16b4a3d3ba5b6e577396cdd389
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2025-11-23 (Sun, 23 Nov 2025)
+
+  Changed paths:
+    M .gitignore
+    M Makefile.am
+    A unit/test-gmap.c
+
+  Log Message:
+  -----------
+  test-gmap: add test for GMAP Service
+
+Add tests on GMAP service for reading the attributes.
+
+
+  Commit: d992424281c71092cabcaac86eee677f51ec33c3
+      https://github.com/bluez/bluez/commit/d992424281c71092cabcaac86eee677f51ec33c3
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2025-11-23 (Sun, 23 Nov 2025)
+
+  Changed paths:
+    M Makefile.plugins
+    M configure.ac
+    A profiles/audio/gmap.c
+
+  Log Message:
+  -----------
+  gmap: Add GMAP profile
+
+Read GMAP properties from remote devices and enable advertising the
+values for local services.
+
+
+  Commit: c30fc6a06bf57004dd94e840dbfcf7f96c84b5a1
+      https://github.com/bluez/bluez/commit/c30fc6a06bf57004dd94e840dbfcf7f96c84b5a1
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2025-11-23 (Sun, 23 Nov 2025)
+
+  Changed paths:
+    M profiles/audio/bap.c
+
+  Log Message:
+  -----------
+  bap: unicast client wait for GMAP service
+
+Wait until GMAP properties (if any) are read before configuring
+endpoints and transports as BAP Client.
+
+
+  Commit: f86a08101d6e9dd597b4d280db64ef141555b7d3
+      https://github.com/bluez/bluez/commit/f86a08101d6e9dd597b4d280db64ef141555b7d3
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2025-11-23 (Sun, 23 Nov 2025)
+
+  Changed paths:
+    M doc/org.bluez.MediaEndpoint.rst
+
+  Log Message:
+  -----------
+  doc: org.bluez.MediaEndpoint: add SupportedFeatures
+
+Add SupportedFeatures field for indicating TMAP & GMAP roles and
+features.
+
+
+  Commit: f5872e81f4df93d8a55627e5fe6b04ce88f86df2
+      https://github.com/bluez/bluez/commit/f5872e81f4df93d8a55627e5fe6b04ce88f86df2
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2025-11-23 (Sun, 23 Nov 2025)
+
+  Changed paths:
+    M profiles/audio/bap.c
+
+  Log Message:
+  -----------
+  bap: add SupportedFeatures for MediaEndpoints
 
 Indicate TMAP & GMAP capabilities in SupportedFeatures.
----
- profiles/audio/bap.c | 76 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 76 insertions(+)
 
-diff --git a/profiles/audio/bap.c b/profiles/audio/bap.c
-index 17a040a71..ec75fb5ce 100644
---- a/profiles/audio/bap.c
-+++ b/profiles/audio/bap.c
-@@ -46,6 +46,8 @@
- #include "src/shared/gatt-client.h"
- #include "src/shared/gatt-server.h"
- #include "src/shared/bap.h"
-+#include "src/shared/tmap.h"
-+#include "src/shared/gmap.h"
- 
- #include "btio/btio.h"
- #include "src/plugin.h"
-@@ -444,6 +446,78 @@ static gboolean get_qos(const GDBusPropertyTable *property,
- 	return TRUE;
- }
- 
-+static bool probe_tmap_role(struct bap_ep *ep, uint32_t data)
-+{
-+	struct gatt_db *db = bt_bap_get_db(ep->data->bap, true);
-+
-+	return bt_tmap_get_role(bt_tmap_find(db)) & data;
-+}
-+
-+static bool probe_gmap_role(struct bap_ep *ep, uint32_t data)
-+{
-+	struct gatt_db *db = bt_bap_get_db(ep->data->bap, true);
-+
-+	return bt_gmap_get_role(bt_gmap_find(db)) & data;
-+}
-+
-+static bool probe_gmap_feature(struct bap_ep *ep, uint32_t data)
-+{
-+	struct gatt_db *db = bt_bap_get_db(ep->data->bap, true);
-+
-+	return bt_gmap_get_features(bt_gmap_find(db)) & data;
-+}
-+
-+static const struct {
-+	const char *name;
-+	bool (*probe)(struct bap_ep *ep, uint32_t data);
-+	uint32_t data;
-+} features[] = {
-+	{ "tmap-cg", probe_tmap_role, BT_TMAP_ROLE_CG },
-+	{ "tmap-ct", probe_tmap_role, BT_TMAP_ROLE_CT },
-+	{ "tmap-ums", probe_tmap_role, BT_TMAP_ROLE_UMS },
-+	{ "tmap-umr", probe_tmap_role, BT_TMAP_ROLE_UMR },
-+	{ "tmap-bms", probe_tmap_role, BT_TMAP_ROLE_BMS },
-+	{ "tmap-bmr", probe_tmap_role, BT_TMAP_ROLE_BMR },
-+	{ "gmap-ugg", probe_gmap_role, BT_GMAP_ROLE_UGG },
-+	{ "gmap-ugt", probe_gmap_role, BT_GMAP_ROLE_UGT },
-+	{ "gmap-bgs", probe_gmap_role, BT_GMAP_ROLE_BGS },
-+	{ "gmap-bgr", probe_gmap_role, BT_GMAP_ROLE_BGR },
-+	{ "gmap-ugg-multiplex", probe_gmap_feature, BT_GMAP_UGG_MULTIPLEX },
-+	{ "gmap-ugg-96kbps-source", probe_gmap_feature, BT_GMAP_UGG_96KBPS },
-+	{ "gmap-ugg-multisink", probe_gmap_feature, BT_GMAP_UGG_MULTISINK },
-+	{ "gmap-ugt-source", probe_gmap_feature, BT_GMAP_UGT_SOURCE },
-+	{ "gmap-ugt-80kbps-source", probe_gmap_feature,
-+						BT_GMAP_UGT_80KBPS_SOURCE },
-+	{ "gmap-ugt-sink", probe_gmap_feature, BT_GMAP_UGT_SINK },
-+	{ "gmap-ugt-64kbps-sink", probe_gmap_feature, BT_GMAP_UGT_64KBPS_SINK },
-+	{ "gmap-ugt-multiplex", probe_gmap_feature, BT_GMAP_UGT_MULTIPLEX },
-+	{ "gmap-ugt-multisink", probe_gmap_feature, BT_GMAP_UGT_MULTISINK },
-+	{ "gmap-ugt-multisource", probe_gmap_feature, BT_GMAP_UGT_MULTISOURCE },
-+	{ "gmap-bgs-96kbps", probe_gmap_feature, BT_GMAP_BGS_96KBPS },
-+	{ "gmap-bgr-multisink", probe_gmap_feature, BT_GMAP_BGR_MULTISINK },
-+	{ "gmap-bgr-multiplex", probe_gmap_feature, BT_GMAP_BGR_MULTIPLEX },
-+};
-+
-+static gboolean supported_features(const GDBusPropertyTable *property,
-+					DBusMessageIter *iter, void *data)
-+{
-+	struct bap_ep *ep = data;
-+	DBusMessageIter entry;
-+	size_t i;
-+
-+	dbus_message_iter_open_container(iter, DBUS_TYPE_ARRAY,
-+				DBUS_TYPE_STRING_AS_STRING, &entry);
-+
-+	for (i = 0; i < ARRAY_SIZE(features); ++i)
-+		if (features[i].probe(ep, features[i].data))
-+			dbus_message_iter_append_basic(&entry, DBUS_TYPE_STRING,
-+							&features[i].name);
-+
-+	dbus_message_iter_close_container(iter, &entry);
-+
-+	return TRUE;
-+}
-+
- static const GDBusPropertyTable ep_properties[] = {
- 	{ "UUID", "s", get_uuid, NULL, NULL,
- 					G_DBUS_PROPERTY_FLAG_EXPERIMENTAL },
-@@ -463,6 +537,8 @@ static const GDBusPropertyTable ep_properties[] = {
- 					G_DBUS_PROPERTY_FLAG_EXPERIMENTAL },
- 	{ "QoS", "a{sv}", get_qos, NULL, qos_exists,
- 					G_DBUS_PROPERTY_FLAG_EXPERIMENTAL },
-+	{ "SupportedFeatures", "as", supported_features, NULL, NULL,
-+					G_DBUS_PROPERTY_FLAG_EXPERIMENTAL },
- 	{ }
- };
- 
--- 
-2.51.1
 
+Compare: https://github.com/bluez/bluez/compare/80e60b4f55c2%5E...f5872e81f4df
+
+To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
