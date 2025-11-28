@@ -1,34 +1,34 @@
-Return-Path: <linux-bluetooth+bounces-16993-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-16990-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3685DC93122
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Nov 2025 21:03:15 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C48BC93119
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Nov 2025 21:03:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 173C64E1DA0
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Nov 2025 20:03:14 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 508FF4E23D8
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Nov 2025 20:03:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFDDA2D9EE7;
-	Fri, 28 Nov 2025 20:02:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A1D02DC334;
+	Fri, 28 Nov 2025 20:02:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="uSoR5yPP"
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="XejUWzTx"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7EB2DAFBA
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB242DAFA9
 	for <linux-bluetooth@vger.kernel.org>; Fri, 28 Nov 2025 20:02:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764360175; cv=pass; b=urqY4I1F1pSLhiYiNK7GUuzBe5iKA6Y6H3Yy3Y1IrahaC4jagjuHFGRVK47mhWCzjg1qwVXmUXCokJb+zPI1CLu7M7DhggfD7ZY2icYCfARqE6C3urlV8iXhLq4JLRKeYllDnRv3FyjFU3nE4r/fDYylhsRlMxy9S6z2ZYTGIoI=
+	t=1764360174; cv=pass; b=gSBJdDop2p2EJEXBcAQposPHZuOiSKf2yVABHoec+JbMElryoapY9QbSWj5x6nb4Dyk7w2oVq+jtGdvzlAxY6ekkZTQpBmHjbUhiOFMHEgS71sRMrcurWdG/Fd3uT2XJBtiWz+UIdoYaf10UrciYcRuMIYSaTAx9EPyBqT3D5yw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764360175; c=relaxed/simple;
-	bh=f+JCITPWZqn76ixpDW6D1kJhkZUC3c3acq/LGqsP+24=;
+	s=arc-20240116; t=1764360174; c=relaxed/simple;
+	bh=OL75nNrDNd/LlLadWkxBdJyG/ErJmXbTjgtXmbM+fdQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q5ES0VUS6xzFf67ZmbbXeF2/IkU72QgrmoTn4IgEJCYJ9ArYuCxeyJ0J3rXJYgKjOEmIo4isrxMRwyIsCvtfIt4BS547rbQIswG/BgzOej50VkLsgWkKVvcyoJYzgi52iOFf0pGYTYVSx7F1MYJsR0UgnW8YgB+fOBtpJq/PWjI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=uSoR5yPP; arc=pass smtp.client-ip=195.140.195.201
+	 MIME-Version; b=qThKHdTqLN3UH2rF0CTtE05SF/FsRkmJ6qdSQ1GrqBApFm5xAqYowdxeJjCUgJiSIS7IzJJuQQBVTZaTKrcvzH+sPp9xGE1s1B1zL9Aghv1Rj6JKBZX0lq30m13toDUiFfH9JYHsMk4tnKEgf0N1xh1NdWsZT78vwOneyHQJ1fk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=XejUWzTx; arc=pass smtp.client-ip=195.140.195.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [IPv6:2a02:ed04:3581:4::d001])
@@ -36,7 +36,7 @@ Received: from monolith.lan (unknown [IPv6:2a02:ed04:3581:4::d001])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4dJ4353Rp2z10H4;
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4dJ43555r4z10HW;
 	Fri, 28 Nov 2025 22:02:41 +0200 (EET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
 	t=1764360161;
@@ -44,14 +44,14 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=w+ppCJKkG7Nilg9Hi2Q7vjtbKqewj7HwTyWvSKKjrkg=;
-	b=uSoR5yPP+ohmXpTrt49FaVNp7JIIYP3T2gK+QTRT16pgsCKkBv2B7VsbCJABjFIhEJsEwF
-	OcW/l6bo/bceQpzYifVGqYJtdSfB269KwOQuH1fsIkk86B82rmIMVrohQaDVunCOqbi6bq
-	b0RsblXHFotccZ8W4VD+74LodMVIVFo=
+	bh=0NXm7rZRLZvSnmw2rOB5vMrkdqrRozi2igVrrIwhbSs=;
+	b=XejUWzTx3LdJsyIL1RrRRRe4m1/DE0nQy2Twn1iC1KxLf0t4QeAQcwgyRs6nMBxj/fMYax
+	8cp9ZItwq4M6k0J2sx5o+p0RsyIrCRXIG7ut1XoZKOvLQANGcbWRKQR26sXNcoRxtKMAZj
+	ghxoAZRfcWW+HJ9Rgh5dafK3w9zB+UU=
 ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1764360161;
-	b=xRB8OrR8L3Qig4aZCIMV3Lw3Wqhk7IkfrM0WM7+sZIc0ZUNqiqjEmh7+DzIfoajNugtEhB
-	TpBb0VHBKwb/XO+28fTT7gcttFFvIoDRRT5kKWCUrv2Yfdk24DISpGP9dYA2bVk1oa8Owo
-	b5uae70SRAuwtrSDzZiI9ev8+3jDgKU=
+	b=fpxl+tH7zKZbLwfe6ApOsFpc7OgSaaX51SfwVo1TE7QkYlWeec102Za/OVn6d97TBtaFo7
+	0CWp/ooCuc620Nc48WUFlaimOzU9InC2BfkGwFDmPr9whpvcyxcewSsuOEB0mLbRiIDodj
+	YsS1QXHZaIoCw5TI6xL81UmCK6xV0g0=
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
@@ -61,16 +61,16 @@ ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=w+ppCJKkG7Nilg9Hi2Q7vjtbKqewj7HwTyWvSKKjrkg=;
-	b=jI0LZc02NUABpwH0+Llzm5bMBUQYGNqKq/tDJID6g2ZZcLjTf/DgdzdT4q0PiL1cWEQBlR
-	NgKQWWC991dK4v0qeXmZ2oclHJ7SUURc18Hefb0vWNCPFCdhDAy751f/qr9qZ1OSXreTM3
-	RE3IH8lbtb0W6dIcGgrPXfFuhIUV5s0=
+	bh=0NXm7rZRLZvSnmw2rOB5vMrkdqrRozi2igVrrIwhbSs=;
+	b=K14z2vxOfvce80px8umySYiMh8smGvYF/vQrnglfceeSttnK5dA/HbAmSpqM48crh+LQmp
+	5c7MKO1EbIKXlQpCZxb1yrTj2ulwIMwRPjU6IGE/BlQqd9IMxdvyKnHkrpaAC7iuRCxexJ
+	MymuSJkpuqFQolMk5QlTvzs6smcph+g=
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ v2 7/9] device: use after_uuids in service autoconnect and sort also GATT
-Date: Fri, 28 Nov 2025 22:02:26 +0200
-Message-ID: <a70dbe05e5a56492edbbaef74db75c13306088b7.1764360140.git.pav@iki.fi>
+Subject: [PATCH BlueZ v2 8/9] service: add btd_profile::ready callback when after_uuids ready
+Date: Fri, 28 Nov 2025 22:02:27 +0200
+Message-ID: <e4fa2723acf33689e9c235a9f2f0ec9c873679a9.1764360141.git.pav@iki.fi>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <cover.1764360140.git.pav@iki.fi>
 References: <cover.1764360140.git.pav@iki.fi>
@@ -82,148 +82,199 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Use btd_profile_sort_list() for selecting the order in which services
-are connected: first by priority, then by after_uuids.
-
-Probe and accept also GATT services in profile order. Previously this
-was done in the order they were in GATT db.
+Add btd_profile::ready that is called when after_uuids dependencies have
+finished connecting.
 ---
 
 Notes:
     v2:
     - new commit
 
- src/device.c | 74 +++++++++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 62 insertions(+), 12 deletions(-)
+ src/profile.h |   3 ++
+ src/service.c | 100 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 103 insertions(+)
 
-diff --git a/src/device.c b/src/device.c
-index eb184633a..3ecbfd67c 100644
---- a/src/device.c
-+++ b/src/device.c
-@@ -2523,14 +2523,6 @@ static struct btd_service *find_connectable_service(struct btd_device *dev,
+diff --git a/src/profile.h b/src/profile.h
+index a8c2443e3..28504331e 100644
+--- a/src/profile.h
++++ b/src/profile.h
+@@ -52,6 +52,9 @@ struct btd_profile {
+ 
+ 	int (*accept) (struct btd_service *service);
+ 
++	/* Emitted when services in after_uuids are no longer connecting */
++	void (*ready)(struct btd_service *service);
++
+ 	int (*adapter_probe) (struct btd_profile *p,
+ 						struct btd_adapter *adapter);
+ 	void (*adapter_remove) (struct btd_profile *p,
+diff --git a/src/service.c b/src/service.c
+index 7690a1261..95950aa50 100644
+--- a/src/service.c
++++ b/src/service.c
+@@ -26,6 +26,8 @@
+ #include "bluetooth/bluetooth.h"
+ #include "bluetooth/sdp.h"
+ 
++#include "src/shared/queue.h"
++
+ #include "log.h"
+ #include "backtrace.h"
+ 
+@@ -43,6 +45,8 @@ struct btd_service {
+ 	int			err;
+ 	bool			is_allowed;
+ 	bool			initiator;
++	struct queue		*depends;
++	struct queue		*dependents;
+ };
+ 
+ struct service_state_callback {
+@@ -71,6 +75,46 @@ static const char *state2str(btd_service_state_t state)
  	return NULL;
  }
  
--static int service_prio_cmp(gconstpointer a, gconstpointer b)
--{
--	struct btd_profile *p1 = btd_service_get_profile(a);
--	struct btd_profile *p2 = btd_service_get_profile(b);
--
--	return p2->priority - p1->priority;
--}
--
- bool btd_device_all_services_allowed(struct btd_device *dev)
++static void depends_ready(void *item, void *user_data)
++{
++	struct btd_service *service = item;
++	struct btd_service *dep = user_data;
++	char addr[18];
++
++	if (dep && !queue_remove(service->depends, dep))
++		return;
++	if (!service->depends || !queue_isempty(service->depends))
++		return;
++
++	queue_destroy(service->depends, NULL);
++	service->depends = NULL;
++
++	ba2str(device_get_address(service->device), addr);
++	DBG("%p: device %s profile %s dependencies ready", service,
++						addr, service->profile->name);
++
++	switch (service->state) {
++	case BTD_SERVICE_STATE_CONNECTING:
++	case BTD_SERVICE_STATE_CONNECTED:
++		if (service->profile->ready)
++			service->profile->ready(service);
++		break;
++	case BTD_SERVICE_STATE_UNAVAILABLE:
++	case BTD_SERVICE_STATE_DISCONNECTING:
++	case BTD_SERVICE_STATE_DISCONNECTED:
++		break;
++	}
++}
++
++static void service_ready(struct btd_service *service)
++{
++	queue_foreach(service->dependents, depends_ready, service);
++	queue_destroy(service->dependents, NULL);
++	service->dependents = NULL;
++
++	depends_ready(service, NULL);
++}
++
+ static void change_state(struct btd_service *service, btd_service_state_t state,
+ 									int err)
  {
- 	GSList *l;
-@@ -2581,6 +2573,12 @@ void btd_device_update_allowed_services(struct btd_device *dev)
+@@ -98,6 +142,9 @@ static void change_state(struct btd_service *service, btd_service_state_t state,
+ 		cb->cb(service, old, state, cb->user_data);
  	}
+ 
++	if (state != BTD_SERVICE_STATE_CONNECTING)
++		service_ready(service);
++
+ 	if (state == BTD_SERVICE_STATE_DISCONNECTED)
+ 		service->initiator = false;
+ }
+@@ -111,6 +158,20 @@ struct btd_service *btd_service_ref(struct btd_service *service)
+ 	return service;
  }
  
-+static const struct btd_profile *get_service_profile(void *data,
-+								void *user_data)
++static void depends_remove(void *item, void *user_data)
 +{
-+	return btd_service_get_profile(data);
++	struct btd_service *service = item;
++
++	queue_remove(service->dependents, user_data);
 +}
 +
- static GSList *create_pending_list(struct btd_device *dev, const char *uuid)
++static void dependents_remove(void *item, void *user_data)
++{
++	struct btd_service *service = item;
++
++	queue_remove(service->depends, user_data);
++}
++
+ void btd_service_unref(struct btd_service *service)
  {
- 	struct btd_service *service;
-@@ -2619,10 +2617,13 @@ static GSList *create_pending_list(struct btd_device *dev, const char *uuid)
- 						BTD_SERVICE_STATE_DISCONNECTED)
- 			continue;
+ 	service->ref--;
+@@ -120,6 +181,11 @@ void btd_service_unref(struct btd_service *service)
+ 	if (service->ref > 0)
+ 		return;
  
--		dev->pending = g_slist_insert_sorted(dev->pending, service,
--							service_prio_cmp);
-+		dev->pending = g_slist_append(dev->pending, service);
- 	}
- 
-+	/* Connect in priority order */
-+	dev->pending = btd_profile_sort_list(dev->pending, get_service_profile,
-+									NULL);
++	queue_foreach(service->depends, depends_remove, service);
++	queue_foreach(service->dependents, dependents_remove, service);
++	queue_destroy(service->depends, NULL);
++	queue_destroy(service->dependents, NULL);
 +
- 	return dev->pending;
+ 	g_free(service);
  }
  
-@@ -4630,9 +4631,42 @@ done:
- 	service_accept(service, btd_device_is_initiator(device));
+@@ -172,6 +238,37 @@ void service_remove(struct btd_service *service)
+ 	btd_service_unref(service);
  }
  
-+
-+static const struct btd_profile *get_gatt_profile(void *data, void *user_data)
++static void add_depends(struct btd_service *service)
 +{
-+	struct gatt_db_attribute *attr = data;
-+	struct btd_profile *profile;
-+	bt_uuid_t uuid;
-+	struct btd_profile *dummy_profile = user_data;
-+	char *uuid_str = (char *)dummy_profile->remote_uuid;
++	const char **uuid;
 +
-+	gatt_db_attribute_get_service_uuid(attr, &uuid);
-+	bt_uuid_to_string(&uuid, uuid_str, MAX_LEN_UUID_STR);
++	queue_foreach(service->depends, depends_remove, service);
++	queue_destroy(service->depends, NULL);
++	service->depends = queue_new();
 +
-+	profile = btd_profile_find_remote_uuid(uuid_str);
-+	if (!profile)
-+		profile = dummy_profile;
++	for (uuid = service->profile->after_uuids; uuid && *uuid; uuid++) {
++		struct btd_service *dep;
 +
-+	return profile;
++		dep = btd_device_get_service(service->device, *uuid);
++		if (!dep)
++			continue;
++
++		/* Profiles are sorted vs after_uuids, so the dependency will
++		 * have started connecting before us if it is going to connect.
++		 */
++		if (dep->state != BTD_SERVICE_STATE_CONNECTING)
++			continue;
++		if (queue_find(service->depends, NULL, dep))
++			continue;
++
++		queue_push_tail(service->depends, dep);
++
++		if (!dep->dependents)
++			dep->dependents = queue_new();
++		queue_push_tail(dep->dependents, service);
++	}
 +}
 +
-+static void get_gatt_attrs(struct gatt_db_attribute *attr,
-+							void *user_data)
-+{
-+	GSList **list = user_data;
-+
-+	*list = g_slist_append(*list, attr);
-+}
-+
- static void device_add_gatt_services(struct btd_device *device)
+ int service_accept(struct btd_service *service, bool initiator)
  {
  	char addr[18];
-+	GSList *attrs = NULL;
-+	GSList *entry;
-+	char uuid_str[MAX_LEN_UUID_STR];
-+	struct btd_profile dummy_profile = {
-+		.remote_uuid = uuid_str,
-+	};
- 
- 	ba2str(&device->bdaddr, addr);
- 
-@@ -4641,18 +4675,34 @@ static void device_add_gatt_services(struct btd_device *device)
- 		return;
+@@ -199,6 +296,7 @@ int service_accept(struct btd_service *service, bool initiator)
  	}
  
--	gatt_db_foreach_service(device->db, NULL, add_gatt_service, device);
-+	/* Probe and accept in profile priority order */
-+	gatt_db_foreach_service(device->db, NULL, get_gatt_attrs, &attrs);
-+
-+	attrs = btd_profile_sort_list(attrs, get_gatt_profile,
-+							&dummy_profile);
-+
-+	for (entry = attrs; entry; entry = g_slist_next(entry))
-+		add_gatt_service(entry->data, device);
-+
-+	g_slist_free(attrs);
- }
+ 	service->initiator = initiator;
++	add_depends(service);
  
- static void device_accept_gatt_profiles(struct btd_device *device)
- {
- 	GSList *l;
- 	bool initiator = btd_device_is_initiator(device);
-+	GSList *services;
+ 	err = service->profile->accept(service);
+ 	if (!err)
+@@ -265,6 +363,8 @@ int btd_service_connect(struct btd_service *service)
+ 		return -ECONNABORTED;
+ 	}
  
- 	DBG("initiator %s", initiator ? "true" : "false");
- 
--	for (l = device->services; l != NULL; l = g_slist_next(l))
-+	/* Accept in profile priority order */
-+	services = g_slist_copy(device->services);
-+	services = btd_profile_sort_list(services, get_service_profile, NULL);
++	add_depends(service);
 +
-+	for (l = services; l != NULL; l = g_slist_next(l))
- 		service_accept(l->data, initiator);
-+
-+	g_slist_free(services);
- }
- 
- static void device_remove_gatt_service(struct btd_device *device,
+ 	err = profile->connect(service);
+ 	if (err == 0) {
+ 		service->initiator = true;
 -- 
 2.51.1
 
