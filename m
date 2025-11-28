@@ -1,34 +1,34 @@
-Return-Path: <linux-bluetooth+bounces-16992-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-16989-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id B28F9C9311F
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Nov 2025 21:03:12 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E158FC93128
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Nov 2025 21:03:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 981F54E166C
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Nov 2025 20:03:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B0673A5434
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Nov 2025 20:03:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 468772DAFCA;
-	Fri, 28 Nov 2025 20:02:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AE702D6E61;
+	Fri, 28 Nov 2025 20:02:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="gQhcteBG"
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="REUy+NPR"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F00CB2D9EE7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01402D9EF4
 	for <linux-bluetooth@vger.kernel.org>; Fri, 28 Nov 2025 20:02:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764360174; cv=pass; b=oDWzFRscnOM2VVAVomS7jV27GC2dMzt9WprYll+AKrCRJ1NxkILLWrpl3oA30E/J4rRlQrxkTwWehCAVjd83Z8ga2V7w4G3MpBmQss5wtTJatqJ3BrV4ivNBHdCNw0PWpjc1FQiy1H9jdip5H2NpQoRSmGqsXdRnGyub7MA2Ibk=
+	t=1764360173; cv=pass; b=J+4WwjOQIxV6Sp0kw9LQxc77UrYZwaGnN7xSTAMzc4IYGjwkX2CH/6WwBbSooEISOCGbF/ibvhM1+CX9aaIy3zSVLFt+1ZpLB624xFVC67CgnzR2/q+IFNDbUQ9d6hlnAwONWoeJ3BGmN6Eh4rk8vQckSHSzPrsowUBvZvBZoWo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764360174; c=relaxed/simple;
-	bh=hy9dgkEqpm5Trb/jQQ32dPxR86XXZ6p9UJagUZPKmqU=;
+	s=arc-20240116; t=1764360173; c=relaxed/simple;
+	bh=qfec75MjKhDMTt2+bLohDDFPAvefCeici+INMYHStKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L97zUG5LyeicthueFLgiUM5cGsYyoLSu2uxdOFbPpcerz3iHkKEGVs3iHANH+hC2OK96kOdBdiy+uV4Bq+giyKc2MvKKPWnb7yB/TdbwZIuneJ+l4oSoS12Ffm1Rtga6/QX2GY3NJK7oB5gF4MiUPtBTIGIyc+3GLA8J9rnuwtI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=gQhcteBG; arc=pass smtp.client-ip=195.140.195.201
+	 MIME-Version; b=uYxGXFxkNKnd2HkEdiSzxqKliBkbRJjF4RydAaavHMkOLlG6ROYuIONlsf/Ajd8XY446ztNE9eNBTzR0T6rdfWXygjVJvfVcmlMR/rdEHkrYzujKyk9f694wF6CPiDk8lW4p8PCSa3ZC4xropLsyN6DTcq6eWcHWrbqXCSbnlnU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=REUy+NPR; arc=pass smtp.client-ip=195.140.195.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [IPv6:2a02:ed04:3581:4::d001])
@@ -36,41 +36,41 @@ Received: from monolith.lan (unknown [IPv6:2a02:ed04:3581:4::d001])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4dJ4345rBSz109Q;
-	Fri, 28 Nov 2025 22:02:40 +0200 (EET)
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4dJ4351ClNz10Cm;
+	Fri, 28 Nov 2025 22:02:41 +0200 (EET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
-	t=1764360160;
+	t=1764360161;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=k6WW/LbWZ9Der3Aa+r+VY9mKZkKEMkw3mhkwvpJkZFQ=;
-	b=gQhcteBGIqLOlteFC2piuy8Ws7u83w5Rv+FsTCzGvB2ThIZunE5tc+W4G4R0wNagHx8IVJ
-	j7OxiyV5ff+rzf9DOUI5dhF/b5brmJLoxmA55PzR2hyGlY5FbCiBeGQEsS9ELcF1XrWJnG
-	M9fr7Tpx+DzpnYXd3DhTrHo+MNwyqrA=
-ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1764360160;
-	b=iB6QU604N1qVw0iDllwQ+sr2gz4QMWej8dK/o3DVvUId44Y/1PB55bmGtcPinY+j/BoGY2
-	lBbSRkpDszPsAfmjDU901XLI3jzJRQmug3WbJjtCq7bvT8efzoB9dNpORNWBdXvYSCFmkT
-	d5UriZlCaEpnaFPLlvJfdFIqkHApRLg=
+	bh=k727lEht4jQzltEzHGowh/NS4fNidJsZ2orgr9I3jfk=;
+	b=REUy+NPReZSXUCh1gx5gNnfi4RubvO31i69jFh/ObyWGRcAZTTUEvH7dn0/H/4d5Z7vBNu
+	amJXb3EiSzDn1vJgxvuZvIPYfColRzoW+t46nrm1x5oO6YElToSBZEs5NvZjqeNvd3F1eq
+	/SI/V/FylebtSawvsN/2oNLP+gSRMig=
+ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1764360161;
+	b=V4ziNmPsAVdmTk+kI+SGJhMnIf3CaNZG8vStNhkWPSRemdZfBcUzan33RJFWTTdghtcgrn
+	gfDG6CyzuXM1igloOtBq047G1RS57W5IPwdXqu0DzCY+oCt4R3nqLFKzsbGJsuC9cZVKj+
+	OmLUC2VJWVLLPHzK3Hmb4AnQ5ku9jAo=
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=meesny; t=1764360160;
+	s=meesny; t=1764360161;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=k6WW/LbWZ9Der3Aa+r+VY9mKZkKEMkw3mhkwvpJkZFQ=;
-	b=ODcJzx/+7PALQix8N584OnQnosCFEXSGX/ePGMsTwxESQ5Eo1mPZt9pUp/nAbxk2t/r5+k
-	4S/iIlwHry8+G01yeaS0sXmjY+NEX0WskupNQhQS+9wGg9+B7gQFqSH658q2Wx9OEp0Av3
-	QGe1O48q8BElUSX3WOw44ufWh93ml68=
+	bh=k727lEht4jQzltEzHGowh/NS4fNidJsZ2orgr9I3jfk=;
+	b=r0sBSWHuOZgB3Qz/QREk6A7wIRq3NWy9MLpkxIs/kLfbvspp0j3WBtf77yHd+dtsA7DD6I
+	0Xswu/yaWeikXeEKXxOM416KavN9z/PWIxQIuTf1bc5+VEl81c0ogvlUvfdQKHdeN98rCj
+	wKuYh/+zxU3fFiHE9EpnAtaL6DmZZL8=
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ v2 5/9] bap: add SupportedFeatures for MediaEndpoints
-Date: Fri, 28 Nov 2025 22:02:24 +0200
-Message-ID: <da848f8cc1c85683386cdf475743ff448c5ce00d.1764360140.git.pav@iki.fi>
+Subject: [PATCH BlueZ v2 6/9] profile: add after_uuids for ordering profile startup
+Date: Fri, 28 Nov 2025 22:02:25 +0200
+Message-ID: <0e68b96a2adb2f49be8ee961496d3033f32139fe.1764360140.git.pav@iki.fi>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <cover.1764360140.git.pav@iki.fi>
 References: <cover.1764360140.git.pav@iki.fi>
@@ -82,170 +82,158 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Indicate TMAP & GMAP capabilities in SupportedFeatures.
+Add btd_profile::after_uuids to specify the profile connect/accept order
+for autoconnect.  This is a "soft" dependency so it doesn't fail if the
+other services fail to start nor try to start them if they otherwise
+wouldn't.
+
+Add btd_profile_sort_list() for sorting a list according to profile
+ordering, taking account priority and after_uuids.
+
+Add btd_profile_find_remote_uuid() lookup utility, needed when using
+btd_profile_sort_list() with uuid lists.
 ---
 
 Notes:
     v2:
-    - make it a dict uuid -> features
+    - new commit
 
- profiles/audio/bap.c | 122 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 122 insertions(+)
+ src/profile.c | 89 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ src/profile.h | 13 ++++++++
+ 2 files changed, 102 insertions(+)
 
-diff --git a/profiles/audio/bap.c b/profiles/audio/bap.c
-index b07d65e68..0dcc57eb5 100644
---- a/profiles/audio/bap.c
-+++ b/profiles/audio/bap.c
-@@ -46,6 +46,8 @@
- #include "src/shared/gatt-client.h"
- #include "src/shared/gatt-server.h"
- #include "src/shared/bap.h"
-+#include "src/shared/tmap.h"
-+#include "src/shared/gmap.h"
- 
- #include "btio/btio.h"
- #include "src/plugin.h"
-@@ -65,6 +67,10 @@
- #define MEDIA_ENDPOINT_INTERFACE "org.bluez.MediaEndpoint1"
- #define MEDIA_INTERFACE "org.bluez.Media1"
- 
-+#define VCS_UUID_STR "00001844-0000-1000-8000-00805f9b34fb"
-+#define TMAS_UUID_STR "00001855-0000-1000-8000-00805f9b34fb"
-+#define GMAS_UUID_STR "00001858-0000-1000-8000-00805f9b34fb"
-+
- struct bap_setup;
- 
- typedef void (*bap_setup_ready_func_t)(struct bap_setup *setup, int code,
-@@ -438,6 +444,120 @@ static gboolean get_qos(const GDBusPropertyTable *property,
- 	return TRUE;
+diff --git a/src/profile.c b/src/profile.c
+index 66405d7e4..eaf368a4a 100644
+--- a/src/profile.c
++++ b/src/profile.c
+@@ -773,6 +773,30 @@ static struct btd_profile *btd_profile_find_uuid(const char *uuid)
+ 	return NULL;
  }
  
-+static bool probe_tmap_role(struct bap_ep *ep, uint32_t data)
++struct btd_profile *btd_profile_find_remote_uuid(const char *uuid)
 +{
-+	struct gatt_db *db = bt_bap_get_db(ep->data->bap, true);
++	GSList *l, *next;
 +
-+	return bt_tmap_get_role(bt_tmap_find(db)) & data;
-+}
++	for (l = profiles; l != NULL; l = next) {
++		struct btd_profile *p = l->data;
 +
-+static bool probe_gmap_role(struct bap_ep *ep, uint32_t data)
-+{
-+	struct gatt_db *db = bt_bap_get_db(ep->data->bap, true);
-+
-+	return bt_gmap_get_role(bt_gmap_find(db)) & data;
-+}
-+
-+static bool probe_gmap_feature(struct bap_ep *ep, uint32_t data)
-+{
-+	struct gatt_db *db = bt_bap_get_db(ep->data->bap, true);
-+
-+	return bt_gmap_get_features(bt_gmap_find(db)) & data;
-+}
-+
-+struct feature {
-+	const char *name;
-+	bool (*probe)(struct bap_ep *ep, uint32_t data);
-+	uint32_t data;
-+};
-+
-+static const struct feature tmap_features[] = {
-+	{ "cg", probe_tmap_role, BT_TMAP_ROLE_CG },
-+	{ "ct", probe_tmap_role, BT_TMAP_ROLE_CT },
-+	{ "ums", probe_tmap_role, BT_TMAP_ROLE_UMS },
-+	{ "umr", probe_tmap_role, BT_TMAP_ROLE_UMR },
-+	{ "bms", probe_tmap_role, BT_TMAP_ROLE_BMS },
-+	{ "bmr", probe_tmap_role, BT_TMAP_ROLE_BMR },
-+};
-+
-+static const struct feature gmap_features[] = {
-+	{ "ugg", probe_gmap_role, BT_GMAP_ROLE_UGG },
-+	{ "ugt", probe_gmap_role, BT_GMAP_ROLE_UGT },
-+	{ "bgs", probe_gmap_role, BT_GMAP_ROLE_BGS },
-+	{ "bgr", probe_gmap_role, BT_GMAP_ROLE_BGR },
-+	{ "ugg-multiplex", probe_gmap_feature, BT_GMAP_UGG_MULTIPLEX },
-+	{ "ugg-96kbps-source", probe_gmap_feature, BT_GMAP_UGG_96KBPS },
-+	{ "ugg-multisink", probe_gmap_feature, BT_GMAP_UGG_MULTISINK },
-+	{ "ugt-source", probe_gmap_feature, BT_GMAP_UGT_SOURCE },
-+	{ "ugt-80kbps-source", probe_gmap_feature,
-+						BT_GMAP_UGT_80KBPS_SOURCE },
-+	{ "ugt-sink", probe_gmap_feature, BT_GMAP_UGT_SINK },
-+	{ "ugt-64kbps-sink", probe_gmap_feature, BT_GMAP_UGT_64KBPS_SINK },
-+	{ "ugt-multiplex", probe_gmap_feature, BT_GMAP_UGT_MULTIPLEX },
-+	{ "ugt-multisink", probe_gmap_feature, BT_GMAP_UGT_MULTISINK },
-+	{ "ugt-multisource", probe_gmap_feature, BT_GMAP_UGT_MULTISOURCE },
-+	{ "bgs-96kbps", probe_gmap_feature, BT_GMAP_BGS_96KBPS },
-+	{ "bgr-multisink", probe_gmap_feature, BT_GMAP_BGR_MULTISINK },
-+	{ "bgr-multiplex", probe_gmap_feature, BT_GMAP_BGR_MULTIPLEX },
-+};
-+
-+static const struct {
-+	const char *uuid;
-+	const struct feature *items;
-+	size_t count;
-+} features[] = {
-+	{ TMAS_UUID_STR, tmap_features, ARRAY_SIZE(tmap_features) },
-+	{ GMAS_UUID_STR, gmap_features, ARRAY_SIZE(gmap_features) },
-+};
-+
-+static gboolean supported_features(const GDBusPropertyTable *property,
-+					DBusMessageIter *iter, void *data)
-+{
-+	struct bap_ep *ep = data;
-+	DBusMessageIter dict, entry, variant, list;
-+	size_t i, j;
-+
-+	dbus_message_iter_open_container(iter, DBUS_TYPE_ARRAY, "{sv}", &dict);
-+
-+	for (i = 0; i < ARRAY_SIZE(features); ++i) {
-+		for (j = 0; j < features[i].count; ++j) {
-+			const struct feature *feature = &features[i].items[j];
-+
-+			if (feature->probe(ep, feature->data))
-+				break;
-+		}
-+		if (j == features[i].count)
-+			continue;
-+
-+		dbus_message_iter_open_container(&dict, DBUS_TYPE_DICT_ENTRY,
-+								NULL, &entry);
-+		dbus_message_iter_append_basic(&entry, DBUS_TYPE_STRING,
-+							&features[i].uuid);
-+		dbus_message_iter_open_container(&entry, DBUS_TYPE_VARIANT,
-+								"as", &variant);
-+		dbus_message_iter_open_container(&variant, DBUS_TYPE_ARRAY,
-+								"s", &list);
-+
-+		for (j = 0; j < features[i].count; ++j) {
-+			const struct feature *feature = &features[i].items[j];
-+
-+			if (!feature->probe(ep, feature->data))
-+				continue;
-+
-+			dbus_message_iter_append_basic(&list, DBUS_TYPE_STRING,
-+								&feature->name);
-+		}
-+
-+		dbus_message_iter_close_container(&variant, &list);
-+		dbus_message_iter_close_container(&entry, &variant);
-+		dbus_message_iter_close_container(&dict, &entry);
++		if (!g_strcmp0(p->remote_uuid, uuid))
++			return p;
++		next = g_slist_next(l);
 +	}
 +
-+	dbus_message_iter_close_container(iter, &dict);
++	for (l = ext_profiles; l != NULL; l = next) {
++		struct ext_profile *ext = l->data;
++		struct btd_profile *p = &ext->p;
 +
-+	return TRUE;
++		if (!g_strcmp0(p->remote_uuid, uuid))
++			return p;
++		next = g_slist_next(l);
++	}
++
++	return NULL;
 +}
 +
- static const GDBusPropertyTable ep_properties[] = {
- 	{ "UUID", "s", get_uuid, NULL, NULL,
- 					G_DBUS_PROPERTY_FLAG_EXPERIMENTAL },
-@@ -457,6 +577,8 @@ static const GDBusPropertyTable ep_properties[] = {
- 					G_DBUS_PROPERTY_FLAG_EXPERIMENTAL },
- 	{ "QoS", "a{sv}", get_qos, NULL, qos_exists,
- 					G_DBUS_PROPERTY_FLAG_EXPERIMENTAL },
-+	{ "SupportedFeatures", "a{sv}", supported_features, NULL, NULL,
-+					G_DBUS_PROPERTY_FLAG_EXPERIMENTAL },
- 	{ }
- };
+ int btd_profile_register(struct btd_profile *profile)
+ {
+ 	if (profile->experimental && !(g_dbus_get_flags() &
+@@ -2650,3 +2674,68 @@ void btd_profile_cleanup(void)
+ 	g_dbus_unregister_interface(btd_get_dbus_connection(),
+ 				"/org/bluez", "org.bluez.ProfileManager1");
+ }
++
++/* Stable sort of a list according to profile priority & after_uuids */
++GSList *btd_profile_sort_list(GSList *list, btd_profile_list_get get,
++							void *user_data)
++{
++	GSList *result = NULL;
++	GSList *remain = list;
++	GHashTable *uuids;
++	GSList *entry;
++	const struct btd_profile *p;
++
++	uuids = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, NULL);
++
++	/* Unsatisfied remote uuids */
++	for (entry = remain; entry; entry = g_slist_next(entry)) {
++		p = get(entry->data, user_data);
++		if (p->remote_uuid)
++			g_hash_table_add(uuids, g_strdup(p->remote_uuid));
++	}
++
++	/* Sort */
++	while (remain) {
++		GSList *first_entry = remain;
++		int max_priority = INT_MIN;
++
++		/* Find max priority */
++		for (entry = remain; entry; entry = g_slist_next(entry)) {
++			p = get(entry->data, user_data);
++			if (p->priority > max_priority) {
++				first_entry = entry;
++				max_priority = p->priority;
++			}
++		}
++
++		/* Find max priority entry with no unsatisfied dependencies */
++		for (entry = remain; entry; entry = g_slist_next(entry)) {
++			const char **uuid;
++
++			p = get(entry->data, user_data);
++			if (p->priority < max_priority)
++				continue;
++
++			for (uuid = p->after_uuids; uuid && *uuid; uuid++)
++				if (g_hash_table_contains(uuids, *uuid))
++					break;
++			if (!(uuid && *uuid))
++				break;
++		}
++
++		/* If cyclic dependencies: break preserving priority & order */
++		if (!entry)
++			entry = first_entry;
++
++		p = get(entry->data, user_data);
++		if (p->remote_uuid)
++			g_hash_table_remove(uuids, p->remote_uuid);
++
++		remain = g_slist_remove_link(remain, entry);
++		result = g_slist_concat(result, entry);
++	}
++
++	g_hash_table_destroy(uuids);
++
++	return result;
++}
+diff --git a/src/profile.h b/src/profile.h
+index 424ce55ad..a8c2443e3 100644
+--- a/src/profile.h
++++ b/src/profile.h
+@@ -38,6 +38,12 @@ struct btd_profile {
+ 	 */
+ 	bool testing;
  
++	/* Indicates the profile should be ordered after profiles providing
++	 * these remote uuids when connecting. A NULL-terminated array of
++	 * strings.
++	 */
++	const char **after_uuids;
++
+ 	int (*device_probe) (struct btd_service *service);
+ 	void (*device_remove) (struct btd_service *service);
+ 
+@@ -76,3 +82,10 @@ bool btd_profile_remove_custom_prop(const char *uuid, const char *name);
+ 
+ void btd_profile_init(void);
+ void btd_profile_cleanup(void);
++
++struct btd_profile *btd_profile_find_remote_uuid(const char *uuid);
++
++typedef const struct btd_profile *(*btd_profile_list_get)(void *item,
++							void *user_data);
++GSList *btd_profile_sort_list(GSList *list, btd_profile_list_get get,
++							void *user_data);
 -- 
 2.51.1
 
