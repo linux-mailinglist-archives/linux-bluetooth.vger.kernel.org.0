@@ -1,33 +1,34 @@
-Return-Path: <linux-bluetooth+bounces-16984-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-16987-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7667DC93110
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Nov 2025 21:02:54 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 24B25C93113
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Nov 2025 21:03:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 22683349C0C
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Nov 2025 20:02:54 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 9DFC1349C7D
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Nov 2025 20:03:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94CD82D8364;
-	Fri, 28 Nov 2025 20:02:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C87D2DA777;
+	Fri, 28 Nov 2025 20:02:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="HOLi+Flm"
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="cQn298Zr"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E8023771E
-	for <linux-bluetooth@vger.kernel.org>; Fri, 28 Nov 2025 20:02:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 470982D46D6
+	for <linux-bluetooth@vger.kernel.org>; Fri, 28 Nov 2025 20:02:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764360169; cv=pass; b=RaEVbfgJxSmjbq+mkKGUbWugUI7fd5+8DFr/rcuxv/Pj0IdfLPYi3+q0VCDU9RTOQAhUjBZVowLttCjiXiricIIj9uod3NiuHAlw8U/HUU0QrmwWKFe0yonvPW+c/qTJxvpd0NbYRr2rFQyb4YQx/CKTjDq+EfRGITryoBi/cJ8=
+	t=1764360171; cv=pass; b=fvE+o0kZMnylDFx3uByG09kB/1gMnmIb2Haeh71OimjgX2CdU3GSVvEYssxVokPbuenH3smv4tjKFlGIu/xaz6topM15gmUAVBAcVH8s2gcKUoH/nTNvpZVP2aDsB85YtZievKxoX6Eurper6Zn/tGdfh8nPWidrIsrgLRpK+g0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764360169; c=relaxed/simple;
-	bh=1bdBVoONPcEn0kpLco/QX0lC9DQv/U7VhLTWfRgqbeE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=R72TBXNWqn9JRsyrPhkQaggixrdxJrcDyPLbTy7QT3r8KAlqhNa3WSG7alxbdwC80MU0jO/YQflKWp7AYr+IELtcEmtIzJcW0bj+kkjbvBBuPH5VcghqjarnEliOxnzueaEByU91G7iVKU2f2NNDbJLcABPo2ZKzah41vfwVdX4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=HOLi+Flm; arc=pass smtp.client-ip=195.140.195.201
+	s=arc-20240116; t=1764360171; c=relaxed/simple;
+	bh=T0pkdk8wpp4f1G5n6xt7SwqnuQ8TL7AFGriLFYuWRJI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=seA7DTkLnP23A/OYcrp9CWgDrYmfPIAQUrTZe3Efa65kRBBIbBehfKoEbgTay0cS8TT2ulr7KSwxCG0jctaJ17AAuVjch4g4Yvu6EickKxXw37kHQiyokOaWDrbltBhpHfD/u7I8pMR/rOdAxEKd9xxkYLazBbQEyO9sVeTmqVo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=cQn298Zr; arc=pass smtp.client-ip=195.140.195.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [IPv6:2a02:ed04:3581:4::d001])
@@ -35,21 +36,22 @@ Received: from monolith.lan (unknown [IPv6:2a02:ed04:3581:4::d001])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4dJ43264JDzyQH;
-	Fri, 28 Nov 2025 22:02:38 +0200 (EET)
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4dJ4333FCLzyVG;
+	Fri, 28 Nov 2025 22:02:39 +0200 (EET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
 	t=1764360159;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=2jJMTDq38nnM0GVe3fmFlj0K+SV+NQay2l0cCBTLMxc=;
-	b=HOLi+FlmblOlxfhwhDQMllckhfMGexNqRavJDs2Frnm3b2fjRsSqpd0J+hhnwM+ZQOuGQ+
-	B68CE81oueOB58pMPVh61s1CDfjAXbzEkduXpq515+5/qoTqL1/h/Ikvs9Sgh3INnBXEeF
-	SOhpPyJ+iNNUni7MemyO9CHNuhw7R7Y=
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=2VwR037PNkKrWAI6KcwZbY2IF8mkiqQQ63JBA2Mlc3k=;
+	b=cQn298Zr7ZJ4C6KjuzGafTocsTx4uxRbWxg5RX0XdDSWcr454yv5i6coKUgh/ytHDJZ3WG
+	pnqRLdLnrzj262g5EEB57wzQ9LTjcbw7r9BtQ0GST1zt3Jg3HJLrIgt6tCvi95GxkND4vU
+	SJCBXw4YUhFOq8GhIZc+QSbJMVX5d7g=
 ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1764360159;
-	b=gt38POTDFVHbd33aUiYi6ZYwVuM+oGeRLIEhE0ww2SzfUlDOSD2RVntpFBJRveIKrCBPYT
-	ugbSAYo7XtGC2ex76le/oZnyK9Z8fHwptFbvmF6wJc0m9BxMTUClaGHTUwgW6OEyJxIYc4
-	98Ixsxf9lGoTfXxG1sCxubhMdkkJmSU=
+	b=JLmh4iVnh7/1TjixdzFcAyGQp73cSC6WwwaZ/9VPIZg9Ko4aFeENT/l6IIiC7tdogKcNqA
+	ZpVe8UhtyHb+X6klEvAgo7nUpj8TUeZ/Ka0QqADeNv5DwrPPT/l5qNyxIGVqdcD+4l2blJ
+	cnuUxIqb+Dy5BLhyg/PnaxhcZUqKKRo=
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
@@ -57,18 +59,21 @@ ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
 	s=meesny; t=1764360159;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=2jJMTDq38nnM0GVe3fmFlj0K+SV+NQay2l0cCBTLMxc=;
-	b=mpGJjyPqBHFVGQVJ8KWjFm6qefclMwiNAh0N1m7wvfaUY9rwf1+vSyCDmDQ/B7DVXOiM3e
-	pY5EsI5b/8WD75ewPalFdhVrzSnrMKbrVM/J4m+FH5f9VpzpSSqiS/fmqJJkjbAsQqL6Ea
-	ej7rpIgm2XrmKgUdo9/uVoo4k0ueBPE=
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=2VwR037PNkKrWAI6KcwZbY2IF8mkiqQQ63JBA2Mlc3k=;
+	b=VUdP33d5S2Vb5E0Y/XmxAMlIKOZYqUdcOHu0JKcJESFTneQCrsnOHzADEwzX4XKPH46ffq
+	xy1Ah1SCGxcGIHhbqgwpc0Rsy0hoEphDsWktliIBWb7BPnIPip3xnFmxM4O+JC6+IYUEZ9
+	2tjv5+lA1DnaHfSE72t88Qy6UOROUXk=
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ v2 0/9] Add TMAP & GMAP information services
-Date: Fri, 28 Nov 2025 22:02:19 +0200
-Message-ID: <cover.1764360140.git.pav@iki.fi>
+Subject: [PATCH BlueZ v2 1/9] shared/gmap: add GMAP Service
+Date: Fri, 28 Nov 2025 22:02:20 +0200
+Message-ID: <e96fe0ead1afec4ce017a2416132b58548f1850b.1764360140.git.pav@iki.fi>
 X-Mailer: git-send-email 2.51.1
+In-Reply-To: <cover.1764360140.git.pav@iki.fi>
+References: <cover.1764360140.git.pav@iki.fi>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -77,69 +82,539 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add support for TMAP and GMAP services. They contain only device
-audio capability bitmasks.
+GMAP Service is just a simple service with bitmasks.
 
-v2:
-- Rework the service wait to be general mechanism that also determines
-  the service autoconnect order.
-
-  This is now slightly more involved, but this sort of "soft" ordering
-  dependency must know which services the autoconnect mechanism is going
-  to start.
-
-  Sorting autoconnect services is one of the ways to do it, probably
-  makes sense also otherwise, and we could insert service conflict
-  handling at the same place.
-
-- Make org.bluez.MediaEndpoint::SupportedFeatures per-uuid dict
-
+The values can be used to figure out which GMAP roles and features the
+remote device claims it supports (matters for available mandatory
+features).  Also can advertise the same for remote clients.
 ---
 
-Expose the values from remote devices in
-org.bluez.MediaEndpoint->SupportedFeatures
+Notes:
+    v2:
+    - remove one unnecessary #include
 
-This maybe could also be org.bluez.Device->SupportedFeatures instead,
-but MediaEndpoint looks OK too.
-
-Sound server can use theses to determine which mandatory capabilities
-devices have.
-
-TODO (maybe later): add way to configure advertised local service
-values, e.g.  via config file.
-
-Pauli Virtanen (9):
-  shared/gmap: add GMAP Service
-  test-gmap: add test for GMAP Service
-  gmap: Add GMAP profile
-  doc: org.bluez.MediaEndpoint: add SupportedFeatures
-  bap: add SupportedFeatures for MediaEndpoints
-  profile: add after_uuids for ordering profile startup
-  device: use after_uuids in service autoconnect and sort also GATT
-  service: add btd_profile::ready callback when after_uuids ready
-  bap: have unicast client wait for VCS & TMAS & GMAP
-
- .gitignore                      |   1 +
- Makefile.am                     |   7 +
- Makefile.plugins                |   5 +
- configure.ac                    |   7 +
- doc/org.bluez.MediaEndpoint.rst | 108 +++++++
- lib/bluetooth/uuid.h            |   8 +
- profiles/audio/bap.c            | 163 ++++++++++-
- profiles/audio/gmap.c           | 200 +++++++++++++
- src/device.c                    |  74 ++++-
- src/profile.c                   |  89 ++++++
- src/profile.h                   |  16 ++
- src/service.c                   | 100 +++++++
- src/shared/gmap.c               | 401 ++++++++++++++++++++++++++
- src/shared/gmap.h               |  70 +++++
- unit/test-gmap.c                | 496 ++++++++++++++++++++++++++++++++
- 15 files changed, 1730 insertions(+), 15 deletions(-)
- create mode 100644 profiles/audio/gmap.c
+ Makefile.am          |   1 +
+ lib/bluetooth/uuid.h |   8 +
+ src/shared/gmap.c    | 401 +++++++++++++++++++++++++++++++++++++++++++
+ src/shared/gmap.h    |  70 ++++++++
+ 4 files changed, 480 insertions(+)
  create mode 100644 src/shared/gmap.c
  create mode 100644 src/shared/gmap.h
- create mode 100644 unit/test-gmap.c
 
+diff --git a/Makefile.am b/Makefile.am
+index 11e632c02..14dccafaf 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -243,6 +243,7 @@ shared_sources = src/shared/io.h src/shared/timeout.h \
+ 			src/shared/bass.h src/shared/bass.c \
+ 			src/shared/ccp.h src/shared/ccp.c \
+ 			src/shared/tmap.c src/shared/tmap.h \
++			src/shared/gmap.c src/shared/gmap.h \
+ 			src/shared/lc3.h src/shared/tty.h \
+ 			src/shared/bap-defs.h \
+ 			src/shared/asha.h src/shared/asha.c \
+diff --git a/lib/bluetooth/uuid.h b/lib/bluetooth/uuid.h
+index 771f7675d..82e948a23 100644
+--- a/lib/bluetooth/uuid.h
++++ b/lib/bluetooth/uuid.h
+@@ -216,6 +216,14 @@ extern "C" {
+ #define TMAS_UUID				0x1855
+ #define TMAP_ROLE_CHRC_UUID			0x2b51
+ 
++/* Gaming Audio Service */
++#define GMAS_UUID				0x1858
++#define GMAP_ROLE_CHRC_UUID			0x2c00
++#define GMAP_UGG_CHRC_UUID			0x2c01
++#define GMAP_UGT_CHRC_UUID			0x2c02
++#define GMAP_BGS_CHRC_UUID			0x2c03
++#define GMAP_BGR_CHRC_UUID			0x2c04
++
+ /* Coordinated Set Identification Profile(CSIP) */
+ #define CSIS_UUID					0x1846
+ #define CS_SIRK						0x2B84
+diff --git a/src/shared/gmap.c b/src/shared/gmap.c
+new file mode 100644
+index 000000000..f571f3270
+--- /dev/null
++++ b/src/shared/gmap.c
+@@ -0,0 +1,401 @@
++// SPDX-License-Identifier: LGPL-2.1-or-later
++/*
++ *
++ *  BlueZ - Bluetooth protocol stack for Linux
++ *
++ *  Copyright (C) 2025	Pauli Virtanen. All rights reserved.
++ *
++ */
++
++#define _GNU_SOURCE
++#include <inttypes.h>
++#include <string.h>
++#include <stdlib.h>
++#include <stdbool.h>
++#include <unistd.h>
++#include <errno.h>
++
++#include "bluetooth/bluetooth.h"
++#include "bluetooth/uuid.h"
++
++#include "src/shared/queue.h"
++#include "src/shared/util.h"
++#include "src/shared/timeout.h"
++#include "src/shared/att.h"
++#include "src/shared/gatt-db.h"
++#include "src/shared/gatt-server.h"
++#include "src/shared/gatt-client.h"
++#include "src/shared/gmap.h"
++
++#define DBG(_gmap, fmt, arg...) \
++	gmap_debug(_gmap, "%s:%s() " fmt, __FILE__, __func__, ## arg)
++
++struct bt_gmas_attr {
++	struct bt_gmap *gmap;
++	const char *name;
++	struct gatt_db_attribute *attr;
++	uint8_t value;
++};
++
++struct bt_gmas_db {
++	struct gatt_db *db;
++	struct gatt_db_attribute *service;
++	struct bt_gmas_attr role;
++	struct bt_gmas_attr ugg;
++	struct bt_gmas_attr ugt;
++	struct bt_gmas_attr bgs;
++	struct bt_gmas_attr bgr;
++};
++
++struct bt_gmap {
++	int ref_count;
++	struct bt_gatt_client *client;
++	struct bt_gmas_db db;
++
++	int idle_id;
++	bt_gmap_ready_func_t ready_func;
++	void *ready_data;
++
++	bt_gmap_debug_func_t debug_func;
++	bt_gmap_destroy_func_t debug_destroy;
++	void *debug_data;
++};
++
++static struct queue *instances;
++
++static void gmap_free(void *data)
++{
++	struct bt_gmap *gmap = data;
++
++	if (gmap->client) {
++		bt_gatt_client_idle_unregister(gmap->client, gmap->idle_id);
++		bt_gatt_client_unref(gmap->client);
++	} else {
++		gatt_db_remove_service(gmap->db.db, gmap->db.service);
++		gatt_db_unref(gmap->db.db);
++	}
++
++	queue_remove(instances, gmap);
++	if (queue_isempty(instances)) {
++		queue_destroy(instances, NULL);
++		instances = NULL;
++	}
++
++	free(gmap);
++}
++
++struct bt_gmap *bt_gmap_ref(struct bt_gmap *gmap)
++{
++	if (!gmap)
++		return NULL;
++
++	__sync_fetch_and_add(&gmap->ref_count, 1);
++
++	return gmap;
++}
++
++void bt_gmap_unref(struct bt_gmap *gmap)
++{
++	if (!gmap)
++		return;
++
++	if (__sync_sub_and_fetch(&gmap->ref_count, 1))
++		return;
++
++	gmap_free(gmap);
++}
++
++static void gmap_debug(struct bt_gmap *gmap, const char *format, ...)
++{
++	va_list ap;
++
++	if (!gmap || !format || !gmap->debug_func)
++		return;
++
++	va_start(ap, format);
++	util_debug_va(gmap->debug_func, gmap->debug_data, format, ap);
++	va_end(ap);
++}
++
++bool bt_gmap_set_debug(struct bt_gmap *gmap, bt_gmap_debug_func_t cb,
++		void *user_data, bt_gmap_destroy_func_t destroy)
++{
++	if (!gmap)
++		return false;
++
++	if (gmap->debug_destroy)
++		gmap->debug_destroy(gmap->debug_data);
++
++	gmap->debug_func = cb;
++	gmap->debug_destroy = destroy;
++	gmap->debug_data = user_data;
++
++	return true;
++}
++
++uint8_t bt_gmap_get_role(struct bt_gmap *gmap)
++{
++	if (!gmap)
++		return 0;
++
++	return gmap->db.role.value & BT_GMAP_ROLE_MASK;
++}
++
++uint32_t bt_gmap_get_features(struct bt_gmap *gmap)
++{
++	if (!gmap)
++		return 0;
++
++	return (((uint32_t)gmap->db.ugg.value << BT_GMAP_UGG_FEATURE_SHIFT) |
++		((uint32_t)gmap->db.ugt.value << BT_GMAP_UGT_FEATURE_SHIFT) |
++		((uint32_t)gmap->db.bgs.value << BT_GMAP_BGS_FEATURE_SHIFT) |
++		((uint32_t)gmap->db.bgr.value << BT_GMAP_BGR_FEATURE_SHIFT)) &
++		BT_GMAP_FEATURE_MASK;
++}
++
++/*
++ * GMA Client
++ */
++
++static void gmap_attr_read(bool success, uint8_t att_ecode,
++					const uint8_t *value, uint16_t length,
++					void *user_data)
++{
++	struct bt_gmas_attr *attr = user_data;
++	struct bt_gmap *gmap = attr->gmap;
++	struct iovec iov = { .iov_base = (void *)value, .iov_len = length };
++	uint8_t v;
++
++	if (!success) {
++		DBG(gmap, "Unable to read %s: error 0x%02x",
++							attr->name, att_ecode);
++		return;
++	}
++
++	if (!util_iov_pull_u8(&iov, &v)) {
++		DBG(gmap, "Invalid %s", attr->name);
++		return;
++	}
++
++	DBG(gmap, "%s Value 0x%x", attr->name, v);
++	attr->value = v;
++}
++
++static void foreach_gmap_char(struct gatt_db_attribute *attr, void *user_data)
++{
++	struct bt_gmap *gmap = user_data;
++	uint16_t value_handle;
++	bt_uuid_t uuid, uuid_attr;
++	struct {
++		const uint32_t uuid;
++		struct bt_gmas_attr *attr;
++		const char *name;
++	} attrs[] = {
++		{ GMAP_ROLE_CHRC_UUID, &gmap->db.role, "Role" },
++		{ GMAP_UGG_CHRC_UUID, &gmap->db.ugg, "UGG Features" },
++		{ GMAP_UGT_CHRC_UUID, &gmap->db.ugt, "UGT Features" },
++		{ GMAP_BGS_CHRC_UUID, &gmap->db.bgs, "BGS Features" },
++		{ GMAP_BGR_CHRC_UUID, &gmap->db.bgr, "BGR Features" },
++	};
++	unsigned int i;
++
++	if (!gatt_db_attribute_get_char_data(attr, NULL, &value_handle,
++						NULL, NULL, &uuid))
++		return;
++
++	for (i = 0; i < ARRAY_SIZE(attrs); ++i) {
++		bt_uuid16_create(&uuid_attr, attrs[i].uuid);
++		if (bt_uuid_cmp(&uuid, &uuid_attr))
++			continue;
++
++		attrs[i].attr->gmap = gmap;
++		attrs[i].attr->name = attrs[i].name;
++
++		DBG(gmap, "GMAS %s Char found: handle 0x%04x",
++			attrs[i].name, value_handle);
++		bt_gatt_client_read_value(gmap->client, value_handle,
++					gmap_attr_read, attrs[i].attr,
++					NULL);
++		return;
++	}
++}
++
++static void foreach_gmap_service(struct gatt_db_attribute *attr,
++						void *user_data)
++{
++	struct bt_gmap *gmap = user_data;
++
++	gatt_db_service_set_claimed(attr, true);
++	gatt_db_service_foreach_char(attr, foreach_gmap_char, gmap);
++}
++
++static void gmap_idle(void *data)
++{
++	struct bt_gmap *gmap = data;
++
++	gmap->idle_id = 0;
++
++	if (!instances)
++		instances = queue_new();
++	queue_push_tail(instances, gmap);
++
++	if (gmap->ready_func)
++		gmap->ready_func(gmap, gmap->ready_data);
++}
++
++struct bt_gmap *bt_gmap_attach(struct bt_gatt_client *client,
++				bt_gmap_ready_func_t ready, void *user_data)
++{
++	struct bt_gmap *gmap;
++	bt_uuid_t uuid;
++
++	if (!client)
++		return NULL;
++
++	client = bt_gatt_client_clone(client);
++	if (!client)
++		return NULL;
++
++	gmap = new0(struct bt_gmap, 1);
++	gmap->client = client;
++	gmap->ready_func = ready;
++	gmap->ready_data = user_data;
++	gmap->db.db = bt_gatt_client_get_db(gmap->client);
++
++	bt_uuid16_create(&uuid, GMAS_UUID);
++	gatt_db_foreach_service(gmap->db.db, &uuid, foreach_gmap_service, gmap);
++
++	gmap->idle_id = bt_gatt_client_idle_register(gmap->client, gmap_idle,
++								gmap, NULL);
++
++	return bt_gmap_ref(gmap);
++}
++
++/*
++ * GMAS Service
++ */
++
++static void gmas_attr_read(struct gatt_db_attribute *attrib,
++					unsigned int id, uint16_t offset,
++					uint8_t opcode, struct bt_att *att,
++					void *user_data)
++{
++	struct bt_gmas_attr *attr = user_data;
++	struct iovec iov = {
++		.iov_base = &attr->value,
++		.iov_len = sizeof(attr->value)
++	};
++
++	gatt_db_attribute_read_result(attrib, id, 0, iov.iov_base,
++							iov.iov_len);
++}
++
++static bool match_db(const void *data, const void *match_data)
++{
++	const struct bt_gmap *gmap = data;
++
++	return gmap->db.db == match_data;
++}
++
++struct bt_gmap *bt_gmap_find(struct gatt_db *db)
++{
++	return db ? queue_find(instances, match_db, db) : NULL;
++}
++
++static void gmap_update_chrc(struct bt_gmap *gmap)
++{
++	struct {
++		const uint32_t uuid;
++		uint8_t role;
++		struct bt_gmas_attr *attr;
++		const char *name;
++	} attrs[] = {
++		{ GMAP_ROLE_CHRC_UUID, 0, &gmap->db.role, "Role" },
++		{ GMAP_UGG_CHRC_UUID, BT_GMAP_ROLE_UGG, &gmap->db.ugg,
++							"UGG Features" },
++		{ GMAP_UGT_CHRC_UUID, BT_GMAP_ROLE_UGT, &gmap->db.ugt,
++							"UGT Features" },
++		{ GMAP_BGS_CHRC_UUID, BT_GMAP_ROLE_BGS, &gmap->db.bgs,
++							"BGS Features" },
++		{ GMAP_BGR_CHRC_UUID, BT_GMAP_ROLE_BGR, &gmap->db.bgr,
++							"BGR Features" },
++	};
++	unsigned int i;
++	bt_uuid_t uuid;
++
++	for (i = 0; i < ARRAY_SIZE(attrs); ++i) {
++		if (attrs[i].attr->attr)
++			continue;
++
++		attrs[i].attr->gmap = gmap;
++		attrs[i].attr->name = attrs[i].name;
++
++		if (attrs[i].role && !(gmap->db.role.value & attrs[i].role))
++			continue;
++
++		bt_uuid16_create(&uuid, attrs[i].uuid);
++		attrs[i].attr->attr = gatt_db_service_add_characteristic(
++					gmap->db.service,
++					&uuid,
++					BT_ATT_PERM_READ,
++					BT_GATT_CHRC_PROP_READ,
++					gmas_attr_read, NULL,
++					attrs[i].attr);
++		gatt_db_attribute_set_fixed_length(attrs[i].attr->attr, 1);
++	}
++}
++
++struct bt_gmap *bt_gmap_add_db(struct gatt_db *db)
++{
++	struct bt_gmap *gmap;
++	bt_uuid_t uuid;
++
++	if (!db || queue_find(instances, match_db, db))
++		return NULL;
++
++	gmap = new0(struct bt_gmap, 1);
++	gmap->db.db = gatt_db_ref(db);
++
++	bt_uuid16_create(&uuid, GMAS_UUID);
++	gmap->db.service = gatt_db_add_service(db, &uuid, true, 5*3);
++
++	if (!instances)
++		instances = queue_new();
++	queue_push_tail(instances, gmap);
++
++	return bt_gmap_ref(gmap);
++}
++
++void bt_gmap_set_role(struct bt_gmap *gmap, uint8_t role)
++{
++	if (gmap->client)
++		return;
++
++	gmap->db.role.value = role & BT_GMAP_ROLE_MASK;
++
++	gmap_update_chrc(gmap);
++
++	/* Expose values only when first set */
++	gatt_db_service_set_active(gmap->db.service, true);
++}
++
++
++void bt_gmap_set_features(struct bt_gmap *gmap, uint32_t features)
++{
++	if (gmap->client)
++		return;
++
++	gmap->db.ugg.value = (features & BT_GMAP_UGG_FEATURE_MASK)
++						>> BT_GMAP_UGG_FEATURE_SHIFT;
++	gmap->db.ugt.value = (features & BT_GMAP_UGT_FEATURE_MASK)
++						>> BT_GMAP_UGT_FEATURE_SHIFT;
++	gmap->db.bgs.value = (features & BT_GMAP_BGS_FEATURE_MASK)
++						>> BT_GMAP_BGS_FEATURE_SHIFT;
++	gmap->db.bgr.value = (features & BT_GMAP_BGR_FEATURE_MASK)
++						>> BT_GMAP_BGR_FEATURE_SHIFT;
++
++	gmap_update_chrc(gmap);
++
++	/* Expose values only when first set */
++	gatt_db_service_set_active(gmap->db.service, true);
++}
+diff --git a/src/shared/gmap.h b/src/shared/gmap.h
+new file mode 100644
+index 000000000..ef7d96e0a
+--- /dev/null
++++ b/src/shared/gmap.h
+@@ -0,0 +1,70 @@
++/* SPDX-License-Identifier: LGPL-2.1-or-later */
++/*
++ *
++ *  BlueZ - Bluetooth protocol stack for Linux
++ *
++ *  Copyright (C) 2025  Pauli Virtanen. All rights reserved.
++ *
++ */
++
++#include <stdbool.h>
++#include <inttypes.h>
++
++#define BT_GMAP_ROLE_UGG		BIT(0)
++#define BT_GMAP_ROLE_UGT		BIT(1)
++#define BT_GMAP_ROLE_BGS		BIT(2)
++#define BT_GMAP_ROLE_BGR		BIT(3)
++#define BT_GMAP_ROLE_MASK		(BIT(4) - 1)
++
++#define BT_GMAP_UGG_MULTIPLEX		(BIT(0) << 0)
++#define BT_GMAP_UGG_96KBPS		(BIT(1) << 0)
++#define BT_GMAP_UGG_MULTISINK		(BIT(2) << 0)
++#define BT_GMAP_UGG_FEATURE_MASK	((BIT(3) - 1) << 0)
++#define BT_GMAP_UGG_FEATURE_SHIFT	0
++
++#define BT_GMAP_UGT_SOURCE		(BIT(0) << 8)
++#define BT_GMAP_UGT_80KBPS_SOURCE	(BIT(1) << 8)
++#define BT_GMAP_UGT_SINK		(BIT(2) << 8)
++#define BT_GMAP_UGT_64KBPS_SINK		(BIT(3) << 8)
++#define BT_GMAP_UGT_MULTIPLEX		(BIT(4) << 8)
++#define BT_GMAP_UGT_MULTISINK		(BIT(5) << 8)
++#define BT_GMAP_UGT_MULTISOURCE		(BIT(6) << 8)
++#define BT_GMAP_UGT_FEATURE_MASK	((BIT(7) - 1) << 8)
++#define BT_GMAP_UGT_FEATURE_SHIFT	8
++
++#define BT_GMAP_BGS_96KBPS		(BIT(0) << 16)
++#define BT_GMAP_BGS_FEATURE_MASK	((BIT(1) - 1) << 16)
++#define BT_GMAP_BGS_FEATURE_SHIFT	16
++
++#define BT_GMAP_BGR_MULTISINK		(BIT(0) << 24)
++#define BT_GMAP_BGR_MULTIPLEX		(BIT(1) << 24)
++#define BT_GMAP_BGR_FEATURE_MASK	((BIT(2) - 1) << 24)
++#define BT_GMAP_BGR_FEATURE_SHIFT	24
++
++#define BT_GMAP_FEATURE_MASK		(BT_GMAP_UGG_FEATURE_MASK | \
++					BT_GMAP_UGT_FEATURE_MASK | \
++					BT_GMAP_BGS_FEATURE_MASK | \
++					BT_GMAP_BGR_FEATURE_MASK)
++
++struct bt_gmap;
++
++typedef void (*bt_gmap_ready_func_t)(struct bt_gmap *gmap, void *user_data);
++typedef void (*bt_gmap_destroy_func_t)(void *user_data);
++typedef void (*bt_gmap_debug_func_t)(const char *str, void *user_data);
++
++struct bt_gmap *bt_gmap_ref(struct bt_gmap *gmap);
++void bt_gmap_unref(struct bt_gmap *gmap);
++
++struct bt_gmap *bt_gmap_attach(struct bt_gatt_client *client,
++				bt_gmap_ready_func_t ready, void *user_data);
++struct bt_gmap *bt_gmap_find(struct gatt_db *db);
++struct bt_gmap *bt_gmap_add_db(struct gatt_db *db);
++
++uint8_t bt_gmap_get_role(struct bt_gmap *gmap);
++uint32_t bt_gmap_get_features(struct bt_gmap *gmap);
++
++void bt_gmap_set_role(struct bt_gmap *gmas, uint8_t role);
++void bt_gmap_set_features(struct bt_gmap *gmas, uint32_t features);
++
++bool bt_gmap_set_debug(struct bt_gmap *gmap, bt_gmap_debug_func_t cb,
++			void *user_data, bt_gmap_destroy_func_t destroy);
 -- 
 2.51.1
 
