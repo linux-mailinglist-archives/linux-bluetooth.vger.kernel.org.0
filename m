@@ -1,34 +1,34 @@
-Return-Path: <linux-bluetooth+bounces-16988-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-16985-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B8ACC93125
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Nov 2025 21:03:15 +0100 (CET)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 06325C93116
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Nov 2025 21:03:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A8A403A2EB1
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Nov 2025 20:03:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F36083A44CC
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 28 Nov 2025 20:02:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B03E2DA77F;
-	Fri, 28 Nov 2025 20:02:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F214423771E;
+	Fri, 28 Nov 2025 20:02:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="Di7DGj77"
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="VATUkPc0"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 470222BE622
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFBD32D592F
 	for <linux-bluetooth@vger.kernel.org>; Fri, 28 Nov 2025 20:02:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764360171; cv=pass; b=ee7B3Q+Tm2IxnUCOhGMo4Ua94/KJcyHSnMr1BJTx6HlTXMA7TxCaBvMgTRNMkq7lMtxTxS/vxu0GYGlcaLeE6yGyx/t6iQZFtCku36POMTBe2SrcofTdCcn/xhepq/h831OSB7L6Ewg31ss1nl7B+Hb2w8+evZQfxl0+EFhL5Iw=
+	t=1764360170; cv=pass; b=bU13Cr3GveJxe4yDxFLScszFUYu7YhPTjWscGhzAI+KfbU9v6i4u8uP8FfF3nT6nUXW+pFly8H5d95CFxPIh9giiPZTzfyeh96qge4e0mhS3ohK4e4VSl9NdchF4eKmy/vq8RP7dKvBA7YVuGodkJBxTmoHW+bC4O54CaI1QHeY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764360171; c=relaxed/simple;
-	bh=DOGJGuUlWLAI5ybvkylo2Dv3l0MlAPRVdviFo7y6Ye8=;
+	s=arc-20240116; t=1764360170; c=relaxed/simple;
+	bh=MFyZzI6VHwVkrQoSKCM0wJqD5RsPx80CbmRpFm9aBlc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VsxuoQqEyS+lo4GHywSuRsmQFKfIfs1/MLjsXWVTZnj0rslKhNoA1t7+/0xURr9dw0e3Zu+BKB9pDGb/JzwZc/JU6e7xcobEye+H7/M3ouBrDAVgLfWHAEsHMPrOhNU0XRmzCagLyiHncW83kBotChiGT+GatNhp2a5UMLps8rE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=Di7DGj77; arc=pass smtp.client-ip=195.140.195.201
+	 MIME-Version; b=A49G/Js2KlWBhaMp3/1Vy0HP5IyFvtbpxRkqvhT2HPdBpqmNrpiDM5+AYtQedpK4XA+PU31cg1uejcfFj5GogNGt5Xg8heZobTCCrLYhs0L/GWOGsmk+nuHiyCHiPfLdw0xpNRZr1+QtTX6hNqGMBvfSWX+UxNQxWEYm+x7DwUg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=VATUkPc0; arc=pass smtp.client-ip=195.140.195.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [IPv6:2a02:ed04:3581:4::d001])
@@ -36,7 +36,7 @@ Received: from monolith.lan (unknown [IPv6:2a02:ed04:3581:4::d001])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4dJ4341Hx6z105L;
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4dJ4343vRwz108j;
 	Fri, 28 Nov 2025 22:02:40 +0200 (EET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
 	t=1764360160;
@@ -44,14 +44,14 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=B8Pu13bBQA57xZVrljyJNPRsRwAlrETb26g6XXr780k=;
-	b=Di7DGj77zx0zHvpaGPMVx8WntvXY8cIfCL65gOvwsonOo7Qjy2hT3+BWBLpFEPVLT6Sryn
-	8u7Z9RL408BXD7fZ6q09+vxjAmXnQry/8j2QlgE9CMxfNh//KFykA6/mHh59ILcw1NbGXz
-	7ZmOegAb/+U1dBX54hIE6EPgIkovL/U=
+	bh=zqXWgBKx1cri5DdPiZin2MsXgbhD1jdeKvce3V+Gu6g=;
+	b=VATUkPc03lFilwWRrMe6KMRCLa9rrGGqGKgzFA9OgFawG8SXQDL25TdYbBfLytVxyE5KEh
+	AwFlaIlTGp3eg+5CTXcYPvEPDZ8GpnuqFdW2iaM0UbgxpFxHC5aTS+NFRjJLIHZJDrqlq0
+	2MZCaQPzvnzJhRvIwzg5ExLwFwfDaqk=
 ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1764360160;
-	b=a0rY2Ose+Kpq+kfxvdCY7AZ8BeyJ/OWqjsKCPncrR+flyjQWZi2VCUNNrp5Drte8tnGIqU
-	dhfURo4H0jGsRQmq+y4fINLz0cCxnX0f02mInfV0Jhgjo4MsgdVV6BnQvVtU3CWZ++rctW
-	ryD/A4FtGg2sukd6Zl6lXczd5vOZnTo=
+	b=OHn2aW0PHdnR9qXtrZkWNoUQ3Lux19SlNH3kzo6CH1nHpyeP8Lq79ZI11UpOyQFQBvVTPE
+	Q0GoW1hew6mSfJGdKFqK4P8M3DG7d15AF1hC6Ghyox8tAq94VjsENcUYX8Hj/1zz3g3N3k
+	P7yt7kcnpqJ327QWNZSf14lJs1s2ahY=
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
@@ -61,16 +61,16 @@ ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=B8Pu13bBQA57xZVrljyJNPRsRwAlrETb26g6XXr780k=;
-	b=hJs9X/VFFp6gqFogHWgLLLExhIR+B1y1vVnfz0/DbcGGDvXDy4FtVVku2sJw9SZytQUQBA
-	jqzapGqVCnTEmGvYuAPWyjxgwEFtbvEWRuDO01RHDtX5xSgbz0kh5OizAw9fNqixPfRaxd
-	X+m7yM0VDfV+cpqu+pjXN3gakggoSeY=
+	bh=zqXWgBKx1cri5DdPiZin2MsXgbhD1jdeKvce3V+Gu6g=;
+	b=OwB9zB4M2lp2vABoKSucCiPzOa1B/4B7IFjFgWJ1WX6WnIWcByBtSZ6lps58bdB7Br/U9F
+	dSQ1VQMOHJGSRYlcYkx/sRHyus2F4Lp550wQaCP8Rvcl/jCaLYipgv8kfWDTFS0nOWlpSF
+	zxmYzwokCZ2zdzrV60TBJCvMFBwS0RM=
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ v2 3/9] gmap: Add GMAP profile
-Date: Fri, 28 Nov 2025 22:02:22 +0200
-Message-ID: <46f5d5e1e1d410668119979b994203dabf6dc206.1764360140.git.pav@iki.fi>
+Subject: [PATCH BlueZ v2 4/9] doc: org.bluez.MediaEndpoint: add SupportedFeatures
+Date: Fri, 28 Nov 2025 22:02:23 +0200
+Message-ID: <ffa3e8894e8cf9af76faa4e881190069e17a64e8.1764360140.git.pav@iki.fi>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <cover.1764360140.git.pav@iki.fi>
 References: <cover.1764360140.git.pav@iki.fi>
@@ -82,260 +82,133 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Read GMAP properties from remote devices and enable advertising the
-values for local services.
+Add SupportedFeatures field for indicating TMAP & GMAP roles and
+features.
 ---
 
 Notes:
     v2:
-    - remove one unnecessary #include
+    - make it a dict of uuid -> features
 
- Makefile.plugins      |   5 ++
- configure.ac          |   7 ++
- profiles/audio/gmap.c | 200 ++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 212 insertions(+)
- create mode 100644 profiles/audio/gmap.c
+ doc/org.bluez.MediaEndpoint.rst | 108 ++++++++++++++++++++++++++++++++
+ 1 file changed, 108 insertions(+)
 
-diff --git a/Makefile.plugins b/Makefile.plugins
-index c976c66f4..3572ee845 100644
---- a/Makefile.plugins
-+++ b/Makefile.plugins
-@@ -151,6 +151,11 @@ builtin_modules += tmap
- builtin_sources += profiles/audio/tmap.c
- endif
+diff --git a/doc/org.bluez.MediaEndpoint.rst b/doc/org.bluez.MediaEndpoint.rst
+index c1ce1d562..8202b2fdf 100644
+--- a/doc/org.bluez.MediaEndpoint.rst
++++ b/doc/org.bluez.MediaEndpoint.rst
+@@ -299,3 +299,111 @@ Indicates QoS capabilities.
+ :uint32 PreferredMaximumDelay:
  
-+if GMAP
-+builtin_modules += gmap
-+builtin_sources += profiles/audio/gmap.c
-+endif
+ 	Indicates endpoint preferred maximum presentation delay.
 +
- if ASHA
- builtin_modules += asha
- builtin_sources += profiles/audio/asha.h profiles/audio/asha.c
-diff --git a/configure.ac b/configure.ac
-index 29a322cb5..16b81aca3 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -234,6 +234,13 @@ if test "${enable_tmap}" != "no"; then
- 	AC_DEFINE(HAVE_TMAP, 1, [Define to 1 if you have TMAP support.])
- fi
- 
-+AC_ARG_ENABLE(gmap, AS_HELP_STRING([--disable-gmap],
-+		[disable GMAP profile]), [enable_gmap=${enableval}])
-+AM_CONDITIONAL(GMAP, test "${enable_gmap}" != "no")
-+if test "${enable_gmap}" != "no"; then
-+	AC_DEFINE(HAVE_GMAP, 1, [Define to 1 if you have GMAP support.])
-+fi
++dict SupportedFeatures [readonly, ISO only, experimental]
++`````````````````````````````````````````````````````````
 +
- AC_ARG_ENABLE(asha, AS_HELP_STRING([--disable-asha],
- 		[disable ASHA support]), [enable_asha=${enableval}])
- AM_CONDITIONAL(ASHA, test "${enable_asha}" != "no")
-diff --git a/profiles/audio/gmap.c b/profiles/audio/gmap.c
-new file mode 100644
-index 000000000..810bc783c
---- /dev/null
-+++ b/profiles/audio/gmap.c
-@@ -0,0 +1,200 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+/*
-+ *
-+ *  BlueZ - Bluetooth protocol stack for Linux
-+ *
-+ *  Copyright (C) 2025  Pauli Virtanen. All rights reserved.
-+ *
-+ *
-+ */
++Dictionary representing supported features for different
++services. Keys are service UUIDs, values arrays of strings.
 +
-+#ifdef HAVE_CONFIG_H
-+#include <config.h>
-+#endif
++Services:
 +
-+#define _GNU_SOURCE
++:array{string} 00001855-0000-1000-8000-00805f9b34fb:
 +
-+#include <ctype.h>
-+#include <stdbool.h>
-+#include <stdlib.h>
-+#include <stdio.h>
-+#include <sys/types.h>
-+#include <sys/stat.h>
-+#include <fcntl.h>
-+#include <errno.h>
++	TMAP Features. Possible items:
 +
-+#include <glib.h>
++	:"cg":
 +
-+#include "gdbus/gdbus.h"
++		Call Gateway
 +
-+#include "bluetooth/bluetooth.h"
-+#include "bluetooth/hci.h"
-+#include "bluetooth/sdp.h"
-+#include "bluetooth/uuid.h"
++	:"ct":
 +
-+#include "src/dbus-common.h"
-+#include "src/shared/util.h"
-+#include "src/shared/att.h"
-+#include "src/shared/queue.h"
-+#include "src/shared/gatt-db.h"
-+#include "src/shared/gatt-client.h"
-+#include "src/shared/gatt-server.h"
-+#include "src/shared/gmap.h"
++		Call Terminal
 +
-+#include "btio/btio.h"
-+#include "src/plugin.h"
-+#include "src/adapter.h"
-+#include "src/gatt-database.h"
-+#include "src/device.h"
-+#include "src/profile.h"
-+#include "src/service.h"
-+#include "src/log.h"
-+#include "src/error.h"
++	:"ums":
 +
-+#define GMAS_UUID_STR			"00001858-0000-1000-8000-00805f9b34fb"
++		Unicast Media Sender
 +
-+static void gmap_debug(const char *str, void *user_data)
-+{
-+	DBG_IDX(0xffff, "%s", str);
-+}
++	:"umr":
 +
-+static void service_ready(struct bt_gmap *gmap, void *user_data)
-+{
-+	struct btd_service *service = user_data;
++		Unicast Media Receiver
 +
-+	btd_service_connecting_complete(service, 0);
-+}
++	:"bms":
 +
-+static struct bt_gmap *add_service(struct btd_service *service)
-+{
-+	struct btd_device *device = btd_service_get_device(service);
-+	struct bt_gatt_client *client = btd_device_get_gatt_client(device);
-+	struct bt_gmap *gmap = btd_service_get_user_data(service);
++		Broadcast Media Sender
 +
-+	if (gmap)
-+		return gmap;
++	:"bmr":
 +
-+	gmap = bt_gmap_attach(client, service_ready, service);
-+	if (!gmap) {
-+		error("GMAP client unable to attach");
-+		return NULL;
-+	}
++		Broadcast Media Receiver
 +
-+	bt_gmap_set_debug(gmap, gmap_debug, NULL, NULL);
++:array{string} 00001858-0000-1000-8000-00805f9b34fb:
 +
-+	btd_service_set_user_data(service, gmap);
-+	return gmap;
-+}
++	GMAP Features. Possible items:
 +
-+static void remove_service(struct btd_service *service)
-+{
-+	struct bt_gmap *gmap = btd_service_get_user_data(service);
++	:"ugg":
 +
-+	if (!gmap)
-+		return;
++		Unicast Game Gateway
 +
-+	btd_service_set_user_data(service, NULL);
-+	bt_gmap_unref(gmap);
-+}
++	:"ugt":
 +
-+static int gmap_accept(struct btd_service *service)
-+{
-+	struct btd_device *device = btd_service_get_device(service);
-+	struct bt_gmap *gmap;
-+	char addr[18];
++		Unicast Game Terminal
 +
-+	ba2str(device_get_address(device), addr);
-+	DBG("%s", addr);
++	:"bgs":
 +
-+	gmap = add_service(service);
-+	if (!gmap)
-+		return -EINVAL;
++		Broadcast Game Sender
 +
-+	return 0;
-+}
++	:"bgr":
 +
-+static int gmap_disconnect(struct btd_service *service)
-+{
-+	remove_service(service);
++		Broadcast Game Receiver
 +
-+	btd_service_disconnecting_complete(service, 0);
-+	return 0;
-+}
++	:"ugg-multiplex":
 +
-+static int gmap_probe(struct btd_service *service)
-+{
-+	struct btd_device *device = btd_service_get_device(service);
-+	char addr[18];
++		UGG Multiplex feature support
 +
-+	ba2str(device_get_address(device), addr);
-+	DBG("%s", addr);
-+	return 0;
-+}
++	:"ugg-96kbps-source":
 +
-+static void gmap_remove(struct btd_service *service)
-+{
-+	struct btd_device *device = btd_service_get_device(service);
-+	char addr[18];
++		UGG 96 kbps Source feature support
 +
-+	ba2str(device_get_address(device), addr);
-+	DBG("%s", addr);
-+}
++	:"ugg-multisink":
 +
-+static int gmap_adapter_probe(struct btd_profile *p,
-+				  struct btd_adapter *adapter)
-+{
-+	struct btd_gatt_database *database = btd_adapter_get_database(adapter);
-+	struct bt_gmap *gmap;
++		UGG Multisink feature support
 +
-+	DBG("Add GMAP server %s", adapter_get_path(adapter));
-+	gmap = bt_gmap_add_db(btd_gatt_database_get_db(database));
++	:"ugt-source":
 +
-+	bt_gmap_set_debug(gmap, gmap_debug, NULL, NULL);
-+	return 0;
-+}
++		UGT Source feature support
 +
-+static void gmap_adapter_remove(struct btd_profile *p,
-+					struct btd_adapter *adapter)
-+{
-+	struct btd_gatt_database *database = btd_adapter_get_database(adapter);
-+	struct bt_gmap *gmap;
++	:"ugt-80kbps-source":
 +
-+	DBG("Remove GMAP server %s", adapter_get_path(adapter));
-+	gmap = bt_gmap_find(btd_gatt_database_get_db(database));
-+	bt_gmap_unref(gmap);
-+}
++		UGT 80 kbps Source feature support
 +
-+static struct btd_profile gmap_profile = {
-+	.name		= "gmap",
-+	.priority	= BTD_PROFILE_PRIORITY_MEDIUM,
-+	.remote_uuid	= GMAS_UUID_STR,
++	:"ugt-sink":
 +
-+	.device_probe	= gmap_probe,
-+	.device_remove	= gmap_remove,
-+	.accept		= gmap_accept,
-+	.disconnect	= gmap_disconnect,
++		UGT Sink feature support
 +
-+	.adapter_probe = gmap_adapter_probe,
-+	.adapter_remove = gmap_adapter_remove,
++	:"ugt-64kbps-sink":
 +
-+	.experimental	= true,
-+};
++		UGT 64 kbps Sink feature support
 +
-+static int gmap_init(void)
-+{
-+	int err;
++	:"ugt-multiplex":
 +
-+	err = btd_profile_register(&gmap_profile);
-+	if (err)
-+		return err;
++		UGT Multiplex feature support
 +
-+	return 0;
-+}
++	:"ugt-multisink":
 +
-+static void gmap_exit(void)
-+{
-+	btd_profile_unregister(&gmap_profile);
-+}
++		UGT Multisink feature support
 +
-+BLUETOOTH_PLUGIN_DEFINE(gmap, VERSION, BLUETOOTH_PLUGIN_PRIORITY_DEFAULT,
-+							gmap_init, gmap_exit)
++	:"ugt-multisource":
++
++		UGT Multisource feature support
++
++	:"bgs-96kbps":
++
++		BGS 96 kbps feature support
++
++	:"bgr-multisink":
++
++		BGR Multisink feature support
++
++	:"bgr-multiplex":
++
++		BGR Multiplex feature support
 -- 
 2.51.1
 
