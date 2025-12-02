@@ -1,90 +1,176 @@
-Return-Path: <linux-bluetooth+bounces-17047-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-17043-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2450AC9BCB8
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 02 Dec 2025 15:33:41 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id E32F9C9BC91
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 02 Dec 2025 15:31:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D7BE03A7BE7
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Dec 2025 14:33:39 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 63CEF34559F
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Dec 2025 14:31:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3F65221F0C;
-	Tue,  2 Dec 2025 14:33:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32C8F212B31;
+	Tue,  2 Dec 2025 14:31:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P0HFBHZc"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bIqgzVZP"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30A54306B18
-	for <linux-bluetooth@vger.kernel.org>; Tue,  2 Dec 2025 14:33:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 204E054774
+	for <linux-bluetooth@vger.kernel.org>; Tue,  2 Dec 2025 14:31:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764685999; cv=none; b=PfwwGu70nut4vIRgkgP/OK21lTTa5xAVJZEunxZuD0eogXWOQHM8Nz8gCvX8BcTOQLdUHNjvO/xh1kOvxCH+4zVJXTPD6IOOj4TE2WZeoVHP7Lf7UdzQmkmi+WF2Uo5rUGPBPdif4Q7fggFrYsc5VRHkDgAN8KReu8YPg/Qi878=
+	t=1764685870; cv=none; b=n4/ep9cMxXJpK5yPeiLlROqF16D7G5g1XG8qnK7u1nCPryeN22oIpRqDxwcP0kmMNU6pmWUcqxZkg+Zz1NAzeJ4ErLrkkwTUsR4sPxJNLf2JsGzNw/faQMdYr72BgzscMGRhzroxoKwhvTO14nDtTIrgWr1FTA6CXH1nbCWb0HI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764685999; c=relaxed/simple;
-	bh=Cj7/3S3H8RZXNqmz1aLT7BXBDcSSf+Evo6Y3Bn8Hfc0=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=JK9rK5czEAuob01b+ZCpljBfX72Uc9OYp84e8YTpJAK2IYVKIzMLnuAj6Mr/gjDYVIjSLkvXV55KOCTK+rAUMplN68bodToSdI+2dnH4+eDDz1ZQNDjvyOwJX/P1ZbEjncixGt4s8oKO0UjkfFgHHfZcVfg630MsRPsWg9NZoQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P0HFBHZc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6299C116B1;
-	Tue,  2 Dec 2025 14:33:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764685998;
-	bh=Cj7/3S3H8RZXNqmz1aLT7BXBDcSSf+Evo6Y3Bn8Hfc0=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=P0HFBHZcsLDHB0fewrpQQEBv0gyPqoPUaAkgeoK/oz3o+yJ0ck67qhCSrsUMZb5O3
-	 dNeUX5xBFrKJHKu89ZWJhYFUuZeiO44/9seNSuSURX2X4B/7gtXJqRoYTwzuUIaFnK
-	 w78bSd4pTMQ0rXYR4vom/yclwIK6qkKh5ZIgDISk1T1QUTvXz25y+c9E631UeaPx3T
-	 VGP/2KdH2SRa5y2YjZ+VYgY/ECKxVJFZrBXKnDfVENIc+L+4JUIi977yCW243ZA+m3
-	 XtZ4LxuTdhciN7jm16Mo9iWgciQfGnHXlKEIQSvN27jYGYWrSgqfGxsj9cmmZdUZhg
-	 A7FnvonEzqxGw==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 78C3C3A54A16;
-	Tue,  2 Dec 2025 14:30:19 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1764685870; c=relaxed/simple;
+	bh=pcqt4XdjF+CDytCzwvAyGUFPa5+W/Fdo3rdQgQfLPh4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ezM6q4wzkkzJa523TBzKfT7xfwZ8u7gjH/yhA9+hZvH6LAvEvkXKzCrIJlctCqOwaD+3K6Z25hGKlgqoyPwr9L8utrpf3mQ2y6gpEYfZoByxmnLtxlHoli2wxzlAgy+WmPo0gVzXSG3mMROMlTBYfWFly43Fdu0Ai8Iqf0b2N6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bIqgzVZP; arc=none smtp.client-ip=209.85.208.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-37902f130e1so52260281fa.1
+        for <linux-bluetooth@vger.kernel.org>; Tue, 02 Dec 2025 06:31:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1764685867; x=1765290667; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=r0PCMs54UXzZSdH1jgNNXPaRPg4CaAgu9x8m2HqMwp4=;
+        b=bIqgzVZPVBGAP5NKddiABgDiBrDEMeGNYELasWpm4LeVX8tmzHCHOnlgHMgAS9Wvre
+         BotdXkRIiFC3KT9E3IwSNktvJ4Kk9dvuVoXhm6X0gL/zgRbggSEnv2mBrxXyyY/GR6oy
+         f8Ia1gdWgdK4XBJg3ixE4oUtQDfwaxA32ZycaST4TvL5Wk5ITc5qn+++FTlqi1f/x/c7
+         iFRf7GBaZTKVr8/i/a7/N18vVN1Q5ddcE+/wiCa8gMT9hcET2oKuF4lloxFrjYAOj4f4
+         tA5jzilI0e+I08HA9JS8nxb9fm9uUArWkgs/p2VbDR7vE7IqmXXkBwtsgPMwpCadZEFz
+         4m3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764685867; x=1765290667;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=r0PCMs54UXzZSdH1jgNNXPaRPg4CaAgu9x8m2HqMwp4=;
+        b=jI9ORg0omSG3lTIcdMETQmTHUxEx9ifkUL15cBuUkIQ97qzaYFyimihwG9I/55u+s9
+         mA51qnbnf5SlTnZHbYIT453kyvqohUyEHgnV4Siix0ggDGTr67vdKzW+OidyYqtT2edM
+         OAYFDrwHRBVy7Pr9HMvmw2SHa3MpsGepWzePQTfMkR5g43/Eospu5X5TSf+gzDarC3kw
+         cV2D23/I+jLzGbrBzcMMz1JDSXpWhKvlwDp4+mNWLOtK15CIlTvIGIef0cpdhBKoB0gf
+         NhR+Lj1BINZnjK7rDw4/wYzEB6qnpsFifbpVGAmjo8eXS59YBWAebfhGiKz1BI3DXEbI
+         VsBg==
+X-Forwarded-Encrypted: i=1; AJvYcCVDurXb5hf3tS4ey+0q6oBgZ3/6a0JsdDqNvSC20urtCL84J0CCVFcNBkBlbTGqEDLwcPKw4ph4i3Avud8PZdQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxo12swMCDxLPJcq6kyblx4Hk6LhcPAVoD5Pz25JYOUfBmExrvk
+	NkYRMJfLWZ0lADXT6cQv6QnLbz2Po8/dCR21e+lZIIdIOIIrzo06MzEOiRG0zAN1eUim4mFrEZe
+	mQnq6fJ4gvd/ZlRQVBLSkFaM0EcANadw=
+X-Gm-Gg: ASbGncsnLOV3QXICSrZx9uwQYr1gRFMd+Wb50D/F6qeWLeA2yoyyt9bLTioApfI8rMq
+	JjCYRM9nT53xsF8ZBPX8L0o1DV55dY08UJYrHD4ZMeycXPVMyO6OZuSrpQwsG9Gljb3NextqQLK
+	H9dqFYnyCRse5DJBqXlPHYmEc0rTWQKNKOS7XWrsxu2yEfnQeyYY7s6lAmtwxCZ2OXH5/jEYvCW
+	RkvcRDtYSGAnKPLq+N3s/5C77MkGheEjpgT/T/bBVz9HNE466z6nYRkCUQ6Atzm3A0xOWiRSts+
+	TmOJ
+X-Google-Smtp-Source: AGHT+IGOwZkzIdsHmSn2gpBjqwrDNfc/MzCaS7PmviqdeiZnZ71DelU/4q3Fv5ydrP/RTxp4VEUkETh4E6PuIjrFBo4=
+X-Received: by 2002:a2e:9604:0:b0:37a:3123:fd9a with SMTP id
+ 38308e7fff4ca-37cd928dee4mr83694971fa.42.1764685866823; Tue, 02 Dec 2025
+ 06:31:06 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH BlueZ v1] client/player: Print
- MediaEndpoint.SupportedFeatures
-From: patchwork-bot+bluetooth@kernel.org
-Message-Id: 
- <176468581802.3250289.13474236152923619585.git-patchwork-notify@kernel.org>
-Date: Tue, 02 Dec 2025 14:30:18 +0000
-References: <20251201180608.168392-1-luiz.dentz@gmail.com>
-In-Reply-To: <20251201180608.168392-1-luiz.dentz@gmail.com>
-To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: linux-bluetooth@vger.kernel.org
+References: <20250916140259.400285-1-quic_shuaz@quicinc.com>
+ <vipw44g3fmaf7yhv5xtaf74zbgbkwhjgyjtguwdxgkkk7pimy6@eauo3cuq3bgi> <c87533fc-768d-4b70-a1aa-2639e5329058@quicinc.com>
+In-Reply-To: <c87533fc-768d-4b70-a1aa-2639e5329058@quicinc.com>
+From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date: Tue, 2 Dec 2025 09:30:54 -0500
+X-Gm-Features: AWmQ_bkO_gk7n3itmkPSV3EaCnil9GDPcWHRKQKKXaQMjQaimc77N6c5fmhHKig
+Message-ID: <CABBYNZJ=C3fYy=SXQyv9x-49vGSjXd-06MsQJ2N3Ps0egMRCuQ@mail.gmail.com>
+Subject: Re: [PATCH v12] Bluetooth: hci_qca: Fix SSR (SubSystem Restart) fail
+ when BT_EN is pulled up by hw
+To: Shuai Zhang <quic_shuaz@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, marcel@holtmann.org, 
+	linux-bluetooth@vger.kernel.org, stable@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	quic_chejiang@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello:
+Hi Shuai,
 
-This patch was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+On Tue, Dec 2, 2025 at 4:08=E2=80=AFAM Shuai Zhang <quic_shuaz@quicinc.com>=
+ wrote:
+>
+> Hi Luiz
+>
+> On 9/16/2025 11:01 PM, Dmitry Baryshkov wrote:
+> > On Tue, Sep 16, 2025 at 10:02:59PM +0800, Shuai Zhang wrote:
+> >> On QCS9075 and QCA8275 platforms, the BT_EN pin is always pulled up by=
+ hw
+> >> and cannot be controlled by the host. As a result, in case of a firmwa=
+re
+> >> crash, the host cannot trigger a cold reset. Instead, the BT controlle=
+r
+> >> performs a warm restart on its own, without reloading the firmware.
+> >>
+> >> This leads to the controller remaining in IBS_WAKE state, while the ho=
+st
+> >> expects it to be in sleep mode. The mismatch causes HCI reset commands
+> >> to time out. Additionally, the driver does not clear internal flags
+> >> QCA_SSR_TRIGGERED and QCA_IBS_DISABLED, which blocks the reset sequenc=
+e.
+> >> If the SSR duration exceeds 2 seconds, the host may enter TX sleep mod=
+e
+> >> due to tx_idle_timeout, further preventing recovery. Also, memcoredump=
+_flag
+> >> is not cleared, so only the first SSR generates a coredump.
+> >>
+> >> Tell driver that BT controller has undergone a proper restart sequence=
+:
+> >>
+> >> - Clear QCA_SSR_TRIGGERED and QCA_IBS_DISABLED flags after SSR.
+> >> - Add a 50ms delay to allow the controller to complete its warm reset.
+> >> - Reset tx_idle_timer to prevent the host from entering TX sleep mode.
+> >> - Clear memcoredump_flag to allow multiple coredump captures.
+> >>
+> >> Apply these steps only when HCI_QUIRK_NON_PERSISTENT_SETUP is not set,
+> >> which indicates that BT_EN is defined in DTS and cannot be toggled.
+> >>
+> >> Refer to the comment in include/net/bluetooth/hci.h for details on
+> >> HCI_QUIRK_NON_PERSISTENT_SETUP.
+> >>
+> >> Changes in v12:
+> >> - Rewrote commit to clarify the actual issue and affected platforms.
+> >> - Used imperative language to describe the fix.
+> >> - Explained the role of HCI_QUIRK_NON_PERSISTENT_SETUP.
+> >
+> > I'll leave having the changelog inside the commit message to the
+> > maintainer's discretion.
+> >
+> > Otherwise:
+> >
+> >
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> >
+> >
+>
+> I noticed that this upstream patch has already been reviewed,
+> but it still seems not to have been accepted. Is there anything else I ne=
+ed to do?
 
-On Mon,  1 Dec 2025 13:06:08 -0500 you wrote:
-> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-> 
-> This makes command endpoint.show print the MediaEndpoint interface
-> property SupportedFeatures.
-> ---
->  client/player.c | 1 +
->  1 file changed, 1 insertion(+)
+My bad, please resend it so CI can pick it up for testing.
 
-Here is the summary with links:
-  - [BlueZ,v1] client/player: Print MediaEndpoint.SupportedFeatures
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=6b9d8c388442
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+> >
+> >>
+> >> Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
+> >> ---
+> >>  drivers/bluetooth/hci_qca.c | 33 +++++++++++++++++++++++++++++++++
+> >>  1 file changed, 33 insertions(+)
+> >>
+> >
+>
+> Thanks,
+> Shuai
 
 
+
+--=20
+Luiz Augusto von Dentz
 
