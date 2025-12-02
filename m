@@ -1,61 +1,42 @@
-Return-Path: <linux-bluetooth+bounces-17060-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-17057-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 255B5C9CF66
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 02 Dec 2025 21:49:07 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 82FBEC9CF54
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 02 Dec 2025 21:48:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 579C5343EF2
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Dec 2025 20:48:51 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 75F204E37A7
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Dec 2025 20:48:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4996A2F8BDC;
-	Tue,  2 Dec 2025 20:48:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A5272F744F;
+	Tue,  2 Dec 2025 20:48:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="EYvQO+ND";
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="BIS9CScJ"
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="rlmUPYdr"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [185.185.170.37])
+Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C9CE2EA158
-	for <linux-bluetooth@vger.kernel.org>; Tue,  2 Dec 2025 20:48:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=185.185.170.37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE3042F745C
+	for <linux-bluetooth@vger.kernel.org>; Tue,  2 Dec 2025 20:48:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764708497; cv=pass; b=sMaj1qqoTOoMHVzMXBo9xBYhayYd7A/AhObqpQZHkxQH+vuhkVZRAjG5g1POrW17YUnULUVO/bJpNFNEw0Qrfizhm6/+OWGBfVsGse2yRqZXRiWS2capr88TE7fpW/gDblVf8efH5Lg/7B/ffMvl003uk3cSvlWxkVQKk6IyeF4=
+	t=1764708492; cv=pass; b=GrCkH1ckkVo9ZSxuZVyKUCKAqp6PKelW+PMwzDHL9EnSAz3CS6s7hApk36sxxtLpYk7FP60KNd/B9NFWbAYttI662kZqVrXmg6YgcLQIq/lsyS855BwK5jL+cK87SQ04iSRRFoOWUGq2l70zVUgiAgxTpQtc0VaMlRXN3lBXljY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764708497; c=relaxed/simple;
-	bh=TZnowD4SozmAIWQZldk/iz2SQwLNoCFizSJ8uDyYpv0=;
+	s=arc-20240116; t=1764708492; c=relaxed/simple;
+	bh=xFMR9Gk8RLaEFI6qmNfrUPAfPfF4n8mZT3/LI7RF3wg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LQsmWty4YNsTxcp5uKr6ObGR1H57KgbkpD+7Fff9xJDxx+CIXsmZ/B+3+6Szj31/fTC7ymBCUGspyD9lQQ4NscDjkt2N8u1FOpVtEKQi1EGSaK6lUe7kcYnyeQAGz/pVkFZEEOaHh1kV5Vcqi3Zw/kwlDpEhsXcDpJIjyht5RtQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=EYvQO+ND; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=BIS9CScJ; arc=pass smtp.client-ip=185.185.170.37
+	 MIME-Version; b=J+/OONpp4k6Y/274ImsjiPR9a7wlTq1D4Og8hzVBmXYMq76saNPcOYI2AY83OCEbNz1VIOvsVAUpi0Lm4Xt5FCSIo49c6y4CGShJ0zWQelmP68zXly3QP3+cvxwyZHrn35miZw9OCAnGJNmnqBIj3ft6EbklUHsK7vYBg021Boo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=rlmUPYdr; arc=pass smtp.client-ip=195.140.195.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
-Received: from meesny.iki.fi (meesny.iki.fi [IPv6:2001:67c:2b0:1c1::201])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by lahtoruutu.iki.fi (Postfix) with ESMTPS id 4dLXsb1t0hz49Q80
-	for <linux-bluetooth@vger.kernel.org>; Tue, 02 Dec 2025 22:48:03 +0200 (EET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
-	t=1764708483;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=tk1+Jw6C4mWuzjmioQygpl/nJLdLoOesNvf6rg3xiNk=;
-	b=EYvQO+NDkm4XW7nsVHSQcAeSQeZh1z/78zjBRctYaSADnnvg3K0pxXnCt69Gcw4Mg4EBBH
-	zbTfJKQlq0k2YKN5kbV78pPsbRJ0c/UwNwLbV5WtZ3IwRH1spozXZR0JCCbwTXjxMjZxs/
-	g3ddW32WRKg4uVoHc/2+DYJ3sZ4cBZYd8ztV//47XoPYCDM8HjE05tXNbK+ib+3eTVsCqj
-	zus+/83WHG5XH65Df+Leu6DaLY7ZWizPFOgQhnSGNEDhVBV5aAtr8AhevviMTqQJ3qf+xm
-	RmPniSwTJuiSYERisq08eQTtPIM2h5M+XS3H2UX7cbW2OVv36SfR4J0Rajcz1Q==
 Received: from monolith.lan (unknown [IPv6:2a02:ed04:3581:3::d001])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4dLXsR36fvz10Lw;
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4dLXsR4fdqz10M3;
 	Tue,  2 Dec 2025 22:47:55 +0200 (EET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
 	t=1764708475;
@@ -63,14 +44,14 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=tk1+Jw6C4mWuzjmioQygpl/nJLdLoOesNvf6rg3xiNk=;
-	b=BIS9CScJGy/TIvZIkUzuy7qLmqTAkcJ4u3X24l0g/hrOoYagmwNx5VBYUQaZD4wjVFXnbV
-	VmAVcFSp1oR4jWa9DDuCUtt6JydeY9s4QE4cmXCvJY4BVreNxCy1b3Bn672ORoubft21Mb
-	qf6JXzHTHtlh4jh2GttPvV4s04IQCHQ=
+	bh=5zs6AMls0y6pjwnp6M1vJqoMhk7yZI2/AREY3VYzcP8=;
+	b=rlmUPYdrMt+gky2ObDYmSuFrp1x9Q/UUQpOlc0yOalV6vHEuQpuhazZxChdOFBs6olaChR
+	X+InY9RGnhsjQ3nUuUsjr+AJEPUKWNnBca0Di4vk9Bp+y375tH0d9B2UISK42gDk9kF6wR
+	g1rjLeBjfKXSw8Vk5CLTzzBazKZLzEM=
 ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1764708475;
-	b=YTpUg7rJqZ6Sj1rkbbesmsHPmZ5mA9v/mAn6XvazILeJ7epoO0G8IX2QOe/Y1p+lzlxomc
-	388VMJR6AUeiRCaIczrb0ceqsvWc6md82E0zThfZ50UkkDCFHQwrCeREDydmxkdhDF/5Uv
-	R8LhlH9uZOL3SWgdC+YGrkTNE0IGhps=
+	b=ShM6rsqri87aiB/9X2RpjpbCcrtbsh2PICNZZS1FaBmvfo4XeCkXW2RxqX0Psu2UX31DCv
+	Wtk1TpmxYPfK4+ervOPXv3l4mbmnbprD6rRpiWsTP/Eo2MAxW6c2pp5H2TeQLL7zefk6QT
+	uJzaUvh53EMlJtoJCdwweW2++PJFWLE=
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
@@ -80,16 +61,16 @@ ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=tk1+Jw6C4mWuzjmioQygpl/nJLdLoOesNvf6rg3xiNk=;
-	b=saa8AHAi48XXMQrZhiL2t2YDX9HeQCm0OrQ8lcdP4p87MyL468Q39hZ87PvWjIuZgUPy99
-	6FNYPfXUw6kbKyypsgm+5CiUVCFf/rZo5j8DdBcdpR3HivtKt0iaudEaAtOF8jZqDIhs2P
-	aOiqRL0fMqUiWgSE5FNpGbREG74Q5U8=
+	bh=5zs6AMls0y6pjwnp6M1vJqoMhk7yZI2/AREY3VYzcP8=;
+	b=OAUZ8BjeeVMCdI8qhkwyltbp2inqERPxzHdi3RNBFdgOcgKjQvi3GqDUs/Hwc/o8q/YkEb
+	woUhFFvBpyhD0VQPTEe1M5UQMRGG8N1wS+kYH3bztg9Yv8UpnRUeCNyJlUmKOw0JoMKPGU
+	rIIJwVgrLwOX4sY7oyZv5VN2i6LIhOM=
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ v3 4/7] service: implement btd_profile::after_services callback
-Date: Tue,  2 Dec 2025 22:47:49 +0200
-Message-ID: <5c6590378409461bf24b97f090af3abb59c7a66d.1764708372.git.pav@iki.fi>
+Subject: [PATCH BlueZ v3 5/7] bap: have unicast client wait for VCS & TMAS & GMAP
+Date: Tue,  2 Dec 2025 22:47:50 +0200
+Message-ID: <ea99aac0d8fddbc9dc7130cfb89d139e48850c66.1764708372.git.pav@iki.fi>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <cover.1764708372.git.pav@iki.fi>
 References: <cover.1764708372.git.pav@iki.fi>
@@ -101,191 +82,96 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Handle btd_profile::after_services callback when after_services
-dependencies have finished connecting.
+Have unicast client to wait for VCS, TMAS, and GMAP before creating
+endpoints and transports, so that their information is available at that
+point.
 ---
 
 Notes:
     v3:
-    - after_uuids -> after_services
-    - don't log "dependencies ready" if there is no deps or callback
+    - ready + after_uuids -> after_services
+    v2:
+    - use the generic mechanism to do this
 
- src/service.c | 106 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 106 insertions(+)
+ profiles/audio/bap.c | 36 +++++++++++++++++++++++++++++++++---
+ 1 file changed, 33 insertions(+), 3 deletions(-)
 
-diff --git a/src/service.c b/src/service.c
-index 7690a1261..8301b1ead 100644
---- a/src/service.c
-+++ b/src/service.c
-@@ -26,6 +26,8 @@
- #include "bluetooth/bluetooth.h"
- #include "bluetooth/sdp.h"
- 
-+#include "src/shared/queue.h"
-+
- #include "log.h"
- #include "backtrace.h"
- 
-@@ -43,6 +45,8 @@ struct btd_service {
- 	int			err;
- 	bool			is_allowed;
- 	bool			initiator;
-+	struct queue		*depends;
-+	struct queue		*dependents;
+diff --git a/profiles/audio/bap.c b/profiles/audio/bap.c
+index 0dcc57eb5..295e4552d 100644
+--- a/profiles/audio/bap.c
++++ b/profiles/audio/bap.c
+@@ -145,6 +145,8 @@ struct bap_data {
+ 	GIOChannel *listen_io;
+ 	unsigned int io_id;
+ 	unsigned int cig_update_id;
++	bool services_ready;
++	bool bap_ready;
  };
  
- struct service_state_callback {
-@@ -71,6 +75,50 @@ static const char *state2str(btd_service_state_t state)
- 	return NULL;
+ static struct queue *sessions;
+@@ -2137,10 +2139,10 @@ static bool pac_found_bcast(struct bt_bap_pac *lpac, struct bt_bap_pac *rpac,
+ 	return true;
  }
  
-+static void depends_ready(void *item, void *user_data)
-+{
-+	struct btd_service *service = item;
-+	struct btd_service *dep = user_data;
-+	struct btd_profile_uuid_cb *after = &service->profile->after_services;
-+	char addr[18];
-+
-+	if (dep && !queue_remove(service->depends, dep))
-+		return;
-+	if (!service->depends || !queue_isempty(service->depends))
-+		return;
-+
-+	queue_destroy(service->depends, NULL);
-+	service->depends = NULL;
-+
-+	if (!after->count && !after->func)
-+		return;
-+
-+	ba2str(device_get_address(service->device), addr);
-+	DBG("%p: device %s profile %s dependencies ready", service,
-+						addr, service->profile->name);
-+
-+	switch (service->state) {
-+	case BTD_SERVICE_STATE_CONNECTING:
-+	case BTD_SERVICE_STATE_CONNECTED:
-+		if (after->func)
-+			after->func(service);
-+		break;
-+	case BTD_SERVICE_STATE_UNAVAILABLE:
-+	case BTD_SERVICE_STATE_DISCONNECTING:
-+	case BTD_SERVICE_STATE_DISCONNECTED:
-+		break;
-+	}
-+}
-+
-+static void service_ready(struct btd_service *service)
-+{
-+	queue_foreach(service->dependents, depends_ready, service);
-+	queue_destroy(service->dependents, NULL);
-+	service->dependents = NULL;
-+
-+	depends_ready(service, NULL);
-+}
-+
- static void change_state(struct btd_service *service, btd_service_state_t state,
- 									int err)
+-static void bap_ready(struct bt_bap *bap, void *user_data)
++static void bap_ucast_start(struct bap_data *data)
  {
-@@ -98,6 +146,9 @@ static void change_state(struct btd_service *service, btd_service_state_t state,
- 		cb->cb(service, old, state, cb->user_data);
+-	struct btd_service *service = user_data;
+-	struct bap_data *data = btd_service_get_user_data(service);
++	struct btd_service *service = data->service;
++	struct bt_bap *bap = data->bap;
+ 
+ 	DBG("bap %p", bap);
+ 
+@@ -3723,6 +3725,29 @@ static void pa_and_big_sync(struct bap_setup *setup)
+ 	}
+ }
+ 
++static void bap_ready(struct bt_bap *bap, void *user_data)
++{
++	struct btd_service *service = user_data;
++	struct bap_data *data = btd_service_get_user_data(service);
++
++	DBG("bap %p", bap);
++
++	data->bap_ready = true;
++	if (data->services_ready)
++		bap_ucast_start(data);
++}
++
++static void bap_services_ready(struct btd_service *service)
++{
++	struct bap_data *data = btd_service_get_user_data(service);
++
++	DBG("%p", data);
++
++	data->services_ready = true;
++	if (data->bap_ready)
++		bap_ucast_start(data);
++}
++
+ static int bap_bcast_probe(struct btd_service *service)
+ {
+ 	struct btd_device *device = btd_service_get_device(service);
+@@ -3877,6 +3902,9 @@ static int bap_accept(struct btd_service *service)
+ 		return -EINVAL;
  	}
  
-+	if (state != BTD_SERVICE_STATE_CONNECTING)
-+		service_ready(service);
++	data->bap_ready = false;
++	data->services_ready = false;
 +
- 	if (state == BTD_SERVICE_STATE_DISCONNECTED)
- 		service->initiator = false;
- }
-@@ -111,6 +162,20 @@ struct btd_service *btd_service_ref(struct btd_service *service)
- 	return service;
- }
+ 	if (!bt_bap_attach(data->bap, client)) {
+ 		error("BAP unable to attach");
+ 		return -EINVAL;
+@@ -4000,6 +4028,8 @@ static struct btd_profile bap_profile = {
+ 	.adapter_remove	= bap_adapter_remove,
+ 	.auto_connect	= true,
+ 	.experimental	= true,
++	.after_services	= BTD_PROFILE_UUID_CB(bap_services_ready,
++				VCS_UUID_STR, TMAS_UUID_STR, GMAS_UUID_STR),
+ };
  
-+static void depends_remove(void *item, void *user_data)
-+{
-+	struct btd_service *service = item;
-+
-+	queue_remove(service->dependents, user_data);
-+}
-+
-+static void dependents_remove(void *item, void *user_data)
-+{
-+	struct btd_service *service = item;
-+
-+	queue_remove(service->depends, user_data);
-+}
-+
- void btd_service_unref(struct btd_service *service)
- {
- 	service->ref--;
-@@ -120,6 +185,11 @@ void btd_service_unref(struct btd_service *service)
- 	if (service->ref > 0)
- 		return;
- 
-+	queue_foreach(service->depends, depends_remove, service);
-+	queue_foreach(service->dependents, dependents_remove, service);
-+	queue_destroy(service->depends, NULL);
-+	queue_destroy(service->dependents, NULL);
-+
- 	g_free(service);
- }
- 
-@@ -172,6 +242,39 @@ void service_remove(struct btd_service *service)
- 	btd_service_unref(service);
- }
- 
-+static void add_depends(struct btd_service *service)
-+{
-+	struct btd_profile_uuid_cb *after = &service->profile->after_services;
-+	unsigned int i;
-+
-+	queue_foreach(service->depends, depends_remove, service);
-+	queue_destroy(service->depends, NULL);
-+	service->depends = queue_new();
-+
-+	for (i = 0; i < after->count; ++i) {
-+		const char *uuid = after->uuids[i];
-+		struct btd_service *dep;
-+
-+		dep = btd_device_get_service(service->device, uuid);
-+		if (!dep)
-+			continue;
-+
-+		/* Profiles are sorted vs after_uuids, so the dependency will
-+		 * have started connecting before us if it is going to connect.
-+		 */
-+		if (dep->state != BTD_SERVICE_STATE_CONNECTING)
-+			continue;
-+		if (queue_find(service->depends, NULL, dep))
-+			continue;
-+
-+		queue_push_tail(service->depends, dep);
-+
-+		if (!dep->dependents)
-+			dep->dependents = queue_new();
-+		queue_push_tail(dep->dependents, service);
-+	}
-+}
-+
- int service_accept(struct btd_service *service, bool initiator)
- {
- 	char addr[18];
-@@ -199,6 +302,7 @@ int service_accept(struct btd_service *service, bool initiator)
- 	}
- 
- 	service->initiator = initiator;
-+	add_depends(service);
- 
- 	err = service->profile->accept(service);
- 	if (!err)
-@@ -265,6 +369,8 @@ int btd_service_connect(struct btd_service *service)
- 		return -ECONNABORTED;
- 	}
- 
-+	add_depends(service);
-+
- 	err = profile->connect(service);
- 	if (err == 0) {
- 		service->initiator = true;
+ static struct btd_profile bap_bcast_profile = {
 -- 
 2.51.1
 
