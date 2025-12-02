@@ -1,132 +1,202 @@
-Return-Path: <linux-bluetooth+bounces-17055-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-17063-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B17FC9CF5A
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 02 Dec 2025 21:48:49 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 00BF9C9CF7B
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 02 Dec 2025 21:53:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 7C375343508
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Dec 2025 20:48:37 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id EC32A343C86
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  2 Dec 2025 20:53:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A597F2F7464;
-	Tue,  2 Dec 2025 20:48:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E60C2F691F;
+	Tue,  2 Dec 2025 20:53:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="dhbgMsUz"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="Z8lDzUir"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
+Received: from out-26.smtp.github.com (out-26.smtp.github.com [192.30.252.209])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B89AB2F7454
-	for <linux-bluetooth@vger.kernel.org>; Tue,  2 Dec 2025 20:48:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764708491; cv=pass; b=a5oprma5Yq1KZiVTfgY/AD19bp8BYUdzzF/sRnerczB3MEET+o0T0Vy9cUjcmNiO91Mm6iBoPxc0ZwhOS0V9tPP3TjJjA++7aa6DM0oCqfx65r+T/yoKbO455lX03+EFk1NymxBSvpphHV8xD7Oo51EZG+hSPXCJDck9IRTRArs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764708491; c=relaxed/simple;
-	bh=eDmzJ9fw7qDoGhErWQSD1ib00mBfpU4PuOCZiBWIFCc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZducWGNvbrWciPAiVjofNMqMN2/lQO5dQPDaE114wnHw9MXKntUMMmcBsWa6hUAXqrQnDaDO4yJF+HUG3BcpV2FsXIZiq7ko9i7+iOJkaCYzfphWpFMeIFuevICLHTvJUDtwfeLLD6ANGPmyxNDAyVcVz2svYSc8YtZ6KWeuLFc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=dhbgMsUz; arc=pass smtp.client-ip=195.140.195.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
-Received: from monolith.lan (unknown [IPv6:2a02:ed04:3581:3::d001])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: pav)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4dLXsS0m1Rz10MB;
-	Tue,  2 Dec 2025 22:47:56 +0200 (EET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
-	t=1764708476;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=w1DoRPan02uSW3bx+ysjBjMx03RNuux2mB2xKuvTw0Q=;
-	b=dhbgMsUzaLnGxdl7GMqYXNxvYCAHpEaLm1dkJKKPi2GuQw5EViAvbkytxwkJ5NjvwXc94J
-	MUItKuS5g+ia06I9c7WTEYABM/XsVec87QDFbgMl4w/PQlmVlClciRMEDKtcT8Dxxd3zQc
-	xWY2hEzwTemhOSa5n2Cqr3QJkeyzQEQ=
-ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1764708476;
-	b=lpax63OdBRG64IqpJn1QDSPv/1I9Q3oeBsjGsFUYIlNQOk/9xSQMfImFq0hrW1CqZ/Et9L
-	jcU4QbN3gZLWLFmXAXtcvZCvQLRmNIzmHkylwfkXkhIvOpMVHBuCTsTYXMNWVzOuQJvVgf
-	VJZfgkhdpimNz+5Ze28bb1di0WPUqSc=
-ARC-Authentication-Results: i=1;
-	ORIGINATING;
-	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=meesny; t=1764708476;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=w1DoRPan02uSW3bx+ysjBjMx03RNuux2mB2xKuvTw0Q=;
-	b=gJThzFnfSLPhGgckl/J2EMzO6hakixmComyafWpTd7KrbF5VjZfscadXQp4/WUnRMPEBaS
-	X14a82nJwsFSpIjGsnJzH+e65sjaqLiQcwFGGABrImrBkP2R4QQfby8gXVS2pB7OEv71my
-	jR++47ot9iZ/wZyXktQfSITNKLaZAYY=
-From: Pauli Virtanen <pav@iki.fi>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A058D21883E
+	for <linux-bluetooth@vger.kernel.org>; Tue,  2 Dec 2025 20:53:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.209
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1764708810; cv=none; b=GPcP0XPo8aUwLh6MhvM5pz385MH3KaCLekg7Kf0YKENWIrb9wAU51TNDofPE7WHmXQvroqcPBsfaaog8SnOfZnK1tdPy7IwoJHhDn7p9D4r2j3Uhv/8aGhKx3Kk7KCb24c/nWrQlm85AtDV9A3OA7R4o8ued5tF1hvmRAasHsP4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1764708810; c=relaxed/simple;
+	bh=jb5LtTbdxTLmIH+c8OSEPEcn+uZZi/IN68vbxtQcOSU=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=MmvEMtHjriD/2YqxBy8iv1AqVOigEAvfVM97Nx2kW87nd6O3Y/DKbtNhEeD9j1QY7aSiaILTfMo5+1SGcH/wVF/FTsqEgkoA/S33CtVDOF4ePZg52qFW93RK4T01G7XzHXfnUKMNxYOkD72WCBMLrUFB4wn8L1nnwYnHzNsd/NQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=Z8lDzUir; arc=none smtp.client-ip=192.30.252.209
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
+Received: from github.com (hubbernetes-node-56813b9.ash1-iad.github.net [10.56.225.86])
+	by smtp.github.com (Postfix) with ESMTPA id B93A2600757
+	for <linux-bluetooth@vger.kernel.org>; Tue,  2 Dec 2025 12:53:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+	s=pf2023; t=1764708807;
+	bh=5uehAK6tSgRrb9xn8DARx+Z5BtbsQAwhuh6DCU7LCOE=;
+	h=Date:From:To:Subject:List-Unsubscribe:From;
+	b=Z8lDzUirYq2qEllTtv7IXQfxOFm7WBTnv7XIjdMtat+1J1oWyOzWxrMPLOXaCeoi8
+	 FsK/7dXzC+cuwsFWPEbE2gVaY8FfjrPHPbbujG5Y1Pr7vS/yjbodarJG2vpGU2CF0k
+	 ueHOjWr0y9zOgXm53s84RwH3W/LnYRaOO69sDHSI=
+Date: Tue, 02 Dec 2025 12:53:27 -0800
+From: Pauli Virtanen <noreply@github.com>
 To: linux-bluetooth@vger.kernel.org
-Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ v3 7/7] vcp: wait until client ready before marking profile connected
-Date: Tue,  2 Dec 2025 22:47:52 +0200
-Message-ID: <ede9e43cf2971a7037d4772fc7a3f5f5f0a258e5.1764708372.git.pav@iki.fi>
-X-Mailer: git-send-email 2.51.1
-In-Reply-To: <cover.1764708372.git.pav@iki.fi>
-References: <cover.1764708372.git.pav@iki.fi>
+Message-ID: <bluez/bluez/push/refs/heads/1029869/000000-d21535@github.com>
+Subject: [bluez/bluez] 617e7f: profile: add after_services for ordering
+ profile s...
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
+
+  Branch: refs/heads/1029869
+  Home:   https://github.com/bluez/bluez
+  Commit: 617e7f7db6be5cbdeae4a69e18761b770f33edeb
+      https://github.com/bluez/bluez/commit/617e7f7db6be5cbdeae4a69e18761b770f33edeb
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2025-12-02 (Tue, 02 Dec 2025)
+
+  Changed paths:
+    M src/profile.c
+    M src/profile.h
+
+  Log Message:
+  -----------
+  profile: add after_services for ordering profile startup
+
+Add btd_profile::after_servicess to specify the profile connect/accept
+order for autoconnect.  This is a "soft" dependency so it doesn't fail
+if the other services fail to start nor try to start them if they
+otherwise wouldn't.
+
+Add btd_profile_sort_list() for sorting a list according to profile
+ordering, taking account priority and after_services.
+
+Add btd_profile_find_remote_uuid() lookup utility, needed when using
+btd_profile_sort_list() with uuid lists.
+
+
+  Commit: dc2d782c008937a05f55f19992581fef27104b7b
+      https://github.com/bluez/bluez/commit/dc2d782c008937a05f55f19992581fef27104b7b
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2025-12-02 (Tue, 02 Dec 2025)
+
+  Changed paths:
+    M .gitignore
+    M Makefile.am
+    A unit/btd.c
+    A unit/test-profile.c
+
+  Log Message:
+  -----------
+  test-profile: add tests for profile sorting
+
+Add tests to check btd_profile_sort_list() works correctly.
+
+The test uses queue instead of GSList in case device.c is converted to
+use queue later.
+
+Makefile.am: separate out bluetoothd_internal_sources (excludes plugins
+& main.c) and add stub for symbols in main.c.  The profile.c pulls in
+large parts of these so it's simpler to depend on them all for the test.
+This doesn't cause any recompilation.
+
+
+  Commit: ac5f5a333c27285228552637ca1883e839e27056
+      https://github.com/bluez/bluez/commit/ac5f5a333c27285228552637ca1883e839e27056
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2025-12-02 (Tue, 02 Dec 2025)
+
+  Changed paths:
+    M src/device.c
+
+  Log Message:
+  -----------
+  device: use after_services in service autoconnect and sort also GATT
+
+Use btd_profile_sort_list() for selecting the order in which services
+are connected: first by priority, then by after_services.
+
+Probe and accept also GATT services in profile order. Previously this
+was done in the order they were in GATT db.
+
+
+  Commit: 868ef3b95480cc7d45324a26e166a8d00f603cfb
+      https://github.com/bluez/bluez/commit/868ef3b95480cc7d45324a26e166a8d00f603cfb
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2025-12-02 (Tue, 02 Dec 2025)
+
+  Changed paths:
+    M src/service.c
+
+  Log Message:
+  -----------
+  service: implement btd_profile::after_services callback
+
+Handle btd_profile::after_services callback when after_services
+dependencies have finished connecting.
+
+
+  Commit: 0e55ecd81ed52bbd4ea8d8af2b5dc66226381237
+      https://github.com/bluez/bluez/commit/0e55ecd81ed52bbd4ea8d8af2b5dc66226381237
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2025-12-02 (Tue, 02 Dec 2025)
+
+  Changed paths:
+    M profiles/audio/bap.c
+
+  Log Message:
+  -----------
+  bap: have unicast client wait for VCS & TMAS & GMAP
+
+Have unicast client to wait for VCS, TMAS, and GMAP before creating
+endpoints and transports, so that their information is available at that
+point.
+
+
+  Commit: 693b73340e4a4c88b97ca2260bb65e4e64a7cdc2
+      https://github.com/bluez/bluez/commit/693b73340e4a4c88b97ca2260bb65e4e64a7cdc2
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2025-12-02 (Tue, 02 Dec 2025)
+
+  Changed paths:
+    M src/shared/vcp.c
+    M src/shared/vcp.h
+
+  Log Message:
+  -----------
+  shared/vcp: add ready callback to bt_vcp_attach()
+
+Add callback that is called when VCP client has finished attaching, so
+that caller can know when it can be used.
+
+
+  Commit: d215356302ee80defe30cbe8b712a1d635e2b665
+      https://github.com/bluez/bluez/commit/d215356302ee80defe30cbe8b712a1d635e2b665
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2025-12-02 (Tue, 02 Dec 2025)
+
+  Changed paths:
+    M profiles/audio/vcp.c
+
+  Log Message:
+  -----------
+  vcp: wait until client ready before marking profile connected
 
 Mark vcp profile connected only when VCP client is ready, so that
 dependent profiles do not try to use it when it is not yet initialized.
----
 
-Notes:
-    v3:
-    - new commit
 
- profiles/audio/vcp.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+Compare: https://github.com/bluez/bluez/compare/617e7f7db6be%5E...d215356302ee
 
-diff --git a/profiles/audio/vcp.c b/profiles/audio/vcp.c
-index 8949c7185..b2c9d1b32 100644
---- a/profiles/audio/vcp.c
-+++ b/profiles/audio/vcp.c
-@@ -282,6 +282,13 @@ static void vcp_remove(struct btd_service *service)
- 	vcp_data_remove(data);
- }
- 
-+static void vcp_ready(struct bt_vcp *vcp, void *user_data)
-+{
-+	struct btd_service *service = user_data;
-+
-+	btd_service_connecting_complete(service, 0);
-+}
-+
- static int vcp_accept(struct btd_service *service)
- {
- 	struct btd_device *device = btd_service_get_device(service);
-@@ -297,13 +304,11 @@ static int vcp_accept(struct btd_service *service)
- 		return -EINVAL;
- 	}
- 
--	if (!bt_vcp_attach(data->vcp, client)) {
-+	if (!bt_vcp_attach(data->vcp, client, vcp_ready, service)) {
- 		error("VCP unable to attach");
- 		return -EINVAL;
- 	}
- 
--	btd_service_connecting_complete(service, 0);
--
- 	return 0;
- }
- 
--- 
-2.51.1
-
+To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
