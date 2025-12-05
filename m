@@ -1,125 +1,62 @@
-Return-Path: <linux-bluetooth+bounces-17132-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-17111-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA0F9CAA16F
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 06 Dec 2025 06:29:28 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1966DCA8330
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 05 Dec 2025 16:32:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2E15730E6252
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  6 Dec 2025 05:29:26 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2EF51328AF7A
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  5 Dec 2025 15:29:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B9DE2BD5B9;
-	Sat,  6 Dec 2025 05:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5F42315D58;
+	Fri,  5 Dec 2025 15:17:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="Z3Qr5vKE"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mslow3.mail.gandi.net (mslow3.mail.gandi.net [217.70.178.249])
+Received: from out-21.smtp.github.com (out-21.smtp.github.com [192.30.252.204])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9C41FF7C7
-	for <linux-bluetooth@vger.kernel.org>; Sat,  6 Dec 2025 05:29:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.178.249
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987113570B2
+	for <linux-bluetooth@vger.kernel.org>; Fri,  5 Dec 2025 15:17:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.204
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764998965; cv=none; b=OW+BlhawEWw66PtE/BZb+uHQiee77DWFuGMghWeyjKBT7pf6BmCnJpWM6ehJD3ltWGdlXR57ORjxoVoCcDm7ZEKTO5R32tBdIdnt7uyKA+9I/TCkGnPzGKdv3jWFunXdHVxYHDazMRIXCgEU3JDcPJVG16EbKoH+ny0I7bi6u2c=
+	t=1764947869; cv=none; b=ayFDhooDaZbTNrHtpaVGOLzO0H1O+BwIN2GTYw4rg9UvGtg98HcOlOjMBM8UX+J925INjEyGfEHkoM7c+MDqm2Qo3VcppIzJMUA4yMwuttE5RsSlbZOLTOJDy9JJ3Apsm0gXX6tDWxUa3F9dnuLuqgWLPGlvquQkYKKyEVk+wt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764998965; c=relaxed/simple;
-	bh=kvaVICPJgckVprAkO1PTzdwxzYwo/eA1iHNuVj+VMmQ=;
-	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=gH0wd24KxoP0T9X0y1NW/i+43qu4LxMxVgdDL4QmiR2YJUATP6b5BZAQAoGGhhaHBWiEOWVe8qO8ZUN9mQ6n2xIafZG1SJbp68ZCmUcNzpCM1TM+zafW7Vj86+dhdoFEw69PWJ9mkd75UaGkTF+lCWpQJhF/2QEikXMZbqxGh1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.178.249
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
-	by mslow3.mail.gandi.net (Postfix) with ESMTP id 7F1E158BEFF
-	for <linux-bluetooth@vger.kernel.org>; Fri,  5 Dec 2025 15:14:05 +0000 (UTC)
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 78B694322F;
-	Fri,  5 Dec 2025 15:13:58 +0000 (UTC)
-Message-ID: <4efd49cd5fa6897706742d8907b56aaff3b475b3.camel@hadess.net>
-Subject: Re: [PATCH BlueZ] main: fix bool vs. gboolean type in
- g_option_context_parse()
-From: Bastien Nocera <hadess@hadess.net>
-To: Pauli Virtanen <pav@iki.fi>, linux-bluetooth@vger.kernel.org
-Date: Fri, 05 Dec 2025 16:13:57 +0100
-In-Reply-To: <36c55de961b5b5ceda83c019ec511f8fa7cd44b6.1764880521.git.pav@iki.fi>
-References: 
-	<36c55de961b5b5ceda83c019ec511f8fa7cd44b6.1764880521.git.pav@iki.fi>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.1 (3.58.1-1.fc43) 
+	s=arc-20240116; t=1764947869; c=relaxed/simple;
+	bh=bZWgw6+6HBMj9r0s+caPN4OA1P4+zMxkOXRzgnIoXcA=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=Oq6jdR9usbu1x8DxjSlOnrlDTWnB+PGMk1MnIptI4U2AGU3fBRpN6Xg6OtO8EnLZ9Ixc3ch1+B17jM6Hp5uBhKC8tu9kPNa08oGva5xefEHhXJej/t6sa2UT0k7WSOgEYB6kDk5bQf4klPCnr8OQnxogHxyTQskFZljJomjHjTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=Z3Qr5vKE; arc=none smtp.client-ip=192.30.252.204
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
+Received: from github.com (hubbernetes-node-563cb2f.ac4-iad.github.net [10.52.147.36])
+	by smtp.github.com (Postfix) with ESMTPA id EA38440106F
+	for <linux-bluetooth@vger.kernel.org>; Fri,  5 Dec 2025 07:17:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+	s=pf2023; t=1764947865;
+	bh=EsfekSkuV38wVNHBch86kER1N9OIoGU77TrEOI9MptU=;
+	h=Date:From:To:Subject:List-Unsubscribe:From;
+	b=Z3Qr5vKENsnOQjVSJHwqGh/3Cz9v/ynwTJ60AyasjH3oWkWAz4ElJT08o5CLm2Yl9
+	 7f7MMaxasDRdcUBDvFe1xUEVdjvodQ2ZPQsu9QLSmUkXXDHIvEsszX+UBb5J4BvwIq
+	 B8IzPWLgky1IOHBYmYkvJK2CFpR5AbPZFV9xRk88=
+Date: Fri, 05 Dec 2025 07:17:44 -0800
+From: BluezTestBot <noreply@github.com>
+To: linux-bluetooth@vger.kernel.org
+Message-ID: <bluez/bluez/push/refs/heads/1030592/d5afae-000000@github.com>
+Subject: [bluez/bluez]
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdekjeduucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefkuffhvfffjghftgfgfgggsehtqhertddtreejnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpeeuveeivdetkeekgfefffeftefhjeeikeetffdvteejheefieeltedtvdeuleduleenucfkphepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefpdhhvghloheplgfkrfhvieemvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefngdpmhgrihhlfhhrohhmpehhrgguvghssheshhgruggvshhsrdhnvghtpdhnsggprhgtphhtthhopedvpdhrtghpthhtohepphgrvhesihhkihdrfhhipdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-GND-Sasl: hadess@hadess.net
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
 
-On Thu, 2025-12-04 at 22:38 +0200, Pauli Virtanen wrote:
-> btd_opts.experimental and testing are bool, not gboolean, which may
-> cause memory to be clobbered and crash.
+  Branch: refs/heads/1030592
+  Home:   https://github.com/bluez/bluez
 
-Can you please explain why it crashes in the commit message?
-
-IIRC, it's because a gboolean is a typedef for an int, and bool/_Bool
-for a single bit.
-
->=20
-> Fix with separate variable for cmdline option.
->=20
-> Log:
-> ERROR: AddressSanitizer: BUS on unknown address
-> =C2=A0=C2=A0=C2=A0 #0 0x0000005b9914 in queue_find ../src/shared/queue.c:=
-230
-> =C2=A0=C2=A0=C2=A0 #1 0x00000057c0ff in btd_kernel_experimental_enabled
-> ../src/main.c:721
-> =C2=A0=C2=A0=C2=A0 #2 0x0000004ff52f in read_exp_features_complete
-> ../src/adapter.c:10230
-> =C2=A0=C2=A0=C2=A0 #3 0x0000005be40b in request_complete ../src/shared/mg=
-mt.c:306
-> ---
-> =C2=A0src/main.c | 9 +++++++--
-> =C2=A01 file changed, 7 insertions(+), 2 deletions(-)
->=20
-> diff --git a/src/main.c b/src/main.c
-> index 558bf2888..61e5ef983 100644
-> --- a/src/main.c
-> +++ b/src/main.c
-> @@ -1330,6 +1330,8 @@ static char *option_noplugin =3D NULL;
-> =C2=A0static char *option_configfile =3D NULL;
-> =C2=A0static gboolean option_compat =3D FALSE;
-> =C2=A0static gboolean option_detach =3D TRUE;
-> +static gboolean option_experimental =3D FALSE;
-> +static gboolean option_testing =3D FALSE;
-> =C2=A0static gboolean option_version =3D FALSE;
-> =C2=A0
-> =C2=A0static void free_options(void)
-> @@ -1420,9 +1422,9 @@ static GOptionEntry options[] =3D {
-> =C2=A0			"Specify an explicit path to the config
-> file", "FILE"},
-> =C2=A0	{ "compat", 'C', 0, G_OPTION_ARG_NONE, &option_compat,
-> =C2=A0				"Provide deprecated command line
-> interfaces" },
-> -	{ "experimental", 'E', 0, G_OPTION_ARG_NONE,
-> &btd_opts.experimental,
-> +	{ "experimental", 'E', 0, G_OPTION_ARG_NONE,
-> &option_experimental,
-> =C2=A0				"Enable experimental D-Bus
-> interfaces" },
-> -	{ "testing", 'T', 0, G_OPTION_ARG_NONE, &btd_opts.testing,
-> +	{ "testing", 'T', 0, G_OPTION_ARG_NONE, &option_testing,
-> =C2=A0				"Enable testing D-Bus interfaces" },
-> =C2=A0	{ "kernel", 'K', G_OPTION_FLAG_OPTIONAL_ARG,
-> G_OPTION_ARG_CALLBACK,
-> =C2=A0				parse_kernel_experimental,
-> @@ -1464,6 +1466,9 @@ int main(int argc, char *argv[])
-> =C2=A0		exit(0);
-> =C2=A0	}
-> =C2=A0
-> +	btd_opts.experimental =3D option_experimental;
-> +	btd_opts.testing =3D option_testing;
-> +
-> =C2=A0	umask(0077);
-> =C2=A0
-> =C2=A0	btd_backtrace_init();
+To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
