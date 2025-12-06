@@ -1,32 +1,32 @@
-Return-Path: <linux-bluetooth+bounces-17142-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-17144-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C584CAA4A8
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 06 Dec 2025 12:02:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E30ACAA4AE
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 06 Dec 2025 12:02:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id EE4E6311B0A1
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  6 Dec 2025 11:01:48 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C9FDA3138363
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  6 Dec 2025 11:01:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25D042D9492;
-	Sat,  6 Dec 2025 11:01:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E9B1286422;
+	Sat,  6 Dec 2025 11:01:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="sYngZbOA"
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="L9lMSeHz"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82F22701BB
-	for <linux-bluetooth@vger.kernel.org>; Sat,  6 Dec 2025 11:01:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621E82D8DA8
+	for <linux-bluetooth@vger.kernel.org>; Sat,  6 Dec 2025 11:01:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765018907; cv=pass; b=U1iju/Eurhg/8HklQHSEVs19eL3rLNeDHUfjKqj+2R8oz577XO15ezApAGebKc2CgBPpstK+rrbf3v18ryvuHtAyfR+5V5jOWtcmcz0+x9lnncXsZkhhxaVEHjstV/nkB8CvNX/An7RnB5FnYfnUmotD2h77jRzHwsvKR1/ohPo=
+	t=1765018908; cv=pass; b=fKTI8pzUxJ8Xj+1fkOgXjLkfRGyhbAnK1KK6v4keBBBnydcdv9TDKRqRrZHRHB+YV0Ln5GCWFpoqF1FAMUI9pWKr98Y4Fxrsc7FcQul6iilelWnc2C8+JlOxUKJVi/SoFu0x+++3Qsi/gQjYjzLVkUDiIp+az2fQJpg5kc6T9qA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765018907; c=relaxed/simple;
-	bh=2b54GFGg3qKM7K86JTnmxiTk7ksLPuPjnlToaxVat1k=;
+	s=arc-20240116; t=1765018908; c=relaxed/simple;
+	bh=MZnHO4qcDQkB35u7JinC0IRdzu7k20d821v4pL6Dwx4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HA9m/QWpQS7/A5+OjH2WeCQgrPa12xaH3ZO9N984wAOeC4THZW7SgszK6Lo3IGz8zDbzwBTzYmpffH4EjEtVOayO3nfEBADyf0+r6qnezPXOCO0uasHgds3IK6edfUjrRVVoBaFittxrvsRxmnFIGmNoT80i5DLteqwceRba+9U=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=sYngZbOA; arc=pass smtp.client-ip=195.140.195.201
+	 MIME-Version; b=sX9PuBAeCwI5/UGO8rfnZ5GKuQCSAX7f3d3r4PYu1+6kyrig5mgegGGcNvwCcWUDZhVaCO9thmtmmMqH0miROJyB5y4c9raiI7r2JwVppoXcfwHhA43ZefFzWz8Y5RN1K/0Ci1GBbY4+VS+zQnJ6onAQgHC6Ho/Kf1cNQiv6Ka0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=L9lMSeHz; arc=pass smtp.client-ip=195.140.195.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [IPv6:2a0c:f040:0:2790::a01d])
@@ -34,41 +34,41 @@ Received: from monolith.lan (unknown [IPv6:2a0c:f040:0:2790::a01d])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4dNlg83ZRmz107P;
-	Sat,  6 Dec 2025 13:01:40 +0200 (EET)
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4dNlgB4hzwz108j;
+	Sat,  6 Dec 2025 13:01:42 +0200 (EET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
-	t=1765018902;
+	t=1765018903;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=wZd0yfhOCHJsYVAwYjarx4lbaKdZxgHY+u+XuYghqXw=;
-	b=sYngZbOACBnI2welpblcw7i7rpl9Nnuimk6pbNIfQKzgA3ANXks+zhYXgDi+Xrl1m8F+Pq
-	eiMl6yMqpDRWj6GaM9PobknZVHPD4O3cGc9/DGoIRNF5vszvX8dihWa6nVzU1q7pWx/foR
-	VXr8EkYhhO/+QHpj0z5MUz/lMt7/SSY=
-ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1765018902;
-	b=UFSDseiuYQR70YAVHntC6XdLNkSQnq0U1Nm3tL4qUfNEw6kpGocinv5ujbk6qabsYhSBri
-	X+2nLtyhPjSD9hXS8f5DOa/HJw2BbVfODY4wDhqOdBNDEL3STPrBjvVm7nD5paduCoR5Ka
-	Q5OSCsGOI85qwC6H5MhsFz2OsKfQP2A=
+	bh=fu6BWJHdMXXiZhT8UE0uQwOC2UX+qk0i7sa2Lw8FvfE=;
+	b=L9lMSeHzc6S8IaYGN//pvCXs09iIwK2X/ACWMRxXDMzD2v3OVOQ336cDaRZ+xphvdCCP7g
+	X4I4aHi8L4z65EyG1VCYxgtXmL4HGYPPczwQ9tOh+NBkaON4YhveJn/at+5NYbJsCRc5Uo
+	vBe0lR/qTV0f4fcnfSG4rSGZuTH53Zc=
+ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1765018903;
+	b=WxGqE4skZpz1wxL7h+LgLcLr7zLX9tD9O5m70+cvsBjOf7XtzGDok1VUd+uLOKEpbB8YQw
+	gVbzeQ1Cj5rUwVIqhIISAH1hXHSkbyRsC64LDGEFuiTe6d2lOmBwIGn4GpxicyBXzIoPLX
+	2H+7OWVckyrvAfZMiKgrWOtaGYLC7nI=
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=meesny; t=1765018902;
+	s=meesny; t=1765018903;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=wZd0yfhOCHJsYVAwYjarx4lbaKdZxgHY+u+XuYghqXw=;
-	b=IGTApJSAfCAio/n02sh7qArKvROFDi/A8YbZiMhoOHxFgRuX1JfCf1X/rOGvk9eo9zCPWv
-	dmcVVS7PS3/X0WsocvMmvnLsYsU3h0znmeZiA5mcqHhTAq5cXKETRCmorpfTqWzLW638h1
-	/ceaVBDjNCwWxLRxfQfpQUAuu9dwP3E=
+	bh=fu6BWJHdMXXiZhT8UE0uQwOC2UX+qk0i7sa2Lw8FvfE=;
+	b=FmWYxJmhGB/owCqa2qt6zS/YmICOP9tTyMcgjoXmq6M6fznuWytZ5oDMfhGp3EnDLEd5xH
+	GkQs3svCjOt965eHGeHnpmBI4WdcZhHv0y0m4tdn/I3nkGs8MpJgu2KRQns8vUBdVoGdmn
+	cjgYmFSkD9bSRDjrAI3WxhfuzAQ60q0=
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ 08/11] test-gmap: test removing, adding, and changing role
-Date: Sat,  6 Dec 2025 13:01:24 +0200
-Message-ID: <7178b86115314eac2d438864c4dc2c72c7bb6921.1765018766.git.pav@iki.fi>
+Subject: [PATCH BlueZ 09/11] media: parse SupportedFeatures from registered MediaEndpoints
+Date: Sat,  6 Dec 2025 13:01:25 +0200
+Message-ID: <2eb690d52ed1c1e8086527b60bc7f5ad7f280c05.1765018766.git.pav@iki.fi>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <cover.1765018766.git.pav@iki.fi>
 References: <cover.1765018766.git.pav@iki.fi>
@@ -80,177 +80,289 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When role is changed the old characteristic is removed, which shifts the
-attribute handles.
+Parse SupportedFeatures for TMAP and GMAP features, and update the
+values to the local services if present.
 ---
- unit/test-gmap.c | 89 ++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 64 insertions(+), 25 deletions(-)
+ profiles/audio/media.c | 160 +++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 156 insertions(+), 4 deletions(-)
 
-diff --git a/unit/test-gmap.c b/unit/test-gmap.c
-index 6102ce65d..ce9eeb8f9 100644
---- a/unit/test-gmap.c
-+++ b/unit/test-gmap.c
-@@ -32,6 +32,7 @@
+diff --git a/profiles/audio/media.c b/profiles/audio/media.c
+index 418a9d06b..9deeed1f4 100644
+--- a/profiles/audio/media.c
++++ b/profiles/audio/media.c
+@@ -55,6 +55,8 @@
+ #include "src/shared/att.h"
+ #include "src/shared/bap.h"
+ #include "src/shared/bap-debug.h"
++#include "src/shared/tmap.h"
++#include "src/shared/gmap.h"
  
- struct test_config {
- 	uint8_t role;
-+	uint8_t old_role;
- 	uint32_t features;
- 	const struct iovec *setup_data;
- 	const size_t setup_data_len;
-@@ -107,22 +108,22 @@ static void test_teardown(const void *user_data)
-  * ATT: Read By Group Type Response (0x11) len 37
-  *   Attribute data length: 6
-  *   Attribute group list: 1 entries
-- *   Handle range: 0x0001-0x000f
-+ *   Handle range: 0x0001-0x000b
-  *   UUID: Gaming Audio Service (0x1858)
-  * ATT: Read By Group Type Request (0x10) len 6
-- *   Handle range: 0x0006-0xffff
-+ *   Handle range: 0x000c-0xffff
-  *   Attribute group type: Primary Service (0x2800)
-  * ATT: Error Response (0x01) len 4
-  *   Read By Group Type Request (0x10)
-  *   Handle: 0x0004
-  *   Error: Attribute Not Found (0x0a)
-  */
--#define GMAS_PRIMARY_SERVICE \
-+#define GMAS_PRIMARY_SERVICE(base) \
- 	IOV_DATA(0x10, 0x01, 0x00, 0xff, 0xff, 0x00, 0x28), \
- 	IOV_DATA(0x11, 0x06, \
--		0x01, 0x00, 0x0f, 0x00, 0x58, 0x18), \
--	IOV_DATA(0x10, 0x10, 0x00, 0xff, 0xff, 0x00, 0x28), \
--	IOV_DATA(0x01, 0x10, 0x10, 0x00, 0x0a)
-+		0x01 + base, 0x00, 0x0b + base, 0x00, 0x58, 0x18), \
-+	IOV_DATA(0x10, 0x0c + base, 0x00, 0xff, 0xff, 0x00, 0x28), \
-+	IOV_DATA(0x01, 0x10, 0x0c + base, 0x00, 0x0a)
+ #ifdef HAVE_A2DP
+ #include "avdtp.h"
+@@ -109,6 +111,12 @@ struct endpoint_request {
+ 	void			*user_data;
+ };
  
- 
- /* ATT: Read By Group Type Request (0x10) len 6
-@@ -145,9 +146,9 @@ static void test_teardown(const void *user_data)
-  *   Handle: 0x0001
-  *   Error: Attribute Not Found (0x0a)
-  */
--#define GMAS_INCLUDE \
--	IOV_DATA(0x08, 0x01, 0x00, 0x0f, 0x00, 0x02, 0x28), \
--	IOV_DATA(0x01, 0x08, 0x01, 0x00, 0x0a)
-+#define GMAS_INCLUDE(base) \
-+	IOV_DATA(0x08, 0x01 + base, 0x00, 0x0b + base, 0x00, 0x02, 0x28), \
-+	IOV_DATA(0x01, 0x08, 0x01 + base, 0x00, 0x0a)
- 
- /* ATT: Read By Type Request (0x08) len 6
-  *   Handle range: 0x0001-0x0003
-@@ -182,15 +183,15 @@ static void test_teardown(const void *user_data)
-  */
- #define IOV_CONTENT(data...)	data
- 
--#define GMAS_FIND_CHRC(uuid) \
--	IOV_DATA(0x08, 0x01, 0x00, 0x0f, 0x00, 0x03, 0x28), \
-+#define GMAS_FIND_CHRC(uuid, base) \
-+	IOV_DATA(0x08, 0x01 + base, 0x00, 0x0b + base, 0x00, 0x03, 0x28), \
- 	IOV_DATA(0x09, 0x07, \
--		0x02, 0x00, 0x02, 0x03, 0x00, 0x00, 0x2c, \
--		0x04, 0x00, 0x02, 0x05, 0x00, uuid), \
--	IOV_DATA(0x08, 0x05, 0x00, 0x0f, 0x00, 0x03, 0x28), \
--	IOV_DATA(0x01, 0x08, 0x05, 0x00, 0x0a), \
--	IOV_DATA(0x04, 0x06, 0x00, 0x0f, 0x00), \
--	IOV_DATA(0x01, 0x04, 0x06, 0x00, 0x0a)
-+		0x02 + base, 0x00, 0x02, 0x03 + base, 0x00, 0x00, 0x2c, \
-+		0x04 + base, 0x00, 0x02, 0x05 + base, 0x00, uuid), \
-+	IOV_DATA(0x08, 0x05 + base, 0x00, 0x0b + base, 0x00, 0x03, 0x28), \
-+	IOV_DATA(0x01, 0x08, 0x05 + base, 0x00, 0x0a), \
-+	IOV_DATA(0x04, 0x06 + base, 0x00, 0x0b + base, 0x00), \
-+	IOV_DATA(0x01, 0x04, 0x06 + base, 0x00, 0x0a)
- 
- #define UGG_UUID	0x01, 0x2c
- #define UGT_UUID	0x02, 0x2c
-@@ -214,19 +215,19 @@ static void test_teardown(const void *user_data)
- 	IOV_DATA(0x01, 0x08, 0x01, 0x00, 0x0a)
- 
- 
--#define GMAS_SETUP(uuid) \
-+#define GMAS_SETUP(uuid, base) \
- 	GMAS_MTU_FEAT, \
--	GMAS_PRIMARY_SERVICE, \
-+	GMAS_PRIMARY_SERVICE(base), \
- 	GMAS_SECONDARY_SERVICE, \
--	GMAS_INCLUDE, \
--	GMAS_FIND_CHRC(IOV_CONTENT(uuid)), \
-+	GMAS_INCLUDE(base), \
-+	GMAS_FIND_CHRC(IOV_CONTENT(uuid), base), \
- 	GMAS_DATABASE_HASH
- 
- /* GATT Discover All procedure */
--static const struct iovec setup_data_ugg[] = { GMAS_SETUP(UGG_UUID) };
--static const struct iovec setup_data_ugt[] = { GMAS_SETUP(UGT_UUID) };
--static const struct iovec setup_data_bgs[] = { GMAS_SETUP(BGS_UUID) };
--static const struct iovec setup_data_bgr[] = { GMAS_SETUP(BGR_UUID) };
-+static const struct iovec setup_data_ugg[] = { GMAS_SETUP(UGG_UUID, 0) };
-+static const struct iovec setup_data_ugt[] = { GMAS_SETUP(UGT_UUID, 0) };
-+static const struct iovec setup_data_bgs[] = { GMAS_SETUP(BGS_UUID, 0) };
-+static const struct iovec setup_data_bgr[] = { GMAS_SETUP(BGR_UUID, 0) };
- 
- static void setup_complete_cb(const void *user_data)
- {
-@@ -252,6 +253,13 @@ static void test_setup_server(const void *user_data)
- 	data->gmap = bt_gmap_add_db(db);
- 	bt_gmap_set_debug(data->gmap, print_debug, "gmap:", NULL);
- 
-+	if (data->cfg->old_role) {
-+		bt_gmap_set_role(data->gmap, data->cfg->old_role);
-+		bt_gmap_set_features(data->gmap, 0xffffffff);
-+		bt_gmap_set_role(data->gmap, data->cfg->role);
-+		bt_gmap_set_role(data->gmap, 0);
-+	}
-+
- 	bt_gmap_set_role(data->gmap, data->cfg->role);
- 	bt_gmap_set_features(data->gmap, data->cfg->features);
- 
-@@ -466,6 +474,29 @@ static void test_gmap_cl(void)
- #define SGGIT_CHA_ROLE	READ_ROLE(0x01)
- #define SGGIT_CHA_FEAT	READ_FEAT(0x01)
- 
-+const struct test_config cfg_read_ugg_re_add = {
-+	.old_role = BT_GMAP_ROLE_UGG,
-+	.role = BT_GMAP_ROLE_UGG,
-+	.features = BT_GMAP_UGG_MULTIPLEX,
-+	.setup_data = setup_data_ugg,
-+	.setup_data_len = ARRAY_SIZE(setup_data_ugg),
++struct endpoint_features {
++	uint8_t			tmap_role;
++	uint8_t			gmap_role;
++	uint32_t		gmap_features;
 +};
 +
-+#define SGGIT_CHA_FEAT_CHANGE \
-+	READ_CHRC(IOV_CONTENT(0x0b + FEAT_HND), 0x01)
-+
-+static const struct iovec setup_data_ugg_change[] = {
-+	GMAS_SETUP(UGG_UUID, 0x0b)
-+};
-+
-+const struct test_config cfg_read_ugg_change = {
-+	.old_role = BT_GMAP_ROLE_UGT,
-+	.role = BT_GMAP_ROLE_UGG,
-+	.features = BT_GMAP_UGG_MULTIPLEX,
-+	.setup_data = setup_data_ugg_change,
-+	.setup_data_len = ARRAY_SIZE(setup_data_ugg_change),
-+};
-+
- static void test_gmap_sr(void)
- {
- 	/* Sec. 4.6.2 GMA Server */
-@@ -484,6 +515,14 @@ static void test_gmap_sr(void)
- 	define_test("GMAP/SR/SGGIT/CHA/BV-05-C [Characteristic GGIT - BGR "
- 						"Features]",
- 		test_setup_server, test_server, &cfg_read_bgr, SGGIT_CHA_FEAT);
-+
-+	define_test("GMAP/SR/SGGIT/CHA/BLUEZ-01-C [Re-add UGG Features]",
-+		test_setup_server, test_server, &cfg_read_ugg_re_add,
-+		SGGIT_CHA_FEAT);
-+
-+	define_test("GMAP/SR/SGGIT/CHA/BLUEZ-02-C [Change UGT -> UGG]",
-+		test_setup_server, test_server, &cfg_read_ugg_change,
-+		SGGIT_CHA_FEAT_CHANGE);
+ struct media_endpoint {
+ #ifdef HAVE_A2DP
+ 	struct a2dp_sep		*sep;
+@@ -133,6 +141,7 @@ struct media_endpoint {
+ 	GSList			*requests;
+ 	struct media_adapter	*adapter;
+ 	GSList			*transports;
++	struct endpoint_features	features;
+ };
+ 
+ struct media_player {
+@@ -247,6 +256,33 @@ static struct media_endpoint *media_adapter_find_endpoint(
+ 	return NULL;
  }
  
- int main(int argc, char *argv[])
++static void update_features(struct media_adapter *adapter)
++{
++	struct endpoint_features all = { 0 };
++	GSList *list;
++	struct btd_gatt_database *database;
++	struct gatt_db *db;
++	struct bt_tmap *tmap;
++	struct bt_gmap *gmap;
++
++	for (list = adapter->endpoints; list; list = list->next) {
++		struct media_endpoint *endpoint = list->data;
++
++		all.tmap_role |= endpoint->features.tmap_role;
++		all.gmap_role |= endpoint->features.gmap_role;
++		all.gmap_features |= endpoint->features.gmap_features;
++	}
++
++	database = btd_adapter_get_database(adapter->btd_adapter);
++	db = btd_gatt_database_get_db(database);
++	tmap = bt_tmap_find(db);
++	gmap = bt_gmap_find(db);
++
++	bt_tmap_set_role(tmap, all.tmap_role);
++	bt_gmap_set_role(gmap, all.gmap_role);
++	bt_gmap_set_features(gmap, all.gmap_features);
++}
++
+ static void media_endpoint_remove(void *data)
+ {
+ 	struct media_endpoint *endpoint = data;
+@@ -270,6 +306,8 @@ static void media_endpoint_remove(void *data)
+ 							"MediaEndpoints");
+ 
+ 	media_endpoint_destroy(endpoint);
++
++	update_features(adapter);
+ }
+ 
+ static void media_endpoint_exit(DBusConnection *connection, void *user_data)
+@@ -1531,6 +1569,7 @@ media_endpoint_create(struct media_adapter *adapter,
+ 						int size,
+ 						uint8_t *metadata,
+ 						int metadata_size,
++						struct endpoint_features *feat,
+ 						int *err)
+ {
+ 	struct media_endpoint *endpoint;
+@@ -1550,6 +1589,9 @@ media_endpoint_create(struct media_adapter *adapter,
+ 	if (qos)
+ 		endpoint->qos = *qos;
+ 
++	if (feat)
++		endpoint->features = *feat;
++
+ 	if (size > 0) {
+ 		endpoint->capabilities = g_new(uint8_t, size);
+ 		memcpy(endpoint->capabilities, capabilities, size);
+@@ -1596,11 +1638,98 @@ media_endpoint_create(struct media_adapter *adapter,
+ 	adapter->endpoints = g_slist_append(adapter->endpoints, endpoint);
+ 	info("Endpoint registered: sender=%s path=%s", sender, path);
+ 
++	update_features(adapter);
++
+ 	if (err)
+ 		*err = 0;
+ 	return endpoint;
+ }
+ 
++static void parse_tmap_role(struct endpoint_features *features, uint32_t data)
++{
++	features->tmap_role |= data;
++}
++
++static void parse_gmap_role(struct endpoint_features *features, uint32_t data)
++{
++	features->gmap_role |= data;
++}
++
++static void parse_gmap_feature(struct endpoint_features *features,
++								uint32_t data)
++{
++	features->gmap_features |= data;
++}
++
++#define TMAP_ROLE(key) \
++	{ .uuid = TMAS_UUID_STR, .name = key ## _STR, .data = key, \
++	  .func = parse_tmap_role },
++#define GMAP_ROLE(key) \
++	{ .uuid = GMAS_UUID_STR, .name = key ## _STR, .data = key, \
++	  .func = parse_gmap_role },
++#define GMAP_FEATURE(key) \
++	{ .uuid = GMAS_UUID_STR, .name = key ## _STR, .data = key, \
++	  .func = parse_gmap_feature },
++
++static const struct endpoint_feature_dbus {
++	const char *uuid;
++	const char *name;
++	uint32_t data;
++	void (*func)(struct endpoint_features *features, uint32_t data);
++} endpoint_features[] = {
++	BT_TMAP_ROLE_LIST(TMAP_ROLE)
++	BT_GMAP_ROLE_LIST(GMAP_ROLE)
++	BT_GMAP_FEATURE_LIST(GMAP_FEATURE)
++};
++
++static void parse_endpoint_feature(const char *uuid, const char *value,
++					struct endpoint_features *features)
++{
++	unsigned int i;
++
++	for (i = 0; i < ARRAY_SIZE(endpoint_features); ++i) {
++		const struct endpoint_feature_dbus *f = &endpoint_features[i];
++
++		if (strcmp(uuid, f->uuid) == 0 && strcmp(value, f->name) == 0) {
++			f->func(features, f->data);
++			break;
++		}
++	}
++}
++
++static int parse_endpoint_features(DBusMessageIter *iter,
++					struct endpoint_features *features)
++{
++	while (dbus_message_iter_get_arg_type(iter) == DBUS_TYPE_DICT_ENTRY) {
++		const char *uuid, *name;
++		DBusMessageIter value, entry, array;
++		int var;
++
++		dbus_message_iter_recurse(iter, &entry);
++		dbus_message_iter_get_basic(&entry, &uuid);
++
++		dbus_message_iter_next(&entry);
++		dbus_message_iter_recurse(&entry, &value);
++
++		var = dbus_message_iter_get_arg_type(&value);
++		if (var != DBUS_TYPE_ARRAY)
++			return -EINVAL;
++
++		dbus_message_iter_recurse(&value, &array);
++
++		while (dbus_message_iter_get_arg_type(&array)
++							== DBUS_TYPE_STRING) {
++			dbus_message_iter_get_basic(&array, &name);
++			parse_endpoint_feature(uuid, name, features);
++			dbus_message_iter_next(&array);
++		}
++
++		dbus_message_iter_next(iter);
++	}
++
++	return 0;
++}
++
+ struct vendor {
+ 	uint16_t cid;
+ 	uint16_t vid;
+@@ -1611,7 +1740,8 @@ static int parse_properties(DBusMessageIter *props, const char **uuid,
+ 				uint16_t *cid, uint16_t *vid,
+ 				struct bt_bap_pac_qos *qos,
+ 				uint8_t **capabilities, int *size,
+-				uint8_t **metadata, int *metadata_size)
++				uint8_t **metadata, int *metadata_size,
++				struct endpoint_features *features)
+ {
+ 	gboolean has_uuid = FALSE;
+ 	gboolean has_codec = FALSE;
+@@ -1708,6 +1838,15 @@ static int parse_properties(DBusMessageIter *props, const char **uuid,
+ 				return -EINVAL;
+ 			dbus_message_iter_get_basic(&value,
+ 						    &qos->supported_context);
++		} else if (strcasecmp(key, "SupportedFeatures") == 0) {
++			DBusMessageIter array;
++
++			if (var != DBUS_TYPE_ARRAY)
++				return -EINVAL;
++
++			dbus_message_iter_recurse(&value, &array);
++			if (parse_endpoint_features(&array, features) < 0)
++				return -EINVAL;
+ 		}
+ 
+ 		dbus_message_iter_next(props);
+@@ -1727,6 +1866,7 @@ static DBusMessage *register_endpoint(DBusConnection *conn, DBusMessage *msg,
+ 	uint16_t cid = 0;
+ 	uint16_t vid = 0;
+ 	struct bt_bap_pac_qos qos = {};
++	struct endpoint_features features = { 0 };
+ 	uint8_t *capabilities = NULL;
+ 	uint8_t *metadata = NULL;
+ 	int size = 0;
+@@ -1749,13 +1889,13 @@ static DBusMessage *register_endpoint(DBusConnection *conn, DBusMessage *msg,
+ 
+ 	if (parse_properties(&props, &uuid, &delay_reporting, &codec, &cid,
+ 			&vid, &qos, &capabilities, &size, &metadata,
+-			&metadata_size) < 0)
++			&metadata_size, &features) < 0)
+ 		return btd_error_invalid_args(msg);
+ 
+ 	if (media_endpoint_create(adapter, sender, path, uuid, delay_reporting,
+ 					codec, cid, vid, &qos, capabilities,
+ 					size, metadata, metadata_size,
+-					&err) == NULL) {
++					&features, &err) == NULL) {
+ 		if (err == -EPROTONOSUPPORT)
+ 			return btd_error_not_supported(msg);
+ 		else
+@@ -2786,6 +2926,7 @@ static void app_register_endpoint(void *data, void *user_data)
+ 	int size = 0;
+ 	uint8_t *metadata = NULL;
+ 	int metadata_size = 0;
++	struct endpoint_features features = { 0 };
+ 	DBusMessageIter iter, array;
+ 	struct media_endpoint *endpoint;
+ 
+@@ -2918,12 +3059,23 @@ static void app_register_endpoint(void *data, void *user_data)
+ 		dbus_message_iter_get_basic(&iter, &qos.supported_context);
+ 	}
+ 
++	if (g_dbus_proxy_get_property(proxy, "SupportedFeatures", &iter)) {
++		DBusMessageIter array;
++
++		if (dbus_message_iter_get_arg_type(&iter) != DBUS_TYPE_ARRAY)
++			goto fail;
++
++		dbus_message_iter_recurse(&iter, &array);
++		if (parse_endpoint_features(&array, &features) < 0)
++			goto fail;
++	}
++
+ 	endpoint = media_endpoint_create(app->adapter, app->sender, path, uuid,
+ 						delay_reporting, codec,
+ 						vendor.cid, vendor.vid, &qos,
+ 						capabilities, size,
+ 						metadata, metadata_size,
+-						&app->err);
++						&features, &app->err);
+ 	if (!endpoint) {
+ 		error("Unable to register endpoint %s:%s: %s", app->sender,
+ 						path, strerror(-app->err));
 -- 
 2.51.1
 
