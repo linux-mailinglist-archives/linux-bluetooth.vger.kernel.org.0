@@ -1,103 +1,116 @@
-Return-Path: <linux-bluetooth+bounces-17175-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-17177-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B59DCAD28F
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 08 Dec 2025 13:35:54 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 909D4CAD37D
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 08 Dec 2025 14:14:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 52F74305308D
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  8 Dec 2025 12:34:27 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 9805130125D8
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  8 Dec 2025 13:14:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82CB42F3638;
-	Mon,  8 Dec 2025 12:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DFE731195B;
+	Mon,  8 Dec 2025 13:14:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BkKf5WAr"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mxhk.zte.com.cn (mxhk.zte.com.cn [160.30.148.34])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD9B45695
-	for <linux-bluetooth@vger.kernel.org>; Mon,  8 Dec 2025 12:34:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=160.30.148.34
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0222E5437
+	for <linux-bluetooth@vger.kernel.org>; Mon,  8 Dec 2025 13:14:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765197265; cv=none; b=VW3pSWyXrrNmFMPp5YT8fKJOtCq9d95awKixs2MIoHyoMCznziitv6mtHC+v7UFhmQ2E7BcWSu4aHfYQk1pcHSjCTIzwkH1lbQoKPw5UQfvTX36TjHFBdzYylNLkNwpSfy/PdM52sxcdCQh6XT3vIM+8WFtDrdHrkqyLvaZLDVc=
+	t=1765199693; cv=none; b=EI80rfwd8JOQcyV+av7t3N/lRGvLHC957Auq8hb1/DrHVFtuRM8RTYBaZky3HyZpYHlIvAD3okTHZFzoK0FZd9cjIsSwWkOE+5NkqNsMsLfNZXhL18t9RO6r/2Jy14lfjfDhAufXs6s+FXwsZKAR8O7nkKvLNx1H0kn1xfm63YA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765197265; c=relaxed/simple;
-	bh=LoFGbRBxk7ItLcSgnRNxvsWtHdzzrMfOftX6GO5tzAQ=;
-	h=Date:Message-ID:In-Reply-To:References:Mime-Version:From:To:Cc:
-	 Subject:Content-Type; b=rW+MK3nsXoV5IRYT7jiKWp+sfyAC67LYZGe4U/hVIyJjyIfpn4NqqwliKjUpm/XLv+Wejt2ionL83uEZcOQOmNdkIWADRtvJ/BxoSRX0rBJG/0tAsc1qwtUmRKO2cEty2ldSQjHd01o+slU2ojIxWXjgp0Uvhwo+Bhuzh6VxRik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zte.com.cn; spf=pass smtp.mailfrom=zte.com.cn; arc=none smtp.client-ip=160.30.148.34
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=zte.com.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zte.com.cn
-Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mxhk.zte.com.cn (FangMail) with ESMTPS id 4dQ1d76P3Sz5BNRd;
-	Mon, 08 Dec 2025 20:34:19 +0800 (CST)
-Received: from xaxapp02.zte.com.cn ([10.88.97.241])
-	by mse-fl2.zte.com.cn with SMTP id 5B8CY1BO039691;
-	Mon, 8 Dec 2025 20:34:01 +0800 (+08)
-	(envelope-from wang.yaxin@zte.com.cn)
-Received: from mapi (xaxapp02[null])
-	by mapi (Zmail) with MAPI id mid32;
-	Mon, 8 Dec 2025 20:34:04 +0800 (CST)
-Date: Mon, 8 Dec 2025 20:34:04 +0800 (CST)
-X-Zmail-TransId: 2afa6936c5bc672-7632c
-X-Mailer: Zmail v1.0
-Message-ID: <20251208203404000bLAos3jnZFMsLDRmqZb_S@zte.com.cn>
-In-Reply-To: <20251208203056891J84Xq6wiMu3r7HXa_mRb3@zte.com.cn>
-References: 20251208203056891J84Xq6wiMu3r7HXa_mRb3@zte.com.cn
+	s=arc-20240116; t=1765199693; c=relaxed/simple;
+	bh=VtfC54Bk9m36N3JzPDdL2sOd3ev2JVBJJgfqADSqXLo=;
+	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
+	 In-Reply-To:References; b=pr2b+uLnyAbMZhO9E2Qj9KAWKYPxOAxHDggql1TPiG126KYzuLHCB/ndGxc0sa1Vd/hbIBbgXjnuXJ4u/7xySlJKY/TQXVBj8quNPI5Kg+RZuEph572QxXNgouSQOKMRvMViBjYqTz6MroNg03b4GJk9EnAEtOxfalOmDksiy4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BkKf5WAr; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-29586626fbeso52147405ad.0
+        for <linux-bluetooth@vger.kernel.org>; Mon, 08 Dec 2025 05:14:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1765199691; x=1765804491; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=VtfC54Bk9m36N3JzPDdL2sOd3ev2JVBJJgfqADSqXLo=;
+        b=BkKf5WArLAfTNQBsl1qUYRX8PF2qWaRh0kPQQrqQTtspdNTa/InlAORV7FLAxrDx5S
+         Zl+tGtFqTgyz28bAYCKIqmPoGOp86/7a/PBzC7OcIta7nn3i1dNkLYMv0UXty3BCQTZJ
+         3B9uEQUfoz3gEEFAzDPFvIguKN+CuwyhXo4gdMoSQFnxQdTHsFmy9bxDVLIhr1T4joNI
+         zFRODz61Ux3sY79iYWxpcf/LwR5axsoQqWtfO1hZJax+hfxY14Q1AHdl/pvjESIF2yWc
+         DSs8WwuRPlstX76rArajG8N7SEKlWiJcVA2g+//REUGx1oLYmIYPCvltwfXozJl/c4Ol
+         50NA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765199691; x=1765804491;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VtfC54Bk9m36N3JzPDdL2sOd3ev2JVBJJgfqADSqXLo=;
+        b=oE4vMrhDcFvitSINQnNW5nwZq2LDyh6k0AW4vVtL13Pp1wjfvXiMI+q7lvM1zhEwYw
+         OI+53Uu201aQNxGgrmSJQvmxwPiQGoyYWhZgLHkEaci8ZobfHgaVmrIh9h9gRrv/S7qh
+         8aN0g1mXppYU0AXEG4zlmBYYIYOyUNZSv/xMLrBe5BaVKJ1NUJD6NmozLvdVHxInkWyQ
+         eAoQp2Oz7cEeV6WGFGe9bLRZ6oM0wf5rOXLCbnxMUm2bft4RHIZBaB31xmFM34JfCYfE
+         OLLpzHZOGq+cMuGSZv+t/zcBL57FLYUXEtaQQoFH/Em93WfH4ERsjGRxpH3I8ZTyrQej
+         BsBw==
+X-Gm-Message-State: AOJu0Yxjacu3T9ANPFrFHeCnLDH8MiSA0tZiutK43B7ckfelwMXJyZGp
+	c411ztI/h6Olkg4Y/v71XH2r2J3YYiKe+YFLiJ0Zvyz4SBLwx4hN+go2UVPEow==
+X-Gm-Gg: ASbGncsx4CZ+kbtB0o3jyuY0MsMH1n66JyCaL9R5hb0WzcoyIDUYnfcMUKeEV4KcJ7y
+	4atlRVEA+NTmGa9Ouzsc6d/7TZJUe7XShZAEQLwXNlEj99B+rLbBbcjSvxM+8tbV++HZzZCMoF2
+	vabwtp5CLnw2SFmZiRZFqNVdLV17S1sG0GB/pwLeFZP36UzyKsGo8qN7ivgJQpS2ka1JOYJwUmA
+	/0iRRd7WkfA4f7jNE22b/Fm58qTSK/lUaWV6vncEbxo+4+LYrh6e06fb98U/NY/haBtzxzkY2+J
+	kE4jlnZtydu286QwYi5zXoGn33kF2itGkiDqOeU5NFDBxOpSiGGVOM93HpugYHzE1qPwBpti5X+
+	Y31Xhd7ZAA0d9MC93VgSYhJJGdufxR4qyoIDbNqzPxsCbZoTfhzCgrsHE95Q5VhyuNeBSrCyL7l
+	Wuo/g+Y4y/hPD8zw==
+X-Google-Smtp-Source: AGHT+IFpw3sEWUhdShBJlT46U1vMlC8om0u749PeZAKx34Z2TdDlTCSrEJiyC8MhBlRTwmj1XPsmbQ==
+X-Received: by 2002:a05:7022:50a:b0:11b:8161:5cfc with SMTP id a92af1059eb24-11e032b2aadmr6643058c88.36.1765199690564;
+        Mon, 08 Dec 2025 05:14:50 -0800 (PST)
+Received: from [172.17.0.2] ([68.220.58.3])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11df76ed82esm60395799c88.7.2025.12.08.05.14.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 Dec 2025 05:14:50 -0800 (PST)
+Message-ID: <6936cf4a.050a0220.31b226.e52f@mx.google.com>
+Date: Mon, 08 Dec 2025 05:14:50 -0800 (PST)
+Content-Type: multipart/mixed; boundary="===============5469576850256682846=="
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-From: <wang.yaxin@zte.com.cn>
-To: <wang.yaxin@zte.com.cn>
-Cc: <marcel@holtmann.org>, <johan.hedberg@gmail.com>, <luiz.dentz@gmail.com>,
-        <linux-bluetooth@vger.kernel.org>, <xu.xin16@zte.com.cn>,
-        <yang.yang29@zte.com.cn>, <qiu.yutan@zte.com.cn>,
-        <chen.junlin@zte.com.cn>, <jiang.kun2@zte.com.cn>
-Subject: =?UTF-8?B?W1JGQyAyLzJdIEJsdWV0b290aDogaGNpX2Nvbm46IGZpeCBXQVJOSU5HIGluIGhjaV9jb25uX3RpbWVvdXQ=?=
-Content-Type: text/plain;
-	charset="UTF-8"
-X-MAIL:mse-fl2.zte.com.cn 5B8CY1BO039691
-X-TLS: YES
-X-SPF-DOMAIN: zte.com.cn
-X-ENVELOPE-SENDER: wang.yaxin@zte.com.cn
-X-SPF: None
-X-SOURCE-IP: 10.5.228.133 unknown Mon, 08 Dec 2025 20:34:19 +0800
-X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 6936C5CB.000/4dQ1d76P3Sz5BNRd
+MIME-Version: 1.0
+From: bluez.test.bot@gmail.com
+To: linux-bluetooth@vger.kernel.org, wang.yaxin@zte.com.cn
+Subject: RE: Bluetooth: hci_conn: Fix WARNING in hci_conn_timeout
+In-Reply-To: <20251208203245047U3UW5v2aGUumhmvjLl96E@zte.com.cn>
+References: <20251208203245047U3UW5v2aGUumhmvjLl96E@zte.com.cn>
+Reply-To: linux-bluetooth@vger.kernel.org
 
-From: Qiu Yutan <qiu.yutan@zte.com.cn>
+--===============5469576850256682846==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-The warning is triggered when conn->refcnt is decremented to a negative value.
-Since atomic_dec_if_positive(&conn->refcnt) only decrements the value by 1
-when conn->refcnt is positive, the resulting value will be greater than or equal to zero,
-preventing this warning from reoccurring.
+This is an automated email and please do not reply to this email.
 
-Signed-off-by: Qiu Yutan <qiu.yutan@zte.com.cn>
-Signed-off-by: Wang Yaxin <wang.yaxin@zte.com.cn>
-Signed-off-by: xu xin <xu.xin16@zte.com.cn>
-Signed-off-by: Chen Junlin <chen.junlin@zte.com.cn>
+Dear Submitter,
+
+Thank you for submitting the patches to the linux bluetooth mailing list.
+While preparing the CI tests, the patches you submitted couldn't be applied to the current HEAD of the repository.
+
+----- Output -----
+
+error: patch failed: include/net/bluetooth/hci_core.h:29
+error: include/net/bluetooth/hci_core.h: patch does not apply
+hint: Use 'git am --show-current-patch' to see the failed patch
+
+Please resolve the issue and submit the patches again.
+
+
 ---
- include/net/bluetooth/hci_core.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Regards,
+Linux Bluetooth
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 5e01e6c501c1..2b306115add4 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -1635,7 +1635,7 @@ static inline void hci_conn_drop(struct hci_conn *conn)
- 	trace_hci_conn_drop(conn);
- 	BT_DBG("hcon %p orig refcnt %d", conn, atomic_read(&conn->refcnt));
 
--	if (atomic_dec_and_test(&conn->refcnt)) {
-+	if (atomic_dec_if_positive(&conn->refcnt) == 0) {
- 		unsigned long timeo;
-
- 		switch (conn->type) {
--- 
-2.27.0
+--===============5469576850256682846==--
 
