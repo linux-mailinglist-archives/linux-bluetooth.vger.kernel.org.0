@@ -1,174 +1,88 @@
-Return-Path: <linux-bluetooth+bounces-17213-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-17215-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A0FCCB04E9
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 09 Dec 2025 15:41:34 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C9A7CB06EA
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 09 Dec 2025 16:43:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1F6B830BF80A
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Dec 2025 14:40:45 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id A7CCA301BAA4
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  9 Dec 2025 15:43:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A1342EA177;
-	Tue,  9 Dec 2025 14:40:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 644DE2FFF84;
+	Tue,  9 Dec 2025 15:43:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QSz2jn5k"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Oem/b83L"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905CE27A442
-	for <linux-bluetooth@vger.kernel.org>; Tue,  9 Dec 2025 14:40:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF8D2DA75A
+	for <linux-bluetooth@vger.kernel.org>; Tue,  9 Dec 2025 15:43:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765291244; cv=none; b=JKXQ/+9wf9MrWX77GEpyLz9t+0hRhKw9S4wAh8mkujh8vZEDzBBN5hmpuXmjOwQOMt6rek0829wZnV+fny6dZ4U+PqmDQhdS1k6BZ1JSBZU71NdKEOhb9npriwfAZvFIVQOv4EtXsB3x69oSiCIR9BLiG/IvrnLjVfANjooJQQs=
+	t=1765294991; cv=none; b=Fmh5mtQu7WIoLsATOKsbC+0LadFE1xaZGFikwuRZFYOZPIPOd3fPCwE1kYoARpNOuEZvg+QveDGxmJUQmVpFr6WclEYEbo58daHzKVB88QKDbaBgiSCyWC55nBuFkjgJU+S/dhMthlGota25W5nYRR4HJ08T7XM0TY9xPFDzeOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765291244; c=relaxed/simple;
-	bh=lmzluPEWTzMCFZ1lAa3jWY69oGm3nCtMSYE6q9qlU8U=;
-	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
-	 In-Reply-To:References; b=cUfCwJnFoTLUxwf0JsZ4a7Pu2tdPhmvbo/mWNazkVegn58UhRhwWF6unKOiTlNQw2XFveMqxBb4b0BSzDFNQyfjiYu6yod8F1Vv2MQ5PB3zvgvPqm/Q59Esgzd2YbtFKYf4JFweCz8Af6TOp5DCdnF8mBukG6VM+EU99+HlGSpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QSz2jn5k; arc=none smtp.client-ip=209.85.219.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-8824ce98111so82822516d6.0
-        for <linux-bluetooth@vger.kernel.org>; Tue, 09 Dec 2025 06:40:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765291241; x=1765896041; darn=vger.kernel.org;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=1wNNLndkSw93gCKDVHlzevz9i188Z5mCYDX23st3HJ8=;
-        b=QSz2jn5kYVbyvE5ejpvujohxx154ObN5PCSL84UEI4WF/zm1QXXHBemlAAX+qOwp+s
-         1HcTcxru3sAa1JG1Q1k6RL9VhJdaTt6+tXLCpva4bBRsxwYQhNFv8yd7R3XNgG1ZzdKH
-         RzIwPsCe7obQnoaHd3QHJcJRhIY/9Gmjc+fg4JapEGEMYebBp6gWkQjaVEvvB/IYE6z1
-         p23R9HozSOuREYm3tDDd5v79VI6GgAjY26r5taKzhhXBFMHvglm1wHzUDAUoQslKETbd
-         sGmGl2RmZTyX5RPF6LWVHTWK3CJt3VqsEJ8oFRBG/0s1HDtxZLflm9vh53T4/9OBSn7S
-         O2JQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765291241; x=1765896041;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1wNNLndkSw93gCKDVHlzevz9i188Z5mCYDX23st3HJ8=;
-        b=MYgJoTzRtBQ8LcZGdnGqJcMoEZeumONroPIvL+f8RA3YEfXl3zVtF8rDQBftQCcqux
-         U1tThz1uvWi8phoNbf/gnzfHgYjIey9FvSB3wKjSoSyHW8mC8sRtg5mBYuri4BvDJx11
-         1IpanKsZFDn1EFQSwP6CFa3TIQJMHkWSncZ61up0hJIUcpPJB4YfE3ahr2NRddT90LRz
-         JVe8To7yUMitXmEhp8yh0tEdhjC2hVPnAYJRNTf0sAfNUZcICFsJ5NYfHUl3MCMSn/u4
-         ekeorFHPmkIYcE8Kkwguxaglynu1Zz//EBy6z32TI4GYX6VUNPujxO7Yxsv1khz6Jl83
-         SAxQ==
-X-Gm-Message-State: AOJu0YyyoPIjux4qorZEBHfhk2RSpATym1PqqxTv9KqIHj817D2yTIgW
-	RSw3tqDgEtvUZh19f4bAYTGabd0WIOJc0qdD3mjIucV78efjVkG01NcNIlT/Nw==
-X-Gm-Gg: AY/fxX7lXKhdETK0KnOakGXiHxoFQJfJ4q8z3X7ksFsY9+FY48wQJhnBbdvkdE82Y0y
-	iIEt+DCu2yKEpjtCaIAbq8gvErfdJ9lnR9GU6U/YkVcteXQA6yGb+tXXpBrFT96N7k6RGo0MvxR
-	zKsvS9c6tr1sZ+d9ua3KDCWsE7CZX281tFCyi793NUB/X7g8UEbUG8uqkZGYwi/iZEdTYzO7NIP
-	9NsyQc4YyBcOs41D9hXtiBAW1yH+wkcgJ59L/Kv0uySGeEvFZ0SKzYPPlA0IPNImqn0DTRtq88K
-	oxxZl0HLymzaEi4IXgQbVUEYoDHmMisYD0vnDJlpl8CjVwlHduB+1Bkp+ZB/S3zM8kw/selQo0k
-	89/CcsWSbAGU6JhFX+osy3boUGZziSvDpcpJhixA8qSP7CnccmG1BY8h/6NBFdKOJ47ZgGQ4MoH
-	A7ZnPiD+ErQLim6aw=
-X-Google-Smtp-Source: AGHT+IGAdkaoGCvpBwMS2MIOTYi2cmsa+/Lk+jm16Y/MQ7/LEl8SdoY/mWX64ewZ6FsKYo5UwidaJA==
-X-Received: by 2002:a05:6214:c4f:b0:880:4790:e61b with SMTP id 6a1803df08f44-8883db618f9mr191879566d6.26.1765291241066;
-        Tue, 09 Dec 2025 06:40:41 -0800 (PST)
-Received: from [172.17.0.2] ([20.109.39.57])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8b627a88115sm1308166185a.41.2025.12.09.06.40.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Dec 2025 06:40:40 -0800 (PST)
-Message-ID: <693834e8.370a0220.668a3.4fb4@mx.google.com>
-Date: Tue, 09 Dec 2025 06:40:40 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============6681518953776817187=="
+	s=arc-20240116; t=1765294991; c=relaxed/simple;
+	bh=v784HLFsrr5PL8cuM67Xs7LQyI7nD9uaVOm1W4M3uWQ=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=s4SMs1i8+lChIYcqgUGJrAA+OP3JwjfeDtBVdZutrgviMKZzFJ3/kQa1zjlWFx2ZNinbQNlsiU51s4gpnoZWlF1XeR2S/qUyZ+Rc/GTLBAXVvYWPNxq7X/ga8rxsYWEWku1giI+4zsbyoon9Ad3npeSDfznz5jtVqGg80qAS0rA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Oem/b83L; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FE6FC4CEF5;
+	Tue,  9 Dec 2025 15:43:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1765294990;
+	bh=v784HLFsrr5PL8cuM67Xs7LQyI7nD9uaVOm1W4M3uWQ=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=Oem/b83LpcWyyV4Um2O4/QvxHKz+KYX6mfS+NYALVnZ+Kk9CgCWSgPO+6QGsRr/3U
+	 dOSNj0DWzk4QwHgkZiKTZexor9/Ae6BWZKskvo9VriGFH5Eje76C1pdKbb29QRSPKA
+	 m8LJ2FomHuZ+Gn6bXDHcIOBgSsdMN8DZEKPiy8isxQMP+WWTqF30eU7kxi8UWKId6R
+	 mfFpwaMjOBfrcobU+jMzzNQsN34DtYVq3AmARttfgwP1iSBX9HeeDHxV//iy8nW+Xo
+	 7oxv/JZNBT5Yw2GW21qOXQibINTFXx+yTJUZbQZ5YREj2s/0YRROji0cQZ8JCt8Uet
+	 0Pr8lF5raDNDA==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id B58093808200;
+	Tue,  9 Dec 2025 15:40:06 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: bluez.test.bot@gmail.com
-To: linux-bluetooth@vger.kernel.org, shuai.zhang@oss.qualcomm.com
-Subject: RE: [v1] Bluetooth: hci_sync: Fix not clearing cmd_sync_work_list on power off
-In-Reply-To: <20251209140347.2816326-1-shuai.zhang@oss.qualcomm.com>
-References: <20251209140347.2816326-1-shuai.zhang@oss.qualcomm.com>
-Reply-To: linux-bluetooth@vger.kernel.org
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH BlueZ] monitor: show ISO timestamps and fix their handling
+From: patchwork-bot+bluetooth@kernel.org
+Message-Id: 
+ <176529480553.3991988.9413786417635977269.git-patchwork-notify@kernel.org>
+Date: Tue, 09 Dec 2025 15:40:05 +0000
+References: 
+ <d86bbd8809c75dea5107ddd0f63f300d3e9c6423.1765030276.git.pav@iki.fi>
+In-Reply-To: 
+ <d86bbd8809c75dea5107ddd0f63f300d3e9c6423.1765030276.git.pav@iki.fi>
+To: Pauli Virtanen <pav@iki.fi>
+Cc: linux-bluetooth@vger.kernel.org
 
---===============6681518953776817187==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Hello:
 
-This is automated email and please do not reply to this email!
+This patch was applied to bluetooth/bluez.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-Dear submitter,
+On Sat,  6 Dec 2025 16:11:52 +0200 you wrote:
+> Fix ISO packet size checks, taking timestamp presence into account.
+> 
+> Also display timestamp value if present.
+> ---
+>  monitor/packet.c | 28 ++++++++++++++++++++--------
+>  1 file changed, 20 insertions(+), 8 deletions(-)
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=1031732
+Here is the summary with links:
+  - [BlueZ] monitor: show ISO timestamps and fix their handling
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=359390c60d9b
 
----Test result---
-
-Test Summary:
-CheckPatch                    PENDING   0.36 seconds
-GitLint                       PENDING   1.04 seconds
-SubjectPrefix                 PASS      0.11 seconds
-BuildKernel                   PASS      25.36 seconds
-CheckAllWarning               PASS      28.41 seconds
-CheckSparse                   PASS      31.51 seconds
-BuildKernel32                 PASS      25.07 seconds
-TestRunnerSetup               PASS      551.16 seconds
-TestRunner_l2cap-tester       PASS      23.72 seconds
-TestRunner_iso-tester         PASS      87.69 seconds
-TestRunner_bnep-tester        PASS      6.22 seconds
-TestRunner_mgmt-tester        FAIL      130.79 seconds
-TestRunner_rfcomm-tester      PASS      9.40 seconds
-TestRunner_sco-tester         FAIL      14.54 seconds
-TestRunner_ioctl-tester       PASS      10.19 seconds
-TestRunner_mesh-tester        FAIL      11.50 seconds
-TestRunner_smp-tester         PASS      8.66 seconds
-TestRunner_userchan-tester    PASS      9.26 seconds
-IncrementalBuild              PENDING   0.90 seconds
-
-Details
-##############################
-Test: CheckPatch - PENDING
-Desc: Run checkpatch.pl script
-Output:
-
-##############################
-Test: GitLint - PENDING
-Desc: Run gitlint
-Output:
-
-##############################
-Test: TestRunner_mgmt-tester - FAIL
-Desc: Run mgmt-tester with test-runner
-Output:
-Total: 494, Passed: 488 (98.8%), Failed: 2, Not Run: 4
-
-Failed Test Cases
-Read Exp Feature - Success                           Failed       0.113 seconds
-LL Privacy - Set Flags 2 (Enable RL)                 Failed       0.171 seconds
-##############################
-Test: TestRunner_sco-tester - FAIL
-Desc: Run sco-tester with test-runner
-Output:
-WARNING: possible circular locking dependency detected
-BUG: sleeping function called from invalid context at net/core/sock.c:3782
-Total: 30, Passed: 30 (100.0%), Failed: 0, Not Run: 0
-##############################
-Test: TestRunner_mesh-tester - FAIL
-Desc: Run mesh-tester with test-runner
-Output:
-Total: 10, Passed: 8 (80.0%), Failed: 2, Not Run: 0
-
-Failed Test Cases
-Mesh - Send cancel - 1                               Timed out    1.961 seconds
-Mesh - Send cancel - 2                               Timed out    1.999 seconds
-##############################
-Test: IncrementalBuild - PENDING
-Desc: Incremental build with the patches in the series
-Output:
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
-
----
-Regards,
-Linux Bluetooth
-
-
---===============6681518953776817187==--
 
