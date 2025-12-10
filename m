@@ -1,342 +1,1223 @@
-Return-Path: <linux-bluetooth+bounces-17237-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-17240-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9D52CB2567
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 10 Dec 2025 08:59:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 817FBCB2E6D
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 10 Dec 2025 13:34:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 1B738300BEF3
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 10 Dec 2025 07:59:43 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 69E38300DB96
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 10 Dec 2025 12:34:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 24E332E22BF;
-	Wed, 10 Dec 2025 07:59:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 204133246ED;
+	Wed, 10 Dec 2025 12:34:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="l615dnTD";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="dlnixvx/"
+	dkim=pass (2048-bit key) header.d=realtek.com header.i=@realtek.com header.b="X6mA5KMg"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from rtits2.realtek.com.tw (rtits2.realtek.com [211.75.126.72])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D3A2C0286
-	for <linux-bluetooth@vger.kernel.org>; Wed, 10 Dec 2025 07:59:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 999AE28000B;
+	Wed, 10 Dec 2025 12:34:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=211.75.126.72
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765353579; cv=none; b=WQ9aQ7qvPAUE/Iiukbfe9Y1uGleyAcgi1XaOIxyghvsSW4j9/VKtZI2u3oinZLyDqUE23GWSm8KhuVoPbunldhHqkTeEz5ygHiNYT2udk9dT18LOR8zlMkA5IL8VQ9/6nl1sEkCXG5gCID5tgZ5xBCr+x4Lmtgcbw3D36PDmmUk=
+	t=1765370092; cv=none; b=DZoOleh56fWWxK6uM4Bxbd4zZKcU+oO1qr3rFMKQPBnz/53G0J2WbFFiedBwqUlNlAwm7nPvSyhcDLqqb5ha1eBXvOhsK2LRLJyJ5PiKOfQSJWkTOIg4vV7JvaBo0cD8PYxq5r6ZqIPdBixesHV/MoRGySk84eOMZ3TATu0b5NE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765353579; c=relaxed/simple;
-	bh=IkRhyT3aGCWjmk+qHRI4iFol30zjeB1LggJ7d4SHvzM=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Nb1FDjThBvO7LyxtT78zGDT0xRIKnZZhTPVuTeW06RzVBN8WlXiVL+zcIzX6VuBMIJ8po46uaYln0V/4HP1qtHN1Wx+tAixvtJb1MX8U7GIXM9/2uOoYYOAs4bLwheRO42dZ9oY3VGcmZFxq/QPT5JNoO3M8yjGfcTFopmy9qvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=l615dnTD; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=dlnixvx/; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BA6DtlW2460921
-	for <linux-bluetooth@vger.kernel.org>; Wed, 10 Dec 2025 07:59:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	bYG8MfvqQtOGqLtFlwUJHseb/gIMCjK932IIsHnbNAQ=; b=l615dnTDvhhcwbtf
-	ocYLZ01IYW1QVCauzkDoUTaSPs0x1L7S1CXEhkGVhhHnSMykNQPeA/74chlW+/Yp
-	COUGsl3NSkll0Va6pkEoNuqdMTG/hA/EL7mQ495HQfNkDx9dIG78OiJg2Jo40oWa
-	uua8yfq1uFlm+YqRF52Kh4xBdSIKvxKYvZS4EDNTAX7DEn/BDhiyeuFdAC7iGO9f
-	KdH+Fdw2+AJJmeXmWizNuWsLjR2Z+hmeohx8LeTgnzXGFgI+n9G7r7sACvWngPH9
-	9HO3fdVC7CEYsZwxAj/gtEqVnbcuWQydcF0QTEOdTF38BA+clOV3wM2Ct9huX4oR
-	62Th0Q==
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4axqu5agvq-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-bluetooth@vger.kernel.org>; Wed, 10 Dec 2025 07:59:36 +0000 (GMT)
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-7ba9c366057so16882015b3a.1
-        for <linux-bluetooth@vger.kernel.org>; Tue, 09 Dec 2025 23:59:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1765353575; x=1765958375; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=bYG8MfvqQtOGqLtFlwUJHseb/gIMCjK932IIsHnbNAQ=;
-        b=dlnixvx/q8M5Uj+0XQJpjWAdhfpzqr71oTdnlAXji5FsyoVPU0N3UAd8NMiWXlRDOY
-         +D9OKevyTSPGJNdXtC1NF2QbsrekcgOvp/fuqEiyg9QCOhig/600G+83f1WQffj3EAml
-         Iw79atmCO+qnVXXKAISYWS32eN937I0KKWEWb4PgOBvrRkDiXiGnzLKw8AxYjJ75ebxY
-         HcSgfMYaW+OhXsT2CNwza1O8HEwqe79pN0JBI7eYTISJml+TeJr799g05g4fjo3bY5ZP
-         nqM3hvwepGMWTbbwEtZIIsQA2Iqnyuac0DQyo+cwZBao7r3bu8Lw9O7LuwQGPaUAmlnS
-         H48g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765353575; x=1765958375;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bYG8MfvqQtOGqLtFlwUJHseb/gIMCjK932IIsHnbNAQ=;
-        b=MqxVrvDRE3tRv2j/2wIdaXoEI2FMgj8XKahZ+9VPeIJktQHUo5WYyJiVCnFB+rwnJK
-         BYy/DFDBcA176bIagsKoD1QA5H46XXcmsZYvD2ztu5F/CsLPT6Q2iEactdcgcl8ujwEU
-         E3lDMvD6tv+RMbKsUINSUN1dNHZdUmJlQx4g4PSF82Ix7L30TwBSuFDdAyx0K6wejvkX
-         ImD6u9vJHrApQoIXy+CbHJ3ww4+bvwt0JrzA4hKRcdl4MfHVxJQmNLn+yCcFDGMGoiO1
-         YHUfNQBWkvZ1JaL1p7m9jumQTPuVeoW10VjbIo9BzR8bJ4Q/OMfVaQmtJe20oAdeLtLZ
-         zXHw==
-X-Gm-Message-State: AOJu0YwNqZnpewsdO2R0Dcaf7gcrcuz2fCGEC9tW8euKdTmG0czqZACv
-	bIFzspQYYhmTjxOglnQtjjNi5c9//ps0ZY+mY/oBb8FeVyCtHQFR7XH+gpEQtYgKs0p4qNoF9Ni
-	WA06V/jiwQIxa3hTa+Gu6r8FhbQ8rlbWNSa23IKqEpAwOuNAoXzeMvfCefUCXXKsa/5Cu3esdVd
-	O6l2N3ONIE
-X-Gm-Gg: ASbGncvnWRxixtmRjS5mgJdj8lOBFh7cxeA27ZHIYn6kXDECOfEnHQkJUj4Y60ITgLl
-	uGCKvt3RaaSERPmbZSosVqYhHsdFrxWMs5XU+Baxrqc+tkhnQKiJACyX2oDXGbPYvPWPpUYaf58
-	aoSpHkBuaW6JPjxULlhWMPPZ+AMf1vOIzbiNFhNcxWfPeufdBBO/+XnO/GsPUOX0RXIQugDfK50
-	b7iq0oFpeBaF4kvr1y7AJj2ZXQD5g8QRjBdvaNKgRx+bG++uuCGxx8Iwkz6ZBaXmyloSXz2oUi8
-	Jc5W+zcKNTsVt6KuXo6wNh16B2i4xMlvPaoT+lkwl/qXLEP1ldtTpYig5M5z5uRKT+DaaCd580d
-	cnhOLOtEOfphboxr2JW2pYGyBOgH0csIGTEk1
-X-Received: by 2002:a05:6a00:2448:b0:7e8:450c:618e with SMTP id d2e1a72fcca58-7f22e49093dmr1377938b3a.37.1765353574780;
-        Tue, 09 Dec 2025 23:59:34 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGfCIjY5aJ2KsACX3+1FJxyMyMfdLEyYvXAz5rEugG3dkWN/jByjrS8WKIf875s4hswxymupQ==
-X-Received: by 2002:a05:6a00:2448:b0:7e8:450c:618e with SMTP id d2e1a72fcca58-7f22e49093dmr1377913b3a.37.1765353574291;
-        Tue, 09 Dec 2025 23:59:34 -0800 (PST)
-Received: from [10.231.216.118] ([114.94.8.21])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7e42d6e7a4csm17763761b3a.18.2025.12.09.23.59.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Dec 2025 23:59:33 -0800 (PST)
-Message-ID: <ee21c657-5120-4dbd-8660-d2a522f8578b@oss.qualcomm.com>
-Date: Wed, 10 Dec 2025 15:59:23 +0800
+	s=arc-20240116; t=1765370092; c=relaxed/simple;
+	bh=NQhgpzDi/ljdMg7fGMtEnnf2LQpitrT2bF5c8w8pN8s=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=d/b9Io/jUrF0skVb8evweWPZyxEwJ6XuivFxWaZ8U2M+C8GtIo+DN23oca7vaOXq2L1Z8J+zKOoHHhNaVuO3sZbn/1V9lzTFxGoxO/1Pp4aZAwh0DSQmhj8S+81B0gpgNQvlVrFn7m5gU6ACmnaCUsZUeAm6QT26HgblSnWIxwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=realtek.com; spf=pass smtp.mailfrom=realtek.com; dkim=pass (2048-bit key) header.d=realtek.com header.i=@realtek.com header.b=X6mA5KMg; arc=none smtp.client-ip=211.75.126.72
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=realtek.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=realtek.com
+X-SpamFilter-By: ArmorX SpamTrap 5.80 with qID 5BACYWKh8003712, This message is accepted by code: ctloc85258
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=realtek.com; s=dkim;
+	t=1765370072; bh=G3mqeQHW+hQlSHczrbjtbFquk52S0311qgZgXnEJjLk=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:
+	 Content-Transfer-Encoding:Content-Type;
+	b=X6mA5KMgKGJjHDqEpRHUAlqMX2URCta7+eElDSFMqhIIW3zC2vH5cKFtVGG9/ss8i
+	 D5/AC9H6XX3G+9K4atz/9Ft3GY1lw+U6v/2TnzmvJuqDg7t1JaBHZbnKTQ3k7yCj+e
+	 eNAYWPPSim1k9ZYgUbhjpV9lI8wB1I67BrGPvnL8XsPne4orjIOAKFRiRSOyfcE3JB
+	 6QKihpbfVMMsaQhABn7nV8mqzvbktHRGP9XkRazxw802H684DNri3NLv6KdZ3KNgfg
+	 sNlS2eBUS4yC7lW19AdZ7pdcU4dOsQnra2yRUxvLpYUB/AuLxeHifIdGGpP+Yiuuqp
+	 q+6MmLDscw5iw==
+Received: from mail.realtek.com (rtkexhmbs04.realtek.com.tw[10.21.1.54])
+	by rtits2.realtek.com.tw (8.15.2/3.21/5.94) with ESMTPS id 5BACYWKh8003712
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 10 Dec 2025 20:34:32 +0800
+Received: from RTKEXHMBS04.realtek.com.tw (10.21.1.54) by
+ RTKEXHMBS04.realtek.com.tw (10.21.1.54) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.27; Wed, 10 Dec 2025 20:34:32 +0800
+Received: from localhost.localhost (172.24.54.48) by
+ RTKEXHMBS04.realtek.com.tw (10.21.1.54) with Microsoft SMTP Server id
+ 15.2.1544.27 via Frontend Transport; Wed, 10 Dec 2025 20:34:32 +0800
+From: Hilda Wu <hildawu@realtek.com>
+To: <marcel@holtmann.org>
+CC: <luiz.dentz@gmail.com>, <linux-bluetooth@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <alex_lu@realsil.com.cn>,
+        <jason_mao@realsil.com.cn>, <zoey_zhou@realsil.com.cn>,
+        <max.chou@realtek.com>
+Subject: [PATCH v5 1/3] Bluetooth: btrtl: Add firmware format v3 support
+Date: Wed, 10 Dec 2025 20:34:05 +0800
+Message-ID: <20251210123407.3971233-1-hildawu@realtek.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Mengshi Wu <mengshi.wu@oss.qualcomm.com>
-Subject: Re: [PATCH v1] gatt-client:Implement error handling for
- DB_OUT_OF_SYNC in GATT caching.
-To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: linux-bluetooth@vger.kernel.org, shuai.zhang@oss.qualcomm.com,
-        cheng.jiang@oss.qualcomm.com, chezhou@qti.qualcomm.com,
-        wei.deng@oss.qualcomm.com
-References: <20251208101915.247459-1-mengshi.wu@oss.qualcomm.com>
- <CABBYNZJ=S3LHcwyXAc=gxf0RptcOC+6TPaWvoEmJquar54b3dQ@mail.gmail.com>
-Content-Language: en-US
-In-Reply-To: <CABBYNZJ=S3LHcwyXAc=gxf0RptcOC+6TPaWvoEmJquar54b3dQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: O6y77Wik0_J0qDAph96mVKbB2ykLXQGN
-X-Authority-Analysis: v=2.4 cv=Y7/1cxeN c=1 sm=1 tr=0 ts=69392868 cx=c_pps
- a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=Uz3yg00KUFJ2y2WijEJ4bw==:17
- a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=a3tpYQ5gCbRvBMh9ShMA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=OpyuDcXvxspvyRM73sMx:22
-X-Proofpoint-ORIG-GUID: O6y77Wik0_J0qDAph96mVKbB2ykLXQGN
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjEwMDA2OCBTYWx0ZWRfX9cPJBIBOm6BU
- anIirAXZnA0K/GGkayDD4Ok6jE3zCuKuk4LTso82ArvY9/4PZG8oJ/ZHrl8hrHjhkf1+jT4cf1L
- xGBgSAjdGLk6XMy3ADnTkllm5SaePdc5l+5GB7kYuhNLs7NHgL0Jj6e70uwOGib414A/OEEQm9S
- RkQ3qoL/NJX2WwdsmyZfehwJKMCOb1kts71wh/xiWUXQxAkh0JK7ZE1uIczvB/TyyOF5DaFrkt0
- iF0u6nMNoVjfuIGz8peTFhFWe8LQ2UPR2JaLaGKJg7W7PrPVE5ute9GJ1cO0z7pFTJcbZye/+Gb
- wrZRFfFI8Fma8G8maISmBCLu16fsq217fcDtNpFqQJE5Xd1TP4eXKqOfGWb2SEoaP4dCi1Q+nKQ
- wdSVXR8YcdzS6CVGYQxjdOCaf16oPA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-09_05,2025-12-09_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 lowpriorityscore=0 suspectscore=0 spamscore=0
- phishscore=0 bulkscore=0 priorityscore=1501 adultscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512100068
+Content-Type: text/plain
 
-Hi,
+Realtek updated its Bluetooth firmware format to v3.
+This patch extends the btrtl driver to recognise and parse the new v3 file
+format, including:
+- New signature string and image ID definitions
+- Extension of btrtl_device_info to store v3-specific metadata
+- Logic to extract and load firmware data out of v3 images
+- Maintains compatibility with existing v2 firmware format
 
-Thank you for your comments.
+This is required for future Realtek Bluetooth chips that ship with
+v3 firmware.
+The RTL8922D is the first IC to use firmware format V3, so the following
+example uses the RTL8922D's log as expected fw format v3 output:
 
-On 12/8/2025 11:35 PM, Luiz Augusto von Dentz wrote:
-> Hi,
-> 
-> On Mon, Dec 8, 2025 at 5:19 AM Mengshi Wu <mengshi.wu@oss.qualcomm.com> wrote:
->>
->> Add automatic DB re-discovery on receiving BT_ATT_ERROR_DB_OUT_OF_SYNC
->> error code from ATT operations. This ensures the local GATT database
->> stays synchronized with the remote device by triggering a full service
->> discovery (handles 0x0001-0xffff) when the database becomes out of sync.
->>
->> The process_db_out_of_sync() function is now called in all ATT error
->> response handlers (read_multiple, read_long, write, execute_write,
->> prepare_write, and prep_write callbacks) to handle this error condition
->> consistently.
->>
->> Signed-off-by: Mengshi Wu <mengshi.wu@oss.qualcomm.com>
->> ---
->>  src/shared/gatt-client.c | 35 +++++++++++++++++++++++++++++++++--
->>  1 file changed, 33 insertions(+), 2 deletions(-)
->>
->> diff --git a/src/shared/gatt-client.c b/src/shared/gatt-client.c
->> index f6d5dc4b7..087d4e228 100644
->> --- a/src/shared/gatt-client.c
->> +++ b/src/shared/gatt-client.c
->> @@ -1965,6 +1965,29 @@ fail:
->>                 "Failed to initiate service discovery after Service Changed");
->>  }
->>
->> +static void process_db_out_of_sync(struct bt_gatt_client *client,
->> +                                  uint8_t att_ecode)
->> +{
->> +       struct service_changed_op *op;
->> +
->> +       if (att_ecode != BT_ATT_ERROR_DB_OUT_OF_SYNC)
->> +               return;
->> +
->> +       DBG(client, "Database Out of Sync - triggering full re-discovery");
->> +
->> +       if (!client->in_svc_chngd) {
->> +               process_service_changed(client, 0x0001, 0xffff);
->> +               return;
->> +       }
->> +
->> +       op = new0(struct service_changed_op, 1);
->> +
->> +       op->start_handle = 0x0001;
->> +       op->end_handle = 0xffff;
->> +
->> +       queue_push_tail(client->svc_chngd_queue, op);
->> +}
-> 
-> Id just change process_error to call into db_out_sync, that said this
-> is not recovering at all, it just rediscovering but the original
-> request will be lost, I wonder if we should implement some backoff
-> logic wait to see if the server do a service changed, read the hash
-> (in case we are not doing it already), and then redo the operation.
-> Also we do need to make sure we don't end up in a loop rediscovery.
+Bluetooth: btrtl_read_chip_id() hci0: RTL: chip_id status=0x00 id=0x37
+Bluetooth: btrtl_initialize() hci0: RTL: examining hci_ver=0d hci_rev=000d lmp_ver=0d lmp_subver=8922
+Bluetooth: rtl_read_rom_version() hci0: RTL: rom_version status=0 version=1
+Bluetooth: btrtl_initialize() hci0: RTL: btrtl_initialize: key id 0
+Bluetooth: rtl_load_file() hci0: RTL: loading rtl_bt/rtl8922du_fw.bin
+Bluetooth: rtl_load_file() hci0: RTL: loading rtl_bt/rtl8922du_config.bin
+Bluetooth: rtlbt_parse_firmware_v3() hci0: RTL: key id 0
+Bluetooth: rtlbt_parse_section_v3() hci0: RTL: image (f000:00), chip id 55, cut 0x02, len 00007185
+Bluetooth: rtlbt_parse_section_v3() hci0: RTL: image version: 35fd7908
+Bluetooth: rtlbt_parse_config() hci0: RTL: config file: rtl_bt/rtl8922du_config_f000.bin
+Bluetooth: rtlbt_parse_section_v3() hci0: RTL: image (f002:00), chip id 55, cut 0x02, len 000078f5
+Bluetooth: rtlbt_parse_section_v3() hci0: RTL: image version: 47b6874d
+Bluetooth: rtlbt_parse_config() hci0: RTL: config file: rtl_bt/rtl8922du_config_f002.bin
+Bluetooth: rtlbt_parse_firmware_v3() hci0: RTL: image payload total len: 0x0000ea7a
+Bluetooth: rtl_finalize_download() hci0: RTL: Watchdog reset status 00
+Bluetooth: rtl_finalize_download() hci0: RTL: fw version 0x47b6874d
 
-At the beginning, we considered implementing recovery for failed ATT 
-requests caused by a Database Out of Sync error. However, we identified 
-potential risks in retrying some ATT requests after the remote device’s 
-services have changed. For example, the handle in the ATT_READ_REQ PDU, 
-which identifies the target attribute, may have changed on the remote 
-device. Even if the retry succeeds, it might operate on the wrong 
-attribute.
+Signed-off-by: Alex Lu <alex_lu@realsil.com.cn>
+Signed-off-by: Zoey Zhou <zoey_zhou@realsil.com.cn>
+Signed-off-by: Hilda Wu <hildawu@realtek.com>
 
-As usual, any ATT response error will be propagated to the application 
-layer, so the operation will not be lost but will fail. We did not modify 
-this behavior.
+---
+Change in V5:
+- Independent support for 8922D section
+- Define relevant macros to increase readability
+- Added format v3 description and differences
+- Adjust according to the recommendations
 
-It may not be appropriate to implement recovery logic for failed ATT 
-requests at the BlueZ host layer. Therefore, we only do a rediscovery 
-as required by the Core Spec, Vol. 3, Part G, Section 2.5.2.1,
-after receiving a Database Out of Sync error.
+Change in V4:
+- Modify access to skb->data and add descriptions
+- Fix hidden issues
 
-For the suggestion about back-off logic,
+Change in V3:
+- Fixed cocci warning
 
-We are considering reading the remote database hash and comparing it 
-with the locally stored hash before initiating rediscovery. If reading 
-the remote database hash fails, we will assume that the remote GATT 
-database has changed and proceed with rediscovery immediately.
+Change in V2:
+- Fill in the missing symbols
+- Fix build warnings
+---
+ drivers/bluetooth/btrtl.c | 698 +++++++++++++++++++++++++++++++++++++-
+ drivers/bluetooth/btrtl.h | 102 ++++++
+ drivers/bluetooth/btusb.c |   3 +
+ 3 files changed, 786 insertions(+), 17 deletions(-)
 
-As shown below, the client checks the remote database hash after 
-receiving a Database Out of Sync error. If the remote services have 
-changed, the client initiates rediscovery.
-
-btmon HCI Logs:
-> ACL Data RX: Handle 2 flags 0x02 dlen 9
-      ATT: Error Response (0x01) len 4
-        Read Request (0x0a)
-        Handle: 0x000d
-        Error: Database Out of Sync (0x12)
-bluetoothd[57993]: < ACL Data TX: Handle 2 flags 0x00 dlen 11
-      ATT: Read By Type Request (0x08) len 6
-        Handle range: 0x0001-0xffff
-        Attribute type: Database Hash (0x2b2a)
-> HCI Event: Number of Completed Packets (0x13) plen 5
-        Num handles: 1
-        Handle: 2
-        Count: 1
-> ACL Data RX: Handle 2 flags 0x02 dlen 24
-      ATT: Read By Type Response (0x09) len 19
-        Attribute data length: 18
-        Attribute data list: 1 entry
-        Handle: 0x000f
-        Value: 10d6a00f95bb0eeec55a097ccf7dead8
-bluetoothd[57993]: < ACL Data TX: Handle 2 flags 0x00 dlen 11
-      ATT: Read By Type Request (0x08) len 6
-        Handle range: 0x0010-0xffff
-        Attribute type: Database Hash (0x2b2a)
-> HCI Event: Number of Completed Packets (0x13) plen 5
-        Num handles: 1
-        Handle: 2
-        Count: 1
-> ACL Data RX: Handle 2 flags 0x02 dlen 9
-      ATT: Error Response (0x01) len 4
-        Read By Type Request (0x08)
-        Handle: 0x0010
-        Error: Attribute Not Found (0x0a)
-bluetoothd[57993]: < ACL Data TX: Handle 2 flags 0x00 dlen 11
-      ATT: Read By Group Type Request (0x10) len 6
-        Handle range: 0x0001-0xffff
-        Attribute group type: Primary Service (0x2800)
-
-> 
->>  static void service_changed_cb(uint16_t value_handle, const uint8_t *value,
->>                                         uint16_t length, void *user_data)
->>  {
->> @@ -2709,10 +2732,12 @@ static void read_multiple_cb(uint8_t opcode, const void *pdu, uint16_t length,
->>                         (!pdu && length)) {
->>                 success = false;
->>
->> -               if (opcode == BT_ATT_OP_ERROR_RSP)
->> +               if (opcode == BT_ATT_OP_ERROR_RSP) {
->>                         att_ecode = process_error(pdu, length);
->> -               else
->> +                       process_db_out_of_sync(req->client, att_ecode);
->> +               } else {
->>                         att_ecode = 0;
->> +               }
->>
->>                 pdu = NULL;
->>                 length = 0;
->> @@ -2864,6 +2889,7 @@ static void read_long_cb(uint8_t opcode, const void *pdu,
->>         if (opcode == BT_ATT_OP_ERROR_RSP) {
->>                 success = false;
->>                 att_ecode = process_error(pdu, length);
->> +               process_db_out_of_sync(req->client, att_ecode);
->>                 goto done;
->>         }
->>
->> @@ -3050,6 +3076,7 @@ static void write_cb(uint8_t opcode, const void *pdu, uint16_t length,
->>         if (opcode == BT_ATT_OP_ERROR_RSP) {
->>                 success = false;
->>                 att_ecode = process_error(pdu, length);
->> +               process_db_out_of_sync(req->client, att_ecode);
->>                 goto done;
->>         }
->>
->> @@ -3213,6 +3240,7 @@ static void execute_write_cb(uint8_t opcode, const void *pdu, uint16_t length,
->>         if (opcode == BT_ATT_OP_ERROR_RSP) {
->>                 success = false;
->>                 att_ecode = process_error(pdu, length);
->> +               process_db_out_of_sync(req->client, att_ecode);
->>         } else if (opcode != BT_ATT_OP_EXEC_WRITE_RSP || pdu || length)
->>                 success = false;
->>
->> @@ -3278,6 +3306,7 @@ static void prepare_write_cb(uint8_t opcode, const void *pdu, uint16_t length,
->>         if (opcode == BT_ATT_OP_ERROR_RSP) {
->>                 success = false;
->>                 att_ecode = process_error(pdu, length);
->> +               process_db_out_of_sync(req->client, att_ecode);
->>                 goto done;
->>         }
->>
->> @@ -3447,6 +3476,7 @@ static void prep_write_cb(uint8_t opcode, const void *pdu, uint16_t length,
->>                 success = false;
->>                 reliable_error = false;
->>                 att_ecode = process_error(pdu, length);
->> +               process_db_out_of_sync(req->client, att_ecode);
->>                 goto done;
->>         }
->>
->> @@ -3597,6 +3627,7 @@ static void exec_write_cb(uint8_t opcode, const void *pdu, uint16_t length,
->>         if (opcode == BT_ATT_OP_ERROR_RSP) {
->>                 success = false;
->>                 att_ecode = process_error(pdu, length);
->> +               process_db_out_of_sync(req->client, att_ecode);
->>                 goto done;
->>         }
->>
->> --
->> 2.34.1
->>
->>
-> 
-> 
+diff --git a/drivers/bluetooth/btrtl.c b/drivers/bluetooth/btrtl.c
+index 5603b282f9bc..c90aa4ff5918 100644
+--- a/drivers/bluetooth/btrtl.c
++++ b/drivers/bluetooth/btrtl.c
+@@ -22,6 +22,12 @@
+ #define RTL_CHIP_8723CS_XX	5
+ #define RTL_EPATCH_SIGNATURE	"Realtech"
+ #define RTL_EPATCH_SIGNATURE_V2	"RTBTCore"
++#define RTL_EPATCH_SIGNATURE_V3	"BTNIC003"
++#define RTL_PATCH_V3_1		0x01
++#define RTL_PATCH_V3_2		0x02
++#define IMAGE_ID_F000		0xf000
++#define IMAGE_ID_F001		0xf001
++#define IMAGE_ID_F002		0xf002
+ #define RTL_ROM_LMP_8703B	0x8703
+ #define RTL_ROM_LMP_8723A	0x1200
+ #define RTL_ROM_LMP_8723B	0x8723
+@@ -33,7 +39,14 @@
+ #define RTL_ROM_LMP_8922A	0x8922
+ #define RTL_CONFIG_MAGIC	0x8723ab55
+ 
+-#define RTL_VSC_OP_COREDUMP	0xfcff
++#define RTL_VSC_OP_DOWNLOAD_CMD		0xfc20
++#define RTL_VSC_OP_READ_VENDER		0xfc61
++#define RTL_VSC_OP_WRITE_VENDOR		0xfc62
++#define RTL_VSC_OP_READ_ROM_VER		0xfc6d
++#define RTL_VSC_OP_READ_CHIP_ID		0xfc6f
++#define RTL_VSC_OP_COREDUMP		0xfcff
++#define RTL_VSC_OP_CHECK_DOWNLOAD_STATE	0xfdcf
++#define RTL_VSC_OP_WDG_RESET_CMD	0xfc8e
+ 
+ #define IC_MATCH_FL_LMPSUBV	(1 << 0)
+ #define IC_MATCH_FL_HCIREV	(1 << 1)
+@@ -50,12 +63,16 @@
+ 
+ #define	RTL_CHIP_SUBVER (&(struct rtl_vendor_cmd) {{0x10, 0x38, 0x04, 0x28, 0x80}})
+ #define	RTL_CHIP_REV    (&(struct rtl_vendor_cmd) {{0x10, 0x3A, 0x04, 0x28, 0x80}})
+-#define	RTL_SEC_PROJ    (&(struct rtl_vendor_cmd) {{0x10, 0xA4, 0xAD, 0x00, 0xb0}})
++#define	RTL_SEC_PROJ_V2 (&(struct rtl_vendor_cmd) {{0x10, 0xA4, 0xAD, 0x00, 0xb0}})
++#define	RTL_SEC_PROJ_V3 (&(struct rtl_vendor_cmd) {{0x10, 0xA4, 0x0D, 0x01, 0xa0}})
+ 
+ #define RTL_PATCH_SNIPPETS		0x01
+ #define RTL_PATCH_DUMMY_HEADER		0x02
+ #define RTL_PATCH_SECURITY_HEADER	0x03
+ 
++#define CHIP_ID_V3_BASE		55
++#define RTL_VENDOR_WRITE_TYPE		0x21
++
+ enum btrtl_chip_id {
+ 	CHIP_ID_8723A,
+ 	CHIP_ID_8723B,
+@@ -99,8 +116,11 @@ struct btrtl_device_info {
+ 	int cfg_len;
+ 	bool drop_fw;
+ 	int project_id;
++	u32 opcode;
++	u8 fw_type;
+ 	u8 key_id;
+ 	struct list_head patch_subsecs;
++	struct list_head patch_images;
+ };
+ 
+ static const struct id_table ic_id_table[] = {
+@@ -371,6 +391,33 @@ static const struct id_table *btrtl_match_ic(u16 lmp_subver, u16 hci_rev,
+ 	return &ic_id_table[i];
+ }
+ 
++static int btrtl_read_chip_id(struct hci_dev *hdev, u8 *chip_id)
++{
++	struct rtl_rp_read_chip_id *rp;
++	struct sk_buff *skb;
++	int ret = 0;
++
++	skb = __hci_cmd_sync(hdev, RTL_VSC_OP_READ_CHIP_ID, 0, NULL, HCI_INIT_TIMEOUT);
++	if (IS_ERR(skb))
++		return PTR_ERR(skb);
++
++	rp = skb_pull_data(skb, sizeof(*rp));
++	if (!rp) {
++		ret = -EIO;
++		goto out;
++	}
++
++	rtl_dev_info(hdev, "chip_id status=0x%02x id=0x%02x",
++		     rp->status, rp->chip_id);
++
++	if (chip_id)
++		*chip_id = rp->chip_id;
++
++out:
++	kfree_skb(skb);
++	return ret;
++}
++
+ static struct sk_buff *btrtl_read_local_version(struct hci_dev *hdev)
+ {
+ 	struct sk_buff *skb;
+@@ -397,8 +444,7 @@ static int rtl_read_rom_version(struct hci_dev *hdev, u8 *version)
+ 	struct rtl_rom_version_evt *rom_version;
+ 	struct sk_buff *skb;
+ 
+-	/* Read RTL ROM version command */
+-	skb = __hci_cmd_sync(hdev, 0xfc6d, 0, NULL, HCI_INIT_TIMEOUT);
++	skb = __hci_cmd_sync(hdev, RTL_VSC_OP_READ_ROM_VER, 0, NULL, HCI_INIT_TIMEOUT);
+ 	if (IS_ERR(skb)) {
+ 		rtl_dev_err(hdev, "Read ROM version failed (%ld)",
+ 			    PTR_ERR(skb));
+@@ -427,7 +473,7 @@ static int btrtl_vendor_read_reg16(struct hci_dev *hdev,
+ 	struct sk_buff *skb;
+ 	int err = 0;
+ 
+-	skb = __hci_cmd_sync(hdev, 0xfc61, sizeof(*cmd), cmd,
++	skb = __hci_cmd_sync(hdev, RTL_VSC_OP_READ_VENDER, sizeof(*cmd), cmd,
+ 			     HCI_INIT_TIMEOUT);
+ 	if (IS_ERR(skb)) {
+ 		err = PTR_ERR(skb);
+@@ -449,6 +495,26 @@ static int btrtl_vendor_read_reg16(struct hci_dev *hdev,
+ 	return 0;
+ }
+ 
++static int btrtl_vendor_write_mem(struct hci_dev *hdev, u32 addr, u32 val)
++{
++	struct rtl_vendor_write_cmd cp;
++	struct sk_buff *skb;
++	int err = 0;
++
++	cp.type = RTL_VENDOR_WRITE_TYPE;
++	cp.addr = cpu_to_le32(addr);
++	cp.val = cpu_to_le32(val);
++	skb = __hci_cmd_sync(hdev, RTL_VSC_OP_WRITE_VENDOR, sizeof(cp), &cp, HCI_INIT_TIMEOUT);
++	if (IS_ERR(skb)) {
++		err = PTR_ERR(skb);
++		bt_dev_err(hdev, "RTL: Write mem32 failed (%d)", err);
++		return err;
++	}
++
++	kfree_skb(skb);
++	return 0;
++}
++
+ static void *rtl_iov_pull_data(struct rtl_iovec *iov, u32 len)
+ {
+ 	void *data = iov->data;
+@@ -462,6 +528,31 @@ static void *rtl_iov_pull_data(struct rtl_iovec *iov, u32 len)
+ 	return data;
+ }
+ 
++
++static void btrtl_insert_ordered_patch_image(struct rtl_section_patch_image *image,
++					     struct btrtl_device_info *btrtl_dev)
++{
++	struct list_head *pos;
++	struct list_head *next;
++	struct rtl_section_patch_image *node;
++
++	list_for_each_safe(pos, next, &btrtl_dev->patch_images) {
++		node = list_entry(pos, struct rtl_section_patch_image, list);
++
++		if (node->image_id > image->image_id) {
++			__list_add(&image->list, pos->prev, pos);
++			return;
++		}
++
++		if (node->image_id == image->image_id &&
++		    node->index > image->index) {
++			__list_add(&image->list, pos->prev, pos);
++			return;
++		}
++	}
++	__list_add(&image->list, pos->prev, pos);
++}
++
+ static void btrtl_insert_ordered_subsec(struct rtl_subsection *node,
+ 					struct btrtl_device_info *btrtl_dev)
+ {
+@@ -633,6 +724,279 @@ static int rtlbt_parse_firmware_v2(struct hci_dev *hdev,
+ 	}
+ 
+ 	*_buf = ptr;
++	btrtl_dev->fw_type = FW_TYPE_V2;
++	return len;
++}
++
++static int rtlbt_parse_config(struct hci_dev *hdev,
++			      struct rtl_section_patch_image *patch_image,
++			      struct btrtl_device_info *btrtl_dev)
++{
++	const struct id_table *ic_info = NULL;
++	const struct firmware *fw;
++	char tmp_name[32];
++	char filename[64];
++	u8 *cfg_buf;
++	char *str;
++	char *p;
++	size_t len;
++	int ret;
++
++	if (btrtl_dev && btrtl_dev->ic_info)
++		ic_info = btrtl_dev->ic_info;
++
++	if (!ic_info)
++		return -EINVAL;
++
++	str = ic_info->cfg_name;
++	if (btrtl_dev->fw_type == FW_TYPE_V3_1) {
++		if (!patch_image->image_id && !patch_image->index) {
++			snprintf(filename, sizeof(filename), "%s.bin", str);
++			goto load_fw;
++		}
++		goto done;
++	}
++
++	len = strlen(str);
++	if (len > sizeof(tmp_name) - 1)
++		len = sizeof(tmp_name) - 1;
++	memcpy(tmp_name, str, len);
++	tmp_name[len] = '\0';
++
++	str = tmp_name;
++	p = strsep(&str, ".");
++
++	ret = snprintf(filename, sizeof(filename), "%s", p);
++	if (patch_image->config_rule && patch_image->need_config) {
++		switch (patch_image->image_id) {
++		case IMAGE_ID_F000:
++		case IMAGE_ID_F001:
++		case IMAGE_ID_F002:
++			ret += snprintf(filename + ret, sizeof(filename) - ret,
++					"_%04x", patch_image->image_id);
++			break;
++		default:
++			goto done;
++		}
++	} else {
++		goto done;
++	}
++
++	snprintf(filename + ret, sizeof(filename) - ret, ".%s", str ? str : "bin");
++
++load_fw:
++	rtl_dev_info(hdev, "config file: %s", filename);
++	ret = request_firmware(&fw, filename, &hdev->dev);
++	if (ret < 0) {
++		if (btrtl_dev->fw_type == FW_TYPE_V3_2) {
++			len = 4;
++			cfg_buf = kvmalloc(len, GFP_KERNEL);
++			if (!cfg_buf)
++				return -ENOMEM;
++
++			memset(cfg_buf, 0xff, len);
++			patch_image->cfg_buf = cfg_buf;
++			patch_image->cfg_len = len;
++			return 0;
++		}
++		goto err_req_fw;
++	}
++	rtl_dev_info(hdev, "config file: %s found", filename);
++	cfg_buf = kvmalloc(fw->size, GFP_KERNEL);
++	if (!cfg_buf) {
++		ret = -ENOMEM;
++		goto err;
++	}
++	memcpy(cfg_buf, fw->data, fw->size);
++	len = fw->size;
++	release_firmware(fw);
++
++	patch_image->cfg_buf = cfg_buf;
++	patch_image->cfg_len = len;
++done:
++	return 0;
++err:
++	release_firmware(fw);
++err_req_fw:
++	rtl_dev_info(hdev, "config file: [%s] not found", filename);
++	return ret;
++}
++
++static int rtlbt_parse_section_v3(struct hci_dev *hdev,
++				  struct btrtl_device_info *btrtl_dev,
++				  u32 opcode, u8 *data, u32 len)
++{
++	struct rtl_section_patch_image *patch_image;
++	struct rtl_patch_image_hdr *hdr;
++	u16 image_id;
++	u16 chip_id;
++	size_t patch_image_len;
++	u8 *ptr;
++	int ret = 0;
++	size_t i;
++	struct rtl_iovec iov = {
++		.data = data,
++		.len  = len,
++	};
++
++	hdr = rtl_iov_pull_data(&iov, sizeof(*hdr));
++	if (!hdr)
++		return -EINVAL;
++
++	if (btrtl_dev->opcode && btrtl_dev->opcode != opcode) {
++		rtl_dev_err(hdev, "invalid opcode 0x%02x", opcode);
++		return -EINVAL;
++	}
++
++	if (!btrtl_dev->opcode) {
++		btrtl_dev->opcode = opcode;
++		switch (btrtl_dev->opcode) {
++		case RTL_PATCH_V3_1:
++			btrtl_dev->fw_type = FW_TYPE_V3_1;
++			break;
++		case RTL_PATCH_V3_2:
++			btrtl_dev->fw_type = FW_TYPE_V3_2;
++			break;
++		default:
++			return -EINVAL;
++		}
++	}
++
++	patch_image_len = (u32)le64_to_cpu(hdr->patch_image_len);
++	chip_id = le16_to_cpu(hdr->chip_id);
++	image_id = le16_to_cpu(hdr->image_id);
++	rtl_dev_info(hdev, "image (%04x:%02x), chip id %u, cut 0x%02x, len %08zx"
++		     , image_id, hdr->index, chip_id, hdr->ic_cut,
++		     patch_image_len);
++
++	if (btrtl_dev->key_id != hdr->key_id) {
++		rtl_dev_err(hdev, "invalid key_id (%u, %u)", hdr->key_id,
++			    btrtl_dev->key_id);
++		return -EINVAL;
++	}
++
++	if (hdr->ic_cut != btrtl_dev->rom_version + 1) {
++		rtl_dev_info(hdev, "unused ic_cut (%u, %u)", hdr->ic_cut,
++			    btrtl_dev->rom_version + 1);
++		return -EINVAL;
++	}
++
++	if (btrtl_dev->fw_type == FW_TYPE_V3_1 && !btrtl_dev->project_id)
++		btrtl_dev->project_id = chip_id;
++
++	if (btrtl_dev->fw_type == FW_TYPE_V3_2 &&
++	    chip_id != btrtl_dev->project_id) {
++		rtl_dev_err(hdev, "invalid chip_id (%u, %d)", chip_id,
++			    btrtl_dev->project_id);
++		return -EINVAL;
++	}
++
++	ptr = rtl_iov_pull_data(&iov, patch_image_len);
++	if (!ptr)
++		return -ENODATA;
++
++	patch_image = kzalloc(sizeof(*patch_image), GFP_KERNEL);
++	if (!patch_image)
++		return -ENOMEM;
++	patch_image->index = hdr->index;
++	patch_image->image_id = image_id;
++	patch_image->config_rule = hdr->config_rule;
++	patch_image->need_config = hdr->need_config;
++
++	for (i = 0; i < DL_FIX_ADDR_MAX; i++) {
++		patch_image->fix[i].addr =
++			(u32)le64_to_cpu(hdr->addr_fix[i * 2]);
++		patch_image->fix[i].value =
++			(u32)le64_to_cpu(hdr->addr_fix[i * 2 + 1]);
++	}
++
++	patch_image->image_len = patch_image_len;
++	patch_image->image_data = kvmalloc(patch_image_len, GFP_KERNEL);
++	if (!patch_image->image_data) {
++		ret = -ENOMEM;
++		goto err;
++	}
++	memcpy(patch_image->image_data, ptr, patch_image_len);
++	patch_image->image_ver =
++		get_unaligned_le32(ptr + patch_image->image_len - 4);
++	rtl_dev_info(hdev, "image version: %08x", patch_image->image_ver);
++
++	rtlbt_parse_config(hdev, patch_image, btrtl_dev);
++
++	ret = patch_image->image_len;
++
++	btrtl_insert_ordered_patch_image(patch_image, btrtl_dev);
++
++	return ret;
++err:
++	kfree(patch_image);
++	return ret;
++}
++
++static int rtlbt_parse_firmware_v3(struct hci_dev *hdev,
++				   struct btrtl_device_info *btrtl_dev)
++{
++	struct rtl_epatch_header_v3 *hdr;
++	int rc;
++	u32 num_sections;
++	struct rtl_section_v3 *section;
++	u32 section_len;
++	u32 opcode;
++	int len = 0;
++	int i;
++	u8 *ptr;
++	struct rtl_iovec iov = {
++		.data = btrtl_dev->fw_data,
++		.len  = btrtl_dev->fw_len,
++	};
++
++	rtl_dev_info(hdev, "key id %u", btrtl_dev->key_id);
++
++	hdr = rtl_iov_pull_data(&iov, sizeof(*hdr));
++	if (!hdr)
++		return -EINVAL;
++	num_sections = le32_to_cpu(hdr->num_sections);
++
++	rtl_dev_dbg(hdev, "timpstamp %08x-%08x", *((u32 *)hdr->timestamp),
++		    *((u32 *)(hdr->timestamp + 4)));
++
++	for (i = 0; i < num_sections; i++) {
++		section = rtl_iov_pull_data(&iov, sizeof(*section));
++		if (!section)
++			break;
++
++		section_len = (u32)le64_to_cpu(section->len);
++		opcode = le32_to_cpu(section->opcode);
++
++		rtl_dev_dbg(hdev, "opcode 0x%04x", section->opcode);
++
++		ptr = rtl_iov_pull_data(&iov, section_len);
++		if (!ptr)
++			break;
++
++		rc = 0;
++		switch (opcode) {
++		case RTL_PATCH_V3_1:
++		case RTL_PATCH_V3_2:
++			rc = rtlbt_parse_section_v3(hdev, btrtl_dev, opcode,
++						    ptr, section_len);
++			break;
++		default:
++			rtl_dev_warn(hdev, "Unknown opcode %08x", opcode);
++			break;
++		}
++		if (rc < 0) {
++			rtl_dev_err(hdev, "Parse section (%u) err (%d)",
++				    opcode, rc);
++			continue;
++		}
++		len += rc;
++	}
++
++	rtl_dev_info(hdev, "image payload total len: 0x%08x", len);
++	if (!len)
++		return -ENODATA;
++
+ 	return len;
+ }
+ 
+@@ -678,6 +1042,9 @@ static int rtlbt_parse_firmware(struct hci_dev *hdev,
+ 	if (btrtl_dev->fw_len <= 8)
+ 		return -EINVAL;
+ 
++	if (!memcmp(btrtl_dev->fw_data, RTL_EPATCH_SIGNATURE_V3, 8))
++		return rtlbt_parse_firmware_v3(hdev, btrtl_dev);
++
+ 	if (!memcmp(btrtl_dev->fw_data, RTL_EPATCH_SIGNATURE, 8))
+ 		min_size = sizeof(struct rtl_epatch_header) +
+ 				sizeof(extension_sig) + 3;
+@@ -813,10 +1180,11 @@ static int rtlbt_parse_firmware(struct hci_dev *hdev,
+ 	memcpy(buf + patch_length - 4, &epatch_info->fw_version, 4);
+ 
+ 	*_buf = buf;
++	btrtl_dev->fw_type = FW_TYPE_V1;
+ 	return len;
+ }
+ 
+-static int rtl_download_firmware(struct hci_dev *hdev,
++static int rtl_download_firmware(struct hci_dev *hdev, u8 fw_type,
+ 				 const unsigned char *data, int fw_len)
+ {
+ 	struct rtl_download_cmd *dl_cmd;
+@@ -827,6 +1195,13 @@ static int rtl_download_firmware(struct hci_dev *hdev,
+ 	int j = 0;
+ 	struct sk_buff *skb;
+ 	struct hci_rp_read_local_version *rp;
++	u8 dl_rp_len = sizeof(struct rtl_download_response);
++
++	if (is_v3_fw(fw_type)) {
++		j = 1;
++		if (fw_type == FW_TYPE_V3_2)
++			dl_rp_len++;
++	}
+ 
+ 	dl_cmd = kmalloc(sizeof(*dl_cmd), GFP_KERNEL);
+ 	if (!dl_cmd)
+@@ -840,15 +1215,15 @@ static int rtl_download_firmware(struct hci_dev *hdev,
+ 			j = 1;
+ 
+ 		if (i == (frag_num - 1)) {
+-			dl_cmd->index |= 0x80; /* data end */
++			if (!is_v3_fw(fw_type))
++				dl_cmd->index |= 0x80; /* data end */
+ 			frag_len = fw_len % RTL_FRAG_LEN;
+ 		}
+ 		rtl_dev_dbg(hdev, "download fw (%d/%d). index = %d", i,
+ 				frag_num, dl_cmd->index);
+ 		memcpy(dl_cmd->data, data, frag_len);
+ 
+-		/* Send download command */
+-		skb = __hci_cmd_sync(hdev, 0xfc20, frag_len + 1, dl_cmd,
++		skb = __hci_cmd_sync(hdev, RTL_VSC_OP_DOWNLOAD_CMD, frag_len + 1, dl_cmd,
+ 				     HCI_INIT_TIMEOUT);
+ 		if (IS_ERR(skb)) {
+ 			rtl_dev_err(hdev, "download fw command failed (%ld)",
+@@ -857,7 +1232,7 @@ static int rtl_download_firmware(struct hci_dev *hdev,
+ 			goto out;
+ 		}
+ 
+-		if (skb->len != sizeof(struct rtl_download_response)) {
++		if (skb->len != dl_rp_len) {
+ 			rtl_dev_err(hdev, "download fw event length mismatch");
+ 			kfree_skb(skb);
+ 			ret = -EIO;
+@@ -868,6 +1243,9 @@ static int rtl_download_firmware(struct hci_dev *hdev,
+ 		data += RTL_FRAG_LEN;
+ 	}
+ 
++	if (is_v3_fw(fw_type))
++		goto out;
++
+ 	skb = btrtl_read_local_version(hdev);
+ 	if (IS_ERR(skb)) {
+ 		ret = PTR_ERR(skb);
+@@ -885,6 +1263,237 @@ static int rtl_download_firmware(struct hci_dev *hdev,
+ 	return ret;
+ }
+ 
++static int rtl_check_download_state(struct hci_dev *hdev,
++				    struct btrtl_device_info *btrtl_dev)
++{
++	struct sk_buff *skb;
++	int ret = 0;
++	u8 *state;
++
++	skb = __hci_cmd_sync(hdev, RTL_VSC_OP_CHECK_DOWNLOAD_STATE, 0, NULL, HCI_CMD_TIMEOUT);
++	if (IS_ERR(skb)) {
++		rtl_dev_err(hdev, "write tb error %lu", PTR_ERR(skb));
++		return -EIO;
++	}
++
++	/* Other driver might be downloading the combined firmware. */
++	state = skb_pull_data(skb, sizeof(*state));
++	if (state && *state == 0x03) {
++		btrealtek_set_flag(hdev, REALTEK_DOWNLOADING);
++		ret = btrealtek_wait_on_flag_timeout(hdev, REALTEK_DOWNLOADING,
++						     TASK_INTERRUPTIBLE,
++						     msecs_to_jiffies(5000));
++		if (ret == -EINTR) {
++			bt_dev_err(hdev, "Firmware loading interrupted");
++			goto out;
++		}
++
++		if (ret) {
++			bt_dev_err(hdev, "Firmware loading timeout");
++			ret = -ETIMEDOUT;
++		} else {
++			ret = -EALREADY;
++		}
++
++	}
++
++out:
++	kfree_skb(skb);
++	return ret;
++}
++
++static int rtl_finalize_download(struct hci_dev *hdev,
++				 struct btrtl_device_info *btrtl_dev)
++{
++	struct hci_rp_read_local_version *rp_ver;
++	u8 params[2] = { 0x03, 0xb2 };
++	struct sk_buff *skb;
++	int ret = 0;
++	u16 opcode;
++	u32 len;
++	u8 *p;
++
++	opcode = RTL_VSC_OP_WDG_RESET_CMD;
++	len = 2;
++	if (btrtl_dev->opcode == RTL_PATCH_V3_1) {
++		opcode = RTL_VSC_OP_DOWNLOAD_CMD;
++		params[0] = 0x80;
++		len = 1;
++	}
++	skb = __hci_cmd_sync(hdev, opcode, len, params, HCI_CMD_TIMEOUT);
++	if (IS_ERR(skb)) {
++		rtl_dev_err(hdev, "Watchdog reset err (%ld)", PTR_ERR(skb));
++		return -EIO;
++	}
++	p = skb_pull_data(skb, 1);
++	if (!p) {
++		ret = -ENODATA;
++		goto out;
++	}
++	rtl_dev_info(hdev, "Watchdog reset status %02x", *p);
++	kfree_skb(skb);
++
++	skb = btrtl_read_local_version(hdev);
++	if (IS_ERR(skb)) {
++		ret = PTR_ERR(skb);
++		rtl_dev_err(hdev, "read local version failed (%d)", ret);
++		return ret;
++	}
++
++	rp_ver = skb_pull_data(skb, sizeof(*rp_ver));
++	if (rp_ver)
++		rtl_dev_info(hdev, "fw version 0x%04x%04x",
++			     __le16_to_cpu(rp_ver->hci_rev),
++			     __le16_to_cpu(rp_ver->lmp_subver));
++out:
++	kfree_skb(skb);
++	return ret;
++}
++
++static int rtl_security_check(struct hci_dev *hdev,
++			      struct btrtl_device_info *btrtl_dev)
++{
++	struct rtl_section_patch_image *tmp = NULL;
++	struct rtl_section_patch_image *image = NULL;
++	u32 val;
++	int ret;
++
++	list_for_each_entry_reverse(tmp, &btrtl_dev->patch_images, list) {
++		/* Check security hdr */
++		if (!tmp->fix[DL_FIX_SEC_HDR_ADDR].value ||
++		    !tmp->fix[DL_FIX_SEC_HDR_ADDR].addr ||
++		    tmp->fix[DL_FIX_SEC_HDR_ADDR].addr == 0xffffffff)
++			continue;
++		rtl_dev_info(hdev, "addr 0x%08x, value 0x%08x",
++			     tmp->fix[DL_FIX_SEC_HDR_ADDR].addr,
++			     tmp->fix[DL_FIX_SEC_HDR_ADDR].value);
++		image = tmp;
++		break;
++	}
++
++	if (!image)
++		return 0;
++
++	rtl_dev_info(hdev, "sec image (%04x:%02x)", image->image_id,
++		     image->index);
++	val = image->fix[DL_FIX_PATCH_ADDR].value + image->image_len -
++					image->fix[DL_FIX_SEC_HDR_ADDR].value;
++	ret = btrtl_vendor_write_mem(hdev, image->fix[DL_FIX_PATCH_ADDR].addr,
++				     val);
++	if (ret) {
++		rtl_dev_err(hdev, "write sec reg failed (%d)", ret);
++		return ret;
++	}
++	return 0;
++}
++
++static int rtl_download_firmware_v3(struct hci_dev *hdev,
++				    struct btrtl_device_info *btrtl_dev)
++{
++	struct rtl_section_patch_image *image, *tmp;
++	struct rtl_rp_dl_v3 *rp;
++	struct sk_buff *skb;
++	u8 *fw_data;
++	int fw_len;
++	int ret = 0;
++	u8 i;
++
++	if (btrtl_dev->fw_type == FW_TYPE_V3_2) {
++		ret = rtl_check_download_state(hdev, btrtl_dev);
++		if (ret) {
++			if (ret == -EALREADY)
++				return 0;
++			return ret;
++		}
++	}
++
++	list_for_each_entry_safe(image, tmp, &btrtl_dev->patch_images, list) {
++		rtl_dev_dbg(hdev, "image (%04x:%02x)", image->image_id,
++			    image->index);
++
++		for (i = DL_FIX_CI_ID; i < DL_FIX_ADDR_MAX; i++) {
++			if (!image->fix[i].addr ||
++			    image->fix[i].addr == 0xffffffff) {
++				rtl_dev_dbg(hdev, "no need to write addr %08x",
++					    image->fix[i].addr);
++				continue;
++			}
++			rtl_dev_dbg(hdev, "write addr and val, 0x%08x, 0x%08x",
++				    image->fix[i].addr, image->fix[i].value);
++			if (btrtl_vendor_write_mem(hdev, image->fix[i].addr,
++						   image->fix[i].value)) {
++				rtl_dev_err(hdev, "write reg failed");
++				ret = -EIO;
++				goto done;
++			}
++		}
++
++		fw_len = image->image_len + image->cfg_len;
++		fw_data = kvmalloc(fw_len, GFP_KERNEL);
++		if (!fw_data) {
++			rtl_dev_err(hdev, "Couldn't alloc buf for image data");
++			ret = -ENOMEM;
++			goto done;
++		}
++		memcpy(fw_data, image->image_data, image->image_len);
++		if (image->cfg_len > 0)
++			memcpy(fw_data + image->image_len, image->cfg_buf,
++			       image->cfg_len);
++
++		rtl_dev_dbg(hdev, "patch image (%04x:%02x). len: %d",
++			    image->image_id, image->index, fw_len);
++		rtl_dev_dbg(hdev, "fw_data %p, image buf %p, len %u", fw_data,
++			    image->image_data, image->image_len);
++
++		ret = rtl_download_firmware(hdev, btrtl_dev->fw_type, fw_data,
++					    fw_len);
++		kvfree(fw_data);
++		if (ret < 0) {
++			rtl_dev_err(hdev, "download firmware failed (%d)", ret);
++			goto done;
++		}
++
++		if (image->list.next != &btrtl_dev->patch_images &&
++		    image->image_id == tmp->image_id)
++			continue;
++
++		if (btrtl_dev->fw_type == FW_TYPE_V3_1)
++			continue;
++
++		i = 0x80;
++		skb = __hci_cmd_sync(hdev, RTL_VSC_OP_DOWNLOAD_CMD, 1, &i, HCI_CMD_TIMEOUT);
++		if (IS_ERR(skb)) {
++			ret = -EIO;
++			rtl_dev_err(hdev, "Failed to issue last cmd fc20, %ld",
++				    PTR_ERR(skb));
++			goto done;
++		}
++		ret = 2;
++		rp = skb_pull_data(skb, sizeof(*rp));
++		if (rp)
++			ret = rp->err;
++		kfree_skb(skb);
++		if (ret == 2) {
++			/* Verification failure */
++			ret = -EFAULT;
++			goto done;
++		}
++	}
++
++	if (btrtl_dev->fw_type == FW_TYPE_V3_1) {
++		ret = rtl_security_check(hdev, btrtl_dev);
++		if (ret) {
++			rtl_dev_err(hdev, "Security check failed (%d)", ret);
++			goto done;
++		}
++	}
++
++	ret = rtl_finalize_download(hdev, btrtl_dev);
++
++done:
++	return ret;
++}
++
+ static int rtl_load_file(struct hci_dev *hdev, const char *name, u8 **buff)
+ {
+ 	const struct firmware *fw;
+@@ -918,7 +1527,7 @@ static int btrtl_setup_rtl8723a(struct hci_dev *hdev,
+ 		return -EINVAL;
+ 	}
+ 
+-	return rtl_download_firmware(hdev, btrtl_dev->fw_data,
++	return rtl_download_firmware(hdev, FW_TYPE_V0, btrtl_dev->fw_data,
+ 				     btrtl_dev->fw_len);
+ }
+ 
+@@ -933,7 +1542,7 @@ static int btrtl_setup_rtl8723b(struct hci_dev *hdev,
+ 	if (ret < 0)
+ 		goto out;
+ 
+-	if (btrtl_dev->cfg_len > 0) {
++	if (!is_v3_fw(btrtl_dev->fw_type) && btrtl_dev->cfg_len > 0) {
+ 		tbuff = kvzalloc(ret + btrtl_dev->cfg_len, GFP_KERNEL);
+ 		if (!tbuff) {
+ 			ret = -ENOMEM;
+@@ -949,9 +1558,14 @@ static int btrtl_setup_rtl8723b(struct hci_dev *hdev,
+ 		fw_data = tbuff;
+ 	}
+ 
++	if (is_v3_fw(btrtl_dev->fw_type)) {
++		ret = rtl_download_firmware_v3(hdev, btrtl_dev);
++		goto out;
++	}
++
+ 	rtl_dev_info(hdev, "cfg_sz %d, total sz %d", btrtl_dev->cfg_len, ret);
+ 
+-	ret = rtl_download_firmware(hdev, fw_data, ret);
++	ret = rtl_download_firmware(hdev, btrtl_dev->fw_type, fw_data, ret);
+ 
+ out:
+ 	kvfree(fw_data);
+@@ -1021,7 +1635,7 @@ static int rtl_read_chip_type(struct hci_dev *hdev, u8 *type)
+ 	const unsigned char cmd_buf[] = {0x00, 0x94, 0xa0, 0x00, 0xb0};
+ 
+ 	/* Read RTL chip type command */
+-	skb = __hci_cmd_sync(hdev, 0xfc61, 5, cmd_buf, HCI_INIT_TIMEOUT);
++	skb = __hci_cmd_sync(hdev, RTL_VSC_OP_READ_VENDER, 5, cmd_buf, HCI_INIT_TIMEOUT);
+ 	if (IS_ERR(skb)) {
+ 		rtl_dev_err(hdev, "Read chip type failed (%ld)",
+ 			    PTR_ERR(skb));
+@@ -1047,6 +1661,7 @@ static int rtl_read_chip_type(struct hci_dev *hdev, u8 *type)
+ void btrtl_free(struct btrtl_device_info *btrtl_dev)
+ {
+ 	struct rtl_subsection *entry, *tmp;
++	struct rtl_section_patch_image *image, *next;
+ 
+ 	kvfree(btrtl_dev->fw_data);
+ 	kvfree(btrtl_dev->cfg_data);
+@@ -1056,6 +1671,13 @@ void btrtl_free(struct btrtl_device_info *btrtl_dev)
+ 		kfree(entry);
+ 	}
+ 
++	list_for_each_entry_safe(image, next, &btrtl_dev->patch_images, list) {
++		list_del(&image->list);
++		kvfree(image->image_data);
++		kvfree(image->cfg_buf);
++		kfree(image);
++	}
++
+ 	kfree(btrtl_dev);
+ }
+ EXPORT_SYMBOL_GPL(btrtl_free);
+@@ -1063,7 +1685,7 @@ EXPORT_SYMBOL_GPL(btrtl_free);
+ struct btrtl_device_info *btrtl_initialize(struct hci_dev *hdev,
+ 					   const char *postfix)
+ {
+-	struct btrealtek_data *coredump_info = hci_get_priv(hdev);
++	struct btrealtek_data *btrtl_data  = hci_get_priv(hdev);
+ 	struct btrtl_device_info *btrtl_dev;
+ 	struct sk_buff *skb;
+ 	struct hci_rp_read_local_version *resp;
+@@ -1072,6 +1694,7 @@ struct btrtl_device_info *btrtl_initialize(struct hci_dev *hdev,
+ 	char cfg_name[40];
+ 	u16 hci_rev, lmp_subver;
+ 	u8 hci_ver, lmp_ver, chip_type = 0;
++	u8 chip_id = 0;
+ 	int ret;
+ 	int rc;
+ 	u8 key_id;
+@@ -1084,8 +1707,15 @@ struct btrtl_device_info *btrtl_initialize(struct hci_dev *hdev,
+ 	}
+ 
+ 	INIT_LIST_HEAD(&btrtl_dev->patch_subsecs);
++	INIT_LIST_HEAD(&btrtl_dev->patch_images);
+ 
+ check_version:
++	ret = btrtl_read_chip_id(hdev, &chip_id);
++	if (!ret && chip_id >= CHIP_ID_V3_BASE) {
++		btrtl_dev->project_id = chip_id;
++		goto read_local_ver;
++	}
++
+ 	ret = btrtl_vendor_read_reg16(hdev, RTL_CHIP_SUBVER, reg_val);
+ 	if (ret < 0)
+ 		goto err_free;
+@@ -1108,6 +1738,7 @@ struct btrtl_device_info *btrtl_initialize(struct hci_dev *hdev,
+ 		}
+ 	}
+ 
++read_local_ver:
+ 	skb = btrtl_read_local_version(hdev);
+ 	if (IS_ERR(skb)) {
+ 		ret = PTR_ERR(skb);
+@@ -1185,7 +1816,11 @@ struct btrtl_device_info *btrtl_initialize(struct hci_dev *hdev,
+ 		goto err_free;
+ 	}
+ 
+-	rc = btrtl_vendor_read_reg16(hdev, RTL_SEC_PROJ, reg_val);
++	if (btrtl_dev->project_id >= CHIP_ID_V3_BASE)
++		rc = btrtl_vendor_read_reg16(hdev, RTL_SEC_PROJ_V3, reg_val);
++	else
++		rc = btrtl_vendor_read_reg16(hdev, RTL_SEC_PROJ_V2, reg_val);
++
+ 	if (rc < 0)
+ 		goto err_free;
+ 
+@@ -1243,7 +1878,7 @@ struct btrtl_device_info *btrtl_initialize(struct hci_dev *hdev,
+ 		hci_set_msft_opcode(hdev, 0xFCF0);
+ 
+ 	if (btrtl_dev->ic_info)
+-		coredump_info->rtl_dump.controller = btrtl_dev->ic_info->hw_info;
++		btrtl_data->rtl_dump.controller = btrtl_dev->ic_info->hw_info;
+ 
+ 	return btrtl_dev;
+ 
+@@ -1403,6 +2038,35 @@ int btrtl_shutdown_realtek(struct hci_dev *hdev)
+ }
+ EXPORT_SYMBOL_GPL(btrtl_shutdown_realtek);
+ 
++
++int btrtl_recv_event(struct hci_dev *hdev, struct sk_buff *skb)
++{
++	struct sk_buff *clone = skb_clone(skb, GFP_ATOMIC);
++	struct hci_event_hdr *hdr;
++	u8 *p;
++
++	if (!clone)
++		goto out;
++
++	hdr = skb_pull_data(clone, sizeof(*hdr));
++	if (!hdr || hdr->evt != HCI_VENDOR_PKT)
++		goto out;
++
++	p = skb_pull_data(clone, 1);
++	if (!p)
++		goto out;
++	switch (*p) {
++	case 0x77:
++		if (btrealtek_test_and_clear_flag(hdev, REALTEK_DOWNLOADING))
++			btrealtek_wake_up_flag(hdev, REALTEK_DOWNLOADING);
++		break;
++	}
++out:
++	consume_skb(clone);
++	return hci_recv_frame(hdev, skb);
++}
++EXPORT_SYMBOL_GPL(btrtl_recv_event);
++
+ static unsigned int btrtl_convert_baudrate(u32 device_baudrate)
+ {
+ 	switch (device_baudrate) {
+diff --git a/drivers/bluetooth/btrtl.h b/drivers/bluetooth/btrtl.h
+index a2d9d34f9fb0..dd4acdf29b2f 100644
+--- a/drivers/bluetooth/btrtl.h
++++ b/drivers/bluetooth/btrtl.h
+@@ -12,6 +12,19 @@
+ #define rtl_dev_info(dev, fmt, ...) bt_dev_info(dev, "RTL: " fmt, ##__VA_ARGS__)
+ #define rtl_dev_dbg(dev, fmt, ...) bt_dev_dbg(dev, "RTL: " fmt, ##__VA_ARGS__)
+ 
++#define FW_TYPE_V0		0
++#define FW_TYPE_V1		1
++#define FW_TYPE_V2		2
++#define FW_TYPE_V3_1		3
++#define FW_TYPE_V3_2		4
++#define is_v3_fw(type)	(type == FW_TYPE_V3_1 || type == FW_TYPE_V3_2)
++
++#define DL_FIX_CI_ID		0
++#define DL_FIX_CI_ADDR		1
++#define DL_FIX_PATCH_ADDR	2
++#define DL_FIX_SEC_HDR_ADDR	3
++#define DL_FIX_ADDR_MAX		4
++
+ struct btrtl_device_info;
+ 
+ struct rtl_chip_type_evt {
+@@ -103,8 +116,79 @@ struct rtl_vendor_cmd {
+ 	__u8 param[5];
+ } __packed;
+ 
++struct rtl_vendor_write_cmd {
++	u8 type;
++	__le32 addr;
++	__le32 val;
++} __packed;
++
++struct rtl_rp_read_chip_id {
++	__u8 status;
++	__u8 chip_id;
++} __packed;
++
++struct rtl_rp_dl_v3 {
++	__u8 status;
++	__u8 index;
++	__u8 err;
++} __packed;
++
++struct rtl_epatch_header_v3 {
++	__u8 signature[8];
++	__u8 timestamp[8];
++	__le32 ver_rsvd;
++	__le32 num_sections;
++} __packed;
++
++struct rtl_section_v3 {
++	__le32 opcode;
++	__le64 len;
++	u8 data[];
++} __packed;
++
++struct rtl_addr_fix {
++	u32 addr;
++	u32 value;
++};
++
++struct rtl_section_patch_image {
++	u16 image_id;
++	u8 index;
++	u8 config_rule;
++	u8 need_config;
++
++	struct rtl_addr_fix fix[DL_FIX_ADDR_MAX];
++
++	u32 image_len;
++	u8 *image_data;
++	u32 image_ver;
++
++	u8  *cfg_buf;
++	u16 cfg_len;
++
++	struct list_head list;
++};
++
++struct rtl_patch_image_hdr {
++	__le16 chip_id;
++	u8 ic_cut;
++	u8 key_id;
++	u8 enable_ota;
++	__le16 image_id;
++	u8 config_rule;
++	u8 need_config;
++	u8 rsv[950];
++
++	__le64 addr_fix[DL_FIX_ADDR_MAX * 2];
++	u8 index;
++
++	__le64 patch_image_len;
++	__u8 data[];
++} __packed;
++
+ enum {
+ 	REALTEK_ALT6_CONTINUOUS_TX_CHIP,
++	REALTEK_DOWNLOADING,
+ 
+ 	__REALTEK_NUM_FLAGS,
+ };
+@@ -130,8 +214,20 @@ struct btrealtek_data {
+ #define btrealtek_get_flag(hdev)					\
+ 	(((struct btrealtek_data *)hci_get_priv(hdev))->flags)
+ 
++#define btrealtek_wake_up_flag(hdev, nr)				\
++	do {								\
++		struct btrealtek_data *rtl = hci_get_priv((hdev));	\
++		wake_up_bit(rtl->flags, (nr));				\
++	} while (0)
++
+ #define btrealtek_test_flag(hdev, nr)	test_bit((nr), btrealtek_get_flag(hdev))
+ 
++#define btrealtek_test_and_clear_flag(hdev, nr)				\
++		test_and_clear_bit((nr), btrealtek_get_flag(hdev))
++
++#define btrealtek_wait_on_flag_timeout(hdev, nr, m, to)			\
++		wait_on_bit_timeout(btrealtek_get_flag(hdev), (nr), m, to)
++
+ #if IS_ENABLED(CONFIG_BT_RTL)
+ 
+ struct btrtl_device_info *btrtl_initialize(struct hci_dev *hdev,
+@@ -148,6 +244,7 @@ int btrtl_get_uart_settings(struct hci_dev *hdev,
+ 			    unsigned int *controller_baudrate,
+ 			    u32 *device_baudrate, bool *flow_control);
+ void btrtl_set_driver_name(struct hci_dev *hdev, const char *driver_name);
++int btrtl_recv_event(struct hci_dev *hdev, struct sk_buff *skb);
+ 
+ #else
+ 
+@@ -157,6 +254,11 @@ static inline struct btrtl_device_info *btrtl_initialize(struct hci_dev *hdev,
+ 	return ERR_PTR(-EOPNOTSUPP);
+ }
+ 
++static inline int btrtl_recv_event(struct hci_dev *hdev, struct sk_buff *skb)
++{
++	return -EOPNOTSUPP;
++}
++
+ static inline void btrtl_free(struct btrtl_device_info *btrtl_dev)
+ {
+ }
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 8ed3883ab8ee..89fd640023f7 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -2738,6 +2738,9 @@ static int btusb_recv_event_realtek(struct hci_dev *hdev, struct sk_buff *skb)
+ 		return 0;
+ 	}
+ 
++	if (skb->data[0] == HCI_VENDOR_PKT)
++		return btrtl_recv_event(hdev, skb);
++
+ 	return hci_recv_frame(hdev, skb);
+ }
+ 
+-- 
+2.34.1
 
 
