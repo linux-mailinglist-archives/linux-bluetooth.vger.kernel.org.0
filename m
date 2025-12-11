@@ -1,32 +1,32 @@
-Return-Path: <linux-bluetooth+bounces-17320-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-17322-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89C8ACB7234
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Dec 2025 21:16:31 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B407CB7225
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Dec 2025 21:16:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id CE5EA30393FE
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Dec 2025 20:16:16 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 9C9E43001BC4
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Dec 2025 20:16:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B7B531D39F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8E953168EB;
 	Thu, 11 Dec 2025 20:16:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="k3y5aPot"
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="HWw1EfXs"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44073319879
-	for <linux-bluetooth@vger.kernel.org>; Thu, 11 Dec 2025 20:16:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B841EDA3C
+	for <linux-bluetooth@vger.kernel.org>; Thu, 11 Dec 2025 20:16:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765484171; cv=pass; b=G4IQ7B9tphv6DG8ttK1lwBwxdRgxroOv2zZTXuQUUC0I1lOoKaqSFboOfnBh5Q7NdJBgYlb1MAmzzsJ/vkcWkdlTLti1J5YOSGqJcdqdkqNU5RSUYHBPVz4gpi0gssIkXxsHBFzTBlkhSvCRpdji5QFx6VruvDOsm/Mub127yDE=
+	t=1765484172; cv=pass; b=I+gad5KNCsw0qr/boU7m3K9MEq+VE05ClEle9jWOLJme67y20HjfVI8DY1gEcs7oJaxiFYXfG3cLeGxT2TcZJtUw2SjjwC/gr2g3oKjAw6YZBMXfQfWcl7cZmADJ5MDX24POHRpZfmcMk3erjTddb0PEFdcr3sYkh2C7FyXB1qA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765484171; c=relaxed/simple;
-	bh=FpaFBI/WfxUfiS/FXJf6n/chY3dyzTndzTEXrO22yLs=;
+	s=arc-20240116; t=1765484172; c=relaxed/simple;
+	bh=IiqS9ivKf4vHulVletF6MRswBtUnccEaiW/kB0n7DU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VV7460L2nUYkzGogf2zyUXklVdUnBGz1k/spOFGS6T1fMh2n9DSGRMhok5IN+gxnKhfolXyHHzKhbIgdDfx1GWuuqWqt1Osd4gz4Ya/LYUR2dh+fAhMBim/ZEN3HcoamIXk/GmwtkcR52tCJidscIJfBSsaji9i+JNOxUBkUKcA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=k3y5aPot; arc=pass smtp.client-ip=195.140.195.201
+	 MIME-Version; b=Ax2kWqBz/0DLhUEX/SUCS4491GjthcOIJtADP0xFMVcw05XawAqID4VSbZBEw/Uk+aVQHRe+Jveyj7A5Hlmzhbmk5ZPLvaM4aKX305YshWLfdLsQTWG3N9/0XxCEOKpKC5ZV37kSyPz/fNnZI9hFG7wF0ApGpBfmwmByHcuR9gs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=HWw1EfXs; arc=pass smtp.client-ip=195.140.195.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [IPv6:2a02:ed04:3581:4::d001])
@@ -34,41 +34,41 @@ Received: from monolith.lan (unknown [IPv6:2a02:ed04:3581:4::d001])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4dS3kZ5FNczyd6;
-	Thu, 11 Dec 2025 22:16:06 +0200 (EET)
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4dS3kb4QfFzyd7;
+	Thu, 11 Dec 2025 22:16:07 +0200 (EET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
-	t=1765484167;
+	t=1765484168;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=1UBhGUITJQXukRm/Vg/GM1W71HJAuZHSyEvm0mye37w=;
-	b=k3y5aPotSpPPuumiBNZlkFzIci7khI+LxiYRd/deSkkYWnzC6W+tO0GFiYzgG8UjQ+rbJI
-	kO55GkPBaNycZr1LFf5h2O374Tk6893QwOz6OA/5f7OmwNcfejksHldCg9c72QjncMpMhP
-	zCoxvzagZyFSIigbR5GD6T5rxm8vpRY=
-ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1765484167;
-	b=qu1J6N7x9eJTkydRxziw4jrhD5SarGq9zkRv/dF7xt6F/o3qhWC8dGBmrSgt5hlKO6WX2C
-	h4HXptFa3YMJnLN/nZQfFLtfaz1LVJVTR9002cXHMbE+yFrJEl/fxgKTfN35JwJ8uAcsJw
-	4ht6GQ6TcsWqU2/JPiduW2Tyf6wL4ZQ=
+	bh=CammmK1kTvYnu9C9IS0QmuIBkPPbdvSWXg9K55emZMk=;
+	b=HWw1EfXsgOwaLmNNT19NUEaQJUocRhUohwP5LusM/ezeTo+qxL0mcr7YexiJpbHhHfgI0B
+	9h1NA7sGsMgF/lFKtCk4YfqHHRBijvmtSVM+zls57Mw0BAdsJsCfg1YNKcrH58im6tYRom
+	CHcSo0sHtVQtDcJ1voyYDDEoW4Tiwzg=
+ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1765484168;
+	b=eaIAGW/UkaEu+6RR4ufO6tDmGfJyHo76hdMmRgDxAas9RqtMf2CTPjyzyZIHmvIxLTM0Bk
+	TBDDuzFoKpjLAWbOBtHO6+RUc5FxJ79GCVm2UcAvspfxXOk4LlesQlBjaG5oCu32LpqJzs
+	zANpHK/kBIf6zJo7EtdaoXWr6zcj6OQ=
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=meesny; t=1765484167;
+	s=meesny; t=1765484168;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=1UBhGUITJQXukRm/Vg/GM1W71HJAuZHSyEvm0mye37w=;
-	b=YPfBGgbvzBf95dVSKQd8VgsMY3RoYnAeoiG5PsdhQvwqlKioOZqRgkj7O31U1c959lEI4q
-	FOUsJZ7bJvuToxkFVY946fVhvOUZZuGuU+dwqzH0khsR+CSfu+4IgsWmFCwo3AglG92oEh
-	xPLD9RZdTr/3+2Rky0t1FiYGYdbNJKI=
+	bh=CammmK1kTvYnu9C9IS0QmuIBkPPbdvSWXg9K55emZMk=;
+	b=jvs2F5weGWIthvEyNbAITr+dzPfp4sbGjzqkUbexG6aYsreX3cD7ijPIoV9FXDRGrzdbrI
+	N+s8FJPoXO7j3p01ELgjzmQS2QgcDPnzZcErVHbmhvppdmeO8Xdm9Rh0VO160d2Du8rQ0q
+	5igN1Vpio2RiJoPMhXVVdK94CQ0O2ec=
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ v5 3/7] mcp: adapt to new MCP API to support multiple remote MCS services
-Date: Thu, 11 Dec 2025 22:15:55 +0200
-Message-ID: <230f32494238424b0714d0f348076872060374bf.1765484150.git.pav@iki.fi>
+Subject: [PATCH BlueZ v5 4/7] shared/uinput-util: extract uinput utility function from AVCTP
+Date: Thu, 11 Dec 2025 22:15:56 +0200
+Message-ID: <e8fd07e902ad1fbc00113ef57eb89b8970d29a84.1765484150.git.pav@iki.fi>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <cover.1765484150.git.pav@iki.fi>
 References: <cover.1765484150.git.pav@iki.fi>
@@ -80,789 +80,265 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Rewrite to use the new shared/mcp API, adding support for multiple MCS
-services on the remote side.
+Extract uinput utility function from AVCTP to src/shared so that it can
+be reused for MCS.
 ---
- profiles/audio/mcp.c | 647 +++++++++++++++++++++++++++----------------
- 1 file changed, 407 insertions(+), 240 deletions(-)
+ Makefile.am              |   4 +-
+ src/shared/uinput-util.c | 191 +++++++++++++++++++++++++++++++++++++++
+ src/shared/uinput-util.h |  31 +++++++
+ 3 files changed, 225 insertions(+), 1 deletion(-)
+ create mode 100644 src/shared/uinput-util.c
+ create mode 100644 src/shared/uinput-util.h
 
-diff --git a/profiles/audio/mcp.c b/profiles/audio/mcp.c
-index 8d4eed643..e64cbd01d 100644
---- a/profiles/audio/mcp.c
-+++ b/profiles/audio/mcp.c
-@@ -22,6 +22,7 @@
- #include <sys/stat.h>
- #include <fcntl.h>
- #include <errno.h>
-+#include <math.h>
+diff --git a/Makefile.am b/Makefile.am
+index ba0262d5f..4c7177886 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -247,7 +247,9 @@ shared_sources = src/shared/io.h src/shared/timeout.h \
+ 			src/shared/lc3.h src/shared/tty.h \
+ 			src/shared/bap-defs.h \
+ 			src/shared/asha.h src/shared/asha.c \
+-			src/shared/battery.h src/shared/battery.c
++			src/shared/battery.h src/shared/battery.c \
++			src/shared/uinput-util.h \
++			src/shared/uinput-util.c
  
- #include <glib.h>
- 
-@@ -51,50 +52,54 @@
- #include "src/service.h"
- #include "src/log.h"
- #include "src/error.h"
-+
- #include "player.h"
- 
--#define GMCS_UUID_STR "00001849-0000-1000-8000-00805f9b34fb"
-+#define MCS_UUID_STR	"00001848-0000-1000-8000-00805f9b34fb"
-+#define GMCS_UUID_STR	"00001849-0000-1000-8000-00805f9b34fb"
- 
--struct mcp_data {
--	struct btd_device *device;
--	struct btd_service *service;
-+
+ if READLINE
+ shared_sources += src/shared/shell.c src/shared/shell.h
+diff --git a/src/shared/uinput-util.c b/src/shared/uinput-util.c
+new file mode 100644
+index 000000000..4e9644661
+--- /dev/null
++++ b/src/shared/uinput-util.c
+@@ -0,0 +1,191 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
-+ * Remote player
++ *
++ *  BlueZ - Bluetooth protocol stack for Linux
++ *
++ *  Copyright (C) 2006-2010  Nokia Corporation
++ *  Copyright (C) 2004-2010  Marcel Holtmann <marcel@holtmann.org>
++ *  Copyright (C) 2011  Texas Instruments, Inc.
++ *
++ *
 + */
 +
-+struct remote_player {
- 	struct bt_mcp *mcp;
--	unsigned int state_id;
--
-+	uint8_t ccid;
- 	struct media_player *mp;
-+	uint8_t playing_order;
- };
- 
--static void mcp_debug(const char *str, void *user_data)
--{
--	DBG_IDX(0xffff, "%s", str);
--}
--
- static char *name2utf8(const uint8_t *name, uint16_t len)
- {
--	char utf8_name[HCI_MAX_NAME_LENGTH + 2];
-+	char *utf8_name;
- 
--	len = MIN(len, sizeof(utf8_name) - 1);
-+	utf8_name = malloc(len + 1);
-+	if (!utf8_name)
-+		return NULL;
- 
--	memset(utf8_name, 0, sizeof(utf8_name));
--	strncpy(utf8_name, (char *) name, len);
-+	if (len)
-+		memcpy(utf8_name, name, len);
++#ifdef HAVE_CONFIG_H
++#include <config.h>
++#endif
 +
-+	utf8_name[len] = 0;
- 	strtoutf8(utf8_name, len);
- 
- 	/* Remove leading and trailing whitespace characters */
- 	g_strstrip(utf8_name);
- 
--	return g_strdup(utf8_name);
-+	return utf8_name;
- }
- 
- static const char *mcp_status_val_to_string(uint8_t status)
- {
- 	switch (status) {
--	case BT_MCS_STATUS_PLAYING:
-+	case BT_MCS_STATE_PLAYING:
- 		return "playing";
--	case BT_MCS_STATUS_PAUSED:
-+	case BT_MCS_STATE_PAUSED:
- 		return "paused";
--	case BT_MCS_STATUS_INACTIVE:
-+	case BT_MCS_STATE_INACTIVE:
- 		return "stopped";
--	case BT_MCS_STATUS_SEEKING:
-+	case BT_MCS_STATE_SEEKING:
- 		/* TODO: find a way for fwd/rvs seeking, probably by storing
- 		 * control point operation sent before
- 		 */
-@@ -104,307 +109,469 @@ static const char *mcp_status_val_to_string(uint8_t status)
- 	}
- }
- 
--static struct mcp_data *mcp_data_new(struct btd_device *device)
--{
--	struct mcp_data *data;
--
--	data = new0(struct mcp_data, 1);
--	data->device = device;
--
--	return data;
--}
--
--static void cb_player_name(struct bt_mcp *mcp,  const uint8_t *value,
--					uint16_t length)
-+static void remote_media_player_name(void *data, const uint8_t *value,
-+								uint16_t length)
- {
-+	struct remote_player *remote = data;
- 	char *name;
--	struct media_player *mp = bt_mcp_get_user_data(mcp);
- 
- 	name = name2utf8(value, length);
-+	if (!name)
-+		return;
++#include <unistd.h>
++#include <fcntl.h>
++#include <sys/ioctl.h>
++#include <errno.h>
++#include <string.h>
++#include <stdio.h>
++#include <stdarg.h>
++#include <linux/uinput.h>
 +
- 	DBG("Media Player Name %s", (const char *)name);
- 
--	media_player_set_name(mp, name);
-+	media_player_set_name(remote->mp, name);
- 
--	g_free(name);
-+	free(name);
- }
- 
--static void cb_track_changed(struct bt_mcp *mcp)
-+static void remote_track_changed(void *data)
- {
-+	struct remote_player *remote = data;
++#include "bluetooth/bluetooth.h"
 +
- 	DBG("Track Changed");
--	/* Since track changed has happened
--	 * track title notification is expected
--	 */
++#include "src/shared/util.h"
++#include "src/shared/uinput-util.h"
 +
-+	media_player_metadata_changed(remote->mp);
- }
- 
--static void cb_track_title(struct bt_mcp *mcp, const uint8_t *value,
--					uint16_t length)
-+static void remote_track_title(void *data, const uint8_t *value,
-+								uint16_t length)
- {
-+	struct remote_player *remote = data;
- 	char *name;
- 	uint16_t len;
--	struct media_player *mp = bt_mcp_get_user_data(mcp);
- 
- 	name = name2utf8(value, length);
-+	if (!name)
-+		return;
 +
- 	len = strlen(name);
- 
- 	DBG("Track Title %s", (const char *)name);
- 
--	media_player_set_metadata(mp, NULL, "Title", name, len);
--	media_player_metadata_changed(mp);
-+	media_player_set_metadata(remote->mp, NULL, "Title", name, len);
-+	media_player_metadata_changed(remote->mp);
- 
- 	g_free(name);
- }
- 
--static void cb_track_duration(struct bt_mcp *mcp, int32_t duration)
-+static void remote_track_duration(void *data, int32_t duration_centisec)
- {
--	struct media_player *mp = bt_mcp_get_user_data(mcp);
--	unsigned char buf[10];
-+	struct remote_player *remote = data;
- 
--	/* MCP defines duration is int32 but api takes it as uint32 */
--	snprintf((char *)buf, 10, "%d", duration);
--	media_player_set_metadata(mp, NULL, "Duration", buf, sizeof(buf));
--	media_player_metadata_changed(mp);
--}
--
--static void cb_track_position(struct bt_mcp *mcp, int32_t duration)
--{
--	struct media_player *mp = bt_mcp_get_user_data(mcp);
--
--	/* MCP defines duration is int32 but api takes it as uint32 */
--	media_player_set_position(mp, duration);
--}
--
--static void cb_media_state(struct bt_mcp *mcp, uint8_t status)
--{
--	struct media_player *mp = bt_mcp_get_user_data(mcp);
--
--	media_player_set_status(mp, mcp_status_val_to_string(status));
--}
--
--static const struct bt_mcp_event_callback cbs = {
--	.player_name			= cb_player_name,
--	.track_changed			= cb_track_changed,
--	.track_title			= cb_track_title,
--	.track_duration			= cb_track_duration,
--	.track_position			= cb_track_position,
--	.media_state			= cb_media_state,
--};
--
--static int ct_play(struct media_player *mp, void *user_data)
--{
--	struct bt_mcp *mcp = user_data;
--
--	return bt_mcp_play(mcp);
--}
--
--static int ct_pause(struct media_player *mp, void *user_data)
--{
--	struct bt_mcp *mcp = user_data;
--
--	return bt_mcp_pause(mcp);
--}
--
--static int ct_stop(struct media_player *mp, void *user_data)
--{
--	struct bt_mcp *mcp = user_data;
--
--	return bt_mcp_stop(mcp);
--}
--
--static int ct_next(struct media_player *mp, void *user_data)
--{
--	struct bt_mcp *mcp = user_data;
--
--	return bt_mcp_next_track(mcp);
--}
--
--static int ct_previous(struct media_player *mp, void *user_data)
--{
--	struct bt_mcp *mcp = user_data;
--
--	return bt_mcp_previous_track(mcp);
--}
--
--static const struct media_player_callback ct_cbs = {
--	.play		= ct_play,
--	.pause		= ct_pause,
--	.stop		= ct_stop,
--	.next		= ct_next,
--	.previous	= ct_previous,
--};
--
--static int mcp_probe(struct btd_service *service)
--{
--	struct btd_device *device = btd_service_get_device(service);
--	struct btd_adapter *adapter = device_get_adapter(device);
--	struct btd_gatt_database *database = btd_adapter_get_database(adapter);
--	struct mcp_data *data = btd_service_get_user_data(service);
--	char addr[18];
--
--	ba2str(device_get_address(device), addr);
--	DBG("%s", addr);
--
--	/* Ignore, if we were probed for this device already */
--	if (data) {
--		error("Profile probed twice for the same device!");
--		return -EINVAL;
--	}
--
--	data = mcp_data_new(device);
--	data->service = service;
--
--	data->mcp = bt_mcp_new(btd_gatt_database_get_db(database),
--					btd_device_get_gatt_db(device));
--
--	bt_mcp_set_debug(data->mcp, mcp_debug, NULL, NULL);
--	btd_service_set_user_data(service, data);
--
--	return 0;
--}
--
--static void mcp_data_free(struct mcp_data *data)
--{
--	DBG("");
--
--	if (data->service) {
--		btd_service_set_user_data(data->service, NULL);
--		bt_mcp_set_user_data(data->mcp, NULL);
--	}
--
--	if (data->mp) {
--		media_player_destroy(data->mp);
--		data->mp = NULL;
--	}
--
--	bt_mcp_unref(data->mcp);
--	free(data);
--}
--
--static void mcp_data_remove(struct mcp_data *data)
--{
--	DBG("data %p", data);
--
--	mcp_data_free(data);
--}
--
--static void mcp_remove(struct btd_service *service)
--{
--	struct btd_device *device = btd_service_get_device(service);
--	struct mcp_data *data;
--	char addr[18];
--
--	ba2str(device_get_address(device), addr);
--	DBG("%s", addr);
--
--	data = btd_service_get_user_data(service);
--	if (!data) {
--		error("MCP service not handled by profile");
-+	if (duration_centisec == BT_MCS_POSITION_UNAVAILABLE) {
-+		media_player_set_duration(remote->mp, 0);
- 		return;
- 	}
- 
--	mcp_data_remove(data);
-+	if (duration_centisec < 0)
-+		duration_centisec = 0;
++#define DBG(uinput, fmt, arg...) \
++	uinput_debug(uinput->debug_func, uinput->debug_data, "%s:%s() " fmt, \
++						__FILE__, __func__, ## arg)
 +
-+	media_player_set_duration(remote->mp, duration_centisec * 10);
-+}
-+
-+static void remote_track_position(void *data, int32_t position_centisec)
-+{
-+	struct remote_player *remote = data;
-+
-+	if (position_centisec == BT_MCS_POSITION_UNAVAILABLE) {
-+		media_player_set_position(remote->mp, 0);
-+		return;
-+	}
-+
-+	if (position_centisec < 0)
-+		position_centisec = 0;
-+
-+	media_player_set_position(remote->mp, position_centisec * 10);
-+}
-+
-+static void remote_playback_speed(void *data, int8_t value)
-+{
-+	/* TODO */
-+}
-+
-+static void remote_seeking_speed(void *data, int8_t speed)
-+{
-+	/* TODO */
-+}
-+
-+static const struct {
-+	uint16_t basic;
-+	uint16_t repeat;
-+	bool shuffle;
-+	bool single;
-+} playing_orders[] = {
-+	{ BT_MCS_ORDER_SINGLE_ONCE, BT_MCS_ORDER_SINGLE_REPEAT,
-+	  .single = true },
-+	{ BT_MCS_ORDER_IN_ORDER_ONCE, BT_MCS_ORDER_IN_ORDER_REPEAT },
-+	{ BT_MCS_ORDER_OLDEST_ONCE, BT_MCS_ORDER_OLDEST_REPEAT },
-+	{ BT_MCS_ORDER_NEWEST_ONCE, BT_MCS_ORDER_NEWEST_REPEAT },
-+	{ BT_MCS_ORDER_SHUFFLE_ONCE, BT_MCS_ORDER_SHUFFLE_REPEAT,
-+	  .shuffle = true },
++struct bt_uinput {
++	int fd;
++	bt_uinput_debug_func_t debug_func;
++	void *debug_data;
 +};
 +
-+static void remote_playing_order(void *data, uint8_t order)
++static void uinput_debug(bt_uinput_debug_func_t debug_func, void *debug_data,
++							const char *format, ...)
 +{
-+	struct remote_player *remote = data;
-+	const char *repeat = "off";
-+	unsigned int i;
-+	bool shuffle;
++	va_list ap;
 +
-+	remote->playing_order = order;
-+
-+	for (i = 0; i < ARRAY_SIZE(playing_orders); ++i) {
-+		shuffle = playing_orders[i].shuffle;
-+		if (order == playing_orders[i].basic) {
-+			break;
-+		} else if (order == playing_orders[i].repeat) {
-+			repeat = playing_orders[i].single ? "singletrack" :
-+				"alltracks";
-+			break;
-+		}
-+	}
-+	if (i == ARRAY_SIZE(playing_orders))
++	if (!debug_func || !format)
 +		return;
 +
-+	media_player_set_setting(remote->mp, "Repeat", repeat);
-+	media_player_set_setting(remote->mp, "Shuffle", shuffle ? "on" : "off");
++	va_start(ap, format);
++	util_debug_va(debug_func, debug_data, format, ap);
++	va_end(ap);
 +}
 +
-+static void remote_media_state(void *data, uint8_t status)
++static int send_event(int fd, uint16_t type, uint16_t code, int32_t value)
 +{
-+	struct remote_player *remote = data;
++	struct input_event event;
 +
-+	media_player_set_status(remote->mp, mcp_status_val_to_string(status));
++	memset(&event, 0, sizeof(event));
++	event.type	= type;
++	event.code	= code;
++	event.value	= value;
++
++	return write(fd, &event, sizeof(event));
 +}
 +
-+static void remote_destroy(void *data)
++void bt_uinput_send_key(struct bt_uinput *uinput, uint16_t key, bool pressed)
 +{
-+	struct remote_player *remote = data;
++	if (!uinput)
++		return;
 +
-+	media_player_destroy(remote->mp);
-+	free(data);
++	DBG(uinput, "%d", key);
++
++	send_event(uinput->fd, EV_KEY, key, pressed ? 1 : 0);
++	send_event(uinput->fd, EV_SYN, SYN_REPORT, 0);
 +}
 +
-+static const struct bt_mcp_listener_callback remote_cb = {
-+	.media_player_name = remote_media_player_name,
-+	.track_changed = remote_track_changed,
-+	.track_title = remote_track_title,
-+	.track_duration = remote_track_duration,
-+	.track_position = remote_track_position,
-+	.playback_speed = remote_playback_speed,
-+	.seeking_speed = remote_seeking_speed,
-+	.playing_order = remote_playing_order,
-+	.media_state = remote_media_state,
-+	.destroy = remote_destroy,
-+};
-+
-+static int remote_mp_play(struct media_player *mp, void *user_data)
++struct bt_uinput *bt_uinput_new(const char *name, const char *suffix,
++					const bdaddr_t *addr,
++					const struct input_id *dev_id,
++					const struct bt_uinput_key_map *key_map,
++					bt_uinput_debug_func_t debug,
++					void *user_data)
 +{
-+	struct remote_player *remote = user_data;
++	struct bt_uinput *uinput;
++	struct uinput_user_dev dev;
++	int fd, err, i;
++	char src[18];
 +
-+	return bt_mcp_play(remote->mcp, remote->ccid);
-+}
++	uinput = new0(struct bt_uinput, 1);
++	uinput->debug_func = debug;
++	uinput->debug_data = user_data;
 +
-+static int remote_mp_pause(struct media_player *mp, void *user_data)
-+{
-+	struct remote_player *remote = user_data;
-+
-+	return bt_mcp_pause(remote->mcp, remote->ccid);
-+}
-+
-+static int remote_mp_stop(struct media_player *mp, void *user_data)
-+{
-+	struct remote_player *remote = user_data;
-+
-+	return bt_mcp_stop(remote->mcp, remote->ccid);
-+}
-+
-+static int remote_mp_next(struct media_player *mp, void *user_data)
-+{
-+	struct remote_player *remote = user_data;
-+
-+	return bt_mcp_next_track(remote->mcp, remote->ccid);
-+}
-+
-+static int remote_mp_previous(struct media_player *mp, void *user_data)
-+{
-+	struct remote_player *remote = user_data;
-+
-+	return bt_mcp_previous_track(remote->mcp, remote->ccid);
-+}
-+
-+static bool remote_mp_set_setting(struct media_player *mp, const char *key,
-+					const char *value, void *user_data)
-+{
-+	struct remote_player *remote = user_data;
-+	unsigned int i;
-+
-+	if (strcmp(key, "Repeat") == 0) {
-+		bool repeat = (strcmp(value, "alltracks") == 0);
-+		uint8_t order = remote->playing_order;
-+
-+		/* Some sensible mapping, 1-to-1 not possible */
-+		for (i = 0; i < ARRAY_SIZE(playing_orders); ++i) {
-+			if (order == playing_orders[i].basic) {
-+				if (repeat)
-+					order = playing_orders[i].repeat;
-+				break;
-+			} else if (order == playing_orders[i].repeat) {
-+				if (!repeat)
-+					order = playing_orders[i].basic;
-+				break;
++	fd = open("/dev/uinput", O_RDWR);
++	if (fd < 0) {
++		fd = open("/dev/input/uinput", O_RDWR);
++		if (fd < 0) {
++			fd = open("/dev/misc/uinput", O_RDWR);
++			if (fd < 0) {
++				err = errno;
++				DBG(uinput, "Can't open input device: %s (%d)",
++							strerror(err), err);
++				free(uinput);
++				errno = err;
++				return NULL;
 +			}
 +		}
-+
-+		if (strcmp(value, "singletrack") == 0)
-+			order = BT_MCS_ORDER_SINGLE_REPEAT;
-+
-+		DBG("Set Repeat %s -> 0x%02x", value, order);
-+
-+		if (order == remote->playing_order)
-+			return true;
-+		return bt_mcp_set_playing_order(remote->mcp, remote->ccid,
-+									order);
 +	}
 +
-+	if (strcmp(key, "Shuffle") == 0) {
-+		bool shuffle = (strcmp(value, "off") != 0);
-+		uint8_t order = remote->playing_order;
++	memset(&dev, 0, sizeof(dev));
 +
-+		/* Some sensible mapping, 1-to-1 not possible */
-+		switch (order) {
-+		case BT_MCS_ORDER_SHUFFLE_ONCE:
-+			if (!shuffle)
-+				order = BT_MCS_ORDER_IN_ORDER_ONCE;
-+			break;
-+		case BT_MCS_ORDER_SHUFFLE_REPEAT:
-+			if (!shuffle)
-+				order = BT_MCS_ORDER_IN_ORDER_REPEAT;
-+			break;
-+		case BT_MCS_ORDER_SINGLE_ONCE:
-+		case BT_MCS_ORDER_IN_ORDER_ONCE:
-+		case BT_MCS_ORDER_OLDEST_ONCE:
-+		case BT_MCS_ORDER_NEWEST_ONCE:
-+			if (shuffle)
-+				order = BT_MCS_ORDER_SHUFFLE_ONCE;
-+			break;
-+		case BT_MCS_ORDER_SINGLE_REPEAT:
-+		case BT_MCS_ORDER_IN_ORDER_REPEAT:
-+		case BT_MCS_ORDER_OLDEST_REPEAT:
-+		case BT_MCS_ORDER_NEWEST_REPEAT:
-+			if (shuffle)
-+				order = BT_MCS_ORDER_SHUFFLE_REPEAT;
-+			break;
-+		}
++	if (name)
++		snprintf(dev.name, UINPUT_MAX_NAME_SIZE, "%s", name);
 +
-+		DBG("Set Shuffle %s -> 0x%02x", value, order);
++	if (suffix) {
++		int len, slen;
 +
-+		if (order == remote->playing_order)
-+			return true;
-+		return bt_mcp_set_playing_order(remote->mcp, remote->ccid,
-+									order);
++		len = strlen(dev.name);
++		slen = strlen(suffix);
++
++		/* If name + suffix don't fit, truncate the name, then add the
++		 * suffix.
++		 */
++		if (slen >= UINPUT_MAX_NAME_SIZE)
++			slen = UINPUT_MAX_NAME_SIZE - 1;
++		if (len > UINPUT_MAX_NAME_SIZE - slen - 1)
++			len = UINPUT_MAX_NAME_SIZE - slen - 1;
++
++		snprintf(dev.name + len, UINPUT_MAX_NAME_SIZE - len,
++								"%s", suffix);
 +	}
 +
-+	return false;
++	if (dev_id) {
++		dev.id.bustype = dev_id->bustype;
++		dev.id.vendor = dev_id->vendor;
++		dev.id.product = dev_id->product;
++		dev.id.version = dev_id->version;
++	} else {
++		dev.id.bustype = BUS_VIRTUAL;
++	}
++
++	if (write(fd, &dev, sizeof(dev)) < 0) {
++		err = errno;
++		DBG(uinput, "Can't write device information: %s (%d)",
++							strerror(err), err);
++		close(fd);
++		free(uinput);
++		errno = err;
++		return NULL;
++	}
++
++	ioctl(fd, UI_SET_EVBIT, EV_KEY);
++	ioctl(fd, UI_SET_EVBIT, EV_REL);
++	ioctl(fd, UI_SET_EVBIT, EV_REP);
++	ioctl(fd, UI_SET_EVBIT, EV_SYN);
++
++	ba2strlc(addr, src);
++	ioctl(fd, UI_SET_PHYS, src);
++
++	for (i = 0; key_map[i].name != NULL; i++)
++		ioctl(fd, UI_SET_KEYBIT, key_map[i].uinput);
++
++	if (ioctl(fd, UI_DEV_CREATE, NULL) < 0) {
++		err = errno;
++		DBG(uinput, "Can't create uinput device: %s (%d)",
++							strerror(err), err);
++		close(fd);
++		free(uinput);
++		errno = err;
++		return NULL;
++	}
++
++	send_event(fd, EV_REP, REP_DELAY, 300);
++
++	DBG(uinput, "%p", uinput);
++
++	uinput->fd = fd;
++	return uinput;
 +}
 +
-+static const struct media_player_callback remote_mp_cb = {
-+	.play		= remote_mp_play,
-+	.pause		= remote_mp_pause,
-+	.stop		= remote_mp_stop,
-+	.next		= remote_mp_next,
-+	.previous	= remote_mp_previous,
-+	.set_setting	= remote_mp_set_setting,
-+};
-+
-+static void mcp_ccid(void *data, uint8_t ccid, bool gmcs)
++void bt_uinput_destroy(struct bt_uinput *uinput)
 +{
-+	struct btd_service *service = data;
-+	struct btd_device *device = btd_service_get_device(service);
-+	struct bt_mcp *mcp = btd_service_get_user_data(service);
-+	struct remote_player *remote;
-+	struct media_player *mp;
-+
-+	mp = media_player_controller_create(device_get_path(device),
-+					gmcs ? "mcp_gmcs" : "mcp_mcs", ccid);
-+	if (!mp) {
-+		DBG("Unable to create Media Player");
++	if (!uinput)
 +		return;
-+	}
 +
-+	remote = new0(struct remote_player, 1);
-+	remote->mcp = mcp;
-+	remote->ccid = ccid;
-+	remote->mp = mp;
++	DBG(uinput, "%p", uinput);
 +
-+	media_player_set_callbacks(remote->mp, &remote_mp_cb, remote);
-+
-+	if (!bt_mcp_add_listener(mcp, ccid, &remote_cb, remote)) {
-+		DBG("Unable to register Media Player with MCP");
-+		media_player_destroy(mp);
-+		free(remote);
-+		return;
-+	}
++	ioctl(uinput->fd, UI_DEV_DESTROY);
++	close(uinput->fd);
++	free(uinput);
 +}
-+
-+static void mcp_debug(void *data, const char *str)
-+{
-+	DBG_IDX(0xffff, "%s", str);
-+}
-+
-+static void mcp_ready(void *data)
-+{
-+	struct btd_service *service = data;
-+
-+	btd_service_connecting_complete(service, 0);
-+}
-+
-+static const struct bt_mcp_callback mcp_cb = {
-+	.ccid = mcp_ccid,
-+	.debug = mcp_debug,
-+	.ready = mcp_ready,
-+};
-+
-+
+diff --git a/src/shared/uinput-util.h b/src/shared/uinput-util.h
+new file mode 100644
+index 000000000..fb8f7e6bd
+--- /dev/null
++++ b/src/shared/uinput-util.h
+@@ -0,0 +1,31 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
 +/*
-+ * Profile
++ *
++ *  BlueZ - Bluetooth protocol stack for Linux
++ *
++ *  Copyright (C) 2006-2010  Nokia Corporation
++ *  Copyright (C) 2004-2010  Marcel Holtmann <marcel@holtmann.org>
++ *  Copyright (C) 2011  Texas Instruments, Inc.
++ *
++ *
 + */
 +
-+static struct btd_profile mcp_gmcs_profile;
++struct bt_uinput;
 +
-+static int add_service(struct btd_service *service)
-+{
-+	struct btd_device *device = btd_service_get_device(service);
-+	struct bt_gatt_client *client = btd_device_get_gatt_client(device);
-+	struct bt_mcp *mcp = btd_service_get_user_data(service);
-+	bool gmcs;
-+
-+	if (mcp)
-+		return -EALREADY;
-+
-+	gmcs = btd_service_get_profile(service) == &mcp_gmcs_profile;
-+
-+	mcp = bt_mcp_attach(client, gmcs, &mcp_cb, service);
-+	if (!mcp) {
-+		DBG("Unable to attach MCP");
-+		return -EINVAL;
-+	}
-+
-+	btd_service_set_user_data(service, mcp);
-+	return 0;
-+}
-+
-+static void remove_service(struct btd_service *service)
-+{
-+	struct bt_mcp *mcp = btd_service_get_user_data(service);
-+
-+	btd_service_set_user_data(service, NULL);
-+	bt_mcp_detach(mcp);
- }
- 
- static int mcp_accept(struct btd_service *service)
- {
- 	struct btd_device *device = btd_service_get_device(service);
--	struct bt_gatt_client *client = btd_device_get_gatt_client(device);
--	struct mcp_data *data = btd_service_get_user_data(service);
- 	char addr[18];
- 
- 	ba2str(device_get_address(device), addr);
- 	DBG("%s", addr);
- 
--	bt_mcp_attach(data->mcp, client);
--
--	data->mp = media_player_controller_create(device_get_path(device),
--							"mcp", 0);
--	if (data->mp == NULL) {
--		DBG("Unable to create Media Player");
--		return -EINVAL;
--	}
--
--	media_player_set_callbacks(data->mp, &ct_cbs, data->mcp);
--
--	bt_mcp_set_user_data(data->mcp, data->mp);
--	bt_mcp_set_event_callbacks(data->mcp, &cbs, data->mp);
--	btd_service_connecting_complete(service, 0);
--
--	return 0;
-+	return add_service(service);
- }
- 
- static int mcp_connect(struct btd_service *service)
- {
--	struct btd_device *device = btd_service_get_device(service);
--	char addr[18];
--
--	ba2str(device_get_address(device), addr);
--	DBG("%s", addr);
--
- 	return 0;
- }
- 
- static int mcp_disconnect(struct btd_service *service)
- {
- 	struct btd_device *device = btd_service_get_device(service);
--	struct mcp_data *data = btd_service_get_user_data(service);
- 	char addr[18];
- 
- 	ba2str(device_get_address(device), addr);
- 	DBG("%s", addr);
- 
--	if (data->mp) {
--		media_player_destroy(data->mp);
--		data->mp = NULL;
--	}
--
--	bt_mcp_detach(data->mcp);
--
-+	remove_service(service);
- 	btd_service_disconnecting_complete(service, 0);
--
- 	return 0;
- }
- 
--static int media_control_server_probe(struct btd_profile *p,
--						struct btd_adapter *adapter)
-+static int mcp_probe(struct btd_service *service)
- {
--	struct btd_gatt_database *database = btd_adapter_get_database(adapter);
--
--	bt_mcp_register(btd_gatt_database_get_db(database));
--
- 	return 0;
- }
- 
--static void media_control_server_remove(struct btd_profile *p,
--						struct btd_adapter *adapter)
-+static void mcp_remove(struct btd_service *service)
- {
--
-+	remove_service(service);
- }
- 
--static struct btd_profile mcp_profile = {
--	.name			= "mcp",
-+static int gmcs_probe(struct btd_profile *p, struct btd_adapter *adapter)
-+{
-+	return 0;
-+}
-+
-+static void gmcs_remove(struct btd_profile *p, struct btd_adapter *adapter)
-+{
-+}
-+
-+static struct btd_profile mcp_gmcs_profile = {
-+	.name			= "mcp-gmcs",
- 	.priority		= BTD_PROFILE_PRIORITY_MEDIUM,
--	.bearer		= BTD_PROFILE_BEARER_LE,
--	.remote_uuid	= GMCS_UUID_STR,
--	.device_probe	= mcp_probe,
--	.device_remove	= mcp_remove,
-+	.bearer			= BTD_PROFILE_BEARER_LE,
-+	.remote_uuid		= GMCS_UUID_STR,
-+	.device_probe		= mcp_probe,
-+	.device_remove		= mcp_remove,
- 	.accept			= mcp_accept,
- 	.connect		= mcp_connect,
- 	.disconnect		= mcp_disconnect,
- 
--	.adapter_probe	= media_control_server_probe,
--	.adapter_remove = media_control_server_remove,
-+	.adapter_probe		= gmcs_probe,
-+	.adapter_remove		= gmcs_remove,
- 
--	.experimental	= true,
-+	.experimental = true,
++struct bt_uinput_key_map {
++	const char *name;
++	unsigned int code;
++	uint16_t uinput;
 +};
 +
-+static struct btd_profile mcp_mcs_profile = {
-+	.name			= "mcp-mcs",
-+	.priority		= BTD_PROFILE_PRIORITY_MEDIUM,
-+	.bearer			= BTD_PROFILE_BEARER_LE,
-+	.remote_uuid		= MCS_UUID_STR,
-+	.device_probe		= mcp_probe,
-+	.device_remove		= mcp_remove,
-+	.accept			= mcp_accept,
-+	.connect		= mcp_connect,
-+	.disconnect		= mcp_disconnect,
++typedef void (*bt_uinput_debug_func_t)(const char *str, void *user_data);
 +
-+	.adapter_probe		= NULL,
-+	.adapter_remove		= NULL,
++struct bt_uinput *bt_uinput_new(const char *name, const char *suffix,
++					const bdaddr_t *addr,
++					const struct input_id *dev_id,
++					const struct bt_uinput_key_map *key_map,
++					bt_uinput_debug_func_t debug,
++					void *user_data);
++void bt_uinput_destroy(struct bt_uinput *uinput);
 +
-+	.experimental = true,
- };
- 
- static int mcp_init(void)
- {
--	return btd_profile_register(&mcp_profile);
-+	int err;
-+
-+	err = btd_profile_register(&mcp_gmcs_profile);
-+	if (err)
-+		return err;
-+
-+	err = btd_profile_register(&mcp_mcs_profile);
-+	if (err) {
-+		btd_profile_unregister(&mcp_gmcs_profile);
-+		return err;
-+	}
-+
-+	return err;
- }
- 
- static void mcp_exit(void)
- {
--	btd_profile_unregister(&mcp_profile);
-+	btd_profile_unregister(&mcp_gmcs_profile);
-+	btd_profile_unregister(&mcp_mcs_profile);
- }
- 
- BLUETOOTH_PLUGIN_DEFINE(mcp, VERSION, BLUETOOTH_PLUGIN_PRIORITY_DEFAULT,
++void bt_uinput_send_key(struct bt_uinput *uinput, uint16_t key, bool pressed);
 -- 
 2.51.1
 
