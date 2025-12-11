@@ -1,56 +1,56 @@
-Return-Path: <linux-bluetooth+bounces-17300-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-17302-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 193ADCB6E9F
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Dec 2025 19:34:48 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B666CB6EAB
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Dec 2025 19:35:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 9A5CC300248C
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Dec 2025 18:34:45 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1CA65302EFCC
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Dec 2025 18:34:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7C8F31960A;
-	Thu, 11 Dec 2025 18:34:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C56D31A07B;
+	Thu, 11 Dec 2025 18:34:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="lOlrsiWO"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="Jv5UQc0Z"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58FCC2DBF48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F482D1F4E
 	for <linux-bluetooth@vger.kernel.org>; Thu, 11 Dec 2025 18:34:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765478083; cv=none; b=jhZ2fE9Oi8njbjja/shp0PFteYWNBYwg6ttG7+EyoZpkJPOTQxPTRXqVNJQJ8nB/SwsW4HGJeDWEoApXGTKrRn2sDbH2pv4/WDBVS498yu6GgwoflP6t0lmUPDJvZ769fFVyBhsPi6IUeQKqh4RwGILfkRlb5HRSDMDUqRSK1L0=
+	t=1765478083; cv=none; b=Qf9JaLxWyqz9XCz9+7XzMhqNkY/001RCIWChlc740EAJj5AuQpNvdNOuNHYRSLI3IAMRgljNx3KIJ7Glvy5xcO2daP9MkmprGjqIjDUzU8R+Gv2fDQSiOp+tA9+k06NJUX8SsKQERIag43TgRp0Jnjav72xgWLnks0+IFHG0uho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1765478083; c=relaxed/simple;
-	bh=FGFODAy+vKlq+mGswhaFOuB5ypDbidtTu29RxQ2Gk0U=;
+	bh=A2+gA10l44f2B3mDv+ipZ3ju14hb5KHy/z+XybUXeUE=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hK5jMpri1lP3S+nl6WI0St6+1V0jYHFTlOiUFpQpkpXO3TRmiaAOeStijva6d03JxLFq+9PGwrbSMGgUxkXt+1nvs+Ckq363Nl3hhszpbU18gxBRcsGcYRCN6sm36fgIeiCw/2fWfp1oNGq3Kq3koj8p7V5peeIpnd0AB5+tOiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=lOlrsiWO; arc=none smtp.client-ip=148.251.105.195
+	 MIME-Version:Content-Type; b=h1htdByD7eTG6tcACf0a6nN7sXtja3ga7uozyO+B88CWSL9ygQzUGwdk7+MM8jJ23TqYnOhtrTSyfFhs1dJ71r4Iky+mFgY9sMpbjudRr6vXJw5O8hmaF9VoTSAbI02v2qQJmGLr2XtbxqzQ8B9dUupQqhpEi5N7syzK3sNYx3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=Jv5UQc0Z; arc=none smtp.client-ip=148.251.105.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
 	s=mail; t=1765478079;
-	bh=FGFODAy+vKlq+mGswhaFOuB5ypDbidtTu29RxQ2Gk0U=;
+	bh=A2+gA10l44f2B3mDv+ipZ3ju14hb5KHy/z+XybUXeUE=;
 	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=lOlrsiWOtQuQJ/ftvVy4QUAdUmKVSa+bYKB9DHgI4msxQQ12bDAC4QKGfslhrgB1F
-	 tLyI4czfgcj7UtJuzONYRWWagEagNqVkiQoNdE73Dlc3sOPE/u70zkJnPGjAtSzqmp
-	 NseYtFgD8eKXX55lPM2INN3CvfGyXVbx2XjG61TC98L8furfym0ymGbn9P2gZ3sVMQ
-	 tCu+rRLCnWdwT0uxhlHd7YiMxpwKZ4Ytj8LzbhW0WhjGmfREdeBd/OrgAw7ZGaKeIX
-	 KhcvdxyhoWoyX/Veyz19c9+RAyZ16SC7S925GMhkaKHZXkUylp3h5FZ5UqtWFyY6u2
-	 93/675ewNO4ew==
+	b=Jv5UQc0ZgG4ThWHDTV8UZ5VNtZ643nIyyRgWGuosLdta1cLb3cKOtmZeGV4Vaqa11
+	 0dfQ8maelmVPIunSteMtw2n2K9x7bHm1NRTYEwR4U3AhbwhfgKSi+EKhwMVIQQ7nTB
+	 plOxo4UP6vhRwFG8P4Qa4Gb+j/U3FVURbyzxS36pSP+nJUpQDKDZaEl/mx12yuCzdi
+	 3/gaJejh17HkQ/ZfvbaTO+nKvU4PFgKObj6jXl35AKEdoSkkznbosysliTxtfMqJP2
+	 y0GLRBqIoFPznimrFuWsEDyw1OTE7u0ZcChmubn5RqATm+QUW4lzuVn4dNV6NcX71L
+	 z3eDxMnRcvgEg==
 Received: from fdanis-ThinkPad-X1.. (2a02-8428-af44-1001-F1a6-5002-c5C6-5e5c.rev.sfr.net [IPv6:2a02:8428:af44:1001:f1a6:5002:c5c6:5e5c])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: fdanis)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 5949717E35D9
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id A2D7817E361C
 	for <linux-bluetooth@vger.kernel.org>; Thu, 11 Dec 2025 19:34:39 +0100 (CET)
 From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v2 4/5] audio/hfp-hf: Add HFP SLC connection and event support
-Date: Thu, 11 Dec 2025 19:34:28 +0100
-Message-ID: <20251211183429.419619-4-frederic.danis@collabora.com>
+Subject: [PATCH BlueZ v2 5/5] client/telephony: Add new submenu
+Date: Thu, 11 Dec 2025 19:34:29 +0100
+Message-ID: <20251211183429.419619-5-frederic.danis@collabora.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251211183429.419619-1-frederic.danis@collabora.com>
 References: <20251211183429.419619-1-frederic.danis@collabora.com>
@@ -63,159 +63,740 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-This implements the HFP HF SLC connection and events support for the
-Telephony DBus interface.
+This add a new submenu to bluetoothctl to be able to manage telephony
+related "headset" profiles.
+It currently allows to control calls from an HFP phone, i.e. starts a
+call, hangup a call, accepting or rejecting an incoming call.
+
+Audio part is not yet supported.
 ---
 v1->v2: Improve commit message
 
- profiles/audio/hfp-hf.c | 96 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 96 insertions(+)
+ Makefile.tools                    |   9 +-
+ client/bluetoothctl-telephony.rst |  95 ++++++
+ client/main.c                     |   3 +
+ client/telephony.c                | 528 ++++++++++++++++++++++++++++++
+ client/telephony.h                |  12 +
+ 5 files changed, 644 insertions(+), 3 deletions(-)
+ create mode 100644 client/bluetoothctl-telephony.rst
+ create mode 100644 client/telephony.c
+ create mode 100644 client/telephony.h
 
-diff --git a/profiles/audio/hfp-hf.c b/profiles/audio/hfp-hf.c
-index 5375168cf..d25cda389 100644
---- a/profiles/audio/hfp-hf.c
-+++ b/profiles/audio/hfp-hf.c
-@@ -40,6 +40,7 @@
- #include "src/plugin.h"
- #include "src/profile.h"
- #include "src/service.h"
-+#include "src/shared/hfp.h"
+diff --git a/Makefile.tools b/Makefile.tools
+index 561b03d0b..cc8aab55c 100644
+--- a/Makefile.tools
++++ b/Makefile.tools
+@@ -15,7 +15,8 @@ client_bluetoothctl_SOURCES = client/main.c \
+ 					client/player.h client/player.c \
+ 					client/mgmt.h client/mgmt.c \
+ 					client/assistant.h client/assistant.c \
+-					client/hci.h client/hci.c
++					client/hci.h client/hci.c \
++					client/telephony.h client/telephony.c
+ client_bluetoothctl_LDADD = lib/libbluetooth-internal.la \
+ 			gdbus/libgdbus-internal.la src/libshared-glib.la \
+ 			$(GLIB_LIBS) $(DBUS_LIBS) -lreadline
+@@ -361,7 +362,8 @@ man_MANS += tools/rctest.1 tools/l2ping.1 tools/btattach.1 tools/isotest.1 \
+ 		client/bluetoothctl-advertise.1 client/bluetoothctl-endpoint.1 \
+ 		client/bluetoothctl-gatt.1 client/bluetoothctl-player.1 \
+ 		client/bluetoothctl-scan.1 client/bluetoothctl-transport.1 \
+-		client/bluetoothctl-assistant.1 client/bluetoothctl-hci.1
++		client/bluetoothctl-assistant.1 client/bluetoothctl-hci.1 \
++		client/bluetoothctl-telephony.1
  
- #include "telephony.h"
+ endif
  
-@@ -50,12 +51,25 @@ struct hfp_device {
- 	struct telephony	*telephony;
- 	uint16_t		version;
- 	GIOChannel		*io;
-+	struct hfp_hf		*hf;
- };
+@@ -494,7 +496,8 @@ manual_pages += tools/hciattach.1 tools/hciconfig.1 \
+ 			client/bluetoothctl-scan.1 \
+ 			client/bluetoothctl-transport.1 \
+ 			client/bluetoothctl-assistant.1 \
+-			client/bluetoothctl-hci.1
++			client/bluetoothctl-hci.1 \
++			client/bluetoothctl-telephony.1
  
-+static void hfp_hf_debug(const char *str, void *user_data)
+ if HID2HCI
+ udevdir = $(UDEV_DIR)
+diff --git a/client/bluetoothctl-telephony.rst b/client/bluetoothctl-telephony.rst
+new file mode 100644
+index 000000000..a6870e781
+--- /dev/null
++++ b/client/bluetoothctl-telephony.rst
+@@ -0,0 +1,95 @@
++======================
++bluetoothctl-telephony
++======================
++
++-----------------
++Telephony Submenu
++-----------------
++
++:Version: BlueZ
++:Copyright: Free use of this software is granted under the terms of the GNU
++            Lesser General Public Licenses (LGPL).
++:Date: May 2025
++:Manual section: 1
++:Manual group: Linux System Administration
++
++SYNOPSIS
++========
++
++**bluetoothctl** [--options] [telephony.commands]
++
++Telephony Commands
++==================
++
++list
++----
++
++List available audio gateways.
++
++:Usage: **> list**
++
++show
++----
++
++Show audio gateway information.
++
++:Usage: **> show [audiogw]**
++
++select
++------
++
++Select default audio gateway.
++
++:Usage: **> select <audiogw>**
++
++dial
++----
++
++Dial number.
++
++:Usage: **> dial <number> [audiogw]**
++
++hangup-all
++----------
++
++Hangup all calls.
++
++:Usage: **> hangup-all**
++
++list-calls
++----------
++
++List available calls.
++
++:Usage: **> list-calls**
++
++show-call
++---------
++
++Show call information.
++
++:Usage: **> show-call <call>**
++
++answer
++------
++
++Answer call.
++
++:Usage: **> answer <call>**
++
++hangup
++------
++
++Hangup call.
++
++:Usage: **> hangup <call>**
++
++RESOURCES
++=========
++
++http://www.bluez.org
++
++REPORTING BUGS
++==============
++
++linux-bluetooth@vger.kernel.org
+diff --git a/client/main.c b/client/main.c
+index 2203a2a2b..cb016a579 100644
+--- a/client/main.c
++++ b/client/main.c
+@@ -38,6 +38,7 @@
+ #include "mgmt.h"
+ #include "assistant.h"
+ #include "hci.h"
++#include "telephony.h"
+ 
+ /* String display constants */
+ #define COLORED_NEW	COLOR_GREEN "NEW" COLOR_OFF
+@@ -3922,6 +3923,7 @@ int main(int argc, char *argv[])
+ 	mgmt_add_submenu();
+ 	assistant_add_submenu();
+ 	hci_add_submenu();
++	telephony_add_submenu();
+ 	bt_shell_set_prompt(PROMPT_OFF, NULL);
+ 
+ 	bt_shell_handle_non_interactive_help();
+@@ -3962,6 +3964,7 @@ int main(int argc, char *argv[])
+ 	mgmt_remove_submenu();
+ 	assistant_remove_submenu();
+ 	hci_remove_submenu();
++	telephony_remove_submenu();
+ 
+ 	g_dbus_client_unref(client);
+ 
+diff --git a/client/telephony.c b/client/telephony.c
+new file mode 100644
+index 000000000..cc92fe33a
+--- /dev/null
++++ b/client/telephony.c
+@@ -0,0 +1,528 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ *
++ *  BlueZ - Bluetooth protocol stack for Linux
++ *
++ *  Copyright © 2025 Collabora Ltd.
++ *
++ *
++ */
++
++#ifdef HAVE_CONFIG_H
++#include <config.h>
++#endif
++
++#define _GNU_SOURCE
++#include <stdlib.h>
++
++#include <glib.h>
++
++#include "gdbus/gdbus.h"
++
++#include "src/shared/shell.h"
++#include "print.h"
++#include "telephony.h"
++
++/* String display constants */
++#define COLORED_NEW	COLOR_GREEN "NEW" COLOR_OFF
++#define COLORED_CHG	COLOR_YELLOW "CHG" COLOR_OFF
++#define COLORED_DEL	COLOR_RED "DEL" COLOR_OFF
++
++#define BLUEZ_TELEPHONY_INTERFACE "org.bluez.Telephony1"
++#define BLUEZ_TELEPHONY_CALL_INTERFACE "org.bluez.Call1"
++
++static DBusConnection *dbus_conn;
++static GDBusProxy *default_ag;
++static GList *ags;
++static GList *calls;
++
++static GDBusClient *client;
++
++static bool check_default_ag(void)
 +{
-+	DBG_IDX(0xffff, "%s", str);
-+}
-+
- static void device_destroy(struct hfp_device *dev)
- {
- 	DBG("%s", telephony_get_path(dev->telephony));
- 
-+	telephony_set_state(dev->telephony, DISCONNECTING);
-+
-+	if (dev->hf) {
-+		hfp_hf_unref(dev->hf);
-+		dev->hf = NULL;
++	if (!default_ag) {
++		bt_shell_printf("No default audio gateway available\n");
++		return FALSE;
 +	}
 +
- 	if (dev->io) {
- 		g_io_channel_unref(dev->io);
- 		dev->io = NULL;
-@@ -64,6 +78,62 @@ static void device_destroy(struct hfp_device *dev)
- 	telephony_unregister_interface(dev->telephony);
- }
- 
-+static void hfp_hf_update_indicator(enum hfp_indicator indicator, uint32_t val,
-+							void *user_data)
-+{
-+	struct hfp_device *dev = user_data;
-+
-+	switch (indicator) {
-+	case HFP_INDICATOR_SERVICE:
-+		telephony_set_network_service(dev->telephony, val);
-+		break;
-+	case HFP_INDICATOR_CALL:
-+		break;
-+	case HFP_INDICATOR_CALLSETUP:
-+		break;
-+	case HFP_INDICATOR_CALLHELD:
-+		break;
-+	case HFP_INDICATOR_SIGNAL:
-+		telephony_set_signal(dev->telephony, val);
-+		break;
-+	case HFP_INDICATOR_ROAM:
-+		telephony_set_roaming(dev->telephony, val);
-+		break;
-+	case HFP_INDICATOR_BATTCHG:
-+		telephony_set_battchg(dev->telephony, val);
-+		break;
-+	case HFP_INDICATOR_LAST:
-+	default:
-+		DBG("Unknown signal indicator: %u", indicator);
-+	}
++	return TRUE;
 +}
 +
-+static void hfp_hf_session_ready_cb(enum hfp_result res, enum hfp_error cme_err,
-+							void *user_data)
++static char *generic_generator(const char *text, int state, GList *source)
 +{
-+	struct hfp_device *dev = user_data;
++	static int index;
 +
-+	if (res != HFP_RESULT_OK) {
-+		error("Session setup error: %d, dropping connection", res);
-+		hfp_hf_disconnect(dev->hf);
++	if (!source)
++		return NULL;
++
++	if (!state)
++		index = 0;
++
++	return g_dbus_proxy_path_lookup(source, &index, text);
++}
++
++static char *ag_generator(const char *text, int state)
++{
++	return generic_generator(text, state, ags);
++}
++
++static char *call_generator(const char *text, int state)
++{
++	return generic_generator(text, state, calls);
++}
++
++static char *proxy_description(GDBusProxy *proxy, const char *title,
++						const char *description)
++{
++	const char *path;
++
++	path = g_dbus_proxy_get_path(proxy);
++
++	return g_strdup_printf("%s%s%s%s %s ",
++					description ? "[" : "",
++					description ? : "",
++					description ? "] " : "",
++					title, path);
++}
++
++static void print_ag(void *data, void *user_data)
++{
++	GDBusProxy *proxy = data;
++	const char *description = user_data;
++	char *str;
++
++	str = proxy_description(proxy, "Telephony", description);
++
++	bt_shell_printf("%s%s\n", str,
++			default_ag == proxy ? "[default]" : "");
++
++	g_free(str);
++}
++
++static void print_call(void *data, void *user_data)
++{
++	GDBusProxy *proxy = data;
++	const char *description = user_data;
++	const char *path, *line_id;
++	DBusMessageIter iter;
++
++	path = g_dbus_proxy_get_path(proxy);
++
++	if (g_dbus_proxy_get_property(proxy, "LineIdentification", &iter))
++		dbus_message_iter_get_basic(&iter, &line_id);
++	else
++		line_id = "<unknown>";
++
++	bt_shell_printf("%s%s%sCall %s %s\n", description ? "[" : "",
++					description ? : "",
++					description ? "] " : "",
++					path, line_id);
++}
++
++static void cmd_list(int argc, char *arg[])
++{
++	g_list_foreach(ags, print_ag, NULL);
++
++	return bt_shell_noninteractive_quit(EXIT_SUCCESS);
++}
++
++static void cmd_show(int argc, char *argv[])
++{
++	GDBusProxy *proxy;
++
++	if (argc < 2) {
++		if (check_default_ag() == FALSE)
++			return bt_shell_noninteractive_quit(EXIT_FAILURE);
++
++		proxy = default_ag;
++	} else {
++		proxy = g_dbus_proxy_lookup(ags, NULL, argv[1],
++						BLUEZ_TELEPHONY_INTERFACE);
++		if (!proxy) {
++			bt_shell_printf("Audio gateway %s not available\n",
++								argv[1]);
++			return bt_shell_noninteractive_quit(EXIT_FAILURE);
++		}
++	}
++
++	bt_shell_printf("Audio gateway %s\n", g_dbus_proxy_get_path(proxy));
++
++	print_property(proxy, "UUID");
++	print_property(proxy, "SupportedURISchemes");
++	print_property(proxy, "State");
++	print_property(proxy, "Service");
++	print_property(proxy, "Signal");
++	print_property(proxy, "Roaming");
++	print_property(proxy, "BattChg");
++	print_property(proxy, "OperatorName");
++	print_property(proxy, "InbandRingtone");
++
++	return bt_shell_noninteractive_quit(EXIT_SUCCESS);
++}
++
++static void cmd_select(int argc, char *argv[])
++{
++	GDBusProxy *proxy;
++
++	proxy = g_dbus_proxy_lookup(ags, NULL, argv[1],
++						BLUEZ_TELEPHONY_INTERFACE);
++	if (proxy == NULL) {
++		bt_shell_printf("Audio gateway %s not available\n", argv[1]);
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++	}
++
++	if (default_ag == proxy)
++		return bt_shell_noninteractive_quit(EXIT_SUCCESS);
++
++	default_ag = proxy;
++	print_ag(proxy, NULL);
++
++	return bt_shell_noninteractive_quit(EXIT_SUCCESS);
++}
++
++static void dial_reply(DBusMessage *message, void *user_data)
++{
++	DBusError error;
++
++	dbus_error_init(&error);
++
++	if (dbus_set_error_from_message(&error, message) == TRUE) {
++		bt_shell_printf("Failed to answer: %s\n", error.name);
++		dbus_error_free(&error);
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++	}
++
++	bt_shell_printf("Dial successful\n");
++
++	return bt_shell_noninteractive_quit(EXIT_FAILURE);
++}
++
++static void dial_setup(DBusMessageIter *iter, void *user_data)
++{
++	const char *number = user_data;
++
++	dbus_message_iter_append_basic(iter, DBUS_TYPE_STRING, &number);
++}
++
++static void cmd_dial(int argc, char *argv[])
++{
++	GDBusProxy *proxy;
++
++	if (argc < 3) {
++		if (check_default_ag() == FALSE)
++			return bt_shell_noninteractive_quit(EXIT_FAILURE);
++
++		proxy = default_ag;
++	} else {
++		proxy = g_dbus_proxy_lookup(ags, NULL, argv[2],
++						BLUEZ_TELEPHONY_INTERFACE);
++		if (!proxy) {
++			bt_shell_printf("Audio gateway %s not available\n",
++							argv[1]);
++			return bt_shell_noninteractive_quit(EXIT_FAILURE);
++		}
++	}
++
++	if (g_dbus_proxy_method_call(proxy, "Dial", dial_setup,
++				dial_reply, argv[1], NULL) == FALSE) {
++		bt_shell_printf("Failed to dial\n");
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++	}
++
++	bt_shell_printf("Attempting to dial\n");
++}
++
++static void hangupall_reply(DBusMessage *message, void *user_data)
++{
++	DBusError error;
++
++	dbus_error_init(&error);
++
++	if (dbus_set_error_from_message(&error, message) == TRUE) {
++		bt_shell_printf("Failed to answer: %s\n", error.name);
++		dbus_error_free(&error);
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++	}
++
++	bt_shell_printf("Hangup all successful\n");
++
++	return bt_shell_noninteractive_quit(EXIT_FAILURE);
++}
++
++static void cmd_hangupall(int argc, char *argv[])
++{
++	GDBusProxy *proxy;
++
++	if (argc < 2) {
++		if (check_default_ag() == FALSE)
++			return bt_shell_noninteractive_quit(EXIT_FAILURE);
++
++		proxy = default_ag;
++	} else {
++		proxy = g_dbus_proxy_lookup(ags, NULL, argv[1],
++						BLUEZ_TELEPHONY_INTERFACE);
++		if (!proxy) {
++			bt_shell_printf("Audio gateway %s not available\n",
++							argv[1]);
++			return bt_shell_noninteractive_quit(EXIT_FAILURE);
++		}
++	}
++
++	if (g_dbus_proxy_method_call(proxy, "HangupAll", NULL,
++				hangupall_reply, NULL, NULL) == FALSE) {
++		bt_shell_printf("Failed to hangup all calls\n");
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++	}
++
++	bt_shell_printf("Attempting to hangup all calls\n");
++}
++
++static void cmd_list_calls(int argc, char *arg[])
++{
++	g_list_foreach(calls, print_call, NULL);
++
++	return bt_shell_noninteractive_quit(EXIT_SUCCESS);
++}
++
++static void cmd_show_call(int argc, char *argv[])
++{
++	GDBusProxy *proxy;
++
++	if (argc < 2)
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++
++	proxy = g_dbus_proxy_lookup(calls, NULL, argv[1],
++				BLUEZ_TELEPHONY_CALL_INTERFACE);
++	if (!proxy) {
++		bt_shell_printf("Call %s not available\n", argv[1]);
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++	}
++
++	bt_shell_printf("Call %s\n", g_dbus_proxy_get_path(proxy));
++
++	print_property(proxy, "LineIdentification");
++	print_property(proxy, "IncomingLine");
++	print_property(proxy, "Name");
++	print_property(proxy, "Multiparty");
++	print_property(proxy, "State");
++
++	return bt_shell_noninteractive_quit(EXIT_SUCCESS);
++}
++
++static void answer_reply(DBusMessage *message, void *user_data)
++{
++	DBusError error;
++
++	dbus_error_init(&error);
++
++	if (dbus_set_error_from_message(&error, message) == TRUE) {
++		bt_shell_printf("Failed to answer: %s\n", error.name);
++		dbus_error_free(&error);
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++	}
++
++	bt_shell_printf("Answer successful\n");
++
++	return bt_shell_noninteractive_quit(EXIT_FAILURE);
++}
++
++static void cmd_answer_call(int argc, char *argv[])
++{
++	GDBusProxy *proxy;
++
++	if (argc < 2)
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++
++	proxy = g_dbus_proxy_lookup(calls, NULL, argv[1],
++				BLUEZ_TELEPHONY_CALL_INTERFACE);
++	if (!proxy) {
++		bt_shell_printf("Call %s not available\n", argv[1]);
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++	}
++
++	if (g_dbus_proxy_method_call(proxy, "Answer", NULL,
++				answer_reply, NULL, NULL) == FALSE) {
++		bt_shell_printf("Failed to answer call\n");
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++	}
++
++	bt_shell_printf("Attempting to answer\n");
++}
++
++static void hangup_reply(DBusMessage *message, void *user_data)
++{
++	DBusError error;
++
++	dbus_error_init(&error);
++
++	if (dbus_set_error_from_message(&error, message) == TRUE) {
++		bt_shell_printf("Failed to answer: %s\n", error.name);
++		dbus_error_free(&error);
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++	}
++
++	bt_shell_printf("Hangup successful\n");
++
++	return bt_shell_noninteractive_quit(EXIT_FAILURE);
++}
++
++static void cmd_hangup_call(int argc, char *argv[])
++{
++	GDBusProxy *proxy;
++
++	if (argc < 2)
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++
++	proxy = g_dbus_proxy_lookup(calls, NULL, argv[1],
++			BLUEZ_TELEPHONY_CALL_INTERFACE);
++	if (!proxy) {
++		bt_shell_printf("Call %s not available\n", argv[1]);
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++	}
++
++	if (g_dbus_proxy_method_call(proxy, "Hangup", NULL,
++				hangup_reply, NULL, NULL) == FALSE) {
++		bt_shell_printf("Failed to hangup call\n");
++		return bt_shell_noninteractive_quit(EXIT_FAILURE);
++	}
++
++	bt_shell_printf("Attempting to hangup\n");
++}
++
++static void ag_added(GDBusProxy *proxy)
++{
++	ags = g_list_append(ags, proxy);
++
++	if (default_ag == NULL)
++		default_ag = proxy;
++
++	print_ag(proxy, COLORED_NEW);
++}
++
++static void call_added(GDBusProxy *proxy)
++{
++	calls = g_list_append(calls, proxy);
++
++	print_call(proxy, COLORED_NEW);
++}
++
++static void proxy_added(GDBusProxy *proxy, void *user_data)
++{
++	const char *interface;
++
++	interface = g_dbus_proxy_get_interface(proxy);
++
++	if (!strcmp(interface, BLUEZ_TELEPHONY_INTERFACE))
++		ag_added(proxy);
++	else if (!strcmp(interface, BLUEZ_TELEPHONY_CALL_INTERFACE))
++		call_added(proxy);
++}
++
++static void ag_removed(GDBusProxy *proxy)
++{
++	print_ag(proxy, COLORED_DEL);
++
++	if (default_ag == proxy)
++		default_ag = NULL;
++
++	ags = g_list_remove(ags, proxy);
++}
++
++static void call_removed(GDBusProxy *proxy)
++{
++	calls = g_list_remove(calls, proxy);
++
++	print_call(proxy, COLORED_DEL);
++}
++
++static void proxy_removed(GDBusProxy *proxy, void *user_data)
++{
++	const char *interface;
++
++	interface = g_dbus_proxy_get_interface(proxy);
++
++	if (!strcmp(interface, BLUEZ_TELEPHONY_INTERFACE))
++		ag_removed(proxy);
++	else if (!strcmp(interface, BLUEZ_TELEPHONY_CALL_INTERFACE))
++		call_removed(proxy);
++}
++
++static void ag_property_changed(GDBusProxy *proxy, const char *name,
++						DBusMessageIter *iter)
++{
++	char *str;
++
++	str = proxy_description(proxy, "Telephony", COLORED_CHG);
++	print_iter(str, name, iter);
++	g_free(str);
++}
++
++static void call_property_changed(GDBusProxy *proxy, const char *name,
++						DBusMessageIter *iter)
++{
++	char *str;
++
++	str = proxy_description(proxy, "Call", COLORED_CHG);
++	print_iter(str, name, iter);
++	g_free(str);
++}
++
++static void property_changed(GDBusProxy *proxy, const char *name,
++					DBusMessageIter *iter, void *user_data)
++{
++	const char *interface;
++
++	interface = g_dbus_proxy_get_interface(proxy);
++
++	if (!strcmp(interface, BLUEZ_TELEPHONY_INTERFACE))
++		ag_property_changed(proxy, name, iter);
++	else if (!strcmp(interface, BLUEZ_TELEPHONY_CALL_INTERFACE))
++		call_property_changed(proxy, name, iter);
++}
++
++static void telephony_menu_pre_run(const struct bt_shell_menu *menu)
++{
++	dbus_conn = bt_shell_get_env("DBUS_CONNECTION");
++	if (!dbus_conn || client)
 +		return;
-+	}
 +
-+	telephony_set_state(dev->telephony, CONNECTED);
++	client = g_dbus_client_new(dbus_conn, "org.bluez", "/org/bluez");
++
++	g_dbus_client_set_proxy_handlers(client, proxy_added, proxy_removed,
++							property_changed, NULL);
 +}
 +
-+static struct hfp_hf_callbacks hf_session_callbacks = {
-+	.session_ready = hfp_hf_session_ready_cb,
-+	.update_indicator = hfp_hf_update_indicator,
++static const struct bt_shell_menu telephony_menu = {
++	.name = "telephony",
++	.desc = "Telephony Submenu",
++	.pre_run = telephony_menu_pre_run,
++	.entries = {
++	{ "list",         NULL, cmd_list, "List available audio gateway" },
++	{ "show",         "[telephony]", cmd_show, "Audio gateway information",
++						ag_generator},
++	{ "select",       "<telephony>", cmd_select,
++						"Select default audio gateway",
++						ag_generator},
++	{ "dial",         "<number> [telephony]", cmd_dial, "Dial number",
++						ag_generator},
++	{ "hangup-all",   "[telephony]", cmd_hangupall, "Hangup all calls",
++						ag_generator},
++	{ "list-calls",   NULL, cmd_list_calls, "List calls" },
++	{ "show-call",    "<call>", cmd_show_call, "Show call information",
++						call_generator},
++	{ "answer",       "<call>", cmd_answer_call, "Answer call",
++						call_generator},
++	{ "hangup",       "<call>", cmd_hangup_call, "Hangup call",
++						call_generator},
++	{} },
 +};
 +
-+static void hfp_disconnect_watch(void *user_data)
++void telephony_add_submenu(void)
 +{
-+	DBG("");
-+
-+	device_destroy(user_data);
++	bt_shell_add_submenu(&telephony_menu);
 +}
 +
- static void connect_cb(GIOChannel *chan, GError *err, gpointer user_data)
- {
- 	struct hfp_device *dev = user_data;
-@@ -76,8 +146,27 @@ static void connect_cb(GIOChannel *chan, GError *err, gpointer user_data)
- 		goto failed;
- 	}
- 
-+	dev->hf = hfp_hf_new(g_io_channel_unix_get_fd(chan));
-+	if (!dev->hf) {
-+		error("Could not create hfp io");
-+		goto failed;
-+	}
++void telephony_remove_submenu(void)
++{
++	g_dbus_client_unref(client);
++}
+diff --git a/client/telephony.h b/client/telephony.h
+new file mode 100644
+index 000000000..a869da240
+--- /dev/null
++++ b/client/telephony.h
+@@ -0,0 +1,12 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++/*
++ *
++ *  BlueZ - Bluetooth protocol stack for Linux
++ *
++ *  Copyright © 2025 Collabora Ltd.
++ *
++ *
++ */
 +
-+	hfp_hf_set_debug(dev->hf, hfp_hf_debug, NULL, NULL);
- 	g_io_channel_set_close_on_unref(chan, FALSE);
- 
-+	hfp_hf_set_close_on_unref(dev->hf, true);
-+	hfp_hf_set_disconnect_handler(dev->hf, hfp_disconnect_watch,
-+					dev, NULL);
-+	hfp_hf_session_register(dev->hf, &hf_session_callbacks, dev);
-+
-+	if (!hfp_hf_session(dev->hf)) {
-+		error("Could not start SLC creation");
-+		hfp_hf_disconnect(dev->hf);
-+		goto failed;
-+	}
-+
-+	telephony_set_state(dev->telephony, SESSION_CONNECTING);
- 	btd_service_connecting_complete(service, 0);
- 
- 	return;
-@@ -149,8 +238,15 @@ static int hfp_connect(struct btd_service *service)
- 
- static int hfp_disconnect(struct btd_service *service)
- {
-+	struct hfp_device *dev;
-+
- 	DBG("");
- 
-+	dev = btd_service_get_user_data(service);
-+
-+	if (dev->hf)
-+		hfp_hf_disconnect(dev->hf);
-+
- 	btd_service_disconnecting_complete(service, 0);
- 
- 	return 0;
++void telephony_add_submenu(void);
++void telephony_remove_submenu(void);
 -- 
 2.43.0
 
