@@ -1,32 +1,32 @@
-Return-Path: <linux-bluetooth+bounces-17309-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-17313-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BD56CB6FB1
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Dec 2025 20:09:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A4F15CB6FB4
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Dec 2025 20:09:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id BE618303717F
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Dec 2025 19:09:08 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 041463040668
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 11 Dec 2025 19:09:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4017E3176F4;
-	Thu, 11 Dec 2025 19:09:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B057B2F12C7;
+	Thu, 11 Dec 2025 19:09:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="rZDX7qZz"
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="tmqM6Ihd"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E332D1319
-	for <linux-bluetooth@vger.kernel.org>; Thu, 11 Dec 2025 19:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995EE288C3D
+	for <linux-bluetooth@vger.kernel.org>; Thu, 11 Dec 2025 19:09:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765480146; cv=pass; b=iW32qC+4ziSBGiO2aztdH+cy8El1XmXprZV/qRMTzacI2DA6IoOxB6XrircBQCuAouhG05zeV5L+zG1HD4CYxCRv9Dh1wgJYiGFrA6tBX83irGlWy5U+Wh4m6d+uXjcKHuiq89FVyytoArwwyrlpIjNqvWNup1+fcvJxzM3+BxY=
+	t=1765480149; cv=pass; b=ml8m+iYK7FB+rb6yzWUxbhid126UW4NXGX/mtlOvqi7gz23rg6kF8i0UvO5DPx5qwoPlT2QTMqk1C19TAjps8R9xmx4YgFu5K/UR6v9ni2HAZ8+xDIjgYH2sGinn/o7rwo5W90MxxVzRGJB8FguGCURyDWustI+Dgv1gfmVVlNs=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765480146; c=relaxed/simple;
-	bh=/n4e5I/XTM/KQBFyxfeq/dPMMxdRjNb7Ug5uIraNfaE=;
+	s=arc-20240116; t=1765480149; c=relaxed/simple;
+	bh=aeog+6PLXNmGbhLNu7i7EGWyHvCrjz0EodWyA0y1TUI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kjrp/nLNfCnchWlae49hyzIdic4QH2lVnhtVuQgLCCxUTOfk/zHTI1W8ETNHaWnSYPEbjzAaAP3x39S47n1QmFFoWdzLB9Sg9vloUWhUGTG/bo+qmnw+KQ7qK12fFFWPAG4ogd0j0dSVYNoCwpE3lQqaTS+5ZCHRgcOSmKcXYN0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=rZDX7qZz; arc=pass smtp.client-ip=195.140.195.201
+	 MIME-Version; b=YPdq0dWBNrmjtIZcjJAw63yEwY9E8Dvy7g3OjJdSzU2wT7I1QIV9QGYn1qh9zME3rThiD9njna6U8ClQBRd/3JK7NdImCNGXyehv4aMhtQz8mbF9CReXUM2qevcNsRRfk4d6n8Yv61LjZBn2QZmnrwT7rzQTE3k38Id40SHsFIQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=tmqM6Ihd; arc=pass smtp.client-ip=195.140.195.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [IPv6:2a02:ed04:3581:4::d001])
@@ -34,41 +34,41 @@ Received: from monolith.lan (unknown [IPv6:2a02:ed04:3581:4::d001])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4dS2F60zHnzyd6;
-	Thu, 11 Dec 2025 21:08:57 +0200 (EET)
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4dS2F70KT0zydB;
+	Thu, 11 Dec 2025 21:08:58 +0200 (EET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
-	t=1765480138;
+	t=1765480139;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=R5RM3ZvKXQukVeuTHbtmCYBqZakoM2UVRNtL2etGEmw=;
-	b=rZDX7qZzF71dS6ZbgQcpxTlT1hiLpLDRtCJ+8uX8hpCFxzypIicnV7xXwBCoaw0D0jkczp
-	1W4FZNxFkBLWOri/yVeWU1araOnYIu5MsqczzBI1d7Fr+dwH/pVTPp/dre5TSAoMRulV+0
-	nAF1XnWbFJb75mPAhFUH5vvF8QS+Rq4=
-ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1765480138;
-	b=rS1jMmwD2CuSkcpWJpz/+HwnXzTX3w3XVw6YO9FHByAjKvwXQcnjlB01oLNGaREzM2ZTIK
-	OArajVSb0ohsdp2m0TyYsKdHaUb7TC1wTlxmg3d+GA5NJeNnDfszarOnftuLcJzKgZP0qp
-	FnCtuK5wHYdbsRnsGRJsASUanPLOotE=
+	bh=+LnqALAKocDHdaUaCb8sMgnvU6pb7SZqtIOeHda+FgY=;
+	b=tmqM6IhdtA7P3WbQIsTzCXJp67lRkPBpsgsgFvkBLHFDzQv40/NB1nsqTxmTDP3B+vsRbl
+	Ly6C1Udhl5gNd1i2gLiNzktTaYEPMBnFYVKLRPJbxjhEhb88t08LthgEsMF9E43FRbrA4B
+	piZZU/mBfFGSJyXBqBfVz8JLyDJOuqI=
+ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1765480139;
+	b=wJJuJ2qUrIf1/XMghBtqSY98xEQemCY9GrOCFcEnRn/O9taY1XjrIOPZhB7KivJ2Tc2RZv
+	JFCYaVhVjObmGdNSFodAndP5bDranmECHpF5iC/MkbxWFZ+SBF66YBEUJQZWFAED/Lstuh
+	0yl7ptJdJ5eFWwlZSi/gc8QK/A3USes=
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=meesny; t=1765480138;
+	s=meesny; t=1765480139;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=R5RM3ZvKXQukVeuTHbtmCYBqZakoM2UVRNtL2etGEmw=;
-	b=JACBNVXuBJgYhSHx1wTXVz96IToa+WFHfewrBv+ipQorJTgLtQRzQUsmTwXA/kNxXmjpYC
-	c0fzBuMZqV/XZ9Ux20wuxoIkEb0QUMfNWlrUtH5KKSgEx5rl/aTSfdpzlMCUCCLKkfKqxC
-	W7HAvdSWFzpGRNKdEuRP3LAlt6ek0e0=
+	bh=+LnqALAKocDHdaUaCb8sMgnvU6pb7SZqtIOeHda+FgY=;
+	b=AE0YTYvcWgsyC4jnySQYoXsHkccOdGsX42NiNn26xDbZk4Evq7rzElw2bKHNz+gAM8w7qA
+	Xe32SOQR0GJq4OQ1mxtf694DU6X2Tsw7lMkNkCFipSDmCFZZPHUblYOIxH+0l/FpgyFWnl
+	BV0JACo6xFBBPz7H0/JpH04IEmMsXUs=
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ v4 6/7] mcp: add local GMCS service that emits uinput media keys
-Date: Thu, 11 Dec 2025 21:08:46 +0200
-Message-ID: <04a313b809fb8af0cd19a907e50b90afc0ebc5ed.1765480081.git.pav@iki.fi>
+Subject: [PATCH BlueZ v4 7/7] shared/gatt-client: fix notify_data leak in notify_data_write_ccc
+Date: Thu, 11 Dec 2025 21:08:47 +0200
+Message-ID: <07d6b2a67087bf756fdf48a684cbbae7e2e7f986.1765480081.git.pav@iki.fi>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <cover.1765480081.git.pav@iki.fi>
 References: <cover.1765480081.git.pav@iki.fi>
@@ -80,233 +80,38 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Implement simple GMCS service that is always inactive, and emits media
-key presses via uinput for Play/Pause/Stop/Next/Prev MCS commands.
+Calling bt_gatt_client_unregister_notify() when ATT has disconnected
+leaks the reference to notify_data: in notify_data_write_ccc() the
+bt_gatt_client_write_value() fails, the destroy is never called, and
+notify_data_ref() is leaked.
 
-In practice, this seems to be enough to support media control keys on
-headsets.  Some headsets (Creative Zen Hybrid Pro) also refuse to
-connect if there is no GMCS service.
+Fix by balancing unref notify_data on write failure.
+
+Log (unit/test-mcp):
+Direct leak of 5760 byte(s) in 90 object(s) allocated from:
+    #0 0x7fd7e2ce6f2b in malloc
+    #1 0x0000004227e5 in util_malloc src/shared/util.c:46
+    #2 0x00000044a81c in register_notify src/shared/gatt-client.c:1782
+    #3 0x000000458367 in bt_gatt_client_register_notify src/shared/gatt-client.c:3685
+    #4 0x00000049f9f5 in foreach_mcs_char src/shared/mcp.c:1834
 ---
+ src/shared/gatt-client.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Notes:
-    Tested production devices:
-    
-    - Creative Zen Hybrid Pro (doesn't even connect without GMCS)
-    - Samsung Galaxy Buds Pro2
-
- profiles/audio/mcp.c | 173 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 173 insertions(+)
-
-diff --git a/profiles/audio/mcp.c b/profiles/audio/mcp.c
-index e64cbd01d..cf746e325 100644
---- a/profiles/audio/mcp.c
-+++ b/profiles/audio/mcp.c
-@@ -23,6 +23,8 @@
- #include <fcntl.h>
- #include <errno.h>
- #include <math.h>
-+#include <unistd.h>
-+#include <linux/uinput.h>
+diff --git a/src/shared/gatt-client.c b/src/shared/gatt-client.c
+index f6d5dc4b7..f8ebab3fa 100644
+--- a/src/shared/gatt-client.c
++++ b/src/shared/gatt-client.c
+@@ -1691,6 +1691,9 @@ static bool notify_data_write_ccc(struct notify_data *notify_data, bool enable,
+ 						callback,
+ 						notify_data_ref(notify_data),
+ 						notify_data_unref);
++	if (!att_id)
++		notify_data_unref(notify_data);
++
+ 	notify_data->chrc->ccc_write_id = notify_data->att_id = att_id;
  
- #include <glib.h>
- 
-@@ -42,6 +44,7 @@
- #include "src/shared/gatt-server.h"
- #include "src/shared/mcp.h"
- #include "src/shared/mcs.h"
-+#include "src/shared/uinput-util.h"
- 
- #include "btio/btio.h"
- #include "src/plugin.h"
-@@ -433,6 +436,151 @@ static const struct bt_mcp_callback mcp_cb = {
- };
- 
- 
-+/*
-+ * Local player
-+ */
-+
-+struct gmcs;
-+
-+struct local_player {
-+	struct bt_mcs *mcs;
-+	struct media_player *mp;
-+	struct gmcs *gmcs;
-+};
-+
-+struct gmcs {
-+	struct bt_uinput *uinput;
-+	struct btd_adapter *adapter;
-+	struct bt_mcs *mcs;
-+	struct queue *players;
-+};
-+
-+static const struct bt_uinput_key_map key_map[] = {
-+	{ "Play",	BT_MCS_CMD_PLAY,		KEY_PLAYCD },
-+	{ "Stop",	BT_MCS_CMD_STOP,		KEY_STOPCD },
-+	{ "Pause",	BT_MCS_CMD_PAUSE,		KEY_PAUSECD },
-+	{ "Next Track",	BT_MCS_CMD_NEXT_TRACK,		KEY_NEXTSONG },
-+	{ "Prev Track",	BT_MCS_CMD_PREV_TRACK,		KEY_PREVIOUSSONG },
-+	{ NULL }
-+};
-+
-+static struct queue *servers;
-+
-+static bool gmcs_command(struct gmcs *gmcs, uint8_t cmd)
-+{
-+	unsigned int i;
-+
-+	/* Emulate media key press */
-+	if (!gmcs->uinput)
-+		return false;
-+
-+	for (i = 0; i < ARRAY_SIZE(key_map); ++i) {
-+		if (key_map[i].code == cmd) {
-+			DBG("GMCS press %s", key_map[i].name);
-+			bt_uinput_send_key(gmcs->uinput, key_map[i].uinput, 1);
-+			bt_uinput_send_key(gmcs->uinput, key_map[i].uinput, 0);
-+			break;
-+		}
-+	}
-+
-+	/* We are always inactive, so command does not cause state changes and
-+	 * does not succeed, even though we do generate the key presses.
-+	 * This should be OK vs. MCP v1.0.1 p. 26
-+	 */
-+	return false;
-+}
-+
-+static bool gmcs_play(void *data)
-+{
-+	return gmcs_command(data, BT_MCS_CMD_PLAY);
-+}
-+
-+static bool gmcs_pause(void *data)
-+{
-+	return gmcs_command(data, BT_MCS_CMD_PAUSE);
-+}
-+
-+static bool gmcs_stop(void *data)
-+{
-+	return gmcs_command(data, BT_MCS_CMD_STOP);
-+}
-+
-+static bool gmcs_next_track(void *data)
-+{
-+	return gmcs_command(data, BT_MCS_CMD_NEXT_TRACK);
-+}
-+
-+static bool gmcs_previous_track(void *data)
-+{
-+	return gmcs_command(data, BT_MCS_CMD_PREV_TRACK);
-+}
-+
-+static void gmcs_media_player_name(void *data, struct iovec *buf, size_t size)
-+{
-+	struct gmcs *gmcs = data;
-+	int len;
-+
-+	len = snprintf((void *)buf->iov_base, size, "%s",
-+					btd_adapter_get_name(gmcs->adapter));
-+	if (len < 0)
-+		len = 0;
-+	else if ((size_t)len > size)
-+		len = size;
-+	util_iov_push(buf, len);
-+}
-+
-+static void gmcs_destroy(void *data)
-+{
-+	struct gmcs *gmcs = data;
-+
-+	DBG("destroy %p", data);
-+
-+	queue_remove(servers, gmcs);
-+
-+	bt_uinput_destroy(gmcs->uinput);
-+
-+	free(gmcs);
-+}
-+
-+static void gmcs_debug(void *data, const char *str)
-+{
-+	DBG_IDX(0xffff, "%s", str);
-+}
-+
-+static const struct bt_mcs_callback gmcs_cb = {
-+	.media_player_name = gmcs_media_player_name,
-+	.play = gmcs_play,
-+	.pause = gmcs_pause,
-+	.stop = gmcs_stop,
-+	.next_track = gmcs_next_track,
-+	.previous_track = gmcs_previous_track,
-+	.debug = gmcs_debug,
-+	.destroy = gmcs_destroy,
-+};
-+
-+static void uinput_debug(const char *str, void *data)
-+{
-+	DBG_IDX(0xffff, "%s", str);
-+}
-+
-+static struct gmcs *gmcs_new(struct btd_adapter *adapter)
-+{
-+	struct gmcs *gmcs;
-+	const char *name = btd_adapter_get_name(adapter);
-+
-+	gmcs = new0(struct gmcs, 1);
-+	gmcs->adapter = adapter;
-+	gmcs->uinput = bt_uinput_new(name, " (MCS)",
-+				btd_adapter_get_address(adapter), NULL, key_map,
-+				uinput_debug, gmcs);
-+	if (!gmcs->uinput)
-+		error("MCS: failed to init uinput for %s: %m", name);
-+
-+	DBG("new %p", gmcs);
-+
-+	return gmcs;
-+}
-+
- /*
-  * Profile
-  */
-@@ -510,11 +658,36 @@ static void mcp_remove(struct btd_service *service)
- 
- static int gmcs_probe(struct btd_profile *p, struct btd_adapter *adapter)
- {
-+	struct btd_gatt_database *database = btd_adapter_get_database(adapter);
-+	struct gatt_db *db = btd_gatt_database_get_db(database);
-+	struct gmcs *gmcs;
-+
-+	DBG("Add GMCS server %s", adapter_get_path(adapter));
-+
-+	gmcs = gmcs_new(adapter);
-+	if (!gmcs)
-+		return -EINVAL;
-+
-+	gmcs->mcs = bt_mcs_register(db, true, &gmcs_cb, gmcs);
-+	if (!gmcs->mcs) {
-+		gmcs_destroy(gmcs);
-+		return -EINVAL;
-+	}
-+
-+	if (!servers)
-+		servers = queue_new();
-+	queue_push_tail(servers, gmcs);
-+
- 	return 0;
- }
- 
- static void gmcs_remove(struct btd_profile *p, struct btd_adapter *adapter)
- {
-+	struct btd_gatt_database *database = btd_adapter_get_database(adapter);
-+	struct gatt_db *db = btd_gatt_database_get_db(database);
-+
-+	DBG("Remove GMCS server %s", adapter_get_path(adapter));
-+	bt_mcs_unregister_all(db);
- }
- 
- static struct btd_profile mcp_gmcs_profile = {
+ 	return !!att_id;
 -- 
 2.51.1
 
