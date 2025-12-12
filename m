@@ -1,32 +1,32 @@
-Return-Path: <linux-bluetooth+bounces-17359-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-17358-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E969CB9BD2
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 12 Dec 2025 21:13:09 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE0C4CB9BC9
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 12 Dec 2025 21:12:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 632A9305BC66
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 12 Dec 2025 20:12:57 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E8CD730334E7
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 12 Dec 2025 20:12:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DA3230DD22;
-	Fri, 12 Dec 2025 20:12:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E03522DFA3A;
+	Fri, 12 Dec 2025 20:12:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="P4bLHtVJ"
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="w9jpt13U"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6C830BF5C
-	for <linux-bluetooth@vger.kernel.org>; Fri, 12 Dec 2025 20:12:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A03FB2D9786
+	for <linux-bluetooth@vger.kernel.org>; Fri, 12 Dec 2025 20:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765570372; cv=pass; b=B8nxabGgCoDPrytt2bkiw1PEwBN2+Zexvftvkzu1w+gYg/nGMGzj5B2k5E5OnNH/D8Nw41I78T5s1bCVW//e0XV+j1PMCUxns09STGOwWkyDiwWdDluyjDnnWanBszTUR8TWPN4RpbZj9EJ9ubnsgEksCygAcJTawu8/GSETc4E=
+	t=1765570368; cv=pass; b=QQ72Q/6rcnpHTlHRBre+Hwj5rTJOkIXfp7I7T4/NQsfTtDlKTN81iqhC0ElxAuC8czbD/64pnBdcSzzmqMlpFjiayvwwwi9PiaJtxw60DMfxEmX86JyBK39dtfywDlDXGljGbJgABxBhGGA03UPfnPzcUriSzcWklM1Q+akoJ9E=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765570372; c=relaxed/simple;
-	bh=GGlTtjTOATuHFuyYfhw1vbd/5raR1fiutQAKHq5s2/M=;
+	s=arc-20240116; t=1765570368; c=relaxed/simple;
+	bh=XxWVH2hQsTlByrXC1nUNJtvR5Y59pnlETwdNBuVEcXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P6kMwNtPMKUS6Du+9IXaSroz1NiQ3wg2ePN2VpadzdhtuenbqjVzD0cx946+SJbbijtrZBFLzpVEdO7xkMeQP2nYcVnYIKScO2SIyV0iQ/n7q9M6rUUBYOpfyhIBwdQOV76iR9Sm2deyZPmH6sbBFKedtegu4JGC9dSdacWCFEw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=P4bLHtVJ; arc=pass smtp.client-ip=195.140.195.201
+	 MIME-Version; b=F/6VH3+fv3f9ThYBVsjvIqzqbrCV97CTaGfPDssaVfGrTb7aJcZ41swfMzTT/ZaXBmv8Ear8BLZXVXSqIUn3x83f7r1vB9fFxiaqdMyQ4p1m4QlskTTjuTu5cL9fEH3yM72xMgdc+KhoS/v/aMt1n54n45KKJpyaEfetNdG5UYU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=w9jpt13U; arc=pass smtp.client-ip=195.140.195.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [IPv6:2a0c:f040:0:2790::a02d])
@@ -34,41 +34,41 @@ Received: from monolith.lan (unknown [IPv6:2a0c:f040:0:2790::a02d])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4dSgc76wTMz106X;
-	Fri, 12 Dec 2025 22:12:39 +0200 (EET)
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4dSgc84pXDz107f;
+	Fri, 12 Dec 2025 22:12:40 +0200 (EET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
-	t=1765570360;
+	t=1765570361;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=ZeDorO3DXhO8PZ+BrQD3sQFXBLDwSBdAKXP8h9M4z/8=;
-	b=P4bLHtVJNH9gcDS8scCrEBEjfO6XtT2+wKbVhh6Hf9G1+q3999jsTnmBn+uQRUkyxZsUNA
-	R4L3CNKH4JqRQDJbvBKi/KYmZWyKl9Y1Qhj/qVB9bkvioyQ9VVslug4cZS5BwhUqh1XCKc
-	Q6rsfoarGNF0OeeHgiWykKt0OwDeiEg=
-ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1765570360;
-	b=B2mAqZY9b5p14j5bkoRcQNz9Ng3/6VMVZmk0D1VMNiO5lgr9QK3XhNXv9FcpWhW/D1vz0h
-	v3xvS9pj8kfqTJtsBxuLD57+cb09kWpVxlt5F4wROoUJP+ZddU7N+R1tWQ3bQ+o2bsy9tc
-	YVgzqUcl5Y33YKtJeF4aGVuK0u5MXCQ=
+	bh=v4oesjIVWt2H0Z57T9oQXDFXpJd6hYy6QZwIzp7TBy4=;
+	b=w9jpt13UGRDr4unomADkbbTBMmIJI8iDZaMAOOsPJIyvgV26pJsx7MzT6UFHCe5MAmSAmk
+	ukfRzfxMKJ7mkSaY5bmWGiSt7G49CdQtt4VsJI33SUbI6xMsdMl9tfi0e6ZVz9G3jueYui
+	cOXZR3XzfRnvOF9EvAsY9mg9mt/HrzM=
+ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1765570361;
+	b=xD86+T6CMeEOiXR+rLSmqyVkgOgLZZQVMuImqVDplsVQdvbJZatxhR80fdRPCJ6CQnvj2k
+	kAPtHTuHd9X+6nkAIokzjy0e6lBvXZpoXdJOH52f4BjwzLYlw1nRAEyTN+UMqKKgz2Ft7B
+	pU0bgJ0RIxJ0jKztvygzjS4dPXBZy0U=
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=meesny; t=1765570360;
+	s=meesny; t=1765570361;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=ZeDorO3DXhO8PZ+BrQD3sQFXBLDwSBdAKXP8h9M4z/8=;
-	b=fQTXKlaH9djFlTCiVrK5gvlU9V7cQsBQsyPtMrfj7XCBu81/I4qsGH18nKob9JRWqDKL2O
-	ZqcBMUBs5dgtc60+Qdh3xBE61tTKmMRMtmoPDx1kxujzUYIXq3FCFLekZUvJ8Kd9kUh4W9
-	XTpGL4IoYbXAoNKm6+tPcxJeuQ3Jm38=
+	bh=v4oesjIVWt2H0Z57T9oQXDFXpJd6hYy6QZwIzp7TBy4=;
+	b=FcK5t+9+Axv8VFYalDLzWa2DywbKAn+SR46sZfXJQCOy6sjgXCy0vF/M8WUNy/jCDKNvOC
+	DDThCYNPLWcdwrJuUCqeGtNtp3GESpc0TeQysDjMe2zTdCparf+erDPWgmV2PVOVMlFA4y
+	B6rx6mK9fOCeviQ39lXxP5fpujl5ZCI=
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ v6 3/9] mcp: add support for Repeat & Shuffle for remote player
-Date: Fri, 12 Dec 2025 22:12:25 +0200
-Message-ID: <88318c273e8ef2bb3954c3fbf60e9e23dc62b595.1765570334.git.pav@iki.fi>
+Subject: [PATCH BlueZ v6 4/9] shared/uinput: add uinput utility functions
+Date: Fri, 12 Dec 2025 22:12:26 +0200
+Message-ID: <bfdabc3f228c68b2855e335de32c3eb083916c63.1765570334.git.pav@iki.fi>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <cover.1765570334.git.pav@iki.fi>
 References: <cover.1765570334.git.pav@iki.fi>
@@ -80,163 +80,277 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add support for toggling remote player playing order settings.
-
-These do not fully map to current org.bluez.MediaPlayer Repeat/Shuffle,
-but try best effort mapping.
+Add uinput utility function that can be used both for AVCTP and MCS.
 ---
- profiles/audio/mcp.c | 118 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 118 insertions(+)
+ Makefile.am         |   3 +-
+ src/shared/uinput.c | 204 ++++++++++++++++++++++++++++++++++++++++++++
+ src/shared/uinput.h |  32 +++++++
+ 3 files changed, 238 insertions(+), 1 deletion(-)
+ create mode 100644 src/shared/uinput.c
+ create mode 100644 src/shared/uinput.h
 
-diff --git a/profiles/audio/mcp.c b/profiles/audio/mcp.c
-index a4cb9e9d8..48e65d497 100644
---- a/profiles/audio/mcp.c
-+++ b/profiles/audio/mcp.c
-@@ -185,6 +185,47 @@ static void remote_track_position(void *data, int32_t position_centisec)
- 	media_player_set_position(remote->mp, position_centisec * 10);
- }
+diff --git a/Makefile.am b/Makefile.am
+index 795d0d403..3adfa6cd5 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -247,7 +247,8 @@ shared_sources = src/shared/io.h src/shared/timeout.h \
+ 			src/shared/lc3.h src/shared/tty.h \
+ 			src/shared/bap-defs.h \
+ 			src/shared/asha.h src/shared/asha.c \
+-			src/shared/battery.h src/shared/battery.c
++			src/shared/battery.h src/shared/battery.c \
++			src/shared/uinput.h src/shared/uinput.c
  
-+static const struct {
-+	uint16_t basic;
-+	uint16_t repeat;
-+	bool shuffle;
-+	bool single;
-+} playing_orders[] = {
-+	{ BT_MCS_ORDER_SINGLE_ONCE, BT_MCS_ORDER_SINGLE_REPEAT,
-+	  .single = true },
-+	{ BT_MCS_ORDER_IN_ORDER_ONCE, BT_MCS_ORDER_IN_ORDER_REPEAT },
-+	{ BT_MCS_ORDER_OLDEST_ONCE, BT_MCS_ORDER_OLDEST_REPEAT },
-+	{ BT_MCS_ORDER_NEWEST_ONCE, BT_MCS_ORDER_NEWEST_REPEAT },
-+	{ BT_MCS_ORDER_SHUFFLE_ONCE, BT_MCS_ORDER_SHUFFLE_REPEAT,
-+	  .shuffle = true },
+ if READLINE
+ shared_sources += src/shared/shell.c src/shared/shell.h
+diff --git a/src/shared/uinput.c b/src/shared/uinput.c
+new file mode 100644
+index 000000000..4856f93cf
+--- /dev/null
++++ b/src/shared/uinput.c
+@@ -0,0 +1,204 @@
++/* SPDX-License-Identifier: LGPL-2.1-or-later */
++/*
++ *
++ *  BlueZ - Bluetooth protocol stack for Linux
++ *
++ *  Copyright (C) 2025  Pauli Virtanen
++ *
++ */
++
++#ifdef HAVE_CONFIG_H
++#include <config.h>
++#endif
++
++#include <unistd.h>
++#include <fcntl.h>
++#include <sys/ioctl.h>
++#include <errno.h>
++#include <string.h>
++#include <stdio.h>
++#include <stdarg.h>
++#include <linux/uinput.h>
++
++#include "bluetooth/bluetooth.h"
++
++#include "src/shared/util.h"
++#include "src/shared/uinput.h"
++
++
++#define DBG(uinput, fmt, arg...) \
++	uinput_debug(uinput->debug_func, uinput->debug_data, "%s:%s() " fmt, \
++						__FILE__, __func__, ## arg)
++
++struct bt_uinput {
++	struct input_id dev_id;
++	char name[UINPUT_MAX_NAME_SIZE];
++	bdaddr_t addr;
++	int fd;
++
++	bt_uinput_debug_func_t debug_func;
++	void *debug_data;
 +};
 +
-+static void remote_playing_order(void *data, uint8_t order)
++static void uinput_debug(bt_uinput_debug_func_t debug_func, void *debug_data,
++							const char *format, ...)
 +{
-+	struct remote_player *remote = data;
-+	const char *repeat = "off";
-+	unsigned int i;
-+	bool shuffle;
++	va_list ap;
 +
-+	remote->playing_order = order;
-+
-+	for (i = 0; i < ARRAY_SIZE(playing_orders); ++i) {
-+		shuffle = playing_orders[i].shuffle;
-+		if (order == playing_orders[i].basic) {
-+			break;
-+		} else if (order == playing_orders[i].repeat) {
-+			repeat = playing_orders[i].single ? "singletrack" :
-+				"alltracks";
-+			break;
-+		}
-+	}
-+	if (i == ARRAY_SIZE(playing_orders))
++	if (!debug_func || !format)
 +		return;
 +
-+	media_player_set_setting(remote->mp, "Repeat", repeat);
-+	media_player_set_setting(remote->mp, "Shuffle", shuffle ? "on" : "off");
++	va_start(ap, format);
++	util_debug_va(debug_func, debug_data, format, ap);
++	va_end(ap);
 +}
 +
- static void remote_media_state(void *data, uint8_t status)
- {
- 	struct remote_player *remote = data;
-@@ -206,6 +247,7 @@ static const struct bt_mcp_listener_callback remote_cb = {
- 	.track_title = remote_track_title,
- 	.track_duration = remote_track_duration,
- 	.track_position = remote_track_position,
-+	.playing_order = remote_playing_order,
- 	.media_state = remote_media_state,
- 	.destroy = remote_destroy,
- };
-@@ -245,12 +287,88 @@ static int remote_mp_previous(struct media_player *mp, void *user_data)
- 	return bt_mcp_previous_track(remote->mcp, remote->ccid);
- }
- 
-+static bool remote_mp_set_setting(struct media_player *mp, const char *key,
-+					const char *value, void *user_data)
++static void uinput_emit(struct bt_uinput *uinput, uint16_t type, uint16_t code,
++								int32_t val)
 +{
-+	struct remote_player *remote = user_data;
-+	unsigned int i;
++	struct input_event ie;
 +
-+	if (strcmp(key, "Repeat") == 0) {
-+		bool repeat = (strcmp(value, "alltracks") == 0);
-+		uint8_t order = remote->playing_order;
++	memset(&ie, 0, sizeof(ie));
 +
-+		/* Some sensible mapping, 1-to-1 not possible */
-+		for (i = 0; i < ARRAY_SIZE(playing_orders); ++i) {
-+			if (order == playing_orders[i].basic) {
-+				if (repeat)
-+					order = playing_orders[i].repeat;
-+				break;
-+			} else if (order == playing_orders[i].repeat) {
-+				if (!repeat)
-+					order = playing_orders[i].basic;
-+				break;
-+			}
-+		}
++	ie.type = type;
++	ie.code = code;
++	ie.value = val;
 +
-+		if (strcmp(value, "singletrack") == 0)
-+			order = BT_MCS_ORDER_SINGLE_REPEAT;
-+
-+		DBG("Set Repeat %s -> 0x%02x", value, order);
-+
-+		if (order == remote->playing_order)
-+			return true;
-+		return bt_mcp_set_playing_order(remote->mcp, remote->ccid,
-+									order);
-+	}
-+
-+	if (strcmp(key, "Shuffle") == 0) {
-+		bool shuffle = (strcmp(value, "off") != 0);
-+		uint8_t order = remote->playing_order;
-+
-+		/* Some sensible mapping, 1-to-1 not possible */
-+		switch (order) {
-+		case BT_MCS_ORDER_SHUFFLE_ONCE:
-+			if (!shuffle)
-+				order = BT_MCS_ORDER_IN_ORDER_ONCE;
-+			break;
-+		case BT_MCS_ORDER_SHUFFLE_REPEAT:
-+			if (!shuffle)
-+				order = BT_MCS_ORDER_IN_ORDER_REPEAT;
-+			break;
-+		case BT_MCS_ORDER_SINGLE_ONCE:
-+		case BT_MCS_ORDER_IN_ORDER_ONCE:
-+		case BT_MCS_ORDER_OLDEST_ONCE:
-+		case BT_MCS_ORDER_NEWEST_ONCE:
-+			if (shuffle)
-+				order = BT_MCS_ORDER_SHUFFLE_ONCE;
-+			break;
-+		case BT_MCS_ORDER_SINGLE_REPEAT:
-+		case BT_MCS_ORDER_IN_ORDER_REPEAT:
-+		case BT_MCS_ORDER_OLDEST_REPEAT:
-+		case BT_MCS_ORDER_NEWEST_REPEAT:
-+			if (shuffle)
-+				order = BT_MCS_ORDER_SHUFFLE_REPEAT;
-+			break;
-+		}
-+
-+		DBG("Set Shuffle %s -> 0x%02x", value, order);
-+
-+		if (order == remote->playing_order)
-+			return true;
-+		return bt_mcp_set_playing_order(remote->mcp, remote->ccid,
-+									order);
-+	}
-+
-+	return false;
++	write(uinput->fd, &ie, sizeof(ie));
 +}
 +
- static const struct media_player_callback remote_mp_cb = {
- 	.play		= remote_mp_play,
- 	.pause		= remote_mp_pause,
- 	.stop		= remote_mp_stop,
- 	.next		= remote_mp_next,
- 	.previous	= remote_mp_previous,
-+	.set_setting	= remote_mp_set_setting,
- };
- 
- static void mcp_ccid(void *data, uint8_t ccid, bool gmcs)
++void bt_uinput_send_key(struct bt_uinput *uinput, uint16_t key, bool pressed)
++{
++	if (!uinput)
++		return;
++
++	DBG(uinput, "%d", key);
++
++	uinput_emit(uinput, EV_KEY, key, pressed ? 1 : 0);
++	uinput_emit(uinput, EV_SYN, SYN_REPORT, 0);
++}
++
++struct bt_uinput *bt_uinput_new(const char *name, const char *suffix,
++				const bdaddr_t *addr,
++				const struct input_id *dev_id)
++{
++	struct bt_uinput *uinput;
++	const size_t name_max = sizeof(uinput->name);
++
++	uinput = new0(struct bt_uinput, 1);
++	uinput->fd = -1;
++
++	if (name)
++		snprintf(uinput->name, name_max, "%s", name);
++
++	if (suffix) {
++		size_t name_len = strlen(uinput->name);
++		size_t suffix_len = strlen(suffix);
++		size_t pos = name_len;
++
++		if (suffix_len > name_max - 1)
++			suffix_len = name_max - 1;
++		if (pos + suffix_len > name_max - 1)
++			pos = name_max - 1 - suffix_len;
++
++		snprintf(uinput->name + pos, name_max - pos, "%s", suffix);
++	}
++
++	if (addr)
++		bacpy(&uinput->addr, addr);
++
++	if (dev_id) {
++		uinput->dev_id.bustype = dev_id->bustype;
++		uinput->dev_id.product = dev_id->product;
++		uinput->dev_id.vendor = dev_id->vendor;
++		uinput->dev_id.version = dev_id->version;
++	} else {
++		uinput->dev_id.bustype = BUS_BLUETOOTH;
++	}
++
++	return uinput;
++}
++
++void bt_uinput_set_debug(struct bt_uinput *uinput,
++					bt_uinput_debug_func_t debug_func,
++					void *user_data)
++{
++	if (!uinput)
++		return;
++
++	uinput->debug_func = debug_func;
++	uinput->debug_data = user_data;
++}
++
++int bt_uinput_create(struct bt_uinput *uinput,
++					const struct bt_uinput_key_map *key_map)
++{
++	int fd = -1;
++	struct uinput_user_dev dev;
++	size_t i;
++	int err;
++	char addr[18];
++
++	if (!uinput || uinput->fd >= 0)
++		return -EINVAL;
++
++	fd = open("/dev/uinput", O_WRONLY | O_NONBLOCK);
++	if (fd < 0)
++		fd = open("/dev/input/uinput", O_WRONLY | O_NONBLOCK);
++	if (fd < 0)
++		fd = open("/dev/misc/uinput", O_WRONLY | O_NONBLOCK);
++	if (fd < 0) {
++		err = -errno;
++		DBG(uinput, "Failed to open /dev/uinput: %s", strerror(-err));
++		goto fail;
++	}
++
++	ioctl(fd, UI_SET_EVBIT, EV_KEY);
++	ioctl(fd, UI_SET_EVBIT, EV_SYN);
++	for (i = 0; key_map[i].name; ++i)
++		ioctl(fd, UI_SET_KEYBIT, key_map[i].uinput);
++
++	ba2strlc(&uinput->addr, addr);
++	ioctl(fd, UI_SET_PHYS, addr);
++
++	memset(&dev, 0, sizeof(dev));
++	dev.id = uinput->dev_id;
++	snprintf(dev.name, sizeof(dev.name), "%s", uinput->name);
++
++	if (write(fd, &dev, sizeof(dev)) < 0) {
++		err = -errno;
++		DBG(uinput, "Failed to write setup: %s", strerror(-err));
++		goto fail;
++	}
++
++	if (ioctl(fd, UI_DEV_CREATE) < 0) {
++		err = -errno;
++		DBG(uinput, "Failed to create device: %s", strerror(-err));
++		goto fail;
++	}
++
++	DBG(uinput, "%p", uinput);
++
++	uinput->fd = fd;
++	return 0;
++
++fail:
++	if (fd >= 0)
++		close(fd);
++	return err;
++}
++
++void bt_uinput_destroy(struct bt_uinput *uinput)
++{
++	if (!uinput)
++		return;
++
++	DBG(uinput, "%p", uinput);
++
++	if (uinput->fd >= 0) {
++		ioctl(uinput->fd, UI_DEV_DESTROY);
++		close(uinput->fd);
++	}
++
++	free(uinput);
++}
+diff --git a/src/shared/uinput.h b/src/shared/uinput.h
+new file mode 100644
+index 000000000..a15e4b3b4
+--- /dev/null
++++ b/src/shared/uinput.h
+@@ -0,0 +1,32 @@
++/* SPDX-License-Identifier: LGPL-2.1-or-later */
++/*
++ *
++ *  BlueZ - Bluetooth protocol stack for Linux
++ *
++ *  Copyright (C) 2025  Pauli Virtanen
++ */
++
++struct bt_uinput;
++
++struct bt_uinput_key_map {
++	const char *name;
++	unsigned int code;
++	uint16_t uinput;
++};
++
++typedef void (*bt_uinput_debug_func_t)(const char *str, void *user_data);
++
++struct bt_uinput *bt_uinput_new(const char *name, const char *suffix,
++				const bdaddr_t *addr,
++				const struct input_id *dev_id);
++
++void bt_uinput_set_debug(struct bt_uinput *uinput,
++					bt_uinput_debug_func_t debug_func,
++					void *user_data);
++
++int bt_uinput_create(struct bt_uinput *uinput,
++				const struct bt_uinput_key_map *key_map);
++
++void bt_uinput_destroy(struct bt_uinput *uinput);
++
++void bt_uinput_send_key(struct bt_uinput *uinput, uint16_t key, bool pressed);
 -- 
 2.51.1
 
