@@ -1,32 +1,32 @@
-Return-Path: <linux-bluetooth+bounces-17379-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-17381-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FE4ACB9CD3
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 12 Dec 2025 21:46:16 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 463CFCB9CED
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 12 Dec 2025 21:47:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 8663C300BA3B
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 12 Dec 2025 20:46:12 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D603E30B6226
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 12 Dec 2025 20:46:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4861A30C345;
-	Fri, 12 Dec 2025 20:46:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7911F23EAA1;
+	Fri, 12 Dec 2025 20:46:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="gf+aAMrV"
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="VPe3RTuA"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83C923EAA1
-	for <linux-bluetooth@vger.kernel.org>; Fri, 12 Dec 2025 20:46:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A713B8D47
+	for <linux-bluetooth@vger.kernel.org>; Fri, 12 Dec 2025 20:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765572371; cv=pass; b=DUmeQDC0yaLhMXtGBH+F5Z9JWm28YcTXtnJofnR3zKL3Qpyjq7+mLPxjBneMX7W3Mqwf6cq7l8/66HhMFFiA6DTjI2gCiFFK64PVPguW3F9+eXYoXApsVVlMiHD23BqHgcvJPWDWNsNNyfEMnkjfykHZD6nknWOfDK7/ndFuOJg=
+	t=1765572372; cv=pass; b=YXM4TPEdW0efIhgFtqKxsjIANChRuKBWkJ058Zk/DvL9sqoWQrE3a9cadjqHJTSGg3536dJrfhxGugBLh6yTCFrJlYixw+NwE0s6SWnzUEEg4J0LXB+1aEp5LiERNrWBR/EioKnKOiOFE+JtAD14k/UHnWPwVfqMDDqZ0WVU1t8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765572371; c=relaxed/simple;
-	bh=eutJ2ZAajbgulJW8xv3liPaW9voEZgRxV/kM1Xx84y8=;
+	s=arc-20240116; t=1765572372; c=relaxed/simple;
+	bh=FoMsDD38TwJD1Gi1nPO/soiNpv9ywEAXq77+Pjun6xc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nj2eSoF1mMZIIOaM2CzJGqAMITyndA5ct2ttd2uwIQ2fXSK1yjtP18M5V2Qj8JTlwoW63ac/SYADUL1Z+UXWs86sc24EMrUCDBbKsXwQhrYMp09ORr/tXrw+wm72HkWapByZqy/RQoHYVDOpNvayXiYB/K4ZwN3InUQMAwDBlAA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=gf+aAMrV; arc=pass smtp.client-ip=195.140.195.201
+	 MIME-Version; b=WLTSsX6E9QTHPm5t3VSoSxsq1/u/OaFj1SFqtmew5X1TNht7qEk1b056ZEgWJ71ZNL5A08iO8pSEpe4NmIoPmWBYIZXQJOI5fnpUKMOfI9ZiJdL21jzjlOODCvgWu87nSREgYSZ5paUxrcWOis74s7WJvgcel0bqjZjLW0F+icA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=VPe3RTuA; arc=pass smtp.client-ip=195.140.195.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [IPv6:2a0c:f040:0:2790::a02d])
@@ -34,41 +34,41 @@ Received: from monolith.lan (unknown [IPv6:2a0c:f040:0:2790::a02d])
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4dShLl18ffzyVp;
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4dShLl60zcz10Cm;
 	Fri, 12 Dec 2025 22:46:07 +0200 (EET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
-	t=1765572367;
+	t=1765572368;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=BnfZyKNtpagHUkw21Cp3OrKOd3hg0ygvCrq9DUdub/U=;
-	b=gf+aAMrViftR+5B7WRee2eNKeKBCKQLw/T16bd7KOwTMjJCCM+ALjAP//jOjguCfExuxVM
-	w1aQPmD52k177Ud1ZD3D70BGBOxX78+0XHnmGfSlyfnWYoygXf8mYLqLo8g79tXeefj1Hc
-	ZzHFGGModIyiP4KeZAEXQz9t52dbVvQ=
-ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1765572367;
-	b=S688X48OZIW0gDQMCv60o3vGLDPfPkb1/nbeyQpWgfXtvY8UNQWB5kYVUeantpAc16GQZR
-	8oAGSHkjSaZxuMCvGrUei+Yxch+EXUpKmqebSk8AFwQVCEGtdSL+K25FuelA9uf+orjR1q
-	vzvQsp0zvEcmHPakZkKjH46PkiN3Njo=
+	bh=N/9vNOPO1IOvBdanSYt+dCH7fFi27EF6pvwj4k0Z8wU=;
+	b=VPe3RTuA2aJ6BKlpg9gmQWzX/bsPgD3R/kG0yMMzc8rImO1y9PwUnffHGJY/ioiJg6l7fc
+	ciW8jPB/bv6uMRf8BxvGiZ00ZpPqSPKp1aW62EuN/Wpzq05YMyQxiAIkCPxqVdhzoXCVNO
+	7cNrac5dkLtbJiNtFTUKNoSs4x648Ro=
+ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1765572368;
+	b=cMm2klaNO3+I+qg+YoACK2Z5zzFlzW6aYYKZpxvszBxQHvNXODmWXRsskzEddN4pNIkkwz
+	0pOCvDhQVZSKQ8okz/TeaEDvvo75nQeGEMHOCFBSqDhqSt/lbICC8S8SDPb5UyT/9eqcZJ
+	/UB3f2JHBh64A9VKoo21Pdru/bB0V8c=
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=meesny; t=1765572367;
+	s=meesny; t=1765572368;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=BnfZyKNtpagHUkw21Cp3OrKOd3hg0ygvCrq9DUdub/U=;
-	b=SVWunILSr5rnrJdkX3p8r/VUkT7CuE8J77FSAyG+58e1uA+nARxqiyGZm5Z0sTLCFLD7Cm
-	JUJfCNh5DepkBm1pUPeRMMc50xlk0FRZJoylrq8P89jERY8YZH8fVP/2NGIp+bjq5MeFDM
-	P/xhWoZVfJ2af83cuOL+DpGJ+8ob47U=
+	bh=N/9vNOPO1IOvBdanSYt+dCH7fFi27EF6pvwj4k0Z8wU=;
+	b=gzH9dFfKjc96rJhcPWtnCJMnWG2DthwKIrvOLkPCVKuj+hWDWBHvE25Bi8EXKxxk3bARQL
+	HV0G8B6dr4otEy+gUDkFAI7Q3sfm1m67aU0L4Cy2Rjtj+oDWu8TDFOIyi8NvRHZrrOA4ys
+	x13AxkUvvct7MW1bN3VLTzrrdX471Wc=
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ v7 7/9] shared/mcp: on track changed, re-read values if notify not available
-Date: Fri, 12 Dec 2025 22:45:52 +0200
-Message-ID: <5f646312503e484f86d93e0cdaa93f9b9eaeb785.1765572338.git.pav@iki.fi>
+Subject: [PATCH BlueZ v7 8/9] test-mcp: check attributes are reread on track change if no notify
+Date: Fri, 12 Dec 2025 22:45:53 +0200
+Message-ID: <44991a6c123dbf18cb9cb04ba293037d7cbd1126.1765572338.git.pav@iki.fi>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <cover.1765572338.git.pav@iki.fi>
 References: <cover.1765572338.git.pav@iki.fi>
@@ -80,108 +80,82 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Notify is optional for some MCS attributes. To get new track titles etc.
-re-read values on track change, if remote does not have notify on them.
+Add test we reread attributes on track change if remote does not have
+optional notify features.
 ---
- src/shared/mcp.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ unit/test-mcp.c | 52 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
 
-diff --git a/src/shared/mcp.c b/src/shared/mcp.c
-index 97970c495..4916289e1 100644
---- a/src/shared/mcp.c
-+++ b/src/shared/mcp.c
-@@ -979,7 +979,8 @@ void bt_mcs_unregister_all(struct gatt_db *db)
-  */
- 
- static void mcp_service_reread(struct bt_mcp_service *service,
--					struct gatt_db_attribute *attrib);
-+					struct gatt_db_attribute *attrib,
-+					bool skip_notify);
- 
- static void mcp_debug_func(const char *str, void *user_data)
- {
-@@ -1074,7 +1075,6 @@ static void mcp_pending_write_cb(bool success, uint8_t att_ecode,
- 								void *user_data)
- {
- 	struct bt_mcp_pending *pending = user_data;
--	uint8_t props;
- 
- 	if (!success) {
- 		pending->write.result = BT_MCS_RESULT_COMMAND_CANNOT_COMPLETE;
-@@ -1083,14 +1083,8 @@ static void mcp_pending_write_cb(bool success, uint8_t att_ecode,
- 
- 	pending->write.result = BT_MCS_RESULT_SUCCESS;
- 
--	if (!gatt_db_attribute_get_char_data(pending->write.attrib, NULL,
--						NULL, &props, NULL, NULL))
--		return;
--	if (props & BT_GATT_CHRC_PROP_NOTIFY)
--		return;
--
- 	/* If the attribute doesn't have notify, reread to get the new value */
--	mcp_service_reread(pending->service, pending->write.attrib);
-+	mcp_service_reread(pending->service, pending->write.attrib, true);
+diff --git a/unit/test-mcp.c b/unit/test-mcp.c
+index 0100df1ab..b05630185 100644
+--- a/unit/test-mcp.c
++++ b/unit/test-mcp.c
+@@ -1325,6 +1325,57 @@ static void testgroup_cl_mccp(void)
+ 		test_setup, test_client, &cfg_mccp_bv_21_c, MCCP_BV_21_C);
  }
  
- static void mcp_pending_write_done(void *user_data)
-@@ -1389,6 +1383,8 @@ static void update_track_changed(bool success, uint8_t att_ecode,
- 		return;
- 	}
- 
-+	mcp_service_reread(service, NULL, true);
++#define CL_BLUEZ_1_REREAD \
++	NOTIFY_CHRC(TRACK_CHG), \
++	READ_CHRC(TRACK_TITLE, 'N', 'e', 'w'), \
++	READ_CHRC(TRACK_DUR, 0xff, 0xff, 0xff, 0xff), \
++	READ_CHRC(TRACK_POS, 0xff, 0xff, 0xff, 0xff), \
++	READ_CHRC(PLAY_SPEED, 0x00), \
++	READ_CHRC(SEEK_SPEED, 0x00), \
++	READ_CHRC(PLAY_ORDER, 0x04), \
++	READ_CHRC(PLAY_ORDER_SUPP, 0x18, 0x00), \
++	READ_CHRC(CP_SUPP, SPLIT_INT32(0x01))
 +
- 	DBG_SVC(service, "Track Changed");
++static void cl_reread_complete_cb(const void *user_data)
++{
++	struct test_data *data = (void *)user_data;
++
++	if (data->step == 2)
++		tester_test_passed();
++}
++
++static void cl_reread_track_title(void *user_data, const uint8_t *value,
++								uint16_t length)
++{
++	struct test_data *data = user_data;
++
++	if (strncmp((void *)value, "Title", length) == 0 && data->step == 0) {
++		data->step++;
++	} else if (strncmp((void *)value, "New", length) == 0 &&
++							data->step == 1) {
++		data->step++;
++		tester_io_set_complete_func(cl_reread_complete_cb);
++	} else {
++		FAIL_TEST();
++	}
++}
++
++const struct test_config cfg_cl_bluez_1_reread = {
++	.listener_cb = &(struct bt_mcp_listener_callback) {
++		.track_title = cl_reread_track_title,
++	},
++	.setup_data = setup_data_mcs,
++	.setup_data_len = ARRAY_SIZE(setup_data_mcs),
++	.gmcs = false,
++};
++
++static void testgroup_cl_extra(void)
++{
++	define_test("MCP/CL/BLUEZ-1 [Reread On Track Change, No Notify]",
++		test_setup, test_client,
++		&cfg_cl_bluez_1_reread, CL_BLUEZ_1_REREAD);
++}
++
+ /*
+  * Server tests
+  */
+@@ -1800,6 +1851,7 @@ int main(int argc, char *argv[])
+ 	tester_init(&argc, &argv);
+ 	testgroup_cl_cggit();
+ 	testgroup_cl_mccp();
++	testgroup_cl_extra();
+ 	testgroup_sr_sggit();
+ 	testgroup_sr_mcp();
  
- 	LISTENER_CB(service, track_changed);
-@@ -1626,7 +1622,7 @@ static void update_ccid(bool success, uint8_t att_ecode,
- 	uint8_t v;
- 
- 	if (!success || !util_iov_pull_u8(&iov, &v)) {
--		DBG_SVC(service, "Unable to read Media State: error 0x%02x",
-+		DBG_SVC(service, "Unable to read CCID: error 0x%02x",
- 								att_ecode);
- 		return;
- 	}
-@@ -1639,7 +1635,8 @@ static void update_ccid(bool success, uint8_t att_ecode,
- }
- 
- static void mcp_service_reread(struct bt_mcp_service *service,
--					struct gatt_db_attribute *attrib)
-+					struct gatt_db_attribute *attrib,
-+					bool skip_notify)
- {
- 	const struct {
- 		struct gatt_db_attribute *attr;
-@@ -1659,6 +1656,7 @@ static void mcp_service_reread(struct bt_mcp_service *service,
- 	};
- 	struct bt_gatt_client *client = service->mcp->client;
- 	uint16_t value_handle;
-+	uint8_t props;
- 	unsigned int i;
- 
- 	for (i = 0; i < ARRAY_SIZE(attrs); ++i) {
-@@ -1668,8 +1666,10 @@ static void mcp_service_reread(struct bt_mcp_service *service,
- 			continue;
- 
- 		if (!gatt_db_attribute_get_char_data(attrs[i].attr, NULL,
--					&value_handle, NULL, NULL, NULL))
--			return;
-+					&value_handle, &props, NULL, NULL))
-+			continue;
-+		if (skip_notify && (props & BT_GATT_CHRC_PROP_NOTIFY))
-+			continue;
- 
- 		DBG_SVC(service, "re-read handle 0x%04x", value_handle);
- 
-@@ -1681,7 +1681,7 @@ static void mcp_service_reread(struct bt_mcp_service *service,
- static void notify_media_player_name(struct bt_mcp_service *service)
- {
- 	/* On player name change, re-read all attributes */
--	mcp_service_reread(service, NULL);
-+	mcp_service_reread(service, NULL, false);
- }
- 
- static void mcp_idle(void *data)
 -- 
 2.51.1
 
