@@ -1,122 +1,241 @@
-Return-Path: <linux-bluetooth+bounces-17487-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-17489-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 604EFCC9872
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 17 Dec 2025 21:56:07 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C6AACC99CA
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 17 Dec 2025 22:36:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 099EE30343FA
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 17 Dec 2025 20:55:48 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6DC3F303273D
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 17 Dec 2025 21:36:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E99D82C21D3;
-	Wed, 17 Dec 2025 20:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD4592FD66D;
+	Wed, 17 Dec 2025 21:36:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cEc5WoYx"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jHzGUm8k"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7B621D3CA
-	for <linux-bluetooth@vger.kernel.org>; Wed, 17 Dec 2025 20:55:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5A3283C83
+	for <linux-bluetooth@vger.kernel.org>; Wed, 17 Dec 2025 21:36:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766004946; cv=none; b=hd4YahshOnnnPtQhgcF/g8UxVe8e2YH0U15wqaZuB/K9wIjNwpL0HxgIwjNNTh28ihEvYs7zNh9K14FksP364EJK6gYaEozLpWUdbfTojU1mkZrjJKx9CNx+Yk9UBUl5ztfvLhSg7e+bZSrQ3cqOXLg5PTKIPi8Vpf8N8FnrTy0=
+	t=1766007394; cv=none; b=lYy2KWeHMSC1FUwmfxfpYgVWPu9vuR6Oxc6jLJSWh5LjubCfDd5oakIpZlYex0qX/R8qFhVkpeor7Z9OqYrUmq6IvrS6xwcFZ+YXsWgr1KtmnE/Zlc+KAtJ2v+Z094eu03e1YEgUku3kbFKgqUtahYwn6GqeY2RgCtHaFanfbmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766004946; c=relaxed/simple;
-	bh=ARzw0yhG7JrLJ4AFPc5X/qyfW4X/XK1qB7LsLWxi9KU=;
+	s=arc-20240116; t=1766007394; c=relaxed/simple;
+	bh=mPiAnXDnXYeaRRXvkzT09R1gTCChRkB+wmW7gki5HF4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bEdfkHA/HYrvjP1Uhmq52GENjgKrVM2cycY/tpAyF4lvsnkg7karn/NMCli6vrzTMBYj50qKXqhilWTKONhAp33dvix2QYvQxZqDru7MiBWJ6ACeE6mhBnVg9HQePU2u/hzhs2J7NF0RFMhkC/RG8disfBJXaoU6Kz5Al5gEtR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cEc5WoYx; arc=none smtp.client-ip=209.85.208.175
+	 To:Cc:Content-Type; b=US7JZRFxmphQ+01sHfnkoSfH3Au8kWir5EEsXCFJPyRk3dQO6C9J3UeHUQl29UBXWKS94d2V2lhtgyz2LHIbNxxbs9niZBOaPikYysGOe/6uWjf4259OU+jw45W+Bl/PBt6zv1T9v5aDiHC51IXOvSHjTG5cYC3EosEa1YHKhWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jHzGUm8k; arc=none smtp.client-ip=209.85.208.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-37a33b06028so51183351fa.2
-        for <linux-bluetooth@vger.kernel.org>; Wed, 17 Dec 2025 12:55:44 -0800 (PST)
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-38107fadda2so9367381fa.1
+        for <linux-bluetooth@vger.kernel.org>; Wed, 17 Dec 2025 13:36:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1766004943; x=1766609743; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1766007390; x=1766612190; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=u1L3Te7+u2ZCHeXINj7bW4b1SmgCljgQ5w64c+/UCLQ=;
-        b=cEc5WoYxWqwb2vOgBJdj4YLFXyWMsHdG/I88FZprNTo/8jH1MkXvy34hqgVueTNmQF
-         lRpMcmFVzYxMLaw0Fjx0YSsC/3y7kqegmfjqvwQazNjLN8bm0G+c6nJfZguzmgjzcCSw
-         ofT1NBIAB/8ajNGnPIuCR998ryIxRLUIZruCQBCjYk6D5Fzt3N25pDwGJ0EFSvpo3q6L
-         T5nroT6DoOwlsIvWvnhlHWhxadzvxKQPIQu/T1oAMX/Fqp3onXOmxnXQlaGVbg0F/mHk
-         yD/N4otv/xmiQQArWQxWjfvazXUKGuZpFJHpexMaJXFPu9qBIvdBOZN3RsscbrOpTqmk
-         C0fg==
+        bh=1HRCCp5MOT9evGsh3hsretESYQ1gOMoQIZE9n7dSAao=;
+        b=jHzGUm8k6jIWLOmohfboZgpRP06uJUoyyWJIZnsFHSyJBdnid19eSAUf4GY8h9hQGX
+         rh29xECHgpFQgYM7QIC7bio6Va5PS1IvxDntPHCAd++edBNULI7+20i96rQzJmyIjvE3
+         64PoRCykiZddSdBVgW1IijA9ndc5PgzV6if5bLzoI6s+R14d7KyFP9gJfDEWFQc1TI8r
+         YxBPhfDdQQhAEklIcuGt+BlfIRid/JRJl1InZc5Ue5FsBirF0qOvWXnRgR55bAMvbvZW
+         jphy7Qcp9EjtJufg0kJ4Qb/YRu31w7M2C1FjoyOM2hNfxC7zIJUXZlWbPgowbhr1qMAh
+         NtnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1766004943; x=1766609743;
+        d=1e100.net; s=20230601; t=1766007390; x=1766612190;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=u1L3Te7+u2ZCHeXINj7bW4b1SmgCljgQ5w64c+/UCLQ=;
-        b=fQjVybW2AduD8GaOpO1hprJx3LAMThe9y7obWzpIII+IkY1bcpeD6lAsjYnaWnM+C9
-         2PQxbQ0CTOV4gWmVEahVBy7gQnVBsUjKAH7wRr5ztsB+kg/tJ7Fv9NQQiH4ccr5wu+Uu
-         6kBeMU8F824jVV1ZlbgZogW388qZOPpZ0mZfNYvB0e7FQyRNeb7O5Xxw+Aw/8Hhnxj4g
-         dK1qB+qb5EU3J5mjdC+yAelxG1CRx4fCuKYzKPflJBQDMzUQ+JEuQPRUrUZxW2fbCRpI
-         5V18tABWyIEFmnAwfi6NVqkYy30wciSzDGmQVQgb/xdz2ZW4SLaign9vtDcqIbbEHG3P
-         /y8w==
-X-Gm-Message-State: AOJu0YzFt/UCsLKue1fMmBmfET5UVq90Xl/f9rULOxgAq2kCzeuHVi/K
-	2BX5/EfPzRO7Lh7HE7jQyKV8CxWCNuNVIHu9L4A/irQD650+auRSzMAKZ92FFStvp5vcfyZVLnQ
-	1WBndZ1bnC5S3PIJgDzrvlNEB7/M7s8A=
-X-Gm-Gg: AY/fxX4PuMRE+zrKDjmBem2XqvUrH1L/CfSacfVbSq7zVWsG9YBnAmQJWMWv8EUx/3R
-	UIODQEyfwq3b4cfe5AhSzH7hxikJ+cbivDUs19amCWBwmXXkZ7qtae47W21VW86sByw2bdgEGNo
-	AD1QB82PDAiXKFmpBK1wMu7mREU4q4mR/AuhfE9KJ9MevY22752zh6sFUamJy8uB4172V903fk8
-	5mTVCTHOOJQo/A2wMaN8PCdhk6hDHjF0ExaAaMniCBOtYnM67JKoZZ9cROKONYuTNjqZQ==
-X-Google-Smtp-Source: AGHT+IEsMRhSdbTBEy57zOkAaA3skRPfwWDFigM5/8VJ55UP/dCJMlTr5Sq0feik8TPkLee4qTyZXoNVX9wJw6jXP/c=
-X-Received: by 2002:a2e:bc12:0:b0:37a:45fb:d42f with SMTP id
- 38308e7fff4ca-37fd07adb19mr50964281fa.19.1766004942610; Wed, 17 Dec 2025
- 12:55:42 -0800 (PST)
+        bh=1HRCCp5MOT9evGsh3hsretESYQ1gOMoQIZE9n7dSAao=;
+        b=vN24/d8GlwAVRtIpNbPAssaIg6zuQ12nyTCMiw8Q8/GikAUdSCYIawXeLXSjfBT0s4
+         zkl8K2nSZBd2TKJYZirMWzD2VNFh23a5RW7HSv+oxVtuwaMN3LzC7NSBEZRcfI+UR1yc
+         dYAPs6f6pBwhy2OANGMN8jI/lLCxvXxC4p1fXoEq63/pwhfKp+4pJXT98GcQmHrIeWFv
+         ZQhIrG62EFLwYsoBF8wMCvmHFhmtpb8FDQR5O0arvmWRKHO0oEY3yjKpfPwBeMgoO+NH
+         IFE+ZHaj69m4ZJo6AUS36426P3zUxIaj3Fy/8M+oIisocePRwX0q7AraGV269Un0KcbU
+         fJDw==
+X-Gm-Message-State: AOJu0Yy66YT+ZpJ0t8IaCNNk71UUwMGKxhX0nahJuNOAxnPccAfTmXJ/
+	gIL1I8dXHYHuJpbu5u1nuPtQrQmlq84U39frzxlAyjkfYsJhKokM2J8ROsJzUtHrUHcHVWEtQHi
+	Oo322UX0exOYUo+QCeC3JoSB+5sBSZgk=
+X-Gm-Gg: AY/fxX7tnqq0ntvAzUfoWaLhBbEvgyBsVTpNTbxvkqX7dCtUIkch928C6AF4yRHBnOy
+	Keo8Qkerg7bf5RzA629LZQI/ZOJpcvJclLj9074vG04s3Q7kgTUjD7OkfL+i3svhaZ6GI2IUzvN
+	uvZkw3Hh3df3kOsQQcr9QbTAiJ0vecGo+wT5caooEm0LrRnt2IzcdhFQEVF8b2sCTBIgitLvUUp
+	PYinDwzyl4yDEYDtTaDV0u2bmBx0D++UjUZPz88NP7Hgjv7YT8cIAm5+kWHGsU8BxmiqQ==
+X-Google-Smtp-Source: AGHT+IHS1pJCfFi8UUoNWBhzHaivRgIYxgf5LXjO7ufMaT3GrBrZrXIKfEeMi18C3JAoCGmcgBFjF6npMi+HWFeJzyo=
+X-Received: by 2002:a2e:a549:0:b0:352:6aa4:3cee with SMTP id
+ 38308e7fff4ca-37fd07b6d1bmr53080201fa.17.1766007390391; Wed, 17 Dec 2025
+ 13:36:30 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20251217160256.441737-1-ssorensen@roku.com>
-In-Reply-To: <20251217160256.441737-1-ssorensen@roku.com>
+References: <20251216191255.882653-1-cakturk@gmail.com>
+In-Reply-To: <20251216191255.882653-1-cakturk@gmail.com>
 From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Wed, 17 Dec 2025 15:55:30 -0500
-X-Gm-Features: AQt7F2oMCc8GflaJaBMeN1s4iTpc8R0WVX532HZCvMKepZ2KCjXg0uFWclor2FI
-Message-ID: <CABBYNZLxp1aWRQp8cVMZjE-GgcTdMQPO6-eThcOiPG62A=geCQ@mail.gmail.com>
-Subject: Re: [PATCH BlueZ 0/4] Decode system parameters and add BR/EDR idle timeout
-To: =?UTF-8?Q?Stefan_S=C3=B8rensen?= <ssorensen@roku.com>
-Cc: linux-bluetooth@vger.kernel.org
+Date: Wed, 17 Dec 2025 16:36:18 -0500
+X-Gm-Features: AQt7F2pD0E44LdSWQnxxnebiiCn62J1_dj_F133lrskV1I5-uD-kcwprVEDGU0Q
+Message-ID: <CABBYNZKHof-LaKXiB_oe34R9_mTdH_YCjVsATrdwrLQehaGWhg@mail.gmail.com>
+Subject: Re: [PATCH] Bluetooth: hci: fix refcounts in LE remote features command
+To: Cihangir Akturk <cakturk@gmail.com>
+Cc: linux-bluetooth@vger.kernel.org, Marcel Holtmann <marcel@holtmann.org>, 
+	Johan Hedberg <johan.hedberg@gmail.com>, linux-kernel@vger.kernel.org, 
+	syzbot+87badbb9094e008e0685@syzkaller.appspotmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Stefan,
+Hi Cihangir,
 
-On Wed, Dec 17, 2025 at 3:38=E2=80=AFPM Stefan S=C3=B8rensen <ssorensen@rok=
-u.com> wrote:
+On Tue, Dec 16, 2025 at 2:13=E2=80=AFPM Cihangir Akturk <cakturk@gmail.com>=
+ wrote:
 >
-> This series adds support for setting the BR/EDR system default
-> connection idle timeout, documents some previously added default
-> system configuration parameters and adds decoding of read/set default
-> system parameters.
+> KASAN reported a slab-use-after-free in le_read_features_complete()
+> running from hci_cmd_sync_work.  le_read_features_complete() can run
+> after hci_rx_work/hci_conn_del() has removed the link, so the destroy
+> callback may touch a freed hci_conn and trigger a KASAN use-after-free.
+> Duplicate submissions also need to drop the references to avoid leaking
+> the hold and blocking teardown.
 >
-> Stefan S=C3=B8rensen (4):
->   doc: Sync default system parameter list with kernel
->   adapter: Do not send empty default system parameter list
->   monitor: Decode MGMT read/set default system parameters
->   main: Add BR.IdleTimeout option
-
-Looks like the last 2 were not sent to list, or they were blocked:
-
-https://patchwork.kernel.org/project/bluetooth/list/?series=3D1034329
-
->  doc/mgmt.rst      |   4 ++
->  monitor/packet.c  | 117 +++++++++++++++++++++++++++++++++++++++++++---
->  src/adapter.c     |   9 ++++
->  src/btd.h         |   1 +
->  src/main.c        |  10 +++-
->  src/main.conf     |   3 ++
->  src/shared/mgmt.c |   5 ++
->  src/shared/mgmt.h |   1 +
->  8 files changed, 142 insertions(+), 8 deletions(-)
+> Fix this by taking hci_conn_get() before queueing, passing the conn
+> directly as work data, and balancing hci_conn_hold()/drop() and
+> hci_conn_get()/put() in the completion and all error/-EEXIST paths so
+> the connection stays referenced while the work runs and is released
+> afterwards.
 >
+> Reported-by: syzbot+87badbb9094e008e0685@syzkaller.appspotmail.com
+> Signed-off-by: Cihangir Akturk <cakturk@gmail.com>
+> ---
+>  net/bluetooth/hci_sync.c | 37 ++++++++++++++++++++++++++-----------
+>  1 file changed, 26 insertions(+), 11 deletions(-)
+>
+> I am not entirely sure that removing the err =3D=3D -ECANCELED early retu=
+rn
+> is strictly correct. My assumption is that, with the changes in this
+> patch, there does not appear to be another cancellation path that
+> reliably balances hci_conn_drop() and hci_conn_put() for this command.
+> Based on that assumption, keeping the early return could leave the
+> references taken before queuing unbalanced on cancellation, so I opted
+> to remove it to keep the lifetime handling consistent.
+>
+> diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+> index a9f5b1a68356..5a3d288e7015 100644
+> --- a/net/bluetooth/hci_sync.c
+> +++ b/net/bluetooth/hci_sync.c
+> @@ -776,14 +776,23 @@ _hci_cmd_sync_lookup_entry(struct hci_dev *hdev, hc=
+i_cmd_sync_work_func_t func,
+>   * - Lookup if an entry already exist and only if it doesn't creates a n=
+ew entry
+>   *   and queue it.
+>   */
+> -int hci_cmd_sync_queue_once(struct hci_dev *hdev, hci_cmd_sync_work_func=
+_t func,
+> +static int __hci_cmd_sync_queue_once(struct hci_dev *hdev, hci_cmd_sync_=
+work_func_t func,
+>                             void *data, hci_cmd_sync_work_destroy_t destr=
+oy)
+>  {
+>         if (hci_cmd_sync_lookup_entry(hdev, func, data, destroy))
+> -               return 0;
+> +               return -EEXIST;
+>
+>         return hci_cmd_sync_queue(hdev, func, data, destroy);
+>  }
+> +
+> +int hci_cmd_sync_queue_once(struct hci_dev *hdev, hci_cmd_sync_work_func=
+_t func,
+> +                           void *data, hci_cmd_sync_work_destroy_t destr=
+oy)
+> +{
+> +       int ret;
+> +
+> +       ret =3D __hci_cmd_sync_queue_once(hdev, func, data, destroy);
+> +       return ret =3D=3D -EEXIST ? 0 : ret;
+> +}
+>  EXPORT_SYMBOL(hci_cmd_sync_queue_once);
+>
+>  /* Run HCI command:
+> @@ -7338,10 +7347,8 @@ static void le_read_features_complete(struct hci_d=
+ev *hdev, void *data, int err)
+>
+>         bt_dev_dbg(hdev, "err %d", err);
+>
+> -       if (err =3D=3D -ECANCELED)
+> -               return;
+> -
+>         hci_conn_drop(conn);
+> +       hci_conn_put(conn);
+>  }
+>
+>  static int hci_le_read_all_remote_features_sync(struct hci_dev *hdev,
+> @@ -7408,12 +7415,20 @@ int hci_le_read_remote_features(struct hci_conn *=
+conn)
+>          * role is possible. Otherwise just transition into the
+>          * connected state without requesting the remote features.
+>          */
+> -       if (conn->out || (hdev->le_features[0] & HCI_LE_PERIPHERAL_FEATUR=
+ES))
+> -               err =3D hci_cmd_sync_queue_once(hdev,
+> -                                             hci_le_read_remote_features=
+_sync,
+> -                                             hci_conn_hold(conn),
+> -                                             le_read_features_complete);
+> -       else
+> +       if (conn->out || (hdev->le_features[0] & HCI_LE_PERIPHERAL_FEATUR=
+ES)) {
+> +               hci_conn_get(conn);
+> +               hci_conn_hold(conn);
+> +               err =3D __hci_cmd_sync_queue_once(hdev,
+> +                                               hci_le_read_remote_featur=
+es_sync,
+> +                                               conn,
+> +                                               le_read_features_complete=
+);
+> +               if (err) {
+> +                       hci_conn_drop(conn);
+> +                       hci_conn_put(conn);
+> +                       if (err =3D=3D -EEXIST)
+> +                               err =3D 0;
+> +               }
+> +       } else
+
+Sort of overkill, why do we have to use 2 references? Also we do have
+code for dequeuing callbacks using conn as user_data so either that is
+not working or there is something else at play here. Maybe we need to
+change the order so that dequeue happens before hci_conn_cleanup:
+
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index dc085856f5e9..b64c0e53d9cd 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -1232,15 +1232,15 @@ void hci_conn_del(struct hci_conn *conn)
+        skb_queue_purge(&conn->data_q);
+        skb_queue_purge(&conn->tx_q.queue);
+
++       /* Dequeue callbacks using connection pointer as data */
++       hci_cmd_sync_dequeue(hdev, NULL, conn, NULL);
++
+        /* Remove the connection from the list and cleanup its remaining
+         * state. This is a separate function since for some cases like
+         * BT_CONNECT_SCAN we *only* want the cleanup part without the
+         * rest of hci_conn_del.
+         */
+        hci_conn_cleanup(conn);
+-
+-       /* Dequeue callbacks using connection pointer as data */
+-       hci_cmd_sync_dequeue(hdev, NULL, conn, NULL);
+ }
+
+ struct hci_dev *hci_get_route(bdaddr_t *dst, bdaddr_t *src, uint8_t src_ty=
+pe)
+
+
+>                 err =3D -EOPNOTSUPP;
+>
+>         return err;
 > --
 > 2.52.0
->
 >
 
 
