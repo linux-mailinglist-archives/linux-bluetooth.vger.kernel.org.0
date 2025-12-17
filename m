@@ -1,67 +1,70 @@
-Return-Path: <linux-bluetooth+bounces-17497-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-17488-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id C418BCCA1CD
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 18 Dec 2025 03:57:06 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id DBD45CC9991
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 17 Dec 2025 22:27:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 5912630090A0
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 18 Dec 2025 02:57:05 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E7C643025F81
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 17 Dec 2025 21:27:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B70B4259CB9;
-	Thu, 18 Dec 2025 02:57:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 408E3308F2A;
+	Wed, 17 Dec 2025 21:27:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=roku.com header.i=@roku.com header.b="flSu6sDK"
+	dkim=pass (2048-bit key) header.d=roku.com header.i=@roku.com header.b="czDbzS6f"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from DM1PR04CU001.outbound.protection.outlook.com (mail-centralusazon11020092.outbound.protection.outlook.com [52.101.61.92])
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11021142.outbound.protection.outlook.com [40.93.194.142])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414751F30C3
-	for <linux-bluetooth@vger.kernel.org>; Thu, 18 Dec 2025 02:57:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.61.92
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0891DDA18
+	for <linux-bluetooth@vger.kernel.org>; Wed, 17 Dec 2025 21:27:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.142
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766026624; cv=fail; b=LK2EiKu38KWC2FLbn7VbNNVZMdjRWRUKDBteOKImAuadqe1xULanxdGAKUXZjLW+sdY3tKHfQ15B7pR1eR/VrUsDC0trs7PKT7sLxP0gFjql9glkhhRVGWNBhB2/ZzE3VOzVv9osklF1x+GMzH8PmubpqpIh/Rm3TU47lsa6u9c=
+	t=1766006833; cv=fail; b=XFKDd2w/RFZ4bJkis5ll5qzNcdhBwssc4Z5+wbJgvwAbN3EfHjp8OOdvLdzOACSXI3w1+wF9Py8H0iTnrDE8h0aEjoizPC5k4w374lLt9y761O/10ZfzLI/bYqED1senaliR5VvZlkVGBaWUJK2/v3NBFAuR/tc9qlWiyb2PKqw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766026624; c=relaxed/simple;
-	bh=TyTgu0s4bxVBWrzRmjbUUlDxYU681ZUkgVycrcAjSfc=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=jmmmYEzXeoWhPuo2i4O+C02VJDXL7zqwbqBcdTwf5bLFoxLTTukrEgPHNNIMhRgotzSwgmje0TcXG/Xk5zWcQg04E4O0tH3py/Wb2IJpJovdbZqpNF+VqcRRmwk8PaNuAqUJS1dy/v9Wzk7qYB50FUOtsV6ZUzeD9xN4kprzkA8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=roku.com; spf=pass smtp.mailfrom=roku.com; dkim=pass (2048-bit key) header.d=roku.com header.i=@roku.com header.b=flSu6sDK; arc=fail smtp.client-ip=52.101.61.92
+	s=arc-20240116; t=1766006833; c=relaxed/simple;
+	bh=AyYp3SDb2H4s3lbBVtjErwTCEmak9N0qTKKUg94EG9M=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=ORz2GMnQ63yjs7eOCC8wo5rYrf49QJuLTV7Fy5F5hCMAyaV6/db8tfsZRwTdIny+SNBCmnGVgXGKMnxEzBlSYFOOIYqEtackccD/6zgTvjSay66WDINn+Zpa+2JJZwE/K+eyK13lkGUUJbemcAgjC4r2SJn7JA9OGYL02uUu+k4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=roku.com; spf=pass smtp.mailfrom=roku.com; dkim=pass (2048-bit key) header.d=roku.com header.i=@roku.com header.b=czDbzS6f; arc=fail smtp.client-ip=40.93.194.142
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=roku.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=roku.com
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=SmSa5J9YDrDdFaAxwko+MMqBDByl1h3WbWMoL+pRTi+JidZBjOVrMwm9LptgPRbDn1yDTBrRar8MKd6cA0JRWLuyjx3z0UAnAlFw9XawPZgDL/kzj8tyfd3wYBGiN0tXPouWYp4UG83ddDj0Hqu8xIyYvvxitjYlVDwEgTpg5AZomqIdPyTT2wem+IMVzViUEBQ6Lr7KXh5f4kkCGHwh6P/GKyIv8oyxNShAJWDOufGyeBSqkbxZPIOKZ+pbNd5sPNbAw5UhgY9xR5Q514UqiSBjU4R7rCwJEUkL1VXlDSLlTtiQOMdaWzP1OydGZRjE0CAJzYg2kPQQC94AA54p2g==
+ b=LYmOyjuImG41UwW/XyvIAMXKowlKnzvBGNJb0fzU1lk3bQjMqa39NNrjEhpII6/+rI+rOaFEw0s2fQGJVDRW8c6l9ZKGGh1A+8afpbBNQ8euzg/XiFXyTnbC2VN6ZK11jBLkLI9cj3fMRNJHwGsrTJTMZ52VT6pKrqNsu5rhegQl6XX7/8sE6ctUWa9mQSTNKP3MJBF5MB8FCRXUthdT2dCChl1XLzDnM/ftY3DIsiK1vWVjgUbfxWbRLfF4Ljnunk/e9UW9lKx/5LDDpvTI3vxe0gF/xt5zyXj1igHxlmEJpK7JWLfIWBnFvKnPIhxAKmu1t6LHEcevMqTzOvHwIg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=f0zHOKARINlYggzir5+LiqqDGWiIcPSyVR1QY8igz7M=;
- b=nwt2oIk7AsZ9sH80dJLf7ilbT841alzibUuhw//hCyURMUZCq02CLmjCJyAxxysRJk3MOWNcolk582we9N6dcRVqoh+Sbfy16vPwy+Wx8jNxnUz5PCCqFIhdNG8/RIbxXT0ViLWLJgL3LczaQockEYQ88p7syBXaakMWbRT7zpvhKWF4HRfwJA8LGIQ5AJLnEYKicJoLdlRVseOjxZC1/EkzJgiu/wU4okrQcPVYVd46HQD/L3hwkiE2pvaBgIcn5Ns1xavPKbswszEv0/ZZ5vOtZpn5zrfnem0u88EYLyR2uZSSin1oMhxEd49Lcw/G6HBxGTTaCkRdi4Mihfsxbg==
+ bh=yy/m4MRazMyvAU5td8bXl3/LIXpRq5mQ/8J9zTgnBRo=;
+ b=CxlApSzq4k1Kmr2teefXzsjLNEhhyBDbAOUX9iCoh/56oUN6IRg7+rdxaYqxEN/Ga5rvtSw99uHKoqz7kQd/aiFvTcoco7Uwhn2hSkdMYG+AScaFVWGeI2GibhmN8idgle/qZ+EeFS097iVOhs0A0uQixBLQJNpgL/AI9Yi4388q04PzV/Q8RNmapBx4kand210Fp2JU3slUw1geP9Kh4PD812ZAOGXm7PoNniXncjTnBFGaGb9JdmfQgZ3lAS0T9dq1OuTUCT5tJFOI4Str8aV5NGbiNeFgEUyZd1Ad1RYhd2e/STEXHzIrDqDiiVIPYZq1XW7dQo7ZbTzLaAGTRw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=roku.com; dmarc=pass action=none header.from=roku.com;
  dkim=pass header.d=roku.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=roku.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=f0zHOKARINlYggzir5+LiqqDGWiIcPSyVR1QY8igz7M=;
- b=flSu6sDK43vj0i3OVhF8RS23gdA5lftV6nvIEcCm4RZ0UGcYNr7CBgOR+X7WsdiLzDCWskDk1hbSI6EsBE39KhA3FplOy/T3SIYTe6ia1XpYTlCTiJ2JpcN3mZYbuFSsk+0MxwRbxHq5tUZ4g094pTQMhgunEASTwKCB+cLTazBAcITByL7hepqR5hzdtlR5uPwIHA+7FCS4/skErm9Acr2kNNcabHrJpMNcO2rx73BTv1KgGJfaGlNWLGUh1VrtbsggH8Mhy1yYxP7jL82YHJ2N1TX0cb9ioZkJmN9PK1nLeM725P0xVGOwRL3o4nxJAnaIQl+3LVfhivaXTFInzQ==
+ bh=yy/m4MRazMyvAU5td8bXl3/LIXpRq5mQ/8J9zTgnBRo=;
+ b=czDbzS6fVKKJ/BuiLHkpKYoqGifCRrU+aAHO19462pzRVO4LoyvgLPGC4VyZqMJXwwmPaRPPGtlBZ/F7TetLxH/650fSCyg5fRRTt3kcFx0lW7wyxhuPF2eh7DrzBpLKra7HqMQp11Wk+DkMeyT1ea/TKz50EPrAnmEvfGsxDdxwsJV3+Zw7aAbF+tvJ+VVVcHHCtiqip+frpIGZ6q9tZ48BbATnOmFG4fXuf9HPpl77814xk/h0JxQ6VjOLr2zfNfGk3+Mi5j6U0dmSSbRnU9ONDopJL8vVpoToCOOORlpkhQe4isAgJWpcJryXitup+c/78/HkMlpSYi4TSNUBHg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=roku.com;
 Received: from SJ2PR01MB8282.prod.exchangelabs.com (2603:10b6:a03:540::13) by
  CH0PR01MB7091.prod.exchangelabs.com (2603:10b6:610:f1::8) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9434.6; Wed, 17 Dec 2025 16:21:23 +0000
+ 15.20.9434.6; Wed, 17 Dec 2025 16:21:26 +0000
 Received: from SJ2PR01MB8282.prod.exchangelabs.com
  ([fe80::1b0b:87da:f914:dd1f]) by SJ2PR01MB8282.prod.exchangelabs.com
  ([fe80::1b0b:87da:f914:dd1f%7]) with mapi id 15.20.9434.001; Wed, 17 Dec 2025
- 16:21:23 +0000
+ 16:21:25 +0000
 From: =?UTF-8?q?Stefan=20S=C3=B8rensen?= <ssorensen@roku.com>
 To: marcel@holtmann.org,
 	johan.hedberg@gmail.com,
 	luiz.dentz@gmail.com,
 	linux-bluetooth@vger.kernel.org
 Cc: =?UTF-8?q?Stefan=20S=C3=B8rensen?= <ssorensen@roku.com>
-Subject: [PATCH 0/3] Bluetooth: Fixes for BR/EDR connection idle timeout configuration
-Date: Wed, 17 Dec 2025 17:21:09 +0100
-Message-ID: <20251217162112.444181-1-ssorensen@roku.com>
+Subject: [PATCH v2 1/3] Bluetooth: hci_conn: use mod_delayed_work for active mode timeout
+Date: Wed, 17 Dec 2025 17:21:10 +0100
+Message-ID: <20251217162112.444181-2-ssorensen@roku.com>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251217162112.444181-1-ssorensen@roku.com>
+References: <20251217162112.444181-1-ssorensen@roku.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ClientProxiedBy: BLAPR05CA0029.namprd05.prod.outlook.com
@@ -75,124 +78,123 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SJ2PR01MB8282:EE_|CH0PR01MB7091:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6b7ea182-6947-4b58-dc3d-08de3d8851e4
+X-MS-Office365-Filtering-Correlation-Id: 90abbb93-49b9-4e40-4374-08de3d885333
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
 X-Microsoft-Antispam-Message-Info:
- =?utf-8?B?TStGTzZpNENFQ1FyOFJkcFprRDZBZStYaktRZmc3SWxCYmRMcDVibXJML0VQ?=
- =?utf-8?B?eDZPc3hOb0kxMCtYVXhPdUcvRklPZ3BEOU9uRFRCdGpNWUoybmV6RjJKK2ZT?=
- =?utf-8?B?Q0MwdEMrYmFoekdmUXJ0VjVCQU5FbnFYQnZuTVJQR2tncElaT2JkWWlCTjcr?=
- =?utf-8?B?YytVVG0vN3VQd0hFLzRvMmFCb2hCaXlNMUVOaEY5V0VjczlLNUhXZXRKQVd3?=
- =?utf-8?B?TjBXYmJVeU95N1FXMVB1YmJoUlh2K1J6ZFRmOEJyTmorMFBNRGIrNzhuZnhF?=
- =?utf-8?B?Y2FkRjN6ajVQZ0dZb0tYcFFiU3lQa2h2ZFFtcU1oalhORGxHNDRZYmFNNzRs?=
- =?utf-8?B?dzB3NlFlVFN5eGRTdFlTTnRnUlAzaTVqT1ZOWncrRGZTcWhmTm5qY1QzeDZz?=
- =?utf-8?B?eW96U3JnaXBjUzJUeWpVLzRGMmY1R2RnMlhOQXN1SGdDdWp1ZmVHQlJ5b0hj?=
- =?utf-8?B?MFdwaUxrSHlTYjhkN1M1VHRLVldlTlgzNlhWa1o2cVRCNnpqZFZ4NmI3YWVM?=
- =?utf-8?B?bXhPNlk2eitZSExYdm1nZlhGRVBjelZOdFh4UWFxTnJ3bTVtZzU2OWwrcWR2?=
- =?utf-8?B?dGhsQlBXZ2wzYkdHWXhwWWtQSEgrdklPdVFFZWVLVVkrMHR2VVBjWG9YSW4r?=
- =?utf-8?B?VC82UWZqYnNIRFZlWGNHOGdSWlM2YTBSMVVrOW9JY3ZDK0hLdHp5cGdmaCtK?=
- =?utf-8?B?N0hWMVdjU1h1VHJPSittVTlCQVRaMnloUlpyb2VzNW9Kckk3YVJkVm1rMytq?=
- =?utf-8?B?Nm1scTZZWGJWa2VrREVnZ0l3QlgxUGQzQ0VPRVE1VHgvZGtwR3kwNVNZdWk5?=
- =?utf-8?B?RUhkTXBES2dUZWxNbDhrcUovendIN0QzcmFUTlVNVnl3cDMzVHFwK0w3dHdZ?=
- =?utf-8?B?djAzN2czZk05V21BY3VPUVoyMzBJbEp0VnVva2tGd0ppK0svUExhQUgrZm1l?=
- =?utf-8?B?K0E0YmpiaEZKbUY0UGRLREkrb0k5Z290K1VReC9rVzlMd2pKQjRaQnR6bXJS?=
- =?utf-8?B?NzNCQlo2Q3dMNjNWU1hqdzdTTzJwVml6UE42bjl3ZWdpYkFaMVdGcmMzVUQ4?=
- =?utf-8?B?Vks4RUI4Nm9ENjV1Q3pXK21GTitkdE4yaXZUT25jcjQxaU90N1RtUnFRK0I4?=
- =?utf-8?B?OFFmbVk5N0VZNXB4QnZtSHBHdHNTcTkzSjc0OUhjSzF5SDhVMjB0anZRZGdP?=
- =?utf-8?B?STFVTzY2SHozMmNkMllCelI0MlhiRE44Znc5Snc0MnRBaUV3VmcvbUtWVk82?=
- =?utf-8?B?MzRVQWVrQjVDTnpaL05abGw5VUs0YjNSckgvK2xVSVZNWmE3YUhJUy8yc1or?=
- =?utf-8?B?UmtaOEtpSEd4T0JZWkpVUkJVT1pRM20yVVZ0TWpmQ3F3bFVFZVRHajhBYXdm?=
- =?utf-8?B?cDR5amtxNDhTNU5vRUZRbk5yemR3eTlhZmF5Zk5rbzZEWGhCVmdHSDFHWTRw?=
- =?utf-8?B?U0RTTU5NSW05OFl6Z2pxMmpqVnk0Q2w3UDBraEwxcGdlanoycmNGbThWNFlQ?=
- =?utf-8?B?ekVBa2NWc3E0dEZrOXkvN3NFWW9uMTR2aklaVWlFeGRmZjBpZkN6R0V1Z2tN?=
- =?utf-8?B?UzhaTlhQMXl3SDdTQVdycG1uNnUrVnBBeTJvUGNlNGk0cng4V1RkeVpOOTM1?=
- =?utf-8?B?bDZsSUtyY041OHhxYkIzSlJpcEVIMGVFV3NXL1dtYmszNmxPUWtlYTF2RmQy?=
- =?utf-8?B?WC96NXZGb3pGYmpmM1pJWDFQTER2ZTNzaFV0YWVqKy9ydmhQS1hsaUhaeCs3?=
- =?utf-8?B?bTJPTjN6YmVmY0FIbVlwTDhVTEMzTXQyWC8yUS9BSmhSN0c0VlRaMEc1cFNz?=
- =?utf-8?B?azBjOVp0NDFMRnFIdkZ2U00rRWlxZVc3QnpzZnBnWERDbHFUaE5Sc2VqNXRU?=
- =?utf-8?B?dkp6TncvcXdnYlpIekZKcUtETjlEOUhQVENkSUZTcnBrSTdyYytWMFA3bmp5?=
- =?utf-8?Q?AHD4D717wz8Uia9kx6bGNHwMj7oiERes?=
+ =?utf-8?B?c2JlRlZhU2JjN3VneUtvRmNROUY1bkJsQUNVdkNHNjRNMGRvZy81S1dMMG12?=
+ =?utf-8?B?U0xSNndnQm5xYVByQ3A1U01XemljalRwYVAxbUxPYVA3aWMyRlg0NDFLM3FD?=
+ =?utf-8?B?cm5xRWVvMTZIYWpiZUJuMlBHWjR6Z1RNQ3JvTlAySXFkSmxwRjNxUzRSbzNJ?=
+ =?utf-8?B?dW8rUTBqOEpsbnhPdkdmYTQ1RHJ0YWpueFMwQXFJZk5QZTFwd0xRZG5oTTZL?=
+ =?utf-8?B?cGNoY3o2RjhTaG55eS9CUGVlRlRSTCtNR1QyTjRnZ28veEhNdUJLZU9rZzFV?=
+ =?utf-8?B?YnQ4MVlUOFNVUFg4dkhONzRFMFMvRTRrUTRkem9LQm1XK1NobklJNW15N0ZB?=
+ =?utf-8?B?eXhvMXNRbTA1SHc3UEkyZG9uV0Z2TG1EMXVCdlBnNFRrZzVQaGt2cVlsQmpW?=
+ =?utf-8?B?d09wM0J6ZktNY0NpRHpqOGFmTkRSWEp2ZmZNS2V2aEYvSHczVjdWTEF5cjBS?=
+ =?utf-8?B?bnE0ZE0wVjF3UFZyb0R3OW1TQXR3RHZ4UnhOMERJaHFkTEZIRVdCVkxaZ0lD?=
+ =?utf-8?B?OTFaMlpFRnpUaE14WkpHeDVXci9KVkZsNHI2Mk9QY2xFUUtSbm9qVi9mR0No?=
+ =?utf-8?B?T055K05DREtoWVVOWVozVUFMTytiTlhsWm9QRlVEYVFaRVcxeFhFODN5NXJR?=
+ =?utf-8?B?aTdFVTY5RkhYTjFZVENJTjQ3U2E0SnlpQWdvTFc3dWJFZjRIdHFadjdXckNs?=
+ =?utf-8?B?dW1TblhuQ1Jqalh3NlRiQWxVbkowMWRNcHRMY0o0QmtsRFlnbjRGUkU5enEr?=
+ =?utf-8?B?dXE4MGlybTczMlF5aHgyamxhOEkwb3AxNnlha3pWNGpNTUJkRWx6dHI3K3JG?=
+ =?utf-8?B?dzVNeFRnVWVpQ1BWQXdSMDJpNWJyUkN5VDhISjZpc1RDQXZSSEZRdThzSC82?=
+ =?utf-8?B?YldSdmJ5YnF4Q2dYZStGdkhxcUVnN2JKVnAwMWtITHdRL1RUSGFldDFsdUNB?=
+ =?utf-8?B?Sko5NmZFYzBJSk0zVEd5N0l6Vmdsc3RDVXY0UjJsVXlwdEFCZElDUDF3YkpR?=
+ =?utf-8?B?dEZxb3dBbkpmcW9mUXhJT0I2d0VsNE1PL205ejRRRUkvaHBhaXU2RnMvdWFv?=
+ =?utf-8?B?R3dKTEp2djVVMnFocEhBNlNGYlZPci95dm9OMDNRMEtmS3VBKy9naFl6UzlJ?=
+ =?utf-8?B?dkQrbmxmZGx0KytWS2FtYkludnpTK3o3MWJmQUs1SWRRQTY3a1I5WmRkSkFD?=
+ =?utf-8?B?SWIzbnE4SlVYR2MrM0VWM2FFN0lGckg0UCtNNmZFYTAxbEVnbmRoNTJOM0U4?=
+ =?utf-8?B?NDB6QTNiOFBoNHBiM1dxUjhjRTQyaWFNSFpsZGIzbzNyQUhNdGV3T2lna21X?=
+ =?utf-8?B?d1o5TFovV09aRmlBc0NNcnU2cmFoSldROEdhOFZsNlJXS0FJa3VEcmszcjZF?=
+ =?utf-8?B?TUZBd0xxMlM3bG1KUGxaamxiZzZCYUthOHk0b0E0YjZ6aGhJeml4RnRVOVFz?=
+ =?utf-8?B?eGI4ZWxaVHNhdjhHbEpaMGFxUVNrVnJiU2phMVdzZWtTWjdLYStMVElaYjJK?=
+ =?utf-8?B?V216UmhHQzU0U1dQVWhDYm5ZOERGbmRnNWF4MTVkTHhHaWpyL1ZBRzIrR2tu?=
+ =?utf-8?B?OGlXNkNjVXU3TE82TDhrZC8vQ1FBdkxMU0hTTExDc045cGNSN2xPVFIxZUxY?=
+ =?utf-8?B?ZXQ1YTFpNnhhMjFwV1BRbjZ3M0NFM2hDOXZOZEtrQjhNNnhxSnBjMjYrUWYw?=
+ =?utf-8?B?YW1VNThhNkhvcFRRcW5GbUtaMHd5ZzNNWTFzT3pIYWRDMFZSL2R4SVF0Q0Q2?=
+ =?utf-8?B?OEpUVXNaRnB6c2t4NVlhUUJ0WDhJekR4bnVHb0x6U2MvNG0zckdXakc4M3pD?=
+ =?utf-8?B?M3Ezek5hQm5PeWpqVUNsWlJkQ1BkZmxNU0RDYUpnZWJFL0xhd2dZcXkva2du?=
+ =?utf-8?B?YnptQ3ExYjJTYm5PakpnRmJWS2pUUnkwM2NidC9OS2VzQUYyL0hwazJ2L0hj?=
+ =?utf-8?Q?0PV6OdNTNAJ+Qg25rko2QvBa9ShcgaFD?=
 X-Forefront-Antispam-Report:
  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR01MB8282.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
- =?utf-8?B?TTJyK2RRT0FPZzJZaUdWS3dLWi9pY3JaMDJUU0lGV0loWFJVWC9PVXJTTlNm?=
- =?utf-8?B?Q3NyTnloTVFOQWdVSUhOZ1VFblIycGN5QXQ3TXI3Qy9TYmxtMUZnZ08vL1Vw?=
- =?utf-8?B?cVRVdUlwdGxiNDcrR0hmeVhTN3Y0eTFUZEZ4S3NKRzdyUmFWWTdjY2Y2NVY4?=
- =?utf-8?B?VUIzQVA1YTBFZ2hQclFHWVZwd21jdlF2TXR5VGVjN1RlZ29oSkpTTkw0R3lK?=
- =?utf-8?B?aWtZRGd1RWh1N2pzSTR6bTFOWkttdDludW8zb0hOdG9EZC9aVS83c1VUVURE?=
- =?utf-8?B?ZjBxODR4dzBvUGVLNmtZU0VLU1ZQRXdjbTV0dGRLZWVrblY0OWNaVHU1bWVO?=
- =?utf-8?B?ajh3cW9qa0NYWEdtdXd0R1ZsdFJienhvalZJU3UvQWp4WHBaOUlHOHpnLzZr?=
- =?utf-8?B?YzRWQUVRN0o1V2Rvb1hBZ1dISFBLRDBxZDhTdUxDd2lIOWZWWTVjbnRQWG5k?=
- =?utf-8?B?eG14VmtJSHVjWjJPYmZsaVBVeFNvUEZtNng1SFNrQVFVZDRtR3RhNDBIejRz?=
- =?utf-8?B?Tm1HK1puTjB5RXQrb2lSTFMyN0tWM2tqcm9UMlB5dVBxeHcybEpROFpjL2sy?=
- =?utf-8?B?cjhkS2c4T2E4UGU4a3dlTVVxV05uZk5BT3R5cHBTMTF0VlRxNHNIdFY3Q3c1?=
- =?utf-8?B?OW5MYmp0aVhIcnJ3bEJQMXJLRElDbm1sb2tnRWxxNmFRdUdBK0ZSUjVXcnp2?=
- =?utf-8?B?VGp6RjY0RHFlMVZoeXBPb0ZtcEU4b2t6TFU5R3BYbHR0cjZJNmVDaEN1WGwz?=
- =?utf-8?B?eVZab1lmMHhvZHp3K0tQcXp5b3V1U3ZGV21DNGlrRGpxWG1nTHcweG01VVVm?=
- =?utf-8?B?WWdYV2xCMFU3enZQT0sreTg0OC9JVG9wSTlqa2N1VjdYRTNSSnNjTGZkTGlm?=
- =?utf-8?B?VVkvcC9ScXROTjROek10L205cS9TSkhGRXZ3L2F0RFFWaldhOG9Sc0orelEv?=
- =?utf-8?B?YVpzdEVzY3IxVVpXYTIxdFZtRGlVVDNhL2lvK0RxRytnUFZzeUVwVDB4ZVJp?=
- =?utf-8?B?NVFzZVZGMVIwckt6TGV5YjhXTHI3VWx4K1hwdGMrSExmMUxXNDNjRjlwbUVm?=
- =?utf-8?B?NGlXZEdVdllMZnNBNGZDTmVrNGNIdUNwRXVpUVllTTNCeVpqcE1lWHlRTG5Q?=
- =?utf-8?B?ZGpyVGtjQ1VSQnVrN29qNnFrQ0RXK3JEL3hUQytzZ3U0TVo2dlhSd1pvZVU0?=
- =?utf-8?B?emZZYng3NVBkc0Q1UVFnTTBJNi9rTHBibTRRR2dLKzFHR3dxR1k2TS83bmg5?=
- =?utf-8?B?WnJBbU5rUk4va1ZyYzhyMTFXMkR5endrSzhaVjhGTTR4TXZvUjN2ZjNzNXlP?=
- =?utf-8?B?bG1GaUdHc1dQbXEyMHNqWTlQWXdWSzh5WEJWVTdHcjF5K1ZXNkJHMHl3QmRv?=
- =?utf-8?B?MnVsMkVDVW9oZzlNbGZNNCtoM20wYm5Cd3JhYllWZURTZThEKzVXSG41bkJ5?=
- =?utf-8?B?UTVKeWZvcmNDcy8vWmM0U0s3TFIzaDdKc0hHb3pkeHQ2MXdhMGl2SUZaWVpq?=
- =?utf-8?B?eit2MTBuWWtWSWFncGhhVzZqS1RCd1B0THg5aStPRVZGcDdhbTVjTE9PRjF5?=
- =?utf-8?B?SUFxbENod2NkTDdhN3lXWUlLT09XOFJ6YmJqVEJDajZZRmVvUW0xMkNlL0xC?=
- =?utf-8?B?NGI3VDhYSUp2dXhnaWlTU2hBUUNSWlREdFRzZ2toZ3dYaEgwbTRyY0p6UTc3?=
- =?utf-8?B?MnhsdkN2QXhrUEUwN0JKMHJOMG4vZXJub1REUDQ3aUR5a2FHeDNMUUtVbUJG?=
- =?utf-8?B?ME5WZE9ITzI3VWtla3cwUzhqSXpxVittUGRBdE9sMm84WVBJWmdjdW9uN2VB?=
- =?utf-8?B?S3JlUzNKdktHYjdjaGZOMzc4YmxoZ2xQOU9RYVFxZGdjYWNac01rY2xLenA0?=
- =?utf-8?B?YVhIQ3FBR2VXajVCZTVWNTFSVU42UVFDMk9RM1c0T2EyVVVpNTlxalJBSk1H?=
- =?utf-8?B?UW9LUFVzam1BcUNReDg2NmhLRnlYSGhycWRtWFZJaFhsdkVYWmNRWUNvRkQw?=
- =?utf-8?B?czZxdEtCSUlwYitGR3hTbjlMVEprR09GcGVpY1NjZDNBTmdUeGE0cFRidnBS?=
- =?utf-8?B?RXlMaldsRmI5TlhIWnF3WTU0STlndUVFY2FyYmNhMnhRWGY2NzMyd1g2d0Vm?=
- =?utf-8?Q?W3aa9V7TH5VaL3hfhqph6kpom?=
+ =?utf-8?B?VTZGVlNQTVNLYXhqU1BmVFBSM3hGTk5ETmRRbDhucVp1SXFhbnVkOGNHOHFG?=
+ =?utf-8?B?WWtkZ2lnSittSk93N09HQkpud0RtNkdqRWFlejBKTkdnOWFaZGR0ZFZpRlRD?=
+ =?utf-8?B?SHA2Si8ycWVjTXV6czBBbWZ3emJJWkUvTy9rTHZxTDF5bUlmZHIzZC9XdGNa?=
+ =?utf-8?B?V1lwckdhSmt5WVR3dXJ5bklRSjVLVm5GZm11aHJISy8zUXhGdXRLZW5UNnpw?=
+ =?utf-8?B?NmdKbEhIMnNicE5tMkZyM0lpb2haUWpSZkV0dmh4blRqZ2ZKVjBQNysyMWJu?=
+ =?utf-8?B?ejdaYkQ2LzNFL1ZZMmpMbVRvUHV6VDhTZ0FJRWpvTW16cVB0bmxGUVdRdXAw?=
+ =?utf-8?B?VjNad0Fqd3hmVGxjcXlVVVAybWdGV2FuVWQ3dFg2Wk5IU0diNzNLS3laOVIy?=
+ =?utf-8?B?N2FoQ2lMdWQraE56VnZpNkZCVXpMcjVyRzAxL2tEQlpoOHh3T2VEWUE0L0hK?=
+ =?utf-8?B?aDFmSjJGTlFjREo2MVNiendocjJ0MVloMUgveUd6Ni9EQndScjl3djVhbkpF?=
+ =?utf-8?B?WnRGeVFVS21OVm5NNXVQa29kVFFhaUEyVEJhTVNvZFJmRERVaE50aDdFdWZq?=
+ =?utf-8?B?QlFDUWtpb0xoLzlheGdaVHMzSkxnVUtpbG1mYkE0QkEyN1QvZ0NycjJKMmtJ?=
+ =?utf-8?B?Z0VzWjlSZ3g4NGNCZ0dYMDBFMUNXbzVBbW1LVElSRTBBOU90WGVDbFYzRHcx?=
+ =?utf-8?B?cFNlamdobjdBMWo0VmZCVmw5Tk1YUXJOazhqWEQzckV1bi9UZ0NiSWtZTzU4?=
+ =?utf-8?B?cEcxcTkxcXRpQlVra1hHcDlEL3RWdmlaV0trbUdUYjcvUkxQeHpZbzlGMXI2?=
+ =?utf-8?B?aFlWbVlpQTNnMkZBZDZtYkNoc29JTVZTUTF5MDBQTFd6U1VqYnlCaHozRzFz?=
+ =?utf-8?B?OXIyaEtJK0ZMTDRyZzBNQmhEOFBHSmJFRXRlU3dFUHdvSVpXVWhzL3h0aXg1?=
+ =?utf-8?B?R0lkanpKWVZwc2E2cEFYcWJhTGNpY01FNVk2WDhpYmdhV1VUUWNybHd3WWlt?=
+ =?utf-8?B?L3dLWDJaOW95ZFNPZG0zSS9XMVo3MGIxalAvV2NRZ3Ayb2NiNkhxbTFrVjF0?=
+ =?utf-8?B?MkJHTlUyNy9Pako2RkJabjNOb0kxS2pwRktlZkZ2YWhVN2tvYjVGL3ZodlNy?=
+ =?utf-8?B?Vm9XalIwZHlCSXBoMXFXSGN1MlVjNmdXNzIrdENKQ3RqK21zbVFXMzdDRXdp?=
+ =?utf-8?B?Rkt3NklvM0xYNVJ2eUVFN05xOGY1eUFmbU1pTDFOQVRDaGgyTGkwRDVhUGFR?=
+ =?utf-8?B?TEowM0YyKzFNRXNzdWcrZWZLOXQ3WGN2Tzl1SnNCN2FTcHI0Y1UxWWtwQ1JR?=
+ =?utf-8?B?U0IvOGtUU21XUU8zM2NZRjBZdHkyd2p6Mk05d2RNMEp1TTR2KzF2bVFpNXlX?=
+ =?utf-8?B?eVJhZUZuVHg2Umphb2s1WUpQbm1tdlBuRFhBV2tqeEIyMGZ6WFpXcFNvRUJV?=
+ =?utf-8?B?Tlo4Qjl4K0ZETXlsd3dFSjl5azJndURhQ1p4dWFnSm9zV0g1NHA3bmVVRDBz?=
+ =?utf-8?B?ejk3U1FOQmwxZXQ3R3V6ZGt2N2NqZk1KVkhzaWRMSG5yTTlqN2hWOGxkN3BR?=
+ =?utf-8?B?VTZiaHlYbDFKZ3NlZW9SSWVYL1NJRy9NOEZtNytmWnZJRFN5SjltQTNiRkUw?=
+ =?utf-8?B?NUUxdUNsNUluVkdLMldkemRxYXlYTkRuOHZrNUF6Y2NVVVBWVEEvRXpnMGtJ?=
+ =?utf-8?B?cFBYa0JEU0hqZGNuOEdOT1BJUzAvckxXb1J3Rk9keWtUYlNlRTNjM0p1UzBa?=
+ =?utf-8?B?bzFjTHo1eFZRYmwvT21ja25BaFgvOUtqT3NqbXJDVmtaNEw2UW5MQm5BVW1a?=
+ =?utf-8?B?Mks5Z01qYklsbFFwQy9lWDFNV2MrdHZaamlvYkVuTi9HYXREbDB4eEUwVE0x?=
+ =?utf-8?B?OGQ4Y2NrRnBFRnFXd0JQZWFQNHZ5Y1E2UTQwZGRDNXNlOVJDQjJiV0h2OUtw?=
+ =?utf-8?B?K1Y4Q0ZEMk1Xb2QvdlZZSFJQN2QrQUtEeUlJWERCV2VqZUhxUXJmWEFKTzlN?=
+ =?utf-8?B?N0M4b1JsYmFIWXdib2M1dzh6QzNVYUhKOXFWbGM4Z0Jxdm41N1FSNEdVSWcz?=
+ =?utf-8?B?U1FvSEVIRkV0RmhENFQ4MUs3UHNqT2ZTRi9ZeHZsNUxTR3VpVjJzRE5WdkFB?=
+ =?utf-8?Q?9zr0BrnmOEDhzTe1K85h0SddD?=
 X-OriginatorOrg: roku.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6b7ea182-6947-4b58-dc3d-08de3d8851e4
+X-MS-Exchange-CrossTenant-Network-Message-Id: 90abbb93-49b9-4e40-4374-08de3d885333
 X-MS-Exchange-CrossTenant-AuthSource: SJ2PR01MB8282.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Dec 2025 16:21:23.5005
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Dec 2025 16:21:25.8280
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 00fc7e42-ad65-4c4c-ab54-848ba124a5b7
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: uSZeZdW8W09hEO5kR6eq5JdDMVlR3+j/0BwNZMCZJ/yWkGIdGwCDcqXv0mpm33ZqT7w+ZjwokP/ODvAGdc7oEw==
+X-MS-Exchange-CrossTenant-UserPrincipalName: e8yfx0V58YyVmlcFHi2WzUl0jfWzljQ8rDAy/s+A1W/rR4osBRHzHWJ6VdBPX7ZRPa8y7mhAfTFVytIwN2JRow==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR01MB7091
 
-This series addresses issues with how Bluetooth BR/EDR connections handle
-idle timeouts (entering Sniff mode) and exposes the timeout value to
-userspace: 
+hci_conn_enter_active_mode() uses queue_delayed_work() with the
+intention that the work will run after the given timeout. However,
+queue_delayed_work() does nothing if the work is already queued, so
+depending on the link policy we may end up putting the connection
+into idle mode every hdev->idle_timeout ms.
 
-1. Ensure the active mode timeout is correctly updated using
-   mod_delayed_work(), preventing the timer from being ignored if
-   already queued.
-2. Apply the link policy to incoming ACL connections (previously only
-   applied to outgoing), ensuring incoming connections can also enter
-   idle modes.
-3. Add idle_timeout to the configurable system parameters in the
-   Management interface. This allows userspace to control when the
-   Sniff mode is triggered, complementing the existing ability to
-   control the Sniff parameters themselves.
+Use mod_delayed_work() instead so the work is queued if not already
+queued, and the timeout is updated otherwise.
 
-Changes in v2:
- - Fix type of parameter code in TLV
+Signed-off-by: Stefan Sørensen <ssorensen@roku.com>
+---
+ net/bluetooth/hci_conn.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Stefan Sørensen (3):
-  Bluetooth: hci_conn: use mod_delayed_work for active mode timeout
-  Bluetooth: hci_conn: Set link_policy on incoming ACL connections
-  Bluetooth: mgmt: Add idle_timeout to configurable system parameters
-
- net/bluetooth/hci_conn.c    |  3 ++-
- net/bluetooth/hci_sync.c    |  2 --
- net/bluetooth/mgmt_config.c | 21 +++++++++++++++++++++
- 3 files changed, 23 insertions(+), 3 deletions(-)
-
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index 5a4374ccf8e84..837038b5c5681 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -2619,7 +2619,7 @@ void hci_conn_enter_active_mode(struct hci_conn *conn, __u8 force_active)
+ 
+ timer:
+ 	if (hdev->idle_timeout > 0)
+-		queue_delayed_work(hdev->workqueue, &conn->idle_work,
++		mod_delayed_work(hdev->workqueue, &conn->idle_work,
+ 				   msecs_to_jiffies(hdev->idle_timeout));
+ }
+ 
 -- 
 2.52.0
 
