@@ -1,101 +1,112 @@
-Return-Path: <linux-bluetooth+bounces-17536-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-17538-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A539CD0453
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 19 Dec 2025 15:31:49 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1AB97CD055B
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 19 Dec 2025 15:43:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 42BA6305D410
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 19 Dec 2025 14:29:13 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 506BC305D410
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 19 Dec 2025 14:38:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF3D532ABC6;
-	Fri, 19 Dec 2025 14:29:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F5581F03DE;
+	Fri, 19 Dec 2025 14:38:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="pxwuSV3O"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="c88tlIfh"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from out-24.smtp.github.com (out-24.smtp.github.com [192.30.252.207])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A6561E1E04
-	for <linux-bluetooth@vger.kernel.org>; Fri, 19 Dec 2025 14:29:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE1B263F2D
+	for <linux-bluetooth@vger.kernel.org>; Fri, 19 Dec 2025 14:38:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.207
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766154551; cv=none; b=eUOuHojcZDvQMJx9GbcOXNJgpMIW/IN7e8ci6vpJgMq2m7qBiY26iDso1l0MgcQfEQBsD3SVhzSQ/V9G/+/2ZyVFThOjoASNeqeKs+aceh27xFlGivGDsysGTNWWlCKlqrp55Xi/kR5UFjRAzy6NFzj5YhJxzGxkovuXS25LqmE=
+	t=1766155081; cv=none; b=ODzVGXo9jSwPjeBp42dtmclMN6iq1xTqvRw7KyINa+I4cP8ZPMSTqhxIsqovWATiKUCS6cWThzVC7U2kJTFFY9z5MIWQf4urIyLDSCqwnvBSfZbo0ftToB0GdNmz1ZiW1cs3VUY6AqwFaiJkz1g2VromdZLBWynxF96W58ny+0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766154551; c=relaxed/simple;
-	bh=/gyPFoUoLyYFE1ySA6I8l+lJiBo9cgY2O/YeF+HBzkE=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Acg99XLxuukLXJ73MNRkaqF5VEgw1I+l33D0uwhGIO2lh++yXWarqmUepJBl+X5Ff+80LXM3TjiwJtn8CNWzx7xsVcHTEsCWU/XetPhdEa5jqNXASOzGAb4XK/1edjjhRcr2FPMsv2+cUT25qiof7PDpdOpqi/Heij8BguTzZuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=pxwuSV3O; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1766154547;
-	bh=/gyPFoUoLyYFE1ySA6I8l+lJiBo9cgY2O/YeF+HBzkE=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=pxwuSV3O1LkZmwjdjgCt0OJcIkdbNNTOWBMOgY+rjF7d6euXT00h6d+GitBcw0T0h
-	 PzGGbdXbhx2a5JfokhM3tzj6zk0g5BUpvYVzZtfNwE8pipC57eSb940RQcfpc6cyVR
-	 YD+Wz8znqkBnSdzRdC6cVAxCqLZRIm17rczpgSt+/yS3EUIIw+vrNIMuAS5KQI8K/4
-	 HvldsKUMZp2ONEqQIPxb1hSG/wYyePOF59hXgfIvykuRgM5PJBvnGx+BkBmAvBQqya
-	 UCSLGIwQPjot/F7tLCJxvl86inTCNMd36DMsXE0PzQLnPxlobmRNpfsSRn7OI8n8qC
-	 F5A7VUmU+2YEg==
-Received: from fdanis-ThinkPad-X1.. (2A02-8428-Af44-1001-2e1C-31AC-4A84-8c5a.rev.sfr.net [IPv6:2a02:8428:af44:1001:2e1c:31ac:4a84:8c5a])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: fdanis)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 79CFC17E0465
-	for <linux-bluetooth@vger.kernel.org>; Fri, 19 Dec 2025 15:29:07 +0100 (CET)
-From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
+	s=arc-20240116; t=1766155081; c=relaxed/simple;
+	bh=jPrshL8qnlNWjzCdCUg3VC6CSuDWETBQpAgiAi/R4+A=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=FEzHdTXHWxpX0prWsEW3jIulerq7XmLmrwR9Sh/53bccmdTUKUbgvBuWb9GM0YduOejTT/jlM0QWUWU7E8tULpLPjzuGN3feDQic+3PxW1kfkuzkTTXGGeJErfLx2NG66Ys1oDzmaHXyEs/fHQmYc6gX8F3VfLmgnmi4mFrJ8tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=c88tlIfh; arc=none smtp.client-ip=192.30.252.207
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
+Received: from github.com (hubbernetes-node-e3fa9e0.ac4-iad.github.net [10.52.166.22])
+	by smtp.github.com (Postfix) with ESMTPA id 9476D640979
+	for <linux-bluetooth@vger.kernel.org>; Fri, 19 Dec 2025 06:37:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+	s=pf2023; t=1766155079;
+	bh=M90CiyDgb1XWaLcXW3d8cZwn4JW+N2s5rR9VcZlOsM4=;
+	h=Date:From:To:Subject:List-Unsubscribe:From;
+	b=c88tlIfh/dYLcwlPc02MUkw/HVNTVQx45lxbeFfwD8J7xK0QyMCZrTBHyIAcKbsN+
+	 2OqT0odbMNGzV0dWfmKCulSRpKBlyrvdjbJgpVo+s4xrygTk754kq2KUtiRrSsSs3r
+	 0bUsL4eemDewavoHFICuyWq+N1DUzqpWz2T0/ymU=
+Date: Fri, 19 Dec 2025 06:37:59 -0800
+From: fdanis-oss <noreply@github.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v2 3/3] audio/hfp-hf: Add in-band ringtone flag support
-Date: Fri, 19 Dec 2025 15:29:02 +0100
-Message-ID: <20251219142902.559714-3-frederic.danis@collabora.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251219142902.559714-1-frederic.danis@collabora.com>
-References: <20251219142902.559714-1-frederic.danis@collabora.com>
+Message-ID: <bluez/bluez/push/refs/heads/1035059/000000-ad7749@github.com>
+Subject: [bluez/bluez] c5ef28: audio/hfp-hf: Add Operator name support
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
+
+  Branch: refs/heads/1035059
+  Home:   https://github.com/bluez/bluez
+  Commit: c5ef284c44ab31598e1ab862e3685057ebfdee81
+      https://github.com/bluez/bluez/commit/c5ef284c44ab31598e1ab862e3685=
+057ebfdee81
+  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
+  Date:   2025-12-19 (Fri, 19 Dec 2025)
+
+  Changed paths:
+    M profiles/audio/hfp-hf.c
+
+  Log Message:
+  -----------
+  audio/hfp-hf: Add Operator name support
+
+
+  Commit: a8c403f5833b4d5f3be17bc37a7cedebe8348196
+      https://github.com/bluez/bluez/commit/a8c403f5833b4d5f3be17bc37a7ce=
+debe8348196
+  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
+  Date:   2025-12-19 (Fri, 19 Dec 2025)
+
+  Changed paths:
+    M profiles/audio/hfp-hf.c
+
+  Log Message:
+  -----------
+  audio/hfp-hf: Add simple call support
+
+This allows to dial, hang-up, answer or reject a call.
+
+
+  Commit: ad77493dd3fac10d1738a6e5c6969a464718016b
+      https://github.com/bluez/bluez/commit/ad77493dd3fac10d1738a6e5c6969=
+a464718016b
+  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
+  Date:   2025-12-19 (Fri, 19 Dec 2025)
+
+  Changed paths:
+    M profiles/audio/hfp-hf.c
+
+  Log Message:
+  -----------
+  audio/hfp-hf: Add in-band ringtone flag support
 
 This flags is set by remote phone when it wants to play the ringtone
 through the audio channel.
----
- profiles/audio/hfp-hf.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
 
-diff --git a/profiles/audio/hfp-hf.c b/profiles/audio/hfp-hf.c
-index a3263c018..ca40c46d0 100644
---- a/profiles/audio/hfp-hf.c
-+++ b/profiles/audio/hfp-hf.c
-@@ -138,6 +138,13 @@ static void hfp_hf_update_indicator(enum hfp_indicator indicator, uint32_t val,
- 	}
- }
- 
-+static void hfp_hf_update_inband_ring(bool enabled, void *user_data)
-+{
-+	struct hfp_device *dev = user_data;
-+
-+	telephony_set_inband_ringtone(dev->telephony, enabled);
-+}
-+
- static void hfp_hf_update_operator(const char *operator_name, void *user_data)
- {
- 	struct hfp_device *dev = user_data;
-@@ -230,6 +237,7 @@ static struct hfp_hf_callbacks hf_session_callbacks = {
- 	.session_ready = hfp_hf_session_ready_cb,
- 	.update_indicator = hfp_hf_update_indicator,
- 	.update_operator = hfp_hf_update_operator,
-+	.update_inband_ring = hfp_hf_update_inband_ring,
- 	.call_added = hfp_hf_call_added,
- 	.call_removed = hfp_hf_call_removed,
- 	.call_status_updated = hfp_hf_call_status_updated,
--- 
-2.43.0
 
+Compare: https://github.com/bluez/bluez/compare/c5ef284c44ab%5E...ad77493=
+dd3fa
+
+To unsubscribe from these emails, change your notification settings at ht=
+tps://github.com/bluez/bluez/settings/notifications
 
