@@ -1,93 +1,95 @@
-Return-Path: <linux-bluetooth+bounces-17620-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-17621-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52176CDC908
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Dec 2025 15:48:16 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A32ECDC95F
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Dec 2025 15:52:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 3E3C53025A71
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Dec 2025 14:48:12 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 0A6DC303CAA3
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 24 Dec 2025 14:50:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B89A35295A;
-	Wed, 24 Dec 2025 14:45:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BDA63587A8;
+	Wed, 24 Dec 2025 14:48:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="NLapyBHn"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="A/lRyNzm"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from out-18.smtp.github.com (out-18.smtp.github.com [192.30.252.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA5335502F
-	for <linux-bluetooth@vger.kernel.org>; Wed, 24 Dec 2025 14:45:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 477D334D3AC
+	for <linux-bluetooth@vger.kernel.org>; Wed, 24 Dec 2025 14:48:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766587555; cv=none; b=ZYPeAsvpDHQ1tjvLv2wX3IINwMOnHQSfz0s0gSNUlXUiSNmL9xylU/xXsWPQY500PtHKypgHeEiTJQM4lURl8syRyD07oxBqhuwiM/SwxpSBvc47ioLYZaEQDOL1j0ySyMhcb3uEqpcGwGhpBe6xTuBgcbuelorEkoguotz/O0o=
+	t=1766587689; cv=none; b=d6IkpabqUEbZgeDUbWO/qn1pmA/Zk1E3wYkJ5im5fzYzjcLLiBvOxvPBsAAupwZekvDTNLU40O6A2i5AT/jFkJkQWaqEb1YPQTWnOycmv4j6cHErn/2sg66bQWsADY9T2XxWMHj/Lhu9BViAd7SA3G1xduqhARnaaOLOjkNVFHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766587555; c=relaxed/simple;
-	bh=HvH8H84GTAJ/8dMNofn1Dtgex9QQ+Z+avVSps60lnB0=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=E7Ml2o3ETWPDhzX5uHd1c/TE4uSQEXKmDJkp3rFcvNplVvzZncoMRsUhdESMGSj1mvXZH0vGxUeMuNvdz3+1k3zgCAzQqEe3+3NU1cQ+gSZ+c8C5a6u+bV4r+XC7BaICnLPrt4aeynnStrbZ+7oy2233jLYhbQ+Dz4zRebXiUw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=NLapyBHn; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1766587551;
-	bh=HvH8H84GTAJ/8dMNofn1Dtgex9QQ+Z+avVSps60lnB0=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=NLapyBHngII6sNiisPer+c7zZvMy347pYo1udMSHQ6AL393+XAxYAQP2easrqnv6j
-	 4nf1aVFtcbiQNz1bukDgoVq+ZjFUftyC9e3SFZU4R2ly9qrs0z9Q7DzqJ0rDDF7GFN
-	 AN/ExcIlSaoCCIz3/xN/PZc4u0JhL/rvRHlqcSxHTTaWW1au3pQQfzn8LvjXVeqdBt
-	 sfOWITwYisDKdmxHnDi9+hb86QkjegAOuiFJt7d46XioYzOFomadeaad7lPFNKd+6w
-	 R2/0EbQc9pfnnw5sgCIqC6ZNSt7BDPE5+s30aiR87qjDQxbhz7qXlMSrU9l3WGpFTm
-	 3NSIiOhdVgOkg==
-Received: from fdanis-ThinkPad-X1.. (2A02-8428-aF44-1001-0593-56E9-3f4c-22E6.rev.sfr.net [IPv6:2a02:8428:af44:1001:593:56e9:3f4c:22e6])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: fdanis)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 794BA17E0463
-	for <linux-bluetooth@vger.kernel.org>; Wed, 24 Dec 2025 15:45:51 +0100 (CET)
-From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
+	s=arc-20240116; t=1766587689; c=relaxed/simple;
+	bh=lwZ6FjF+9ALdeB7hWGC1nNGOeLbBiuMjOISfrOu+iQw=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=DCtCjVc5Bm+KALgbSsLfhPr+4J3Ohrayug+3xVHOEwLdb13eotdoX44+kdO2nEhtlcIPKKIAQ9GHlkxyJxBoT9HVCU4iyAKnvXL8HxUHD89A8BPMmePMlZ7MjM65Y3JZxoVfKZjOuBipJNUTNxZUsmICuHfFL+jF9KCyO18LmWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=A/lRyNzm; arc=none smtp.client-ip=192.30.252.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
+Received: from github.com (hubbernetes-node-fd43568.va3-iad.github.net [10.48.204.73])
+	by smtp.github.com (Postfix) with ESMTPA id 668D9E0513
+	for <linux-bluetooth@vger.kernel.org>; Wed, 24 Dec 2025 06:48:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+	s=pf2023; t=1766587687;
+	bh=70+//1Df3NVL7Al8SDpH7bLdTnZ67ApJIX4Lw6oGqRA=;
+	h=Date:From:To:Subject:List-Unsubscribe:From;
+	b=A/lRyNzmbwjW3zqQ4dNb02nZMfnEaWi+Ki3pbzcceR8835u6X19pQO7b95bf356s3
+	 5P1Ad73JZKipjBLuVWNBawNXhoXL7np/ar69BDxWRDOvdclS0RopW2U4GhKGN8Z0rW
+	 +6FMVYAYoh4K9jVHA3igfbWhKsnV1OWhXPgY9x4k=
+Date: Wed, 24 Dec 2025 06:48:07 -0800
+From: fdanis-oss <noreply@github.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ 2/2] audio/hfp-hf: Update multiparty status on call creation
-Date: Wed, 24 Dec 2025 15:45:45 +0100
-Message-ID: <20251224144545.211533-2-frederic.danis@collabora.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251224144545.211533-1-frederic.danis@collabora.com>
-References: <20251224144545.211533-1-frederic.danis@collabora.com>
+Message-ID: <bluez/bluez/push/refs/heads/1036434/000000-21a817@github.com>
+Subject: [bluez/bluez] b6fc31: shared/hfp: Add function to get multiparty call
+ st...
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
 
----
- profiles/audio/hfp-hf.c | 3 +++
- 1 file changed, 3 insertions(+)
+  Branch: refs/heads/1036434
+  Home:   https://github.com/bluez/bluez
+  Commit: b6fc31421f576ecf78b762b539f78d103266f459
+      https://github.com/bluez/bluez/commit/b6fc31421f576ecf78b762b539f78=
+d103266f459
+  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
+  Date:   2025-12-24 (Wed, 24 Dec 2025)
 
-diff --git a/profiles/audio/hfp-hf.c b/profiles/audio/hfp-hf.c
-index ca40c46d0..c91b16426 100644
---- a/profiles/audio/hfp-hf.c
-+++ b/profiles/audio/hfp-hf.c
-@@ -158,12 +158,15 @@ static void hfp_hf_call_added(uint id, enum hfp_call_status status,
- 	struct hfp_device *dev = user_data;
- 	struct call *call;
- 	const char *number;
-+	bool mpty;
- 
- 	call = telephony_new_call(dev->telephony, id,
- 					hfp_call_status_to_call_state(status),
- 					NULL);
- 	if ((number = hfp_hf_call_get_number(dev->hf, id)) != NULL)
- 		call->line_id = g_strdup(number);
-+	if (hfp_hf_call_get_multiparty(dev->hf, id, &mpty))
-+		call->multiparty = mpty;
- 	if (telephony_call_register_interface(call)) {
- 		telephony_free_call(call);
- 		return;
--- 
-2.43.0
+  Changed paths:
+    M src/shared/hfp.c
+    M src/shared/hfp.h
 
+  Log Message:
+  -----------
+  shared/hfp: Add function to get multiparty call status
+
+
+  Commit: 21a81713265b389a141207aa5e8cf40b234e811e
+      https://github.com/bluez/bluez/commit/21a81713265b389a141207aa5e8cf=
+40b234e811e
+  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
+  Date:   2025-12-24 (Wed, 24 Dec 2025)
+
+  Changed paths:
+    M profiles/audio/hfp-hf.c
+
+  Log Message:
+  -----------
+  audio/hfp-hf: Update multiparty status on call creation
+
+
+Compare: https://github.com/bluez/bluez/compare/b6fc31421f57%5E...21a8171=
+3265b
+
+To unsubscribe from these emails, change your notification settings at ht=
+tps://github.com/bluez/bluez/settings/notifications
 
