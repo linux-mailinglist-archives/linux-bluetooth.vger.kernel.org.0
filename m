@@ -1,116 +1,148 @@
-Return-Path: <linux-bluetooth+bounces-17677-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-17679-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B784CEAFC8
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 31 Dec 2025 02:16:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 129BACEB800
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 31 Dec 2025 08:59:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id BC7DF301CE9C
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 31 Dec 2025 01:16:08 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 8015230433F6
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 31 Dec 2025 07:58:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C8C47080D;
-	Wed, 31 Dec 2025 01:16:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D53AB311C10;
+	Wed, 31 Dec 2025 07:58:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TbhP6TR7"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KmPrJFz/"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-pl1-f196.google.com (mail-pl1-f196.google.com [209.85.214.196])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A42C139D
-	for <linux-bluetooth@vger.kernel.org>; Wed, 31 Dec 2025 01:16:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC0931158A;
+	Wed, 31 Dec 2025 07:58:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767143766; cv=none; b=tXikorRU4FX+qCDfRD/OizXIv6GKPAifzvY1XJwMQF+Y1t67fgL9T2UD8aE5Wk9GPIMT2dhZAKL2oznjsK3isZCZNrzTaLYbRjNVuWfLBcRSRcj6BW/f+zrrm8Bg80vCKsdVkuggc00eXP/0oNmfqUhx/MFCajGCnRTjsmeUx2Y=
+	t=1767167921; cv=none; b=uZawrst8cDYzIUsZmiL34UKo+J33q6VVsZSIRi6PhA6iRpheHuV4dX6opmLaH3rrXLOt4meZBZ7yxqRVaT6lxHTP7bQJLZEc4KX5HwwZBJOSOh4f2Qho4Wrxdx+HCtRPm6h0ki3oaQFbZjfdX7h8w+S8GwXVGOvoQ2oPSKiiLaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767143766; c=relaxed/simple;
-	bh=6PktqEC7NSOC201Jpjuo5HRRLk2Y/2juxtfF76dAhD8=;
-	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
-	 In-Reply-To:References; b=XujCx+O66ZZ0TZ8DuULSO72o2V7BZgIp7eOZLFqmSYprmeFUfIAwiX8LGFc8vBgGkvRQxC1L+c1w0IyEMDGhduHzObWWJjPTns3ohShcHOlPDhOdQ8VOr8FCz/FQ9LbBaMk3w3te6bt+uHtbBjvood4USqGJbD4lOQRGAaGxras=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TbhP6TR7; arc=none smtp.client-ip=209.85.214.196
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f196.google.com with SMTP id d9443c01a7336-2a0833b5aeeso142268235ad.1
-        for <linux-bluetooth@vger.kernel.org>; Tue, 30 Dec 2025 17:16:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767143764; x=1767748564; darn=vger.kernel.org;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=6PktqEC7NSOC201Jpjuo5HRRLk2Y/2juxtfF76dAhD8=;
-        b=TbhP6TR7P3hqIK8DKmiXQcCoFbhUD0oqq9EpSTeI8c3/sgRIW//AMRx8V70jVkrgVc
-         5pLkjAkMrhCnIveUvQ5kwJBiKvrzzKHDZ9r31du+wneVt0F/AEgq3o6u7dapkWXXbfuH
-         FPmCDUvQhprJ+KYWgHDa74hHsaEj/uwFaXYxqtnIybDBsaHRzy7kXZ+jKGQ7rS97tyhZ
-         /J/NVWJ/bftkZeranggKw0t6bvA4+dDSlGhVKVL4Yilpr2Pag9JlLsmnLf6rGegbIPMc
-         v83Co0JljSXGB9D8aEvRGWM7xZWBKKDCryTKNdJvUcF3eQsoa2gdgWdo674GRxGLpZMf
-         wJtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767143764; x=1767748564;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6PktqEC7NSOC201Jpjuo5HRRLk2Y/2juxtfF76dAhD8=;
-        b=PpW4s568p+rXF5acprbrbbTzEGrmbf/W+led44qfbOAyPqmACHCnQs4VYcVfMnVejH
-         uiTBxhK1Jh5wBjbjHDYPJP4J+3bIGA3PyL3ymMDN9ToA1O2PsJ1AsEAU2o80oJ4bdopH
-         Y5lgtlivF8vJLtJrJhjjB5E1ilKCBpFj1RsMkqm5NxpBtT8rrFNKd+DrHRW5iWF/3XVp
-         1PfjMYAIk8fLJ09UXHeLOpo1XaUReKhJBgP2Ee9/lrhAof1b5jAoH/8w3cIMGw9aEgFo
-         H6qOObaNtiRxg4zs+EY73yKqivEh77SXfYnrPs8U53v6BR7vYcOaOnPpOURl1tkVa8Fg
-         WwaA==
-X-Gm-Message-State: AOJu0YzfCwQhMNNhSgAgi+S1c6UYxSDk3Onh0k69g64e6Mb0vifSfA98
-	gHCYsMpiwHGhLYCn1L9yyy1Qak8F1h7Z8a+lGyPA4/d5JSBPjHImcBSPGGg07G8X
-X-Gm-Gg: AY/fxX5ti3e5p8RyomtqsSTexvhAkkSbAxQwxQHybSynMEzzBsAoPDvxiDscCtdw5bd
-	A+e1DT7Jjm5fT4bKFHIBTbdUW+YDIjqZHwJdW2Hk4Eoln61wzNwqDplAVI9wzHGQ4c6flAlX/Yy
-	YIUBWyHZd+UTNa1KlUPyts+tNYwQObI7lYf+HxwsMHxTsaXlkAWfzUnR8KswUVkUPVFpihxhGtD
-	qHK1jZthlYYheyKQLfFEoNulHJq+enWALoqeOKsC4whunJd7Gz6YBDIl043DzzxR83w9z+qH7mp
-	EQI7+elzqKrDN972bxRuroUQ9UtFHac6oloXecCRxbyooD2+XQdobizEHkCxL311g1T8l7lzD5G
-	6N6Cmk9+wkpu2EyUA15UyUfRvM/PLFgg6JSUPuVOcU787ax8m3prltdhf44R+A+R/dWxXNSMUqV
-	2P8RRbDxJiuyU3NcMBjA==
-X-Google-Smtp-Source: AGHT+IHI79IS/ssqboNqG7yGqpwWnmP9kFs7hSyr4HSYd3SQ3/yh8YbVwolGFJjp8RJw2VUFWsnFgg==
-X-Received: by 2002:a05:7022:7e8e:b0:11a:c387:1357 with SMTP id a92af1059eb24-121722ac203mr31413077c88.16.1767143764260;
-        Tue, 30 Dec 2025 17:16:04 -0800 (PST)
-Received: from [172.17.0.2] ([172.184.211.35])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1217243bbe3sm139145252c88.0.2025.12.30.17.16.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Dec 2025 17:16:03 -0800 (PST)
-Message-ID: <69547953.050a0220.d1924.58cd@mx.google.com>
-Date: Tue, 30 Dec 2025 17:16:03 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============8429792558584745830=="
+	s=arc-20240116; t=1767167921; c=relaxed/simple;
+	bh=CVvpF6z0r+yOa4cVP6ihF2+GaNV0HiUxkHipTyvUnCU=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=hrYKR+w4u/ZWUZ079RmlQV+x/ma4hOK9Z7icJ19uvyxBRvbxw4sAjgamEKCvu9ZJNbi41bdd0wSNX3wHxhfX6+6mJ9VVUG+wIRjD3ky9YiHrRapzm+XbyboSo1mdE8BqofzZK7qE+sDoerPMxuvTxjg5Wx+6eeO74z4fRDPevSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KmPrJFz/; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BV4pAR81430889;
+	Wed, 31 Dec 2025 07:58:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=bjQomBQ49ENAkWYecE10FPvpLPoFK/fSdhq
+	q7xhzk9U=; b=KmPrJFz/Mk5mXRTnUrzzyBPxpJhMOciyZi5rJGqbWUfgf4W+Lra
+	jJxPrE6XlDs9aJ5/KPB8UdneAMpdpnZX6XRjCCAb8BBbFVgrGXoMIO+4G0hZFW3X
+	TB/pcgLRmKvXB0E5ev+/EQYjZJKLFvaT04NtEXyVPq+XykokWpI2TarQvMTOXH2g
+	vAOhSOixuaKpwU9sy0JiC4m5AyEWmkwmKHRiMnDNFamgi3CSO0EfefRLGyx8trHW
+	GVUQOmXQMi4bqStZEkPrwFhwMEOpEHiR+rxUBOaE1646XsfGNJRxjYe1Tda/jjqS
+	bOZEqMwKc7bdmp/ml92/kYYoT2qBFaBr6gw==
+Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bcw5e0aam-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 31 Dec 2025 07:58:31 +0000 (GMT)
+Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+	by APTAIPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 5BV7wTDb023886;
+	Wed, 31 Dec 2025 07:58:29 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 4ba8hm6q0k-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 31 Dec 2025 07:58:29 +0000
+Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5BV7wTHE023867;
+	Wed, 31 Dec 2025 07:58:29 GMT
+Received: from bt-iot-sh02-lnx.ap.qualcomm.com (smtphost-taiwan.qualcomm.com [10.249.136.33])
+	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 5BV7wS55023862
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 31 Dec 2025 07:58:29 +0000
+Received: by bt-iot-sh02-lnx.ap.qualcomm.com (Postfix, from userid 4467449)
+	id 1AB0523490; Wed, 31 Dec 2025 15:58:28 +0800 (CST)
+From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+To: Bartosz Golaszewski <brgl@kernel.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-kernel@vger.kernel.org, cheng.jiang@oss.qualcomm.com,
+        quic_chezhou@quicinc.com, wei.deng@oss.qualcomm.com,
+        jinwang.li@oss.qualcomm.com, mengshi.wu@oss.qualcomm.com,
+        shuai.zhang@oss.qualcomm.com
+Subject: [PATCH v5 0/2] Bluetooth: btqca: move WCN7850 WA and add WCN6855 firmware priority selection feature
+Date: Wed, 31 Dec 2025 15:58:15 +0800
+Message-Id: <20251231075817.2611848-1-shuai.zhang@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: bluez.test.bot@gmail.com
-To: linux-bluetooth@vger.kernel.org, dmitry.baryshkov@oss.qualcomm.com
-Subject: RE: power: sequencing: extend WCN driver to support WCN399x device
-In-Reply-To: <20251231-wcn3990-pwrctl-v1-1-1ff4d6028ad5@oss.qualcomm.com>
-References: <20251231-wcn3990-pwrctl-v1-1-1ff4d6028ad5@oss.qualcomm.com>
-Reply-To: linux-bluetooth@vger.kernel.org
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjMxMDA2NyBTYWx0ZWRfX+YcPriRhhHkf
+ DVqhZ6AMMVKPJaKea42WREdpUOaQ0PVXulg4wuL47VqN71lBoQ6OFoiAtpRFAowSrcILNLpKJ8p
+ uuzomLvfC536obbSLhKVlTu37a7oXCLGq4jYON8hWcZQUK/MpR1TwkDrWPO9INUfkK2FpSo4pPR
+ rSfAQk5uH0Kg32EniXAr0oPErsCaKpECA2R63FPQX+Z8DvfFz1j3cDkZPCBlR6/se3eM4Y+ZA7s
+ nBxrkpjPvEoa/wrJkdmYyy3c7+3By7DM7HTORgUwiri4T7IRKSdk5VSNYqgTsRtbUhtQgzFJ5JA
+ 16fp93x9PtGWW+vRHbOmPAfrJk81tiBoTAyV25Pe6QbXcr0Tf5D+kBdmamXs6djWed3Jv8MQM86
+ Fk2HoIVTDkdadKFZJMPUZr5eeC0G8WxJvTe1Tjy27fm+dAz9WHmSRjDrAhjnanHN/ERrkf7EpXI
+ FFhrcJp+QcvLNArRSXg==
+X-Proofpoint-GUID: GRAL127eBHiLDt6YLLdcC0CxPbc1fcCM
+X-Proofpoint-ORIG-GUID: GRAL127eBHiLDt6YLLdcC0CxPbc1fcCM
+X-Authority-Analysis: v=2.4 cv=Mdxhep/f c=1 sm=1 tr=0 ts=6954d7a7 cx=c_pps
+ a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=COk6AnOGAAAA:8 a=3rVLPgN0mCaywZWmVPYA:9 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-31_02,2025-12-31_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 adultscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0
+ phishscore=0 priorityscore=1501 bulkscore=0 suspectscore=0 clxscore=1011
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2512310067
 
---===============8429792558584745830==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+patch1: Move WCN7850 workaround to the caller
+patch2: Update WCN6855 firmware to use the new FW file and added a fallback mechanism.
 
-This is an automated email and please do not reply to this email.
+Changes v5
+- Separate move WCN7850 and add WCN6855 fw name commit.
+- remove WCN7850 unuseless condition.
+- Link to v4:
+  https://lore.kernel.org/all/20251226075621.3223336-1-shuai.zhang@oss.qualcomm.com/
 
-Dear Submitter,
+Changed v4:
+- move WCN7850 WA to the caller.
+  handle cases where the firmware cannot be found.
+- Link to v3
+  https://lore.kernel.org/all/20251117021645.712753-1-shuai.zhang@oss.qualcomm.com/
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-While preparing the CI tests, the patches you submitted couldn't be applied to the current HEAD of the repository.
+changed v3:
+- Remove CC satble
+- Update commit
+- add test steps and log
+- Link to v2
+  https://lore.kernel.org/all/20251114081751.3940541-2-shuai.zhang@oss.qualcomm.com/
 
------ Output -----
+Changes v2:
+- Add Fixes tag.
+- Add comments in the commit and code to explain the reason for the changes.
+- Link to v1
+  https://lore.kernel.org/all/20251112074638.1592864-1-quic_shuaz@quicinc.com/
 
-error: patch failed: arch/arm64/boot/dts/qcom/qrb2210-rb1.dts:235
-error: arch/arm64/boot/dts/qcom/qrb2210-rb1.dts: patch does not apply
-hint: Use 'git am --show-current-patch' to see the failed patch
+Shuai Zhang (2):
+  Bluetooth: btqca: move WCN7850 workaround to the caller
+  Bluetooth: btqca: Add WCN6855 firmware priority selection feature
 
-Please resolve the issue and submit the patches again.
+ drivers/bluetooth/btqca.c | 66 ++++++++++++++++++++++++---------------
+ 1 file changed, 41 insertions(+), 25 deletions(-)
 
+-- 
+2.34.1
 
----
-Regards,
-Linux Bluetooth
-
-
---===============8429792558584745830==--
 
