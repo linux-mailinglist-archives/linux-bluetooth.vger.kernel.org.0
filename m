@@ -1,223 +1,227 @@
-Return-Path: <linux-bluetooth+bounces-17718-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-17720-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id E88CACEF77B
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 03 Jan 2026 00:24:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 61144CF06B0
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 03 Jan 2026 23:14:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A5F26301BEB7
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  2 Jan 2026 23:24:31 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 21C2C301AD02
+	for <lists+linux-bluetooth@lfdr.de>; Sat,  3 Jan 2026 22:14:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4CB82D9488;
-	Fri,  2 Jan 2026 23:24:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A9202C21F4;
+	Sat,  3 Jan 2026 22:14:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pA+VyAur";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="FWFEjQc7"
+	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="HFAdAaJ3";
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="JU7BULXG"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [185.185.170.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7A7257827
-	for <linux-bluetooth@vger.kernel.org>; Fri,  2 Jan 2026 23:24:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767396269; cv=none; b=XJqaa82ZYZERed8JVjV+ZNq+sPCYrkNRTmquGWTA9SGyWvrPPIVc5Hw/CR4EfkSSrU3k7pibeQ+bR3OZDa3JnqW+7ZFM4o6euXuKHEbCdK2ZX4O9f1XUOMSLxpoIh55/CGuy3iv8wggVtb0afFL2V5RHReNAQl+8adg+C0Gj7/M=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767396269; c=relaxed/simple;
-	bh=ISZjvX6y5MMyPtGKT+WtnBq+hiWnMNABmNpydnT9t1M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NUF6oPLftfdQe9hXg8vztKVF+GCUNAZx+X3jltycmFCc4+DxxFunw1lJ9JoLTcr5Nc8AlhXZAbJWSZPBoBw3IsVkxcIZ2x5mWdlCbjuMRAvaZfYvX5HWnT04jSiJrokzCuAzzeHHp7f4eMpK75B4P08uISADOofqaRCtT7e/q88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pA+VyAur; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=FWFEjQc7; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6029Vx2T2310253
-	for <linux-bluetooth@vger.kernel.org>; Fri, 2 Jan 2026 23:24:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	T1GYY8vrtnmd/Fz+orMbcn6ybyOpEE1SHFFFCXiCQQs=; b=pA+VyAurGpIRBT0T
-	9ZvKhauE2ySokqZuRMqwYad7L7h/R0YE3D8Yd/5R2+JB4ovWl1gxeHSJiorTO3/7
-	wkAMF25Tp8eyo6lCOTqs31CAJ6cwDRhiNbstVHvLNzIPv7+N4It/dVLht02cXh6d
-	bIKoSMHZ2M656N03wNiawMths25ASABLwexazKVSh9h+BZ/MJiFpSaDsITDcwWiJ
-	dBUIbxF8wi7rUDo1vk8SIR36lUY5qTpMZ1ybCTAoR2pnKbXbY2ADM0LWPUNzzgIn
-	kQ93SuYdJlP1GxuSmcgcp3ncvWnqYqVsYkkMGgciBQct3VY5dKnEnv1Q60vwKo9e
-	h3dxpg==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bdsc9u4rw-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-bluetooth@vger.kernel.org>; Fri, 02 Jan 2026 23:24:26 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-88a3929171bso260835866d6.3
-        for <linux-bluetooth@vger.kernel.org>; Fri, 02 Jan 2026 15:24:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1767396265; x=1768001065; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=T1GYY8vrtnmd/Fz+orMbcn6ybyOpEE1SHFFFCXiCQQs=;
-        b=FWFEjQc74bHWTi6D4kOsu5x46+dUckxIBf1yn4oNT9KpnLuT4VYv84vNcNPOoeqqSC
-         WjDILsh5OQNcI92goceLhk4gWj9p3LS8GChdhkhj3kx25A+Qe6gP5Y1YRMOOlOH/v+kA
-         DpziuevprvNrUbSLkoy3iYzyk5bJSgJt5Cj8AWThXnV/MwwXW0Bbl9+1Djrd4KbhVhAB
-         8vYlV7oItM8DE8nLbcb1MeWrBe5i73We2zJtQdl9OY5KS26J9nTOQKLRHPyoq4/XjZ39
-         7YxAmnb3YL1s8hdkA+E7KxOowtL3LikWcTR5zv3rdqfLM8bp8YTtFn+iiIPC7Wmuxo8T
-         8qmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767396265; x=1768001065;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=T1GYY8vrtnmd/Fz+orMbcn6ybyOpEE1SHFFFCXiCQQs=;
-        b=YMJTaOuBpDwcI6ypZ4BuqcI/5AL3V0HakpoL8VX/08wiCiQn4qYW1FWzghUEJH7QJc
-         JOo0vcsTQhPI8l5pPa8NZ4D1CXodAHuQ+9WBi41HpfeTsnIw69PcHy1ZGY4lukuhTwbn
-         4tLgA1tHT6GzY/WApsGGecPlFGhrifgq+VKAsXIpwEm4YihjPyUv57fIBB7976jGsTFS
-         OCJDYraq0cnkHw7xuyDxHZaKC3f9Tt+RHLuoKZbIW+CPw0WgCft9bP+jvJ1UdQZYGO0n
-         fi1Ho7KcuaOTqA4nOc+p41T1rS5lCLeSZF49kBlR0TbpKoK+Z0fbiaD7fWBT2K4Lc4nu
-         UMDQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU88Yo4AAWSnzz+pKG8ragOoOMkakrA3QSqYyP1YHmIRiKvhXp933e1W0Dlk+VCzkpU5qN30RMA8gfhoIjxh90=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzR+8o4opVKwBc6S12BSJCyfM0cGG4fP5JnEbwc6h2+ipb0NURd
-	FWeuPZydlGgKxjDaKEmovWicerM3qZi85MwHDHSBXH0XuziFuazv9rqQJw4rNv6MHRtaKPwsZWY
-	mIZHgd/l0WnDR7ifwExXhI3RC8WA6HuD2opwJUDT6EnFby7KBOe/1+k+b1QGGvxasd6EKF1w=
-X-Gm-Gg: AY/fxX6egxoUpUw8uF3ev+tFo8ZylIEfipWOpZj4Hoj1QMu8xPX6hl2l3dyRVWSDIsb
-	BUp6MIPPDUyYilFC3Gxsm+ASyrwkEL3RvV55KHRBaKDNN42jyXpkxUOoyPoWlEbqUR3TZcprUyC
-	hHwRbavG40BoZuZyzvKBH4a5MOL6H2CPDn2ATDWmeiI1rSjQFbsvMquXV3g6N/Jccpgkj6xrJ/C
-	2uevrjQWpLtmbyBp2n26d0YU5n6WxIAyFu/Ww6qtXvAPLPOT9pafLVPH+PGIsq7GHWhZZrTtmqI
-	Ql0UR3a7P86TOtcIP/txwBSBzDFLVCK7jCothyJfL82VSxLsvJM82dONq4oMkQrexJtleRaDOpF
-	4GoW3YWpoDu11Y3gKXEJQ0LYUNZToipdu1Jvzmf661n7xzcJBdNWcYyD4Qiv/2XaBsz2+ohGBX/
-	9//dDs+cx+3NYppyFbNFPR45k=
-X-Received: by 2002:a05:6214:1ccf:b0:786:8f81:42f with SMTP id 6a1803df08f44-88d8369eac6mr675360036d6.39.1767396265424;
-        Fri, 02 Jan 2026 15:24:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEVK/WKrTkslH7Y0vfCHTFCAvovEzvlC0OyEeJ2yOG+2XWavrDxprlpJsUYJLZtTg1a4LzJzg==
-X-Received: by 2002:a05:6214:1ccf:b0:786:8f81:42f with SMTP id 6a1803df08f44-88d8369eac6mr675359666d6.39.1767396264962;
-        Fri, 02 Jan 2026 15:24:24 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59a186287e3sm12691524e87.97.2026.01.02.15.24.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Jan 2026 15:24:22 -0800 (PST)
-Date: Sat, 3 Jan 2026 01:24:19 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Bartosz Golaszewski <brgl@kernel.org>
-Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Jeff Johnson <jjohnson@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
-        Matthias Kaehlcke <mka@chromium.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, linux-wireless@vger.kernel.org,
-        ath10k@lists.infradead.org, linux-pm@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>
-Subject: Re: [PATCH 04/14] wifi: ath10k: snoc: support powering on the device
- via pwrseq
-Message-ID: <trdxottcptxd5uvgn63oaphemnsk6s2ujc3533abh6pm65iqpi@5ahtn56pff67>
-References: <20251231-wcn3990-pwrctl-v1-0-1ff4d6028ad5@oss.qualcomm.com>
- <20251231-wcn3990-pwrctl-v1-4-1ff4d6028ad5@oss.qualcomm.com>
- <CAMRc=Mey1ScNmosipLFg6mmABjeG2SO2L-pyjwTuOpOYOHZjqg@mail.gmail.com>
- <CAO9ioeU2JjzDwkGQzxc963kakNyZCtaSRAmLu=1kOAMGQeuZRQ@mail.gmail.com>
- <CAMRc=MdCxXg6Hbn_qPVsux2aAfN8cqpG946rS2Sb9J_Cjy0ZQg@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46DC12C11D4
+	for <linux-bluetooth@vger.kernel.org>; Sat,  3 Jan 2026 22:14:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=185.185.170.37
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1767478472; cv=pass; b=cHr5yd7qekRyIy6FmJQH4UUpHlSPBWPRGsYXZ4hn0BSzhzE6FKtMp02vOK8zrC+Wmlo19/WDW7gf42M7f+AHtcTlU4DscRIBWtLjTagteqq+9Xe/dHbFdfgjwcLHFNZZEX74e9mDqCq6XJasNUePNsnSaFlga06dxWtjZg07G+g=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1767478472; c=relaxed/simple;
+	bh=vKn0qqCQOCLGBbS15UAA50x1fczgVyFIJTTfi1/5AT0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=GKc6o7CNybl9Rq9VJH9hm7Uh4K3z04wbCvYQfPiYCoQFbyKu1ZAzZz/ggcpNrhcgma6w5SyH/2d/Z+omY1KAw8y9jOA95jhxpA2gZ8YdrVzzShLdx49Kpye7GhoYJ3SvLUlXYK4DVPABY+oLKMbuBfZ0FBt4kFEAoUWZJu3Q1aY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=HFAdAaJ3; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=JU7BULXG; arc=pass smtp.client-ip=185.185.170.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
+Received: from meesny.iki.fi (meesny.iki.fi [IPv6:2001:67c:2b0:1c1::201])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by lahtoruutu.iki.fi (Postfix) with ESMTPS id 4dkFGM21Wgz49Q3J
+	for <linux-bluetooth@vger.kernel.org>; Sun, 04 Jan 2026 00:14:19 +0200 (EET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
+	t=1767478459;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=82Nq/RyjHj8B5eBXdSPhDo5dtw0do9+CLAcujHAMtaQ=;
+	b=HFAdAaJ37SnZPaHyCX58zbQOnjF17oFP3pfZWe3RVLw0vtV1lAxvYuhQt/bE+Xk1cfx52N
+	Z6h27eDCONq64yfWQRXjq4yYG/mOgMiORh4nuLT2YmP2ykDR6jEr6rS9LsYqQYyX6Z9BYL
+	yDWGO65OQ/EEZRYLYFwvYSi9jRsESOgHq9r1tyHn2LJa0sSumUjhc9aSMsWsB5kOka4mbk
+	NppsL2v8QqthVQaaD1da1cwY8gBfz6CXlcKYjrrnsM6j1HwKOOvWMaNhmaqELYVavMZoS1
+	TMvYyiTC7aVZtgcMl2Vxh0McI+lxBoi8NTVN+79WLz4g/Uok4ckY+lzqfZu1aw==
+Received: from monolith.lan (unknown [IPv6:2a02:ed04:3581:3::d001])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: pav)
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4dkFG96g5vzyRd;
+	Sun, 04 Jan 2026 00:14:09 +0200 (EET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
+	t=1767478450;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=82Nq/RyjHj8B5eBXdSPhDo5dtw0do9+CLAcujHAMtaQ=;
+	b=JU7BULXGOCTo8ROGq8MsuDuO8Ic6pgBxK6pf2ZJN5RlQvX6iMQuHt3KPv/PbWI7Ep5Yk9f
+	nt2eDgbfKzFZ27KCT8uPlmwCckT+NKE5WcVPETRapfTTCBwxM5QS9O9m54BtA6/I476Ia9
+	kWYgT52tqDXO0eumvi/p4XcnVcd2VFE=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
+	s=meesny; t=1767478450;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=82Nq/RyjHj8B5eBXdSPhDo5dtw0do9+CLAcujHAMtaQ=;
+	b=r+B8/CxnFuv4ecy9xwV6f6LYtjV+V3w7I/QdOPPF1hrOZaiSL5hvC8Md6139v0No22em/k
+	tlhvp322r6rwrih9HyJRkaG/22Kv5TJrC3OrlMkfLkkGSKz4KGtdT3+UobNpVusIooRjm+
+	Qk6o1BH5eA8FKCf4W18esSwEYTD6BPM=
+ARC-Authentication-Results: i=1;
+	ORIGINATING;
+	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
+ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1767478450;
+	b=Oll+V4jww789yNfmenEZ84ECJvZQlyir4J12PMgU65qZ1XOckRsK47L+rKGycqbB7GmeIE
+	DtLWZYVMpugPoirZa50j2sAmPHUXOuGPy8gG7dxSMlQTtQJgJ5CoGvHEBUGdLcrBBTvIXX
+	kPVgcatDaGx40DxLizAx5cFxPN+kfTk=
+From: Pauli Virtanen <pav@iki.fi>
+To: linux-bluetooth@vger.kernel.org
+Cc: Pauli Virtanen <pav@iki.fi>
+Subject: [RESEND PATCH BlueZ 1/2] 6lowpan-tester: add test for header compression
+Date: Sun,  4 Jan 2026 00:14:06 +0200
+Message-ID: <d7f5c6978db76b58f9db1b6f93254d2f38c1e365.1767478380.git.pav@iki.fi>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMRc=MdCxXg6Hbn_qPVsux2aAfN8cqpG946rS2Sb9J_Cjy0ZQg@mail.gmail.com>
-X-Proofpoint-ORIG-GUID: pWR80GgUGM0HrxGScsiGjKsDZ-pa3xye
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTAyMDIxMSBTYWx0ZWRfX2iiXffc/KHgZ
- LTjFnzkd4h7DNA4+yFEMudr4GV0HDyG0YJ3QFYS11KY2zbk4xemYBnIzsXzqD9eGm+9HnYOO9UV
- Qs3lt2CTKbRct/niihw5+I3IHpoQA4pwHlSN4uyyh1JNX2HezwkG5Pe1Zi3rc3SpR6ASK2R4nsV
- JoJtSFze7Y/YgiIAoScaOFViMsOK2n5+O1LaPLNVRiEWHZvZIqr90eLYAbhE/hdRE14CIWOCxOA
- Y1KhadxyWGZ1EkNuIwXstLGnS+tu7Wx8+8GghhCUOvDIBq9NAd6IFKEmVOkM2DYvowT1DGXMB4d
- CL6heU9rnP8+oNHXcVP5yHhu9E1UUlV7JokOk8bXP+ET08jFwqLc3sA+5wJGsKJvm+Y8pZv8u+2
- Fj5VlsjOBB0s34SrvuLAXElSgj6Cg3aZ6dfL1lNDn+nCoyKVqRDiUSFr50iozDCseL0IMEsBCYb
- qqUH/1LXbSQD3bQ2Nng==
-X-Proofpoint-GUID: pWR80GgUGM0HrxGScsiGjKsDZ-pa3xye
-X-Authority-Analysis: v=2.4 cv=Hq972kTS c=1 sm=1 tr=0 ts=695853aa cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=S1boB9Fu75youA7A4nsA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2026-01-02_04,2025-12-31_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0 adultscore=0
- phishscore=0 priorityscore=1501 clxscore=1015 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2601020211
 
-On Fri, Jan 02, 2026 at 06:06:51PM +0100, Bartosz Golaszewski wrote:
-> On Fri, Jan 2, 2026 at 4:10 PM Dmitry Baryshkov
-> <dmitry.baryshkov@oss.qualcomm.com> wrote:
-> >
-> > On Fri, 2 Jan 2026 at 13:07, Bartosz Golaszewski <brgl@kernel.org> wrote:
-> > >
-> > > On Wed, Dec 31, 2025 at 12:36 AM Dmitry Baryshkov
-> > > <dmitry.baryshkov@oss.qualcomm.com> wrote:
-> > > >
-> > > > The WCN39xx family of WiFi/BT chips incorporates a simple PMU, spreading
-> > > > voltages over internal rails. Implement support for using powersequencer
-> > > > for this family of ATH10k devices in addition to using regulators.
-> > > >
-> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> > > > ---
-> > >
-> > > [snip]
-> > >
-> > > >
-> > > >  static void ath10k_snoc_wlan_disable(struct ath10k *ar)
-> > > > @@ -1762,7 +1779,27 @@ static int ath10k_snoc_probe(struct platform_device *pdev)
-> > > >                 goto err_release_resource;
-> > > >         }
-> > > >
-> > > > -       ar_snoc->num_vregs = ARRAY_SIZE(ath10k_regulators);
-> > > > +       /*
-> > > > +        * Backwards compatibility, ignore the defer error from pwrseq, if it
-> > > > +        * should be used, we will get an error from regulator get.
-> > > > +        */
-> > >
-> > > Can you elaborate on this? I'm not exactly following. I suppose you
-> > > mean the regulator_get() will return -EPROBE_DEFER? One of the
-> > > supplies exposed by the PMU?
-> >
-> > Yes. devm_pwrseq_get() can return -EPROBE_DEFER in two cases:
-> > - it is not supposed to be used
-> > - it is supposed to be used, but the driver hasn't probed yet.
-> >
-> 
-> Yes but normally driver core would still create a devlink between the
-> device binding to the PMU node and the consumer of its regulators -
+Add smoke test for IPV6 header compression. These test the compressed
+ipv6 code path in net/bluetooth/6lowpan.c
 
-fw_devlink, which are not mandatory, time out, etc. So, no, it is not
-granted that the PMU is always available during the probe.
+Client Recv IPHC Dgram - Success
+Client Recv IPHC Raw - Success
+---
+ tools/6lowpan-tester.c | 61 +++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 57 insertions(+), 4 deletions(-)
 
-> this device - so we can expect that it will always be the first one,
-> no? Unless we need this driver to be firmware-agnostic.
-> 
-> > There is no simple way to distinguish between these two cases, but:
-> > - if it is not supposed to be used, then regulator_bulk_get() will
-> > return all regulators as expected, continuing the probe
-> > - if it is supposed to be used, but wasn't probed yet, we will get
-> > -EPROBE_DEFER from regulator_bulk_get() too.
-> >
-> > I can write that in a comment, if you think that it makes the code more obvious.
-> >
-> 
-> Yes, please make it more descriptive. Ideally I'd like to improve the
-> API to avoid such confusion in the future.
-
-The prolem is that we can't (or I don't see a way to). Power sequencing
-core has no way to distinguish these two cases.
-
+diff --git a/tools/6lowpan-tester.c b/tools/6lowpan-tester.c
+index e1d23d552..7fdacefeb 100644
+--- a/tools/6lowpan-tester.c
++++ b/tools/6lowpan-tester.c
+@@ -70,6 +70,10 @@ struct client_data {
+ 	const void *send_data;
+ 	uint16_t send_data_len;
+ 
++	/* Data to expect to be received as kernel client */
++	const void *send_expect_data;
++	uint16_t send_expect_data_len;
++
+ 	/* Interface listener socket type, SOCK_RAW / DGRAM */
+ 	int sk_type;
+ };
+@@ -320,6 +324,8 @@ static const uint8_t dgram_data[64+1] = {
+ static const struct client_data client_recv_dgram = {
+ 	.send_data = dgram_data,
+ 	.send_data_len = sizeof(dgram_data),
++	.send_expect_data = dgram_data + 1,
++	.send_expect_data_len = sizeof(dgram_data) - 1,
+ 	.sk_type = SOCK_DGRAM,
+ 	.disconnect = true,
+ };
+@@ -327,11 +333,49 @@ static const struct client_data client_recv_dgram = {
+ static const struct client_data client_recv_raw = {
+ 	.send_data = dgram_data,
+ 	.send_data_len = sizeof(dgram_data),
++	.send_expect_data = dgram_data + 1,
++	.send_expect_data_len = sizeof(dgram_data) - 1,
+ 	.sk_type = SOCK_RAW,
+ 	.disconnect = true,
+ 	.skip_by_default_reason = "kernel BUG at net/core/skbuff.c:212"
+ };
+ 
++static const uint8_t iphc_dgram_data[64+2] = {
++	/* IPHC dispatch: TF=11, NH=0, HLIM=00; see draft-ietf-6lowpan-hc-11 */
++	0x78,
++	/* CID=0, SAC=0, SAM=00, M=0, DAC=0, DAM=00 */
++	0x00,
++	/* rest of ipv6 fields (nh, hlim, src, dst) + data */
++	0xde, 0xad, 0xbe, 0xef
++};
++
++static const uint8_t iphc_uncompressed_dgram_data[70] = {
++	/* IPv6 (version, tc, fl) */
++	0x60, 0x00, 0x00, 0x00,
++	/* payload size */
++	0x00, sizeof(iphc_dgram_data) - 2 - (2 + 2*16),
++	/* rest of ipv6 fields + data */
++	0xde, 0xad, 0xbe, 0xef
++};
++
++static const struct client_data client_recv_iphc_dgram = {
++	.send_data = iphc_dgram_data,
++	.send_data_len = sizeof(iphc_dgram_data),
++	.send_expect_data = iphc_uncompressed_dgram_data,
++	.send_expect_data_len = sizeof(iphc_uncompressed_dgram_data),
++	.sk_type = SOCK_DGRAM,
++	.disconnect = true,
++};
++
++static const struct client_data client_recv_iphc_raw = {
++	.send_data = iphc_dgram_data,
++	.send_data_len = sizeof(iphc_dgram_data),
++	.send_expect_data = iphc_uncompressed_dgram_data,
++	.send_expect_data_len = sizeof(iphc_uncompressed_dgram_data),
++	.sk_type = SOCK_RAW,
++	.disconnect = true,
++};
++
+ static void client_cmd_complete(uint16_t opcode, uint8_t status,
+ 					const void *param, uint8_t len,
+ 					void *user_data)
+@@ -501,7 +545,6 @@ static gboolean recv_iface_packet(GIOChannel *io, GIOCondition cond,
+ 	uint8_t buf[256];
+ 	int fd;
+ 	ssize_t ret;
+-	int phy_hdr_size = (cdata->sk_type == SOCK_DGRAM) ? 1 : 0;
+ 
+ 	if (cond & (G_IO_ERR | G_IO_HUP | G_IO_NVAL))
+ 		goto done;
+@@ -516,9 +559,9 @@ static gboolean recv_iface_packet(GIOChannel *io, GIOCondition cond,
+ 
+ 	tester_print("Recv %d bytes", (int)ret);
+ 
+-	if (ret != cdata->send_data_len - phy_hdr_size)
++	if (ret != cdata->send_expect_data_len)
+ 		return TRUE;
+-	if (memcmp(buf, cdata->send_data + phy_hdr_size, ret))
++	if (memcmp(buf, cdata->send_expect_data, ret))
+ 		return TRUE;
+ 
+ 	tester_print("Received sent packet");
+@@ -559,7 +602,7 @@ static gboolean client_open_iface(gpointer user_data)
+ 				recv_iface_packet, data);
+ 		g_io_channel_unref(io);
+ 
+-		tester_debug("Send %u+1 bytes", cdata->send_data_len - 1);
++		tester_debug("Send %u bytes", cdata->send_data_len);
+ 		bthost_send_cid(bthost, data->handle, data->dcid,
+ 				cdata->send_data, cdata->send_data_len);
+ 	} else if (cdata->disconnect) {
+@@ -670,5 +713,15 @@ int main(int argc, char *argv[])
+ 							setup_powered_client,
+ 							test_connect);
+ 
++	test_6lowpan("Client Recv IPHC Dgram - Success",
++						&client_recv_iphc_dgram,
++						setup_powered_client,
++						test_connect);
++
++	test_6lowpan("Client Recv IPHC Raw - Success",
++						&client_recv_iphc_raw,
++						setup_powered_client,
++						test_connect);
++
+ 	return tester_run();
+ }
 -- 
-With best wishes
-Dmitry
+2.52.0
+
 
