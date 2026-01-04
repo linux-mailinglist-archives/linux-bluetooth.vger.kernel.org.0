@@ -1,31 +1,32 @@
-Return-Path: <linux-bluetooth+bounces-17723-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-17726-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id D390FCF14AD
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C5AFBCF14AC
 	for <lists+linux-bluetooth@lfdr.de>; Sun, 04 Jan 2026 21:51:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 14349300C29A
-	for <lists+linux-bluetooth@lfdr.de>; Sun,  4 Jan 2026 20:51:23 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id ED237300162F
+	for <lists+linux-bluetooth@lfdr.de>; Sun,  4 Jan 2026 20:51:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DF192ED873;
-	Sun,  4 Jan 2026 20:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03CB32EF66E;
+	Sun,  4 Jan 2026 20:51:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="BLc/kQSH"
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="kzqEdqv6"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC25221710
-	for <linux-bluetooth@vger.kernel.org>; Sun,  4 Jan 2026 20:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE432DF3DA
+	for <linux-bluetooth@vger.kernel.org>; Sun,  4 Jan 2026 20:51:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767559880; cv=pass; b=RImqXLJxYtgKAmdzYkHblIdx5b4fpO0ooxmaLSpdZzXv87IShKJOtJRO4R8hIxPTmy+/zOxRTtQDaGc0uIKwizHjY4xH94JU3wixgBZTKNwfo9QU0ifbptbmHxZF6+AI3dZKGNqDCTeWKSYO6EJV6mTO9r4Hbzpq+OY2SoWPzfs=
+	t=1767559881; cv=pass; b=Pntupg1gpYPXWLqyX4g9sxGDjCnxQm1BCRE4l55HIxJhqTgoXIh4AWKeOsJND3joklBKJqN9/k03jnFKUg6f87BtPQCDMTWYHx5fQCnu1bijWeUZCl5TlAlwlZ4GGiz8wii4bId11x1I21cIQfom3FzKDLQVXZKC9a0alu1A1aE=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767559880; c=relaxed/simple;
-	bh=W9BQLHhts7Iroo0HrqY5TbjBzDm4OZGdgMcc2UACUbs=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=dQGUgdOiL8fa40A6YSQBaa66gPkmsxlqjut8Lx3I+z3k/QrdMeUS4kUsdSaUqPtBDf5//bN6dRHtTjjxwLPJMm6hQyxzy6Y5DnCAEj2iBbjoepGemAXUXIJwySNeIc7jhvJwlQE0MKCaoUW1PIz08vGzE8dspa+QY6kxmZ41qdU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=BLc/kQSH; arc=pass smtp.client-ip=195.140.195.201
+	s=arc-20240116; t=1767559881; c=relaxed/simple;
+	bh=mdlT2xTIuFcx/VeKSVsBSh8VeO3NeEUtgfeizTRRfSw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=kHqM+LhFSMU2UgQYk+JSJKWraGnJh8O1tJ+6iyzmwhtnbQvJauM8r0c1ZgF/yJnOZsq8ILpz6oNA7Pj803Nfx9sFp8W47sggmctz0H6yfoUxRnDaYcK4rYXbOzs7zfMQcuADyhzlRYCLoIEbDSrQYc0Bxc3DcmscG0QPG+ayj0Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=kzqEdqv6; arc=pass smtp.client-ip=195.140.195.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
 Received: from monolith.lan (unknown [IPv6:2a02:ed04:3581:4::d001])
@@ -33,40 +34,44 @@ Received: from monolith.lan (unknown [IPv6:2a02:ed04:3581:4::d001])
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4dkqN26FLmzyQR;
-	Sun, 04 Jan 2026 22:51:14 +0200 (EET)
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4dkqN369fYzyYm;
+	Sun, 04 Jan 2026 22:51:15 +0200 (EET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
-	t=1767559875;
+	t=1767559876;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=vAuKhIdgQTL6AhxqWhuFpZtilsbushTq0lYrt3lMgWo=;
-	b=BLc/kQSHojNhafaesKeQ7vpCBBLs54nh0TAKEHPZ7w4iT0XnhFVpQLVjfCiLr5jjJ3sIu1
-	OAeD2QzYEjKnwbU1NTNUbm6iTfarzGS993ZafopZm4S4W5vQeyBCIsRLDOLvNThPoChQ4n
-	sneOYyM1TOjww5m57F4hfUAcSOKLC4k=
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=sRoiX89FQ96w0Gcf+dFYnY09/9tuoWb+8D44S9J+2uc=;
+	b=kzqEdqv6W6IQ5G8F84cse+6HiCXUNam3Q6Mr7Xjzuhw6AQbMIrDlgC1jtfqcrHogt+5G/E
+	lrlh3D4OcJmpxVYrSVpiwZOBpB7oAVQKR3R+3NT/bI7w2vZUt98/upLX1XUxKXSp3lJ0vX
+	JCSTK20nuUa1EpF+fP5RnOpoES2V37U=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=meesny; t=1767559875;
+	s=meesny; t=1767559876;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=vAuKhIdgQTL6AhxqWhuFpZtilsbushTq0lYrt3lMgWo=;
-	b=zMIGpzQcKXMYKMUIbBqdpFVXB4vDFjnWM8QyiD34iSq3LwnwszbVZAILaVNzChl3aC6r/t
-	LsXYA1ANxNfFpxQ1B6QL5bH15JeZ9DOq3yXTgNByZJRUIMyD7g/Vjjjv3DgfJ7D0ZWYsot
-	M23shyfV7Cc7+R47FxawMdl41iHZfFs=
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=sRoiX89FQ96w0Gcf+dFYnY09/9tuoWb+8D44S9J+2uc=;
+	b=s0vXY3/67co884sg/e5l/CsWGsDbRxeHHYD/IuS+ag4ynjxaslUCqtqyWUmsaj0h9jczwG
+	KSUq9aLp60W6osj0KqqN6imSYmLqa2AFRPH8VkytI5iuz1c4UTa7fG5yEhAxYRe5nROXdd
+	4ATIwUMk7DcMH04Dut7rwZRvpeQP4zs=
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
-ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1767559875;
-	b=ik3MJJHT8HaNm794wQ9iCBU6Htu6yuWPpiGhZ4Oe2BtO9Zyxr12F4K+ZgKu4j9lW6FUEXU
-	huLR33uWvbTLgaZWHpx/nTior9IPWdMrNwqDCanczYEV/0+XJ7Kyhv+HIqPr+PPPNL9Nzh
-	jzP1t00MCwLfDYsTS+OPuUs6v0ExfLM=
+ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1767559876;
+	b=HdkmynDmF2NdqoU7f5En+PfcT42hnCEWhvIbNJn8PpmnlfG5evvPfkaQr+rVDH+rpO6Fns
+	417VCLT452tRoMuHTH3jC2czZmOoR1LssvRBGlCrQaCjhBgGb8nbmmSzHE7KDVKmz3RGHa
+	dbscBnxLAJtWhW44XtY3RlP9LFUElq8=
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ 0/3] transport: distinguish BAP mic and playback volumes
-Date: Sun,  4 Jan 2026 22:51:09 +0200
-Message-ID: <cover.1767559459.git.pav@iki.fi>
+Subject: [PATCH BlueZ 1/3] shared/bap: add bt_bap_stream_is_server
+Date: Sun,  4 Jan 2026 22:51:10 +0200
+Message-ID: <ce1ecf069f0856ff58471bbc39c6e38ad4acf0a9.1767559459.git.pav@iki.fi>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <cover.1767559459.git.pav@iki.fi>
+References: <cover.1767559459.git.pav@iki.fi>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -75,31 +80,43 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Currently we are confusing VCP and MICP volumes.
+Add function for determining whether a given stream is a BAP Server
+stream or not.
+---
+ src/shared/bap.c | 6 ++++++
+ src/shared/bap.h | 2 ++
+ 2 files changed, 8 insertions(+)
 
-We are also mixing up AVRCP and VCP volumes.
-
-As microphone volumes are commonly 100% and sound server may set them,
-we end up with spurious 100% playback volumes.
-
-Fix this, and also do some cleanup of #ifdefs in the volume code.
-
-Pauli Virtanen (3):
-  shared/bap: add bt_bap_stream_is_server
-  transport: clean up volume set/get for A2DP and VCP
-  transport: distinguish BAP mic and playback volumes
-
- profiles/audio/avrcp.c     |  10 +--
- profiles/audio/media.c     |   2 +-
- profiles/audio/media.h     |  10 +++
- profiles/audio/transport.c | 137 +++++++++++++++++++++----------------
- profiles/audio/transport.h |  10 +--
- profiles/audio/vcp.c       |  12 ++--
- profiles/audio/vcp.h       |  21 +++++-
- src/shared/bap.c           |   6 ++
- src/shared/bap.h           |   2 +
- 9 files changed, 133 insertions(+), 77 deletions(-)
-
+diff --git a/src/shared/bap.c b/src/shared/bap.c
+index 6a35e4e1d..d0425318c 100644
+--- a/src/shared/bap.c
++++ b/src/shared/bap.c
+@@ -4270,6 +4270,12 @@ uint8_t bt_bap_stream_get_type(struct bt_bap_stream *stream)
+ 	return 0x00;
+ }
+ 
++bool bt_bap_stream_is_server(struct bt_bap_stream *stream)
++{
++	/* Stream is a BAP Server stream (not Broadcast or BAP Client) */
++	return !stream->client;
++}
++
+ static void notify_pac_removed(void *data, void *user_data)
+ {
+ 	struct bt_bap_pac_changed *changed = data;
+diff --git a/src/shared/bap.h b/src/shared/bap.h
+index 80e91f10a..983b9d9a6 100644
+--- a/src/shared/bap.h
++++ b/src/shared/bap.h
+@@ -113,6 +113,8 @@ struct iovec *bt_bap_pac_get_metadata(struct bt_bap_pac *pac);
+ 
+ uint8_t bt_bap_stream_get_type(struct bt_bap_stream *stream);
+ 
++bool bt_bap_stream_is_server(struct bt_bap_stream *stream);
++
+ struct bt_bap_stream *bt_bap_pac_get_stream(struct bt_bap_pac *pac);
+ 
+ /* Session related function */
 -- 
 2.52.0
 
