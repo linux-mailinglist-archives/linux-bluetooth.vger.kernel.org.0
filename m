@@ -1,78 +1,110 @@
-Return-Path: <linux-bluetooth+bounces-17845-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-17848-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B844CFCAE5
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 07 Jan 2026 09:51:46 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id C6FA0CFCBA9
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 07 Jan 2026 10:08:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 514DE301BCE7
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  7 Jan 2026 08:51:45 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 97DB9308F007
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  7 Jan 2026 09:04:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 950B12E5B21;
-	Wed,  7 Jan 2026 08:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E795E17DFE7;
+	Wed,  7 Jan 2026 09:04:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pJCkW35Q"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="MLQTlgAD"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from o7.sgmail.github.com (o7.sgmail.github.com [167.89.101.198])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3D7285419
-	for <linux-bluetooth@vger.kernel.org>; Wed,  7 Jan 2026 08:51:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB628285C8D
+	for <linux-bluetooth@vger.kernel.org>; Wed,  7 Jan 2026 09:03:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=167.89.101.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767775903; cv=none; b=tdphx3Bq8U1VJz/FP69SRfUyk+24nQDVTPqAlBYyZrrxUDcmxgOndwoPvlzaEMSsmokJ4uq/EveeN2trZBrEkhsTAeQqjdW/gl7XTK7wkLJpFXQ9ZvxFj/ncU6ueFO/PT8y7ZywjFeC/nYN2W81bCDQzBA8kUsWp+oJKHzMSe8o=
+	t=1767776640; cv=none; b=Zxc+BW1S5+1GhSr1MH4Sk5KJGM3f80p+Bk2cUdGyo4Ow/+RF7lE1ewcokV40CmEzHyIDhqcfbGFKIZIIOGMGfO+NhNrPm56Rl8M7v3BjH7ksI0Xtee3kJFgz2wGNLKjzEkH3XuKhpdeZKZbo2klYuTTJIIJNlHSBykLC95mEAzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767775903; c=relaxed/simple;
-	bh=0fGVN+SXp4Tf8RFEpMf9Is5ghs3XgyxYsNTniFOYBic=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=iZnNr/NG61cJ+W38rLRvgq1rTsHGu8j7GU/+t7Xpi5Md1Y2CA+11wym7L+A33wftmE/chmEAgOMf62FmL34d+vnpibm4v6jqBDYfSYLW6FUqMrahP4ykiqtKmAKRd1lMoVguDd0BbcU8bxfSBTiNXIwIeBJhnZ+uDHPk7LB0rZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pJCkW35Q; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id BDD43C16AAE;
-	Wed,  7 Jan 2026 08:51:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1767775902;
-	bh=0fGVN+SXp4Tf8RFEpMf9Is5ghs3XgyxYsNTniFOYBic=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=pJCkW35Q7UyGxA4hJsbq45QItxCfN3Q0HCGixovc/WuTza6yl39jYX2IBbZbl0zN3
-	 +KT/KI3R5Hp0FZVs2uhNKR6S64FOMdHg7tcbhlOj0gC5BDf90zMnCS2GxdCKZl/QqE
-	 dbyyCaFImqP22CcG8EgkIeZGBjRYZx0Nnrrt0LEPSf81oEIsO3mHTLqy3YRejRFT/q
-	 lHfN/nCMeLEJCNmIaxrwyArVIMpN9ycW/bNhsppptrqIs7ULLwZIPWk7qqL+AQSpDQ
-	 ZfJC7dN3FArm5MpZ6bwnsablRSsoagtosRoPHzUlSK670RJTUMWBJfy/eWQIM53EY8
-	 2Xn6H9rRKGu0A==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AEFDCCF6C13;
-	Wed,  7 Jan 2026 08:51:42 +0000 (UTC)
-From: Yang Li via B4 Relay <devnull+yang.li.amlogic.com@kernel.org>
-Date: Wed, 07 Jan 2026 16:51:37 +0800
-Subject: [PATCH BlueZ bluez 2/2] bap: add timer to wait for SID update
- before PA sync
+	s=arc-20240116; t=1767776640; c=relaxed/simple;
+	bh=Pvu3TY/1Z1NejXDFW85Y1FTeUHJLzHpB8Lm7FLRKITw=;
+	h=Date:From:Message-ID:Subject:Mime-Version:Content-Type:To; b=JQzy+Er3BPl52vzWK99fI6tfBfy+Zfb/foDYcRXhWhg/2kIx2QppAjNPuWMWvij3EmCzOx5rBe7lE1dkpoMQzMHOMIAD54gTlB56QTlFB/mwfp892y7bPs+C3NmNS68LNR0e9Se/xGcvX1GJdiKExD9AFX/C+0PpKTrnAGsejjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=sgmail.github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=MLQTlgAD; arc=none smtp.client-ip=167.89.101.198
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sgmail.github.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+	h=date:from:subject:mime-version:content-type:content-transfer-encoding:
+	list-unsubscribe:to:cc:content-type:date:from:subject:to;
+	s=smtpapi; bh=O+cyMBAYFBfXm54t845PHdT6oFESNaIGdpCwjWxzIgU=;
+	b=MLQTlgADBSzCFPCn7FlcgI9lYAqwHT1aPhlNWJe1jEHcGWgQr2gj6HuxtCZV9jPLxiwJ
+	xtcEGYCyON3NMMeEJYY3102YDG+bXR+7vllUif5e8HeW6v7oy+aGtHZnuZV7ldVzC13ZTY
+	IB1waBTv43Y1HtijACa2jyv/QR3rugK9s=
+Received: by recvd-874656597-vhgq4 with SMTP id recvd-874656597-vhgq4-1-695E217D-6A
+	2026-01-07 09:03:57.944418697 +0000 UTC m=+1767180.653616592
+Received: from out-22.smtp.github.com (unknown)
+	by geopod-ismtpd-62 (SG)
+	with ESMTP id bopWbwHCQMazLT9dGmY-6A
+	for <linux-bluetooth@vger.kernel.org>;
+	Wed, 07 Jan 2026 09:03:57.890 +0000 (UTC)
+Received: from github.com (hubbernetes-node-acf3dfe.ac4-iad.github.net [10.52.211.38])
+	by smtp.github.com (Postfix) with ESMTPA id 8818C21037
+	for <linux-bluetooth@vger.kernel.org>; Wed,  7 Jan 2026 01:03:51 -0800 (PST)
+Date: Wed, 07 Jan 2026 09:03:57 +0000 (UTC)
+From: "github-actions[bot]" <noreply@github.com>
+Message-ID: <bluez/bluez/push/refs/heads/1039291/000000-31b82c@github.com>
+Subject: [bluez/bluez] b495ad: adapter: add MGMT_EV_EXT_ADV_SID_CHANGED mgmt
+ event
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260107-mgmt_ext_adv_sid-v1-2-6832b40813fd@amlogic.com>
-References: <20260107-mgmt_ext_adv_sid-v1-0-6832b40813fd@amlogic.com>
-In-Reply-To: <20260107-mgmt_ext_adv_sid-v1-0-6832b40813fd@amlogic.com>
-To: Linux Bluetooth <linux-bluetooth@vger.kernel.org>
-Cc: Yang Li <yang.li@amlogic.com>
-X-Mailer: b4 0.13-dev-f0463
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1767775901; l=2686;
- i=yang.li@amlogic.com; s=20240418; h=from:subject:message-id;
- bh=YR0LwNu5FiAzaxwLOK2tvD6+VPIsHP6jNefQFy0Z4dM=;
- b=Gwc7w+BPMdlH3cGifxAuvcCn1tAv9D4HChSrXS1yUNB7QH+GHgqPpToiECbXyBNR1PopFItbZ
- HoHsNNA4QSaBMAjPxBwkEHVbR4XzaYuZdUbAeDOeEqs+ZQZXnFJCG86
-X-Developer-Key: i=yang.li@amlogic.com; a=ed25519;
- pk=86OaNWMr3XECW9HGNhkJ4HdR2eYA5SEAegQ3td2UCCs=
-X-Endpoint-Received: by B4 Relay for yang.li@amlogic.com/20240418 with
- auth_id=180
-X-Original-From: Yang Li <yang.li@amlogic.com>
-Reply-To: yang.li@amlogic.com
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
+X-SG-EID: 
+ =?us-ascii?Q?u001=2EOmaFr=2F1UU=2FZnDLH7OeuCdRX0CsxIfcrGHCrZFU+6memyJLWEfoVOzRRry?=
+ =?us-ascii?Q?oaLUMWT5aK+P15stzHrMb2=2Fq5PF2q8ST+3DpYgR?=
+ =?us-ascii?Q?Gbd9G1lmyhWpgFzsnpr1RMei06rdRl5xQEaAP1B?=
+ =?us-ascii?Q?YHZbWhSRTzu2ZwVpZhDpz9ZgEiYlyHprHQC6FK+?=
+ =?us-ascii?Q?xw2GqZOmMym7La4aBMBbl0LNFD48zaEO2mZ+eP0?=
+ =?us-ascii?Q?5nxrCS=2Fpj5pa=2FW5OotKBnSL+i+bKt1oMTKU=2F9NC?=
+ =?us-ascii?Q?HV2PxxbOBLx3pgsz2uMxbnTUKg=3D=3D?=
+To: linux-bluetooth@vger.kernel.org
+X-Entity-ID: u001.h3RSp2myFsXwI84tgZKC3Q==
 
-From: Yang Li <yang.li@amlogic.com>
+  Branch: refs/heads/1039291
+  Home:   https://github.com/bluez/bluez
+  Commit: b495ad25ed257bdbe1fe4f10ad6e146430664841
+      https://github.com/bluez/bluez/commit/b495ad25ed257bdbe1fe4f10ad6e146430664841
+  Author: Yang Li <yang.li@amlogic.com>
+  Date:   2026-01-07 (Wed, 07 Jan 2026)
+
+  Changed paths:
+    M lib/bluetooth/mgmt.h
+    M src/adapter.c
+    M src/device.c
+    M src/device.h
+
+  Log Message:
+  -----------
+  adapter: add MGMT_EV_EXT_ADV_SID_CHANGED mgmt event
+
+Add the MGMT_EV_EXT_ADV_SID_CHANGED mgmt event to notify userspace
+of SID updates for extended advertising.
+
+Signed-off-by: Yang Li <yang.li@amlogic.com>
+
+
+  Commit: 31b82c0d7a368771770814be96ec68db42406812
+      https://github.com/bluez/bluez/commit/31b82c0d7a368771770814be96ec68db42406812
+  Author: Yang Li <yang.li@amlogic.com>
+  Date:   2026-01-07 (Wed, 07 Jan 2026)
+
+  Changed paths:
+    M profiles/audio/bap.c
+
+  Log Message:
+  -----------
+  bap: add timer to wait for SID update before PA sync
 
 Add a timer to wait for the SID to become valid before triggering
 PA sync. Once the SID is available, PA sync is initiated accordingly.
@@ -80,101 +112,9 @@ PA sync. Once the SID is available, PA sync is initiated accordingly.
 Fixes: https://github.com/bluez/bluez/issues/1758
 
 Signed-off-by: Yang Li <yang.li@amlogic.com>
----
- profiles/audio/bap.c | 47 ++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 46 insertions(+), 1 deletion(-)
-
-diff --git a/profiles/audio/bap.c b/profiles/audio/bap.c
-index b6eb91ab3..360e0a309 100644
---- a/profiles/audio/bap.c
-+++ b/profiles/audio/bap.c
-@@ -48,6 +48,7 @@
- #include "src/shared/bap.h"
- #include "src/shared/tmap.h"
- #include "src/shared/gmap.h"
-+#include "src/shared/timeout.h"
- 
- #include "btio/btio.h"
- #include "src/plugin.h"
-@@ -140,6 +141,8 @@ struct bap_data {
- 	struct queue *server_streams;
- 	GIOChannel *listen_io;
- 	unsigned int io_id;
-+	unsigned int listen_retry_id;
-+	int listen_retry_tries;
- 	unsigned int cig_update_id;
- 	bool services_ready;
- 	bool bap_ready;
-@@ -176,6 +179,9 @@ static void bap_data_free(struct bap_data *data)
- {
- 	struct queue *bcast_snks = data->bcast_snks;
- 
-+	if (data->listen_retry_id)
-+		timeout_remove(data->listen_retry_id);
-+
- 	if (data->listen_io) {
- 		g_io_channel_shutdown(data->listen_io, TRUE, NULL);
- 		g_io_channel_unref(data->listen_io);
-@@ -3573,16 +3579,55 @@ static void bap_detached(struct bt_bap *bap, void *user_data)
- 	bap_data_remove(data);
- }
- 
-+static bool pa_sync_retry_cb(gpointer user_data)
-+{
-+	struct bap_data *data = user_data;
-+	uint8_t sid = device_get_sid(data->device);
-+
-+	if (!data)
-+		return FALSE;
-+
-+	data->listen_retry_tries++;
-+	if (data->listen_retry_tries >= 2) {
-+		data->listen_retry_id = 0;
-+		data->listen_retry_tries = 0;
-+		btd_adapter_remove_device(data->adapter, data->device);
-+		return FALSE;
-+	}
-+
-+	if (sid != 0xFF) {
-+		data->listen_retry_id = 0;
-+		data->listen_retry_tries = 0;
-+		pa_sync(data);
-+		return FALSE;
-+	}
-+
-+	return TRUE;
-+}
-+
- static int pa_sync(struct bap_data *data)
- {
- 	GError *err = NULL;
--	uint8_t sid = 0xff;
-+	uint8_t sid = device_get_sid(data->device);
- 
- 	if (data->listen_io) {
- 		DBG("Already probed");
- 		return -1;
- 	}
- 
-+	/*
-+	 * If SID is not yet available, wait MGMT_EV_EXT_ADV_SID_CHANGED event
-+	 * to update it and retry PA sync creation.
-+	 */
-+	if (sid == 0xFF) {
-+		DBG("SID not available, scheduling retry for PA sync");
-+		if (data->listen_retry_id == 0)
-+			data->listen_retry_id =
-+						timeout_add(5, pa_sync_retry_cb, data, NULL);
-+
-+		return -1;
-+	}
-+
- 	DBG("Create PA sync with this source");
- 
- 	data->listen_io = bt_io_listen(NULL, iso_pa_sync_confirm_cb, data,
-
--- 
-2.42.0
 
 
+Compare: https://github.com/bluez/bluez/compare/b495ad25ed25%5E...31b82c0d7a36
+
+To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
