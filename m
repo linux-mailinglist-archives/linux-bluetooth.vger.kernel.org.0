@@ -1,139 +1,89 @@
-Return-Path: <linux-bluetooth+bounces-17852-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-17854-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8CF52CFE7AE
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 07 Jan 2026 16:09:18 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B8A4CFF08B
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 07 Jan 2026 18:14:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 7408830F9095
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  7 Jan 2026 15:03:14 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 038FE33491A6
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  7 Jan 2026 17:01:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 398A13502BA;
-	Wed,  7 Jan 2026 14:48:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E95C3587C4;
+	Wed,  7 Jan 2026 16:13:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LDBPu0yU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pSVLkPWy"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D17350297
-	for <linux-bluetooth@vger.kernel.org>; Wed,  7 Jan 2026 14:48:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B26F57C9F;
+	Wed,  7 Jan 2026 16:13:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767797290; cv=none; b=NeDMORSAJXriJtpjUIHMpgp2O5eGmud/CnkYaqvv7aZvVL6ZSTTa8lmxMO4716oOXqaCWEQFqp2ammoH8Yfpj9JlMkwTBKEsxaXXgV+t/9Bzisf+jFSUG24BihbboYX/JiB5DTBMNwZR9JjmaomABvh4LAAKt6bCuO6XPwymjfs=
+	t=1767802411; cv=none; b=kjZnPrHwNMejVmehQyYIen5fGoPt9h2VlLA+J89kas2xs1ks8jsWydya/MOf61vumdvWmHxHhk8hzPUiCrbEg/pKuJwCVGlL6CNv+O7HvpvdOQL9yuU/ujsn0mTXUVgponUrFRqAScONvnUUoq0MnsR6Ry8yLr3sh7qVFkaTl3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767797290; c=relaxed/simple;
-	bh=jqVFVwjXEGeJeMYSRDQgHFAdPRrb+aDpKucKTx2DPXI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Lvkt0xl5nZs/VvEYx83MglG9wLwzOUn475sMORbwqvN7tK8eXgT4xvFGF5YWd4n9hXS6vXeaSr6sD7M5wW/AMeG/y5X9nHXlWWBihTbC2So6af3KQ6657YC94vLuuv7vypkwivKcA3IDB4QqMpPiI4+ChOmSEv/nGjKWQGyYDq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LDBPu0yU; arc=none smtp.client-ip=209.85.128.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-78e7ba9fc29so24628927b3.2
-        for <linux-bluetooth@vger.kernel.org>; Wed, 07 Jan 2026 06:48:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767797288; x=1768402088; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bGxpR1Egec65BiyhYoiU7hHXukKj3jVU+l6UVvpYxhQ=;
-        b=LDBPu0yUx2IuEp6lVjswHqBS4BPc5x5HBCohQ/+RvWwSlL3qgzPe5cPAjV64avULrB
-         +ETz2w9qQOgITC9Kci+TFDc99WIQ23zFsebyXU5uE2FjstUjiSlOc7l8U4K4TJyWCJNy
-         hIzumd+T2+tHISXH9cVme3jmR4BEB5d+VoaBuegV2Qb4MIJDBxG1kTm9mOW/jH/AK4ou
-         PEbMGWcxNeFHpx6E6PCWO/6oOVseYYpQUm9/3EEpmBlwIrlO4Li+ImI4NoFicjKBkoOI
-         eU5zImS0TN2+BOxBaXR2zb8ozHK6noG2yHsW8x+7zEc6XWS3DAD0NIta3fcjUweo6sy8
-         enrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767797288; x=1768402088;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=bGxpR1Egec65BiyhYoiU7hHXukKj3jVU+l6UVvpYxhQ=;
-        b=NBb06w6A3Euw4mFzT1EXf36QzPNCQp05dsvF0Ca6fo7iIzEqCnh73hFiQiRNxzhT5n
-         ggwKezTToN0Spax/Mp5pVbMKCrjLwBcjg5KwMcyHPr6oUZgzG4lCESVshMlSAgbPc5gJ
-         hO9ur08dwST9kdwLgu8N3G7qNbo+Tq9oNPGszmt0lp1h6jZHliUgWFloCtQMWgqiRtde
-         iKKSKWK2agfi94OaYF8a7eJNeRtcNPr43ELiSLPQfP1Pd0bi/c37g4WaEmtitWxS9eLl
-         qBVH1jy32LjmKHMUnMFfBGf8Xz3SiRwTHYcCLHnqySo5ZzWMGfj1vP2oQ+vFhsxeNHA/
-         ffsA==
-X-Gm-Message-State: AOJu0YzMb7qp5ZweCXQSfLnX/IYTCKDKlnYgxSed87o9kPRnLgsCTGVg
-	Ded9GeuSFww4kin14ANXY7UTlNSdoKv9yWZ5jz69n7VpRODUIBRI6e8PrhNO7GLTykcVIdnoFe1
-	+qlXZhC9qjavM+KNDMdn8tIM78k31HBo=
-X-Gm-Gg: AY/fxX5JYYhw6FVNVbPT4CEQcqX7zOP1VemKl8ePYo9BpHWC1SMwP2IUEJiAzbmmyBG
-	YTegZNpzlUyW92IrYqVM571VBMiKWAocYDMJxvRTQAfij7bQk7tkcK4mpL6hpA6AubnzMUnTc/M
-	GGhKVaTTIIl6nQTbNFbhjo436vwDLtuT2c4eon0Xap/bxlAY0DtQmzYmnrNg2pEBgq8s56Kps6E
-	kjNXgk3zMMff4qiuSb0lTWSLn1R1QepNRwuEB9Fn5UR0NL2Vf7+vb6BKxUqKOZM/r0nLANspazk
-	Wdu3uno4RjYPUZtPp3/bYzucMIH0VvBrHSYHqFdGYbyfs009GbfSj2rA1w==
-X-Google-Smtp-Source: AGHT+IH3aNCzG59JljbV/j2Im55EwKCWNIPs+Yewt3z1y23N77lH3754Nd7Saejg/3ZogPgDPsjST6GbPGPgYyBkSUk=
-X-Received: by 2002:a53:cd4d:0:b0:63f:ad02:8e2 with SMTP id
- 956f58d0204a3-64716bda129mr1823652d50.31.1767797288259; Wed, 07 Jan 2026
- 06:48:08 -0800 (PST)
+	s=arc-20240116; t=1767802411; c=relaxed/simple;
+	bh=V6gOIwm6342c3yGry2Km7WcUIa+wggiZSRjxm1m4kH0=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=OsF/iZkWQ8EFcu03qllod0JIjStFNtdkRmrM8JjqpmXXTyOvmEK4Lpo9jUX+aWFSrplV1kjT+GVUKTqXtdSNQcuEWBX0kIFdKROd6yKqo+lejN3rvNSIaQNmwdlXJ+zfPXNmzTKnAApN7zcoFHpo/PSAH2YOtxA8QyhHTW5/W2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pSVLkPWy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B6BBC4CEF1;
+	Wed,  7 Jan 2026 16:13:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1767802410;
+	bh=V6gOIwm6342c3yGry2Km7WcUIa+wggiZSRjxm1m4kH0=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=pSVLkPWyq181bjmei9mV3jcKVcCkhfPr6Q+XNX+olX9OZNKXmDSbAdWuEkAtaav/a
+	 7+f0EtUPvtFmob4+y1ZqEtuwyDw9ifQ1+1HpPZ5GZU+hb5PD48V+HJDOpJpUTXYbhl
+	 g2Kevn/mbO1aPQ2mcH3TstT5svdHmoBdioP90a5Ys0VfLf2z8uES5r+Rotl+qwc+0y
+	 7BTuoNlsopHOdEFU4ZjqH00xBou0l3EOKxtwI/ZbfAO1aZ37vHtH3/wjw29ioSVH0E
+	 KLblXckqouMDP0S84Q/7kG9hQBBvVFjinAGH5KgrDejaR/zCHcfRgXUi8SnHdsBfIM
+	 k+5KktAg1l8qw==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 9576839FEB7C;
+	Wed,  7 Jan 2026 16:10:08 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260107024820.1722270-1-lilinmao@kylinos.cn>
-In-Reply-To: <20260107024820.1722270-1-lilinmao@kylinos.cn>
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Wed, 7 Jan 2026 09:47:57 -0500
-X-Gm-Features: AQt7F2pwd4eHtzBipDhAm7DM7xV68V7-SuA0y417hI7b9WxSNb2nvkt6nz4QKlM
-Message-ID: <CABBYNZ+Zq2HYsfGbOi7V=pnV1GczSv6--rMEbi+=yCXE4p+-6g@mail.gmail.com>
-Subject: Re: [PATCH] Bluetooth: btusb: Reject autosuspend if HCI inquiry or LE
- scan is active
-To: Linmao Li <lilinmao@kylinos.cn>
-Cc: linux-bluetooth@vger.kernel.org, marcel@holtmann.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH] Bluetooth: hci_sync: enable PA Sync Lost event
+From: patchwork-bot+bluetooth@kernel.org
+Message-Id: 
+ <176780220752.2838947.769832971851801138.git-patchwork-notify@kernel.org>
+Date: Wed, 07 Jan 2026 16:10:07 +0000
+References: <20251219-enable_pa_sync_lost_mask-v1-1-2769917f44e2@amlogic.com>
+In-Reply-To: <20251219-enable_pa_sync_lost_mask-v1-1-2769917f44e2@amlogic.com>
+To: Yang Li <yang.li@amlogic.com>
+Cc: marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
+ linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org
 
-Hi Linmao,
+Hello:
 
-On Tue, Jan 6, 2026 at 9:48=E2=80=AFPM Linmao Li <lilinmao@kylinos.cn> wrot=
-e:
->
-> If USB autosuspend occurs while BR/EDR inquiry or LE scan is active,
-> the ongoing HCI operation may not complete successfully. On some
-> devices, this can leave discovery.state stuck in DISCOVERY_FINDING.
->
-> Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-> ---
->  drivers/bluetooth/btusb.c | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-> index ded09e94d296..885c3d8c0a10 100644
-> --- a/drivers/bluetooth/btusb.c
-> +++ b/drivers/bluetooth/btusb.c
-> @@ -4469,10 +4469,13 @@ static int btusb_suspend(struct usb_interface *in=
-tf, pm_message_t message)
->
->         BT_DBG("intf %p", intf);
->
-> -       /* Don't auto-suspend if there are connections; external suspend =
-calls
-> -        * shall never fail.
-> +       /* Don't auto-suspend if there are connections or HCI operations =
-in
-> +        * progress; external suspend calls shall never fail.
->          */
-> -       if (PMSG_IS_AUTO(message) && hci_conn_count(data->hdev))
-> +       if (PMSG_IS_AUTO(message) &&
-> +           (hci_conn_count(data->hdev) ||
-> +           test_bit(HCI_INQUIRY, &data->hdev->flags) ||
-> +           hci_dev_test_flag(data->hdev, HCI_LE_SCAN)))
+This patch was applied to bluetooth/bluetooth-next.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-We shall probably use hci_discovery_active instead of testing
-individual bits like above.
+On Fri, 19 Dec 2025 10:43:09 +0800 you wrote:
+> From: Yang Li <yang.li@amlogic.com>
+> 
+> Enable the PA Sync Lost event mask to ensure
+> PA sync loss is properly reported and handled.
+> 
+> Fixes 59e5396a2579 ("Bluetooth: hci_event: Fix not handling PA Sync Lost event")
+> 
+> [...]
 
->                 return -EBUSY;
->
->         if (data->suspend_count++)
-> --
-> 2.25.1
->
+Here is the summary with links:
+  - Bluetooth: hci_sync: enable PA Sync Lost event
+    https://git.kernel.org/bluetooth/bluetooth-next/c/3d57712f01eb
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
---=20
-Luiz Augusto von Dentz
 
