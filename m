@@ -1,39 +1,39 @@
-Return-Path: <linux-bluetooth+bounces-17904-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-17906-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08E9FD08428
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 09 Jan 2026 10:39:01 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 61A23D0840B
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 09 Jan 2026 10:38:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id AECCC3064D53
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  9 Jan 2026 09:36:31 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id DA0BE3020B6F
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  9 Jan 2026 09:36:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42635359705;
-	Fri,  9 Jan 2026 09:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A84B3590AC;
+	Fri,  9 Jan 2026 09:36:25 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35AF03596FD
-	for <linux-bluetooth@vger.kernel.org>; Fri,  9 Jan 2026 09:36:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECB33590CA
+	for <linux-bluetooth@vger.kernel.org>; Fri,  9 Jan 2026 09:36:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767951375; cv=none; b=EG9iZG+q0d75FfeidO4uvbWIUpVgtiuLRkwjSzZvu1AqYrf6PQMqqY3BraIhezC+aI81C9bYNuEXoAIbRkUsE3kIcSVGB3r3MsnDeGwYhFN0MbdS6miSS7ItMNFzje4qwYsh2p/HDOIbu/pI7PSPx1bPM+VQ21RClA5IWuSkmao=
+	t=1767951385; cv=none; b=O+J3j+eNSjNys5nrP/rSLdz0OhKf7urPddCwz1hC4jkTcrc94HHHqorYNGri20NizZT/JlQjzLeJl9IWkVy4lO8Ga60UbxkdChPRUa85iNbh/emlsBcnNSuWDO4hbVu7GlNax9T4iWxOe6W6oIps5Q7h7xzKpgKBJABBwvI8bJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767951375; c=relaxed/simple;
-	bh=9tsIBAzYSY8Gzumm17bHcgE8Mmj/s/qjBopHCMIkcP8=;
+	s=arc-20240116; t=1767951385; c=relaxed/simple;
+	bh=CPwAkvT6YO//5xwK7yJ/fvVe4+ZgQqK3Oo2fYYKKwi0=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ojkMdCY7/72DxdHBM8wDun8WgMaEsjg64UwpuTMW2op/UyvaRnhq8cLN6/0BVbsqJl24tOCqwFwDH/OHRcCKCtPsftBbNU+yzN94XlNXnUrplWbz3hUSCFrDW3cAF3wtFQdDZ/EJD4fzFp+7OJkaoYIlSH1fbjR6MT34yk6zijA=
+	 MIME-Version; b=DxXjxeR4q+VJ8FQ6CqZzsa168nJ5w7NBeVmdUFQDMifgPfI10QD1n2ZQdAL3d1jzsTh1Kzk4MLGD0A+mLW1Z61VUA+lbzr2Vf08P9CsYpyMr289TEKivXLoMl67B965uButRFjk+o4w9FrqEA4WwOC3PrV6H+K5ZJ63ngZg1zuE=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 9D9E443273
+Received: by mail.gandi.net (Postfix) with ESMTPSA id D36B342E7F
 	for <linux-bluetooth@vger.kernel.org>; Fri,  9 Jan 2026 09:36:11 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
-Subject: [BlueZ PATCH v1 2/3] unit: Speed up unit-gobex-transfer test
-Date: Fri,  9 Jan 2026 10:29:01 +0100
-Message-ID: <20260109093602.1224918-3-hadess@hadess.net>
+Subject: [BlueZ PATCH v1 3/3] unit: Speed up unit-ringbuf test
+Date: Fri,  9 Jan 2026 10:29:02 +0100
+Message-ID: <20260109093602.1224918-4-hadess@hadess.net>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260109093602.1224918-1-hadess@hadess.net>
 References: <20260109093602.1224918-1-hadess@hadess.net>
@@ -47,29 +47,33 @@ Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 X-GND-State: clean
 X-GND-Score: 0
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutdekgeeiucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpeekteetgeettdehieduiedttdetffelleehtdejkeeluedvgfffvdevteetudfhkeenucfkphepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefpdhhvghlohepohhlihhmphhitgdpmhgrihhlfhhrohhmpehhrgguvghssheshhgruggvshhsrdhnvghtpdhqihgupeelffelgfeggeefvdejfedpmhhouggvpehsmhhtphhouhhtpdhnsggprhgtphhtthhopedupdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddutdekgeeiucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpeekteetgeettdehieduiedttdetffelleehtdejkeeluedvgfffvdevteetudfhkeenucfkphepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefpdhhvghlohepohhlihhmphhitgdpmhgrihhlfhhrohhmpehhrgguvghssheshhgruggvshhsrdhnvghtpdhqihgupefffeeiueefgedvgfejhfdpmhhouggvpehsmhhtphhouhhtpdhnsggprhgtphhtthhopedupdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
 
-Speed up /gobex/test_packet_put_req_suspend_resume by reducing the
-timeout length from seconds to hundreds of milliseconds.
+Speed up /gobex/test_packet_put_req_suspend_resume by not printing
+debug for each of the million of iterations of our test.
 
-This reduces the runtime from 1.5 secs to 0.1 secs.
+If we carry on printing this, then either the terminal's output speed,
+or the debug capture from the test suite will throttle the test.
+
+This reduces the runtime from 3.3 secs to 0.007 secs.
 ---
- unit/test-gobex-transfer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ unit/test-ringbuf.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/unit/test-gobex-transfer.c b/unit/test-gobex-transfer.c
-index 4fc97f4541b8..d97e0ae430f7 100644
---- a/unit/test-gobex-transfer.c
-+++ b/unit/test-gobex-transfer.c
-@@ -1123,7 +1123,7 @@ static gssize provide_seq_delay(void *buf, gsize len, gpointer user_data)
+diff --git a/unit/test-ringbuf.c b/unit/test-ringbuf.c
+index b1cf51115a41..0e348a49b8c9 100644
+--- a/unit/test-ringbuf.c
++++ b/unit/test-ringbuf.c
+@@ -57,9 +57,6 @@ static void test_power2(const void *data)
+ 		while (size3 < i && size3 < SIZE_MAX)
+ 			size3 <<= 1;
  
- 	if (d->provide_delay > 0) {
- 		g_obex_suspend(d->obex);
--		g_timeout_add_seconds(d->provide_delay, resume_obex, d);
-+		g_timeout_add(d->provide_delay * 100, resume_obex, d);
- 		d->provide_delay = 0;
- 	}
- 
+-		tester_debug("%zu -> size1=%zu size2=%zu size3=%zu\n",
+-						i, size1, size2, size3);
+-
+ 		g_assert(size1 == size2);
+ 		g_assert(size2 == size3);
+ 		g_assert(size3 == size1);
 -- 
 2.52.0
 
