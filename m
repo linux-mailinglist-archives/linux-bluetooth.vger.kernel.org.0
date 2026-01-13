@@ -1,59 +1,59 @@
-Return-Path: <linux-bluetooth+bounces-18023-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18020-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B1A9D17175
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 Jan 2026 08:48:49 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id D6817D17199
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 Jan 2026 08:49:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id D9B403019BB9
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 Jan 2026 07:48:13 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id D149F3026B40
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 13 Jan 2026 07:47:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DA103242BA;
-	Tue, 13 Jan 2026 07:47:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EB15318B9E;
+	Tue, 13 Jan 2026 07:47:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="gn8JpPhA"
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="W3dLPFcy"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013008.outbound.protection.outlook.com [52.101.83.8])
+Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010052.outbound.protection.outlook.com [52.101.69.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A363242B5;
-	Tue, 13 Jan 2026 07:47:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.83.8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC3F314A89;
+	Tue, 13 Jan 2026 07:47:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.69.52
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768290452; cv=fail; b=BTYrQw/H/j3Hg9fLa45KxKAenXR5O//SDQw2z4OfkdUoCIObLvpaYe77DZ5g16D0wge40Xy6HUc2Pb7vL0PIcxCM6037RkhRvON3CQg6rIk8ibwtTdDzzNzObjsxnHpNLDwnjI3iF8WhKYKHMe1J07NuYgaiql3tgnqCWhdAUVg=
+	t=1768290435; cv=fail; b=mEUWBQpygmbWg0HSC1pePLN0wbNsV2UdwBzg4Ypr1j1ChikQopa/XH69Dm/t42kDJzDbvaUehpNPOjaGEw5bbD9hd9diqM2mN09496OKpL2ZToL8oKO/hSWK9inIAUr7Tqlr5S4v31xSh4tvY6GsdRrNZYMI3xqNeVp77LGw/HY=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768290452; c=relaxed/simple;
-	bh=IGWO6NoGxkaNaAj3nk9Pwgo/oxIJu7cVi4x3Q1GMOSQ=;
+	s=arc-20240116; t=1768290435; c=relaxed/simple;
+	bh=CmaiCwS45Me+s454rXQi2XdQHRTBGAPTV4b19nqDUGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=dXYfddQJigIhD7wGYDURKy+xC1iEwSms+3sfNzQfPt2MPb4J+Zr/CV/yCJO7AeEYa35pC3wO/mBNXbcy5Am/mL+9QjMNQ50IottkD4tdgG4af7slkJKXeF16zxJqF2rJwJvrvWtAly1jAbVbe53OOa44XKaGIzOcbWFIdI9trIQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=gn8JpPhA; arc=fail smtp.client-ip=52.101.83.8
+	 Content-Type:MIME-Version; b=P3L9k45LuvacEyNMyTxnrUjkS6r4Gsni6ev6vMPFesvVnzKhRFsAxc6KhYlyNo4GowB7HCemgLbIER/KCIAPYpWP7nJpqC47lthQg8RYfJt40CJ/QJstGW4TEBNwgmp7j2T6yn0eQ6868wQzCMLqxB6ZStzwjRywrye2FyniLs0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=W3dLPFcy; arc=fail smtp.client-ip=52.101.69.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=AQPzqzn9Hd43iuAhlw4Bx3IerTmw6VPGS6Lo+78rJgqlh10q56XhZly3zDMyPFgyAXOPGmJcRhPt+wm9ccMAIDu78utPaBoJP5XFcA76lvXXf3nTLt5HK2HjHtiYKjSfC2N0FCndKugV1Of6nwJolPqPicUn+Uu7R4z/aiAIPU43VASj0xGQcoInSz8WrTRywWVg8xcfHqXFT9uCreMEQvpe5fTebLIF/EmBr941YG94DeI7+aFb65tq8i/ItfnIQDASsZCEQPnaYGxHm5oeBi/g0PRPuHbVfj67ZUlCHV1OGjy9F9cOWyp6QzRPH18XKc3jtYp4NzhPKu+O2jrb9w==
+ b=Iv4O3qdO7nfX8gxKQOSeuhcVNJaiv7k5LfHwn/+++RoyK1q+KuQ40/9fY0xpmcMJwO+46/qiMoOYmmEUkq64xHzj/v0zuPZeUdUtGIg8E3NSSpqG9iQag0mNxNjoaEjfTkFQ75+9hvE0ILzDgT96+A1WxhUyj6U53djtMLGb0bBvdIP9p70MLg1oB4TKH4RXZ2omVmPyiVA/wnnfIe5dmnD2VYHr8Pr7yef2o6ZZ6hhgttxeXqLoncug2Vy+1V9uY1KfOsxE/g1z+eoJqFZd/2Ol+poJGveTVv4npNuonIvsHHN8Z+Aa4f2Ungb/M+Xt+dJLo8ykWFvIIMXiUxWIVQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vtJI53yQlAlHMiWfYSdkyUiGhEbLBlPp91w/jJcr92c=;
- b=bHt3RAcbHUFqWK4o1P1kNSpVJ0XQUPrnvlJE546AMC3AKDSLqV/AA8lxi2fsRIUNJ0O01Ldn+ool2dds7bP1bXyHgTjcHtP9a5IXkjp9ICVw2AjshFReoP75/iXUuSl5xiEUkuWJTY96+WS466lov5bIJxi/NqA1qDWEzNh+jASW9noaRLFptpofB3PVlX+Jz8PudB5xrmO8iovsrJsfwQEr3A5sJg5iZNnrjBQkBPKcOnW+fimwa3/JMtl+Gm3jAi89sFLodKgqnTRpf6dyvkzshaTvAdQYqa88DqafXh6gWMPoKWwOeGc3Pkj4uOETtLtOCOu1OnYYzGhrVp6wbw==
+ bh=tvyUPpjImRls9SVxtFgJP0Ji0abVMi7jLMTMOCKM3I8=;
+ b=NTEyCl9MTcC11hMTAAKcNnb78TKEoHTMhK8PqQgjAR3sxK38cr4KQWEhElZ2sUecAQD/QO4JnsUMyVI/rEEu6jrNu43+1x1yWMErusVOcJQYC5LMI9JMIaCCYkNyUagsMYAq+O1lNmeRZUcC4smdtmFR3l3egf3QsFeLUnPssd4XMTCMTUXukOzKCnlQD7/UuH9hFGQWenK/LSQ8toiFNhi5v0sPJCAFRuJMKEvALairkU69TtZM8PXEc9oDb1p0IlEgta+kPv512lVqQpiEWDHzHU8M6qhl3HhBTSPUgRULUl907empJYCiinU4Nl1tVv6RWDZaprIAroOOtypffA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
  header.d=nxp.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vtJI53yQlAlHMiWfYSdkyUiGhEbLBlPp91w/jJcr92c=;
- b=gn8JpPhAhMVNlWL+b0JMPPWWMMqCi1JdyUZjZUW0Ttj8vB6v0mWUBTsIv6Tp+h5XHmc4vytKqRqg83eUupffIN/VFqHVFtMx9F0EYe2jGTNRAcvgGSgfJbkxRK26fEGKguhO0Af13TqYLjWKlxBeFJVCMk/n7hOIanw8wSwZ7+eUHv6+/EClVCzHBcvn1X6741J4vhd7SpN/sQBCkfvqn6m60K1D1Fm1AZ5QSVLOT61gti7Xb4vZQcMRGUzhgaEEZZ9mV+eJttcXmepfcvc9pSfMRdu+ctMi+7wd5FzYQdOF8Giyu1EYw9NHKZsQpKtjyGCyCdiHPChin4aZ83yqfQ==
+ bh=tvyUPpjImRls9SVxtFgJP0Ji0abVMi7jLMTMOCKM3I8=;
+ b=W3dLPFcyE3iaCFi7YABU7DCSjqw0X58ShSDidXUkqcO3DiLFVn0e6td1iOfuYEyLOzochkGBlcTxSh/MYnDtl+4ZDlnjm0w4G5IcdY527ZwOQgFLf6RuBkaObxkjlR78HP1/mFEDHDFA44UCIrtPani2QJDaMYeOrniSGi4SPkir3qHfd7abgutZEZOKKLFo5kVaw5eBU4pljcprjj10bXYajxtzqzSh6b4Z4df2CeZsgWH+JLjt/UxQ827vM1VvcZUSHBEAGVO/YqxLTQqwd8Gunt6/vZj1Gr4qf/WwvlafAG3nahxTmuVIZGR5nepTxFZoJzbiaHdvjrHM8FXJWg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nxp.com;
 Received: from AS4PR04MB9692.eurprd04.prod.outlook.com (2603:10a6:20b:4fe::20)
  by PAXPR04MB8144.eurprd04.prod.outlook.com (2603:10a6:102:1cc::13) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9499.6; Tue, 13 Jan
- 2026 07:47:03 +0000
+ 2026 07:47:05 +0000
 Received: from AS4PR04MB9692.eurprd04.prod.outlook.com
  ([fe80::a2bf:4199:6415:f299]) by AS4PR04MB9692.eurprd04.prod.outlook.com
  ([fe80::a2bf:4199:6415:f299%4]) with mapi id 15.20.9520.003; Tue, 13 Jan 2026
- 07:47:03 +0000
+ 07:47:05 +0000
 From: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
 To: marcel@holtmann.org,
 	luiz.dentz@gmail.com
@@ -63,9 +63,9 @@ Cc: amitkumar.karwar@nxp.com,
 	dmitrii.lebed@nxp.com,
 	linux-bluetooth@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 07/11] Bluetooth: btnxpuart: Add device authentication
-Date: Tue, 13 Jan 2026 13:17:14 +0530
-Message-ID: <20260113074718.2384043-8-neeraj.sanjaykale@nxp.com>
+Subject: [PATCH v2 08/11] Bluetooth: btnxpuart: Derive traffic keys from TLS 1.3 handshake
+Date: Tue, 13 Jan 2026 13:17:15 +0530
+Message-ID: <20260113074718.2384043-9-neeraj.sanjaykale@nxp.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260113074718.2384043-1-neeraj.sanjaykale@nxp.com>
 References: <20260113074718.2384043-1-neeraj.sanjaykale@nxp.com>
@@ -82,693 +82,223 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: AS4PR04MB9692:EE_|PAXPR04MB8144:EE_
-X-MS-Office365-Filtering-Correlation-Id: 556cd2b7-22a7-4e53-308b-08de5277f12a
+X-MS-Office365-Filtering-Correlation-Id: 29a91da1-fb25-449b-3102-08de5277f260
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|376014|52116014|366016|19092799006|1800799024|38350700014|7142099003;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?dlfcedsVjMub5A2gn2Y6CwKYojfFa4IDKH4Rj2UThP4kbKPsCTLEjreJOuFu?=
- =?us-ascii?Q?aE0+K0SBQjJrQq+CZd0aSzhaPoXxpkkJBp5jP3IML2QoqAW2O5JBRAVSdpMt?=
- =?us-ascii?Q?3h4sALrVBtycOq0+0BFSEzEwzzcV4shDm0B/sJuap7VIdS5O94z88dF9XR/t?=
- =?us-ascii?Q?hQveTFn+A3bXXvR9JqySkLlr7NiMuKyvYJakl8RfN2Rc4BsDrXK/59igAsVT?=
- =?us-ascii?Q?8Y7noiFqaanfev9QBDK6fZZVQjyWBiT1iJs9bo7u1APd3jpooApIJWGbRmhZ?=
- =?us-ascii?Q?yubgQxuVbnh7eomCfNc0Wd2aPXfs3VSXhFdD/oevxdsfyHVu55ingAYciEJz?=
- =?us-ascii?Q?+TWInP2Et8uQrtfvLHSsj6fZQOMrUt6Xu7J14MlPDOMoY9SaAIV3FxPNFpOl?=
- =?us-ascii?Q?TGFdsn8Qk7KrfnOLcX86r1xCbnF+sSdydaaeBcsoYCXCoQtvl4eZIi+WqHcM?=
- =?us-ascii?Q?O+7UFkI9YwRS3UF/lIxACfMIJCejtLunZZrntCM/wIvzZkm0gmMtuRAqqsb6?=
- =?us-ascii?Q?xrA49FGCqUH9gZYAzq2zW+yzI95h8CtlZ4V996wWDpugj+eJeQyDl8e8EyOL?=
- =?us-ascii?Q?LL/q9QcHxxAcJc3BueIOp9Y0pw/UShxkKcDVnErGhTHzGgGnPSirvymApvh8?=
- =?us-ascii?Q?b+4K9Ivkm3avz/le2P4Y+S+EM/rMPdQDu/0n3Qtn88VQR/80OE0q4OkQjUJK?=
- =?us-ascii?Q?5zIhEOhRBzDNv8S3AVGxUiO1+UyypKjht8kdIbtywGbSh8s4TwYthFtwIQ/f?=
- =?us-ascii?Q?uB9x8NP0fFnwh/xmMNDgDTbGAtx2W4PegugeKjSnsee2ffet0w/GZffiBlXL?=
- =?us-ascii?Q?GC+UFIGEQQFzomn1wF686nMH+NBKlZcwMa7ZzGzmshMb04JY9PuM4rEXHB5m?=
- =?us-ascii?Q?NdPy0wz2Rmd0lZ+G5RWnMnyGNLCgKNqL10STbF5iK4pvTX/R7zrMZpjI1+Mx?=
- =?us-ascii?Q?rf231hj0UKZRB014qhUzBMk/aahpTmrWvq5+bpT6sH2fiS0pO7xk6ITAfddk?=
- =?us-ascii?Q?nQEHGZlJKEHBkj56X2/t5aFOGZ8qWAdHMG15E/fQpacRjPLKMSAY6MGLdvlv?=
- =?us-ascii?Q?sgjEfCQub3LhpWMHBuQ3/B+QA4E1QGQwDUl2cQnNm6VnBhz1Z8uhBtUoN7zT?=
- =?us-ascii?Q?iEJegP90TQR8f1Sjo+LobwzcqstWDIsi7k5kq+aljruSv/t1p/vyisYjiCpI?=
- =?us-ascii?Q?a7meFGu2bgfYtImpG1OauqcWKCV/ZrGGz4jgiMd3tbYkCzln9qssk503ezsK?=
- =?us-ascii?Q?XWDptAhfNQfRi3r97ZZM7BRiCktcnTOT559dAkn/CfJiExuOhsHi0GREWCVe?=
- =?us-ascii?Q?+jM8wjdk+EvKk6NFdFeuj5yU3PHS/6k7f6mYtKNsoJ2/ITFYKzDlpip/kTTn?=
- =?us-ascii?Q?CtG7tiG94P5O1KcsNOWfq1xM5tdz9F0OkCKGmMXUn5wMVx+flk2OaPEQS6g2?=
- =?us-ascii?Q?RXU/fCP0FmrePtzNStAgbUcxKHF/GZ+nTG9cYWIdtP2CtZBPf06vHJHY2lEl?=
- =?us-ascii?Q?i7O99bxp/by1mCQA8eWM54G/XpFnb9DfuxSB?=
+	=?us-ascii?Q?HIzpqmw4Ow9iFh3rLFKsrA2Yq62PFpqsN34MTHBo8vqNoXqEDychAWVJELoP?=
+ =?us-ascii?Q?6j4OvrruHtD0DTVIgcl2SadJXVOiJ8Sln0/pJd+u5HH67fOkGVqG6NFrCyBC?=
+ =?us-ascii?Q?zoRwB7DEMO9fqUl1ByymSixjrvdyIMh0QCoEZVc64Vi/hk+5HjCPe/1IEYN/?=
+ =?us-ascii?Q?tq7ULtvGFZ1kKit/b9JZ0dExV/Y7p42X7+LuTg8E0ESc6QfYr4T51WY5K0vy?=
+ =?us-ascii?Q?D7hLh7/Rr/7hS0DPPxpAYtUWWv0Q4j5zU4nG9gkyyxZ0+dVRvmLcQmClzrZn?=
+ =?us-ascii?Q?riH7r2Fft0QKGI/t3rjHaEYSeu0L28BXbS4VDD2vEEtRo+3juusbJm1Ug+V0?=
+ =?us-ascii?Q?zxV+loXSodSgZQw1wa8hf1QXweXI3s0ScMAV8trJVPfff5NEkesxv+tdBD0G?=
+ =?us-ascii?Q?Y4Ur7GsQZZB0zIxe7/AMO8d5xdht9RFyr5jyBD3hsEEnBQa0SrZrYtlVKzeR?=
+ =?us-ascii?Q?YWAmW7bK5Xfe5PlRFzGDdAikT8ewhViNWrhmoWJ6sBr5S4P6RE31JqmlWAyR?=
+ =?us-ascii?Q?seLP77FI2bm9cKPGZ3TZMJVVGDh00O/KS2EGg1OUZbCcFfpuwdgK3/PZtB3D?=
+ =?us-ascii?Q?Sfl9uZgdvMO+aaYHCDdnfy5L2Kg6hXtcXXH6/qLEqX9bzLHtCap/kBO0fGVc?=
+ =?us-ascii?Q?pG9PZa2/i/7Q/TQG7Shza0Go+XNALQIOcVzgNeTqeh0f2SUhKtbs+kaHjvad?=
+ =?us-ascii?Q?e8c35KkIKxZbjnPJDZvfNfjmnB+Acyu3zF9BxKFi98SWevv+/PVzEuwr86e7?=
+ =?us-ascii?Q?nnKs2+2spFrf1A0+i5+bmJEtrQQa/zo1rhUuD4r04T55F0MNj0Qcn63yK8i3?=
+ =?us-ascii?Q?MJhonoY1n9W/2slOPB6S/tlUSD0pnG9IG3NiFeAZmeWbnWA7FmkvZNk2aOeo?=
+ =?us-ascii?Q?Cb8s7/fHcbKBTeozgwrovhhF3BbWWL/1b4iyTcfyzIi4L0isybZI/m1TBOvj?=
+ =?us-ascii?Q?/DG6LOZriutw6uxYZUILXR7mDLsI4eyzVkeB25DQ3pyN0POg1CFIPaXkEvlh?=
+ =?us-ascii?Q?GSwQ5oeu30vKyF1pE2ZCI4oOtSTzFw5LheUBGU1032/tr0afB7GVptqbgHvo?=
+ =?us-ascii?Q?645izuJUgn6NRjAv3Fzitjeely9uj7Ar6/HKgbOeuW5rOVBOY1Mafe/NzvCP?=
+ =?us-ascii?Q?GGO0GX6ZxT2ltDBqGBy0YfdUjFJLJ7VBBueZ28VkryOtp6+/aMAdnGbAoXww?=
+ =?us-ascii?Q?DJ/PSRwc4pZbcNloaruP2yxJ9WzFT+Vvjc+KwA9ZRp9KgdUMAGMEdtXIC5DU?=
+ =?us-ascii?Q?Ue/eO6kcFX6FbR77cTwXYu8he8wkuGFnjEzrKxLrD94Scb42eUhi5iALgpcI?=
+ =?us-ascii?Q?ijWDoIpf2bvgtYTqcrIaVbFQr4dgFmUHVnZGnvDXv6kHHPnMhP9GboK1GA5i?=
+ =?us-ascii?Q?rZPk4B3ZVoABSiqIGjFZsKt3i0Jt/Nqmt+Hgx0oXbJ5LvVPJQWwW67xAeyYB?=
+ =?us-ascii?Q?EvjHQmIvzErq4ect9kZYtqUdah7yuYrWire3Id+pJU/c8nmAvr1VQshBpYDr?=
+ =?us-ascii?Q?nK6DEmImGjaNKULnRsBJSWbjGcOU5D9dr3pm?=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS4PR04MB9692.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(52116014)(366016)(19092799006)(1800799024)(38350700014)(7142099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?BbFBoz9yD6Oj46tA3G6xoj5/qTm4R0LeRVCBGxwqUP1QxLhFu0XQvYbtv8MW?=
- =?us-ascii?Q?ySx89TsnK5gTlcBTnOJrLYqkbY2vWaW06f89oocpgfkng29vQZuSE/rbFxrg?=
- =?us-ascii?Q?A88gxKaFlGAJOkIFwB+KTf+9RUOCWX6JA0bTPT3087PQyfLKmC2TcnV3MDVg?=
- =?us-ascii?Q?tT9RfeV3/6OtGqQIDpvPWNyLMBsrNj2WSK1t1IJ2zz5RapkVNTMf5aV+0KW8?=
- =?us-ascii?Q?xaOsLdKtVU0x7JgSK9TEOJ8ORqnmShBb1cNjfnCRFne8hFwF/RI59zKRWuAT?=
- =?us-ascii?Q?IaDmyoUguIwiOkRugbC8TuieWWqXKRIy1FkloaO+i0Nt0GQKMIOo+AwOv8LW?=
- =?us-ascii?Q?EqyYI8kWdIvQy5SfoEwDoeHwGRWVnVzIL0N0/xnc40CW5HIl6La9lPbxcWlh?=
- =?us-ascii?Q?kjephYJLY0XuVFJ3LdOXODf4a9FHcBv8hg4JQOUTgRQ1KPorwXqPxULcsz/i?=
- =?us-ascii?Q?+U/dGO8Rfd7LAFIXlEJWEH7r2AsE9aCzbznB7SwvJn3Kz+xVe+F8cgZHFg3C?=
- =?us-ascii?Q?agt8cI55I6BBM2DGS5uUfCzYxJDF0Os5BjoQRIAIYvM/8rWYm6vHtIAgu05g?=
- =?us-ascii?Q?S/UydPEMXBEuPxj63tQsgqtvT2vqZ1uJgHvKMh/baE7zh1t2umwkMNK6Jrnf?=
- =?us-ascii?Q?19yRWPYSrFx2U2be5QMSrsYWXmIDqeUveESBBelsjcnY1BF5MKDMUFg4qD1Y?=
- =?us-ascii?Q?LffPKQpweqffYUYSvKaS6g7ovGAjmigyS/lbiKaFhx+0bprC+BYilQv+9PZK?=
- =?us-ascii?Q?7Lj05ZTunV+Xc+ismFNWpA4YaKCZyo45AAAfXJtd4/xfD7SOK/VkRpf4EbEW?=
- =?us-ascii?Q?cisA5jGXZ3dhS84gFpfJ5iI+52EAcnt1ccB5XDZFWLk+H7tI6uaXcfxlEXb7?=
- =?us-ascii?Q?lXbcHox04DSRkQ+W2M8/7CH7Ge4LxUNdKTRQPbJX2WAzpSFV3e6zGoQ49dLB?=
- =?us-ascii?Q?6TH3k7f8ddze6iVQcUe+76tlmSxzV7smBoc/3sssLg68BHAyJM5ap4Alb+Kq?=
- =?us-ascii?Q?/2FjrGnliqwb2b9le8ZY08ZTFx+5IMhwuTih5zmXqli1aTSSdohUYeABLll0?=
- =?us-ascii?Q?7KXqHBDMCCR/7vz5Syc8x9mDN7pC3mtDL26Nj+PteU5SFyDnfJqMOrZGUIr8?=
- =?us-ascii?Q?Ra8Qb8rNAg2hAf/w6aTMuzcd6m06PCMfDoSyKIoOBPCl35Zsv5x1irFiNlcO?=
- =?us-ascii?Q?InGAuk0/BEI66GqgEqqrBBMJ6yOLDt3fTjoqSWjOlsR1wOcjA3tSnIo6GCkf?=
- =?us-ascii?Q?W2AQ4EKMHCJWdKRxhMXyfAutmnYq7t38ccOYpPU9HpqWrz2ZS5a48AKeFTVY?=
- =?us-ascii?Q?/o3rw/cF/lMlQDVJ/ekeUkbGs04d82Bjrf3HpNE+YKw90xic7wlw2+qBwFsr?=
- =?us-ascii?Q?his4O4SZq1kblSfXBuy4Y/nZ3q8vvOpfcNWZJgsxx7lLkxGxrSH7QMHp+rJA?=
- =?us-ascii?Q?Zqv5Hn/r2NgGxv1yO4QJTrMQKNTsScRPFbD03TNu1Upk7DeCQQZz1CqEB/Hb?=
- =?us-ascii?Q?6VR+Quzjs8A570/KtpC1MElArHhszvPTXuIUdNvHx1FqPk7v93HButFMTkcj?=
- =?us-ascii?Q?P9CWWS+rRgXVqzNhHhwJTqtNwlC8aw3KsDKLwOkEpyRIouQ2wu+sFLu69Utl?=
- =?us-ascii?Q?+xKeW9A7CXImoLBu+xWAvuPS7OSHb+LRThpcxEFzHIF+fwj9v+k1AxdxsVLF?=
- =?us-ascii?Q?aFIGsDvd7QH4tVMyMBgHWMZqfX3SE053ffWtZpXd8wJpjgvAj+Ha23EjSaga?=
- =?us-ascii?Q?oHFkqbqV+8A1tXyqwUGVkcpGRZHkLoA=3D?=
+	=?us-ascii?Q?UHv5FvjZ3ma2m5XCo2IWJaz8b9MweQPQ2J3rJ4RtkfaXHEAkdM4zfF/9xvJD?=
+ =?us-ascii?Q?Zf7rhX0op1QxrNVYr2GmgUTjugIyVFWbeBte9vo2nvsad9h2NAUrvSW+1L2M?=
+ =?us-ascii?Q?Ed1jhFMqvk6OpBOQP7MEkhnAla2vQu1BcXiKM809fCSRPy7obcXwvDl8maam?=
+ =?us-ascii?Q?IxTnHxLOu2worqnhEL5MFS4Pjj2jY9Y27d/D5o/pt5NHUHGBoWWPoBgA4FDY?=
+ =?us-ascii?Q?cWmFHzwkq0ekqtx/Nr+7zresCm46BLk3icWiMSJveo86/iXCDxHyJ/JqNq9f?=
+ =?us-ascii?Q?JBocio4y97RvnJkx/9bfm/JCy/KxxWhOAA79d6wOWdFnJU4KYPnEYzAstrQa?=
+ =?us-ascii?Q?C3t6jk93Gr7DZIqpdeYmuohdxCkPtLDzIvIzrYqEoPcyGHEiqlAUKnEosgi4?=
+ =?us-ascii?Q?2HqsEZoMadd5ze4sVfenzBvWYaRXeCzy31sqtIb/tOZNL5og1boSB27avkQ5?=
+ =?us-ascii?Q?Ff+Guxy1cZSYjJx9TLMyVBhugdmo0NeheyrcRxXo3ffYrU6R5REQu/dCdzA5?=
+ =?us-ascii?Q?MUE8Rpln0CYRjCEolaiqu3J23lrVW1xCrnWdSAWRvgt3matqg++jP3rk7HqH?=
+ =?us-ascii?Q?Wvmv80P0ufXQ/bSAoyEsuFJN2GUtNcvaFW091YnqB9F3uC6L1Ec2eHsvmAMk?=
+ =?us-ascii?Q?EaXcvCzilLxE6Z7kovFoxT4gg35OBjEs1wA8THMX9fKpXO2cVHWdR90sGrJ+?=
+ =?us-ascii?Q?po2WzOJV7WiGqeL5Qy3X2tfdedsqhdIuJlVWvVGuDkD0D6tLYq4yjI17J5TC?=
+ =?us-ascii?Q?IipflEbAlQ2K4JP+zm4LgQCKO8A+diHB1MEPuVMfKL2GplofpPxd1wBAz8yq?=
+ =?us-ascii?Q?999TwYFXQx/U6BHVkM5YwvmNXZNqt3Q5mswMMw+flGEI5x0ZSQ/CLwlr64lh?=
+ =?us-ascii?Q?mEx5Jdb85P/VGB2RWdRr7Ui0amhjgvk1juJqZKS20gz7dgFgx/5XugpTtAgN?=
+ =?us-ascii?Q?6iI+OV3MdjSgbBvlea/ssQ+1TIp5CBmrCXac51KlcpRbwBje91QbwyTY+T9T?=
+ =?us-ascii?Q?RmGIDw550mA2XjvZulJal+zSoSE7Kona1GwyGSpjkmptmeOa6hyPqF+rWmwR?=
+ =?us-ascii?Q?tUGur+KqFhpm1WdHuB7CX8OjOhqPRDfsgj5vYSiHgmeDxiwTqIs8SqKxMmnv?=
+ =?us-ascii?Q?rlWUSsj0YcK06tyaoiXsVPxvxxe1lDKQkNGANb/b+lzRNH/CuCep3PFPXwgk?=
+ =?us-ascii?Q?+EeWT3lyXfd8tYA+7onasn9SXwYEyxk4dRZbnhxZc0je4OinuKt78XK5suGW?=
+ =?us-ascii?Q?th7dkGtA4O+5SVKxQt7Ulx0mtDcrjzzdXj6ZNtd5lAypbkc0uLS4iYK5bFc+?=
+ =?us-ascii?Q?3kzNSskWw8G9PR/aqzZ8Lf1y7OXRrvJDJnTKu2BKkIPc3wXT7tjLJccBV/XG?=
+ =?us-ascii?Q?YYdLud0zUTeOiPOHIOuKS2xBBg9IiNYd92WxJB/ZHd5VOsf2wa6Y433pGroa?=
+ =?us-ascii?Q?23qc3n2AMmWbVcQ4nwDyJRySY+T6lbcl5wdxQLfEmLMttxR1b6O+EMxwalwL?=
+ =?us-ascii?Q?HJ/0fKkI4C5UZC00TNizYEI9aAwK3w7Hy5HE+Dk6lXVH57UOxTMXeezH9JV6?=
+ =?us-ascii?Q?ifm/bk4m2eKcKMJClPaD0LpBqfYIXfrzcK+uCtnATro2AyCK7KMfnKCZVXJk?=
+ =?us-ascii?Q?0u8oio0gaWJBZcWZDJHCESdinoqMMfL3TeLfzA+GGbZPtSbJxrPZD8mWaUTC?=
+ =?us-ascii?Q?wnrYMpKCWWd/9RtYTOb7w7zhs9Y3IC07iK0HSTfL+3eJ3XTH62ioTERlNBRm?=
+ =?us-ascii?Q?1pxHHpN2MfWSa2NYwjRoLMFBdsXUQL8=3D?=
 X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 556cd2b7-22a7-4e53-308b-08de5277f12a
+X-MS-Exchange-CrossTenant-Network-Message-Id: 29a91da1-fb25-449b-3102-08de5277f260
 X-MS-Exchange-CrossTenant-AuthSource: AS4PR04MB9692.eurprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jan 2026 07:47:03.6666
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jan 2026 07:47:05.6748
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: nrvkXS8e8BbGT/lMJoc0foeTfyidkUkRI4UgTVYoeOYX47+7eaVSXQ5l6OcSANQFA2ZtTcKO+Zj84h+zO1B7OyqZbF92ULtHgnN9WX5IN2s=
+X-MS-Exchange-CrossTenant-UserPrincipalName: SCXWYm+ZWmadaiuozmPiIKli7ATKSKchWgoQF6XQPlSEbtFD08AtV0xjgeKnqlE0CHETSLZNjKP4MySJA/6kss9e2izEuvz2vEZKZ/gamiY=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR04MB8144
 
-This implements secure device authentication during TLS 1.3-like
-handshake with ECDSA signature verification.
-
-The authentication flow:
-- Derive handshake traffic secret from ECDH shared secret
-- Decrypt device hello encrypted section using AES-GCM with traffic secret
-- Extract ECDSA public key from firmware metadata for verification
-- Verify device handshake signature to authenticate device identity
-- Validate device finished message using calculated verify data
-- Clear handshake traffic secret after successful authentication
-
-This ensures only devices with valid private keys can complete the
-handshake.
-
-Key components added:
-- AES-GCM encrypt/decrypt with traffic secret derived keys
-- ECDSA P-256 signature verification using kernel crypto API
-- X9.62 to P1363 signature format conversion
-- TLS 1.3 finished message verification
-- Secure memory cleanup of cryptographic material
+This completes the TLS handshake implementation by adding master secret
+derivation and traffic key generation. These traffic keys will be used
+to encrypt/decrypt sensitive HCI commands, response and events.
 
 Signed-off-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
 ---
-v2: Fix sparse warnings. (kernel test robot)
----
- drivers/bluetooth/btnxpuart.c | 504 +++++++++++++++++++++++++++++++++-
- 1 file changed, 499 insertions(+), 5 deletions(-)
+ drivers/bluetooth/btnxpuart.c | 88 +++++++++++++++++++++++++++++++++--
+ 1 file changed, 84 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/bluetooth/btnxpuart.c b/drivers/bluetooth/btnxpuart.c
-index 0e71f68a408e..9ed4cece7e42 100644
+index 9ed4cece7e42..cabed02e0964 100644
 --- a/drivers/bluetooth/btnxpuart.c
 +++ b/drivers/bluetooth/btnxpuart.c
-@@ -27,6 +27,12 @@
- #include <crypto/hash.h>
- #include <crypto/kpp.h>
- #include <crypto/ecdh.h>
-+#include <linux/scatterlist.h>
-+#include <linux/completion.h>
-+#include <crypto/aes.h>
-+#include <crypto/gcm.h>
-+#include <crypto/aead.h>
-+#include <crypto/public_key.h>
+@@ -206,6 +206,16 @@ enum bootloader_param_change {
+ 	changed
+ };
  
- #include <net/bluetooth/bluetooth.h>
- #include <net/bluetooth/hci_core.h>
-@@ -204,11 +210,13 @@ struct btnxpuart_crypto {
++struct nxp_tls_traffic_keys {
++	u8 h2d_secret[SHA256_DIGEST_SIZE];
++	u8 d2h_secret[SHA256_DIGEST_SIZE];
++	/* These keys below should be used for message encryption/decryption */
++	u8 h2d_iv[GCM_AES_IV_SIZE];
++	u8 h2d_key[AES_KEYSIZE_128];
++	u8 d2h_iv[GCM_AES_IV_SIZE];
++	u8 d2h_key[AES_KEYSIZE_128];
++};
++
+ struct btnxpuart_crypto {
  	struct crypto_shash *tls_handshake_hash_tfm;
  	struct shash_desc *tls_handshake_hash_desc;
- 	struct crypto_kpp *kpp;
--	uint8_t ecdh_public[NXP_FW_ECDH_PUBKEY_SIZE];	/* ECDH public key, Key negotiation */
-+	u8 ecdh_public[NXP_FW_ECDH_PUBKEY_SIZE];	/* ECDH public key, Key negotiation */
- 	u8 ecdsa_public[NXP_FW_ECDSA_PUBKEY_SIZE];	/* ECDSA public key, Authentication*/
+@@ -215,8 +225,10 @@ struct btnxpuart_crypto {
  	u8 fw_uuid[NXP_FW_UUID_SIZE];
  	u8 handshake_h2_hash[SHA256_DIGEST_SIZE];
  	u8 handshake_secret[SHA256_DIGEST_SIZE];
-+	struct completion completion;
-+	int decrypt_result;
++	u8 master_secret[SHA256_DIGEST_SIZE];
+ 	struct completion completion;
+ 	int decrypt_result;
++	struct nxp_tls_traffic_keys keys;
  };
  
  struct btnxpuart_dev {
-@@ -405,6 +413,10 @@ union nxp_set_bd_addr_payload {
- 
- #define NXP_TLS_LABEL(str)		str, strlen(str)
- #define NXP_TLS_DEVICE_HS_TS_LABEL	NXP_TLS_LABEL("D HS TS")
-+#define NXP_TLS_KEYING_IV_LABEL		NXP_TLS_LABEL("iv")
-+#define NXP_TLS_KEYING_KEY_LABEL	NXP_TLS_LABEL("key")
-+#define NXP_TLS_FINISHED_LABEL		NXP_TLS_LABEL("finished")
-+#define NXP_TLS_HOST_HS_TS_LABEL	NXP_TLS_LABEL("H HS TS")
+@@ -416,7 +428,10 @@ union nxp_set_bd_addr_payload {
+ #define NXP_TLS_KEYING_IV_LABEL		NXP_TLS_LABEL("iv")
+ #define NXP_TLS_KEYING_KEY_LABEL	NXP_TLS_LABEL("key")
+ #define NXP_TLS_FINISHED_LABEL		NXP_TLS_LABEL("finished")
++#define NXP_TLS_DERIVED_LABEL		NXP_TLS_LABEL("derived")
+ #define NXP_TLS_HOST_HS_TS_LABEL	NXP_TLS_LABEL("H HS TS")
++#define NXP_TLS_D_AP_TS_LABEL		NXP_TLS_LABEL("D AP TS")
++#define NXP_TLS_H_AP_TS_LABEL		NXP_TLS_LABEL("H AP TS")
  
  enum nxp_tls_signature_algorithm {
  	NXP_TLS_ECDSA_SECP256R1_SHA256 = 0x0403,
-@@ -478,9 +490,42 @@ struct nxp_tls_device_hello {
- 	u8 auth_tag[NXP_ENC_AUTH_TAG_SIZE];   /* Auth tag for the encrypted portion */
- };
- 
-+struct nxp_tls_data_add {
-+	u8 version;        /* NXP_TLS_VERSION */
-+	u8 reserved[5];    /* zeroes */
-+	__le16 len;
-+};
-+
-+struct nxp_tls_host_finished {
-+	struct nxp_tls_message_hdr hdr;
-+	__le32 reserved;
-+	/* Encrypted portion */
-+	struct {
-+		struct nxp_tls_signature reserved2;
-+		struct nxp_tls_finished host_finished;
-+	} enc;
-+	u8 auth_tag[NXP_ENC_AUTH_TAG_SIZE];   /* Auth tag for the encrypted portion */
-+};
-+
-+union nxp_tls_host_finished_payload {
-+	struct {
-+		u8 msg_type;
-+		struct nxp_tls_host_finished host_finished;
-+	} __packed;
-+	u8 buf[125];
-+};
-+
- #define DEVICE_HELLO_SIG_CUTOFF_POS \
- 	offsetof(struct nxp_tls_device_hello, enc)
- 
-+#define DEVICE_HELLO_FINISHED_ENC_CUTOFF_POS \
-+	(offsetof(struct nxp_tls_device_hello, enc.device_finished) - \
-+	DEVICE_HELLO_SIG_CUTOFF_POS)
-+
-+
-+#define HOST_FINISHED_CUTOFF_POS \
-+	offsetof(struct nxp_tls_host_finished, enc.host_finished)
-+
- /* FW Meta Data */
- struct fw_metadata_hdr {
- 	__le32 cmd;
-@@ -1700,6 +1745,38 @@ static void nxp_get_fw_version(struct hci_dev *hdev)
- }
- 
- /* Secure Interface */
-+static int nxp_get_pub_key(struct hci_dev *hdev,
-+		      const struct nxp_tls_device_info *device_info,
-+		      u8 ecdsa_pub_key[NXP_FW_ECDSA_PUBKEY_SIZE])
-+{
-+	struct btnxpuart_dev *nxpdev = hci_get_drvdata(hdev);
-+	const char *fw_name;
-+
-+	if (ecdsa_pub_key[0] == 0x04)
-+		return 0;
-+
-+	fw_name = nxp_get_fw_name_from_chipid(hdev,
-+					      le16_to_cpu(device_info->chip_id),
-+					      le16_to_cpu(device_info->device_flags));
-+	if (nxp_request_firmware(hdev, fw_name, NULL))
-+		return -ENOENT;
-+
-+	nxp_process_fw_meta_data(hdev, nxpdev->fw);
-+	release_firmware(nxpdev->fw);
-+	memset(nxpdev->fw_name, 0, sizeof(nxpdev->fw_name));
-+
-+	if (memcmp(nxpdev->crypto.fw_uuid, device_info->uuid, 16) ||
-+	    nxpdev->crypto.ecdsa_public[0] != 0x04) {
-+		bt_dev_err(hdev,
-+			   "UUID check failed while trying to read ECDSA public key from FW.");
-+		return -EBADF;
-+	}
-+
-+	memcpy(ecdsa_pub_key, nxpdev->crypto.ecdsa_public, 65);
-+
-+	return 0;
-+}
-+
- static int nxp_generate_ecdh_public_key(struct crypto_kpp *tfm, u8 public_key[64])
- {
- 	DECLARE_CRYPTO_WAIT(result);
-@@ -1971,6 +2048,320 @@ static int nxp_hkdf_derive_secret(u8 secret[32], const char *label, size_t label
- 				     output, SHA256_DIGEST_SIZE);
- }
- 
-+/*
-+ * The digital signature is computed over the concatenation of:
-+ *  -  A string that consists of octet 32 (0x20) repeated 64 times
-+ *  -  The context string
-+ *  -  A single 0 byte which serves as the separator
-+ *  -  The content to be signed
-+ */
-+static int nxp_handshake_sig_hash(const u8 transcript_hash[SHA256_DIGEST_SIZE],
-+				   const char *context, size_t context_len,
-+				   u8 output_hash[SHA256_DIGEST_SIZE])
-+{
-+	struct crypto_shash *tfm;
-+	struct shash_desc *desc;
-+	const u8 zero = 0;
-+
-+	tfm = crypto_alloc_shash("sha256", 0, 0);
-+	if (IS_ERR(tfm))
-+		return PTR_ERR(tfm);
-+
-+	desc = kzalloc(sizeof(*desc) + crypto_shash_descsize(tfm), GFP_KERNEL);
-+	if (!desc) {
-+		crypto_free_shash(tfm);
-+		return -ENOMEM;
-+	}
-+
-+	desc->tfm = tfm;
-+
-+	memset(output_hash, 0x20, SHA256_DIGEST_SIZE);
-+
-+	crypto_shash_init(desc);
-+	/* 2x hash size = block size of 0x20 */
-+	crypto_shash_update(desc, output_hash, SHA256_DIGEST_SIZE);
-+	crypto_shash_update(desc, output_hash, SHA256_DIGEST_SIZE);
-+
-+	crypto_shash_update(desc, context, context_len);
-+	crypto_shash_update(desc, &zero, sizeof(zero));
-+
-+	crypto_shash_update(desc, transcript_hash, SHA256_DIGEST_SIZE);
-+	crypto_shash_final(desc, output_hash);
-+
-+	kfree(desc);
-+	crypto_free_shash(tfm);
-+	return 0;
-+}
-+
-+
-+static void nxp_aead_complete(void *req, int err)
-+{
-+	struct btnxpuart_crypto *crypto = req;
-+
-+	crypto->decrypt_result = err;
-+	complete(&crypto->completion);
-+}
-+
-+static int nxp_aes_gcm_decrypt(struct hci_dev *hdev, void *buf, size_t size,
-+			       u8 auth_tag[16], u8 key[AES_KEYSIZE_128],
-+			       u8 iv[GCM_AES_IV_SIZE])
-+{
-+	struct btnxpuart_dev *nxpdev = hci_get_drvdata(hdev);
-+	struct crypto_aead *tfm;
-+	struct aead_request *req;
-+	struct scatterlist src, dst;
-+	struct nxp_tls_data_add aad = {
-+		.version = NXP_TLS_VERSION,
-+		.len = cpu_to_le16((u16)size)
-+	};
-+	u8 *ciphertext;
-+	u8 *plaintext;
-+	int ret = 0;
-+
-+	ciphertext = kzalloc(sizeof(aad) + size + NXP_ENC_AUTH_TAG_SIZE,
-+				 GFP_KERNEL);
-+	if (!ciphertext)
-+		return -ENOMEM;
-+
-+	plaintext = kzalloc(size + NXP_ENC_AUTH_TAG_SIZE, GFP_KERNEL);
-+	if (!plaintext) {
-+		ret = -ENOMEM;
-+		goto free_ciphertext;
-+	}
-+
-+	memcpy(ciphertext, &aad, sizeof(aad));
-+	memcpy(ciphertext + sizeof(aad), buf, size);
-+	memcpy(ciphertext + sizeof(aad) + size, auth_tag, NXP_ENC_AUTH_TAG_SIZE);
-+
-+	tfm = crypto_alloc_aead("gcm(aes)", 0, 0);
-+	if (IS_ERR(tfm)) {
-+		ret = PTR_ERR(tfm);
-+		goto free_plaintext;
-+	}
-+
-+	crypto_aead_setkey(tfm, key, AES_KEYSIZE_128);
-+	crypto_aead_setauthsize(tfm, NXP_ENC_AUTH_TAG_SIZE);
-+
-+	req = aead_request_alloc(tfm, GFP_KERNEL);
-+	if (!req) {
-+		ret = -ENOMEM;
-+		goto free_tfm;
-+	}
-+
-+	sg_init_one(&src, ciphertext, sizeof(aad) + size + NXP_ENC_AUTH_TAG_SIZE);
-+	sg_init_one(&dst, plaintext, size + NXP_ENC_AUTH_TAG_SIZE);
-+	init_completion(&nxpdev->crypto.completion);
-+
-+	aead_request_set_callback(req, CRYPTO_TFM_REQ_MAY_BACKLOG,
-+				  nxp_aead_complete, &nxpdev->crypto);
-+	aead_request_set_crypt(req, &src, &dst, size + NXP_ENC_AUTH_TAG_SIZE, iv);
-+	aead_request_set_ad(req, sizeof(aad));
-+
-+	ret = crypto_aead_decrypt(req);
-+	if (ret == -EINPROGRESS || ret == -EBUSY) {
-+		wait_for_completion(&nxpdev->crypto.completion);
-+		ret = nxpdev->crypto.decrypt_result;
-+	}
-+	if (!ret)
-+		memcpy(buf, plaintext + sizeof(aad), size);
-+
-+	aead_request_free(req);
-+free_tfm:
-+	crypto_free_aead(tfm);
-+free_plaintext:
-+	kfree(plaintext);
-+free_ciphertext:
-+	kfree(ciphertext);
-+	return ret;
-+}
-+
-+static int nxp_aes_gcm_encrypt(struct hci_dev *hdev, void *buf, size_t size, u8 auth_tag[16],
-+			       u8 key[AES_KEYSIZE_128], u8 iv[GCM_AES_IV_SIZE])
-+{
-+	struct btnxpuart_dev *nxpdev = hci_get_drvdata(hdev);
-+	struct crypto_aead *tfm;
-+	struct aead_request *req;
-+	struct scatterlist src, dst;
-+	struct nxp_tls_data_add aad = {
-+		.version = NXP_TLS_VERSION,
-+		.len = cpu_to_le16((u16)size)
-+	};
-+	u8 *ciphertext;
-+	u8 *plaintext;
-+	int ret = 0;
-+
-+	ciphertext = kzalloc(sizeof(aad) + size + NXP_ENC_AUTH_TAG_SIZE,
-+				 GFP_KERNEL);
-+	if (!ciphertext)
-+		return -ENOMEM;
-+
-+	plaintext = kzalloc(size + NXP_ENC_AUTH_TAG_SIZE, GFP_KERNEL);
-+	if (!plaintext) {
-+		ret = -ENOMEM;
-+		goto free_ciphertext;
-+	}
-+
-+	memcpy(plaintext, &aad, sizeof(aad));
-+	memcpy(plaintext + sizeof(aad), buf, size);
-+
-+	tfm = crypto_alloc_aead("gcm(aes)", 0, 0);
-+	if (IS_ERR(tfm)) {
-+		ret = PTR_ERR(tfm);
-+		goto free_plaintext;
-+	}
-+
-+	crypto_aead_setkey(tfm, key, AES_KEYSIZE_128);
-+	crypto_aead_setauthsize(tfm, NXP_ENC_AUTH_TAG_SIZE);
-+
-+	req = aead_request_alloc(tfm, GFP_KERNEL);
-+	if (!req) {
-+		ret = -ENOMEM;
-+		goto free_tfm;
-+	}
-+
-+	sg_init_one(&src, plaintext, size + NXP_ENC_AUTH_TAG_SIZE);
-+	sg_init_one(&dst, ciphertext, sizeof(aad) + size + NXP_ENC_AUTH_TAG_SIZE);
-+	init_completion(&nxpdev->crypto.completion);
-+
-+	aead_request_set_callback(req, CRYPTO_TFM_REQ_MAY_BACKLOG,
-+				  nxp_aead_complete, &nxpdev->crypto);
-+	aead_request_set_crypt(req, &src, &dst, size, iv);
-+	aead_request_set_ad(req, sizeof(aad));
-+
-+	ret = crypto_aead_encrypt(req);
-+	if (ret == -EINPROGRESS || ret == -EBUSY) {
-+		wait_for_completion(&nxpdev->crypto.completion);
-+		ret = nxpdev->crypto.decrypt_result;
-+	}
-+	if (!ret) {
-+		memcpy(buf, ciphertext + sizeof(aad), size);
-+		memcpy(auth_tag, ciphertext + size + sizeof(aad), NXP_ENC_AUTH_TAG_SIZE);
-+	}
-+
-+	aead_request_free(req);
-+free_tfm:
-+	crypto_free_aead(tfm);
-+free_plaintext:
-+	kfree(plaintext);
-+free_ciphertext:
-+	kfree(ciphertext);
-+	return ret;
-+}
-+
-+static int nxp_handshake_decrypt_verify(struct hci_dev *hdev, void *buf, size_t size,
-+					u8 auth_tag[16],
-+					u8 traffic_secret[SHA256_DIGEST_SIZE])
-+{
-+	u8 key[AES_KEYSIZE_128] = {0};
-+	u8 iv[GCM_AES_IV_SIZE] = {0};
-+
-+	nxp_hkdf_expand_label(traffic_secret, NXP_TLS_KEYING_KEY_LABEL, NULL, 0,
-+			      key, AES_KEYSIZE_128);
-+	nxp_hkdf_expand_label(traffic_secret, NXP_TLS_KEYING_IV_LABEL, NULL, 0,
-+			      iv, GCM_AES_IV_SIZE);
-+
-+	return nxp_aes_gcm_decrypt(hdev, buf, size, auth_tag, key, iv);
-+}
-+
-+static int nxp_handshake_encrypt(struct hci_dev *hdev, void *buf,
-+				 size_t size, u8 auth_tag[16],
-+				 u8 traffic_secret[SHA256_DIGEST_SIZE])
-+{
-+	u8 key[AES_KEYSIZE_128] = {0};
-+	u8 iv[GCM_AES_IV_SIZE] = {0};
-+
-+	nxp_hkdf_expand_label(traffic_secret, NXP_TLS_KEYING_KEY_LABEL, NULL,
-+			      0, key, AES_KEYSIZE_128);
-+	nxp_hkdf_expand_label(traffic_secret, NXP_TLS_KEYING_IV_LABEL, NULL,
-+			      0, iv, GCM_AES_IV_SIZE);
-+
-+	return nxp_aes_gcm_encrypt(hdev, buf, size, auth_tag, key, iv);
-+}
-+
-+static int nxp_p256_ecdsa_verify(const u8 sig[64], const u8 pub[65],
-+				const u8 *hash, size_t hash_len)
-+{
-+	struct public_key_signature sig_info = {0};
-+	struct public_key pub_key = {0};
-+	int ret;
-+
-+	sig_info.s = (u8 *)sig;
-+	sig_info.s_size = 64;
-+	sig_info.digest = (u8 *)hash;
-+	sig_info.digest_size = hash_len;
-+	sig_info.pkey_algo = "ecdsa";
-+	sig_info.hash_algo = "sha256";
-+	sig_info.encoding = "p1363";
-+
-+	pub_key.key = (void *)pub;
-+	pub_key.keylen = 65;
-+	pub_key.algo = OID_id_ecPublicKey;
-+	pub_key.key_is_private = false;
-+	pub_key.pkey_algo = "ecdsa-nist-p256";
-+	pub_key.id_type = NULL;
-+
-+	ret = public_key_verify_signature(&pub_key, &sig_info);
-+	if (ret)
-+		pr_err("ECDSA signature verification failed: %d\n", ret);
-+
-+	return ret;
-+}
-+
-+static int nxp_device_hello_sig_verify(struct hci_dev *hdev, struct nxp_tls_device_hello *msg)
-+{
-+	struct btnxpuart_dev *nxpdev = hci_get_drvdata(hdev);
-+	u8 hash_sig[SHA256_DIGEST_SIZE];
-+
-+	nxp_handshake_sig_hash(nxpdev->crypto.handshake_h2_hash,
-+			       "D HS SIG", 8, hash_sig);
-+	return nxp_p256_ecdsa_verify(msg->enc.device_handshake_sig.sig,
-+				nxpdev->crypto.ecdsa_public,
-+				hash_sig, SHA256_DIGEST_SIZE);
-+}
-+
-+static int nxp_write_finished(struct hci_dev *hdev,
-+			       const u8 hs_traffic_secret[SHA256_DIGEST_SIZE],
-+			       u8 verify_data[SHA256_DIGEST_SIZE])
-+{
-+	struct btnxpuart_dev *nxpdev = hci_get_drvdata(hdev);
-+	u8 transcript_hash[SHA256_DIGEST_SIZE];
-+	u8 finished_key[SHA256_DIGEST_SIZE];
-+	int ret = 0;
-+
-+	ret = nxp_crypto_shash_final(nxpdev->crypto.tls_handshake_hash_desc,
-+				     transcript_hash);
-+	if (ret)
-+		return ret;
-+
-+	ret = nxp_hkdf_expand_label(hs_traffic_secret, NXP_TLS_FINISHED_LABEL,
-+				    NULL, 0, finished_key, sizeof(finished_key));
-+	if (ret)
-+		return ret;
-+
-+	nxp_hkdf_sha256_extract(finished_key, SHA256_DIGEST_SIZE, transcript_hash,
-+				SHA256_DIGEST_SIZE, verify_data);
-+
-+	return 0;
-+}
-+
-+static int nxp_verify_device_finished(struct hci_dev *hdev,
-+				      struct nxp_tls_device_hello *msg,
-+				      const u8 hs_traffic_secret[SHA256_DIGEST_SIZE])
-+{
-+	u8 verify_data[SHA256_DIGEST_SIZE] = {0};
-+	int ret = 0;
-+
-+	ret = nxp_write_finished(hdev, hs_traffic_secret, verify_data);
-+	if (ret)
-+		return ret;
-+
-+	if (memcmp(verify_data, msg->enc.device_finished.verify_data,
-+		      SHA256_DIGEST_SIZE))
-+		return -EBADMSG;
-+
-+	return 0;
-+}
-+
- static int nxp_process_device_hello(struct hci_dev *hdev, struct nxp_tls_device_hello *msg)
- {
- 	struct btnxpuart_dev *nxpdev = hci_get_drvdata(hdev);
-@@ -2025,9 +2416,51 @@ static int nxp_process_device_hello(struct hci_dev *hdev, struct nxp_tls_device_
- 	if (ret)
- 		goto fail;
- 
--	/* TODO: Verify Signature in Device Hello using ECDSA Public Key
--	 * extracted from the FW metadata.
-+	ret = nxp_handshake_decrypt_verify(hdev, &msg->enc, sizeof(msg->enc),
-+					   msg->auth_tag, hs_traffic_secret);
-+	if (ret)
-+		goto fail;
-+
-+	/*
-+	 * Verify ECDSA signature handshake_sig using Device's public key from FW metadata.
-+	 *
-+	 * This is the key point where Device authentication happens:
-+	 * - Host generates a random (HostHello.random)
-+	 * - Device signs the entire handshake (incl. Host's random) with its
-+	 *   private key (DeviceHello.device_handshake_sig)
-+	 * - Host now verifies ECDSA signature generated by device using Device's
-+	 *   public key
-+	 *
-+	 * Only the device that possesses the proper private key could sign the
-+	 * Host's random.
-+	 * If the device is an impostor and does not pose a valid private key,
-+	 * the handshake will fail at this point.
- 	 */
-+	ret = nxp_get_pub_key(hdev, &msg->enc.device_info, nxpdev->crypto.ecdsa_public);
-+	if (ret)
-+		goto fail;
-+
-+	ret = nxp_device_hello_sig_verify(hdev, msg);
-+	if (ret)
-+		goto fail;
-+
-+	ret = crypto_shash_update(nxpdev->crypto.tls_handshake_hash_desc,
-+				  (u8 *)&msg->enc,
-+				  DEVICE_HELLO_FINISHED_ENC_CUTOFF_POS);
-+	if (ret)
-+		goto fail;
-+
-+	ret = nxp_verify_device_finished(hdev, msg, hs_traffic_secret);
-+	if (ret)
-+		goto fail;
-+
-+	ret = crypto_shash_update(nxpdev->crypto.tls_handshake_hash_desc,
-+				  (u8 *)&msg->enc.device_finished,
-+				  sizeof(msg->enc.device_finished));
-+	if (ret)
-+		goto fail;
-+
-+	memset(hs_traffic_secret, 0, SHA256_DIGEST_SIZE);
- 
- fail:
- 	memset(shared_secret, 0, 32);
-@@ -2035,6 +2468,64 @@ static int nxp_process_device_hello(struct hci_dev *hdev, struct nxp_tls_device_
+@@ -2526,6 +2541,71 @@ static int nxp_host_do_finished(struct hci_dev *hdev)
  	return ret;
  }
  
-+static int nxp_host_do_finished(struct hci_dev *hdev)
++static void nxp_handshake_derive_master_secret(u8 master_secret[SHA256_DIGEST_SIZE],
++					       u8 handshake_secret[SHA256_DIGEST_SIZE])
++{
++	u8 zeros[SHA256_DIGEST_SIZE] = {0};
++	u8 dhs[SHA256_DIGEST_SIZE];
++
++	/* Derive intermediate secret */
++	nxp_hkdf_expand_label(handshake_secret, NXP_TLS_DERIVED_LABEL,
++			      NULL, 0, dhs, sizeof(dhs));
++	/* Extract master secret from derived handshake secret */
++	nxp_hkdf_sha256_extract(dhs, SHA256_DIGEST_SIZE, zeros,
++				sizeof(zeros), master_secret);
++
++	memset(dhs, 0, sizeof(dhs));
++}
++
++static int nxp_handshake_derive_traffic_keys(struct hci_dev *hdev)
 +{
 +	struct btnxpuart_dev *nxpdev = hci_get_drvdata(hdev);
-+	union nxp_tls_host_finished_payload finished;
-+	struct nxp_tls_host_finished *msg = &finished.host_finished;
-+	u8 hs_traffic_secret[SHA256_DIGEST_SIZE];
-+	struct sk_buff *skb;
-+	u8 *status;
++	struct nxp_tls_traffic_keys *keys = &nxpdev->crypto.keys;
++	u8 hash[SHA256_DIGEST_SIZE];
 +	int ret = 0;
 +
-+	memset(msg, 0, sizeof(*msg));
-+	nxp_tls_hdr_init(&msg->hdr, sizeof(*msg), NXP_TLS_HOST_FINISHED);
-+
-+	crypto_shash_update(nxpdev->crypto.tls_handshake_hash_desc,
-+			    (u8 *)msg, HOST_FINISHED_CUTOFF_POS);
-+
-+	ret = nxp_hkdf_derive_secret(nxpdev->crypto.handshake_secret,
-+				     NXP_TLS_HOST_HS_TS_LABEL,
-+				     nxpdev->crypto.handshake_h2_hash,
-+				     hs_traffic_secret);
++	ret = crypto_shash_final(nxpdev->crypto.tls_handshake_hash_desc, hash);
 +	if (ret)
 +		return ret;
 +
-+	ret = nxp_write_finished(hdev, hs_traffic_secret,
-+				 msg->enc.host_finished.verify_data);
++	ret = nxp_hkdf_derive_secret(nxpdev->crypto.master_secret,
++				     NXP_TLS_D_AP_TS_LABEL, hash, keys->d2h_secret);
 +	if (ret)
 +		return ret;
 +
-+	crypto_shash_update(nxpdev->crypto.tls_handshake_hash_desc,
-+			    (u8 *)&msg->enc.host_finished, sizeof(msg->enc.host_finished));
++	ret = nxp_hkdf_expand_label(keys->d2h_secret,
++				    NXP_TLS_KEYING_KEY_LABEL, NULL, 0,
++				    keys->d2h_key, AES_KEYSIZE_128);
++	if (ret)
++		return ret;
 +
-+	nxp_handshake_encrypt(hdev, &msg->enc, sizeof(msg->enc),
-+			      msg->auth_tag, hs_traffic_secret);
++	ret = nxp_hkdf_expand_label(keys->d2h_secret,
++				    NXP_TLS_KEYING_IV_LABEL, NULL, 0,
++				    keys->d2h_iv, GCM_AES_IV_SIZE);
++	if (ret)
++		return ret;
 +
-+	finished.msg_type = 0x01;
++	ret = nxp_hkdf_derive_secret(nxpdev->crypto.master_secret,
++				     NXP_TLS_H_AP_TS_LABEL, hash, keys->h2d_secret);
++	if (ret)
++		return ret;
 +
-+	skb = __hci_cmd_sync(hdev, HCI_NXP_SHI_ENCRYPT,
-+			     sizeof(finished), finished.buf,
-+			     HCI_CMD_TIMEOUT);
-+	if (IS_ERR(skb)) {
-+		bt_dev_err(hdev, "Host Finished error %ld", PTR_ERR(skb));
-+		return PTR_ERR(skb);
-+	}
-+	status = skb_pull_data(skb, 1);
-+	if (!status) {
-+		ret = -EIO;
-+		goto fail;
-+	}
-+	if (*status) {
-+		ret = -EIO;
-+		bt_dev_err(hdev, "Host Finished status error: %d", *status);
-+	}
++	ret = nxp_hkdf_expand_label(keys->h2d_secret,
++				    NXP_TLS_KEYING_KEY_LABEL, NULL, 0,
++				    keys->h2d_key, AES_KEYSIZE_128);
++	if (ret)
++		return ret;
 +
-+fail:
-+	kfree_skb(skb);
++	ret = nxp_hkdf_expand_label(keys->h2d_secret,
++				    NXP_TLS_KEYING_IV_LABEL, NULL, 0,
++				    keys->h2d_iv, GCM_AES_IV_SIZE);
++	if (ret)
++		return ret;
++
++	memset(hash, 0, sizeof(hash));
 +	return ret;
 +}
 +
  static int nxp_authenticate_device(struct hci_dev *hdev)
  {
  	struct btnxpuart_dev *nxpdev = hci_get_drvdata(hdev);
-@@ -2085,10 +2576,13 @@ static int nxp_authenticate_device(struct hci_dev *hdev)
+@@ -2580,10 +2660,10 @@ static int nxp_authenticate_device(struct hci_dev *hdev)
  	if (ret)
  		goto free_skb;
  
-+	ret = nxp_host_do_finished(hdev);
-+	if (ret)
-+		goto free_skb;
+-	/* TODO: Implement actual TLS handshake protocol
+-	 * This will include:
+-	 * 1. Master secret and traffic key derivation
+-	 */
++	nxp_handshake_derive_master_secret(nxpdev->crypto.master_secret,
++					   nxpdev->crypto.handshake_secret);
 +
- 	/* TODO: Implement actual TLS handshake protocol
- 	 * This will include:
--	 * 1. Send Host Finish TLS message
--	 * 2. Master secret and traffic key derivation
-+	 * 1. Master secret and traffic key derivation
- 	 */
++	nxp_handshake_derive_traffic_keys(hdev);
  
  free_skb:
+ 	kfree_skb(skb);
 -- 
 2.43.0
 
