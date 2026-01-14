@@ -1,115 +1,161 @@
-Return-Path: <linux-bluetooth+bounces-18066-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18068-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 131E3D21715
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 14 Jan 2026 22:51:05 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D781FD21784
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 14 Jan 2026 22:57:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 29911303834F
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 14 Jan 2026 21:50:26 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 05ACE302411F
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 14 Jan 2026 21:54:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F70238F954;
-	Wed, 14 Jan 2026 21:50:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 21CE93A89AD;
+	Wed, 14 Jan 2026 21:54:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z0si2lvW"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="Wrg/yRva"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-26.smtp.github.com (out-26.smtp.github.com [192.30.252.209])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0653A641A
-	for <linux-bluetooth@vger.kernel.org>; Wed, 14 Jan 2026 21:49:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A3C3A4ADE
+	for <linux-bluetooth@vger.kernel.org>; Wed, 14 Jan 2026 21:54:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.209
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768427416; cv=none; b=MR8HZltPdJpbzauS12Ksqnh3IhY2VjYENiDemVbRSQ+AgZn1y91W9wFj9QcnatlshdMgIaPyvD1Efr0Fpxgf5kpU9kgn2M0CUnDtNZW1WuCwDA13oG4Jyn05fHXiDeT9ZjchIqJy7/5KWDQn4RkaH1RPBXzD2bezxw/iUzxc4fg=
+	t=1768427691; cv=none; b=Dcdnde5FlV85OXjNDuSmpDgoTLncA9ltPChB8+y47zSQwDSGFbT9sJRTWdYY3WcnY7J7tqTEWpyo1zp9AQJNfxUBOzJBYy4+Gub1HTQR22zsUY6+FpVwlbYjQkBTxLqbnzLIwz/sLSJMckA76xFodF2oHffEMNzYOqSTJ3TkgmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768427416; c=relaxed/simple;
-	bh=8+DUQDEDLv1Tf7nx7T/OWeJNKDGqLQ7n6CkJXN35IEA=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r8REp2EbGbdWScC+YSXXUL7zMbYDegiC2buiMysGcmrWSo7mHAO6DNT8wAmsvjwG3i9nAdo46wC4I+WusJnUfL3X8nFdzM4ZeauBN7k9dud2m9br/VQD8j7P4R8+57ejx6j3010qwFAkS8glDRQB4hMlrERkXucveVq9oTK73WA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z0si2lvW; arc=none smtp.client-ip=209.85.222.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-9413e5ee53eso206941241.0
-        for <linux-bluetooth@vger.kernel.org>; Wed, 14 Jan 2026 13:49:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768427393; x=1769032193; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FV/6uKsFxEvsgbL+MyzBSWbTHLznZnBXjAofgq2LMbM=;
-        b=Z0si2lvWk7zDf8mp4RdtNvul2T9znf9919xKnJ1HwNB1UMIi0AIBabnkupXFv9gB7L
-         3xy8f/21SxxoI/V2xt8tPBAOk+8koy/ZCeuwrGkV9q5PfZreWIQTyKNSBddUBWU4A1kJ
-         yux/rc1JKoHAwEd8veEZkgX6sCu3BHthGH6oITdRxO2Donete9wyLJRxncxN53L9wB6B
-         pz8cWUeuQJ//ULuA/ZyKKCtsPgllsJuIP8R6pW43hE9r2vsSPjpxiQGd3muCx6H6SMUs
-         V9xBY5Zsxkf/ZWSV+lA4v9Z636S2p6W2OGwIYaomUbQvRO0jFZiBQcmrfVnttvkSdyyp
-         s/5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768427393; x=1769032193;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=FV/6uKsFxEvsgbL+MyzBSWbTHLznZnBXjAofgq2LMbM=;
-        b=NyBljk/Yog0i/JA0+/Toh0hVpV+AKXVW8GkPxiSrxGT89lPenBTMNiAO9G6OSpl6KD
-         H1udLo0oNPlFSpARS5/pyB0iZZs0iM1wmT7UEDH8PonCwhOGf3oNSU/gUjZOu1AOI4Od
-         wx5CiVMgpInbTpbr0ngPLz/CERz9Sa6NEiV+/gXC1M7j/tY8VKU4x+dW/LfZWFk87IWY
-         yUFB3p7oN3FxI/jI1KREzMatvxMBNdXzDr8YgINHXtQ3zjkei1wuW7FqBTguUfdDY6qo
-         6iUspJsIBnozthRGHRzAMi5T4MgvqZpLFygDKyk6oTHymRQlazY7IYDG8is3dON7XmAN
-         z4qw==
-X-Gm-Message-State: AOJu0Yz46Ix3sxdSo60zorDbPmazxVZsvB/9oOrsqjOO2WHoZOignTfl
-	mso8WyI+gLhyX4trbmfCNqYyi5oZUB3xMBUycRCrLRBhZDXp14Oi5n8mqZp47Q==
-X-Gm-Gg: AY/fxX6IklOr4m1yYay2+VidiDrIEMwqwhbmAVWLwoYlnul2fDjinatSHb5HlkT2kw2
-	27BdomYJVMA+tUZjZcLLRlxNYF6sQcmpSkKmVlGareX5HBmR8wqYx0WfzroXusmLyiyRdNR2jJ2
-	4IvHHap2VbjAjst9AuRfP3G/bcFkxHFMij92Cdxi53igdfVV7E4MYeaPZjHieP7OhUGClNElcrJ
-	jOyCfPOE6lHhWAg6QWn54tok+tBSiJWjDw6Ps6dXrQAdfCnX7+6s+ULUQvpTVU5JIs+HmnlgJiY
-	DyUGotGLlgui7sYZspM2aKK4kVAQD92NmwYlf2Qb679TsXRDMl7XjQf05rOmuW+gJnkFwlQowmf
-	VTXrNdzmjstR2lw4cJr5FACrIG0Ec7jeHQpRL21FseAW2LHTGIIFkfYICMPY7xYF+Ya970WJGYm
-	D6sAqHEJ00nOtDg3Vm2TIuKxDbyNv95aSo77zq0XQGdWrqwpK5XWifheTt5Uw5kimmYNqTxbL2o
-	B6Guw==
-X-Received: by 2002:a05:6102:c04:b0:5dd:b287:e5f4 with SMTP id ada2fe7eead31-5f17f23b837mr1874302137.0.1768427393525;
-        Wed, 14 Jan 2026 13:49:53 -0800 (PST)
-Received: from lvondent-mobl5 ([72.188.211.115])
-        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-5ec772af325sm24985649137.10.2026.01.14.13.49.52
-        for <linux-bluetooth@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jan 2026 13:49:52 -0800 (PST)
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+	s=arc-20240116; t=1768427691; c=relaxed/simple;
+	bh=7XDI9li8L3UW247ntABxuWJbbv+9/4bEDoFWySf4L1A=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=SQqlXSFaErc3RbcBLnap+bztlK1pr62KgaR2xletI+10FCTkA2Ooit/EKRj8R7zGo6PArKVeWQfTA+WoxvzVGf3hspMAepimLdukcTl813R4ZnWRAr1f/4xXSm3PVB7ZqcyR+vZpEmPkVPdJczlrfx90vPftcaJfkkpPjBY60o8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=Wrg/yRva; arc=none smtp.client-ip=192.30.252.209
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
+Received: from github.com (hubbernetes-node-3263c14.ash1-iad.github.net [10.56.131.82])
+	by smtp.github.com (Postfix) with ESMTPA id E1B2F601257
+	for <linux-bluetooth@vger.kernel.org>; Wed, 14 Jan 2026 13:54:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+	s=pf2023; t=1768427665;
+	bh=ZmlbWvi9DcEjkpSL8dzKYp7X1+IR7fPQNDpf+8TICEU=;
+	h=Date:From:To:Subject:List-Unsubscribe:From;
+	b=Wrg/yRvacpKzXC99YT5cH5Y+bn8e35dTYLlmvlzXubUSv54y3Br4YsGmDTF4KdaaC
+	 joW0Tglo9fatasOdd/abNCXmBdnmZyIeMCK4M+CrXxzseCR4ELsd4Gk87h//UBnYI3
+	 270u2SZBgvh5y0cVWmtjohUPbpH7HSh/w0QJEk+8=
+Date: Wed, 14 Jan 2026 13:54:25 -0800
+From: Luiz Augusto von Dentz <noreply@github.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v1 6/6] advtest: Fix displaying RSI as a byte array rather then an address
-Date: Wed, 14 Jan 2026 16:49:37 -0500
-Message-ID: <20260114214938.1417430-6-luiz.dentz@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260114214938.1417430-1-luiz.dentz@gmail.com>
-References: <20260114214938.1417430-1-luiz.dentz@gmail.com>
+Message-ID: <bluez/bluez/push/refs/heads/1042511/000000-0ae390@github.com>
+Subject: [bluez/bluez] 860724: shared/crypto: Add bt_crypto_rsi
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Branch: refs/heads/1042511
+  Home:   https://github.com/bluez/bluez
+  Commit: 8607248ae3d5aed495b750b6d67bd16ce52220b7
+      https://github.com/bluez/bluez/commit/8607248ae3d5aed495b750b6d67bd16ce52220b7
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2026-01-14 (Wed, 14 Jan 2026)
+
+  Changed paths:
+    M src/shared/crypto.c
+    M src/shared/crypto.h
+
+  Log Message:
+  -----------
+  shared/crypto: Add bt_crypto_rsi
+
+This adds bt_cryptor_rsi which can be used to generate a Resolvable Set
+Identifier as per CSIS spec:
+
+https://www.bluetooth.com/wp-content/uploads/Files/Specification/HTML/28085-CSIS-html5/out/en/index-en.html#UUID-4dc0c19a-2900-d43e-6ea5-e651151d3c3e
+
+
+  Commit: 6e9787c231576afebb05fb12dd564fee8655a29e
+      https://github.com/bluez/bluez/commit/6e9787c231576afebb05fb12dd564fee8655a29e
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2026-01-14 (Wed, 14 Jan 2026)
+
+  Changed paths:
+    M src/advertising.c
+
+  Log Message:
+  -----------
+  advertising: Use bt_crypto_rsi to generate RSI
+
+This makes use of bt_crypto_rsi to generate a valid RSI.
+
+
+  Commit: afa931b33af8a8f1e15993529857ef9399d38cb7
+      https://github.com/bluez/bluez/commit/afa931b33af8a8f1e15993529857ef9399d38cb7
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2026-01-14 (Wed, 14 Jan 2026)
+
+  Changed paths:
+    M tools/advtest.c
+
+  Log Message:
+  -----------
+  advtest: Use bt_crypto_rsi to generate RSI
+
+This makes use of bt_crypto_rsi to generate a valid RSI.
+
+
+  Commit: d4f716f13454acad1596e1dc044754086b849aca
+      https://github.com/bluez/bluez/commit/d4f716f13454acad1596e1dc044754086b849aca
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2026-01-14 (Wed, 14 Jan 2026)
+
+  Changed paths:
+    M src/device.c
+    M src/shared/ad.c
+    M src/shared/ad.h
+
+  Log Message:
+  -----------
+  shared/ad: Make bt_ad_has_data return the data
+
+This makes bt_ad_has_data return the data found rather then true of
+false.
+
+
+  Commit: 235992d1574335e3657f95d21ea328bc8c959bd6
+      https://github.com/bluez/bluez/commit/235992d1574335e3657f95d21ea328bc8c959bd6
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2026-01-14 (Wed, 14 Jan 2026)
+
+  Changed paths:
+    M src/advertising.c
+
+  Log Message:
+  -----------
+  advertising: Fix not verifying if RSI set is valid
+
+The hash portion of the RSI can be verified if it was set properly.
+
+
+  Commit: 0ae3907e956aa906912f147d13b6980ce008609a
+      https://github.com/bluez/bluez/commit/0ae3907e956aa906912f147d13b6980ce008609a
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2026-01-14 (Wed, 14 Jan 2026)
+
+  Changed paths:
+    M tools/advtest.c
+
+  Log Message:
+  -----------
+  advtest: Fix displaying RSI as a byte array rather then an address
 
 RSI should be displayed as an address if the intention is to use big
 endian format.
----
- tools/advtest.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/advtest.c b/tools/advtest.c
-index 706b2503b74c..7e744dca8021 100644
---- a/tools/advtest.c
-+++ b/tools/advtest.c
-@@ -53,7 +53,7 @@ static struct bt_hci *scan_dev;
- 
- static void print_rpa(const uint8_t addr[6])
- {
--	printf("  RSI:\t0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x\n",
-+	printf("  RSI:\t%02x-%02x-%02x-%02x-%02x-%02x\n",
- 					addr[5], addr[4], addr[3],
- 					addr[2], addr[1], addr[0]);
- 	printf("    Random: %02x%02x%02x\n", addr[3], addr[4], addr[5]);
--- 
-2.52.0
 
+Compare: https://github.com/bluez/bluez/compare/8607248ae3d5%5E...0ae3907e956a
+
+To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
