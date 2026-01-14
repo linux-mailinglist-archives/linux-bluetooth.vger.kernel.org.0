@@ -1,234 +1,162 @@
-Return-Path: <linux-bluetooth+bounces-18061-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18065-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91D5BD209E5
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 14 Jan 2026 18:47:06 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id AEC68D2170F
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 14 Jan 2026 22:50:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 42021306217F
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 14 Jan 2026 17:46:00 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id A4B283077526
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 14 Jan 2026 21:50:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33710325726;
-	Wed, 14 Jan 2026 17:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D092D3A7DF6;
+	Wed, 14 Jan 2026 21:50:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L3f4RUtw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G3+OATGL"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9798632692A
-	for <linux-bluetooth@vger.kernel.org>; Wed, 14 Jan 2026 17:45:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CECE63A35D2
+	for <linux-bluetooth@vger.kernel.org>; Wed, 14 Jan 2026 21:49:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768412757; cv=none; b=L+CCN0w2hxS0BcN1GZbFpXNYcS2sLqCIrY2dBVW2tYlI348H/pmpC2vuBx5gmPw/3rSgpTDbtateVPxRB2G/QnyPxOvWxBhgE9qlYsRyBRtnOGQQa+usx6WA8h3GVz3HnFOvCvqI/D2swsacPP1Z171A6NuIETsWpDxfgh4eziQ=
+	t=1768427412; cv=none; b=jm+ku1xpeuKqAdcea3THbldznKzcmMRCyLfT2FrjX5rOd/sBw6AIsNTOQrgMZWUmP+cnAFjEe+HEnXHkVSYP619v3uvC0jdcZMwH/Oqtbp3FkJt6tCxaBg4Z/yd1OMSa37vmhRzXsSF8Aipm67wrfOcPFyho5fges/G0UuMTrv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768412757; c=relaxed/simple;
-	bh=VLyvNJXlQ7uY8tpXWo5FC7Z644s2L6LFH6yjNoy6qEE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Anr/JDteuM2SQ+mfQqdeamOglx8zI2BxXL9vn5sc2UHLk2p43WNF0PXorOY8ZgSb11HI/2DUmuaNjtc0s2faiuVa+bDMBcBwUWtiU9HQUMdbRI2VV6ZmBRIORfZlDddsLksczEkxwPcDS1Wc4aDPqsC0eGcZniN5oigqYqo8Xtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L3f4RUtw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C845C2BCB5
-	for <linux-bluetooth@vger.kernel.org>; Wed, 14 Jan 2026 17:45:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768412757;
-	bh=VLyvNJXlQ7uY8tpXWo5FC7Z644s2L6LFH6yjNoy6qEE=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=L3f4RUtwn3UXoZPZmKpVuAv7wS20RfV9nBeLqZmGUIuaNo8FvXrtH44hdthYVevDH
-	 QSVQZx/Ui5iVSgXFYt4fQV/OR2h5BgZM0KQs8bOzjqskmkZBBtcPZdAQe8kvMzlQV7
-	 0D8fQ5rfmBXgU6sADeLNFwDWj4BiYHWgcJBj3/HVC2LCKSPDslf04gYsc7F7fomOS6
-	 XAeELhC98vWgbpqPJYZUyYa6bAtBZ8ms96XRGp9rnARwthStUCk/pgZyhS8Dvx7NH+
-	 4ef2okqQF+r1LwZp/eSJ0JojapcPG691nvMn06RUn32l9vbyAkm7o3fyZIw/LWsY3F
-	 XlpOzBa2RmVkQ==
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-653780e9eb3so23730a12.1
-        for <linux-bluetooth@vger.kernel.org>; Wed, 14 Jan 2026 09:45:57 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCXR6ap0c2YiB82z8rwnbSySIWHRjJzEhtTnVUbma9q+0L2uDEwhgvD0ih+mmeWiVDH7hiwMgQv3agIZ2e7AUX8=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywbuwq8cWKxKNV6bjTHIxt+QOAI1zfhDCPdbp9Uleux+/mDoT6K
-	rwpQR+nI7bhGs6lwU+lhJf0Sbqg+G//ykgmEfCtnmH0AZ1XxDaGjN5QwVCVNruhBCME7ss3OnRc
-	GIUyD2oxpvQTo9XEF9yAgDnWNfb6+Jw==
-X-Received: by 2002:a17:907:6d14:b0:b7d:1d1b:217a with SMTP id
- a640c23a62f3a-b87611110eamr270292166b.34.1768412755531; Wed, 14 Jan 2026
- 09:45:55 -0800 (PST)
+	s=arc-20240116; t=1768427412; c=relaxed/simple;
+	bh=L+WwTY5ED00gCcnTB2DWnsosy3TB78lvh1tTom6+KnA=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=PzNGd0+wuNUvCUqPsAtG24iS0HCN9LqHwY27UJze4riPih+WdauWM3QPDPxnl+L1YNGEwXJHmENcPG7wa95AhOPQVU2cpqz7lgFqD60qSEfiwRrOpzmzJ64+De8CLu3y3Bp/ohkdMgXb/5fUZKboW1y2A+r0qbSMEcPqjn+ZBf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G3+OATGL; arc=none smtp.client-ip=209.85.217.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-5ebb6392f58so104142137.0
+        for <linux-bluetooth@vger.kernel.org>; Wed, 14 Jan 2026 13:49:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768427388; x=1769032188; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=VYfrxNZ+rhkRHvhmQxIT9jlWaeuUfbnfa7U9JXNqUO8=;
+        b=G3+OATGLhZK9k8HGCl1+2etTu8M4m+ret/LO6tWBjbCrxuse4tICmNy8EOIoKKNhM/
+         ir3bHM3sHSua+Srleu8pKBPsLvO5tzJbm5Mc332Wuok9tIWgtltbdUbBHYifpy147y2S
+         x+y5O79Au/C7WLj8QM6KLt5fT4UYh/nWq6ziapNphqgcORuwGXAjFq/Xk7bJTtN2Kyya
+         cnpbUL34Ec6LVkuIm0Bcp0hy7XOQFD/qyR5Nd+6qAbONnsEWUo2thmUaGUVOpaK0Q2au
+         Lx2Nx30uyMLhC4tJOghdskpCdCFEhgFISHxkkaBLQDLZX1BcoATJ1NsreJMmix+2GOs8
+         68tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768427388; x=1769032188;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VYfrxNZ+rhkRHvhmQxIT9jlWaeuUfbnfa7U9JXNqUO8=;
+        b=h9/BvXqKCrPc3TLHsiCx71H6Oz7S2j7ogaDHk7l7GY8IVbJpUce6vxbTFprTbkuPGD
+         PsIxSd/I5Blb5aotmNxWugq8PX4Te6v2BbHt9HBo7gNPmsorTkVP1KzCcyjHozLxFCrV
+         OB1q+PHmMCLANJ1vHjk5speoErRoNc8+xdPjXyZkaLgw+GMjhLWSXKvfoWL2+9g13XhN
+         oNHT1jpsHWKSB4ND5d/PHY4yW97E8+OkKnZcLDiA9+EyBv4ph75G03ANmpCbv5IPXBiB
+         spuRd1A5aN/At93YgBtXnxC1jFOxfphVByj/SHJCqUihDG4LM/qDj5MIEH3PTv9RK8vi
+         ZYCg==
+X-Gm-Message-State: AOJu0YwuD5C7joteUljwIjoJT+TE9XAxyeSF6ykZBH5pPXQfh9PfjqEH
+	0mdnILFjHxF03tqRPjaxqCJocjuHEO72hRTx0twxfVolp1sedKl9ahdGOeH+Zw==
+X-Gm-Gg: AY/fxX7DX/lNtIjJrIODAcZGkXwbw0QVFLpoiRIQXZPRz5xOJfdUjFW1+6/1D6hYTs6
+	zht1Kwas1/9Zc29jYHqQzxpC5sjKKfMDJwia9AQXciUWrg58KhGlp97RiqwIJl+wPyNJGT8dObM
+	5fHhVPVpLrussUSMQmSiBySW1D4SHQ81lybcRCpaaI5FmQH3hJPQCEvzCfdvmQBfm9J/ZJ6FDqO
+	tZny05gi9UTwM3pEgtCkFW8Xaoq8ykIPoGqT0uDGKbfnufUbW0+xwczjZeesqFlIjoZ4zQXkzxL
+	vMY3AjKEoHlC42qijlU+6NypXAytuUFYdIkEe2wvAYB0oRwQrj0bzsvcJYIVdzTztO+R+/e5fBK
+	W8t0eDvZCYM02zgzBmE2qpzYZ3ru5ZYreG+Kcw/aQkLP3nY+nPI5fharvCXaBHrVTS0hLN0r7bY
+	sjlZ2+hMb+1BLoN+lAousn0ttbw2Bc7oeNlxJD4U118MpxbsQGsG8KjVkaSk19pNlwbaPhL0qeg
+	wo6AA==
+X-Received: by 2002:a05:6102:dcc:b0:5ee:9e4b:a81c with SMTP id ada2fe7eead31-5f17f58e155mr1815386137.22.1768427387603;
+        Wed, 14 Jan 2026 13:49:47 -0800 (PST)
+Received: from lvondent-mobl5 ([72.188.211.115])
+        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-5ec772af325sm24985649137.10.2026.01.14.13.49.46
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Jan 2026 13:49:47 -0800 (PST)
+From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+To: linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ v1 1/6] shared/crypto: Add bt_crypto_rsi
+Date: Wed, 14 Jan 2026 16:49:32 -0500
+Message-ID: <20260114214938.1417430-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260112-pci-m2-e-v4-0-eff84d2c6d26@oss.qualcomm.com>
- <20260112-pci-m2-e-v4-5-eff84d2c6d26@oss.qualcomm.com> <20260113171424.GA3925312-robh@kernel.org>
- <xyttom64ht5hrrp5hecjqehnyfgsv4mfl2t36e2sveu44ccpjl@lkzquse2kqsx>
-In-Reply-To: <xyttom64ht5hrrp5hecjqehnyfgsv4mfl2t36e2sveu44ccpjl@lkzquse2kqsx>
-From: Rob Herring <robh@kernel.org>
-Date: Wed, 14 Jan 2026 11:45:42 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqJxBNm0y6T7vji6MXgsO65iDJ-tdUEo0cOxkw7EuMKpkg@mail.gmail.com>
-X-Gm-Features: AZwV_Qjd8RRdZiuji8UWlnEg_b-A7CkYgcetFKx6gFJZkZR9Wa6Q2Mjzt04XOZQ
-Message-ID: <CAL_JsqJxBNm0y6T7vji6MXgsO65iDJ-tdUEo0cOxkw7EuMKpkg@mail.gmail.com>
-Subject: Re: [PATCH v4 5/9] dt-bindings: connector: Add PCIe M.2 Mechanical
- Key E connector
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
-	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>, 
-	Hans de Goede <hansg@kernel.org>, =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
-	Mark Pearson <mpearson-lenovo@squebb.ca>, "Derek J. Clark" <derekjohn.clark@gmail.com>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	Bartosz Golaszewski <brgl@bgdev.pl>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
-	Bartosz Golaszewski <brgl@kernel.org>, linux-serial@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org, 
-	platform-driver-x86@vger.kernel.org, linux-pci@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-bluetooth@vger.kernel.org, linux-pm@vger.kernel.org, 
-	Stephan Gerhold <stephan.gerhold@linaro.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, linux-acpi@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, Jan 14, 2026 at 10:14=E2=80=AFAM Manivannan Sadhasivam <mani@kernel=
-.org> wrote:
->
-> On Tue, Jan 13, 2026 at 11:14:24AM -0600, Rob Herring wrote:
-> > On Mon, Jan 12, 2026 at 09:56:04PM +0530, Manivannan Sadhasivam wrote:
-> > > Add the devicetree binding for PCIe M.2 Mechanical Key E connector de=
-fined
-> > > in the PCI Express M.2 Specification, r4.0, sec 5.1.2. This connector
-> > > provides interfaces like PCIe or SDIO to attach the WiFi devices to t=
-he
-> > > host machine, USB or UART+PCM interfaces to attach the Bluetooth (BT)
-> > > devices. Spec also provides an optional interface to connect the UIM =
-card,
-> > > but that is not covered in this binding.
-> > >
-> > > The connector provides a primary power supply of 3.3v, along with an
-> > > optional 1.8v VIO supply for the Adapter I/O buffer circuitry operati=
-ng at
-> > > 1.8v sideband signaling.
-> > >
-> > > The connector also supplies optional signals in the form of GPIOs for=
- fine
-> > > grained power management.
-> > >
-> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualc=
-omm.com>
-> > > ---
-> > >  .../bindings/connector/pcie-m2-e-connector.yaml    | 154 +++++++++++=
-++++++++++
-> > >  MAINTAINERS                                        |   1 +
-> > >  2 files changed, 155 insertions(+)
-> > >
-> > > diff --git a/Documentation/devicetree/bindings/connector/pcie-m2-e-co=
-nnector.yaml b/Documentation/devicetree/bindings/connector/pcie-m2-e-connec=
-tor.yaml
-> > > new file mode 100644
-> > > index 000000000000..b65b39ddfd19
-> > > --- /dev/null
-> > > +++ b/Documentation/devicetree/bindings/connector/pcie-m2-e-connector=
-.yaml
-> > > @@ -0,0 +1,154 @@
-> > > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > > +%YAML 1.2
-> > > +---
-> > > +$id: http://devicetree.org/schemas/connector/pcie-m2-e-connector.yam=
-l#
-> > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > > +
-> > > +title: PCIe M.2 Mechanical Key E Connector
-> > > +
-> > > +maintainers:
-> > > +  - Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> > > +
-> > > +description:
-> > > +  A PCIe M.2 E connector node represents a physical PCIe M.2 Mechani=
-cal Key E
-> > > +  connector. Mechanical Key E connectors are used to connect Wireles=
-s
-> > > +  Connectivity devices including combinations of Wi-Fi, BT, NFC to t=
-he host
-> > > +  machine over interfaces like PCIe/SDIO, USB/UART+PCM, and I2C.
-> > > +
-> > > +properties:
-> > > +  compatible:
-> > > +    const: pcie-m2-e-connector
-> > > +
-> > > +  vpcie3v3-supply:
-> > > +    description: A phandle to the regulator for 3.3v supply.
-> > > +
-> > > +  vpcie1v8-supply:
-> > > +    description: A phandle to the regulator for VIO 1.8v supply.
-> >
-> > I don't see any 1.8V supply on the connector. There are 1.8V IOs and yo=
-u
-> > may need something in DT to ensure those are powered. However, there's
-> > no guarantee that it's a single supply.
-> >
->
-> 1.8v VIO supply is an optional supply and is only required if the platfor=
-m
-> supports 1.8v for sideband signals such as PERST#, WAKE#... I can include=
- it in
-> the example for completeness.
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-My point is that PERST# and WAKE# supplies could be 2 different 1.8V
-supplies and those supply the I/O pads of the GPIO pins (and possibly
-external pull-ups) that drive them. The 1.8V supply doesn't supply
-1.8V to the slot, so making it a slot/connector property is wrong.
+This adds bt_cryptor_rsi which can be used to generate a Resolvable Set
+Identifier as per CSIS spec:
 
-This isn't exactly a new issue. It could be an issue on any binding
-with GPIOs. Perhaps this needs to be handled within GPIO or pinctrl.
+https://www.bluetooth.com/wp-content/uploads/Files/Specification/HTML/28085-CSIS-html5/out/en/index-en.html#UUID-4dc0c19a-2900-d43e-6ea5-e651151d3c3e
+---
+ src/shared/crypto.c | 39 +++++++++++++++++++++++++++++++++++++++
+ src/shared/crypto.h |  2 ++
+ 2 files changed, 41 insertions(+)
 
-> > > +
-> > > +    oneOf:
-> > > +      - required:
-> > > +          - port@0
-> > > +
-> > > +  clocks:
-> > > +    description: 32.768 KHz Suspend Clock (SUSCLK) input from the ho=
-st system to
-> > > +      the M.2 card. Refer, PCI Express M.2 Specification r4.0, sec 3=
-.1.12.1 for
-> > > +      more details.
-> > > +    maxItems: 1
-> > > +
-> > > +  w-disable1-gpios:
-> > > +    description: GPIO input to W_DISABLE1# signal. This signal is us=
-ed by the
-> > > +      system to disable WiFi radio in the M.2 card. Refer, PCI Expre=
-ss M.2
-> > > +      Specification r4.0, sec 3.1.12.3 for more details.
-> > > +    maxItems: 1
-> > > +
-> > > +  w-disable2-gpios:
-> > > +    description: GPIO input to W_DISABLE2# signal. This signal is us=
-ed by the
-> > > +      system to disable WiFi radio in the M.2 card. Refer, PCI Expre=
-ss M.2
-> > > +      Specification r4.0, sec 3.1.12.3 for more details.
-> > > +    maxItems: 1
-> > > +
-> > > +  viocfg-gpios:
-> > > +    description: GPIO output to IO voltage configuration (VIO_CFG) s=
-ignal. This
-> > > +      signal is used by the M.2 card to indicate to the host system =
-that the
-> > > +      card supports an independent IO voltage domain for the sideban=
-d signals.
-> > > +      Refer, PCI Express M.2 Specification r4.0, sec 3.1.15.1 for mo=
-re details.
-> > > +    maxItems: 1
-> >
-> > What about SDIO and UART WAKE, SDIO RESET, and vendor defined signals?
-> >
->
-> Not sure about vendor defined signals as they can be either GPIO or inter=
-face
-> signals. How should them be defined?
+diff --git a/src/shared/crypto.c b/src/shared/crypto.c
+index 43d7f7c5c4b7..cb9911682c81 100644
+--- a/src/shared/crypto.c
++++ b/src/shared/crypto.c
+@@ -788,6 +788,45 @@ bool bt_crypto_sih(struct bt_crypto *crypto, const uint8_t k[16],
+ 	return bt_crypto_ah(crypto, k, r, hash);
+ }
+ 
++/*
++ * The hash is generated by using the RSI hash function sih, with the input
++ * parameter k set to the device’s SIRK, and the input parameter r set to
++ * prand:
++ *
++ * hash = sih(SIRK, prand)
++ *
++ * The prand and hash are concatenated to generate the RSI
++ * resolvableSetIdentifier in the following manner:
++ *
++ * resolvableSetIdentifier = hash || prand
++ */
++bool bt_crypto_rsi(struct bt_crypto *crypto, const uint8_t sirk[16],
++					uint8_t rsi[6])
++{
++	uint8_t prand[3];
++	uint8_t hash[3];
++
++	/* The random number prand shall meet the following requirements:
++	 *
++	 * - The two most significant bits (MSBs) of prand shall be equal to 0
++	 * - At least one bit of the random part of prand shall be 0.
++	 * - At least one bit of the random part of prand shall be 1.
++	 */
++	if (!bt_crypto_random_bytes(crypto, prand, 3))
++		return false;
++
++	prand[2] &= 0x3f;
++	prand[2] |= 0x40;
++
++	if (!bt_crypto_sih(crypto, sirk, prand, hash))
++		return false;
++
++	memcpy(rsi, hash, 3);
++	memcpy(rsi + 3, prand, 3);
++
++	return true;
++}
++
+ static bool aes_cmac_zero(struct bt_crypto *crypto, const uint8_t *msg,
+ 					size_t msg_len, uint8_t res[16])
+ {
+diff --git a/src/shared/crypto.h b/src/shared/crypto.h
+index d45308abf90a..d85f807fe468 100644
+--- a/src/shared/crypto.h
++++ b/src/shared/crypto.h
+@@ -60,3 +60,5 @@ bool bt_crypto_sih(struct bt_crypto *crypto, const uint8_t k[16],
+ bool bt_crypto_sirk(struct bt_crypto *crypto, const char *str, uint16_t vendor,
+ 			uint16_t product, uint16_t version, uint16_t source,
+ 			uint8_t sirk[16]);
++bool bt_crypto_rsi(struct bt_crypto *crypto, const uint8_t sirk[16],
++					uint8_t rsi[6]);
+-- 
+2.52.0
 
-That kind of breaks any notion of this being a generic slot/connector.
-How's the host supposed to know how to connect them? What if a card
-required them to be driven a certain way before you can discover the
-card? If they can be GPIOs and can be hooked up to the host system
-GPIOs, then you should define GPIOs for them. If they aren't GPIOs on
-a host, then you omit them.
-
-Rob
 
