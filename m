@@ -1,48 +1,48 @@
-Return-Path: <linux-bluetooth+bounces-18092-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18093-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 101B3D251AB
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 15 Jan 2026 15:56:57 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 660EED25109
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 15 Jan 2026 15:52:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 9C23F30928A6
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 15 Jan 2026 14:51:07 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 339873025501
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 15 Jan 2026 14:51:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23DA5350A09;
-	Thu, 15 Jan 2026 14:51:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34A01378D78;
+	Thu, 15 Jan 2026 14:51:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="T+AP9skR"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="iG+cODnv"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-28.smtp.github.com (out-28.smtp.github.com [192.30.252.211])
+Received: from out-18.smtp.github.com (out-18.smtp.github.com [192.30.252.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8B1312819
-	for <linux-bluetooth@vger.kernel.org>; Thu, 15 Jan 2026 14:51:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.211
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01BA34D90F
+	for <linux-bluetooth@vger.kernel.org>; Thu, 15 Jan 2026 14:51:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768488664; cv=none; b=ItzVgq13u6R3bI6UGGgXt+Inv2/RM1MmfB13I9bzoopU4u5NCo6FpanuBm0vvbGz+/bK6bJj3t7qXQbgov8uPUXxEq0ajIp2TyN4mG3M3j4iZf8jXR6DyrfEK15OY5KzkSo/iYcli6UkZLBhKhqZzSpGFccfykZvzvPKuEvFg2I=
+	t=1768488666; cv=none; b=tfJK+bGa+sXyBjy+2Pvd28S9y7RGNbahH2biJXfw020BXvR3Y7QIqGoLWmRMnbSXhrDyKbagK983/00/84Tz0JwO3w5VR143vbvurZD0TPxSZ029A+uPNxgCiF0ZcBC20CxGzzNAP/WjJUg3eLwQ3DL+sLh+GT4Ug4WzJuf5wqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768488664; c=relaxed/simple;
-	bh=dSDrf8jeg5RbB/cuerQFYrEKYuio8dfUjOAH5JBiM5I=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=mFipMftJDgbkbUtwWYUUYSfu3L5E78DcMEvBdFw/IhYaYeG7pbzgeHLVTtWTtOOm5QaYq4XiOhHbypPxjtDTsK8BTGWhzG/yN3fF5FXx7l9//CsztrQMdTmNdrfci37dGOabb2ETT/pcFpUbRChzNo40K4zaokoes7y04nWIJK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=T+AP9skR; arc=none smtp.client-ip=192.30.252.211
+	s=arc-20240116; t=1768488666; c=relaxed/simple;
+	bh=xSa/s3OJmnzkJ3lr9QiC8Mebv5Cz+IQxKPFn/mR1ipE=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=eRAcRvkR6N1WMe6heYKeoMv5cnUkJxKjeKxHE8hIW7lUNltqEoXlJmYlUuXpSfC+NHJi97v4hEbBE+HBuI7Kg1/fM/bXj4IIHfrp45rcS8B3e1KGJbr6Wla7KQrfnfMVQcGtC9hogY1tko1kqDg2C4sGeMSkrwl6Gep6EaE4qxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=iG+cODnv; arc=none smtp.client-ip=192.30.252.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-baae155.ash1-iad.github.net [10.56.179.19])
-	by smtp.github.com (Postfix) with ESMTPA id 7E2F5920968
-	for <linux-bluetooth@vger.kernel.org>; Thu, 15 Jan 2026 06:51:02 -0800 (PST)
+Received: from github.com (hubbernetes-node-04a2db5.va3-iad.github.net [10.48.210.47])
+	by smtp.github.com (Postfix) with ESMTPA id C5813E0A70
+	for <linux-bluetooth@vger.kernel.org>; Thu, 15 Jan 2026 06:51:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1768488662;
-	bh=AEepl9BezVNAvgNEEyyURhRPCpNUjdIwmVvvP1Lbnjs=;
+	s=pf2023; t=1768488664;
+	bh=WZQuKv1R0SWu/vJQc4Lr6QHuZIMJmx4ggtDTMgaGWHk=;
 	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=T+AP9skR2+6/BDz9Wo+f8wFYXOJmEMxl4/2WcLA7yosKXPX9RCjlHNPyM3wO5qIl9
-	 zoIHDYlHebtNxiw/zl4Bz4O9WGIOwEi6K42Zn5pWg1xi3mxSPQV0l/9eWfD5jv7sZF
-	 ALlH0FN+yCPUgtewZ2BtvRDfV4kb2kSPB8pq1WIc=
-Date: Thu, 15 Jan 2026 06:51:02 -0800
+	b=iG+cODnvi0L3AKB6B1sICz1m6/kDOeI885+vynh1oPVc9t71YraIcT1uz4r1gCAJc
+	 yV9I+W5+6zhufhXejRzOXGhZ8Ul6yyUvDnDnRKfm2mzz//Sv7ItKE5GE9cuPVZj3L1
+	 Tyo9qlwhR/EhAY4orXS+MwoqqM6lONFEd1MXqBQs=
+Date: Thu, 15 Jan 2026 06:51:04 -0800
 From: fdanis-oss <noreply@github.com>
 To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/1042857/000000-0dd500@github.com>
-Subject: [bluez/bluez] 0dd500: shared/btp: Fix typo
+Message-ID: <bluez/bluez/push/refs/heads/1042858/000000-2af9c7@github.com>
+Subject: [bluez/bluez] 2af9c7: tools/btpclient: Fix name advertising
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -55,22 +55,25 @@ Content-Transfer-Encoding: quoted-printable
 X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
 X-Auto-Response-Suppress: All
 
-  Branch: refs/heads/1042857
+  Branch: refs/heads/1042858
   Home:   https://github.com/bluez/bluez
-  Commit: 0dd500031eecedbeafb6e73b62c3e8d00e792b07
-      https://github.com/bluez/bluez/commit/0dd500031eecedbeafb6e73b62c3e=
-8d00e792b07
+  Commit: 2af9c774dad1702783a811ac7a7aaef50e4c8bff
+      https://github.com/bluez/bluez/commit/2af9c774dad1702783a811ac7a7aa=
+ef50e4c8bff
   Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
   Date:   2026-01-15 (Thu, 15 Jan 2026)
 
   Changed paths:
-    M src/shared/btp.h
     M tools/btpclient.c
-    M tools/btpclientctl.c
 
   Log Message:
   -----------
-  shared/btp: Fix typo
+  tools/btpclient: Fix name advertising
+
+This allows to pass GAP/BROB/BCST/BV-03-C and GAP/BROB/OBSV/BV-06-C
+tests with auto-pts.
+
+Those tests request privacy to be on to share IRK.
 
 
 
