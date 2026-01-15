@@ -1,35 +1,35 @@
-Return-Path: <linux-bluetooth+bounces-18072-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18073-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5586AD2233A
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 15 Jan 2026 03:55:52 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 70546D22337
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 15 Jan 2026 03:55:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1D8023054655
+	by tor.lore.kernel.org (Postfix) with ESMTP id 6A2A13020169
 	for <lists+linux-bluetooth@lfdr.de>; Thu, 15 Jan 2026 02:55:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47E9627874F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 627F827FD43;
 	Thu, 15 Jan 2026 02:55:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
 	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="Mm3rduxc"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-26.smtp.github.com (out-26.smtp.github.com [192.30.252.209])
+Received: from out-20.smtp.github.com (out-20.smtp.github.com [192.30.252.203])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957C326F293
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63F826CE2D
 	for <linux-bluetooth@vger.kernel.org>; Thu, 15 Jan 2026 02:55:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.209
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.203
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768445704; cv=none; b=A9rtyW90KqyqcsEMRzUbjDs7pV/JuM9mfKPrySP8ZjRYv9MB+/wwc0Wt/QR/tSvHKiuV1oZf84gRDGVokOk4qzPJYPd6v036X71PmVgOG5LCF013mbG0bkZmw4hPlOsFK+jYOHCbjAsQNol7gO3wPHqYbRay5dJ5N+SrAqoGrq0=
+	t=1768445705; cv=none; b=Ep14+K3wZc+IRmPkEi4OLwexDzVjfjeWh5C9+bHVlKdXpd8zi3Mjo6s67iBiwc83o+EeozfwyLMsVa+ngTPqsBdsVYt7lR1bRnaLVkh3K0Z1ugS03VtNRXnBYnC//+gypjKUeonYL7UVQ4PzLKeLiSYRiW2Z65jIYAOIihNg8z0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768445704; c=relaxed/simple;
+	s=arc-20240116; t=1768445705; c=relaxed/simple;
 	bh=7n03I34tNSbzydFb/9vfSqq25WdcRUxlV4nEpweZkwU=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=PCr8SQnvVVs3eszgi4i/CHrVdzU8H63sy7PUIxOJx7dBWECk1Po3sOZC9/Dv1jV16q052bYxZhq8/8OwaEYNA1ShtaMGtE+2P6O/gIGrfvvIOXew2aVqy1tcWp6ravAgkfaJ1UUErA5U96HHlUwMzTpi1Xlh4MBj2dmyWsbuysI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=Mm3rduxc; arc=none smtp.client-ip=192.30.252.209
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=qDFhT1ddddB1Z5Yaza611Phck9LQNgQQZYkXFiCAwT7ezsnNgTxCjrKdZSxtoXRavdgESr4Tbc6plFy96oJgL+DkxFpRbuZHWANfPYtCpvV/RKP5UUSBO+6SzygGGtMMo9HCRQVRD+gxFIyYHV3n8dgl/ZjES5iRtKq2IQ158bc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=Mm3rduxc; arc=none smtp.client-ip=192.30.252.203
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-898ea9d.ash1-iad.github.net [10.56.208.51])
-	by smtp.github.com (Postfix) with ESMTPA id CF0CC6003B6
+Received: from github.com (hubbernetes-node-0b4f780.va3-iad.github.net [10.48.209.47])
+	by smtp.github.com (Postfix) with ESMTPA id E2DB83C0CBC
 	for <linux-bluetooth@vger.kernel.org>; Wed, 14 Jan 2026 18:55:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
 	s=pf2023; t=1768445702;
