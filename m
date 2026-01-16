@@ -1,115 +1,145 @@
-Return-Path: <linux-bluetooth+bounces-18146-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18148-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2CCD8D32009
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Jan 2026 14:42:04 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 91DD6D320A4
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Jan 2026 14:44:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A0C91311F93F
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Jan 2026 13:36:43 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 5FDA93025F83
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Jan 2026 13:42:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70D83281368;
-	Fri, 16 Jan 2026 13:36:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MluxLA9C"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8072E1EC01B;
+	Fri, 16 Jan 2026 13:42:23 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-dl1-f66.google.com (mail-dl1-f66.google.com [74.125.82.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay1-d.mail.gandi.net (relay1-d.mail.gandi.net [217.70.183.193])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85D120DD51
-	for <linux-bluetooth@vger.kernel.org>; Fri, 16 Jan 2026 13:36:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D69D13C9C4
+	for <linux-bluetooth@vger.kernel.org>; Fri, 16 Jan 2026 13:42:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768570601; cv=none; b=P3Q1Mf4r5NOX/dTr39EmbGyJihUgzhlnFFiLnt0eZVEWkMfrV4eIJPYs7Btnt6n05QZnb2sHxBLlA9MHkNK3X9FW0E1zkE0aGhaEv8L/2dDkWEJEgosWODVYp5Yv0D/zpgODwvI20LTBAuOiOi0dJNYThiU0HRqlcuc5wY2hL7g=
+	t=1768570943; cv=none; b=fu+EAo+FpXDLO4Em/Wb2vdY2iZ+0oueFzl8/hJNLQ98tRCs7p/Ce59LNmd5E76uyyXuAL/g2gJoEDuDttM6RB5FnQQFiIx1KfD5uk83Rs5IMGf7e2Z9AqLyMIRleXUU7Np7zfrXYrBZbv2sFs2xfw3oY0JdaRC8EfCCS8lhZnJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768570601; c=relaxed/simple;
-	bh=tQzDm5ksJ47Lxtqr2NTZ5oYXtOYq0vzcRE+LNA2OJe4=;
-	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
-	 In-Reply-To:References; b=IEEMSqq8c7kJP235s2v5ePnD07azEt1+Y/6v1rM2uSFtj9hLhoQ1TPWO0BkANAJ5WJrVZrRW2WVE9ZTNnj8PU2MfZ6mlYif/8iuN38t7uihnL3b+8/26dI3G3vLbY5zgxcD7gx7emyOoRsvCNLV9rJI7937HQKcG9t0uhHkZWwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MluxLA9C; arc=none smtp.client-ip=74.125.82.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-dl1-f66.google.com with SMTP id a92af1059eb24-12336c0a8b6so4105958c88.1
-        for <linux-bluetooth@vger.kernel.org>; Fri, 16 Jan 2026 05:36:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768570599; x=1769175399; darn=vger.kernel.org;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=tQzDm5ksJ47Lxtqr2NTZ5oYXtOYq0vzcRE+LNA2OJe4=;
-        b=MluxLA9CdGjQpjSV0ipHQH+7wIpnEWj8h1p++H+BIPKzXyZZUqN9LPg4gOYqh0iLj/
-         +gbzTwG5HRP9t1fP/tSbJ5iiVeZlXuW8yp6fPonCwJ3mRgND0fubTTveCYQDVpaD0Pjq
-         JNQ5lzOhJfes03cbB21FiiNM9j4wWF+G3HPQaJpu9moOLQt+pAkJH+eru0JUmsOw4iFp
-         aNrMcYXFTRj6zZxLhxS3SoQNb/EDjwLpXW5gOPk3lVgG2MoPoTMnWwPSwbDee6afTe/a
-         utJhvZTwqrIAqkkJE7yk1eF76pzXH6YjmgO4G8vwshnZZaJtG782ZZnAhPpD1rl9kzAf
-         FfFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768570599; x=1769175399;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tQzDm5ksJ47Lxtqr2NTZ5oYXtOYq0vzcRE+LNA2OJe4=;
-        b=ehmwogyYlq8tuv2tVKMOntw3VkQI4bFriZo0d/lNQW/UvN0pUxtvKEUn4iAlYb+Cj3
-         m1SkByFNa6cBzOX5AV3WPyIAsAKvBiP1e3B/iO2sULt2AJqPNR3wAgOgSezMdbJIboHV
-         ri6hMcBONuz5lkaiEGofGaeOPEWSRN5IF4uZn7aGVzMOAij2Y98HBPOK68b3yKzHwI3z
-         Z7ItmOKRDRaaf6MozdDdTRgGL2n8zdrGOxqZizKx4CBQG0Ytmk9xBo7Fz9o+FNACZYFm
-         2zORB0iYnm39ZNhDg2DyKi9oR4JoHRkwJ2erDaY3xnUPMd9PckQ1+Xj/Nr3M6SqrCqmt
-         dNYg==
-X-Gm-Message-State: AOJu0YwKxhcXCqR2lNtYmCjiIM/ToAcDeN8GMTCX3rK8DuWJo9oWWJj1
-	3lwg25aRnWl0I59C3UZlddHUrKNrSE29KoxcBfeMlVLD4xBHud+MbWrpyP5O5oRM
-X-Gm-Gg: AY/fxX7ylig/F73fgAKNrhRbrKy7F60QRuQc1h2ZdWMIJX3dKgAuP9cgsqP1y64fiKm
-	vG1I4vkQYNYqMdqQKlbaPN20gUVMOU8yiUBN0QdnkQDu1dBuXru1ZBWTIGbixXxPJ90H+E8Lu6x
-	w3g7PJ4ZynSWlmDE09uWZYKFddAzA+SWEc2gSAY4++EgNyRdtfLIF401zqrkIXCjQTmV/1oDE1e
-	Y+juLYab2tDOOSAtnYUa7hb2o9XwOz+vynsYbwlrzOI3ST+KvXmPYSU8GS6F+NfOpbeZN78UH5b
-	QuZhQkneMCJL2oGSq3PMLPSwqR4PFBebWp684W3cHMqwFJ8T7rSrxeSd+LToYYcBIeLXlKXkLuZ
-	/uOViVG0ssR55XOyGPg60jvHfqt9k5V2EZpmjpkMwvbXQlZDuI4R5IDx1cHsm7D0k3i/eL3cUq5
-	vLjU11ouEwrk3y/DMp
-X-Received: by 2002:a05:7022:2206:b0:123:3bc6:1ffe with SMTP id a92af1059eb24-1244a70d2e6mr2814420c88.15.1768570599433;
-        Fri, 16 Jan 2026 05:36:39 -0800 (PST)
-Received: from [172.17.0.2] ([104.209.7.232])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1244af10e21sm2348457c88.16.2026.01.16.05.36.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Jan 2026 05:36:38 -0800 (PST)
-Message-ID: <696a3ee6.050a0220.150ef5.4fe9@mx.google.com>
-Date: Fri, 16 Jan 2026 05:36:38 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============8342116290448063844=="
+	s=arc-20240116; t=1768570943; c=relaxed/simple;
+	bh=y14A3rHDRuIyS7Euj0cTzZMLVJNDRVoj9y1mcMmuuHU=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=ibAM6n6B1wt7Frxr7qWnCLn+JkVghvUHerVBuPHuc8Cu+WmtZFifOffM2hDb6zvD0bt1mwV1nBdcApBsW/9TmeM51A5Yf8vspimNfCubhGT/W3ivei9oEgI08pj+Fq2Nr/NvyVwSl/igorS6TjiCgTihdyv0J3Jq9mSiZVwXgzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 5E322442AC;
+	Fri, 16 Jan 2026 13:42:13 +0000 (UTC)
+Message-ID: <4a73d9c0852b80fbfcaf80ce662a1638896d6772.camel@hadess.net>
+Subject: Re: [PATCH 1/3] Bluetooth: btmtksdio: Simplify dev_pm_ops usage
+From: Bastien Nocera <hadess@hadess.net>
+To: Paul Menzel <pmenzel@molgen.mpg.de>
+Cc: linux-bluetooth@vger.kernel.org
+Date: Fri, 16 Jan 2026 14:42:12 +0100
+In-Reply-To: <ebecbe2f-d770-477c-ab61-7513dc95b7a6@molgen.mpg.de>
+References: <20260116125803.598552-1-hadess@hadess.net>
+	 <20260116125803.598552-2-hadess@hadess.net>
+	 <ebecbe2f-d770-477c-ab61-7513dc95b7a6@molgen.mpg.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: bluez.test.bot@gmail.com
-To: linux-bluetooth@vger.kernel.org, hadess@hadess.net
-Subject: RE: More CONFIG_PM* simplifications
-In-Reply-To: <20260116125803.598552-2-hadess@hadess.net>
-References: <20260116125803.598552-2-hadess@hadess.net>
-Reply-To: linux-bluetooth@vger.kernel.org
+X-GND-Sasl: hadess@hadess.net
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdeltdekucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefkuffhvfevffgjfhgtgfgfggesthhqredttderjeenucfhrhhomhepuegrshhtihgvnhcupfhotggvrhgruceohhgruggvshhssehhrgguvghsshdrnhgvtheqnecuggftrfgrthhtvghrnhepieffgfehtedtgefgjeeggfffgeeuvdegveekveejfeekkedujeehteffueefffeunecukfhppedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemsggrgeefmegrieejieemtgdvugefmeejrgehfeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemsggrgeefmegrieejieemtgdvugefmeejrgehfedphhgvlhhopeglkffrvheimedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemsggrgeefmegrieejieemtgdvugefmeejrgehfegnpdhmrghilhhfrhhomhephhgruggvshhssehhrgguvghsshdrnhgvthdpqhhiugephefgfedvvdeggedvteevpdhmohguvgepshhmthhpohhuthdpnhgspghrtghpthhtohepvddprhgtphhtthhopehpmhgvnhiivghlsehmohhlghgvnhdrmhhpghdruggvpdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhth
+ hesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-GND-State: clean
+X-GND-Score: -100
 
---===============8342116290448063844==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+On Fri, 2026-01-16 at 14:33 +0100, Paul Menzel wrote:
+> Dear Bastien,
+>=20
+>=20
+> Thank you for your patch.
+>=20
+> Am 16.01.26 um 13:50 schrieb Bastien Nocera:
+> > This increases build coverage and allows to drop a few #ifdef's.
+>=20
+> Should you resend, you could elaborate on the difference between=20
+> SYSTEM_SLEEP_PM_OPS and SET_SYSTEM_SLEEP_PM_OPS.
 
-This is an automated email and please do not reply to this email.
+Noted.
 
-Dear Submitter,
+For the record, those become no-ops when the associated CONFIG_PM* is
+disabled:
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-While preparing the CI tests, the patches you submitted couldn't be applied to the current HEAD of the repository.
+#ifdef CONFIG_PM_SLEEP
+#define SET_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn) \
+        SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn)
+#else
+#define SET_SYSTEM_SLEEP_PM_OPS(suspend_fn, resume_fn)
+#endif
 
------ Output -----
+#ifdef CONFIG_PM
+#define SET_RUNTIME_PM_OPS(suspend_fn, resume_fn, idle_fn) \
+        RUNTIME_PM_OPS(suspend_fn, resume_fn, idle_fn)
+#else
+#define SET_RUNTIME_PM_OPS(suspend_fn, resume_fn, idle_fn)
+#endif
 
-error: patch failed: drivers/bluetooth/btmtksdio.c:1472
-error: drivers/bluetooth/btmtksdio.c: patch does not apply
-hint: Use 'git am --show-current-patch' to see the failed patch
-
-Please resolve the issue and submit the patches again.
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============8342116290448063844==--
+>=20
+> > Signed-off-by: Bastien Nocera <hadess@hadess.net>
+> > ---
+> > =C2=A0 drivers/bluetooth/btmtksdio.c | 12 +++---------
+> > =C2=A0 1 file changed, 3 insertions(+), 9 deletions(-)
+> >=20
+> > diff --git a/drivers/bluetooth/btmtksdio.c
+> > b/drivers/bluetooth/btmtksdio.c
+> > index fba3ab6d30a5..ec17521d5b9f 100644
+> > --- a/drivers/bluetooth/btmtksdio.c
+> > +++ b/drivers/bluetooth/btmtksdio.c
+> > @@ -1472,7 +1472,6 @@ static void btmtksdio_remove(struct sdio_func
+> > *func)
+> > =C2=A0=C2=A0	hci_free_dev(hdev);
+> > =C2=A0 }
+> > =C2=A0=20
+> > -#ifdef CONFIG_PM
+> > =C2=A0 static int btmtksdio_runtime_suspend(struct device *dev)
+> > =C2=A0 {
+> > =C2=A0=C2=A0	struct sdio_func *func =3D dev_to_sdio_func(dev);
+> > @@ -1538,22 +1537,17 @@ static int btmtksdio_system_resume(struct
+> > device *dev)
+> > =C2=A0 }
+> > =C2=A0=20
+> > =C2=A0 static const struct dev_pm_ops btmtksdio_pm_ops =3D {
+> > -	SYSTEM_SLEEP_PM_OPS(btmtksdio_system_suspend,
+> > btmtksdio_system_resume)
+> > -	RUNTIME_PM_OPS(btmtksdio_runtime_suspend,
+> > btmtksdio_runtime_resume, NULL)
+> > +	SET_SYSTEM_SLEEP_PM_OPS(btmtksdio_system_suspend,
+> > btmtksdio_system_resume)
+> > +	SET_RUNTIME_PM_OPS(btmtksdio_runtime_suspend,
+> > btmtksdio_runtime_resume, NULL)
+> > =C2=A0 };
+> > =C2=A0=20
+> > -#define BTMTKSDIO_PM_OPS (&btmtksdio_pm_ops)
+> > -#else	/* CONFIG_PM */
+> > -#define BTMTKSDIO_PM_OPS NULL
+> > -#endif	/* CONFIG_PM */
+> > -
+> > =C2=A0 static struct sdio_driver btmtksdio_driver =3D {
+> > =C2=A0=C2=A0	.name		=3D "btmtksdio",
+> > =C2=A0=C2=A0	.probe		=3D btmtksdio_probe,
+> > =C2=A0=C2=A0	.remove		=3D btmtksdio_remove,
+> > =C2=A0=C2=A0	.id_table	=3D btmtksdio_table,
+> > =C2=A0=C2=A0	.drv =3D {
+> > -		.pm =3D BTMTKSDIO_PM_OPS,
+> > +		.pm =3D &btmtksdio_pm_ops,
+> > =C2=A0=C2=A0	}
+> > =C2=A0 };
+>=20
+> Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+>=20
+>=20
+> Kind regards,
+>=20
+> Paul
 
