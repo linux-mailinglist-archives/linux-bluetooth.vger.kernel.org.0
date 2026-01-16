@@ -1,98 +1,118 @@
-Return-Path: <linux-bluetooth+bounces-18139-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18144-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A7E0D315FC
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Jan 2026 13:55:21 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4FAF2D31E92
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Jan 2026 14:35:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id B5ACB300969B
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Jan 2026 12:55:20 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 48501303EF97
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Jan 2026 13:33:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6436222D7B6;
-	Fri, 16 Jan 2026 12:55:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CCHUpovz"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92EA626CE0A;
+	Fri, 16 Jan 2026 13:33:54 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5408225A38
-	for <linux-bluetooth@vger.kernel.org>; Fri, 16 Jan 2026 12:55:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E46313C9C4
+	for <linux-bluetooth@vger.kernel.org>; Fri, 16 Jan 2026 13:33:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=141.14.17.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768568117; cv=none; b=g4KzIbk0+nu56XP+BMxIS536TsaA5BUuCFPk//SJLoyxpK8/efsO5L8Om0QAmO+Stg4eXyoJ3Qkzb5aHfT1a74savcb6WroX08cqNviTYpa7YekoHFb1aEPiV4OW95SF1cd4o7sRsFoK+exMJQFmo4YthD/zJtlKvWtH+VJ03rc=
+	t=1768570434; cv=none; b=PpGHZ8BwYZzGHFOEZir8UJyF4waudwd8g7f6czMr0rtZfWL07PJVLA7ymEnjDlOoqB6aQKGRuip59IVpU5rKxdRGMoOgWQv5kRW0Dd4FG4W/HCqzqrfzcuD5h+dwmurQcekUJfzn+xxiU0jdqohvsupCu049YiE9gBQh4yNaaYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768568117; c=relaxed/simple;
-	bh=cqeaAKvZM3xGniM+Z1eJWPoGou4/vAMMGxicRx+LAdM=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=O7B2ODPFmxCTCZWeiJQzyNotrsIHDP4/t7U+lxifCqKHmG032UsxspQG3tG4oKGjvk/+DG2VoIJrD7W+Zaun0sNSM4PBTzvBWBouRQlINf4Ib9k/pj89voUc/hp+HCmjokZbJY6hpvRKJFpSmVJYNE3jqsh8icMyi+5XVzTnJhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CCHUpovz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 81639C19423
-	for <linux-bluetooth@vger.kernel.org>; Fri, 16 Jan 2026 12:55:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768568116;
-	bh=cqeaAKvZM3xGniM+Z1eJWPoGou4/vAMMGxicRx+LAdM=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=CCHUpovzfONInu+F0mhKJRapPOX+sADlYsOkHoQJ6F57E6A33iupN5e9kW17vJbDZ
-	 WPiFdzxOPm0nzu3O/n493T0cbFhX005KzdzacgHkC1jsdzHdchsCiVugq24RaTSHCL
-	 CUzOiXMz0z7QLo+u7DDl244YE9Xqd/gRt3UVRwwWDdIdckq66U3O2WiW7H31CWk8Du
-	 ReYgu20Yz08SqfCKIyzRJ019ex/rF6CY116abPC92DoLt25v74J0UYhVzgIygxB5nZ
-	 iEy84BAv62E6OPvWEonl2iW5BF6UJvlCpwh6BW4/fp+Eo1mozTteA4iq51UnxFo+9t
-	 YBPYQUa6+KUXA==
-Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-	id 79AB7C53BBF; Fri, 16 Jan 2026 12:55:16 +0000 (UTC)
-From: bugzilla-daemon@kernel.org
-To: linux-bluetooth@vger.kernel.org
-Subject: [Bug 220682] Bluetooth adapter (MediaTek MT7925, USB ID 0489:e111)
- stops working after user logs in to the GNOME
-Date: Fri, 16 Jan 2026 12:55:16 +0000
-X-Bugzilla-Reason: AssignedTo
-X-Bugzilla-Type: changed
-X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Drivers
-X-Bugzilla-Component: Bluetooth
-X-Bugzilla-Version: 2.5
-X-Bugzilla-Keywords: 
-X-Bugzilla-Severity: normal
-X-Bugzilla-Who: bugzilla@hadess.net
-X-Bugzilla-Status: RESOLVED
-X-Bugzilla-Resolution: INVALID
-X-Bugzilla-Priority: P3
-X-Bugzilla-Assigned-To: linux-bluetooth@vger.kernel.org
-X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: 
-Message-ID: <bug-220682-62941-sCq3TyP5H9@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-220682-62941@https.bugzilla.kernel.org/>
-References: <bug-220682-62941@https.bugzilla.kernel.org/>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Bugzilla-URL: https://bugzilla.kernel.org/
-Auto-Submitted: auto-generated
+	s=arc-20240116; t=1768570434; c=relaxed/simple;
+	bh=HKfZAu36zFTLoNGU//bO14dU+hoLm4QXvYTAbGPImtc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:Cc:From:
+	 In-Reply-To:Content-Type; b=Cl4vzJIA3qkG76W1mOnN8Jb5eESFYh1ZduoJntxIRcoZ510wfdUYbHV5qX7wqGh2GbGD52cc+kuWgZU6d6NA5o5FMDCWUwVj/TURfKoVdlX0MMDLB8/UAIB6UXNVZMuK9lqzCTnsLFmTn7+HmB3UnH13LdHVQXgl3Qkoa3pGW6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de; spf=pass smtp.mailfrom=molgen.mpg.de; arc=none smtp.client-ip=141.14.17.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=molgen.mpg.de
+Received: from [141.14.220.42] (g42.guest.molgen.mpg.de [141.14.220.42])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: pmenzel)
+	by mx.molgen.mpg.de (Postfix) with ESMTPSA id C883E4C442FC58;
+	Fri, 16 Jan 2026 14:33:46 +0100 (CET)
+Message-ID: <ebecbe2f-d770-477c-ab61-7513dc95b7a6@molgen.mpg.de>
+Date: Fri, 16 Jan 2026 14:33:46 +0100
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] Bluetooth: btmtksdio: Simplify dev_pm_ops usage
+To: Bastien Nocera <hadess@hadess.net>
+References: <20260116125803.598552-1-hadess@hadess.net>
+ <20260116125803.598552-2-hadess@hadess.net>
+Content-Language: en-US
+Cc: linux-bluetooth@vger.kernel.org
+From: Paul Menzel <pmenzel@molgen.mpg.de>
+In-Reply-To: <20260116125803.598552-2-hadess@hadess.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D220682
+Dear Bastien,
 
---- Comment #6 from Bastien Nocera (bugzilla@hadess.net) ---
-There was a bug in the earlier libmtp errata for Fedora, those are the amen=
-ded
-ones:
-https://bodhi.fedoraproject.org/updates/FEDORA-2026-9e8ba7da64
-https://bodhi.fedoraproject.org/updates/FEDORA-2026-59cc133f4a
-https://bodhi.fedoraproject.org/updates/FEDORA-2026-98bf98c858
 
-And we also needed to apply a similar patch to libgphoto2, so more errata:
-https://bodhi.fedoraproject.org/updates/FEDORA-2026-ecbc75649b
-https://bodhi.fedoraproject.org/updates/FEDORA-2026-b2422ec758
-https://bodhi.fedoraproject.org/updates/FEDORA-2026-438abc45e8
+Thank you for your patch.
 
---=20
-You may reply to this email to add a comment.
+Am 16.01.26 um 13:50 schrieb Bastien Nocera:
+> This increases build coverage and allows to drop a few #ifdef's.
 
-You are receiving this mail because:
-You are the assignee for the bug.=
+Should you resend, you could elaborate on the difference between 
+SYSTEM_SLEEP_PM_OPS and SET_SYSTEM_SLEEP_PM_OPS.
+
+> Signed-off-by: Bastien Nocera <hadess@hadess.net>
+> ---
+>   drivers/bluetooth/btmtksdio.c | 12 +++---------
+>   1 file changed, 3 insertions(+), 9 deletions(-)
+> 
+> diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c
+> index fba3ab6d30a5..ec17521d5b9f 100644
+> --- a/drivers/bluetooth/btmtksdio.c
+> +++ b/drivers/bluetooth/btmtksdio.c
+> @@ -1472,7 +1472,6 @@ static void btmtksdio_remove(struct sdio_func *func)
+>   	hci_free_dev(hdev);
+>   }
+>   
+> -#ifdef CONFIG_PM
+>   static int btmtksdio_runtime_suspend(struct device *dev)
+>   {
+>   	struct sdio_func *func = dev_to_sdio_func(dev);
+> @@ -1538,22 +1537,17 @@ static int btmtksdio_system_resume(struct device *dev)
+>   }
+>   
+>   static const struct dev_pm_ops btmtksdio_pm_ops = {
+> -	SYSTEM_SLEEP_PM_OPS(btmtksdio_system_suspend, btmtksdio_system_resume)
+> -	RUNTIME_PM_OPS(btmtksdio_runtime_suspend, btmtksdio_runtime_resume, NULL)
+> +	SET_SYSTEM_SLEEP_PM_OPS(btmtksdio_system_suspend, btmtksdio_system_resume)
+> +	SET_RUNTIME_PM_OPS(btmtksdio_runtime_suspend, btmtksdio_runtime_resume, NULL)
+>   };
+>   
+> -#define BTMTKSDIO_PM_OPS (&btmtksdio_pm_ops)
+> -#else	/* CONFIG_PM */
+> -#define BTMTKSDIO_PM_OPS NULL
+> -#endif	/* CONFIG_PM */
+> -
+>   static struct sdio_driver btmtksdio_driver = {
+>   	.name		= "btmtksdio",
+>   	.probe		= btmtksdio_probe,
+>   	.remove		= btmtksdio_remove,
+>   	.id_table	= btmtksdio_table,
+>   	.drv = {
+> -		.pm = BTMTKSDIO_PM_OPS,
+> +		.pm = &btmtksdio_pm_ops,
+>   	}
+>   };
+
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+
+
+Kind regards,
+
+Paul
+
 
