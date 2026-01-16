@@ -1,39 +1,39 @@
-Return-Path: <linux-bluetooth+bounces-18141-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18143-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id BBF81D31697
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Jan 2026 13:58:32 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A62C4D316A8
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Jan 2026 13:58:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id DC45E3015165
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Jan 2026 12:58:23 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id BD0613016BE7
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 16 Jan 2026 12:58:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91928239E7D;
-	Fri, 16 Jan 2026 12:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB3DF22A7F1;
+	Fri, 16 Jan 2026 12:58:33 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay6-d.mail.gandi.net (relay6-d.mail.gandi.net [217.70.183.198])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1E122FDE6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2C22236E0
 	for <linux-bluetooth@vger.kernel.org>; Fri, 16 Jan 2026 12:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768568302; cv=none; b=tGU/N5omYh5nYQOx0YwsYebEa6lvkQ7hIRvK3ZzKMRRncVkmePPbOfdAp1az4lw5OBA5Embr+9HV40Xomp7Y0VYBJkTSr2h8Uga1D7GYr0oCbUy4meu3+Aa5cbyMdXg2NXv0XfGKwuB2nUEiZtyfxnGp+bCs+hjDzPzVuZOm5dI=
+	t=1768568313; cv=none; b=Jf/TGM7QWoECXoA57E41X+7UoRzAyBECADN35ozKZGNElfvDrSYSUodvKc2zaBHJZlfnGa4nh3y3ntfgzqXI2zDgH1uj9ISkIj3/cJfpR10IFLTTtU117pXMFXrg2Dda01o6vfXnzqC6U47lfguQZ16E6uMg+gadEDymmK3Z7Vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768568302; c=relaxed/simple;
-	bh=a5cTWRME5JZXx3zSa48Hm+L9ZXjatFhq4iExKGbgQeE=;
+	s=arc-20240116; t=1768568313; c=relaxed/simple;
+	bh=SAYb7YSxG8LaPVFrVlBWms+9YMCKNP7EIb1K3TN6A6A=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OHmhqcaIkzIQNWExOxaDwHszt21kMshmKPe8KsouOcUyDsDbE3XPzP7vr7Ps9co+LCgMU3jkb52Jz3/jmrL+1LqOwVbUxe2czu3B2Uni7Y3+yyctvTUVRQAq0zENmvLv6kqqH4wQTbI4xPe0yUxStYM/v2gY4AGh7mziEE89rPw=
+	 MIME-Version; b=auT+AvrythxyEOA4BqXOSFGnQ2tzH7ZgMSmBlbKwpXTFYyK7noKFDropTTV7EDtxNKEhqtU9vzUoh0Kc0P5ZPCDTeew5+Re87MBQXz5hyHzbQQimq4bnbZ61YNPGBdk5sAVdTPvVhOrGhpG5kAoC/4xmO+cql3+WRI90+N4QJEA=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.198
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 39E31442B9
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 719B8442EC
 	for <linux-bluetooth@vger.kernel.org>; Fri, 16 Jan 2026 12:58:12 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH 1/3] Bluetooth: btmtksdio: Simplify dev_pm_ops usage
-Date: Fri, 16 Jan 2026 13:50:42 +0100
-Message-ID: <20260116125803.598552-2-hadess@hadess.net>
+Subject: [PATCH 2/3] Bluetooth: btnxpuart: Remove unneeded CONFIG_PM ifdef
+Date: Fri, 16 Jan 2026 13:50:43 +0100
+Message-ID: <20260116125803.598552-3-hadess@hadess.net>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260116125803.598552-1-hadess@hadess.net>
 References: <20260116125803.598552-1-hadess@hadess.net>
@@ -47,53 +47,39 @@ Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 X-GND-State: clean
 X-GND-Score: 0
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdekleelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpeekteetgeettdehieduiedttdetffelleehtdejkeeluedvgfffvdevteetudfhkeenucfkphepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefpdhhvghlohepohhlihhmphhitgdpmhgrihhlfhhrohhmpehhrgguvghssheshhgruggvshhsrdhnvghtpdhqihgupeeflefgfedugeegvdeuledpmhhouggvpehsmhhtphhouhhtpdhnsggprhgtphhtthhopedupdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduvdekleelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpeekteetgeettdehieduiedttdetffelleehtdejkeeluedvgfffvdevteetudfhkeenucfkphepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefpdhhvghlohepohhlihhmphhitgdpmhgrihhlfhhrohhmpehhrgguvghssheshhgruggvshhsrdhnvghtpdhqihgupeejudelueekgeegvdfgvedpmhhouggvpehsmhhtphhouhhtpdhnsggprhgtphhtthhopedupdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
 
-This increases build coverage and allows to drop a few #ifdef's.
+The functions are already disabled through the use of pm_ptr() when
+CONFIG_PM is disabled, and won't be included in the final code if not
+needed.
+
+This increases build coverage and allows to drop an #ifdef.
 
 Signed-off-by: Bastien Nocera <hadess@hadess.net>
 ---
- drivers/bluetooth/btmtksdio.c | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ drivers/bluetooth/btnxpuart.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c
-index fba3ab6d30a5..ec17521d5b9f 100644
---- a/drivers/bluetooth/btmtksdio.c
-+++ b/drivers/bluetooth/btmtksdio.c
-@@ -1472,7 +1472,6 @@ static void btmtksdio_remove(struct sdio_func *func)
+diff --git a/drivers/bluetooth/btnxpuart.c b/drivers/bluetooth/btnxpuart.c
+index 3b1e9224e965..13daa174aaaa 100644
+--- a/drivers/bluetooth/btnxpuart.c
++++ b/drivers/bluetooth/btnxpuart.c
+@@ -1947,7 +1947,6 @@ static void nxp_serdev_remove(struct serdev_device *serdev)
  	hci_free_dev(hdev);
  }
  
--#ifdef CONFIG_PM
- static int btmtksdio_runtime_suspend(struct device *dev)
+-#ifdef CONFIG_PM_SLEEP
+ static int nxp_serdev_suspend(struct device *dev)
  {
- 	struct sdio_func *func = dev_to_sdio_func(dev);
-@@ -1538,22 +1537,17 @@ static int btmtksdio_system_resume(struct device *dev)
+ 	struct btnxpuart_dev *nxpdev = dev_get_drvdata(dev);
+@@ -1975,7 +1974,6 @@ static int nxp_serdev_resume(struct device *dev)
+ 	ps_control(psdata->hdev, PS_STATE_AWAKE);
+ 	return 0;
  }
+-#endif
  
- static const struct dev_pm_ops btmtksdio_pm_ops = {
--	SYSTEM_SLEEP_PM_OPS(btmtksdio_system_suspend, btmtksdio_system_resume)
--	RUNTIME_PM_OPS(btmtksdio_runtime_suspend, btmtksdio_runtime_resume, NULL)
-+	SET_SYSTEM_SLEEP_PM_OPS(btmtksdio_system_suspend, btmtksdio_system_resume)
-+	SET_RUNTIME_PM_OPS(btmtksdio_runtime_suspend, btmtksdio_runtime_resume, NULL)
- };
- 
--#define BTMTKSDIO_PM_OPS (&btmtksdio_pm_ops)
--#else	/* CONFIG_PM */
--#define BTMTKSDIO_PM_OPS NULL
--#endif	/* CONFIG_PM */
--
- static struct sdio_driver btmtksdio_driver = {
- 	.name		= "btmtksdio",
- 	.probe		= btmtksdio_probe,
- 	.remove		= btmtksdio_remove,
- 	.id_table	= btmtksdio_table,
- 	.drv = {
--		.pm = BTMTKSDIO_PM_OPS,
-+		.pm = &btmtksdio_pm_ops,
- 	}
- };
- 
+ #ifdef CONFIG_DEV_COREDUMP
+ static void nxp_serdev_coredump(struct device *dev)
 -- 
 2.52.0
 
