@@ -1,39 +1,39 @@
-Return-Path: <linux-bluetooth+bounces-18199-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18198-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0CBAAD3A903
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 19 Jan 2026 13:36:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C386D3A901
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 19 Jan 2026 13:36:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id A63E73028440
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 19 Jan 2026 12:36:01 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 1435930239CD
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 19 Jan 2026 12:36:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49E1835BDB8;
-	Mon, 19 Jan 2026 12:35:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 878B735B14A;
+	Mon, 19 Jan 2026 12:35:56 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay6-d.mail.gandi.net (relay6-d.mail.gandi.net [217.70.183.198])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B62435B149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B50E35B13C
 	for <linux-bluetooth@vger.kernel.org>; Mon, 19 Jan 2026 12:35:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768826157; cv=none; b=rUx0DnbbbBtTC5p3USKUctXIpMYp2RbQqTcLXxstC5Q1O1/eaaI3VyYG7AnWoEvNRVEfbG7rKNQkCUfX3Sljyo7Zj64B0MKL5ZQAiPdc8pqCNPu1FmzlOgeCKOic/xkYSO7jVMxHL5vL4rUB39ZEG/RU13popWK0/PEaM+0hLfU=
+	t=1768826156; cv=none; b=nrEjvm4JHxNCCRHY76V1d+zuBqtOr5rkjtOweq8qaZ52zU//pJ6X12BLVp/qhLQlsTXhmo12IVWrTz18ABeGxeeRswBYjBpbQdVwToifmr6WrjGZq+EtOlzHNgDrHMcEqe3JJfyNt0WC/fehFSCB5SwuzYC6LUhZhulYHJttaTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768826157; c=relaxed/simple;
-	bh=er9XHFZJG9ZM03ugVigNLCcB/1uvFwguJUo1y3KB+ds=;
+	s=arc-20240116; t=1768826156; c=relaxed/simple;
+	bh=7ePBXAGx10mDF4aWMp3qHx9yDeBaVQhWyho9yO3REVU=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bCcEvISA0xt68EkPclBhDWM44SJUKc7NJKfU5BrHZDSg9Y4Z17VoqPiyK2SAOAi2JAiVzZiB8w2mr95kiZFRS9RB97QxlkwJt7cAPlOAE/mflZmZxtx9L5fjRoHvqPFxmqrbWuzbc6eX58JHOPpaTYa4vC6XqQ7QTiO6oOZHfUk=
+	 MIME-Version; b=Q6DDB2SBnmyZ5NNTRtisIO3ANS7skeYr9niQ+Xwrp54oHLDMjBTCjUpODs7RbF69u8Shktt0kOzAez5bcsEbGS+PrvavuyBrMiuyhYgMZ67OQas1de3H9YoO4jjow4LrBs+0LJpg0iWWAbPj2+dCRscYPIZIwEA/qVhp6bSV7ZE=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.198
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id E8C4E442B9
-	for <linux-bluetooth@vger.kernel.org>; Mon, 19 Jan 2026 12:35:45 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 2F1A2442BA
+	for <linux-bluetooth@vger.kernel.org>; Mon, 19 Jan 2026 12:35:46 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH v3 1/2] Bluetooth: btnxpuart: Remove unneeded CONFIG_PM ifdef
-Date: Mon, 19 Jan 2026 13:34:59 +0100
-Message-ID: <20260119123537.2611794-2-hadess@hadess.net>
+Subject: [PATCH v3 2/2] Bluetooth: btintel: Remove unneeded CONFIG_PM* #ifdef's
+Date: Mon, 19 Jan 2026 13:35:00 +0100
+Message-ID: <20260119123537.2611794-3-hadess@hadess.net>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260119123537.2611794-1-hadess@hadess.net>
 References: <20260119123537.2611794-1-hadess@hadess.net>
@@ -47,50 +47,76 @@ Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 X-GND-State: clean
 X-GND-Score: 0
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddufeejheelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpeekteetgeettdehieduiedttdetffelleehtdejkeeluedvgfffvdevteetudfhkeenucfkphepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefpdhhvghlohepohhlihhmphhitgdpmhgrihhlfhhrohhmpehhrgguvghssheshhgruggvshhsrdhnvghtpdhqihgupefgkeevgefggeegvdeuledpmhhouggvpehsmhhtphhouhhtpdhnsggprhgtphhtthhopedupdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddufeejheelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpeekteetgeettdehieduiedttdetffelleehtdejkeeluedvgfffvdevteetudfhkeenucfkphepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefpdhhvghlohepohhlihhmphhitgdpmhgrihhlfhhrohhmpehhrgguvghssheshhgruggvshhsrdhnvghtpdhqihgupedvhfdutedvgeegvdeutedpmhhouggvpehsmhhtphhouhhtpdhnsggprhgtphhtthhopedupdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
 
-The functions are already disabled through the use of pm_ptr() when
-CONFIG_PM is disabled, and will be removed from the final linked code
-as not needed.
+The functions are already disabled if CONFIG_PM or CONFIG_PM_SLEEP are
+disabled through the use of SET_SYSTEM_SLEEP_PM_OPS() and
+SET_RUNTIME_PM_OPS().
 
-This increases build coverage and allows to drop an #ifdef.
+This increases build coverage and allows to drop a few #ifdef's.
 
 Signed-off-by: Bastien Nocera <hadess@hadess.net>
 ---
- drivers/bluetooth/btnxpuart.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/bluetooth/hci_intel.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/bluetooth/btnxpuart.c b/drivers/bluetooth/btnxpuart.c
-index 3b1e9224e965..e7036a48ce48 100644
---- a/drivers/bluetooth/btnxpuart.c
-+++ b/drivers/bluetooth/btnxpuart.c
-@@ -1947,8 +1947,7 @@ static void nxp_serdev_remove(struct serdev_device *serdev)
- 	hci_free_dev(hdev);
+diff --git a/drivers/bluetooth/hci_intel.c b/drivers/bluetooth/hci_intel.c
+index 20baf2895dec..f7570c2eaa46 100644
+--- a/drivers/bluetooth/hci_intel.c
++++ b/drivers/bluetooth/hci_intel.c
+@@ -126,7 +126,6 @@ static int intel_wait_booting(struct hci_uart *hu)
+ 	return err;
  }
  
--#ifdef CONFIG_PM_SLEEP
--static int nxp_serdev_suspend(struct device *dev)
-+static int __maybe_unused nxp_serdev_suspend(struct device *dev)
+-#ifdef CONFIG_PM
+ static int intel_wait_lpm_transaction(struct hci_uart *hu)
  {
- 	struct btnxpuart_dev *nxpdev = dev_get_drvdata(dev);
- 	struct ps_data *psdata = &nxpdev->psdata;
-@@ -1962,7 +1961,7 @@ static int nxp_serdev_suspend(struct device *dev)
+ 	struct intel_data *intel = hu->priv;
+@@ -237,7 +236,6 @@ static int intel_lpm_resume(struct hci_uart *hu)
+ 
  	return 0;
  }
+-#endif /* CONFIG_PM */
  
--static int nxp_serdev_resume(struct device *dev)
-+static int __maybe_unused nxp_serdev_resume(struct device *dev)
+ static int intel_lpm_host_wake(struct hci_uart *hu)
  {
- 	struct btnxpuart_dev *nxpdev = dev_get_drvdata(dev);
- 	struct ps_data *psdata = &nxpdev->psdata;
-@@ -1975,7 +1974,6 @@ static int nxp_serdev_resume(struct device *dev)
- 	ps_control(psdata->hdev, PS_STATE_AWAKE);
+@@ -1066,7 +1064,6 @@ static const struct acpi_device_id intel_acpi_match[] = {
+ MODULE_DEVICE_TABLE(acpi, intel_acpi_match);
+ #endif
+ 
+-#ifdef CONFIG_PM
+ static int intel_suspend_device(struct device *dev)
+ {
+ 	struct intel_device *idev = dev_get_drvdata(dev);
+@@ -1090,10 +1087,8 @@ static int intel_resume_device(struct device *dev)
+ 
  	return 0;
  }
 -#endif
  
- #ifdef CONFIG_DEV_COREDUMP
- static void nxp_serdev_coredump(struct device *dev)
+-#ifdef CONFIG_PM_SLEEP
+-static int intel_suspend(struct device *dev)
++static int __maybe_unused intel_suspend(struct device *dev)
+ {
+ 	struct intel_device *idev = dev_get_drvdata(dev);
+ 
+@@ -1103,7 +1098,7 @@ static int intel_suspend(struct device *dev)
+ 	return intel_suspend_device(dev);
+ }
+ 
+-static int intel_resume(struct device *dev)
++static int __maybe_unused intel_resume(struct device *dev)
+ {
+ 	struct intel_device *idev = dev_get_drvdata(dev);
+ 
+@@ -1112,7 +1107,6 @@ static int intel_resume(struct device *dev)
+ 
+ 	return intel_resume_device(dev);
+ }
+-#endif
+ 
+ static const struct dev_pm_ops intel_pm_ops = {
+ 	SET_SYSTEM_SLEEP_PM_OPS(intel_suspend, intel_resume)
 -- 
 2.52.0
 
