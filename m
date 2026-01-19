@@ -1,39 +1,39 @@
-Return-Path: <linux-bluetooth+bounces-18206-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18203-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Delivered-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9CD8D3AB63
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 19 Jan 2026 15:14:36 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32813D3AB5B
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 19 Jan 2026 15:12:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id BBC7D30A06AF
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 19 Jan 2026 14:12:53 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id A76DD3002BA3
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 19 Jan 2026 14:12:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DA15374163;
-	Mon, 19 Jan 2026 14:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE115378D8D;
+	Mon, 19 Jan 2026 14:12:51 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99B92359FBB
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA47B35CB7C
 	for <linux-bluetooth@vger.kernel.org>; Mon, 19 Jan 2026 14:12:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768831972; cv=none; b=JrlmgRaiGLOmsURGiKIWKk7hCWxbWzYKAoInB34e5fCQEPD+aUtKNz0JY4n4kVxaUdjVGE43O8AB2JDifVp2vvmCuO3yX7uh4YMkpxEWSBQsrIZwSk/Hg+YlavQKKvooLiB5n0ujMnYDoEqK9seQqeDCUQ7sLz+8ZLhDO1Ybh8Q=
+	t=1768831971; cv=none; b=GdPMi8ZC0olQltii0zavq5Xgz8HNy3dKCuvmNbomQvM9PmbVMH2NNYwq7g3cidPGugkQBTegPv8/0rQ7NoM6iPKIiHJaF5G1JVSc21B0psC1kIosN4VqrdYX+jFYY2p7fDb6+R3j5eD+Q57c6W75uvAtw7TmqBlBmXkUOwKj3jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768831972; c=relaxed/simple;
-	bh=KQEP/S8qCbXWxGJjEHeqIqgxtvohd75ty4LFYTFGDRs=;
+	s=arc-20240116; t=1768831971; c=relaxed/simple;
+	bh=mXWEQVEiij9UPqbWZqcwfF1GTDHhZdHjU59rSPVOTh4=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b5w6SoAENxApQdZnvieg7JfknSOu+cNTtJapl5/aG2upsty/FlDHvDC+o2Ig/YcnsvolvBNbtXIEJ+jmUM14LQB47OApsOpzXZ1VThzqZnfyE4GwzevDvY5nT2ajiu4HowN/LxJ2eDHOkYHMIJKvqxDJIpv24fdPMleVH+VoMz4=
+	 MIME-Version; b=azMeC5Jc2ffgT0Nx7oyjZ3UdhZacNyopCGMJWi/BDIQCSF2b6JWapxdlZ/SPIkyepvr+/nOSnZhqiLM+3eQ38d5UXxvqnDWK6JaFoWfFDk+gnGFq9xeu8YZDJ63Qi2zSwCirJ7VY1hF3h/gsGy0gXOt82xo4FxeMkfPQog0UDGo=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.197
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 3CCFE43A07
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 7186443A0A
 	for <linux-bluetooth@vger.kernel.org>; Mon, 19 Jan 2026 14:12:48 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
-Subject: [BlueZ 1/4] src: Turn available priority macros into an enum
-Date: Mon, 19 Jan 2026 14:27:09 +0100
-Message-ID: <20260119141239.2683954-2-hadess@hadess.net>
+Subject: [BlueZ 2/4] src: Prefix plugin-accessible adapter_set_name() function
+Date: Mon, 19 Jan 2026 14:27:10 +0100
+Message-ID: <20260119141239.2683954-3-hadess@hadess.net>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260119141239.2683954-1-hadess@hadess.net>
 References: <20260119141239.2683954-1-hadess@hadess.net>
@@ -47,33 +47,71 @@ Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 X-GND-State: clean
 X-GND-Score: 0
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddufeejjeejucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpeekteetgeettdehieduiedttdetffelleehtdejkeeluedvgfffvdevteetudfhkeenucfkphepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefpdhhvghlohepohhlihhmphhitgdpmhgrihhlfhhrohhmpehhrgguvghssheshhgruggvshhsrdhnvghtpdhqihgupeefveevhffggeeftedtjedpmhhouggvpehsmhhtphhouhhtpdhnsggprhgtphhtthhopedupdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddufeejjeejucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpeekteetgeettdehieduiedttdetffelleehtdejkeeluedvgfffvdevteetudfhkeenucfkphepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefpdhhvghlohepohhlihhmphhitgdpmhgrihhlfhhrohhmpehhrgguvghssheshhgruggvshhsrdhnvghtpdhqihgupeejudekieeggeeftedttedpmhhouggvpehsmhhtphhouhhtpdhnsggprhgtphhtthhopedupdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
 
-This will allow generated bindings to know to use the same type
-independent of individual values.
+Plugin-accessible functions are usually prefixed with btd_ to avoid
+confusing them with internal private functions. Rename
+adapter_set_name() to match the existing btd_adapter_set_class().
 ---
- src/plugin.h | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ plugins/hostname.c | 4 ++--
+ src/adapter.c      | 2 +-
+ src/adapter.h      | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/src/plugin.h b/src/plugin.h
-index b484ed37874e..e03b587faed6 100644
---- a/src/plugin.h
-+++ b/src/plugin.h
-@@ -7,9 +7,12 @@
-  *
-  *
-  */
--#define BLUETOOTH_PLUGIN_PRIORITY_LOW      -100
--#define BLUETOOTH_PLUGIN_PRIORITY_DEFAULT     0
--#define BLUETOOTH_PLUGIN_PRIORITY_HIGH      100
-+
-+enum bluetooth_plugin_priority {
-+	BLUETOOTH_PLUGIN_PRIORITY_LOW     = -100,
-+	BLUETOOTH_PLUGIN_PRIORITY_DEFAULT = 0,
-+	BLUETOOTH_PLUGIN_PRIORITY_HIGH    = 100
-+};
+diff --git a/plugins/hostname.c b/plugins/hostname.c
+index 35420e5d587b..c827506275aa 100644
+--- a/plugins/hostname.c
++++ b/plugins/hostname.c
+@@ -82,7 +82,7 @@ static void update_name(struct btd_adapter *adapter, gpointer user_data)
+ 	if (btd_adapter_is_default(adapter)) {
+ 		DBG("name: %s", hostname);
  
- struct bluetooth_plugin_desc {
+-		adapter_set_name(adapter, hostname);
++		btd_adapter_set_name(adapter, hostname);
+ 	} else {
+ 		uint16_t index = btd_adapter_get_index(adapter);
+ 		char *str;
+@@ -92,7 +92,7 @@ static void update_name(struct btd_adapter *adapter, gpointer user_data)
+ 
+ 		DBG("name: %s", str);
+ 
+-		adapter_set_name(adapter, str);
++		btd_adapter_set_name(adapter, str);
+ 
+ 		g_free(str);
+ 	}
+diff --git a/src/adapter.c b/src/adapter.c
+index a5de7cee1552..3bbee2e36810 100644
+--- a/src/adapter.c
++++ b/src/adapter.c
+@@ -998,7 +998,7 @@ static int set_name(struct btd_adapter *adapter, const char *name)
+ 	return -EIO;
+ }
+ 
+-int adapter_set_name(struct btd_adapter *adapter, const char *name)
++int btd_adapter_set_name(struct btd_adapter *adapter, const char *name)
+ {
+ 	if (g_strcmp0(adapter->system_name, name) == 0)
+ 		return 0;
+diff --git a/src/adapter.h b/src/adapter.h
+index dd0c90d9cb3a..e562b1bcd4da 100644
+--- a/src/adapter.h
++++ b/src/adapter.h
+@@ -100,7 +100,6 @@ const char *adapter_get_path(struct btd_adapter *adapter);
+ const bdaddr_t *btd_adapter_get_address(struct btd_adapter *adapter);
+ uint8_t btd_adapter_get_address_type(struct btd_adapter *adapter);
+ const char *btd_adapter_get_storage_dir(struct btd_adapter *adapter);
+-int adapter_set_name(struct btd_adapter *adapter, const char *name);
+ 
+ int adapter_service_add(struct btd_adapter *adapter, sdp_record_t *rec);
+ void adapter_service_remove(struct btd_adapter *adapter, uint32_t handle);
+@@ -114,6 +113,7 @@ void btd_adapter_unref(struct btd_adapter *adapter);
+ 
+ void btd_adapter_set_class(struct btd_adapter *adapter, uint8_t major,
+ 							uint8_t minor);
++int btd_adapter_set_name(struct btd_adapter *adapter, const char *name);
+ 
+ struct btd_adapter_driver {
  	const char *name;
 -- 
 2.52.0
