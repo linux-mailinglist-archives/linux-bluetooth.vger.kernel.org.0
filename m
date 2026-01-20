@@ -1,46 +1,46 @@
-Return-Path: <linux-bluetooth+bounces-18241-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18244-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id +K7kAHWwb2nMKgAAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18241-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Jan 2026 17:42:29 +0100
+	id aOS5MN/Mb2mgMQAAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18244-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Jan 2026 19:43:43 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 942C247D40
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Jan 2026 17:42:28 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E7F049B2D
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Jan 2026 19:43:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id BC6FC706248
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Jan 2026 16:22:06 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id E69EE7C5002
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Jan 2026 16:22:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 975CB44A708;
-	Tue, 20 Jan 2026 16:08:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD2F844A727;
+	Tue, 20 Jan 2026 16:08:26 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [217.70.183.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6009449ECD
-	for <linux-bluetooth@vger.kernel.org>; Tue, 20 Jan 2026 16:08:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A58E449ECE
+	for <linux-bluetooth@vger.kernel.org>; Tue, 20 Jan 2026 16:08:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768925305; cv=none; b=Ra5sOa2vOKC2ugSSr/0J5zHQr2DH6iTfu9eB9OWpGe8AJmEEvoS2mqMJvN9beDvhvjwLIVdBpTbIYHXDia4b7GkyH2ri6K2n2CsodZKLMpHBKHFTcPiBjbVRyCtvcySlNwF0Jx4RNzAva78K8NQqODZeESAnNU+eClUZoZxhiXo=
+	t=1768925306; cv=none; b=exgz1UN/ruOzsCCHMiEtnnq4pKbuZSsOyjTPq2IZKKhp7NGq+CzPhKibCzQVAA0I5oZO0a4FgJcLWzySu5KMCXo/dJ99YppHw/QQv+W8t16PLJ2VdqbQYe9KcOBKqMae88CC1kzdJ06HKuyi5XIRaLDUhjsz1odwwl4gBv40ffo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768925305; c=relaxed/simple;
-	bh=g47PqoA6WThSWQUbNYLpFQVlYB+SL/16LRsd/qC+kgY=;
+	s=arc-20240116; t=1768925306; c=relaxed/simple;
+	bh=HIV5dd4GrriCj/06DkgZrib/OAaWcpVKjn5QKZehZ9U=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YXSvdR4ZBLbTJEZ2y3jO8CYDhseduOCGFHMp3E3NsqDFB1scn4tllbR/QskBhha1Qt+Gu+6N3ig+idcBhWeZI1rTYeD4mqHRPl7ENtcTgc3QvgyIE44+gLTQ6NsjfQof+dvpMSQKH3KK4/aZKLUtun7mYOrFFkMFmHSiW+8IwGM=
+	 MIME-Version; b=JP9RN6ePFq/CMofxXQz9wOWDjbSdu2z0kBReKpk+hfpHmNhkpIkHhFKp/xuSAVM2Vk5ukjs6xxRg8kEQ0aNcADMI661KFVIwN2ZjV5fO9xVWo++Atujzn8/XmIgpBY9iMiIRpWuh9Ti8RC1ef6urPKCdPZdD5+pOXI5SeZ+PL+s=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 53C7E4435E
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 85B584436B
 	for <linux-bluetooth@vger.kernel.org>; Tue, 20 Jan 2026 16:08:21 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
-Subject: [BlueZ 5/7] doc: Port sap-api.txt to RST
-Date: Tue, 20 Jan 2026 17:05:51 +0100
-Message-ID: <20260120160811.3394320-6-hadess@hadess.net>
+Subject: [BlueZ 6/7] doc: Port maintainer-guidelines.txt to RST
+Date: Tue, 20 Jan 2026 17:05:52 +0100
+Message-ID: <20260120160811.3394320-7-hadess@hadess.net>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260120160811.3394320-1-hadess@hadess.net>
 References: <20260120160811.3394320-1-hadess@hadess.net>
@@ -52,7 +52,7 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugedtkeehucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpedvffeiveehfedufeeuveekgeegteetudegfedutedvtdfghedutdduhfdtheevleenucffohhmrghinhepsghluhgviidrtggrlhhlnecukfhppedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemsggrgeefmegrieejieemtgdvugefmeejrgehfeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemsggrgeefmegrieejieemtgdvugefmeejrgehfedphhgvlhhopeholhhimhhpihgtpdhmrghilhhfrhhomhephhgruggvshhssehhrgguvghsshdrnhgvthdpqhhiugepheefveejgfeggeefhefgpdhmohguvgepshhmthhpohhuthdpnhgspghrtghpthhtohepuddprhgtphhtthhopehlihhnuhigqdgslhhuvghtohhothhhsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugedtkeehucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpeekteetgeettdehieduiedttdetffelleehtdejkeeluedvgfffvdevteetudfhkeenucfkphepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefpdhhvghlohepohhlihhmphhitgdpmhgrihhlfhhrohhmpehhrgguvghssheshhgruggvshhsrdhnvghtpdhqihgupeekheeuheekgeegfeeiuedpmhhouggvpehsmhhtphhouhhtpdhnsggprhgtphhtthhopedupdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
 X-GND-State: clean
 X-GND-Score: 0
 X-Spamd-Result: default: False [0.24 / 15.00];
@@ -66,10 +66,10 @@ X-Spamd-Result: default: False [0.24 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-18241-lists,linux-bluetooth=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-18244-lists,linux-bluetooth=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	RCPT_COUNT_ONE(0.00)[1];
-	ASN(0.00)[asn:7979, ipnet:2a01:60a::/32, country:US];
+	ASN(0.00)[asn:7979, ipnet:213.196.21.0/24, country:US];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
 	FROM_NEQ_ENVFROM(0.00)[hadess@hadess.net,linux-bluetooth@vger.kernel.org];
@@ -79,121 +79,162 @@ X-Spamd-Result: default: False [0.24 / 15.00];
 	TO_DN_NONE(0.00)[];
 	R_SPF_SOFTFAIL(0.00)[~all:c];
 	R_DKIM_NA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[hadess.net:mid,ams.mirrors.kernel.org:rdns,ams.mirrors.kernel.org:helo,tieto.com:email]
-X-Rspamd-Queue-Id: 942C247D40
+	DBL_BLOCKED_OPENRESOLVER(0.00)[checkpatch.pl:url,ams.mirrors.kernel.org:rdns,ams.mirrors.kernel.org:helo,hadess.net:mid]
+X-Rspamd-Queue-Id: 6E7F049B2D
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 ---
- Makefile.am                 |  5 +++++
- doc/org.bluez.SimAccess.rst | 40 +++++++++++++++++++++++++++++++++++++
- doc/sap-api.txt             | 20 -------------------
- 3 files changed, 45 insertions(+), 20 deletions(-)
- create mode 100644 doc/org.bluez.SimAccess.rst
- delete mode 100644 doc/sap-api.txt
+ ...idelines.txt => maintainer-guidelines.rst} | 61 +++++++++++--------
+ 1 file changed, 35 insertions(+), 26 deletions(-)
+ rename doc/{maintainer-guidelines.txt => maintainer-guidelines.rst} (65%)
 
-diff --git a/Makefile.am b/Makefile.am
-index d80c1250a417..716bf96da413 100644
---- a/Makefile.am
-+++ b/Makefile.am
-@@ -402,6 +402,8 @@ man_MANS += doc/org.bluez.Telephony.5 doc/org.bluez.Call.5
- man_MANS += doc/org.bluez.ThermometerManager.5 \
- 		doc/org.bluez.Thermometer.5 \
- 		doc/org.bluez.ThermometerWatcher.5
-+man_MANS += doc/org.bluez.SimAccess.5
-+
- endif
- manual_pages += src/bluetoothd.8
- manual_pages += doc/hci.7 doc/mgmt.7 doc/l2cap.7 doc/rfcomm.7 doc/sco.7 \
-@@ -442,6 +444,7 @@ manual_pages += doc/org.bluez.Telephony.5 doc/org.bluez.Call.5
- manual_pages += doc/org.bluez.ThermometerManager.5 \
- 		doc/org.bluez.Thermometer.5 \
- 		doc/org.bluez.ThermometerWatcher.5
-+manual_pages += doc/org.bluez.SimAccess.5
+diff --git a/doc/maintainer-guidelines.txt b/doc/maintainer-guidelines.rst
+similarity index 65%
+rename from doc/maintainer-guidelines.txt
+rename to doc/maintainer-guidelines.rst
+index b875f008258b..a6e756b81c51 100644
+--- a/doc/maintainer-guidelines.txt
++++ b/doc/maintainer-guidelines.rst
+@@ -1,25 +1,28 @@
++=====================
+ Maintainer guidelines
+-*********************
++=====================
  
- EXTRA_DIST += src/genbuiltin src/bluetooth.conf \
- 			src/main.conf profiles/network/network.conf \
-@@ -532,6 +535,8 @@ EXTRA_DIST += doc/org.bluez.ThermometerManager.rst \
- 	      doc/org.bluez.Thermometer.rst \
- 	      doc/org.bluez.ThermometerWatcher.rst
+ This document is intended for the maintainers of the BlueZ project. It
+ serves as basic guidelines for handling patch review and commit access.
  
-+EXTRA_DIST += doc/org.bluez.SimAccess.rst
-+
- EXTRA_DIST += doc/pics-opp.txt doc/pixit-opp.txt \
- 		doc/pts-opp.txt
  
-diff --git a/doc/org.bluez.SimAccess.rst b/doc/org.bluez.SimAccess.rst
-new file mode 100644
-index 000000000000..ac86e7eb220c
---- /dev/null
-+++ b/doc/org.bluez.SimAccess.rst
-@@ -0,0 +1,40 @@
-+===================
-+org.bluez.SimAccess
-+===================
+ Rule 1: Keep the GIT tree clean and linear
+-==========================================
++------------------------------------------
+ 
+-The bluetooth.git, bluetooth-next.git and bluez.git trees are not your
++The ``bluetooth.git``, ``bluetooth-next.git`` and ``bluez.git`` trees are not your
+ private playground. The history is meant to be clean and linear.
+ 
+-	- NO merges
+-	- NO branches
+-	- NO tags
++- NO merges
++- NO branches
++- NO tags
+ 
+ If anyone needs testing or work on a feature, clone the tree and do
+ it in your own copy. The master trees are off limits.
+ 
+ One advise to avoid any accidental errors in this area to set proper
+-options in global ~/.gitconfig or local .git/config files.
++options in global ``~/.gitconfig`` or local ``.git/config`` files.
 +
-+----------------------------------------
-+BlueZ D-Bus Sim Access API documentation
-+----------------------------------------
++.. code-block::
+ 
+ 	[merge]
+ 		ff = only
+@@ -29,7 +32,7 @@ in doubt ask one of the seasoned maintainers.
+ 
+ 
+ Rule 2: Enforce clean commit messages
+-=====================================
++-------------------------------------
+ 
+ The commit messages are required to be clean and follow style guidelines
+ to be consistent.
+@@ -45,20 +48,22 @@ job to ensure we get proper firstname lastname <email> authorship.
+ 
+ It is also important that the committer itself uses a valid name and
+ email address when committing patches. So ensure that either the
+-global ~/.gitconfig or local .git/config provides proper values.
++global ``~/.gitconfig`` or local ``.git/config`` provides proper values.
 +
-+:Version: BlueZ
-+:Date: February 2011
-+:Author: Waldemar Rymarkiewicz <waldemar.rymarkiewicz@tieto.com>
-+:Manual section: 5
-+:Manual group: Linux System Administration
++.. code-block::
+ 
+ 	[user]
+ 		name = Peter Mustermann
+ 		email = peter@mustermann.de
+ 
+-Commit messages for bluez.git shall not contain Signed-off-by
++Commit messages for ``bluez.git`` shall not contain ``Signed-off-by``
+ signatures. They are not used in userspace and with that it is the
+ maintainers job to ensure they do not get committed to the repository.
+ 
+-For bluetooth.git and bluetooth-next.git The Signed-off-by process is
+-used and the signatures are required.
++For ``bluetooth.git`` and ``bluetooth-next.git``, the ``Signed-off-by``
++process is used and the signatures are required.
+ 
+-Tags like Change-Id generated from Gerrit are never acceptable. It is
++Tags like ``Change-Id`` generated from Gerrit are never acceptable. It is
+ the maintainers job to ensure that these are not committed into the
+ repositories.
+ 
+@@ -67,48 +72,52 @@ reversed. If in doubt ask one of the seasoned maintainers.
+ 
+ 
+ Rule 3: Enforce correct coding style
+-====================================
++------------------------------------
+ 
+ The coding style follows roughly the kernel coding style with any
+-exceptions documented in doc/coding-style.txt.
++exceptions documented in :doc:`coding-style <coding-style>`.
+ 
+ To ensure trivial white-space errors don't get committed, have the
+-following in your .gitconfig:
++following in your ``.gitconfig``:
 +
-+Interface
-+=========
++.. code-block::
+ 
+ 	[apply]
+ 		whitespace = error
+ 
+ It can also be helpful to use the checkpatch.pl script coming with the
+ Linux kernel to do some automated checking. Adding the following to your
+-.git/hooks/pre-commit and .git/hooks/pre-applypatch is a simple way to
++``.git/hooks/pre-commit`` and ``.git/hooks/pre-applypatch`` is a simple way to
+ do this:
+ 
++.. code-block::
+ 	exec git diff --cached | ~/src/linux/scripts/checkpatch.pl -q \
+ 		--no-tree --no-signoff --show-types \
+ 		--ignore CAMELCASE,NEW_TYPEDEFS,INITIALISED_STATIC -
+ 
+-The above assumes that a kernel tree resides in ~/src/linux/.
++The above assumes that a kernel tree resides in ``~/src/linux/``.
+ 
+ 
+ Rule 4: Pay extra attention to adding new files to the tree
+-===========================================================
++-----------------------------------------------------------
+ 
+ New files that are added to the tree require several things to be
+ verified first:
+ 
+-	- Check that the names are acceptable with other maintainers
+-	- Ensure that the file modes are correct
+-	- Verify that the license & copyright headers are correct
+-	- If the file is supposed to be part of the release tarball,
+-	  make sure that it gets picked up by 'make dist' (particularly
+-	  important for documentation or other files that are not code)
++- Check that the names are acceptable with other maintainers
++- Ensure that the file modes are correct
++- Verify that the license & copyright headers are correct
++- If the file is supposed to be part of the release tarball,
++  make sure that it gets picked up by 'make dist' (particularly
++  important for documentation or other files that are not code)
+ 
+ 
+ Rule 5: Keep the mailing list in sync with the commit process
+-=============================================================
++-------------------------------------------------------------
+ 
+ When applying patches, be sure to send a response to the mailing list as
+ soon as the code has been pushed to the upstream tree. Usually this
+ means one email per patch, however patch-sets may only have one response
+ covering the entire set. If applying a subset of a patch-set clearly
+ state what was applied in your response.
 +
-+:Service:	org.bluez
-+:Interface:	org.bluez.SimAccess1
-+:Object path:	[variable prefix]/{hci0,hci1,...}
-+
-+Methods
-+-------
-+
-+void Disconnect()
-+`````````````````
-+Disconnects SAP client from the server.
-+
-+Possible errors:
-+
-+:org.bluez.Error.Failed:
-+
-+Properties
-+----------
-+
-+boolean Connected [readonly]
-+````````````````````````````
-+
-+Indicates if SAP client is connected to the server.
-+
-diff --git a/doc/sap-api.txt b/doc/sap-api.txt
-deleted file mode 100644
-index b28c4e305964..000000000000
---- a/doc/sap-api.txt
-+++ /dev/null
-@@ -1,20 +0,0 @@
--BlueZ D-Bus Sim Access API description
--**************************************
--
--
--Sim Access Profile hierarchy
--============================
--
--Service		org.bluez
--Interface	org.bluez.SimAccess1
--Object path	[variable prefix]/{hci0,hci1,...}
--
--Methods		void Disconnect()
--
--			Disconnects SAP client from the server.
--
--			Possible errors: org.bluez.Error.Failed
--
--Properties	boolean Connected [readonly]
--
--			Indicates if SAP client is connected to the server.
 -- 
 2.52.0
 
