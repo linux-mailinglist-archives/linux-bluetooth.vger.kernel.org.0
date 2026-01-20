@@ -1,556 +1,206 @@
-Return-Path: <linux-bluetooth+bounces-18260-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18264-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CANLDqHUb2mgMQAAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18260-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Jan 2026 20:16:49 +0100
+	id EJrzOZXUb2mgMQAAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18264-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Jan 2026 20:16:37 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id D01334A253
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Jan 2026 20:16:48 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B5214A23C
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Jan 2026 20:16:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id A4650863E2E
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Jan 2026 17:21:29 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id C9291A4B015
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 20 Jan 2026 17:49:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76F1A3D5237;
-	Tue, 20 Jan 2026 17:20:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7BF843CECC;
+	Tue, 20 Jan 2026 17:48:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="M0403zRV"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [217.70.183.194])
+Received: from out-19.smtp.github.com (out-19.smtp.github.com [192.30.252.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78DAA3ACEE4
-	for <linux-bluetooth@vger.kernel.org>; Tue, 20 Jan 2026 17:20:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E133BF317
+	for <linux-bluetooth@vger.kernel.org>; Tue, 20 Jan 2026 17:48:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768929649; cv=none; b=nxF3+EiKcKwpxtf4vOEUg3K9Z7KhqGc1QyJKYnZtEi38nfM46Ou0ohTKJBIMOyL4KQyLpPcSFlgqqfS3GwLeqlR4YXzv0Va6A+G1SgywI5AzZf9LDrBbt4cUXyYkkJz0PPF185JHlUgfznWANGOIQF+L78anqkKWPfGw2stqcLM=
+	t=1768931296; cv=none; b=aNj3k3jRYNzYSUSaww4Ns5ThpQZp5GFfTSVKfyqUGj22BwqzQcBkFsnzBTYboMdX2Ap3LW4uqQCsepqE4EzmspvOMTpwqbmnQQC/ayte1tqwqDyCaK4K40n7LeEARCuckB7U22Q1UL7DruubxPOWA/XjpoAbDdz+eEaDNEDvsfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768929649; c=relaxed/simple;
-	bh=Afa2ebCVW3heV5517dBuC4GMJtBCnFZ1p6mt6FLUjpM=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JrlO4oWzL9dIIgRATg/+0E6nn5STjKETwXhsstcnRJmwrH5/30o0Z+jA9WmKFEmDv0RaM5sal9HIPn0MXOIRxUQ9nFKYQnauhM/64mdvxZpa56bAab1CmKM+MyAn+MoRGrheS4Jrocsl8DQkijO5IqO6XdFCo5l0UG9JEBO+VTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id D25A344387
-	for <linux-bluetooth@vger.kernel.org>; Tue, 20 Jan 2026 17:20:44 +0000 (UTC)
-From: Bastien Nocera <hadess@hadess.net>
+	s=arc-20240116; t=1768931296; c=relaxed/simple;
+	bh=CU21sG6lNwrncClxtzpTHLF0KDLKyntqAYvnmXLBW84=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=Nch3jvSptfh9oE505Rj1sIN93zf1Lp1u/A27wRLajMRFvyemlNZcyKO4A71KSyQgQPmvt6fYnxw+T2ppcLnNUp7Fv3pmu8bhbOlUxCkLhYgIoeHmwXwRrU0A/SH1rx6rMNx+UwDsh85T5Z5a+TcOl5W9UcQ5KS66GvR/hchaDys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=M0403zRV; arc=none smtp.client-ip=192.30.252.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
+Received: from github.com (hubbernetes-node-93cebcf.va3-iad.github.net [10.48.179.46])
+	by smtp.github.com (Postfix) with ESMTPA id BBD16E0BB7
+	for <linux-bluetooth@vger.kernel.org>; Tue, 20 Jan 2026 09:48:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+	s=pf2023; t=1768931292;
+	bh=G67Anz8VmIhtkJMOIp4UDBlq6saMQJQAUTO2fOL4dtI=;
+	h=Date:From:To:Subject:List-Unsubscribe:From;
+	b=M0403zRVTLwGLIOk4NAvvq/yJODdz3ORvvT8xBUtn0HrFXpHWDsHtNYSH3iUZWsse
+	 x6B4p2jpxOxfMeK6AQwh0YTePFQRCrVpSmAFwlljwHXB4KFKgeGSpi9OtTgwocCwsv
+	 2mDqcX5ut6SIEi9kiSg6eG+Euey99MuL5uqCNUZQ=
+Date: Tue, 20 Jan 2026 09:48:12 -0800
+From: hadess <noreply@github.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [BlueZ v2 7/7] doc: Port health-api.txt to RST
-Date: Tue, 20 Jan 2026 18:18:52 +0100
-Message-ID: <20260120172034.3463151-8-hadess@hadess.net>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260120172034.3463151-1-hadess@hadess.net>
-References: <20260120172034.3463151-1-hadess@hadess.net>
+Message-ID: <bluez/bluez/push/refs/heads/1044790/000000-6c7858@github.com>
+Subject: [bluez/bluez] 6a7f38: doc: Port assigned-numbers.txt to RST
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: hadess@hadess.net
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugedtleelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvufffkffojghfgggtgfesthekredtredtjeenucfhrhhomhepuegrshhtihgvnhcupfhotggvrhgruceohhgruggvshhssehhrgguvghsshdrnhgvtheqnecuggftrfgrthhtvghrnhepteegheeghfehhfdvkedutdfhffejjefgvdevgfekkeevleetheekhfetleelueefnecukfhppedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemsggrgeefmegrieejieemtgdvugefmeejrgehfeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemsggrgeefmegrieejieemtgdvugefmeejrgehfedphhgvlhhopeholhhimhhpihgtpdhmrghilhhfrhhomhephhgruggvshhssehhrgguvghsshdrnhgvthdpqhhiugepffdvheetfeeggeefkeejpdhmohguvgepshhmthhpohhuthdpnhgspghrtghpthhtohepuddprhgtphhtthhopehlihhnuhigqdgslhhuvghtohhothhhsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-GND-State: clean
-X-GND-Score: 0
-X-Spamd-Result: default: False [-0.26 / 15.00];
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
+X-Spamd-Result: default: False [2.24 / 15.00];
+	DMARC_POLICY_REJECT(2.00)[github.com : No valid SPF,reject];
+	R_DKIM_REJECT(1.00)[github.com:s=pf2023];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
+	MV_CASE(0.50)[];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	ASN(0.00)[asn:7979, ipnet:2a01:60a::/32, country:US];
-	TAGGED_RCPT(0.00)[linux-bluetooth];
-	RCPT_COUNT_ONE(0.00)[1];
+	DKIM_TRACE(0.00)[github.com:-];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-18264-lists,linux-bluetooth=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	RCVD_COUNT_THREE(0.00)[4];
-	R_DKIM_NA(0.00)[];
-	DMARC_NA(0.00)[hadess.net];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[hadess@hadess.net,linux-bluetooth@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	R_SPF_SOFTFAIL(0.00)[~all:c];
-	TAGGED_FROM(0.00)[bounces-18260-lists,linux-bluetooth=lfdr.de];
-	TO_DN_NONE(0.00)[];
+	RCPT_COUNT_ONE(0.00)[1];
 	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[ams.mirrors.kernel.org:rdns,ams.mirrors.kernel.org:helo,hadess.net:mid,makefile.am:url]
-X-Rspamd-Queue-Id: D01334A253
+	MISSING_XM_UA(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[noreply@github.com,linux-bluetooth@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:7979, ipnet:142.0.200.0/24, country:US];
+	R_SPF_SOFTFAIL(0.00)[~all:c];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_NONE(0.00)[];
+	TAGGED_RCPT(0.00)[linux-bluetooth];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo,hadess.net:email]
+X-Rspamd-Queue-Id: 5B5214A23C
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
----
- Makefile.am                     |  12 ++-
- doc/health-api.txt              | 152 --------------------------------
- doc/org.bluez.HealthChannel.rst |  72 +++++++++++++++
- doc/org.bluez.HealthDevice.rst  |  94 ++++++++++++++++++++
- doc/org.bluez.HealthManager.rst |  68 ++++++++++++++
- 5 files changed, 244 insertions(+), 154 deletions(-)
- delete mode 100644 doc/health-api.txt
- create mode 100644 doc/org.bluez.HealthChannel.rst
- create mode 100644 doc/org.bluez.HealthDevice.rst
- create mode 100644 doc/org.bluez.HealthManager.rst
+  Branch: refs/heads/1044790
+  Home:   https://github.com/bluez/bluez
+  Commit: 6a7f388e9534601cf861a2cc21d43be21bf0ba31
+      https://github.com/bluez/bluez/commit/6a7f388e9534601cf861a2cc21d43be21bf0ba31
+  Author: Bastien Nocera <hadess@hadess.net>
+  Date:   2026-01-20 (Tue, 20 Jan 2026)
 
-diff --git a/Makefile.am b/Makefile.am
-index 8396849831f1..938b127cd052 100644
---- a/Makefile.am
-+++ b/Makefile.am
-@@ -403,6 +403,9 @@ man_MANS += doc/org.bluez.ThermometerManager.5 \
- 		doc/org.bluez.Thermometer.5 \
- 		doc/org.bluez.ThermometerWatcher.5
- man_MANS += doc/org.bluez.SimAccess.5
-+man_MANS += doc/org.bluez.HealthChannel.5 \
-+	    doc/org.bluez.HealthDevice.5 \
-+	    doc/org.bluez.HealthManager.5
- 
- endif
- manual_pages += src/bluetoothd.8
-@@ -445,6 +448,9 @@ manual_pages += doc/org.bluez.ThermometerManager.5 \
- 		doc/org.bluez.Thermometer.5 \
- 		doc/org.bluez.ThermometerWatcher.5
- manual_pages += doc/org.bluez.SimAccess.5
-+manual_pages += doc/org.bluez.HealthChannel.5 \
-+		doc/org.bluez.HealthDevice.5 \
-+		doc/org.bluez.HealthManager.5
- 
- EXTRA_DIST += src/genbuiltin src/bluetooth.conf \
- 			src/main.conf profiles/network/network.conf \
-@@ -487,8 +493,6 @@ EXTRA_DIST += doc/assigned-numbers.rst doc/supported-features.txt \
- 				doc/test-runner.rst \
- 				doc/settings-storage.txt
- 
--EXTRA_DIST += doc/health-api.txt
--
- EXTRA_DIST += doc/hci.rst doc/mgmt.rst doc/l2cap.rst doc/rfcomm.rst \
- 	      doc/sco.rst doc/iso.rst
- 
-@@ -536,6 +540,10 @@ EXTRA_DIST += doc/org.bluez.ThermometerManager.rst \
- 
- EXTRA_DIST += doc/org.bluez.SimAccess.rst
- 
-+EXTRA_DIST += doc/org.bluez.HealthChannel.rst \
-+	      doc/org.bluez.HealthDevice.rst \
-+	      doc/org.bluez.HealthManager.rst
-+
- EXTRA_DIST += doc/pics-opp.txt doc/pixit-opp.txt \
- 		doc/pts-opp.txt
- 
-diff --git a/doc/health-api.txt b/doc/health-api.txt
-deleted file mode 100644
-index 2c48ff20449d..000000000000
---- a/doc/health-api.txt
-+++ /dev/null
-@@ -1,152 +0,0 @@
--BlueZ D-Bus Health API description
--**********************************
--
--
--HealthManager hierarchy
--=======================
--
--Service		org.bluez
--Interface	org.bluez.HealthManager1
--Object path	/org/bluez/
--
--Methods		object CreateApplication(dict config)
--
--			Returns the path of the new registered application.
--			Application will be closed by the call or implicitly
--			when the programs leaves the bus.
--
--			config:
--				uint16 DataType:
--
--					Mandatory
--
--				string Role:
--
--					Mandatory. Possible values: "source",
--									"sink"
--
--				string Description:
--
--					Optional
--
--				ChannelType:
--
--					Optional, just for sources. Possible
--					values: "reliable", "streaming"
--
--			Possible Errors: org.bluez.Error.InvalidArguments
--
--		void DestroyApplication(object application)
--
--			Closes the HDP application identified by the object
--			path. Also application will be closed if the process
--			that started it leaves the bus. Only the creator of the
--			application will be able to destroy it.
--
--			Possible errors: org.bluez.Error.InvalidArguments
--					 org.bluez.Error.NotFound
--					 org.bluez.Error.NotAllowed
--
--
--HealthDevice hierarchy
--======================
--
--Service		org.bluez
--Interface	org.bluez.HealthDevice1
--Object path	[variable prefix]/{hci0,hci1,...}/dev_XX_XX_XX_XX_XX_XX
--
--Methods		boolean Echo()
--
--			Sends an echo petition to the remote service. Returns
--			True if response matches with the buffer sent. If some
--			error is detected False value is returned.
--
--			Possible errors: org.bluez.Error.InvalidArguments
--					 org.bluez.Error.OutOfRange
--
--		object CreateChannel(object application, string configuration)
--
--			Creates a new data channel.  The configuration should
--			indicate the channel quality of service using one of
--			this values "reliable", "streaming", "any".
--
--			Returns the object path that identifies the data
--			channel that is already connected.
--
--			Possible errors: org.bluez.Error.InvalidArguments
--					 org.bluez.Error.HealthError
--
--		void DestroyChannel(object channel)
--
--			Destroys the data channel object. Only the creator of
--			the channel or the creator of the HealthApplication
--			that received the data channel will be able to destroy
--			it.
--
--			Possible errors: org.bluez.Error.InvalidArguments
--					 org.bluez.Error.NotFound
--				         org.bluez.Error.NotAllowed
--
--Signals		void ChannelConnected(object channel)
--
--			This signal is launched when a new data channel is
--			created or when a known data channel is reconnected.
--
--		void ChannelDeleted(object channel)
--
--			This signal is launched when a data channel is deleted.
--
--			After this signal the data channel path will not be
--			valid and its path can be reused for future data
--			channels.
--
--Properties	object MainChannel [readonly]
--
--			The first reliable channel opened. It is needed by
--			upper applications in order to send specific protocol
--			data units. The first reliable can change after a
--			reconnection.
--
--
--HealthChannel hierarchy
--=======================
--
--Service		org.bluez
--Interface	org.bluez.HealthChannel1
--Object path	[variable prefix]/{hci0,hci1,...}/dev_XX_XX_XX_XX_XX_XX/chanZZZ
--
--Only the process that created the data channel or the creator of the
--HealthApplication that received it will be able to call these methods.
--
--Methods		fd Acquire()
--
--			Returns the file descriptor for this data channel. If
--			the data channel is not connected it will also
--			reconnect.
--
--			Possible Errors: org.bluez.Error.NotConnected
--					 org.bluez.Error.NotAllowed
--
--		void Release()
--
--			Releases the fd. Application should also need to
--			close() it.
--
--			Possible Errors: org.bluez.Error.NotAcquired
--					 org.bluez.Error.NotAllowed
--
--Properties	string Type [readonly]
--
--			The quality of service of the data channel. ("reliable"
--			or "streaming")
--
--		object Device [readonly]
--
--			Identifies the Remote Device that is connected with.
--			Maps with a HealthDevice object.
--
--		object Application [readonly]
--
--			Identifies the HealthApplication to which this channel
--			is related to (which indirectly defines its role and
--			data type).
-diff --git a/doc/org.bluez.HealthChannel.rst b/doc/org.bluez.HealthChannel.rst
-new file mode 100644
-index 000000000000..f91a1ff94dc1
---- /dev/null
-+++ b/doc/org.bluez.HealthChannel.rst
-@@ -0,0 +1,72 @@
-+=======================
-+org.bluez.HealthChannel
-+=======================
-+
-+----------------------------------
-+BlueZ D-Bus Health API description
-+----------------------------------
-+
-+:Version: BlueZ
-+:Date: July 2010
-+:Author: José Antonio Santos Cadenas <santoscadenas@gmail.com>
-+:Manual section: 5
-+:Manual group: Linux System Administration
-+
-+Interface
-+=========
-+
-+:Service:	org.bluez
-+:Interface:	org.bluez.HealthChannel1
-+:Object path:	[variable prefix]/{hci0,hci1,...}/dev_XX_XX_XX_XX_XX_XX/chanZZZ
-+
-+Only the process that created the data channel or the creator of the
-+HealthApplication that received it will be able to call these methods.
-+
-+Methods
-+-------
-+
-+fd Acquire()
-+````````````
-+
-+Returns the file descriptor for this data channel. If
-+the data channel is not connected it will also
-+reconnect.
-+
-+Possible Errors:
-+
-+:org.bluez.Error.NotConnected:
-+:org.bluez.Error.NotAllowed:
-+
-+void Release()
-+``````````````
-+
-+Releases the fd. Application should also need to
-+close() it.
-+
-+Possible Errors:
-+
-+:org.bluez.Error.NotAcquired:
-+:org.bluez.Error.NotAllowed:
-+
-+Properties
-+----------
-+
-+string Type [readonly]
-+``````````````````````
-+
-+The quality of service of the data channel. ("reliable"
-+or "streaming")
-+
-+object Device [readonly]
-+````````````````````````
-+
-+Identifies the Remote Device that is connected with.
-+Maps with a HealthDevice object.
-+
-+object Application [readonly]
-+`````````````````````````````
-+
-+Identifies the HealthApplication to which this channel
-+is related to (which indirectly defines its role and
-+data type).
-+
-diff --git a/doc/org.bluez.HealthDevice.rst b/doc/org.bluez.HealthDevice.rst
-new file mode 100644
-index 000000000000..568f854b7768
---- /dev/null
-+++ b/doc/org.bluez.HealthDevice.rst
-@@ -0,0 +1,94 @@
-+======================
-+org.bluez.HealthDevice
-+======================
-+
-+------------------------------------
-+BlueZ D-Bus Health API documentation
-+------------------------------------
-+
-+:Version: BlueZ
-+:Date: July 2010
-+:Author: José Antonio Santos Cadenas <santoscadenas@gmail.com>
-+:Manual section: 5
-+:Manual group: Linux System Administration
-+
-+Interface
-+=========
-+
-+:Service:	org.bluez
-+:Interface:	org.bluez.HealthDevice1
-+:Object path:	[variable prefix]/{hci0,hci1,...}/dev_XX_XX_XX_XX_XX_XX
-+
-+Methods
-+-------
-+
-+boolean Echo()
-+``````````````
-+
-+Sends an echo petition to the remote service. Returns
-+True if response matches with the buffer sent. If some
-+error is detected False value is returned.
-+
-+Possible errors:
-+
-+:org.bluez.Error.InvalidArguments:
-+:org.bluez.Error.OutOfRange:
-+
-+object CreateChannel(object application, string configuration)
-+``````````````````````````````````````````````````````````````
-+
-+Creates a new data channel.  The configuration should
-+indicate the channel quality of service using one of
-+this values "reliable", "streaming", "any".
-+
-+Returns the object path that identifies the data
-+channel that is already connected.
-+
-+Possible errors:
-+
-+:org.bluez.Error.InvalidArguments:
-+:org.bluez.Error.HealthError:
-+
-+void DestroyChannel(object channel)
-+```````````````````````````````````
-+
-+Destroys the data channel object. Only the creator of
-+the channel or the creator of the HealthApplication
-+that received the data channel will be able to destroy
-+it.
-+
-+Possible errors:
-+
-+:org.bluez.Error.InvalidArguments:
-+:org.bluez.Error.NotFound:
-+:org.bluez.Error.NotAllowed:
-+
-+Signals
-+-------
-+
-+void ChannelConnected(object channel)
-+`````````````````````````````````````
-+
-+This signal is launched when a new data channel is
-+created or when a known data channel is reconnected.
-+
-+void ChannelDeleted(object channel)
-+```````````````````````````````````
-+
-+This signal is launched when a data channel is deleted.
-+
-+After this signal the data channel path will not be
-+valid and its path can be reused for future data
-+channels.
-+
-+Properties
-+----------
-+
-+object MainChannel [readonly]
-+`````````````````````````````
-+
-+The first reliable channel opened. It is needed by
-+upper applications in order to send specific protocol
-+data units. The first reliable can change after a
-+reconnection.
-+
-diff --git a/doc/org.bluez.HealthManager.rst b/doc/org.bluez.HealthManager.rst
-new file mode 100644
-index 000000000000..1eaaf7935eeb
---- /dev/null
-+++ b/doc/org.bluez.HealthManager.rst
-@@ -0,0 +1,68 @@
-+=======================
-+org.bluez.HealthManager
-+=======================
-+
-+------------------------------------
-+BlueZ D-Bus Health API documentation
-+------------------------------------
-+
-+:Version: BlueZ
-+:Date: July 2010
-+:Author: José Antonio Santos Cadenas <santoscadenas@gmail.com>
-+:Manual section: 5
-+:Manual group: Linux System Administration
-+
-+Interface
-+=========
-+
-+:Service:	org.bluez
-+:Interface:	org.bluez.HealthManager1
-+:Object path:	/org/bluez/
-+
-+Methods
-+-------
-+
-+object CreateApplication(dict config)
-+`````````````````````````````````````
-+
-+Returns the path of the new registered application.
-+Application will be closed by the call or implicitly
-+when the programs leaves the bus.
-+
-+Possible config value:
-+
-+:uint16 DataType:
-+
-+        Mandatory
-+
-+:string Role:
-+
-+	Mandatory. Possible values: "source", "sink"
-+
-+:string Description:
-+
-+	Optional
-+
-+:ChannelType:
-+
-+	Optional, just for sources. Possible
-+	values: "reliable", "streaming"
-+
-+Possible Errors:
-+
-+:org.bluez.Error.InvalidArguments:
-+
-+void DestroyApplication(object application)
-+```````````````````````````````````````````
-+
-+Closes the HDP application identified by the object
-+path. Also application will be closed if the process
-+that started it leaves the bus. Only the creator of the
-+application will be able to destroy it.
-+
-+Possible errors:
-+
-+:org.bluez.Error.InvalidArguments:
-+:org.bluez.Error.NotFound:
-+:org.bluez.Error.NotAllowed:
-+
--- 
-2.52.0
+  Changed paths:
+    M Makefile.am
+    A doc/assigned-numbers.rst
+    R doc/assigned-numbers.txt
 
+  Log Message:
+  -----------
+  doc: Port assigned-numbers.txt to RST
+
+
+  Commit: 5c53424de606909bc957624a6dd578a846010342
+      https://github.com/bluez/bluez/commit/5c53424de606909bc957624a6dd578a846010342
+  Author: Bastien Nocera <hadess@hadess.net>
+  Date:   2026-01-20 (Tue, 20 Jan 2026)
+
+  Changed paths:
+    M Makefile.am
+    A doc/org.bluez.Thermometer.rst
+    A doc/org.bluez.ThermometerManager.rst
+    A doc/org.bluez.ThermometerWatcher.rst
+    R doc/thermometer-api.txt
+
+  Log Message:
+  -----------
+  doc: Port thermometer-api.txt to RST
+
+
+  Commit: ac2b23c26be1693eab8052a36e96ceb87f8e925e
+      https://github.com/bluez/bluez/commit/ac2b23c26be1693eab8052a36e96ceb87f8e925e
+  Author: Bastien Nocera <hadess@hadess.net>
+  Date:   2026-01-20 (Tue, 20 Jan 2026)
+
+  Changed paths:
+    A doc/security-bugs.rst
+    R doc/security-bugs.txt
+
+  Log Message:
+  -----------
+  doc: Port security-bugs.txt to RST
+
+
+  Commit: 247d7e74550d3878b228217a3b21017aff7a2349
+      https://github.com/bluez/bluez/commit/247d7e74550d3878b228217a3b21017aff7a2349
+  Author: Bastien Nocera <hadess@hadess.net>
+  Date:   2026-01-20 (Tue, 20 Jan 2026)
+
+  Changed paths:
+    A doc/coding-style.rst
+    R doc/coding-style.txt
+
+  Log Message:
+  -----------
+  doc: Port coding-style.txt to RST
+
+
+  Commit: 36fd01d8d4fa932c57336d2f5e55af3920007a71
+      https://github.com/bluez/bluez/commit/36fd01d8d4fa932c57336d2f5e55af3920007a71
+  Author: Bastien Nocera <hadess@hadess.net>
+  Date:   2026-01-20 (Tue, 20 Jan 2026)
+
+  Changed paths:
+    M Makefile.am
+    A doc/org.bluez.SimAccess.rst
+    R doc/sap-api.txt
+
+  Log Message:
+  -----------
+  doc: Port sap-api.txt to RST
+
+
+  Commit: 1fb5e8a2af9aa8080073d434d5e731ae229d5b6a
+      https://github.com/bluez/bluez/commit/1fb5e8a2af9aa8080073d434d5e731ae229d5b6a
+  Author: Bastien Nocera <hadess@hadess.net>
+  Date:   2026-01-20 (Tue, 20 Jan 2026)
+
+  Changed paths:
+    A doc/maintainer-guidelines.rst
+    R doc/maintainer-guidelines.txt
+
+  Log Message:
+  -----------
+  doc: Port maintainer-guidelines.txt to RST
+
+
+  Commit: 6c7858ffef842d6e7408962d29e89a510c83088a
+      https://github.com/bluez/bluez/commit/6c7858ffef842d6e7408962d29e89a510c83088a
+  Author: Bastien Nocera <hadess@hadess.net>
+  Date:   2026-01-20 (Tue, 20 Jan 2026)
+
+  Changed paths:
+    M Makefile.am
+    R doc/health-api.txt
+    A doc/org.bluez.HealthChannel.rst
+    A doc/org.bluez.HealthDevice.rst
+    A doc/org.bluez.HealthManager.rst
+
+  Log Message:
+  -----------
+  doc: Port health-api.txt to RST
+
+
+Compare: https://github.com/bluez/bluez/compare/6a7f388e9534%5E...6c7858ffef84
+
+To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
