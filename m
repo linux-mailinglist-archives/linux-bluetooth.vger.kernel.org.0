@@ -1,235 +1,256 @@
-Return-Path: <linux-bluetooth+bounces-18298-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18300-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sIuNNl4/cWnKfQAAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18298-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 21 Jan 2026 22:04:30 +0100
+	id KOlbFX1EcWn2fgAAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18300-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 21 Jan 2026 22:26:21 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C0585DC47
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 21 Jan 2026 22:04:30 +0100 (CET)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8CD45E046
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 21 Jan 2026 22:26:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id BEB605EDDB4
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 21 Jan 2026 19:21:59 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 9402EB431C2
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 21 Jan 2026 21:22:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58C7D345734;
-	Wed, 21 Jan 2026 19:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40FA933C19A;
+	Wed, 21 Jan 2026 21:19:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JQyvdgqe"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail.holtmann.org (coyote.holtmann.net [212.227.132.17])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9996E3AE6F2;
-	Wed, 21 Jan 2026 19:21:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.132.17
+Received: from mail-yx1-f44.google.com (mail-yx1-f44.google.com [74.125.224.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6736426EB5
+	for <linux-bluetooth@vger.kernel.org>; Wed, 21 Jan 2026 21:19:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769023311; cv=none; b=HlEKQk/Z2P8T9JwbWwx1iFQFb+nridnXBFwhGDNVIrXaL0UuQDoI+e0+Yld3oR9xV8O83kvbGk4sZKCedZoNjWRsFvtI7Yvh4iHjTQ6oiokYw2TGgbnyctqOxzyR+j8e7HXMHy4qF/ftiers/k1Co5WU6wiuquiXf7z1BKihVHw=
+	t=1769030348; cv=none; b=eWNz31rVhko8hDyiOKPaNT5wGq/BiPMhCXgykmhwz3XxWGV8Dg9qsHWeZpt9rdeHUd6eAbE66UnrM5oGq1kaGlwft1UIOcno9dUQvWUb15A0xkjLSC9Gtifsmx71ZIsdKrmHYxfToLaFFAj4v0G6dXgllvk5OxjwhiyrDdZfIS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769023311; c=relaxed/simple;
-	bh=TGlWGqADJDsNYt8k6Oof5l64iMrhOpuXIRF9api7r5U=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=i3UA9kqQ3lQAPtbItr8YbB6EXsMgZ9ZS62f0Nk13Rf4U/C8urmN8vJ8I8ip3gqt2P9iStL8B6diCXH5W0JsXK+PRP3OeHt46PS0AhAGbxG2LWYAF7cSj+v3K+8lG3QEGVeSrgoYr1uWNou9iaVWLGuKMdgguhV/IX0L4j0AldFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=holtmann.org; spf=pass smtp.mailfrom=holtmann.org; arc=none smtp.client-ip=212.227.132.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=holtmann.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=holtmann.org
-Received: from smtpclient.apple (p4ff9f357.dip0.t-ipconnect.de [79.249.243.87])
-	by mail.holtmann.org (Postfix) with ESMTPSA id 27A37CECCB;
-	Wed, 21 Jan 2026 20:21:46 +0100 (CET)
-Content-Type: text/plain;
-	charset=utf-8
+	s=arc-20240116; t=1769030348; c=relaxed/simple;
+	bh=a9UO9xKK9T09zShgU8/AvMiIJ59iO6lwz66RVvFBJlg=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=AUrNYcTUNrsG+wvQv/ccaIllu33a0NQFqjegcJhJUU3x2Oz2yBD0U6zVNA5H9YUbiZQHlIWKVTIuxCysYEeNgIf41vvY8ad3qrai4BOhSPAy70jvy27i6PXBT6Pz0Wk5y7HQwflMKB7UD+7kEzcsjdRoKBEsb77IjPv8WbOT/W4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JQyvdgqe; arc=none smtp.client-ip=74.125.224.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-yx1-f44.google.com with SMTP id 956f58d0204a3-64931bbf70cso369757d50.0
+        for <linux-bluetooth@vger.kernel.org>; Wed, 21 Jan 2026 13:19:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769030345; x=1769635145; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zHYs5n6PnbX/BYZAE99RsDw5ytggWdw9PH/AX4izVhM=;
+        b=JQyvdgqebHeR4bSi6xOrKzHGFL1gv6DqGDLGdxa/qdtSitHczVoIfVQXb+jjdomu9q
+         /AK8/gGTKtCocxZ9FDNJ8Tdv95HLeBzeQB/bBGJ+xXT3It8tm+bgdbE8WTlPTSfr3owD
+         S9u1QOElkVIxNMVS7oQVbFLeN3+Rl90b7rQgGqzDmcH1AvmcM/CLIZsrdU8sEYihKHUl
+         stEkqRzj+PiJA6yJwjmTAKSnu80iGup+NkXbdEownUeOQ0/OU+MNLXBguDAuGgSvdNPj
+         xiPwdjqa0vOYDUX4Eup86CErfDv6gG0+XGQofSF28rZKMKOpovJ1RUrGg1tPTAYuj9Vj
+         zCLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769030345; x=1769635145;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zHYs5n6PnbX/BYZAE99RsDw5ytggWdw9PH/AX4izVhM=;
+        b=wD2XyBAZy1lNDeeWHaxvq3jfaC940rApxT6MbTLElPJZG7UrwlEqu4i06Io/Ob8kvd
+         WlpPyGM3SDeZ2Cvr5qVSPjIWWQjNZbS2BDQ3NqXxq7VvyAvFbNkqD9O3geRrZvGwhMaD
+         aS+JY/msrUHmJMtlY1t4tOPPqkNt7nS48SNKqz97a4j9Qset1OG+8yko2/Go9kB6N1WS
+         i6ZLK0LPVJ7Ai6lQFwxSLenpeHT42VEnsKKeg/tLr3RH+EK2rQRXynkYyynulx7dMs5N
+         8ZkqpTruARDhXMu4FAuIRy2Qbt9tOSbca2PfD4UhSMHUV6JzmxCt3lW3HR7HuiQQn0mB
+         1m1A==
+X-Gm-Message-State: AOJu0Yyd8DHvLeCiZO+GopEPbUI0lAFqSKziHL+VRSmwIGjj/KVl/rOS
+	XHDwAzigTID+yj/XRfyvh+VREC8aYQPqciRU854Qhv2KnYzqHZ+vg+A+oZ8FFxNv
+X-Gm-Gg: AZuq6aKHDeltL7IWUbdXhpF9hmF9AWXP9SbWyGPfjY9+4Cys6yTGm7ocUgnF1U0Pol3
+	pVbMDCCOvFNUZJarnFmbytFYBghCZstcR9q2Z/oWnhPWL8kroovRyinM55EXcl1zdk6tvtf5Dau
+	LP/dDF+dpjMpg862ba/qZNRLlTJC/RwnrNmDlE022vlmeBj7Ro0FPW0sJbC3TFttPE9gtrhbMzg
+	bA+0thn5/xikEXp7sNQu2XZMJL2RJChbSR7+iOYY5vY/vdgcPcQJN0IMbyKaDCiNg7pwJK1QV5l
+	McDJJMAJsFZ9iE1e5gSUGNlU5Lt7EBypo42NN/t03eMqxpVv0wmyYX2lJ5DE4eZ3oscwyNN/lU7
+	myYKSEOwkTWC0EEFpCTJqfZ/dRxtyJ2jwBtl1SJExeWKl2HGQ0QlVUD/Kd2h/qP1A0brXt4n7/j
+	kYzFHGm0n5WFoGaXyO1KFbdYTrb0AFFh+HlrdR5CZthtPEL23ZqE0zFH7lguyKlM09X3KMekoRQ
+	MiHPA==
+X-Received: by 2002:a05:690c:ec2:b0:792:6980:36df with SMTP id 00721157ae682-7940a0e6fdcmr131853507b3.6.1769030345290;
+        Wed, 21 Jan 2026 13:19:05 -0800 (PST)
+Received: from lvondent-mobl5 ([72.188.211.115])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-793c66fed6fsm70411817b3.23.2026.01.21.13.19.04
+        for <linux-bluetooth@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Jan 2026 13:19:04 -0800 (PST)
+From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+To: linux-bluetooth@vger.kernel.org
+Subject: [PATCH v1] Bluetooth: L2CAP: Fix not tracking outstanding TX ident
+Date: Wed, 21 Jan 2026 16:18:56 -0500
+Message-ID: <20260121211856.2658795-1-luiz.dentz@gmail.com>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
-Subject: Re: [RESEND PATCH v2 00/11] Bluetooth: btnxpuart: Add secure
- interface support for NXP chipsets
-From: Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <AS4PR04MB9692855E531E082BC431FD02E78FA@AS4PR04MB9692.eurprd04.prod.outlook.com>
-Date: Wed, 21 Jan 2026 20:21:35 +0100
-Cc: Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
- Amitkumar Karwar <amitkumar.karwar@nxp.com>,
- Sherry Sun <sherry.sun@nxp.com>,
- Dmitrii Lebed <dmitrii.lebed@nxp.com>,
- "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- Ethan Lo <ethan.lo@nxp.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <3878D710-FBE3-448C-8830-138355D8D601@holtmann.org>
-References: <20260113074718.2384043-1-neeraj.sanjaykale@nxp.com>
- <CABBYNZ+crY9eDfy6=cz8FwbUqFbjWjqjiVTHanw2J-7QB-Wh_g@mail.gmail.com>
- <AS4PR04MB9692855E531E082BC431FD02E78FA@AS4PR04MB9692.eurprd04.prod.outlook.com>
-To: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
-X-Mailer: Apple Mail (2.3864.300.41.1.7)
-X-Spamd-Result: default: False [-0.76 / 15.00];
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-1.46 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MV_CASE(0.50)[];
+	DMARC_POLICY_ALLOW_WITH_FAILURES(-0.50)[];
+	R_MISSING_CHARSET(0.50)[];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-18298-lists,linux-bluetooth=lfdr.de];
+	DMARC_POLICY_ALLOW(0.00)[gmail.com,none];
+	TAGGED_FROM(0.00)[bounces-18300-lists,linux-bluetooth=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[gmail.com,nxp.com,vger.kernel.org];
-	DMARC_NA(0.00)[holtmann.org];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_EQ_ADDR_SOME(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	RCPT_COUNT_ONE(0.00)[1];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	ASN(0.00)[asn:7979, ipnet:2605:f480::/32, country:US];
+	FROM_NEQ_ENVFROM(0.00)[luizdentz@gmail.com,linux-bluetooth@vger.kernel.org];
+	TO_DN_NONE(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	R_SPF_SOFTFAIL(0.00)[~all:c];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[marcel@holtmann.org,linux-bluetooth@vger.kernel.org];
-	ASN(0.00)[asn:7979, ipnet:213.196.21.0/24, country:US];
-	R_DKIM_NA(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[8];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[holtmann.org:mid,ams.mirrors.kernel.org:rdns,ams.mirrors.kernel.org:helo,outlook.com:url,nets:url]
-X-Rspamd-Queue-Id: 9C0585DC47
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[dfw.mirrors.kernel.org:rdns,dfw.mirrors.kernel.org:helo,intel.com:email]
+X-Rspamd-Queue-Id: C8CD45E046
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi Neeraj,
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
->>> This patch series adds secure interface support for NXP Bluetooth
->>> chipsets to protect against UART-based attacks on Bluetooth security =
-keys.
->>>=20
->>> Problem Statement:
->>> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->>> Bluetooth UART drivers are vulnerable to physical attacks where
->>> adversaries can monitor UART TX/RX lines to extract sensitive =
-cryptographic
->> material.
->>> As demonstrated in research [1], attackers can capture H4 packets
->>> containing Link Keys, LTKs, and other pairing data transmitted in
->>> plaintext over UART.
->>>=20
->>> Once an attacker obtains these keys from UART traffic, they can:
->>> - Decrypt all Bluetooth communication for paired devices
->>> - Impersonate trusted devices
->>> - Perform man-in-the-middle attacks
->>>=20
->>> This vulnerability affects any Bluetooth implementation using UART
->>> transport, making physical access to UART lines equivalent to
->>> compromising all paired device security.
->>>=20
->>> Solution:
->>> =3D=3D=3D=3D=3D=3D=3D=3D=3D
->>> Implement a TLS 1.3-inspired secure interface that:
->>> - Authenticates the chipset using ECDSA signature verification
->>> - Establishes shared encryption keys via ECDH key exchange
->>> - Encrypts sensitive HCI commands (Link Key Reply, LTK Reply, etc.) =
-using
->>>  AES-GCM
->>> - Decrypts encrypted vendor events from the chipset
->>>=20
->>> This ensures that even with full UART access, attackers cannot =
-extract
->>> usable cryptographic keys from the communication channel.
->>>=20
->>> Implementation Overview:
->>> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+This attempts to proper track outstanding request by using struct ida
+and allocating from it in l2cap_get_ident using ida_alloc_range which
+would reuse ids as they are free, then upon completion release
+the id using ida_free.
 
->>> The solution is implemented in 11 incremental patches:
->>>=20
->>> 1-2:   Add firmware metadata parsing and version detection
->>> 3-4:   Establish secure interface framework and crypto setup
->>> 5-7:   Implement TLS handshake (Host Hello, Device Hello, =
-authentication)
->>> 8:     Derive application traffic keys for encryption/decryption
->>> 9-10:  Add command encryption and event decryption support
->>> 11:    Add required crypto algorithm dependencies
->>>=20
->>> The implementation automatically detects secure interface capability
->>> via firmware version strings and enables encryption only when =
-needed.
->>> Legacy chipsets continue to work without modification.
->>>=20
->>> Security Properties:
->>> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->>> - Chipset authentication prevents rogue device substitution
->>> - Forward secrecy through ephemeral ECDH key exchange
->>> - Authenticated encryption (AES-GCM) prevents tampering
->>> - Per-session keys limit exposure from key compromise
->>>=20
->>> Testing:
->>> =3D=3D=3D=3D=3D=3D=3D=3D
->>> Tested on AW693 chipsets with secure firmware. Verified that:
->>> - Authentication handshake completes successfully
->>> - Sensitive commands are encrypted before transmission
->>> - Encrypted events are properly decrypted
->>> - UART monitoring shows only encrypted payloads for sensitive
->>> operations
->>> - Legacy chipsets remain unaffected
->>>=20
->>> [1] "BLAP: Bluetooth Low Energy Attacks on Pairing" - DSN 2022
->>>=20
->>> =
-https://eur01.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fnets
->>>=20
->> ec.ethz.ch%2Fpublications%2Fpapers%2Fdsn22_blap.pdf&data=3D05%7C02%7
->> Cnee
->>>=20
->> raj.sanjaykale%40nxp.com%7C7e6471862d5d4d6b86bc08de52b47c29%7C686
->> ea1d3
->>>=20
->> bc2b4c6fa92cd99c5c301635%7C0%7C0%7C639039132284844210%7CUnknow
->> n%7CTWFp
->>>=20
->> bGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4z
->> MiIsIk
->>>=20
->> FOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=3DHV0OjNPoq%2B
->> P%2B07YW
->>> WCtrrGUlmxWBamNWMwfrbkan7yc%3D&reserved=3D0
->>=20
->> Ok, I start reading the document above but it says the problem is =
-with HCI
->> itself though:
->>=20
->> 'We first present a link key extraction attack that exploits the =
-security flaw in
->> the HCI dump, which records all data passed through the HCI interface =
-in a log
->> file, including link keys.'
->>=20
->> It does say that it is passed to a log file though, maybe the =
-permission of the
->> file is the problem then, either way this would be UART expecific. We =
-do
->> require NET_ADMIN (aka. root) for accessing HCI though, both for =
-monitoring
->> or generating HCI traffic (e.g.
->> HCI_USER_CHANNEL), so I don't believe these claims are valid with =
-respect to
->> Linux since for collecting the logs with the likes of btmon that will =
-require root
->> access, that said perhaps the -w option shall limit the permission of =
-the file to
->> root only as well, in any case it is not like btmon can be run by an =
-attacker
->> without root access, so it beats me how Linux could be considered =
-vulnerable
->> here.
-> The DSN=E2=80=9922 BLAP paper shows link=E2=80=91key extraction from =
-HCI dump logs (e.g., btmon)=E2=80=94a logging issue, not a Linux =
-privilege bypass. Our threat model is different: physical sniffing of =
-the H4 UART lines (common on M.2 Key=E2=80=91E and bring=E2=80=91up =
-boards) where the link=E2=80=91key exchange transits in plaintext. This =
-series addresses that risk by encrypting the link=E2=80=91key =
-request/response (and related vendor events) over UART, so keys aren=E2=80=
-=99t recoverable even with full wire access.
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+---
+ include/net/bluetooth/l2cap.h |  3 +--
+ net/bluetooth/l2cap_core.c    | 44 +++++++++++++++++++++++------------
+ 2 files changed, 30 insertions(+), 17 deletions(-)
 
-but you are not protecting SMP. I think this should be an all-or-nothing =
-approach.
-
-Regards
-
-Marcel
+diff --git a/include/net/bluetooth/l2cap.h b/include/net/bluetooth/l2cap.h
+index 00e182a22720..ec3af01e4db9 100644
+--- a/include/net/bluetooth/l2cap.h
++++ b/include/net/bluetooth/l2cap.h
+@@ -655,8 +655,7 @@ struct l2cap_conn {
+ 
+ 	struct sk_buff		*rx_skb;
+ 	__u32			rx_len;
+-	__u8			tx_ident;
+-	struct mutex		ident_lock;
++	struct ida		tx_ida;
+ 
+ 	struct sk_buff_head	pending_rx;
+ 	struct work_struct	pending_rx_work;
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 07b493331fd7..7719e1e1aa1b 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -924,26 +924,14 @@ int l2cap_chan_check_security(struct l2cap_chan *chan, bool initiator)
+ 				 initiator);
+ }
+ 
+-static u8 l2cap_get_ident(struct l2cap_conn *conn)
++static int l2cap_get_ident(struct l2cap_conn *conn)
+ {
+-	u8 id;
+-
+ 	/* Get next available identificator.
+ 	 *    1 - 128 are used by kernel.
+ 	 *  129 - 199 are reserved.
+ 	 *  200 - 254 are used by utilities like l2ping, etc.
+ 	 */
+-
+-	mutex_lock(&conn->ident_lock);
+-
+-	if (++conn->tx_ident > 128)
+-		conn->tx_ident = 1;
+-
+-	id = conn->tx_ident;
+-
+-	mutex_unlock(&conn->ident_lock);
+-
+-	return id;
++	return ida_alloc_range(&conn->tx_ida, 1, 128, GFP_ATOMIC);
+ }
+ 
+ static void l2cap_send_acl(struct l2cap_conn *conn, struct sk_buff *skb,
+@@ -1773,6 +1761,8 @@ static void l2cap_conn_del(struct hci_conn *hcon, int err)
+ 	if (work_pending(&conn->pending_rx_work))
+ 		cancel_work_sync(&conn->pending_rx_work);
+ 
++	ida_destroy(&conn->tx_ida);
++
+ 	cancel_delayed_work_sync(&conn->id_addr_timer);
+ 
+ 	l2cap_unregister_all_users(conn);
+@@ -4782,12 +4772,34 @@ static int l2cap_le_connect_rsp(struct l2cap_conn *conn,
+ 	return err;
+ }
+ 
++static void l2cap_put_ident(struct l2cap_conn *conn, u8 code, u8 id)
++{
++	switch (code) {
++	case L2CAP_COMMAND_REJ:
++	case L2CAP_CONN_RSP:
++	case L2CAP_CONF_RSP:
++	case L2CAP_DISCONN_RSP:
++	case L2CAP_ECHO_RSP:
++	case L2CAP_INFO_RSP:
++	case L2CAP_CONN_PARAM_UPDATE_RSP:
++	case L2CAP_ECRED_CONN_RSP:
++	case L2CAP_ECRED_RECONF_RSP:
++		/* First do a lookup since the remote may send bogus ids that
++		 * would make ida_free to generate warnings.
++		 */
++		if (ida_find_first_range(&conn->tx_ida, id, id) >= 0)
++			ida_free(&conn->tx_ida, id);
++	}
++}
++
+ static inline int l2cap_bredr_sig_cmd(struct l2cap_conn *conn,
+ 				      struct l2cap_cmd_hdr *cmd, u16 cmd_len,
+ 				      u8 *data)
+ {
+ 	int err = 0;
+ 
++	l2cap_put_ident(conn, cmd->code, cmd->ident);
++
+ 	switch (cmd->code) {
+ 	case L2CAP_COMMAND_REJ:
+ 		l2cap_command_rej(conn, cmd, cmd_len, data);
+@@ -5419,6 +5431,8 @@ static inline int l2cap_le_sig_cmd(struct l2cap_conn *conn,
+ {
+ 	int err = 0;
+ 
++	l2cap_put_ident(conn, cmd->code, cmd->ident);
++
+ 	switch (cmd->code) {
+ 	case L2CAP_COMMAND_REJ:
+ 		l2cap_le_command_rej(conn, cmd, cmd_len, data);
+@@ -6907,13 +6921,13 @@ static struct l2cap_conn *l2cap_conn_add(struct hci_conn *hcon)
+ 	     hci_dev_test_flag(hcon->hdev, HCI_FORCE_BREDR_SMP)))
+ 		conn->local_fixed_chan |= L2CAP_FC_SMP_BREDR;
+ 
+-	mutex_init(&conn->ident_lock);
+ 	mutex_init(&conn->lock);
+ 
+ 	INIT_LIST_HEAD(&conn->chan_l);
+ 	INIT_LIST_HEAD(&conn->users);
+ 
+ 	INIT_DELAYED_WORK(&conn->info_timer, l2cap_info_timeout);
++	ida_init(&conn->tx_ida);
+ 
+ 	skb_queue_head_init(&conn->pending_rx);
+ 	INIT_WORK(&conn->pending_rx_work, process_pending_rx);
+-- 
+2.52.0
 
 
