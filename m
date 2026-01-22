@@ -1,111 +1,285 @@
-Return-Path: <linux-bluetooth+bounces-18339-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18340-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id gAT8JBJhcmnfjQAAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18339-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jan 2026 18:40:34 +0100
+	id +EmvHalmcmmrjwAAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18340-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jan 2026 19:04:25 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14E216B85A
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jan 2026 18:40:34 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 216A06BEA4
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jan 2026 19:04:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id B8995301F165
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jan 2026 17:21:22 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id E6EDD30946CA
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jan 2026 17:24:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECB103A7040;
-	Thu, 22 Jan 2026 17:00:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C696F3B4CB5;
+	Thu, 22 Jan 2026 17:03:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="lsNIkRyH"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
+Received: from out-25.smtp.github.com (out-25.smtp.github.com [192.30.252.208])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE94328243
-	for <linux-bluetooth@vger.kernel.org>; Thu, 22 Jan 2026 17:00:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417A83BE4B6
+	for <linux-bluetooth@vger.kernel.org>; Thu, 22 Jan 2026 17:03:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.208
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769101226; cv=none; b=bxb4TvuG+IQy4navSnaH1L4ceTR/VWpMpBRPAkvMoVrLaW3rdFFjS/jCLKwhhYZ+G4ttBaEe6d7gxHU7LZ7mZJuYlrJPzL49/0FKfobCCD30sTLcRI/JUVG36TNRDc1K+UF8YsPkU9dVSj2PHHJaP09Lm3Zt08tEyjeaVAXrqRM=
+	t=1769101413; cv=none; b=FoCIeTusUx4Em/lhOM/06loZ2fq1CILEUPO/xmLqbpq9pB4jjQ5KorfBNH83dDhiUYv66y6eQgq9HzPKF2DJXcvzw7XCGsVLbhT8MDNPIThoGq+/+F71Ve7cMLo6nk8zCtQit6UjtABsd+q6T0K4T2m7ha7nIBY3nP9OQWmnBIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769101226; c=relaxed/simple;
-	bh=TXPzKmLNE9+b2p0NWp2yqih8QLHYxdMzLMy3RrbbkIU=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DJ2lvxHxFy2rEEPf1vhUJPOkDqgKOa8H9eCkhStEMQEBxsh6/Uvfz7XOqb6u4CP8GwMf4V6Eq/O4VH2wtf5t/lFdY+K8d3b4WkG+7FWa3FKrmn9aYeQGZ/QC+52RJDDBUmK+vTjyjNZn8/WSy8uj+WYs+r/PEsEYz1bQmls9JkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.196
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 0A732444E2
-	for <linux-bluetooth@vger.kernel.org>; Thu, 22 Jan 2026 17:00:09 +0000 (UTC)
-From: Bastien Nocera <hadess@hadess.net>
+	s=arc-20240116; t=1769101413; c=relaxed/simple;
+	bh=DqnF1tGIUsDCOt6Q/T37H9VSuqBJPrOoy3pE6V0zSps=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=hRY/1vF18Xp7S1cEl1Sss+rTLkDJhF0ggSNBV3+UDJBRFO1ESAe8vgbTiaHEOHHG086nymb0TLokqlfr0c6yRVKrmGeKdHFljaH04PX01nFmD2bI7lFr1dayjMWzcQoaR1ZLcYbplBS+/xgO46Et/3BeuWlVSGqBLjClPFyUeiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=lsNIkRyH; arc=none smtp.client-ip=192.30.252.208
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
+Received: from github.com (hubbernetes-node-89ac1ca.ash1-iad.github.net [10.56.207.29])
+	by smtp.github.com (Postfix) with ESMTPA id 5CEA01414E0
+	for <linux-bluetooth@vger.kernel.org>; Thu, 22 Jan 2026 09:03:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+	s=pf2023; t=1769101403;
+	bh=MTnXgCkONBryB4pSQkg4wUIn2VJeU1Tv5d4LXwEiEXk=;
+	h=Date:From:To:Subject:List-Unsubscribe:From;
+	b=lsNIkRyH1FdfJBAEr/1FORdqw1ZWMT1McmUcAIKdLWF36R7TyUgbVdJNCXaGarslP
+	 Ge++WQ77f5hmNC5GwPb/FpK63frkc0MMXgsvlrwcgO0klOFjupG1Gu+K6RjRDz7XDp
+	 tmkXtQwYPL4zleM/R5WLWmvT/6HIjzASmr+PSEVE=
+Date: Thu, 22 Jan 2026 09:03:23 -0800
+From: hadess <noreply@github.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [BlueZ 2/2] doc: Update .gitignore for new daemon man page locations
-Date: Thu, 22 Jan 2026 17:58:58 +0100
-Message-ID: <20260122170001.122052-3-hadess@hadess.net>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260122170001.122052-1-hadess@hadess.net>
-References: <20260122170001.122052-1-hadess@hadess.net>
+Message-ID: <bluez/bluez/push/refs/heads/master/8dea25-fddcda@github.com>
+Subject: [bluez/bluez] 5e2bb7: doc: Rename section 7 man pages
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: hadess@hadess.net
-X-GND-Score: 0
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeeijeduucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpeffieffueegieejheeggfeukeehgfehueeuhefhudejiefhuedtvdelleffffegffenucffohhmrghinheprhhsthdrihhnnecukfhppedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemsggrgeefmegrieejieemtgdvugefmeejrgehfeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemsggrgeefmegrieejieemtgdvugefmeejrgehfedphhgvlhhopeholhhimhhpihgtpdhmrghilhhfrhhomhephhgruggvshhssehhrgguvghsshdrnhgvthdpqhhiugeptdetjeefvdeggeeggfdvpdhmohguvgepshhmthhpohhuthdpnhgspghrtghpthhtohepuddprhgtphhtthhopehlihhnuhigqdgslhhuvghtohhothhhsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-GND-State: clean
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.04 / 15.00];
+X-Spamd-Result: default: False [2.04 / 15.00];
+	DMARC_POLICY_REJECT(2.00)[github.com : SPF not aligned (relaxed),reject];
+	R_DKIM_REJECT(1.00)[github.com:s=pf2023];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	MV_CASE(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[github.com:-];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
 	RCPT_COUNT_ONE(0.00)[1];
-	TAGGED_FROM(0.00)[bounces-18339-lists,linux-bluetooth=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	DMARC_NA(0.00)[hadess.net];
 	RCVD_COUNT_THREE(0.00)[4];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	TAGGED_FROM(0.00)[bounces-18340-lists,linux-bluetooth=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-bluetooth];
-	FROM_NEQ_ENVFROM(0.00)[hadess@hadess.net,linux-bluetooth@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	NEURAL_HAM(-0.00)[-0.902];
+	FROM_NEQ_ENVFROM(0.00)[noreply@github.com,linux-bluetooth@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	TO_DN_NONE(0.00)[];
-	R_DKIM_NA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[rst.in:url,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,hadess.net:mid]
-X-Rspamd-Queue-Id: 14E216B85A
+	NEURAL_HAM(-0.00)[-0.966];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-bluetooth];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,rst.in:url,hadess.net:email]
+X-Rspamd-Queue-Id: 216A06BEA4
 X-Rspamd-Action: no action
 
-bluetoothd.rst.in and bluetooth-meshd.rst.in moved, so the generated
-".rst" files moved too. Update .gitignore to match the new location.
----
- .gitignore | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+  Branch: refs/heads/master
+  Home:   https://github.com/bluez/bluez
+  Commit: 5e2bb7b1ba131252dc739c9e9e5ab75e2e037af9
+      https://github.com/bluez/bluez/commit/5e2bb7b1ba131252dc739c9e9e5ab75e2e037af9
+  Author: Bastien Nocera <hadess@hadess.net>
+  Date:   2026-01-22 (Thu, 22 Jan 2026)
 
-diff --git a/.gitignore b/.gitignore
-index f8e4ad686065..27c9b8b6eb65 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -150,9 +150,9 @@ tools/mesh-cfgclient
- tools/mesh-cfgtest
- tools/mesh-tester
- mesh/bluetooth-meshd
--mesh/bluetooth-meshd.rst
-+doc/bluetooth-meshd.rst
- 
--src/bluetoothd.rst
-+doc/bluetoothd.rst
- src/bluetooth.service
- mesh/bluetooth-mesh.service
- 
--- 
-2.52.0
+  Changed paths:
+    M Makefile.am
+    A doc/hci-protocol.rst
+    R doc/hci.rst
+    A doc/iso-protocol.rst
+    R doc/iso.rst
+    A doc/l2cap-protocol.rst
+    R doc/l2cap.rst
+    A doc/mgmt-protocol.rst
+    R doc/mgmt.rst
+    A doc/rfcomm-protocol.rst
+    R doc/rfcomm.rst
+    A doc/sco-protocol.rst
+    R doc/sco.rst
 
+  Log Message:
+  -----------
+  doc: Rename section 7 man pages
+
+So that rfcomm.rst can be used for the rfcomm command-line utilities.
+This does not change the names of the generated man pages.
+
+
+  Commit: 44e3dd321e4be052bcde40939552b93b734538d3
+      https://github.com/bluez/bluez/commit/44e3dd321e4be052bcde40939552b93b734538d3
+  Author: Bastien Nocera <hadess@hadess.net>
+  Date:   2026-01-22 (Thu, 22 Jan 2026)
+
+  Changed paths:
+    M Makefile.am
+    M Makefile.mesh
+    M Makefile.tools
+    R client/bluetoothctl-admin.rst
+    R client/bluetoothctl-advertise.rst
+    R client/bluetoothctl-assistant.rst
+    R client/bluetoothctl-bredr.rst
+    R client/bluetoothctl-endpoint.rst
+    R client/bluetoothctl-gatt.rst
+    R client/bluetoothctl-hci.rst
+    R client/bluetoothctl-le.rst
+    R client/bluetoothctl-mgmt.rst
+    R client/bluetoothctl-monitor.rst
+    R client/bluetoothctl-player.rst
+    R client/bluetoothctl-scan.rst
+    R client/bluetoothctl-telephony.rst
+    R client/bluetoothctl-transport.rst
+    R client/bluetoothctl.rst
+    M configure.ac
+    A doc/bdaddr.rst
+    A doc/bluetooth-meshd.rst.in
+    A doc/bluetoothctl-admin.rst
+    A doc/bluetoothctl-advertise.rst
+    A doc/bluetoothctl-assistant.rst
+    A doc/bluetoothctl-bredr.rst
+    A doc/bluetoothctl-endpoint.rst
+    A doc/bluetoothctl-gatt.rst
+    A doc/bluetoothctl-hci.rst
+    A doc/bluetoothctl-le.rst
+    A doc/bluetoothctl-mgmt.rst
+    A doc/bluetoothctl-monitor.rst
+    A doc/bluetoothctl-player.rst
+    A doc/bluetoothctl-scan.rst
+    A doc/bluetoothctl-telephony.rst
+    A doc/bluetoothctl-transport.rst
+    A doc/bluetoothctl.rst
+    A doc/bluetoothd.rst.in
+    A doc/btattach.rst
+    A doc/btmgmt.rst
+    A doc/btmon.rst
+    A doc/ciptool.rst
+    A doc/hciattach.rst
+    A doc/hciconfig.rst
+    A doc/hcidump.rst
+    A doc/hcitool.rst
+    A doc/hid2hci.rst
+    A doc/isotest.rst
+    A doc/l2ping.rst
+    A doc/rctest.rst
+    A doc/rfcomm.rst
+    A doc/sdptool.rst
+    R mesh/bluetooth-meshd.rst.in
+    R monitor/btmon.rst
+    R src/bluetoothd.rst.in
+    R tools/bdaddr.rst
+    R tools/btattach.rst
+    R tools/btmgmt.rst
+    R tools/ciptool.rst
+    R tools/hciattach.rst
+    R tools/hciconfig.rst
+    R tools/hcidump.rst
+    R tools/hcitool.rst
+    R tools/hid2hci.rst
+    R tools/isotest.rst
+    R tools/l2ping.rst
+    R tools/rctest.rst
+    R tools/rfcomm.rst
+    R tools/sdptool.rst
+
+  Log Message:
+  -----------
+  doc: Move all the man pages to doc/
+
+No modifications are made to the documentation files, their sources (rst
+or rst.in) are just moved to doc/ and the autotools build files adjusted
+for the new path.
+
+
+  Commit: e93d8cd4fe4104b1158b54de271e1179bdf8a846
+      https://github.com/bluez/bluez/commit/e93d8cd4fe4104b1158b54de271e1179bdf8a846
+  Author: Bastien Nocera <hadess@hadess.net>
+  Date:   2026-01-22 (Thu, 22 Jan 2026)
+
+  Changed paths:
+    M Makefile.am
+    A doc/assigned-numbers.rst
+    R doc/assigned-numbers.txt
+
+  Log Message:
+  -----------
+  doc: Port assigned-numbers.txt to RST
+
+
+  Commit: 4371db7798b3aae146c07073469387f073864414
+      https://github.com/bluez/bluez/commit/4371db7798b3aae146c07073469387f073864414
+  Author: Bastien Nocera <hadess@hadess.net>
+  Date:   2026-01-22 (Thu, 22 Jan 2026)
+
+  Changed paths:
+    M Makefile.am
+    A doc/org.bluez.Thermometer.rst
+    A doc/org.bluez.ThermometerManager.rst
+    A doc/org.bluez.ThermometerWatcher.rst
+    R doc/thermometer-api.txt
+
+  Log Message:
+  -----------
+  doc: Port thermometer-api.txt to RST
+
+
+  Commit: 17d407e34cbef272446fd3d1836d619828325837
+      https://github.com/bluez/bluez/commit/17d407e34cbef272446fd3d1836d619828325837
+  Author: Bastien Nocera <hadess@hadess.net>
+  Date:   2026-01-22 (Thu, 22 Jan 2026)
+
+  Changed paths:
+    A doc/security-bugs.rst
+    R doc/security-bugs.txt
+
+  Log Message:
+  -----------
+  doc: Port security-bugs.txt to RST
+
+
+  Commit: ff58eeb2b1adac497c53b9e78e3bbfc23b1f3050
+      https://github.com/bluez/bluez/commit/ff58eeb2b1adac497c53b9e78e3bbfc23b1f3050
+  Author: Bastien Nocera <hadess@hadess.net>
+  Date:   2026-01-22 (Thu, 22 Jan 2026)
+
+  Changed paths:
+    A doc/coding-style.rst
+    R doc/coding-style.txt
+
+  Log Message:
+  -----------
+  doc: Port coding-style.txt to RST
+
+
+  Commit: fddcda9751afbeb6c1083d4e83f4b6128125c1c6
+      https://github.com/bluez/bluez/commit/fddcda9751afbeb6c1083d4e83f4b6128125c1c6
+  Author: Bastien Nocera <hadess@hadess.net>
+  Date:   2026-01-22 (Thu, 22 Jan 2026)
+
+  Changed paths:
+    A doc/maintainer-guidelines.rst
+    R doc/maintainer-guidelines.txt
+
+  Log Message:
+  -----------
+  doc: Port maintainer-guidelines.txt to RST
+
+
+Compare: https://github.com/bluez/bluez/compare/8dea2591fcc2...fddcda9751af
+
+To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
