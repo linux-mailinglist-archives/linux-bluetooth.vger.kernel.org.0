@@ -1,46 +1,46 @@
-Return-Path: <linux-bluetooth+bounces-18319-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18317-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wM5BNBHscWl6ZAAAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18319-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jan 2026 10:21:21 +0100
+	id QFaqMl/scWl6ZAAAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18317-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jan 2026 10:22:39 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B512646F7
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jan 2026 10:21:21 +0100 (CET)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7F43964746
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jan 2026 10:22:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 8E2AB806C4B
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jan 2026 09:11:38 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 8595E3EA7EA
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jan 2026 09:11:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DE8D3A35D9;
-	Thu, 22 Jan 2026 09:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA517379978;
+	Thu, 22 Jan 2026 09:10:22 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [217.70.183.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8BF33E364
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8272BDC3E
 	for <linux-bluetooth@vger.kernel.org>; Thu, 22 Jan 2026 09:10:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769073023; cv=none; b=JgnCF9F2+EI57X58v9ckP/E6NP34CMUR3VWkbW4ZgvRWKW5bR7YDOdyNlv5FWB8bM8Dy9jJhOAjc1H+tgejcJKWu/eEDJZWIYYJmvk+J8GJnTbkjbaudhx72iG/PTzyaMW7NtolPHGmnS+nGTNcNDYhcjeiN35xnqggzC/RuAGg=
+	t=1769073022; cv=none; b=oyzZeJKvu3Q433KQZlyoOZgwOwHrBeB2D3EOJHtj6DyIxf3fv6lpWDlGtBJ9/cCsiALFlxqPIKdRcgquEJhEn+EzzK+yK2dVxKb2Lkld5/jBNlT6n4VuE+Mgt8n5JiKOiB1EWA/c39JfmeYA0601vSPzSmr3Kf3fuqpKG2cArGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769073023; c=relaxed/simple;
-	bh=4g2DQ/+I8mRqIaFW8MdVRIQDj9o+f6OlE3jBdDWlmYE=;
+	s=arc-20240116; t=1769073022; c=relaxed/simple;
+	bh=LCNjXRZG5nahVKNi03PH6tafT2ahy5hjcX3ETkXQgVs=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mNfB08WFNw7QdxIcnet5kGChpL5LyUUq7RAiMVv5uzfRfMyshRO7PWx8sxn/2TmpZxfzGeOtHQ75tCJ+VEQjb6USB8dclJtv756aXlgsyoDUBlb9t5iOwyRSU0Gb+YH6pzs/6ZlbtUewNqNPqO0E2BjQzjr9xFBELIkfsgchhK0=
+	 MIME-Version; b=ew76QpQJ/U4JFpVLaNexmqNzysgUwq0ysvesxWjIDlyPBa5FN9f4RfbryHsYrsHDpvsdu3wPoIPWnlJJllXTxdYafAyYvujtVbAi3z6KFPKmtBdlOc1abH1U4mCsqNYYdsM/5A60ZyogkqBHvBOHbWq8d7TGmFlq14HcS9qkvXg=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.194
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id D8C2D41B5F
-	for <linux-bluetooth@vger.kernel.org>; Thu, 22 Jan 2026 09:10:12 +0000 (UTC)
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 1F5124310D
+	for <linux-bluetooth@vger.kernel.org>; Thu, 22 Jan 2026 09:10:13 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
-Subject: [BlueZ v3 2/9] doc: Move all the man pages to doc/
-Date: Thu, 22 Jan 2026 10:05:01 +0100
-Message-ID: <20260122091003.398400-3-hadess@hadess.net>
+Subject: [BlueZ v3 3/9] doc: Port assigned-numbers.txt to RST
+Date: Thu, 22 Jan 2026 10:05:02 +0100
+Message-ID: <20260122091003.398400-4-hadess@hadess.net>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260122091003.398400-1-hadess@hadess.net>
 References: <20260122091003.398400-1-hadess@hadess.net>
@@ -52,7 +52,7 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeehjeeiucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpefggfelfefhteejudetjeduteehgfduheehueejvdejfeefjeetfeeuteevfffhteenucffohhmrghinheprhhsthdrihhnpdgslhhuvgiirdgtrghllhenucfkphepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefpdhhvghlohepohhlihhmphhitgdpmhgrihhlfhhrohhmpehhrgguvghssheshhgruggvshhsrdhnvghtpdhqihgupeffkeevvdffgeduueehhfdpmhhouggvpehsmhhtphhouhhtpdhnsggprhgtphhtthhopedupdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeehjeeiucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpeekteetgeettdehieduiedttdetffelleehtdejkeeluedvgfffvdevteetudfhkeenucfkphepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefpdhhvghlohepohhlihhmphhitgdpmhgrihhlfhhrohhmpehhrgguvghssheshhgruggvshhsrdhnvghtpdhqihgupeduhfehuddvgeefuddtffdpmhhouggvpehsmhhtphhouhhtpdhnsggprhgtphhtthhopedupdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
 X-GND-State: clean
 X-GND-Score: 0
 X-Rspamd-Server: lfdr
@@ -67,10 +67,10 @@ X-Spamd-Result: default: False [0.24 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-18319-lists,linux-bluetooth=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-18317-lists,linux-bluetooth=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	RCPT_COUNT_ONE(0.00)[1];
-	ASN(0.00)[asn:7979, ipnet:2605:f480::/32, country:US];
+	ASN(0.00)[asn:7979, ipnet:2a01:60a::/32, country:US];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
 	FROM_NEQ_ENVFROM(0.00)[hadess@hadess.net,linux-bluetooth@vger.kernel.org];
@@ -80,375 +80,98 @@ X-Spamd-Result: default: False [0.24 / 15.00];
 	TO_DN_NONE(0.00)[];
 	R_SPF_SOFTFAIL(0.00)[~all:c];
 	R_DKIM_NA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[hadess.net:mid,dfw.mirrors.kernel.org:helo,dfw.mirrors.kernel.org:rdns,makefile.am:url,configure.ac:url]
-X-Rspamd-Queue-Id: 3B512646F7
+	DBL_BLOCKED_OPENRESOLVER(0.00)[hadess.net:mid,ams.mirrors.kernel.org:helo,ams.mirrors.kernel.org:rdns,makefile.am:url]
+X-Rspamd-Queue-Id: 7F43964746
 X-Rspamd-Action: no action
 
-No modifications are made to the documentation files, their sources (rst
-or rst.in) are just moved to doc/ and the autotools build files adjusted
-for the new path.
 ---
- Makefile.am                                |  4 +-
- Makefile.mesh                              |  4 +-
- Makefile.tools                             | 68 +++++++++++-----------
- configure.ac                               |  4 +-
- {tools => doc}/bdaddr.rst                  |  0
- {mesh => doc}/bluetooth-meshd.rst.in       |  0
- {client => doc}/bluetoothctl-admin.rst     |  0
- {client => doc}/bluetoothctl-advertise.rst |  0
- {client => doc}/bluetoothctl-assistant.rst |  0
- {client => doc}/bluetoothctl-bredr.rst     |  0
- {client => doc}/bluetoothctl-endpoint.rst  |  0
- {client => doc}/bluetoothctl-gatt.rst      |  0
- {client => doc}/bluetoothctl-hci.rst       |  0
- {client => doc}/bluetoothctl-le.rst        |  0
- {client => doc}/bluetoothctl-mgmt.rst      |  0
- {client => doc}/bluetoothctl-monitor.rst   |  0
- {client => doc}/bluetoothctl-player.rst    |  0
- {client => doc}/bluetoothctl-scan.rst      |  0
- {client => doc}/bluetoothctl-telephony.rst |  0
- {client => doc}/bluetoothctl-transport.rst |  0
- {client => doc}/bluetoothctl.rst           |  0
- {src => doc}/bluetoothd.rst.in             |  0
- {tools => doc}/btattach.rst                |  0
- {tools => doc}/btmgmt.rst                  |  0
- {monitor => doc}/btmon.rst                 |  0
- {tools => doc}/ciptool.rst                 |  0
- {tools => doc}/hciattach.rst               |  0
- {tools => doc}/hciconfig.rst               |  0
- {tools => doc}/hcidump.rst                 |  0
- {tools => doc}/hcitool.rst                 |  0
- {tools => doc}/hid2hci.rst                 |  0
- {tools => doc}/isotest.rst                 |  0
- {tools => doc}/l2ping.rst                  |  0
- {tools => doc}/rctest.rst                  |  0
- {tools => doc}/rfcomm.rst                  |  0
- {tools => doc}/sdptool.rst                 |  0
- 36 files changed, 40 insertions(+), 40 deletions(-)
- rename {tools => doc}/bdaddr.rst (100%)
- rename {mesh => doc}/bluetooth-meshd.rst.in (100%)
- rename {client => doc}/bluetoothctl-admin.rst (100%)
- rename {client => doc}/bluetoothctl-advertise.rst (100%)
- rename {client => doc}/bluetoothctl-assistant.rst (100%)
- rename {client => doc}/bluetoothctl-bredr.rst (100%)
- rename {client => doc}/bluetoothctl-endpoint.rst (100%)
- rename {client => doc}/bluetoothctl-gatt.rst (100%)
- rename {client => doc}/bluetoothctl-hci.rst (100%)
- rename {client => doc}/bluetoothctl-le.rst (100%)
- rename {client => doc}/bluetoothctl-mgmt.rst (100%)
- rename {client => doc}/bluetoothctl-monitor.rst (100%)
- rename {client => doc}/bluetoothctl-player.rst (100%)
- rename {client => doc}/bluetoothctl-scan.rst (100%)
- rename {client => doc}/bluetoothctl-telephony.rst (100%)
- rename {client => doc}/bluetoothctl-transport.rst (100%)
- rename {client => doc}/bluetoothctl.rst (100%)
- rename {src => doc}/bluetoothd.rst.in (100%)
- rename {tools => doc}/btattach.rst (100%)
- rename {tools => doc}/btmgmt.rst (100%)
- rename {monitor => doc}/btmon.rst (100%)
- rename {tools => doc}/ciptool.rst (100%)
- rename {tools => doc}/hciattach.rst (100%)
- rename {tools => doc}/hciconfig.rst (100%)
- rename {tools => doc}/hcidump.rst (100%)
- rename {tools => doc}/hcitool.rst (100%)
- rename {tools => doc}/hid2hci.rst (100%)
- rename {tools => doc}/isotest.rst (100%)
- rename {tools => doc}/l2ping.rst (100%)
- rename {tools => doc}/rctest.rst (100%)
- rename {tools => doc}/rfcomm.rst (100%)
- rename {tools => doc}/sdptool.rst (100%)
+ Makefile.am              |  2 +-
+ doc/assigned-numbers.rst | 29 +++++++++++++++++++++++++++++
+ doc/assigned-numbers.txt | 26 --------------------------
+ 3 files changed, 30 insertions(+), 27 deletions(-)
+ create mode 100644 doc/assigned-numbers.rst
+ delete mode 100644 doc/assigned-numbers.txt
 
 diff --git a/Makefile.am b/Makefile.am
-index c7a356b2cbd7..5deea67eff00 100644
+index 5deea67eff00..1498535e2524 100644
 --- a/Makefile.am
 +++ b/Makefile.am
-@@ -364,7 +364,7 @@ nodist_src_bluetoothd_SOURCES = $(builtin_files)
- CLEANFILES += $(builtin_files)
+@@ -473,7 +473,7 @@ endif
  
- if MANPAGES
--man_MANS += src/bluetoothd.8
-+man_MANS += doc/bluetoothd.8
- man_MANS += doc/hci.7 doc/mgmt.7 doc/l2cap.7 doc/rfcomm.7 doc/sco.7 doc/iso.7
- man_MANS += doc/org.bluez.Adapter.5 doc/org.bluez.Device.5 \
- 		doc/org.bluez.Bearer.LE.5 doc/org.bluez.Bearer.BREDR.5 \
-@@ -400,7 +400,7 @@ man_MANS += doc/org.bluez.obex.Client.5 doc/org.bluez.obex.Session.5 \
- 		doc/org.bluez.obex.Image.5
- man_MANS += doc/org.bluez.Telephony.5 doc/org.bluez.Call.5
- endif
--manual_pages += src/bluetoothd.8
-+manual_pages += doc/bluetoothd.8
- manual_pages += doc/hci.7 doc/mgmt.7 doc/l2cap.7 doc/rfcomm.7 doc/sco.7 \
- 		doc/iso.7
- manual_pages += doc/org.bluez.Adapter.5 doc/org.bluez.Device.5 \
-diff --git a/Makefile.mesh b/Makefile.mesh
-index e4c9fa6a32e6..bd3a542b7e6c 100644
---- a/Makefile.mesh
-+++ b/Makefile.mesh
-@@ -48,9 +48,9 @@ mesh_bluetooth_meshd_SOURCES = $(mesh_sources) mesh/main.c
- mesh_bluetooth_meshd_LDADD = src/libshared-ell.la $(ell_ldadd) -ljson-c
+ EXTRA_DIST += $(test_scripts)
  
- if MANPAGES
--man_MANS += mesh/bluetooth-meshd.8
-+man_MANS += doc/bluetooth-meshd.8
- endif
--manual_pages += mesh/bluetooth-meshd.8
-+manual_pages += doc/bluetooth-meshd.8
- 
- endif
- 
-diff --git a/Makefile.tools b/Makefile.tools
-index cc8aab55cc9f..b9a092f87168 100644
---- a/Makefile.tools
-+++ b/Makefile.tools
-@@ -64,10 +64,10 @@ monitor_btmon_LDADD = lib/libbluetooth-internal.la \
- 				$(GLIB_LIBS) $(UDEV_LIBS) -ldl
- 
- if MANPAGES
--man_MANS += monitor/btmon.1
-+man_MANS += doc/btmon.1
- endif
- endif
--manual_pages += monitor/btmon.1
-+manual_pages += doc/btmon.1
- 
- if LOGGER
- pkglibexec_PROGRAMS += tools/btmon-logger
-@@ -355,15 +355,15 @@ profiles_iap_iapd_SOURCES = profiles/iap/main.c
- profiles_iap_iapd_LDADD = gdbus/libgdbus-internal.la $(GLIB_LIBS) $(DBUS_LIBS)
- 
- if MANPAGES
--man_MANS += tools/rctest.1 tools/l2ping.1 tools/btattach.1 tools/isotest.1 \
--		tools/btmgmt.1 client/bluetoothctl.1 \
--		client/bluetoothctl-mgmt.1 \
--		client/bluetoothctl-monitor.1 client/bluetoothctl-admin.1 \
--		client/bluetoothctl-advertise.1 client/bluetoothctl-endpoint.1 \
--		client/bluetoothctl-gatt.1 client/bluetoothctl-player.1 \
--		client/bluetoothctl-scan.1 client/bluetoothctl-transport.1 \
--		client/bluetoothctl-assistant.1 client/bluetoothctl-hci.1 \
--		client/bluetoothctl-telephony.1
-+man_MANS += doc/rctest.1 doc/l2ping.1 doc/btattach.1 doc/isotest.1 \
-+		doc/btmgmt.1 doc/bluetoothctl.1 \
-+		doc/bluetoothctl-mgmt.1 \
-+		doc/bluetoothctl-monitor.1 doc/bluetoothctl-admin.1 \
-+		doc/bluetoothctl-advertise.1 doc/bluetoothctl-endpoint.1 \
-+		doc/bluetoothctl-gatt.1 doc/bluetoothctl-player.1 \
-+		doc/bluetoothctl-scan.1 doc/bluetoothctl-transport.1 \
-+		doc/bluetoothctl-assistant.1 doc/bluetoothctl-hci.1 \
-+		doc/bluetoothctl-telephony.1
- 
- endif
- 
-@@ -474,30 +474,30 @@ tools_hcidump_LDADD = lib/libbluetooth-internal.la
- tools_rfcomm_LDADD = lib/libbluetooth-internal.la
- 
- if MANPAGES
--man_MANS += tools/hciattach.1 tools/hciconfig.1 \
--			tools/hcitool.1 tools/hcidump.1 \
--			tools/rfcomm.1 tools/sdptool.1 tools/ciptool.1
-+man_MANS += doc/hciattach.1 doc/hciconfig.1 \
-+			doc/hcitool.1 doc/hcidump.1 \
-+			doc/rfcomm.1 doc/sdptool.1 doc/ciptool.1
- endif
- endif
- endif
--manual_pages += tools/hciattach.1 tools/hciconfig.1 \
--			tools/hcitool.1 tools/hcidump.1 \
--			tools/rfcomm.1 tools/sdptool.1 tools/ciptool.1 \
--			tools/rctest.1 tools/l2ping.1 tools/btattach.1 \
--			tools/bdaddr.1 tools/isotest.1 tools/btmgmt.1 \
--			client/bluetoothctl.1 \
--			client/bluetoothctl-mgmt.1 \
--			client/bluetoothctl-monitor.1 \
--			client/bluetoothctl-admin.1 \
--			client/bluetoothctl-advertise.1 \
--			client/bluetoothctl-endpoint.1 \
--			client/bluetoothctl-gatt.1 \
--			client/bluetoothctl-player.1 \
--			client/bluetoothctl-scan.1 \
--			client/bluetoothctl-transport.1 \
--			client/bluetoothctl-assistant.1 \
--			client/bluetoothctl-hci.1 \
--			client/bluetoothctl-telephony.1
-+manual_pages += doc/hciattach.1 doc/hciconfig.1 \
-+			doc/hcitool.1 doc/hcidump.1 \
-+			doc/rfcomm.1 doc/sdptool.1 doc/ciptool.1 \
-+			doc/rctest.1 doc/l2ping.1 doc/btattach.1 \
-+			doc/bdaddr.1 doc/isotest.1 doc/btmgmt.1 \
-+			doc/bluetoothctl.1 \
-+			doc/bluetoothctl-mgmt.1 \
-+			doc/bluetoothctl-monitor.1 \
-+			doc/bluetoothctl-admin.1 \
-+			doc/bluetoothctl-advertise.1 \
-+			doc/bluetoothctl-endpoint.1 \
-+			doc/bluetoothctl-gatt.1 \
-+			doc/bluetoothctl-player.1 \
-+			doc/bluetoothctl-scan.1 \
-+			doc/bluetoothctl-transport.1 \
-+			doc/bluetoothctl-assistant.1 \
-+			doc/bluetoothctl-hci.1 \
-+			doc/bluetoothctl-telephony.1
- 
- if HID2HCI
- udevdir = $(UDEV_DIR)
-@@ -507,10 +507,10 @@ udev_PROGRAMS = tools/hid2hci
- tools_hid2hci_LDADD = $(UDEV_LIBS)
- 
- if MANPAGES
--man_MANS += tools/hid2hci.1
-+man_MANS += doc/hid2hci.1
- endif
- endif
--manual_pages += tools/hid2hci.1
-+manual_pages += doc/hid2hci.1
- 
- if READLINE
- noinst_PROGRAMS += tools/btmgmt tools/obex-client-tool tools/obex-server-tool \
-diff --git a/configure.ac b/configure.ac
-index b6f6789bea52..a21cac81f5c3 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -523,11 +523,11 @@ AC_SUBST(PLUGIN_PHONEBOOK, [${plugin_phonebook}])
- AC_CONFIG_FILES(
- 	lib/bluez.pc
- 	Makefile
--	mesh/bluetooth-meshd.rst
-+	doc/bluetooth-meshd.rst
- 	mesh/bluetooth-mesh.service
- 	obexd/src/obex.service
- 	obexd/src/org.bluez.obex.service
--	src/bluetoothd.rst
-+	doc/bluetoothd.rst
- 	src/bluetooth.service
- 	tools/bluetooth-logger.service
- 	tools/mpris-proxy.service
-diff --git a/tools/bdaddr.rst b/doc/bdaddr.rst
-similarity index 100%
-rename from tools/bdaddr.rst
-rename to doc/bdaddr.rst
-diff --git a/mesh/bluetooth-meshd.rst.in b/doc/bluetooth-meshd.rst.in
-similarity index 100%
-rename from mesh/bluetooth-meshd.rst.in
-rename to doc/bluetooth-meshd.rst.in
-diff --git a/client/bluetoothctl-admin.rst b/doc/bluetoothctl-admin.rst
-similarity index 100%
-rename from client/bluetoothctl-admin.rst
-rename to doc/bluetoothctl-admin.rst
-diff --git a/client/bluetoothctl-advertise.rst b/doc/bluetoothctl-advertise.rst
-similarity index 100%
-rename from client/bluetoothctl-advertise.rst
-rename to doc/bluetoothctl-advertise.rst
-diff --git a/client/bluetoothctl-assistant.rst b/doc/bluetoothctl-assistant.rst
-similarity index 100%
-rename from client/bluetoothctl-assistant.rst
-rename to doc/bluetoothctl-assistant.rst
-diff --git a/client/bluetoothctl-bredr.rst b/doc/bluetoothctl-bredr.rst
-similarity index 100%
-rename from client/bluetoothctl-bredr.rst
-rename to doc/bluetoothctl-bredr.rst
-diff --git a/client/bluetoothctl-endpoint.rst b/doc/bluetoothctl-endpoint.rst
-similarity index 100%
-rename from client/bluetoothctl-endpoint.rst
-rename to doc/bluetoothctl-endpoint.rst
-diff --git a/client/bluetoothctl-gatt.rst b/doc/bluetoothctl-gatt.rst
-similarity index 100%
-rename from client/bluetoothctl-gatt.rst
-rename to doc/bluetoothctl-gatt.rst
-diff --git a/client/bluetoothctl-hci.rst b/doc/bluetoothctl-hci.rst
-similarity index 100%
-rename from client/bluetoothctl-hci.rst
-rename to doc/bluetoothctl-hci.rst
-diff --git a/client/bluetoothctl-le.rst b/doc/bluetoothctl-le.rst
-similarity index 100%
-rename from client/bluetoothctl-le.rst
-rename to doc/bluetoothctl-le.rst
-diff --git a/client/bluetoothctl-mgmt.rst b/doc/bluetoothctl-mgmt.rst
-similarity index 100%
-rename from client/bluetoothctl-mgmt.rst
-rename to doc/bluetoothctl-mgmt.rst
-diff --git a/client/bluetoothctl-monitor.rst b/doc/bluetoothctl-monitor.rst
-similarity index 100%
-rename from client/bluetoothctl-monitor.rst
-rename to doc/bluetoothctl-monitor.rst
-diff --git a/client/bluetoothctl-player.rst b/doc/bluetoothctl-player.rst
-similarity index 100%
-rename from client/bluetoothctl-player.rst
-rename to doc/bluetoothctl-player.rst
-diff --git a/client/bluetoothctl-scan.rst b/doc/bluetoothctl-scan.rst
-similarity index 100%
-rename from client/bluetoothctl-scan.rst
-rename to doc/bluetoothctl-scan.rst
-diff --git a/client/bluetoothctl-telephony.rst b/doc/bluetoothctl-telephony.rst
-similarity index 100%
-rename from client/bluetoothctl-telephony.rst
-rename to doc/bluetoothctl-telephony.rst
-diff --git a/client/bluetoothctl-transport.rst b/doc/bluetoothctl-transport.rst
-similarity index 100%
-rename from client/bluetoothctl-transport.rst
-rename to doc/bluetoothctl-transport.rst
-diff --git a/client/bluetoothctl.rst b/doc/bluetoothctl.rst
-similarity index 100%
-rename from client/bluetoothctl.rst
-rename to doc/bluetoothctl.rst
-diff --git a/src/bluetoothd.rst.in b/doc/bluetoothd.rst.in
-similarity index 100%
-rename from src/bluetoothd.rst.in
-rename to doc/bluetoothd.rst.in
-diff --git a/tools/btattach.rst b/doc/btattach.rst
-similarity index 100%
-rename from tools/btattach.rst
-rename to doc/btattach.rst
-diff --git a/tools/btmgmt.rst b/doc/btmgmt.rst
-similarity index 100%
-rename from tools/btmgmt.rst
-rename to doc/btmgmt.rst
-diff --git a/monitor/btmon.rst b/doc/btmon.rst
-similarity index 100%
-rename from monitor/btmon.rst
-rename to doc/btmon.rst
-diff --git a/tools/ciptool.rst b/doc/ciptool.rst
-similarity index 100%
-rename from tools/ciptool.rst
-rename to doc/ciptool.rst
-diff --git a/tools/hciattach.rst b/doc/hciattach.rst
-similarity index 100%
-rename from tools/hciattach.rst
-rename to doc/hciattach.rst
-diff --git a/tools/hciconfig.rst b/doc/hciconfig.rst
-similarity index 100%
-rename from tools/hciconfig.rst
-rename to doc/hciconfig.rst
-diff --git a/tools/hcidump.rst b/doc/hcidump.rst
-similarity index 100%
-rename from tools/hcidump.rst
-rename to doc/hcidump.rst
-diff --git a/tools/hcitool.rst b/doc/hcitool.rst
-similarity index 100%
-rename from tools/hcitool.rst
-rename to doc/hcitool.rst
-diff --git a/tools/hid2hci.rst b/doc/hid2hci.rst
-similarity index 100%
-rename from tools/hid2hci.rst
-rename to doc/hid2hci.rst
-diff --git a/tools/isotest.rst b/doc/isotest.rst
-similarity index 100%
-rename from tools/isotest.rst
-rename to doc/isotest.rst
-diff --git a/tools/l2ping.rst b/doc/l2ping.rst
-similarity index 100%
-rename from tools/l2ping.rst
-rename to doc/l2ping.rst
-diff --git a/tools/rctest.rst b/doc/rctest.rst
-similarity index 100%
-rename from tools/rctest.rst
-rename to doc/rctest.rst
-diff --git a/tools/rfcomm.rst b/doc/rfcomm.rst
-similarity index 100%
-rename from tools/rfcomm.rst
-rename to doc/rfcomm.rst
-diff --git a/tools/sdptool.rst b/doc/sdptool.rst
-similarity index 100%
-rename from tools/sdptool.rst
-rename to doc/sdptool.rst
+-EXTRA_DIST += doc/assigned-numbers.txt doc/supported-features.txt \
++EXTRA_DIST += doc/assigned-numbers.rst doc/supported-features.txt \
+ 				doc/test-coverage.txt \
+ 				doc/test-runner.rst \
+ 				doc/settings-storage.txt
+diff --git a/doc/assigned-numbers.rst b/doc/assigned-numbers.rst
+new file mode 100644
+index 000000000000..e3fcb65b83df
+--- /dev/null
++++ b/doc/assigned-numbers.rst
+@@ -0,0 +1,29 @@
++===============
++RFCOMM Channels
++===============
++
++Since there are a limited amount of possible RFCOMM channels (1-31)
++they've been pre-allocated for currently known profiles in order to
++avoid conflicts.
++
++.. csv-table::
++	:header: "Profile", "Channel"
++	:widths: auto
++
++	DUN, 1
++	SPP, 3
++	HSP HS, 6
++	HFP HF, 7
++	OPP, 9
++	FTP, 10
++	BIP, 11
++	HSP AG, 12
++	HFP AG, 13
++	SYNCH (IrMC), 14
++	PBAP, 15
++	MAP MAS, 16
++	MAP MNS, 17
++	SyncEvolution, 19
++	PC/Ovi Suite, 24
++	SyncML Client, 25
++	SyncML Server, 26
+diff --git a/doc/assigned-numbers.txt b/doc/assigned-numbers.txt
+deleted file mode 100644
+index cf481c15eb88..000000000000
+--- a/doc/assigned-numbers.txt
++++ /dev/null
+@@ -1,26 +0,0 @@
+-RFCOMM Channels
+-===============
+-
+-Since there are a limited amount of possible RFCOMM channels (1-31)
+-they've been pre-allocated for currently known profiles in order to
+-avoid conflicts.
+-
+-Profile		Channel
+------------------------
+-DUN		1
+-SPP		3
+-HSP HS		6
+-HFP HF		7
+-OPP		9
+-FTP		10
+-BIP		11
+-HSP AG		12
+-HFP AG		13
+-SYNCH (IrMC)	14
+-PBAP		15
+-MAP MAS		16
+-MAP MNS		17
+-SyncEvolution	19
+-PC/Ovi Suite	24
+-SyncML Client	25
+-SyncML Server	26
 -- 
 2.52.0
 
