@@ -1,53 +1,44 @@
-Return-Path: <linux-bluetooth+bounces-18336-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18337-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eH03GT5dcmn5iwAAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18336-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jan 2026 18:24:14 +0100
+	id oCwDF/JfcmnbjAAAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18337-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jan 2026 18:35:46 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A9386B2F5
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jan 2026 18:24:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CDC596B6FC
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jan 2026 18:35:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 4473E304203F
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jan 2026 17:11:04 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 8392830C344B
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 22 Jan 2026 17:21:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9090F33F37D;
-	Thu, 22 Jan 2026 16:50:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PtboSJe9"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 600DD3A704F;
+	Thu, 22 Jan 2026 17:00:31 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5728635C1BF
-	for <linux-bluetooth@vger.kernel.org>; Thu, 22 Jan 2026 16:50:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B42C3A5C02
+	for <linux-bluetooth@vger.kernel.org>; Thu, 22 Jan 2026 17:00:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769100609; cv=none; b=TrizI03q4yCtxP/aK516/9WMVVAM9ygJFDA8j4BR1DPlq4UkD20MAXOdgkZzJCgH2WVyKMe6STWxsdRbf6SZH2IP/kiiZqILlVTr8YSY2qN6BLH0mheEJVfk3uItuq6qVV2arTtOCUEtX4gPa+mk1WNO46cHU254iv6CBKIy9JI=
+	t=1769101226; cv=none; b=hYPj2ur6rjlTfUM6KfAmcJIOEZQVjFuVIIGQBoJe5B2cGctPHrxr9nyPgd/qbb45SCKOTRDoYdOn8zicuj6jgl0VRmEoaOu0mQzauhrvoAuPOIMPHexOcGo4u8NYCa94TgI+3vaNxOjHXQOoC9TFfuVfO2XtG7vLTk2qaPaU6Wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769100609; c=relaxed/simple;
-	bh=egkdDJk1kPH+DG6hBhezd6Ft6eKRlbhrzeLv4FE/cJU=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=WthE9ngL6FPZsTD1QfqBjuu7IhJfUu/9xAiNH/Ve6fF0KnGvf3Jyu3potI1DjNyBnTZ5mQzBv1EcewtZnjsVswemI+Wx2vs7pRisIuwgSF/U5ngG2uBJIj3db5aAHhOQ0CxaZBXHAeNgNnakqbGodkdZBlqjejW1wzkMWegaWjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PtboSJe9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D89DAC116C6;
-	Thu, 22 Jan 2026 16:50:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769100608;
-	bh=egkdDJk1kPH+DG6hBhezd6Ft6eKRlbhrzeLv4FE/cJU=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=PtboSJe9Ls2cllcUbkw/QBJYquV/mCGXZ1ggsIcwTgRYNGOIGsMkYFn++N8453zwX
-	 pbXKl+tOinPHdXYGFz/8LRhPgVHWXCrF2lMh0b94us7KGp/fgXFZUIRq8SsgYtpDUc
-	 +g4A8tOUpv+d1fHGoBshhPK2DVapqJkSqRzYAWXwEvphZ4K1ib9NJFzHG/72XusHwS
-	 jOWphHhTotGCKju649SIJOLgChG7Sk4aANzD5pDiw0DOgVbucl/DXKiuNeEYjqMNC6
-	 a0u1UDj4Qxq4544jI1VyO8l8nh9JUsRHrKJgktKcf+wBHFHfP6MiMuunrSxCNCGJJw
-	 oZEbir9ZYsePw==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 8BC913808200;
-	Thu, 22 Jan 2026 16:50:06 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1769101226; c=relaxed/simple;
+	bh=fIaU0LbqCI+dWN9lO0oKFPk1uOqDfPq/eyLDAkNed1M=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=Eib7WmQ3atA9pfT+tjoeYluWYQEPR9KQWqHL9Hjv6UaQ1gd1CJkqhEjzZH74iGp3fvxyr3SLXY3NguvMZ6tarHpn/ySVnDKahjSaZhIgVbbJrlyy4o2s/GVrUpdixysUEPUXptI2jrrTyh6uXL7+LDjRONNg5eQwkIw7qcq3ZeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.196
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 92D3F4334D
+	for <linux-bluetooth@vger.kernel.org>; Thu, 22 Jan 2026 17:00:09 +0000 (UTC)
+From: Bastien Nocera <hadess@hadess.net>
+To: linux-bluetooth@vger.kernel.org
+Subject: [BlueZ 0/2] Documentation fixups
+Date: Thu, 22 Jan 2026 17:58:56 +0100
+Message-ID: <20260122170001.122052-1-hadess@hadess.net>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -55,87 +46,52 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [BlueZ v3 0/9] Port text docs to RST and move man pages
-From: patchwork-bot+bluetooth@kernel.org
-Message-Id: 
- <176910060535.1806518.2169700983805092118.git-patchwork-notify@kernel.org>
-Date: Thu, 22 Jan 2026 16:50:05 +0000
-References: <20260122091003.398400-1-hadess@hadess.net>
-In-Reply-To: <20260122091003.398400-1-hadess@hadess.net>
-To: Bastien Nocera <hadess@hadess.net>
-Cc: linux-bluetooth@vger.kernel.org
+X-GND-Sasl: hadess@hadess.net
+X-GND-Score: 0
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddugeeijeduucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvufffkffoggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpeffleeuffejvdeufeffvdejjedvheekgfeltdejhfeitdettefgjedvuedvhfejueenucfkphepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvfeegmegvtgejfeemtghfvddtmegsrgegfeemrgeijeeimegtvdgufeemjegrheefpdhhvghlohepohhlihhmphhitgdpmhgrihhlfhhrohhmpehhrgguvghssheshhgruggvshhsrdhnvghtpdhqihgupeelvdfffefhgeeffeegffdpmhhouggvpehsmhhtphhouhhtpdhnsggprhgtphhtthhopedupdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-GND-State: clean
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [0.04 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-18336-lists,linux-bluetooth=lfdr.de,bluetooth];
-	RCVD_TLS_LAST(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[patchwork-bot@kernel.org,linux-bluetooth@vger.kernel.org];
-	RCPT_COUNT_TWO(0.00)[2];
-	DKIM_TRACE(0.00)[kernel.org:+];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_ONE(0.00)[1];
+	TAGGED_FROM(0.00)[bounces-18337-lists,linux-bluetooth=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	DMARC_NA(0.00)[hadess.net];
+	RCVD_COUNT_THREE(0.00)[4];
 	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	FROM_NO_DN(0.00)[];
-	NEURAL_HAM(-0.00)[-0.974];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,intel.com:email]
-X-Rspamd-Queue-Id: 7A9386B2F5
+	FROM_NEQ_ENVFROM(0.00)[hadess@hadess.net,linux-bluetooth@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	NEURAL_HAM(-0.00)[-0.923];
+	TO_DN_NONE(0.00)[];
+	R_DKIM_NA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: CDC596B6FC
 X-Rspamd-Action: no action
 
-Hello:
+Some documentation fixups after "Port text docs to RST and move man
+pages" got merged.
 
-This series was applied to bluetooth/bluez.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+Bastien Nocera (2):
+  doc: Add "C" code-block markers for coding-style doc
+  doc: Update .gitignore for new daemon man page locations
 
-On Thu, 22 Jan 2026 10:04:59 +0100 you wrote:
-> This supersedes the "Port text docs to RST" patchset
-> 
-> Changes since v2:
-> - Move all man pages under doc/ so make it easier to reference
->   in the HTML docs.
-> - Fix syntax error in maintainer-guidelines
-> Changes since v1:
-> - Fix distcheck
-> 
-> [...]
+ .gitignore           |  4 ++--
+ doc/coding-style.rst | 46 ++++++++++++++++++++++----------------------
+ 2 files changed, 25 insertions(+), 25 deletions(-)
 
-Here is the summary with links:
-  - [BlueZ,v3,1/9] doc: Rename section 7 man pages
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=5e2bb7b1ba13
-  - [BlueZ,v3,2/9] doc: Move all the man pages to doc/
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=44e3dd321e4b
-  - [BlueZ,v3,3/9] doc: Port assigned-numbers.txt to RST
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=e93d8cd4fe41
-  - [BlueZ,v3,4/9] doc: Port thermometer-api.txt to RST
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=4371db7798b3
-  - [BlueZ,v3,5/9] doc: Port security-bugs.txt to RST
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=17d407e34cbe
-  - [BlueZ,v3,6/9] doc: Port coding-style.txt to RST
-    (no matching commit)
-  - [BlueZ,v3,7/9] doc: Port sap-api.txt to RST
-    (no matching commit)
-  - [BlueZ,v3,8/9] doc: Port maintainer-guidelines.txt to RST
-    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=fddcda9751af
-  - [BlueZ,v3,9/9] doc: Port health-api.txt to RST
-    (no matching commit)
-
-You are awesome, thank you!
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+2.52.0
 
 
