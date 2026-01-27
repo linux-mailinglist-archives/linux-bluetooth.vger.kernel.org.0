@@ -1,61 +1,61 @@
-Return-Path: <linux-bluetooth+bounces-18502-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18506-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0C6oF0r4eGnYuAEAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18502-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Jan 2026 18:39:22 +0100
+	id KPtuO134eGnYuAEAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18506-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Jan 2026 18:39:41 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A289988AE
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Jan 2026 18:39:21 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id AF6D3988F1
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Jan 2026 18:39:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 530433003721
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Jan 2026 17:38:56 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id D1CD33031ACD
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Jan 2026 17:39:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 268A43164C3;
-	Tue, 27 Jan 2026 17:38:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E484314D2D;
+	Tue, 27 Jan 2026 17:38:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="gV2zMBAW"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="kNMp5l7m"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920D630C630
-	for <linux-bluetooth@vger.kernel.org>; Tue, 27 Jan 2026 17:38:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C63F30E82B
+	for <linux-bluetooth@vger.kernel.org>; Tue, 27 Jan 2026 17:38:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769535533; cv=none; b=gf/hCECpN/qVRLisY4p/ZhHN7gJegsisobfRaddGr+BG+UEEITpnUkjMrmPXNgMctw64aebPY4sh9nkKZk/lxSfo2JOmkZwpjXDqSatltje/ozJ8XP3mAdu97ydWyZu0zoAOpx35zTvWKkfETY7Zd2S3AAM2jzhXLvv7ULEtC3g=
+	t=1769535535; cv=none; b=QvegxFbQjzgy9h0SEOnDXe3WnBPof3u6Ahn7erdmBX5Cyb32F1aOF1Ir24G3pcKSrvEtUfKhdI9+2CliUuLwQqdy0aQCWDNyYgJDjEHIHh0zyqCd8lTOYYcimz0vER2GQx6to6TYcJ+IIpYvyp3bpVvNmMdTF+Ce88AWA28P8fA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769535533; c=relaxed/simple;
-	bh=6EJiWVi9Qm80zEaKNNCF+6onj3YEtWvKNEvychXexb4=;
+	s=arc-20240116; t=1769535535; c=relaxed/simple;
+	bh=3sy1DVgexuVbIaQLzeR1o5NEoYbKKNgharqslxe58G0=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CHT/xBPTYIk3+HZCNFBFT+/87irrj3FaehqYskPUeU5zReNd+4iGIVfGfFxGlZyGZuLJx7kRwVQjr7K5hyfyLhaFfS/JNvNvM1/LRWI7Eoxipu6AmfwbAFVzOUSZsyDb3mq+/G6wN1NoZsBtB6Po8uG+5PcOsh7g2hlx7i7XfWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=gV2zMBAW; arc=none smtp.client-ip=148.251.105.195
+	 MIME-Version:Content-Type; b=WQoXQElSH5nF0GG/HCqp+upwJ4XnLGySwFXhVprsZpo8xySY4KJOpb/4/mo9X0uBAZHcuDXQzHgKkbCmFsfzvIxK75wVg42nnwWDifAX8Xq5kwUTVVa6Rq0V3n7rQFMnh6jAjQKY2gbiM8ccOxthbUhp2wIWZOOJ7kk14ZQNggs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=kNMp5l7m; arc=none smtp.client-ip=148.251.105.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
 	s=mail; t=1769535529;
-	bh=6EJiWVi9Qm80zEaKNNCF+6onj3YEtWvKNEvychXexb4=;
+	bh=3sy1DVgexuVbIaQLzeR1o5NEoYbKKNgharqslxe58G0=;
 	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=gV2zMBAWUG1xyQQhzscLtTmVaywgIcDFjoPr0HV3D8fUIT6Qwa/09kdL+LMH+Rkfm
-	 7B2TJN4dnrs/G8FqHf6Sv7eCNzASJ1O/gRbFpLwn+VqfbrvPVQNfpi39fRafFHVB5t
-	 fWi0kUkurMSmLQT6pyNI+41sWU+f1EIZ1+xUc3FcbYYUTm67Ex1wCtR6ReIb6PTeb2
-	 CwF5XiTzAhu+mOtzMltjid/ixLZbDVL1PjaWk1/vwt3R37Ujckg6Yg5yA25DLFqAxs
-	 idixVYcbgMw1IfpxoEIDBSqS1HzkatrWG77KrYBeB4+93AUNaQiiGV1Tfvm59mAupW
-	 aWn/mZSUGHXWw==
+	b=kNMp5l7msTlGaVSZPZlTqiuUh0IkJaw3kc9Zr0L6wErAYqDUvbavKatVJejtcDmuq
+	 VzEuOr1xSciPh4dtqun1BPquQmC/O/dYNmAcAZZQ2qwb+9Ckdpjf8dKQYST2v+XjSF
+	 8rjcPHHRhi7DuM+Gm++wnYB/x/ChRRQWe0dPXHI0I0fnmJjxP19XsbEAJWMUhC3BDm
+	 39Y3s+VVFQnr9uO5JetBk2L9Qc+AAGAt5NQJ0iSzpKm0UxTXe9nDSD/hQAqz6JRdXW
+	 nqLuqScITIbdUkklZwzg7kdFBOdmG7BobfRKQTMS7dTcW3Qhujpi9TVQgn4cke9ySs
+	 w50Z/ycb5MlIg==
 Received: from fdanis-ThinkPad-X1.. (2a02-8428-af44-1001-871c-6E70-D798-Dfc2.rev.sfr.net [IPv6:2a02:8428:af44:1001:871c:6e70:d798:dfc2])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: fdanis)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 02EEA17E14F2
-	for <linux-bluetooth@vger.kernel.org>; Tue, 27 Jan 2026 18:38:48 +0100 (CET)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 4D65017E1513
+	for <linux-bluetooth@vger.kernel.org>; Tue, 27 Jan 2026 18:38:49 +0100 (CET)
 From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v2 05/13] doc/qualification: Add PICS and howto for the GAVDP qualification
-Date: Tue, 27 Jan 2026 18:38:33 +0100
-Message-ID: <20260127173841.153747-5-frederic.danis@collabora.com>
+Subject: [PATCH BlueZ v2 06/13] doc/qualification: Add PICS and howto for the HID qualification
+Date: Tue, 27 Jan 2026 18:38:34 +0100
+Message-ID: <20260127173841.153747-6-frederic.danis@collabora.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260127173841.153747-1-frederic.danis@collabora.com>
 References: <20260127173841.153747-1-frederic.danis@collabora.com>
@@ -73,7 +73,7 @@ X-Spamd-Result: default: False [-0.60 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
 	R_MIXED_CHARSET(0.56)[subject];
 	DMARC_POLICY_ALLOW(-0.50)[collabora.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[collabora.com:s=mail];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -82,69 +82,51 @@ X-Spamd-Result: default: False [-0.60 / 15.00];
 	RCPT_COUNT_ONE(0.00)[1];
 	DKIM_TRACE(0.00)[collabora.com:+];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-18502-lists,linux-bluetooth=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-18506-lists,linux-bluetooth=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	TO_DN_NONE(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[frederic.danis@collabora.com,linux-bluetooth@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	PRECEDENCE_BULK(0.00)[];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[]
-X-Rspamd-Queue-Id: 7A289988AE
+X-Rspamd-Queue-Id: AF6D3988F1
 X-Rspamd-Action: no action
 
 ---
- doc/qualification/gavdp-pics.rst | 170 +++++++++++++++++++++++++++++++
- doc/qualification/gavdp-pts.rst  |  33 ++++++
- 2 files changed, 203 insertions(+)
- create mode 100644 doc/qualification/gavdp-pics.rst
- create mode 100644 doc/qualification/gavdp-pts.rst
+ doc/qualification/hid-pics.rst | 385 +++++++++++++++++++++++++++++++++
+ doc/qualification/hid-pts.rst  |  61 ++++++
+ 2 files changed, 446 insertions(+)
+ create mode 100644 doc/qualification/hid-pics.rst
+ create mode 100644 doc/qualification/hid-pts.rst
 
-diff --git a/doc/qualification/gavdp-pics.rst b/doc/qualification/gavdp-pics.rst
+diff --git a/doc/qualification/hid-pics.rst b/doc/qualification/hid-pics.rst
 new file mode 100644
-index 000000000..b1076c800
+index 000000000..0f63efb93
 --- /dev/null
-+++ b/doc/qualification/gavdp-pics.rst
-@@ -0,0 +1,170 @@
++++ b/doc/qualification/hid-pics.rst
+@@ -0,0 +1,385 @@
 +.. SPDX-License-Identifier: GPL-2.0-or-later
 +.. Copyright © 2025-2026 Collabora Ltd.
 +
-+========================================
-+Generic Audio/Video Distribution Profile
-+========================================
-+(TCRL 2023-1, GAVDP.ICS.1.3.2ed3)
++==============================
++Human Interface Device Profile
++==============================
++(TCRL 2023-1, HID.ICS.p9)
 +
 +Versions
 +========
-+**Table 2a: GAVDP Initiator - X.Y Versions**
-+
-+Prerequisite: GAVDP 1/1 "Initiator"
++**Table 0: Major Versions (X.Y)**
 +
 ++----------------+----------+------------------------------------------------+
 +| Parameter Name | Selected | Description                                    |
 ++================+==========+================================================+
-+| TSPC_GAVDP_2a_3| x        | GAVDP 1.3 (M)                                  |
++| TSPC_HID_0_1   | x        | HID v1.0 (M)                                   |
 ++----------------+----------+------------------------------------------------+
-+
-+- M: Mandatory
-+
-+Versions
-+========
-+**Table 3a: GAVDP Acceptor - X.Y Versions**
-+
-+Prerequisite: GAVDP 1/2 "Acceptor"
-+
-++----------------+----------+------------------------------------------------+
-+| Parameter Name | Selected | Description                                    |
-++================+==========+================================================+
-+| TSPC_GAVDP_3a_3| x        | GAVDP 1.3 (M)                                  |
-++----------------+----------+------------------------------------------------+
-+
-+- M: Mandatory
 +
 +Roles
 +=====
@@ -153,145 +135,378 @@ index 000000000..b1076c800
 ++----------------+----------+------------------------------------------------+
 +| Parameter Name | Selected | Description                                    |
 ++================+==========+================================================+
-+| TSPC_GAVDP_1_1 | x        | Initiator (C.1)                                |
++| TSPC_HID_1_1   | x        | Host, Report protocol (C.1)                    |
 ++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_1_2 | x        | Acceptor (C.1)                                 |
++| TSPC_HID_1_2   |          | Device (C.1)                                   |
 ++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_1_3 | x        | Delay Reporting Initiator (O)                  |
++| TSPC_HID_1_3   |          | Host, Boot protocol (C.1)                      |
 ++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_1_4 |          | Delay Reporting Acceptor (O)                   |
++
++- C.1: Mandatory to support at least one of HID 1/1 "Host, Report protocol"
++  OR HID 1/2 "Device" OR HID 1/3 "Host, Boot protocol".
++
++Host Role
++=========
++**Table 2: Application Procedures**
++
++Prerequisite: HID 1/1 "Host, Report protocol" OR HID 1/3 "Host, Boot protocol"
++
+++----------------+----------+------------------------------------------------+
++| Parameter Name | Selected | Description                                    |
+++================+==========+================================================+
++| TSPC_HID_2_1   | x        | Establish HID connection (C.4)                 |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_2_2   | x        | Accept HID connection (C.4)                    |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_2_3   | x        | Terminate HID connection (C.4)                 |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_2_4   | x        | Accept Termination of HID connection (C.4)     |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_2_5   | x        | Support for virtual cables (C.4)               |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_2_6   | x        | HID initiated reconnection (C.4)               |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_2_7   | x        | Host initiated reconnection (C.4)              |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_2_8   | x        | Host data transfer to HID (C.1)                |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_2_9   | x        | HID data transfer to Host (C.1)                |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_2_10  |          | HID Boot mode data transfer to Host (C.2)      |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_2_11  |          | Host Boot mode data transfer to HID (C.2)      |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_2_12  |          | Support for Application to send GET_REPORT (O) |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_2_13  |          | Support for Application to send SET_REPORT (O) |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_2_14  |          | Support for sending HCI_CONTROL with           |
++|                |          | VIRTUAL_CABLE_UNPLUG (C.3)                     |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_2_15  |          | Support for receiving HCI_CONTROL with         |
++|                |          | VIRTUAL_CABLE_UNPLUG (C.3)                     |
 ++----------------+----------+------------------------------------------------+
 +
 +- O: Optional
-+- C.1: Mandatory to support at least one.
++- C.1: Mandatory IF HID 1/1 "Host, Report protocol", otherwise Optional.
++- C.2: Mandatory IF HID 1/3 "Host, Boot protocol", otherwise Optional.
++- C.3: Optional IF HID 2/5 "Support for virtual cables", otherwise Excluded.
++- C.4: Mandatory IF HID 1/1 "Host, Report protocol", otherwise Optional.
 +
-+Initiator Capabilities
-+======================
-+**Table 2: GAVDP Procedures (Initiator)**
++Host Role
++=========
++**Table 3: Device to Host Transfers**
 +
-+Prerequisite: GAVDP 1/1 "Initiator"
++Prerequisite: HID 1/1 "Host, Report protocol" OR HID 1/3 "Host, Boot protocol"
 +
 ++----------------+----------+------------------------------------------------+
 +| Parameter Name | Selected | Description                                    |
 ++================+==========+================================================+
-+| TSPC_GAVDP_2_1 | x        | Connection Establishment (M)                   |
++| TSPC_HID_3_1   |          | Data reports larger than host MTU on Control   |
++|                |          | channel (O)                                    |
 ++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_2_2 | x        | Transfer Control - Suspend (O)                 |
++| TSPC_HID_3_2   |          | Data reports larger than host MTU on Interrupt |
++|                |          | channel (C.1)                                  |
 ++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_2_3 |          | Transfer Control - Change Parameters (O)       |
++| TSPC_HID_3_3   |          | Data reports to host (C.1)                     |
 ++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_2_4 | x        | Start Streaming (M)                            |
++| TSPC_HID_3_4   |          | Boot mode reports to host (C.2)                |
 ++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_2_5 | x        | Connection Release (M)                         |
++
++- O: Optional
++- C.1: Excluded IF HID 1/3 "Host, Boot protocol", otherwise Mandatory IF HID
++  2/12 "Support for Application to send GET_REPORT", otherwise Optional.
++- C.2: Mandatory IF HID 1/3 "Host, Boot protocol", otherwise Optional.
++
++Host Role
++=========
++**Table 4: Host to Device Transfers**
++
++Prerequisite: HID 1/1 "Host, Report protocol" OR HID 1/3 "Host, Boot protocol"
++
 ++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_2_6 | x        | Signaling Control - Abort (M)                  |
++| Parameter Name | Selected | Description                                    |
+++================+==========+================================================+
++| TSPC_HID_4_1   |          | Data reports larger than device MTU on Control |
++|                |          | channel (C.1)                                  |
 ++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_2_7 |          | Security Control (O)                           |
++| TSPC_HID_4_2   |          | Data reports larger than device MTU on         |
++|                |          | Interrupt channel (C.1)                        |
 ++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_2_8 |          | Delay Reporting (O)                            |
++| TSPC_HID_4_3   | x        | Data reports to device (C.2)                   |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_4_4   |          | Boot mode reports to device (O)                |
+++----------------+----------+------------------------------------------------+
++
++- O: Optional
++- C.1: Excluded IF HID 1/3 "Host, Boot protocol", otherwise Optional.
++- C.2: Excluded IF HID 1/3 "Host, Boot protocol", otherwise Mandatory.
++
++Host Role
++=========
++**Table 5: HID Control Commands**
++
++Prerequisite: HID 1/1 "Host, Report protocol" OR HID 1/3 "Host, Boot protocol"
++
+++----------------+----------+------------------------------------------------+
++| Parameter Name | Selected | Description                                    |
+++================+==========+================================================+
++| TSPC_HID_5_1   |          | Set_Protocol command (C.1, C.4)                |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_5_2   |          | Get_Protocol command (C.1, C.4)                |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_5_3   |          | Set_Idle command (O)                           |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_5_4   |          | Get_Idle command (O)                           |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_5_5   |          | Set_Report command (C.2)                       |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_5_6   |          | Get_Report command (C.3)                       |
+++----------------+----------+------------------------------------------------+
++
++- O: Optional
++- C.1: Mandatory IF HID 1/3 "Host, Boot protocol", otherwise Optional.
++- C.2: Mandatory IF HID 1/1 "Host, Report protocol" AND HID 2/13 "Support for
++  Application to send SET_REPORT", otherwise Excluded.
++- C.3: Mandatory IF HID 1/1 "Host, Report protocol" AND HID 2/12 "Support for
++  Application to send GET_REPORT", otherwise Excluded.
++- C.4: Mandatory to support none or all of HID 5/1 "Set_Protocol command" OR
++  HID 5/2 "Get_Protocol command".
++
++Host Role
++=========
++**Table 6: LMP Requirements**
++
++Prerequisite: HID 1/1 "Host, Report protocol" OR HID 1/3 "Host, Boot protocol"
++
+++----------------+----------+------------------------------------------------+
++| Parameter Name | Selected | Description                                    |
+++================+==========+================================================+
++| TSPC_HID_6_8   | x        | Role switch (C.4)                              |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_6_9   | x        | Request role switch (C.4)                      |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_6_12  | x        | Sniff mode (C.4)                               |
+++----------------+----------+------------------------------------------------+
++
++- C.4: Mandatory IF HID 1/1 "Host, Report protocol", otherwise not defined.
++
++HID Role
++========
++**Table 8: HID Device Types**
++
++Prerequisite: HID 1/2 "Device"
++
+++----------------+----------+------------------------------------------------+
++| Parameter Name | Selected | Description                                    |
+++================+==========+================================================+
++| TSPC_HID_8_1   |          | Pointing HID (C.1)                             |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_8_2   |          | Keyboard HID (C.1)                             |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_8_3   |          | Identification HID (C.1)                       |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_8_4   |          | Other HID (C.1)                                |
+++----------------+----------+------------------------------------------------+
++
++- C.1: Mandatory to support at least one of HID 8/1 "Pointing HID" OR HID 8/2
++  "Keyboard HID" OR HID 8/3 "Identification HID" OR HID 8/4 "Other HID" IF
++  HID 1/2 "Device", otherwise Excluded.
++
++HID Role
++========
++**Table 9: Application Procedures**
++
++Prerequisite: HID 1/2 "Device"
++
+++----------------+----------+------------------------------------------------+
++| Parameter Name | Selected | Description                                    |
+++================+==========+================================================+
++| TSPC_HID_9_1   |          | Establish HID connection (O)                   |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_9_2   |          | Accept HID connection (M)                      |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_9_3   |          | Terminate HID connection (O)                   |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_9_4   |          | Accept Termination of HID connection (M)       |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_9_5   |          | Support for virtual cables (O)                 |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_9_6   |          | HID initiated reconnection (C.1)               |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_9_7   |          | Host initiated reconnection (C.1)              |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_9_8   |          | Host data transfer to HID (C.2)                |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_9_9   |          | HID data transfer to Host (C.2)                |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_9_10  |          | HID Boot mode data transfer to Host (C.3)      |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_9_11  |          | Host Boot mode data transfer to HID (C.4)      |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_9_12  |          | Output reports declared (C.4)                  |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_9_13  |          | Input reports declared (C.3)                   |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_9_14  |          | Feature reports declared (O)                   |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_9_15  |          | Support for sending HCI_CONTROL with           |
++|                |          | VIRTUAL_CABLE_UNPLUG (C.5)                     |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_9_16  |          | Support for receiving HCI_CONTROL with         |
++|                |          | VIRTUAL_CABLE_UNPLUG (C.5)                     |
 ++----------------+----------+------------------------------------------------+
 +
 +- M: Mandatory
 +- O: Optional
++- C.1: Mandatory to support at least one of HID 9/6 "HID initiated
++  reconnection" OR HID 9/7 "Host initiated reconnection" IF HID 9/5 "Support
++  for virtual cables", otherwise Excluded.
++- C.2: Mandatory to support at least one of HID 9/8 "Host data transfer to
++  HID" OR HID 9/9 "HID data transfer to Host" IF HID 1/2 "Device", otherwise
++  Excluded.
++- C.3: Mandatory IF HID 8/1 "Pointing HID" OR HID 8/2 "Keyboard HID",
++  otherwise Excluded.
++- C.4: Mandatory IF HID 8/2 "Keyboard HID", otherwise Excluded.
++- C.5: Optional IF HID 9/5 "Support for virtual cables", otherwise Excluded.
 +
-+Initiator Capabilities
-+======================
-+**Table 4: AVDTP Procedures (Initiator)**
++HID Role
++========
++**Table 10: Device to Host Transfers**
 +
-+Prerequisite: GAVDP 1/1 "Initiator"
-+
-++----------------+----------+------------------------------------------------+
-+| Parameter Name | Selected | Description                                    |
-++================+==========+================================================+
-+| TSPC_GAVDP_4_1 | x        | Stream discover command (M)                    |
-++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_4_2 | x        | Stream get capabilities command (M)            |
-++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_4_3 | x        | Set configuration command (M)                  |
-++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_4_4 | x        | Open stream command (M)                        |
-++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_4_5 | x        | Start stream command (M)                       |
-++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_4_6 | x        | Close stream command (M)                       |
-++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_4_7 | x        | Abort stream command (M)                       |
-++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_4_8 | x        | Stream get all capabilities command (M)        |
-++----------------+----------+------------------------------------------------+
-+
-+- M: Mandatory
-+
-+Acceptor Capabilities
-+=====================
-+**Table 3: GAVDP Procedures (Acceptor)**
-+
-+Prerequisite: GAVDP 1/2 "Acceptor"
++Prerequisite: HID 9/13 "Input reports declared" OR HID 9/14 "Feature reports
++declared"
 +
 ++----------------+----------+------------------------------------------------+
 +| Parameter Name | Selected | Description                                    |
 ++================+==========+================================================+
-+| TSPC_GAVDP_3_1 | x        | Connection Establishment (M)                   |
++| TSPC_HID_10_1  |          | Data reports larger than host MTU on Control   |
++|                |          | channel (O)                                    |
 ++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_3_2 | x        | Transfer Control - Suspend (O)                 |
++| TSPC_HID_10_2  |          | Data reports larger than host MTU on Interrupt |
++|                |          | channel (O)                                    |
 ++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_3_3 |          | Transfer Control - Change Parameters (O)       |
++| TSPC_HID_10_3  |          | Data reports to host (O)                       |
 ++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_3_4 | x        | Start Streaming (M)                            |
-++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_3_5 | x        | Connection Release (M)                         |
-++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_3_6 | x        | Signaling Control - Abort (M)                  |
-++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_3_7 |          | Security Control (O)                           |
-++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_3_8 |          | Delay Reporting (O)                            |
++| TSPC_HID_10_4  |          | Boot mode reports to host (C.1)                |
 ++----------------+----------+------------------------------------------------+
 +
-+- M: Mandatory
 +- O: Optional
++- C.1: Mandatory IF HID 8/1 "Pointing HID" OR HID 8/2 "Keyboard HID",
++  otherwise Optional IF HID 8/3 "Identification HID" OR HID 8/4 "Other HID",
++  otherwise Excluded.
 +
-+Acceptor Capabilities
-+=====================
-+**Table 5: AVDTP Procedures (Acceptor)**
++HID Role
++========
++**Table 11: Host to Device Transfers**
 +
-+Prerequisite: GAVDP 1/2 "Acceptor"
++Prerequisite: HID 9/12 "Output reports declared" OR HID 9/14 "Feature reports
++declared"
 +
 ++----------------+----------+------------------------------------------------+
 +| Parameter Name | Selected | Description                                    |
 ++================+==========+================================================+
-+| TSPC_GAVDP_5_1 | x        | Stream discover response (M)                   |
++| TSPC_HID_11_1  |          | Data reports larger than device MTU on Control |
++|                |          | channel (O)                                    |
 ++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_5_2 | x        | Stream get capabilities response (M)           |
++| TSPC_HID_11_2  |          | Data reports larger than device MTU on         |
++|                |          | Inetrrupt channel (O)                          |
 ++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_5_3 | x        | Set configuration response (M)                 |
++| TSPC_HID_11_3  |          | Data reports to device (O)                     |
 ++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_5_4 | x        | Open stream response (M)                       |
++| TSPC_HID_11_4  |          | Boot mode reports to device (C.1)              |
 ++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_5_5 | x        | Start stream response (M)                      |
++
++- O: Optional
++- C.1: Mandatory IF HID 8/2 "Keyboard HID", otherwise Optional IF HID 8/1
++  "Pointing HID" OR HID 8/3 "Identification HID" OR HID 8/4 "Other HID",
++  otherwise Excluded.
++
++HID Role
++========
++**Table 12: HID Control Commands**
++
++Prerequisite: HID 1/2 "Device"
++
 ++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_5_6 | x        | Close stream response (M)                      |
++| Parameter Name | Selected | Description                                    |
+++================+==========+================================================+
++| TSPC_HID_12_1  |          | Set_Protocol command (C.1, C.5)                |
 ++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_5_7 | x        | General reject message (M)                     |
++| TSPC_HID_12_2  |          | Get_Protocol command (C.1, C.5)                |
 ++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_5_8 | x        | Abort stream response (M)                      |
++| TSPC_HID_12_3  |          | Set_Idle command (C.2)                         |
 ++----------------+----------+------------------------------------------------+
-+| TSPC_GAVDP_5_9 | x        | Stream get all capabilities response (M)       |
++| TSPC_HID_12_4  |          | Get_Idle command (C.2)                         |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_12_5  |          | Set_Report command (C.3)                       |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_12_6  |          | Get_Report command (C.4)                       |
+++----------------+----------+------------------------------------------------+
++
++- C.1: Mandatory IF HID 8/1 "Pointing HID" OR HID 8/2 "Keyboard HID",
++  otherwise Optional IF HID 8/3 "Identification HID" OR HID 8/4 "Other HID",
++  otherwise Excluded.
++- C.2: Mandatory IF HID 8/2 "Keyboard HID", otherwise Optional IF HID 8/1
++  "Pointing HID" OR HID 8/3 "Identification HID" OR HID 8/4 "Other HID",
++  otherwise Excluded.
++- C.3: Mandatory IF HID 9/12 "Output reports declared" OR HID 9/14 "Feature
++  reports declared", otherwise Excluded.
++- C.4: Mandatory IF HID 9/13 "Input reports declared" OR HID 9/14 "Feature
++  reports declared", otherwise Excluded.
++- C.5: Mandatory to support none or all of HID 12/1 "Set_Protocol command" OR
++  HID 12/2 "Get_Protocol command".
++
++HID Role
++========
++**Table 13: LMP Requirements**
++
++Prerequisite: HID 1/2 "Device"
++
+++----------------+----------+------------------------------------------------+
++| Parameter Name | Selected | Description                                    |
+++================+==========+================================================+
++| TSPC_HID_13_8  |          | Role switch (C.3)                              |
+++----------------+----------+------------------------------------------------+
++
++- C.3: Mandatory IF HID 9/6 "HID initiated reconnection", otherwise not
++  defined.
++
++HID Role
++========
++**Table 15: SDP Requirements**
++
++Prerequisite: HID 1/2 "Device"
++
+++----------------+----------+------------------------------------------------+
++| Parameter Name | Selected | Description                                    |
+++================+==========+================================================+
++| TSPC_HID_15_1  |          | Server (M)                                     |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_15_2  |          | LanguageBaseAttributeIdList (M)                |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_15_3  |          | ServiceClassIDList (M)                         |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_15_4  |          | ProtocolDescriptorList (M)                     |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_15_5  |          | BluetoothProfileDescriptorList (M)             |
+++----------------+----------+------------------------------------------------+
++| TSPC_HID_15_6  |          | AdditionalProtocolDescriptorList (M)           |
 ++----------------+----------+------------------------------------------------+
 +
 +- M: Mandatory
-diff --git a/doc/qualification/gavdp-pts.rst b/doc/qualification/gavdp-pts.rst
+diff --git a/doc/qualification/hid-pts.rst b/doc/qualification/hid-pts.rst
 new file mode 100644
-index 000000000..7b0b7e93b
+index 000000000..bc795c69d
 --- /dev/null
-+++ b/doc/qualification/gavdp-pts.rst
-@@ -0,0 +1,33 @@
++++ b/doc/qualification/hid-pts.rst
+@@ -0,0 +1,61 @@
 +.. SPDX-License-Identifier: GPL-2.0-or-later
 +.. Copyright © 2025-2026 Collabora Ltd.
 +
-+==================
-+GAVDP test results
-+==================
++================
++HID test results
++================
 +
 +:PTS version: 8.5.2 Build 5
 +
@@ -309,15 +524,43 @@ index 000000000..7b0b7e93b
 ++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
 +| Test name                    | Result   | Kernel  | BlueZ |                                                                         |
 ++==============================+==========+=========+=======+=========================================================================+
-+| GAVDP/ACP/APP/CON/BV-01-C    | PASS     |     6.1 | 5.69  | It may need to pair the device from IUT during the test                 |
-++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| GAVDP/ACP/APP/TRC/BV-02-C    | PASS     |     6.1 | 5.69  | It may need to pair the device from IUT during the test                 |
-++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| GAVDP/INT/APP/CON/BV-01-C    | PASS     |     6.1 | 5.69  |                                                                         |
-++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| GAVDP/INT/APP/TRC/BV-02-C    | PASS     |     6.1 | 5.69  | Wait for device to disconnect then connect from IUT                     |
++| HID/HOS/CON/BV-01-I          | PASS     |     6.1 | 5.69  | On 1st request run:                                                     |
 +|                              |          |         |       |                                                                         |
-+|                              |          |         |       | Wait on "Suspend the streaming channel"                                 |
++|                              |          |         |       | - sudo btmgmt find                                                      |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | PTS device should be found                                              |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | On 2nd  and 3rd request run:                                            |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - sudo btmgmt find -L                                                   |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | PTS device should be found                                              |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| HID/HOS/DAT/BV-01-C          | PASS     |     6.1 | 5.69  |                                                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| HID/HOS/HCE/BV-01-I          | PASS     |     6.1 | 5.69  |                                                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| HID/HOS/HCE/BV-03-I          | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - this test requests a RF shielded box                                  |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| HID/HOS/HCE/BV-04-I          | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - this test requests a RF shielded box                                  |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| HID/HOS/HCR/BV-01-I          | PASS     |     6.1 | 5.69  |                                                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| HID/HOS/HCR/BV-02-I          | PASS     |     6.1 | 5.69  |                                                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| HID/HOS/HDT/BV-01-I          | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - Remove PTS device from Bluetooth devices                              |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| HID/HOS/HDT/BV-02-I          | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - Remove PTS device from Bluetooth devices                              |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| IOPT/CL/HID-HOS/SFC/BV-15-I  | PASS     |     6.1 | 5.69  |                                                                         |
 ++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
 -- 
 2.43.0
