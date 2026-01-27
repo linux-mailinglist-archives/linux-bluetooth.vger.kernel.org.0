@@ -1,61 +1,61 @@
-Return-Path: <linux-bluetooth+bounces-18505-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18508-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id ABxBJVr4eGnYuAEAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18505-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Jan 2026 18:39:38 +0100
+	id GD40NGT4eGkxuQEAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18508-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Jan 2026 18:39:48 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B045988E1
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Jan 2026 18:39:38 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4956698908
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Jan 2026 18:39:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 8BADF303EB89
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Jan 2026 17:38:59 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 33EEC30327FF
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Jan 2026 17:39:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9193E320A34;
-	Tue, 27 Jan 2026 17:38:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E6A2C324B2D;
+	Tue, 27 Jan 2026 17:38:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="MDiGP6UH"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="V/QmI6j/"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6B9310774
-	for <linux-bluetooth@vger.kernel.org>; Tue, 27 Jan 2026 17:38:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56516322B7B
+	for <linux-bluetooth@vger.kernel.org>; Tue, 27 Jan 2026 17:38:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769535535; cv=none; b=K9zA6pNsGLnPyu0Uhw4YGYdNQ3SpelaWY8Qks8E4lPeqOXF8RL3fPqJk2etv1swQipitE5qe0n3HS7xw5DAgIyXmYpwGjz3gmVbKX6E+ZvAh7qSq+1OVL1aGEiiBflofpCo4qaJcD/H599Kj3Lr7kFJEDW2p+xRBS5vdOYY7qY0=
+	t=1769535537; cv=none; b=jS8W2eD8fBmqKyEL7I2eFUUk0pqPA24ZNuTq/6XL/wEahoqn48L9wlTTxu4Fz2kn4BT6QJVwyymj4dyl5G55IqrEiaoTIFrehxwW4Hyt/VU5z6zA/2HHvx9dwZHgtHnR6MqOpUYf5UP7HS+hwJL47vMKSp6LNYWUhX54SI+2o8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769535535; c=relaxed/simple;
-	bh=vRiqzp9Sl4ErRLjfcFjGruGsCchFE1iwgCEshue9DEA=;
+	s=arc-20240116; t=1769535537; c=relaxed/simple;
+	bh=kV5udwBkQJVnEbCepc18MKAWUlx7TLNLsj+u6M4dvKU=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=A7csRfrf8HppXH7hl6XWZ6kkr26MRmotivE0duQGblc48FvfGozUx5FUgCSe4frH5iz7qCkMCVs8Z1PPCZPe1IJfRh4dBhKgPTC4P7X9NkNH0wAeL1wCsBKSllvIGpvK+GfQhAE2/d7ApaTfmESG2YcqBCW+s0raZjWY8QnI+Lc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=MDiGP6UH; arc=none smtp.client-ip=148.251.105.195
+	 MIME-Version:Content-Type; b=PINvkPqAF8ptdlZsncVxLvgO6Zqo0VW6USGMn950b82wYnJ+km6HwUUvu1xdlW6fCMweWXLBtJBb1A2yoXjwRgpQmWKobvViy1GVUjEOsU2MblcrRnMjfVF12SAbO2YPaelJFBKVfAqkAzWb/0ccgeE6ZEgZTW7tjzRlJit6BzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=V/QmI6j/; arc=none smtp.client-ip=148.251.105.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1769535529;
-	bh=vRiqzp9Sl4ErRLjfcFjGruGsCchFE1iwgCEshue9DEA=;
+	s=mail; t=1769535530;
+	bh=kV5udwBkQJVnEbCepc18MKAWUlx7TLNLsj+u6M4dvKU=;
 	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=MDiGP6UH6dHwz/lGiOs2iMs6N4MBqJ9qhoQJ+QtIPFdKqhrWlkULs3Bu4iMxcxT9D
-	 f9sSprunM41GSp4Ks22irw534EXQTcdbJrukvigI/FprU7crwpIl9mMlUKTPOdunfM
-	 zbrFOiQaq09qaBEUx8xxrv71amL3svuT+GUeZO/3NGxaz44K9gD6jfK7VKhUCy0FTd
-	 BNoE4sAsUWiG4HW0eufQ/oUzuCZgYIUoqr0Ij4KyDuRwusAiFkckpzhXD7VRx0go1F
-	 IGOad41qiG2OcR98OTc6hpPdipV/gC8zKXxwa34K82UZlSXLPpYaRzWzvNrS1MPJxq
-	 Ja8yWOl/nuo2A==
+	b=V/QmI6j/BycEOx3V/45mgqy3oHeY3gwmf75Yf3tp1q8kmxQeR3rhArlkImA837hIQ
+	 GfQjbf5HLQUqCkCQkQ3qlx0PiZa4P3HGaoQDhJrJU9qkQFF5AIPsls5nApof1lPS25
+	 v7a+np1K89E5QTAtvmUYXf2ZfBQe6H8XqWGGQpnN6Umso7XwF55L0TCzNIxTptBwBr
+	 bukNRlWwxCvKVWaVM5HLc1tlnIV7c7xaOQE+1Rl2v6W3O/cl1QH5QR7jvin295G0SB
+	 6+DDqgE0+evKd8834LE5fCaaZXsTZoSB8mLKKFVuncenm1exBmfS7d9ODJW49FIWBl
+	 OpkQ5AxxVGxMg==
 Received: from fdanis-ThinkPad-X1.. (2a02-8428-af44-1001-871c-6E70-D798-Dfc2.rev.sfr.net [IPv6:2a02:8428:af44:1001:871c:6e70:d798:dfc2])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: fdanis)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 96D3117E151C
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id E13A117E1523
 	for <linux-bluetooth@vger.kernel.org>; Tue, 27 Jan 2026 18:38:49 +0100 (CET)
 From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v2 07/13] doc/qualification: Add PICS and howto for the RFComm qualification
-Date: Tue, 27 Jan 2026 18:38:35 +0100
-Message-ID: <20260127173841.153747-7-frederic.danis@collabora.com>
+Subject: [PATCH BlueZ v2 08/13] doc/qualification: Add PICS and howto for the ScPP qualification
+Date: Tue, 27 Jan 2026 18:38:36 +0100
+Message-ID: <20260127173841.153747-8-frederic.danis@collabora.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260127173841.153747-1-frederic.danis@collabora.com>
 References: <20260127173841.153747-1-frederic.danis@collabora.com>
@@ -73,7 +73,7 @@ X-Spamd-Result: default: False [-0.60 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
 	R_MIXED_CHARSET(0.56)[subject];
 	DMARC_POLICY_ALLOW(-0.50)[collabora.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[collabora.com:s=mail];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -82,153 +82,212 @@ X-Spamd-Result: default: False [-0.60 / 15.00];
 	RCPT_COUNT_ONE(0.00)[1];
 	DKIM_TRACE(0.00)[collabora.com:+];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-18505-lists,linux-bluetooth=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-18508-lists,linux-bluetooth=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	TO_DN_NONE(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[frederic.danis@collabora.com,linux-bluetooth@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	PRECEDENCE_BULK(0.00)[];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[]
-X-Rspamd-Queue-Id: 4B045988E1
+X-Rspamd-Queue-Id: 4956698908
 X-Rspamd-Action: no action
 
 ---
- doc/qualification/rfcomm-pics.rst | 106 ++++++++++++++++++++++++++++++
- doc/qualification/rfcomm-pts.rst  |  58 ++++++++++++++++
- 2 files changed, 164 insertions(+)
- create mode 100644 doc/qualification/rfcomm-pics.rst
- create mode 100644 doc/qualification/rfcomm-pts.rst
+ doc/qualification/scpp-pics.rst | 166 ++++++++++++++++++++++++++++++++
+ doc/qualification/scpp-pts.rst  |  31 ++++++
+ 2 files changed, 197 insertions(+)
+ create mode 100644 doc/qualification/scpp-pics.rst
+ create mode 100644 doc/qualification/scpp-pts.rst
 
-diff --git a/doc/qualification/rfcomm-pics.rst b/doc/qualification/rfcomm-pics.rst
+diff --git a/doc/qualification/scpp-pics.rst b/doc/qualification/scpp-pics.rst
 new file mode 100644
-index 000000000..5ab1b07be
+index 000000000..d1024427b
 --- /dev/null
-+++ b/doc/qualification/rfcomm-pics.rst
-@@ -0,0 +1,106 @@
++++ b/doc/qualification/scpp-pics.rst
+@@ -0,0 +1,166 @@
 +.. SPDX-License-Identifier: GPL-2.0-or-later
 +.. Copyright © 2025-2026 Collabora Ltd.
 +
-+===============
-+RFComm Protocol
-+===============
-+(TCRL pkg101, RFCOMM.ICS.p8)
++=======================
++Scan Parameters Profile
++=======================
++(TCRL 2023-1, SCPP.ICS.p2)
 +
 +
 +Versions
 +========
-+**Table 0: X.Y Versions**
++**Table 0: Major Versions (X.Y)**
 +
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_RFCOMM_0_1  |          | RFCOMM v1.1 with TS 07.10 (C.1)              |
-++------------------+----------+----------------------------------------------+
-+| TSPC_RFCOMM_0_2  | x        | RFCOMM v1.2 with TS 07.10 (C.1)              |
-++------------------+----------+----------------------------------------------+
+++------------------+----------+------------------------------------------------------+
++| Parameter Name   | Selected | Description                                          |
+++==================+==========+======================================================+
++| TSC_SCPP_0_1     | x        | SCPP v1.0 (M)                                        |
+++------------------+----------+------------------------------------------------------+
 +
-+- C.1: Mandatory to support one and only one.
++- M: Mandatory
 +
-+Core Configuration
-+==================
-+**Table 0a: Core Configuration Requirements**
++Roles
++=====
++**Table 1: Role Requirements**
 +
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_RFCOMM_0a_1 | x        | Protocol supported over BR/EDR (C.1, C.3)    |
-++------------------+----------+----------------------------------------------+
-+| TSPC_RFCOMM_0a_2 |          | 2 Protocol supported over LE (C.2)           |
-++------------------+----------+----------------------------------------------+
+++------------------+----------+------------------------------------------------------+
++| Parameter Name   | Selected | Description                                          |
+++==================+==========+======================================================+
++| TSC_SCPP_1_1     |          | Scan Server (C.1)                                    |
+++------------------+----------+------------------------------------------------------+
++| TSC_SCPP_1_2     | x        | Scan Client (C.1)                                    |
+++------------------+----------+------------------------------------------------------+
 +
-+- C.1: Excluded for this Protocol IF CORE 41/2 “LE Core Configuration”.
-+- C.2: Excluded for this Protocol.
-+- C.3: Mandatory for this Protocol.
++- C.1: Mandatory to support at least one of SCPP 1/1 "Scan Server" OR SCPP 1/2 "Scan Client".
 +
-+2.3 Supported procedures
-+========================
-+**Table 1: Supported Procedures**
++Transports
++==========
++**Table 2: Transport Requirements**
 +
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_RFCOMM_1_1  | x        | Initialize RFCOMM Session (C.5)              |
-++------------------+----------+----------------------------------------------+
-+| TSPC_RFCOMM_1_2  | x        | Respond to Initialization of an RFCOMM       |
-+|                  |          | Session (C.5)                                |
-++------------------+----------+----------------------------------------------+
-+| TSPC_RFCOMM_1_3  | x        | Shutdown RFCOMM Session (M)                  |
-++------------------+----------+----------------------------------------------+
-+| TSPC_RFCOMM_1_4  | x        | Respond to a Shutdown of an RFCOMM Session   |
-+|                  |          | (M)                                          |
-++------------------+----------+----------------------------------------------+
-+| TSPC_RFCOMM_1_5  | x        | Establish DLC (C.2)                          |
-++------------------+----------+----------------------------------------------+
-+| TSPC_RFCOMM_1_6  | x        | Respond to Establishment of a DLC (C.1)      |
-++------------------+----------+----------------------------------------------+
-+| TSPC_RFCOMM_1_7  | x        | Disconnect DLC (M)                           |
-++------------------+----------+----------------------------------------------+
-+| TSPC_RFCOMM_1_8  | x        | Respond to Disconnection of a DLC (M)        |
-++------------------+----------+----------------------------------------------+
-+| TSPC_RFCOMM_1_9  | x        | Respond to and send MSC Command (M)          |
-++------------------+----------+----------------------------------------------+
-+| TSPC_RFCOMM_1_10 | x        | Initiate Transfer Information (M)            |
-++------------------+----------+----------------------------------------------+
-+| TSPC_RFCOMM_1_11 | x        | Respond to Test Command (M)                  |
-++------------------+----------+----------------------------------------------+
-+| TSPC_RFCOMM_1_12 | x        | Send Test Command (O)                        |
-++------------------+----------+----------------------------------------------+
-+| TSPC_RFCOMM_1_13 | x        | React to Aggregate Flow Control (M)          |
-++------------------+----------+----------------------------------------------+
-+| TSPC_RFCOMM_1_14 | x        | Respond to RLS Command (M)                   |
-++------------------+----------+----------------------------------------------+
-+| TSPC_RFCOMM_1_15 |          | Send RLS Command (O)                         |
-++------------------+----------+----------------------------------------------+
-+| TSPC_RFCOMM_1_16 | x        | Respond to PN Command (M)                    |
-++------------------+----------+----------------------------------------------+
-+| TSPC_RFCOMM_1_17 | x        | Send PN Command (C.3)                        |
-++------------------+----------+----------------------------------------------+
-+| TSPC_RFCOMM_1_18 | x        | Send Non-Supported Command (NSC) response    |
-+|                  |          | (C.4)                                        |
-++------------------+----------+----------------------------------------------+
-+| TSPC_RFCOMM_1_19 | x        | Respond to RPN Command (M)                   |
-++------------------+----------+----------------------------------------------+
-+| TSPC_RFCOMM_1_20 | x        | Send RPN Command (O)                         |
-++------------------+----------+----------------------------------------------+
-+| TSPC_RFCOMM_1_21 | x        | Closing Multiplexer by First Sending a DISC  |
-+|                  |          | Command (O)                                  |
-++------------------+----------+----------------------------------------------+
-+| TSPC_RFCOMM_1_22 | x        | Support of Credit Based Flow Control (M)     |
-++------------------+----------+----------------------------------------------+
+++------------------+----------+------------------------------------------------------+
++| Parameter Name   | Selected | Description                                          |
+++==================+==========+======================================================+
++| TSC_SCPP_2_1     |          | Profile supported over BR/EDR (C.1)                  |
+++------------------+----------+------------------------------------------------------+
++| TSC_SCPP_2_2     | x        | Profile supported over LE (M)                        |
+++------------------+----------+------------------------------------------------------+
++
++- M: Mandatory
++- C.1: Excluded for this Profile.
++
++Scan Server Role
++================
++**Table 3: Services - Scan Server Role**
++
++Prerequisite: SCPP 1/1 "Scan Server"
++
+++------------------+----------+------------------------------------------------------+
++| Parameter Name   | Selected | Description                                          |
+++==================+==========+======================================================+
++| TSC_SCPP_3_1     |          | Scan Parameters Service (M)                          |
+++------------------+----------+------------------------------------------------------+
++
++- M: Mandatory
++
++Scan Server Role
++================
++**Table 4: GAP Requirements - Scan Server Role**
++
++Prerequisite: SCPP 1/1 "Scan Server"
++
+++------------------+----------+------------------------------------------------------+
++| Parameter Name   | Selected | Description                                          |
+++==================+==========+======================================================+
++| TSC_SCPP_4_1     |          | Peripheral (M)                                       |
+++------------------+----------+------------------------------------------------------+
++
++- M: Mandatory
++
++Scan Client Role
++================
++**Table 7: Discover Services and Characteristics - Scan Client Role**
++
++Prerequisite: SCPP 1/2 "Scan Client"
++
+++------------------+----------+------------------------------------------------------+
++| Parameter Name   | Selected | Description                                          |
+++==================+==========+======================================================+
++| TSC_SCPP_7_1     | x        | Discover Scan Parameters Service (M)                 |
+++------------------+----------+------------------------------------------------------+
++| TSC_SCPP_7_2     | x        | Discover Scan Parameters characteristic: Scan        |
++|                  |          | interval Window (M)                                  |
+++------------------+----------+------------------------------------------------------+
++| TSC_SCPP_7_3     | x        | Discover Scan Parameters characteristic: Scan        |
++|                  |          | Refresh (M)                                          |
+++------------------+----------+------------------------------------------------------+
++| TSC_SCPP_7_4     | x        | Discover Scan Parameters characteristic: Scan        |
++|                  |          | Refresh - Client Characteristic Configuration        |
++|                  |          | Descriptor (M)                                       |
+++------------------+----------+------------------------------------------------------+
++
++- M: Mandatory
++
++Scan Client Role
++================
++**Table 8: Features - Scan Client Role**
++
++Prerequisite: SCPP 1/2 "Scan Client"
++
+++------------------+----------+------------------------------------------------------+
++| Parameter Name   | Selected | Description                                          |
+++==================+==========+======================================================+
++| TSC_SCPP_8_1     | x        | Write Scan Interval Window characteristic (M)        |
+++------------------+----------+------------------------------------------------------+
++| TSC_SCPP_8_2     |          | Configure Scan Refresh characteristic: Client        |
++|                  |          | Characteristic Configuration characteristic          |
++|                  |          | descriptor with (O)                                  |
+++------------------+----------+------------------------------------------------------+
++| TSC_SCPP_8_3     | x        | Notify Scan Refresh characteristic (M)               |
+++------------------+----------+------------------------------------------------------+
 +
 +- M: Mandatory
 +- O: Optional
-+- C.1: Mandatory IF RFCOMM 1/2 “Respond to Initialization of an RFCOMM
-+  Session”, otherwise Excluded.
-+- C.2: Mandatory IF RFCOMM 1/1 “Initialize RFCOMM Session”, otherwise
-+  Excluded.
-+- C.3: Mandatory IF RFCOMM 1/1 “Initialize RFCOMM Session”, otherwise
-+  Optional.
-+- C.4: Mandatory IF RFCOMM 0/2 “RFCOMM v1.2 with TS 07.10”, otherwise
-+  Optional.
-+- C.5: Mandatory to support at least one.
-\ No newline at end of file
-diff --git a/doc/qualification/rfcomm-pts.rst b/doc/qualification/rfcomm-pts.rst
++
++Scan Client Role
++================
++**Table 9: GATT Requirements - Scan Client Role**
++
++Prerequisite: SCPP 1/2 "Scan Client"
++
+++------------------+----------+------------------------------------------------------+
++| Parameter Name   | Selected | Description                                          |
+++==================+==========+======================================================+
++| TSC_SCPP_9_1     | x        | GATT Client over LE (M)                              |
+++------------------+----------+------------------------------------------------------+
++| TSC_SCPP_9_3     | x        | Discover All Primary Services (C.1)                  |
+++------------------+----------+------------------------------------------------------+
++| TSC_SCPP_9_4     | x        | Discover Primary Services by Service UUID (C.1)      |
+++------------------+----------+------------------------------------------------------+
++| TSC_SCPP_9_5     | x        | Discover All Characteristics of a Service (C.2)      |
+++------------------+----------+------------------------------------------------------+
++| TSC_SCPP_9_6     | x        | Discover Characteristics by UUID (C.2)               |
+++------------------+----------+------------------------------------------------------+
++| TSC_SCPP_9_7     | x        | Discover All Characteristic Descriptors (M)          |
+++------------------+----------+------------------------------------------------------+
++| TSC_SCPP_9_8     | x        | Write without Response (M)                           |
+++------------------+----------+------------------------------------------------------+
++| TSC_SCPP_9_10    | x        | Notifications (M)                                    |
+++------------------+----------+------------------------------------------------------+
++
++- M: Mandatory
++- C.1: Mandatory to support at least one of SCPP 9/3 "Discover All Primary Services" OR SCPP 9/4 "Discover Primary Services by Service UUID".
++- C.2: Mandatory to support at least one of SCPP 9/5 "Discover All Characteristics of a Service" OR SCPP 9/6 "Discover Characteristics by UUID".
++
++Scan Client Role
++================
++**Table 10: GAP Requirements - Scan Client Role**
++
++Prerequisite: SCPP 1/2 "Scan Client"
++
+++------------------+----------+------------------------------------------------------+
++| Parameter Name   | Selected | Description                                          |
+++==================+==========+======================================================+
++| TSC_SCPP_10_1    | x        | Central (M)                                          |
+++------------------+----------+------------------------------------------------------+
++
++- M: Mandatory
+diff --git a/doc/qualification/scpp-pts.rst b/doc/qualification/scpp-pts.rst
 new file mode 100644
-index 000000000..860ef6508
+index 000000000..d61c60ff0
 --- /dev/null
-+++ b/doc/qualification/rfcomm-pts.rst
-@@ -0,0 +1,58 @@
++++ b/doc/qualification/scpp-pts.rst
+@@ -0,0 +1,31 @@
 +.. SPDX-License-Identifier: GPL-2.0-or-later
 +.. Copyright © 2025-2026 Collabora Ltd.
 +
-+===================
-+RFComm test results
-+===================
++=================
++ScPP test results
++=================
 +
 +:PTS version: 8.5.2 Build 5
 +
@@ -236,7 +295,6 @@ index 000000000..860ef6508
 +=====
 +
 +- Remove PTS device from Bluetooth devices
-+- Update "TSPX_server_channel_iut" in IXIT to "10"
 +
 +Tests
 +=====
@@ -247,39 +305,13 @@ index 000000000..860ef6508
 ++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
 +| Test name                    | Result   | Kernel  | BlueZ |                                                                         |
 ++==============================+==========+=========+=======+=========================================================================+
-+| RFCOMM/DEVA/RFC/BV-01-C      | PASS     |     6.1 | 5.69  | Run 'rctest -n -U spp <BD_ADDR>' upon request                           |
++| SCPP/CL/CGGIT/SER/BV-01-C    | PASS     |     6.1 | 5.69  |                                                                         |
 ++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| RFCOMM/DEVA/RFC/BV-05-C      | PASS     |     6.1 | 5.69  | Run 'rctest -n -U spp <BD_ADDR>' upon request                           |
++| SCPP/CL/CGGIT/CHA/BV-01-C    | PASS     |     6.1 | 5.69  | Cancel 'Please take action to discover the Scan Interval Window …'      |
 ++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| RFCOMM/DEVB/RFC/BV-02-C      | PASS     |     6.1 | 5.69  |                                                                         |
++| SCPP/CL/CGGIT/CHA/BV-02-C    | PASS     |     6.1 | 5.69  | Cancel 'Please take action to discover the Scan Refresh caracteristic…' |
 ++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| RFCOMM/DEVB/RFC/BV-06-C      | PASS     |     6.1 | 5.69  | Run 'rctest -r -U spp -P 16' before starting the test                   |
-++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| RFCOMM/DEVA-DEVB/RFC/BV-03-C | PASS     |     6.1 | 5.69  |                                                                         |
-++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| RFCOMM/DEVA-DEVB/RFC/BV-04-C | PASS     |     6.1 | 5.69  | Run 'rctest -r -U spp -P 16' before starting the test                   |
-+|                              |          |         |       |                                                                         |
-+|                              |          |         |       | Kill rctest upon request                                                |
-++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| RFCOMM/DEVA-DEVB/RFC/BV-07-C | PASS     |     6.1 | 5.69  | Run 'rctest -r -U spp -P 16' before starting the test                   |
-+|                              |          |         |       |                                                                         |
-+|                              |          |         |       | Kill rctest upon request                                                |
-++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| RFCOMM/DEVA-DEVB/RFC/BV-08-C | PASS     |     6.1 | 5.69  | Run 'rctest -r -U spp -P 16' before starting the test                   |
-++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| RFCOMM/DEVA-DEVB/RFC/BV-11-C | PASS     |     6.1 | 5.69  |                                                                         |
-++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| RFCOMM/DEVA-DEVB/RFC/BV-13-C | PASS     |     6.1 | 5.69  | Run 'rctest -r -U spp -P 16' before starting the test                   |
-++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| RFCOMM/DEVA-DEVB/RFC/BV-15-C | PASS     |     6.1 | 5.69  | Run 'rctest -r -U spp -P 16' before starting the test                   |
-++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| RFCOMM/DEVA-DEVB/RFC/BV-17-C | PASS     |     6.1 | 5.69  |                                                                         |
-++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| RFCOMM/DEVA-DEVB/RFC/BV-19-C | PASS     |     6.1 | 5.69  |                                                                         |
-++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| RFCOMM/DEVA-DEVB/RFC/BV-21-C | PASS     |     6.1 | 5.69  | Run 'rctest -w -U spp -P 16' before starting the test                   |
-++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| RFCOMM/DEVA-DEVB/RFC/BV-22-C | PASS     |     6.1 | 5.69  | Run 'rctest -w -U spp -P 16' before starting the test                   |
++| SCPP/CL/SNPF/BV-01-I         | PASS     |     6.1 | 5.69  |                                                                         |
 ++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
 -- 
 2.43.0
