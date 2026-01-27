@@ -1,61 +1,61 @@
-Return-Path: <linux-bluetooth+bounces-18504-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18507-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QJfHGlj4eGnYuAEAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18504-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Jan 2026 18:39:36 +0100
+	id EM+KDlf4eGnYuAEAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18507-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Jan 2026 18:39:35 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E73EC988D3
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Jan 2026 18:39:35 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id BDC7B988CB
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Jan 2026 18:39:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id A38EE302FE84
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Jan 2026 17:38:58 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id DAD8E300846A
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Jan 2026 17:39:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C64930CDAF;
-	Tue, 27 Jan 2026 17:38:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B73D30E82B;
+	Tue, 27 Jan 2026 17:38:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="jZlJTV+X"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="ljm77rJs"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F9343164C8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 588CE2DCF6B
 	for <linux-bluetooth@vger.kernel.org>; Tue, 27 Jan 2026 17:38:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769535534; cv=none; b=XDP+3B3fH8yVwIznaPs2qaWbqGMSYvLqMxJfq9xGAt4M37l4HQlvWHdzXRR9u8d7g+pXMODerUAm77z3e5gpdB+lFBjcVe/TdOmCDwU18mkIys3n0KMTCcn/zciNmtJOap7DAeCyjpPNuspyXH/HjgKcKdQY8rHd9YevWuQpxLQ=
+	t=1769535535; cv=none; b=XfMfR+JqfLfk9GYDlXSRVY3KsLMpYoHiYf0OE4eltVRmhdqXBKau8nuCz34nawW0ZCw/g8u506OR56SGCWqB6RwlGLKbKjlcP6yXyMzdIQo34qpZCaMVbo48ODm6VQ0LpFFNjd8j0a5S/mAL7Lp7lo9O551JXwMYO/Qt+/jIGxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769535534; c=relaxed/simple;
-	bh=Pbzfm2Z5CxSrlcOfZEh264XZYuVHMiincGrFxFdnIgc=;
+	s=arc-20240116; t=1769535535; c=relaxed/simple;
+	bh=oReNH/RioPFbYpgJsgfHPrx3HH9XizXWOYt5q+An2E4=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UG0G7QpBca+sDFGs7vp4A5hDz3Wfv+cZAQU3epWMX02oSEE4RZRToYJWNg0E1jKAeXMgze57NQ+tAghuT/chjTjDxUsHPygfXMOHc/rg/TMkOYJWfXDnn9bUJDnJXYI8oA/MAvx/SPE1Nj90OS2lXR0Nb/Q385tNchvF+MAiVvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=jZlJTV+X; arc=none smtp.client-ip=148.251.105.195
+	 MIME-Version:Content-Type; b=SpJv8ZYIVTMEgAHleY4KMCDlqxVc1Oo8HcDDDJVkYFoYn7jZUt2n9AYblNJjcP+gavNdJ44H2/C+lx0BdjgC6hrNBvsr1Pi6FvbF89yfDknx0x7M4bXAMB81uUMulBqJpMc1TTUpeJiIAoeGgfCMZsoOjAll8YDj3bia6ujx74o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=ljm77rJs; arc=none smtp.client-ip=148.251.105.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
 	s=mail; t=1769535528;
-	bh=Pbzfm2Z5CxSrlcOfZEh264XZYuVHMiincGrFxFdnIgc=;
+	bh=oReNH/RioPFbYpgJsgfHPrx3HH9XizXWOYt5q+An2E4=;
 	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=jZlJTV+XxMCPxqpxiw7ROtdAXNqE5zYjGHOYtN+ubbh8JimaC6ofW1dt8opHzjGAr
-	 X0xxZnsbKwRwubcOU7pvG7xfr4cVbREagiBj0DWG0avBvm6a74NeNY2Px5AMz3iAg7
-	 S1UZARaUW1wCKA/qtvgRWXn7VLyO118m/gR2pGF/CMikZhznC6/ItjKgxR7mP2tGFL
-	 D6AJqRCPBkBhNgjidsz5af1rJwFSaqbsXfFegGUxg/deUAYOnT5TnHLDoyhl3FnhaQ
-	 /GSZqamsOvvw3t9IBL+F5ZDZ853SN5arSrS5nUyZWEwO+TpMHUfnTRkKmrqFblLOXD
-	 yOy5YC+HAsN8g==
+	b=ljm77rJsx9zabZj3763abClHaCtsItpUX3RqVTB24dLK2mal22kYvcQiVoiOWlOM4
+	 j7jfuuNqebfJJAkpHFznINGn7Z3ueruxsrL0PwQYZtSvf19QTaRqJS4e4SJn3pyT3L
+	 9/YNfxhAxKO2sUZ0XqJcoeWnFybP+jIwtykxctgX9dGLcHT5+N2dvcNfD/ivJt3NHl
+	 lYscPeZe9GOXQZJBvnfsKEpMNaOlu48OdnFWklDUgeoq/s2eGka9fk1gP7G0M5F3GF
+	 sjzVo4bESQJKLKGCqbPuuSkbbcFeTX/IkAU0UOWVASi1THT/d0pvTHJ5JkBGjhJUuM
+	 mM9hTT8HgzRUQ==
 Received: from fdanis-ThinkPad-X1.. (2a02-8428-af44-1001-871c-6E70-D798-Dfc2.rev.sfr.net [IPv6:2a02:8428:af44:1001:871c:6e70:d798:dfc2])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: fdanis)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 5815617E13A3
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id AD4B317E1418
 	for <linux-bluetooth@vger.kernel.org>; Tue, 27 Jan 2026 18:38:48 +0100 (CET)
 From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v2 03/13] doc/qualification: Add PICS and howto for the AVDTP qualification
-Date: Tue, 27 Jan 2026 18:38:31 +0100
-Message-ID: <20260127173841.153747-3-frederic.danis@collabora.com>
+Subject: [PATCH BlueZ v2 04/13] doc/qualification: Add PICS and howto for the AVRCP qualification
+Date: Tue, 27 Jan 2026 18:38:32 +0100
+Message-ID: <20260127173841.153747-4-frederic.danis@collabora.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260127173841.153747-1-frederic.danis@collabora.com>
 References: <20260127173841.153747-1-frederic.danis@collabora.com>
@@ -73,7 +73,7 @@ X-Spamd-Result: default: False [-0.60 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
 	R_MIXED_CHARSET(0.56)[subject];
 	DMARC_POLICY_ALLOW(-0.50)[collabora.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	R_DKIM_ALLOW(-0.20)[collabora.com:s=mail];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -82,683 +82,1198 @@ X-Spamd-Result: default: False [-0.60 / 15.00];
 	RCPT_COUNT_ONE(0.00)[1];
 	DKIM_TRACE(0.00)[collabora.com:+];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-18504-lists,linux-bluetooth=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-18507-lists,linux-bluetooth=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	TO_DN_NONE(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[frederic.danis@collabora.com,linux-bluetooth@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	PRECEDENCE_BULK(0.00)[];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[]
-X-Rspamd-Queue-Id: E73EC988D3
+X-Rspamd-Queue-Id: BDC7B988CB
 X-Rspamd-Action: no action
 
 ---
- doc/qualification/avdtp-pics.rst | 638 +++++++++++++++++++++++++++++++
- doc/qualification/avdtp-pts.rst  | 405 ++++++++++++++++++++
- 2 files changed, 1043 insertions(+)
- create mode 100644 doc/qualification/avdtp-pics.rst
- create mode 100644 doc/qualification/avdtp-pts.rst
+ doc/qualification/avrcp-pics.rst | 1153 ++++++++++++++++++++++++++++++
+ doc/qualification/avrcp-pts.rst  |  223 ++++++
+ 2 files changed, 1376 insertions(+)
+ create mode 100644 doc/qualification/avrcp-pics.rst
+ create mode 100644 doc/qualification/avrcp-pts.rst
 
-diff --git a/doc/qualification/avdtp-pics.rst b/doc/qualification/avdtp-pics.rst
+diff --git a/doc/qualification/avrcp-pics.rst b/doc/qualification/avrcp-pics.rst
 new file mode 100644
-index 000000000..d31872cc1
+index 000000000..ee7acd6f2
 --- /dev/null
-+++ b/doc/qualification/avdtp-pics.rst
-@@ -0,0 +1,638 @@
++++ b/doc/qualification/avrcp-pics.rst
+@@ -0,0 +1,1153 @@
 +.. SPDX-License-Identifier: GPL-2.0-or-later
 +.. Copyright © 2025-2026 Collabora Ltd.
 +
-+===========================================
-+Audio/Video Distribution Transport Protocol
-+===========================================
-+(TCRL 2023-1, AVDTP.ICS.1.3.4ed3)
++==================================
++Audio/Video Remote Control Profile
++==================================
++(TCRL 2023-1, AVRCP.ICS.p16)
 +
-+Version and Role Declarations
-+=============================
++Versions
++========
++**Table 2b: Controller - X.Y Versions**
++
++Prerequisite: AVRCP 1/1 "Controller"
++
+++------------------+----------+----------------------------------------------+
++| Parameter Name   | Selected | Description                                  |
+++==================+==========+==============================================+
++| TSPC_AVRCP_2b_4  |          | AVRCP v1.5 (C.1)                             |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2b_5  | x        | AVRCP v1.6	(C.1, C.2)                       |
+++------------------+----------+----------------------------------------------+
++
++- C.1: Mandatory to support one and only one.
++- C.2: Can only be supported with an active X.Y.Z version after Deprecation.
++  Deprecated 2021-02-01. Withdrawn 2024-02-01.
++
++Versions
++========
++**Table 2c: Controller - X.Y.Z Versions**
++
++Prerequisite: AVRCP 1/1 "Controller"
++
+++------------------+----------+----------------------------------------------+
++| Parameter Name   | Selected | Description                                  |
+++==================+==========+==============================================+
++| TSPC_AVRCP_2c_2  | x        | AVRCP v1.6.2 (C.1)                           |
+++------------------+----------+----------------------------------------------+
++
++- C.1: Mandatory IF AVRCP 2b/5 "AVRCP v1.6", otherwise Excluded.
++
++Versions
++========
++**Table 7b: Target - X.Y Versions**
++
++Prerequisite: AVRCP 1/2 "Target"
++
+++------------------+----------+----------------------------------------------+
++| Parameter Name   | Selected | Description                                  |
+++==================+==========+==============================================+
++| TSPC_AVRCP_7b_4  |          | AVRCP v1.5 (C.1)                             |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7b_5  | x        | AVRCP v1.6 (C.1, C.2)                        |
+++------------------+----------+----------------------------------------------+
++
++- C.1: Mandatory to support one and only one.
++- C.2: Can only be supported with an active X.Y.Z version after Deprecation.
++  Deprecated 2021-02-01. Withdrawn 2024-02-01.
++
++Versions
++========
++**Table 7c: Target - X.Y.Z Versions**
++
++Prerequisite: AVRCP 1/2 "Target"
++
+++------------------+----------+----------------------------------------------+
++| Parameter Name   | Selected | Description                                  |
+++==================+==========+==============================================+
++| TSPC_AVRCP_7c_7  | x        | AVRCP v1.6.2 (C.1)                           |
+++------------------+----------+----------------------------------------------+
++
++- C.1: Mandatory IF AVRCP 7b/5 "AVRCP v1.6", otherwise Excluded.
++
++Roles
++=====
 +**Table 1: Role Requirements**
 +
 ++------------------+----------+----------------------------------------------+
 +| Parameter Name   | Selected | Description                                  |
 ++==================+==========+==============================================+
-+| TSPC_AVDTP_1_1   | x        | Source (C.1)                                 |
++| TSPC_AVRCP_1_1   | x        | Controller (C.1)                             |
 ++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_1_2   | x        | Sink (C.1)                                   |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_1_3   | x        | Initiator (C.2)                              |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_1_4   | x        | Acceptor (C.2)                               |
++| TSPC_AVRCP_1_2   | x        | Target (C.1)                                 |
 ++------------------+----------+----------------------------------------------+
 +
-+- C.1: Mandatory to support at least one of AVDTP 1/1 "Source" OR AVDTP 1/2
-+  "Sink".
-+- C.2: Mandatory to support at least one of AVDTP 1/3 "Initiator" OR AVDTP 1/4
-+  "Acceptor". Note: It is within the scope of profiles using the AVDTP
-+  specification to mandate Initiator/Acceptor capabilities.
++- C.1: Mandatory to support at least one.
 +
-+Source Capabilities
++Controller features
 +===================
-+**Table 14a: AVDTP Source - Major Versions (X.Y)**
++**Table 2: Controller Features**
 +
-+Prerequisite: AVDTP 1/1 "Source"
++Prerequisite: AVRCP 1/1 "Controller"
 +
 ++------------------+----------+----------------------------------------------+
 +| Parameter Name   | Selected | Description                                  |
 ++==================+==========+==============================================+
-+| TSPC_AVDTP_14a_1 |          | AVDTP 1.0 Withdrawn (C.1, C.2)               |
++| TSPC_AVRCP_2_1   | x        | Initiating connection establishment for      |
++|                  |          | control (M)                                  |
 ++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_14a_2 |          | AVDTP 1.2 Withdrawn (C.1, C.3)               |
++| TSPC_AVRCP_2_2   | x        | Accepting connection establishment for       |
++|                  |          | control initiated by TG (M)                  |
 ++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_14a_3 | x        | AVDTP 1.3 (C.1)                              |
++| TSPC_AVRCP_2_3   | x        | Initiating connection release for control (M)|
 ++------------------+----------+----------------------------------------------+
-+
-+- C.1: Mandatory to support one and only one of AVDTP 14a/1 "AVDTP 1.0" OR
-+  AVDTP 14a/2 "AVDTP 1.2" OR AVDTP 14a/3 "AVDTP 1.3".
-+- C.2: Excluded after the date of deprecation. Deprecated 2022-02-01.
-+  Withdrawn 2023-02-01.
-+- C.3: Excluded after the date of deprecation. Deprecated 2023-02-01.
-+  Withdrawn 2024-02-01.
-+
-+Source Capabilities
-+===================
-+**Table 14: Source Capabilities**
-+
-+Prerequisite: AVDTP 1/1 "Source"
-+
++| TSPC_AVRCP_2_4   | x        | Accepting connection release for control     |
++|                  |          | initiated by TG (M)                          |
 ++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_14_1  | x        | Basic transport service support (M)          |
++| TSPC_AVRCP_2_5   |          | Sending UNIT INFO command (O)                |
 ++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_14_2  |          | Reporting service support (O)                |
++| TSPC_AVRCP_2_6   |          | Sending SUBUNIT INFO command (O)             |
 ++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_14_3  |          | Recovery service support (O)                 |
++| TSPC_AVRCP_2_7   |          | Sending PASS THROUGH command in category 1   |
++|                  |          | (C.1)                                        |
 ++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_14_4  |          | Multiplexing service support (O)             |
++| TSPC_AVRCP_2_8   | x        | Sending PASS THROUGH command in category 2   |
++|                  |          | (C.1)                                        |
 ++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_14_5  |          | Robust header compression service support (O)|
++| TSPC_AVRCP_2_9   |          | Sending PASS THROUGH command in category 3   |
++|                  |          | (C.1)                                        |
 ++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_14_6  |          | Delay Reporting (C.1)                        |
++| TSPC_AVRCP_2_10  |          | Sending PASS THROUGH command in category 4   |
++|                  |          | (C.1)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_11  |          | Get Capabilities (O)                         |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_12  |          | List Player Application Setting Attributes   |
++|                  |          | (C.9)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_13  |          | List Player Application Setting Values (O)   |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_14  |          | Get Current Player Application Setting Value |
++|                  |          | (C.10)                                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_15  |          | Set Player Application Setting Value (C.10)  |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_16  |          | Get Player Application Setting Attribute Text|
++|                  |          | (O)                                          |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_17  |          | Get Player Application Setting Value Text (O)|
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_18  |          | Inform Displayable Character Set (O)         |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_19  |          | Inform Battery Status of CT (O)              |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_20  |          | Get Element Attributes (O)                   |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_21  |          | Get Play Status (O)                          |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_22  | x        | Register Notification (C.11)                 |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_23  |          | Request Continuing Response (C.2)            |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_24  |          | Abort Continuing Response (C.2)              |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_25  |          | Next Group (C.12)                            |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_26  |          | Previous Group (C.12)                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_27  |          | Media Player Selection (O)                   |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_28  |          | SetAddressedPlayer (O)                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_29  |          | GetFolderItems(MediaPlayerList) (C.5)        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_29b |          | GetTotalNumberOfItems(MediaPlayerList) (C.15)|
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_30  |          | EVENT_AVAILABLE_PLAYERS_CHANGED (O)          |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_31  |          | EVENT_ADDRESSED_PLAYER_CHANGED (O)           |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_32  |          | Browsing (O)                                 |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_33  |          | SetBrowsedPlayer (C.4)                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_34  |          | ChangePath (C.4)                             |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_35  |          | GetFolderItems(Filesystem) (C.4)             |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_35b |          | GetTotalNumberOfItems(Filesystem) (C.15)     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_36  |          | GetItemAttributes (O)                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_37  |          | PlayItem(Filesystem) (C.4)                   |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_38  |          | EVENT_UIDS_CHANGED (O)                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_39  |          | Searching (O)                                |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_40  |          | Search (C.7)                                 |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_41  |          | GetFolderItems(Search Results) (C.7)         |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_41b |          | GetTotalNumberOfItems(Search Results) (C.15) |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_42  |          | PlayItem(SearchResultList) (C.7)             |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_43  |          | NowPlaying (C.8)                             |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_44  |          | GetFolderItems(NowPlayingList) (C.8)         |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_44b |          | GetTotalNumberOfItems(NowPlayingList) (C.15) |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_45  |          | PlayItem(NowPlayingList) (C.8)               |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_46  |          | AddToNowPlaying (O)                          |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_47  |          | EVENT_NOW_PLAYING_CONTENT_CHANGED (O)        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_48  |          | Playable Folders (O)                         |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_49  | x        | Absolute Volume (C.3)                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_50  | x        | SetAbsoluteVolume (C.3)                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_51  | x        | NotifyVolumeChange (C.3)                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_52  | x        | Discoverable Mode (M)                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_53  |          | PASSTHROUGH operation supporting Press and   |
++|                  |          | Hold (O)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_54  |          | Cover Art (C.15)                             |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_55  |          | GetImageProperties (C.14)                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_56  |          | GetImage (C.13)                              |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_2_57  |          | GetLinkedThumbnail (C.13)                    |
 ++------------------+----------+----------------------------------------------+
 +
 +- M: Mandatory
 +- O: Optional
-+- C.1: Optional IF AVDTP 14a/3 "AVDTP 1.3" is supported, otherwise Excluded.
++- C.1: Mandatory to support at least one.
++- C.2: Mandatory to support at least one IF AVRCP 2/20 "Get Element
++  Attributes", otherwise Optional.
++- C.3: Mandatory IF AVRCP 2/8 "Sending PASS THROUGH command in category 2",
++  otherwise Excluded.
++- C.4: Mandatory IF AVRCP 2/32 "Browsing", otherwise Excluded.
++- C.5: Mandatory IF AVRCP 2/27 "Media Player Selection", otherwise Excluded.
++- C.7: Mandatory IF AVRCP 2/39 "Searching", otherwise Excluded.
++- C.8: Mandatory IF AVRCP 2/32 "Browsing", otherwise Optional.
++- C.9: Mandatory IF AVRCP 2/13 "List Player Application Setting Values" OR
++  AVRCP 2/14 "Get Current Player Application Setting Value" OR AVRCP 2/15 "Set
++  Player Application Setting Value", otherwise Optional.
++- C.10: Mandatory to support at least one IF AVRCP 2/12 "List Player
++  Application Setting Attributes", otherwise Excluded.
++- C.11: Mandatory IF AVRCP 2/20 "Get Element Attributes" OR AVRCP 2/49
++  "Absolute Volume", otherwise Optional.
++- C.12: Mandatory to support none or all.
++- C.13: Excluded IF AVRCP 2b/4 "AVRCP v1.5", otherwise Mandatory to support at
++  least one IF AVRCP 2/54 "Cover Art", otherwise Excluded.
++- C.14: Excluded IF AVRCP 2b/4 "AVRCP v1.5", otherwise Optional IF AVRCP 2/54
++  "Cover Art", otherwise Excluded.
++- C.15: Excluded IF AVRCP 2b/4 "AVRCP v1.5", otherwise Optional.
 +
-+Source Capabilities
++Controller features
 +===================
-+**Table 2: Signaling Message Format (Initiator, Source)**
++**Table 3: operation_id of category 1 for CT**
 +
-+Prerequisite: AVDTP 1/3 "Initiator" AND AVDTP 1/1 "Source"
++Prerequisite: AVRCP 2/7 "Sending PASS THROUGH command in category 1"
 +
 ++------------------+----------+----------------------------------------------+
 +| Parameter Name   | Selected | Description                                  |
 ++==================+==========+==============================================+
-+| TSPC_AVDTP_2_1   | x        | Transaction Label (M)                        |
++| TSPC_AVRCP_3_1   |          | 0 (C.1)                                      |
 ++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_2_2   | x        | Packet type (M)                              |
++| TSPC_AVRCP_3_2   |          | 1 (C.1)                                      |
 ++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_2_3   | x        | Message type (M)                             |
++| TSPC_AVRCP_3_3   |          | 2 (C.1)                                      |
 ++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_2_4   | x        | Signal identifier (M)                        |
++| TSPC_AVRCP_3_4   |          | 3 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_5   |          | 4 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_6   |          | 5 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_7   |          | 6 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_8   |          | 7 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_9   |          | 8 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_10  |          | 9 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_11  |          | dot (C.1)                                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_12  |          | enter (C.1)                                  |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_13  |          | clear (C.1)                                  |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_14  |          | sound select (C.1)                           |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_15  |          | input select (C.1)                           |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_16  |          | display information (C.1)                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_17  |          | help (C.1)                                   |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_18  |          | power (C.1)                                  |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_19  |          | play (C.1)                                   |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_20  |          | stop (C.1)                                   |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_21  |          | pause (C.1)                                  |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_22  |          | record (C.1)                                 |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_23  |          | rewind (C.1)                                 |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_24  |          | fast forward (C.1)                           |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_25  |          | eject (C.1)                                  |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_26  |          | forward (C.1)                                |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_27  |          | backward (C.1)                               |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_28  |          | angle (C.1)                                  |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_29  |          | subpicture (C.1)                             |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_30  |          | F1 (C.1)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_32  |          | F3 (C.1)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_33  |          | F4 (C.1)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_34  |          | F5 (C.1)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_3_35  |          | vendor unique (C.1)                          |
+++------------------+----------+----------------------------------------------+
++
++- C.1: Mandatory to support at least one item.
++
++Controller features
++===================
++**Table 4: operation_id of category 2 for CT**
++
++Prerequisite: AVRCP 2/8 "Sending PASS THROUGH command in category 2"
++
+++------------------+----------+----------------------------------------------+
++| Parameter Name   | Selected | Description                                  |
+++==================+==========+==============================================+
++| TSPC_AVRCP_4_1   |          | 0 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_2   |          | 1 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_3   |          | 2 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_4   |          | 3 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_5   |          | 4 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_6   |          | 5 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_7   |          | 6 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_8   |          | 7 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_9   |          | 8 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_10  |          | 9 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_11  |          | dot (C.1)                                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_12  |          | enter (C.1)                                  |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_13  |          | clear (C.1)                                  |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_14  |          | sound select (C.1)                           |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_15  |          | input select (C.1)                           |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_16  |          | display information (C.1)                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_17  |          | help (C.1)                                   |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_18  |          | power (C.1)                                  |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_19  | x        | volume up (C.1)                              |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_20  | x        | volume down (C.1)                            |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_21  |          | mute (C.1)                                   |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_22  |          | F1 (C.1)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_23  |          | F2 (C.1)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_24  |          | F3 (C.1)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_25  |          | F4 (C.1)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_26  |          | F5 (C.1)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_4_27  |          | vendor unique (C.1)                          |
+++------------------+----------+----------------------------------------------+
++
++- C.1: Mandatory to support at least one item.
++
++Controller features
++===================
++**Table 5: operation_id of category 3 for CT**
++
++Prerequisite: AVRCP 2/9 "Sending PASS THROUGH command in category 3"
++
+++------------------+----------+----------------------------------------------+
++| Parameter Name   | Selected | Description                                  |
+++==================+==========+==============================================+
++| TSPC_AVRCP_5_1   |          | 0 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_2   |          | 1 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_3   |          | 2 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_4   |          | 3 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_5   |          | 4 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_6   |          | 5 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_7   |          | 6 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_8   |          | 7 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_9   |          | 8 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_10  |          | 9 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_11  |          | dot (C.1)                                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_12  |          | enter (C.1)                                  |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_13  |          | clear (C.1)                                  |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_14  |          | channel up (C.1)                             |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_15  |          | channel down (C.1)                           |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_16  |          | previous channel (C.1)                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_17  |          | sound select (C.1)                           |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_18  |          | input select (C.1)                           |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_19  |          | display information (C.1)                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_20  |          | help (C.1)                                   |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_21  |          | power (C.1)                                  |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_22  |          | angle (C.1)                                  |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_23  |          | subpicture (C.1)                             |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_24  |          | F1 (C.1)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_25  |          | F2 (C.1)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_26  |          | F3 (C.1)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_27  |          | F4 (C.1)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_28  |          | F5 (C.1)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_5_29  |          | vendor unique (C.1)                          |
+++------------------+----------+----------------------------------------------+
++
++- C.1: Mandatory to support at least one item.
++
++Controller features
++===================
++**Table 6: operation_id of category 4 for CT**
++
++Prerequisite: AVRCP 2/10 "Sending PASS THROUGH command in category 4"
++
+++------------------+----------+----------------------------------------------+
++| Parameter Name   | Selected | Description                                  |
+++==================+==========+==============================================+
++| TSPC_AVRCP_6_1   |          | select (C.1)                                 |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_2   |          | up (C.1)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_3   |          | down (C.1)                                   |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_4   |          | left (C.1)                                   |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_5   |          | right (C.1)                                  |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_6   |          | right-up (C.1)                               |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_7   |          | right-down (C.1)                             |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_8   |          | left-up (C.1)                                |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_9   |          | left-down (C.1)                              |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_10  |          | root menu (C.1)                              |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_11  |          | setup menu (C.1)                             |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_12  |          | contents menu (C.1)                          |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_13  |          | favorite menu (C.1)                          |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_14  |          | exit (C.1)                                   |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_15  |          | 0 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_16  |          | 1 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_17  |          | 2 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_18  |          | 3 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_19  |          | 4 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_20  |          | 5 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_21  |          | 6 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_22  |          | 7 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_23  |          | 8 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_24  |          | 9 (C.1)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_25  |          | dot (C.1)                                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_26  |          | enter (C.1)                                  |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_27  |          | clear (C.1)                                  |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_28  |          | display information (C.1)                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_29  |          | help (C.1)                                   |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_30  |          | page up (C.1)                                |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_31  |          | page down (C.1)                              |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_32  |          | power (C.1)                                  |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_33  |          | F1 (C.1)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_34  |          | F2 (C.1)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_35  |          | F3 (C.1)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_36  |          | F4 (C.1)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_37  |          | F5 (C.1)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_6_38  |          | vendor unique (C.1)                          |
+++------------------+----------+----------------------------------------------+
++
++- C.1: Mandatory to support at least one item.
++
++Target features
++===============
++**Table 7: Target Features**
++
++Prerequisite: AVRCP 1/2 "Target"
++
+++------------------+----------+----------------------------------------------+
++| Parameter Name   | Selected | Description                                  |
+++==================+==========+==============================================+
++| TSPC_AVRCP_7_1   |          | Initiating connection establishment for      |
++|                  |          | control (O)                                  |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_2   | x        | Accepting connection establishment for       |
++|                  |          | control initiated by CT (M)                  |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_3   | x        | Initiating connection release for control (M)|
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_4   | x        | Accepting connection release for control     |
++|                  |          | initiated by CT (M)                          |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_5   | x        | Receiving UNIT INFO command (M)              |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_6   | x        | Receiving SUBUNIT INFO command (M)           |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_7   | x        | Receiving PASS THROUGH command in category 1 |
++|                  |          | (C.1)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_8   | x        | Receiving PASS THROUGH command in category 2 |
++|                  |          | (C.1)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_9   |          | Receiving PASS THROUGH command in category 3 |
++|                  |          | (C.1)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_10  |          | Receiving PASS THROUGH command in category 4 |
++|                  |          | (C.1)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_11  | x        | Get Capabilities Response (C.3)              |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_12  |          | List Player Application Settings Attributes  |
++|                  |          | Response (C.14)                              |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_13  |          | List Player Application Setting Values       |
++|                  |          | Response (C.14)                              |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_14  |          | Get Current Player Application Settings Value|
++|                  |          | Response (C.14)                              |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_15  |          | Set Player Application Setting Value Response|
++|                  |          | (C.14)                                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_16  |          | Get Player Application Setting Attribute Text|
++|                  |          | Response (O)                                 |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_17  |          | Get Player Application Setting Value Text    |
++|                  |          | Response (O)                                 |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_18  |          | Inform Displayable Character Set Response (O)|
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_19  |          | Inform Battery Status of CT Response (O)     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_20  | x        | Get Element Attributes Response (C.3)        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_21  | x        | Get Play Status Response (C.2)               |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_22  | x        | Register Notification Response (C.12)        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_23  | x        | Notify Event Response:                       |
++|                  |          | PLAYBACK_STATUS_CHANGED (C.4)                |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_24  | x        | Notify Event Response: TRACK_CHANGED (C.4)   |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_25  |          | Notify Event Response: TRACK_REACHED_END (O) |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_26  |          | Notify Event Response: TRACK_REACHED_START   |
++|                  |          | (O)                                          |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_27  |          | Notify Event Response: PLAYBACK_POS_CHANGED  |
++|                  |          | (O)                                          |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_28  |          | Notify Event Response: BATT_STATUS_CHANGED   |
++|                  |          | (O)                                          |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_29  |          | Notify Event Response: SYSTEM_STATUS_CHANGED |
++|                  |          | (O)                                          |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_30  |          | Notify Event Response:                       |
++|                  |          | PLAYER_APPLICATION_SETTING_CHANGED (O)       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_31  | x        | Request Continuing Response (C.2)            |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_32  | x        | Abort Continuing Response (C.2)              |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_34  |          | Next Group (C.15)                            |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_35  |          | Previous Group (C.15)                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_36  | x        | Media Player Selection (C.8)                 |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_37  | x        | SetAddressedPlayer (C.8)                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_38  | x        | GetFolderItems(MediaPlayerList) (C.8)        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_38b | x        | GetTotalNumberOfItems(MediaPlayerList) (C.20)|
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_39  | x        | EVENT_AVAILABLE_PLAYERS_CHANGED (C.8)        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_40  | x        | EVENT_ADDRESSED_PLAYER_CHANGED (C.8)         |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_41  |          | Supports Multiple Players (O)                |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_42  |          | Browsing (O)                                 |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_42a |          | Initiating connection establishment for      |
++|                  |          | browsing channel (O)                         |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_43  |          | SetBrowsedPlayer (C.6)                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_43a |          | Non-addressed Player Browsing (C.17)         |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_44  |          | ChangePath (C.6))                            |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_45  |          | GetFolderItems(Filesystem) (C.6)             |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_45b |          | GetTotalNumberOfItems(Filesystem) (C.19)     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_46  |          | GetItemAttributes (C.6)                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_47  |          | PlayItem(Filesystem) (C.6)                   |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_48  |          | EVENT_UIDS_CHANGED (C.9)                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_49  |          | Database Aware Players (O)                   |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_50  |          | Searching (O)                                |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_51  |          | Search (C.10)                                |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_52  |          | GetFolderItems(Search Results) (C.10)        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_52b |          | GetTotalNumberOfItems(SearchResults) (C.21)  |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_53  |          | PlayItem(SearchResultList) (C.10)            |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_54  |          | NowPlaying (C.11)                            |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_55  |          | GetFolderItems(NowPlayingList) (C.11)        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_55b |          | GetTotalNumberOfItems(NowPlayingList) (C.22) |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_56  |          | PlayItem(NowPlayingList) (C.11)              |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_57  |          | AddToNowPlaying (O)                          |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_58  |          | EVENT_NOW_PLAYING_CONTENT_CHANGED (C.11)     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_59  |          | Playable Folders (O)                         |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_60  | x        | Absolute Volume (C.5)                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_61  | x        | SetAbsoluteVolume (C.5)                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_62  | x        | NotifyVolumeChange (C.5)                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_63  |          | Error Response (O)                           |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_64  | x        | General Reject (C.13)                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_65  | x        | Discoverable Mode (M)                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_66  |          | PASSTHROUGH operation supporting Press and   |
++|                  |          | Hold (O)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_67  |          | Cover Art (C.18)                             |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_68  |          | GetImageProperties (C.16)                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_69  |          | GetImage (C.16)                              |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_7_70  |          | GetLinkedThumbnail (C.16)                    |
 ++------------------+----------+----------------------------------------------+
 +
 +- M: Mandatory
-+
-+Source Capabilities
-+===================
-+**Table 3: Signaling Channel Establishment/Disconnection (Initiator, Source)**
-+
-+Prerequisite: AVDTP 1/3 "Initiator" AND AVDTP 1/1 "Source"
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_3_1   | x        | Establish signaling channel (O)              |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_3_2   | x        | Disconnect signaling channel (O)             |
-++------------------+----------+----------------------------------------------+
-+
 +- O: Optional
-+
-+Source Capabilities
-+===================
-+**Table 4: Stream Discovery and Configuration (Initiator, Source)**
-+
-+Prerequisite: AVDTP 1/3 "Initiator" AND AVDTP 1/1 "Source"
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_4_1   | x        | Stream discover command (O)                  |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_4_2   | x        | Stream get capabilities command (C.2)        |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_4_3   | x        | Set configuration command (O)                |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_4_4   | x        | Get configuration command (O)                |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_4_5   |          | Reconfigure command (O)                      |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_4_6   | x        | Stream get all capabilities command (C.1)    |
-++------------------+----------+----------------------------------------------+
-+
-+- O: Optional
-+- C.1: Optional IF AVDTP 14a/3 "AVDTP 1.3" is supported, otherwise Excluded.
-+- C.2: Mandatory IF AVDTP 4/6 "Stream get all capabilities command" is
-+  supported, otherwise Optional.
-+
-+Source Capabilities
-+===================
-+**Table 5: Stream Establishment, Suspension and Release (Initiator, Source)**
-+
-+Prerequisite: AVDTP 1/3 "Initiator" AND AVDTP 1/1 "Source"
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_5_1   | x        | Open stream command (O)                      |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_5_2   | x        | Start stream command (O)                     |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_5_3   | x        | Close stream command (O)                     |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_5_4   | x        | Suspend command (O)                          |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_5_5   | x        | Abort stream command (O)                     |
-++------------------+----------+----------------------------------------------+
-+
-+- O: Optional
-+
-+Source Capabilities
-+===================
-+**Table 6: Security Signaling (Initiator, Source)**
-+
-+Prerequisite: AVDTP 1/3 "Initiator" AND AVDTP 1/1 "Source"
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_6_1   |          | Content security control command (O)         |
-++------------------+----------+----------------------------------------------+
-+
-+- O: Optional
-+
-+Source Capabilities
-+===================
-+**Table 7: Message Fragmentation (Initiator, Source)**
-+
-+Prerequisite: AVDTP 1/3 "Initiator" AND AVDTP 1/1 "Source"
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_7_1   | x        | Signaling message fragmentation (M)          |
-++------------------+----------+----------------------------------------------+
-+
-+- M: Mandatory
-+
-+Source Capabilities
-+===================
-+**Table 8: Signaling Message Format (Acceptor, Source)**
-+
-+Prerequisite: AVDTP 1/4 "Acceptor" AND AVDTP 1/1 "Source"
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_8_1   | x        | Transaction Label (M)                        |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_8_2   | x        | Packet type (M)                              |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_8_3   | x        | Message type (M)                             |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_8_4   | x        | Signal identifier (M)                        |
-++------------------+----------+----------------------------------------------+
-+
-+- M: Mandatory
-+
-+Source Capabilities
-+===================
-+**Table 9: Signaling Channel Establishment/Disconnection (Acceptor, Source)**
-+
-+Prerequisite: AVDTP 1/4 "Acceptor" AND AVDTP 1/1 "Source"
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_9_1   | x        | Establish signaling channel (O)              |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_9_2   | x        | Disconnect signaling channel (O)             |
-++------------------+----------+----------------------------------------------+
-+
-+- O: Optional
-+
-+Source Capabilities
-+===================
-+**Table 10: Stream Discovery and Configuration (Acceptor, Source)**
-+
-+Prerequisite: AVDTP 1/4 "Acceptor" AND AVDTP 1/1 "Source"
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_10_1  | x        | Stream discover response (O)                 |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_10_2  | x        | Stream get capabilities response (C.2)       |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_10_3  | x        | Set configuration response (O)               |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_10_4  | x        | Get configuration response (O)               |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_10_5  |          | Reconfigure response (O)                     |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_10_6  | x        | Stream get all capabilities response (C.1)   |
-++------------------+----------+----------------------------------------------+
-+
-+- O: Optional
-+- C.1: Optional IF AVDTP 14a/3 "AVDTP 1.3" is supported, otherwise Excluded.
-+- C.2: Mandatory IF AVDTP 10/6 "Stream get all capabilities response" is
-+  supported, otherwise Optional.
-+
-+Source Capabilities
-+===================
-+**Table 11: Stream Establishment, Suspension and Release (Acceptor, Source)**
-+
-+Prerequisite: AVDTP 1/4 "Acceptor" AND AVDTP 1/1 "Source"
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_11_1  | x        | Open stream response (O)                     |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_11_2  | x        | Start stream response (O)                    |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_11_3  | x        | Close stream response (O)                    |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_11_4  | x        | Suspend response (O)                         |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_11_5  | x        | Abort stream response (O)                    |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_11_6  | x        | General reject message (O)                   |
-++------------------+----------+----------------------------------------------+
-+
-+- O: Optional
-+
-+Source Capabilities
-+===================
-+**Table 12: Security Signaling (Acceptor, Source)**
-+
-+Prerequisite: AVDTP 1/4 "Acceptor" AND AVDTP 1/1 "Source"
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_12_1  |          | Content security control response (O)        |
-++------------------+----------+----------------------------------------------+
-+
-+- O: Optional
-+
-+Source Capabilities
-+===================
-+**Table 13: Message Fragmentation (Acceptor, Source)**
-+
-+Prerequisite: AVDTP 1/4 "Acceptor" AND AVDTP 1/1 "Source"
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_13_1  | x        | Signaling message fragmentation (M)          |
-++------------------+----------+----------------------------------------------+
-+
-+- M: Mandatory
-+
-+Sink Capabilities
-+=================
-+**Table 15a: AVDTP Sink - Major Versions (X.Y)**
-+
-+Prerequisite: AVDTP 1/2 "Sink"
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_15a_1 |          | AVDTP 1.0 Withdrawn (C.1, C.2)               |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_15a_2 |          | AVDTP 1.2 Withdrawn (C.1, C.3)               |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_15a_3 | x        | AVDTP 1.3 (C.1)                              |
-++------------------+----------+----------------------------------------------+
-+
-+- C.1: Mandatory to support one and only one of AVDTP 15a/1 "AVDTP 1.0" OR
-+  AVDTP 15a/2 "AVDTP 1.2" OR AVDTP 15a/3 "AVDTP 1.3".
-+- C.2: Excluded after the date of deprecation. Deprecated 2022-02-01.
-+  Withdrawn 2023-02-01.
-+- C.3: Excluded after the date of deprecation. Deprecated 2023-02-01.
-+  Withdrawn 2024-02-01.
-+
-+Sink Capabilities
-+=================
-+**Table 15: Sink Capabilities**
-+
-+Prerequisite: AVDTP 1/2 "Sink"
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_15_1  | x        | Basic transport service support (M)          |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_15_2  |          | Reporting service support (O)                |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_15_3  |          | Recovery service support (O)                 |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_15_4  |          | Multiplexing service support (O)             |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_15_5  |          | Robust header compression service support (O)|
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_15_6  |          | Delay Reporting (C.1)                        |
-++------------------+----------+----------------------------------------------+
-+
-+- M: Mandatory
-+- O: Optional
-+- C.1: Optional IF AVDTP 15a/3 "AVDTP 1.3" is supported, otherwise Excluded.
-+
-+Sink Capabilities
-+=================
-+**Table 2b: Signaling Message Format (Initiator, Sink)**
-+
-+Prerequisite: AVDTP 1/3 "Initiator" AND AVDTP 1/2 "Sink"
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_2b_1  | x        | Transaction Label (M)                        |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_2b_2  | x        | Packet type (M)                              |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_2b_3  | x        | Message type (M)                             |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_2b_4  | x        | Signal identifier (M)                        |
-++------------------+----------+----------------------------------------------+
-+
-+- M: Mandatory
-+
-+Sink Capabilities
-+=================
-+**Table 3b: Signaling Channel Establishment/Disconnection (Initiator, Sink)**
-+
-+Prerequisite: AVDTP 1/3 "Initiator" AND AVDTP 1/2 "Sink"
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_3b_1  |          | Establish signaling channel (O)              |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_3b_2  |          | Disconnect signaling channel (O)             |
-++------------------+----------+----------------------------------------------+
-+
-+- O: Optional
-+
-+Sink Capabilities
-+=================
-+**Table 4b: Stream Discovery and Configuration (Initiator, Sink)**
-+
-+Prerequisite: AVDTP 1/3 "Initiator" AND AVDTP 1/2 "Sink"
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_4b_1  | x        | Stream discover command (O)                  |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_4b_2  | x        | Stream get capabilities command (C.2)        |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_4b_3  | x        | Set configuration command (O)                |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_4b_4  |          | Get configuration command (O)                |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_4b_5  |          | Reconfigure command (O)                      |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_4b_6  | x        | Stream get all capabilities command (C.1)    |
-++------------------+----------+----------------------------------------------+
-+
-+- O: Optional
-+- C.1: Optional IF AVDTP 15a/3 "AVDTP 1.3" is supported, otherwise Excluded.
-+- C.2: Mandatory IF AVDTP 4b/6 "Stream get all capabilities command" is
-+  supported, otherwise Optional.
-+
-+Sink Capabilities
-+=================
-+**Table 5b: Stream Establishment, Suspension and Release (Initiator, Sink)**
-+
-+Prerequisite: AVDTP 1/3 "Initiator" AND AVDTP 1/2 "Sink"
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_5b_1  | x        | Open stream command (O)                      |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_5b_2  | x        | Start stream command (O)                     |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_5b_3  | x        | Close stream command (O)                     |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_5b_4  |          | Suspend command (O)                          |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_5b_5  | x        | Abort stream command (O)                     |
-++------------------+----------+----------------------------------------------+
-+
-+- O: Optional
-+
-+Sink Capabilities
-+=================
-+**Table 6b: Security Signaling (Initiator, Sink)**
-+
-+Prerequisite: AVDTP 1/3 "Initiator" AND AVDTP 1/2 "Sink"
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_6b_1  |          | Content security control command (O)         |
-++------------------+----------+----------------------------------------------+
-+
-+- O: Optional
-+
-+Sink Capabilities
-+=================
-+**Table 7b: Message Fragmentation (Initiator, Sink)**
-+
-+Prerequisite: AVDTP 1/3 "Initiator" AND AVDTP 1/2 "Sink"
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_7b_1  | x        | Signaling message fragmentation (M)          |
-++------------------+----------+----------------------------------------------+
-+
-+- M: Mandatory
-+
-+Sink Capabilities
-+=================
-+**Table 8b: Signaling Message Format (Acceptor, Sink)**
-+
-+Prerequisite: AVDTP 1/4 "Acceptor" AND AVDTP 1/2 "Sink"
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_8b_1  | x        | Transaction Label (M)                        |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_8b_2  | x        | Packet type (M)                              |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_8b_3  | x        | Message type (M)                             |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_8b_4  | x        | Signal identifier (M)                        |
-++------------------+----------+----------------------------------------------+
-+
-+- M: Mandatory
-+
-+Sink Capabilities
-+=================
-+**Table 9b: Signaling Channel Establishment/Disconnection (Acceptor, Sink)**
-+
-+Prerequisite: AVDTP 1/4 "Acceptor" AND AVDTP 1/2 "Sink"
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_9b_1  |          | Establish signaling channel (O)              |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_9b_2  |          | Disconnect signaling channel (O)             |
-++------------------+----------+----------------------------------------------+
-+
-+- O: Optional
-+
-+Sink Capabilities
-+=================
-+**Table 10b: Stream Discovery and Configuration (Acceptor, Sink)**
-+
-+Prerequisite: AVDTP 1/4 "Acceptor" AND AVDTP 1/2 "Sink"
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_10b_1 | x        | Stream discover response (O)                 |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_10b_2 | x        | Stream get capabilities response (C.2)       |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_10b_3 | x        | Set configuration response (O)               |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_10b_4 |          | Get configuration response (O)               |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_10b_5 |          | Reconfigure response (O)                     |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_10b_6 | x        | Stream get all capabilities response (C.1)   |
-++------------------+----------+----------------------------------------------+
-+
-+- O: Optional
-+- C.1: Optional IF AVDTP 15a/3 "AVDTP 1.3" is supported, otherwise Excluded.
-+- C.2: Mandatory IF AVDTP 10b/6 "Stream get all capabilities response" is
-+  supported, otherwise Optional.
-+
-+Sink Capabilities
-+=================
-+**Table 11b: Stream Establishment, Suspension and Release (Acceptor, Sink)**
-+
-+Prerequisite: AVDTP 1/4 "Acceptor" AND AVDTP 1/2 "Sink"
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_11b_1 | x        | Open stream response (O)                     |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_11b_2 | x        | Start stream response (O)                    |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_11b_3 | x        | Close stream response (O)                    |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_11b_4 |          | Suspend response (O)                         |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_11b_5 | x        | Abort stream response (O)                    |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_11b_6 | x        | General reject message (O)                   |
-++------------------+----------+----------------------------------------------+
-+
-+- O: Optional
-+
-+Sink Capabilities
-+=================
-+**Table 12b: Security Signaling (Acceptor, Sink)**
-+
-+Prerequisite: AVDTP 1/4 "Acceptor" AND AVDTP 1/2 "Sink"
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_12b_1 |          | Content security control response (O)        |
-++------------------+----------+----------------------------------------------+
-+
-+- O: Optional
-+
-+Sink Capabilities
-+=================
-+**Table 13b: Message Fragmentation (Acceptor, Sink)**
-+
-+Prerequisite: AVDTP 1/4 "Acceptor" AND AVDTP 1/2 "Sink"
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_13b_1 | x        | Signaling message fragmentation (M)          |
-++------------------+----------+----------------------------------------------+
-+
-+- M: Mandatory
-+
-+Message Error Handling Capabilities
-+===================================
-+**Table 16: Message Error Handling Capabilities**
-+
-++------------------+----------+----------------------------------------------+
-+| Parameter Name   | Selected | Description                                  |
-++==================+==========+==============================================+
-+| TSPC_AVDTP_16_1  | x        | Reporting Capability Error (C.1)             |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_16_2  |          | Reject Corrupted Messages (C.2)              |
-++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_16_3  | x        | General Reject Response Includes Signal ID   |
-+|                  |          | (C.3)                                        |
-++------------------+----------+----------------------------------------------+
-+
-+- C.1: Mandatory IF AVDTP 14a/2 "AVDTP 1.2" OR AVDTP 15a/2 "AVDTP 1.2" OR
-+  AVDTP 14a/3 "AVDTP 1.3" OR AVDTP 15a/3 "AVDTP 1.3" is supported, otherwise
++- C.1: Mandatory to support at least one.
++- C.2: Mandatory IF AVRCP 7/20 "Get Element Attributes Response", otherwise
 +  Optional.
-+- C.2: Excluded IF AVDTP 16/3 "General Reject Response Includes Signal ID" is
-+  supported, otherwise Optional.
-+- C.3: Mandatory IF AVDTP 14a/3 "AVDTP 1.3" OR AVDTP 15a/3 "AVDTP 1.3" is
-+  supported, otherwise Optional.
++- C.3: Mandatory IF AVRCP 7/7 "Receiving PASS THROUGH command in category 1",
++  otherwise Optional.
++- C.4: Mandatory IF AVRCP 7/22 "Register Notification Response" AND AVRCP 7/20
++  "Get Element Attributes Response", otherwise Optional.
++- C.5: Mandatory IF AVRCP 7/8 "Receiving PASS THROUGH command in category 2",
++  otherwise Excluded.
++- C.6: Mandatory IF AVRCP 7/42 "Browsing", otherwise Excluded.
++- C.8: Mandatory IF AVRCP 7/7 "Receiving PASS THROUGH command in category 1"
++  OR AVRCP 7/9 "Receiving PASS THROUGH command in category 3", otherwise
++  Excluded.
++- C.9: Mandatory IF AVRCP 7/49 "Database Aware Players", otherwise Optional.
++- C.10: Mandatory IF AVRCP 7/50 "Searching", otherwise Excluded.
++- C.11: Mandatory IF AVRCP 7/42 "Browsing", otherwise Optional.
++- C.12: Mandatory IF AVRCP 7/7 "Receiving PASS THROUGH command in category 1"
++  OR (AVRCP 7/8 "Receiving PASS THROUGH command in category 2" AND AVRCP 7/60
++  "Absolute Volume") OR AVRCP 7/9 "Receiving PASS THROUGH command in category
++  3", otherwise Optional.
++- C.13: Mandatory IF AVRCP 7/7 "Receiving PASS THROUGH command in category 1"
++  OR AVRCP 7/9 "Receiving PASS THROUGH command in category 3" OR AVRCP 7/42
++  "Browsing", otherwise Optional.
++- C.14: Mandatory to support none or all.
++- C.15: Mandatory to support none or all.
++- C.16: Excluded IF AVRCP 7b/4 "AVRCP v1.5", otherwise Mandatory IF AVRCP 7/67
++  "Cover Art", otherwise Excluded.
++- C.17: Optional IF AVRCP 7/42 "Browsing", otherwise Excluded.
++- C.18: Excluded IF AVRCP 7b/4 "AVRCP v1.5", otherwise Optional.
++- C.19: Excluded IF AVRCP 7b/4 "AVRCP v1.5", otherwise Mandatory IF AVRCP 7/42
++  "Browsing", otherwise Excluded.
++- C.20: Excluded IF AVRCP 7b/4 "AVRCP v1.5", otherwise Mandatory IF AVRCP 7/7
++  "Receiving PASS THROUGH command in category 1" OR AVRCP 7/9 "Receiving PASS
++  THROUGH command in category 3", otherwise Excluded.
++- C.21: Excluded IF AVRCP 7b/4 "AVRCP v1.5", otherwise Mandatory IF AVRCP 7/50
++  "Searching", otherwise Excluded.
++- C.22: Excluded IF AVRCP 7b/4 "AVRCP v1.5", otherwise Mandatory IF AVRCP 7/42
++  "Browsing", otherwise Optional.
 +
-+Upper Tester Interface
-+======================
-+**Table 17: Upper Test Interface**
++Target features
++===============
++**Table 8: operation_id of category 1 for TG**
++
++Prerequisite: AVRCP 7/7 "Receiving PASS THROUGH command in category 1"
 +
 ++------------------+----------+----------------------------------------------+
 +| Parameter Name   | Selected | Description                                  |
 ++==================+==========+==============================================+
-+| TSPC_AVDTP_17_1  |          | Upper Tester Interface provided (O)          |
++| TSPC_AVRCP_8_1   |          | 0 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_2   |          | 1 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_3   |          | 2 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_4   |          | 3 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_5   |          | 4 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_6   |          | 5 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_7   |          | 6 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_8   |          | 7 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_9   |          | 8 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_10  |          | 9 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_11  |          | Dot (O)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_12  |          | Enter (O)                                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_13  |          | Clear (O)                                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_14  |          | Sound select (O)                             |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_15  |          | Input select (O)                             |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_16  |          | Display information (O)                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_17  |          | Help (O)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_18  |          | Power (O)                                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_19  | x        | Play (M)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_20  | x        | Stop (M)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_21  |          | Pause (O)                                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_22  |          | Record (O)                                   |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_23  |          | Rewind (O)                                   |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_24  |          | Fast forward (O)                             |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_25  |          | Eject (O)                                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_26  |          | Forward (O)                                  |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_27  |          | Backward (O)                                 |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_28  |          | Angle (O)                                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_29  |          | Subpicture (O)                               |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_30  |          | F1 (O)                                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_31  |          | F2 (O)                                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_32  |          | F3 (O)                                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_33  |          | F4 (O)                                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_33a |          | F5 (O)                                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_8_34  |          | Vendor unique (O)                            |
 ++------------------+----------+----------------------------------------------+
 +
++- M: Mandatory
 +- O: Optional
 +
-+L2CAP Capabilities
-+==================
-+**Table 18: L2CAP Capabilities**
++Target features
++===============
++**Table 9: operation_id of category 2 for TG**
++
++Prerequisite: AVRCP 7/8 "Receiving PASS THROUGH command in category 2"
 +
 ++------------------+----------+----------------------------------------------+
 +| Parameter Name   | Selected | Description                                  |
 ++==================+==========+==============================================+
-+| TSPC_AVDTP_18_1  |          | Enhanced Retransmission Mode preferred for   |
-+|                  |          | signaling channel (O)                        |
++| TSPC_AVRCP_9_1   |          | 0 (O)                                        |
 ++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_18_2  |          | Streaming Mode preferred for Media Transport |
-+|                  |          | channel (O)                                  |
++| TSPC_AVRCP_9_2   |          | 1 (O)                                        |
 ++------------------+----------+----------------------------------------------+
-+| TSPC_AVDTP_18_3  |          | FCS Option (C.1)                             |
++| TSPC_AVRCP_9_3   |          | 2 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_9_4   |          | 3 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_9_5   |          | 4 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_9_6   |          | 5 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_9_7   |          | 6 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_9_8   |          | 7 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_9_9   |          | 8 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_9_10  |          | 9 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_9_11  |          | Dot (O)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_9_12  |          | Enter (O)                                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_9_13  |          | Clear (O)                                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_9_14  |          | Sound select (O)                             |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_9_15  |          | Input select (O)                             |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_9_16  |          | Display information (O)                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_9_17  |          | Help (O)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_9_18  |          | Power (O)                                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_9_19  | x        | Volume up (M)                                |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_9_20  | x        | Volume down (M)                              |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_9_21  |          | Mute (O)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_9_22  |          | F1 (O)                                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_9_23  |          | F2 (O)                                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_9_24  |          | F3 (O)                                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_9_25  |          | F4 (O)                                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_9_26  |          | F5 (O)                                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_9_27  |          | Vendor unique (O)                            |
 ++------------------+----------+----------------------------------------------+
 +
++- M: Mandatory
 +- O: Optional
-+- C.1: Mandatory IF AVDTP 18/1 "Enhanced Retransmission Mode preferred for
-+  signaling channel" is supported, otherwise Optional.
-diff --git a/doc/qualification/avdtp-pts.rst b/doc/qualification/avdtp-pts.rst
++
++Target features
++===============
++**Table 10: operation_id of category 3 for TG**
++
++Prerequisite: AVRCP 7/9 "Receiving PASS THROUGH command in category 3"
++
+++------------------+----------+----------------------------------------------+
++| Parameter Name   | Selected | Description                                  |
+++==================+==========+==============================================+
++| TSPC_AVRCP_10_1  |          | 0 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_2  |          | 1 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_3  |          | 2 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_4  |          | 3 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_5  |          | 4 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_6  |          | 5 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_7  |          | 6 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_8  |          | 7 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_9  |          | 8 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_10 |          | 9 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_11 |          | Dot (O)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_12 |          | Enter (O)                                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_13 |          | Clear (O)                                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_14 |          | Channel up (M)                               |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_15 |          | Channel down (M)                             |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_16 |          | Previous channel (O)                         |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_17 |          | Sound select (O)                             |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_18 |          | Input select (O)                             |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_19 |          | Display information (O)                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_20 |          | Help (O)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_21 |          | Power (O)                                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_21a|          | Angle (O)                                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_21b|          | Subpicture (O)                               |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_22 |          | F1 (O)                                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_23 |          | F2 (O)                                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_24 |          | F3 (O)                                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_25 |          | F4 (O)                                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_25a|          | F5 (O)                                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_10_26 |          | Vendor unique (O)                            |
+++------------------+----------+----------------------------------------------+
++
++- M: Mandatory
++- O: Optional
++
++Target features
++===============
++**Table 11: operation_id of category 4 for TG**
++
++Prerequisite: AVRCP 7/10 "Receiving PASS THROUGH command in category 4"
++
+++------------------+----------+----------------------------------------------+
++| Parameter Name   | Selected | Description                                  |
+++==================+==========+==============================================+
++| TSPC_AVRCP_11_1  |          | Select (M)                                   |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_2  |          | Up (M)                                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_3  |          | Down (M)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_4  |          | Left (M)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_5  |          | Right (M)                                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_6  |          | Right-up (O)                                 |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_7  |          | Right-down (O)                               |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_8  |          | Left-up (O)                                  |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_9  |          | Left-down (O)                                |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_10 |          | Root menu (M)                                |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_11 |          | Setup menu (O)                               |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_12 |          | Contents menu (O)                            |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_13 |          | Favorite menu (O)                            |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_14 |          | Exit (O)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_15 |          | 0 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_16 |          | 1 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_17 |          | 2 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_18 |          | 3 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_19 |          | 4 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_20 |          | 5 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_21 |          | 6 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_22 |          | 7 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_23 |          | 8 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_24 |          | 9 (O)                                        |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_25 |          | Dot (O)                                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_26 |          | Enter (O)                                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_27 |          | Clear (O)                                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_28 |          | Display information (O)                      |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_29 |          | Help (O)                                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_30 |          | Page up (O)                                  |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_31 |          | Page down (O)                                |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_32 |          | Power (O)                                    |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_33 |          | F1 (O)                                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_34 |          | F2 (O)                                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_35 |          | F3 (O)                                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_36 |          | F4 (O)                                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_36a|          | F5 (O)                                       |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_11_37 |          | Vendor unique (O)                            |
+++------------------+----------+----------------------------------------------+
++
++- M: Mandatory
++- O: Optional
++
++Requirements towards other profiles
++===================================
++**Table 12: Requirements towards the Generic Access Profile (CT)**
++
++Prerequisite: AVRCP 1/1 "Controller"
++
+++------------------+----------+----------------------------------------------+
++| Parameter Name   | Selected | Description                                  |
+++==================+==========+==============================================+
++| TSPC_AVRCP_12_1  | x        | General discoverable mode (M)                |
+++------------------+----------+----------------------------------------------+
++
++- M: Mandatory
++
++Requirements towards other profiles
++===================================
++**Table 13: Requirements towards the Generic Access Profile (TG)**
++
++Prerequisite: AVRCP 1/2 "Target"
++
+++------------------+----------+----------------------------------------------+
++| Parameter Name   | Selected | Description                                  |
+++==================+==========+==============================================+
++| TSPC_AVRCP_13_1  | x        | General discoverable mode (M)                |
+++------------------+----------+----------------------------------------------+
++
++- M: Mandatory
++
++Requirements towards other profiles
++===================================
++**Table 14: OBEX Operations (AVRCP CT, OBEX Client)**
++
++Prerequisite: AVRCP 1/1 "Controller"
++
+++------------------+----------+----------------------------------------------+
++| Parameter Name   | Selected | Description                                  |
+++==================+==========+==============================================+
++| TSPC_AVRCP_14_1  |          | OBEX Connect operation (C.1)                 |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_14_2  |          | OBEX Get operation (C.1)                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_14_3  |          | OBEX Disconnect operation (C.1)              |
+++------------------+----------+----------------------------------------------+
++
++- C.1: Mandatory IF AVRCP 2/54 "Cover Art", otherwise Excluded.
++
++Requirements towards other profiles
++===================================
++**Table 15: OBEX Operations (AVRCP TG, OBEX Server)**
++
++Prerequisite: AVRCP 1/2 "Target"
++
+++------------------+----------+----------------------------------------------+
++| Parameter Name   | Selected | Description                                  |
+++==================+==========+==============================================+
++| TSPC_AVRCP_15_1  |          | OBEX Connect operation (C.1)                 |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_15_2  |          | OBEX Get operation (C.1)                     |
+++------------------+----------+----------------------------------------------+
++| TSPC_AVRCP_15_3  |          | OBEX Disconnect operation (C.1)              |
+++------------------+----------+----------------------------------------------+
++
++- C.1: Mandatory IF AVRCP 7/67 "Cover Art", otherwise Excluded.
+diff --git a/doc/qualification/avrcp-pts.rst b/doc/qualification/avrcp-pts.rst
 new file mode 100644
-index 000000000..4830e4529
+index 000000000..34733798f
 --- /dev/null
-+++ b/doc/qualification/avdtp-pts.rst
-@@ -0,0 +1,405 @@
++++ b/doc/qualification/avrcp-pts.rst
+@@ -0,0 +1,223 @@
 +.. SPDX-License-Identifier: GPL-2.0-or-later
 +.. Copyright © 2025-2026 Collabora Ltd.
 +
 +==================
-+AVDTP test results
++AVRCP test results
 +==================
 +
 +:PTS version: 8.5.2 Build 5
@@ -768,7 +1283,12 @@ index 000000000..4830e4529
 +
 +- Remove PTS device from Bluetooth devices
 +
-+- Request avdtptest from bluez/android
++- Update "TSPX_player_feature_bitmask" in IXIT to "1FFAFFBBF3BFF9040800000000000000"
++
++- The Bluetooth Transport path used for "busctl set-property …" is displayed by 'mpris-proxy',
++  e.g. "Bluetooth Transport /org/bluez/hci0/dev_<BD_ADDR>/sep1/fd4 found":
++
++  - Start "mpris-proxy" in a different terminal, it should run during all the AVRCP tests
 +
 +Tests
 +=====
@@ -776,389 +1296,202 @@ index 000000000..4830e4529
 +The kernel and BlueZ versions represent the oldest version without backport
 +for which we know the test passed.
 +
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| Test name                     | Result   | Kernel  | BlueZ |                                                                         |
-++===============================+==========+=========+=======+=========================================================================+
-+| AVDTP/SNK/ACP/SIG/SMG/BV-06-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/ACP/SIG/SMG/BV-08-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/ACP/SIG/SMG/BV-10-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/ACP/SIG/SMG/BV-16-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/ACP/SIG/SMG/BV-18-C | PASS     |     6.1 | 5.69  | Expect to hear sound                                                    |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/ACP/SIG/SMG/BV-20-C | PASS     |     6.1 | 5.69  | Expect to hear sound                                                    |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/ACP/SIG/SMG/BV-24-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/ACP/SIG/SMG/BV-26-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/ACP/SIG/SMG/BI-05-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/ACP/SIG/SMG/BI-08-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/ACP/SIG/SMG/BI-17-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/ACP/SIG/SMG/BI-20-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/ACP/SIG/SMG/BI-23-C | PASS     |     6.1 | 5.69  | Expect to hear sound                                                    |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/ACP/SIG/SMG/BI-38-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/ACP/SIG/SMG/BI-33-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/ACP/TRA/BTR/BV-02-C | PASS     |     6.1 | 5.69  | Expect to hear sound                                                    |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/ACP/TRA/BTR/BI-01-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Stop WirePlumber by running:                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - systemctl --user stop wireplumber                                   |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Run:                                                                  |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - sudo avdtptest -d SINK -l                                           |
-+|                               |          |         |       +-------------------------------------------------------------------------+
-+|                               |          |         |       | Post-condition:                                                         |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Restart WirePlumber by running:                                       |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - systemctl --user start wireplumber                                  |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Stop 'avdtptest'                                                      |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/INT/SIG/SMG/BV-05-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/INT/SIG/SMG/BV-07-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/INT/SIG/SMG/BV-09-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Remove PTS device from Bluetooth devices                              |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/INT/SIG/SMG/BV-15-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Remove PTS device from Bluetooth devices                              |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/INT/SIG/SMG/BV-19-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/INT/SIG/SMG/BV-25-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Remove PTS device from Bluetooth devices                              |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Remove BlueZ cache by running:                                        |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - sudo rm /var/lib/bluetooth/<iut_bdaddr>/cache/<pts_bdaddr>          |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/INT/SIG/SMG/BV-28-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Remove PTS device from Bluetooth devices                              |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Remove BlueZ cache by running:                                        |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - sudo rm /var/lib/bluetooth/<iut_bdaddr>/cache/<pts_bdaddr>          |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/INT/SIG/SMG/BV-31-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Remove PTS device from Bluetooth devices                              |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Remove BlueZ cache by running:                                        |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - sudo rm /var/lib/bluetooth/<iut_bdaddr>/cache/<pts_bdaddr>          |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/INT/SIG/SMG/BI-30-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Remove PTS device from Bluetooth devices                              |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Remove BlueZ cache by running:                                        |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - sudo rm /var/lib/bluetooth/<iut_bdaddr>/cache/<pts_bdaddr>          |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/INT/SIG/SMG/BI-35-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Remove PTS device from Bluetooth devices                              |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Remove BlueZ cache by running:                                        |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - sudo rm /var/lib/bluetooth/<iut_bdaddr>/cache/<pts_bdaddr>          |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/INT/SIG/SMG/BI-36-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Remove PTS device from Bluetooth devices                              |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Remove BlueZ cache by running:                                        |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - sudo rm /var/lib/bluetooth/<iut_bdaddr>/cache/<pts_bdaddr>          |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SNK/INT/SIG/SMG/BV-23-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Stop WirePlumber by running:                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - systemctl --user stop wireplumber                                   |
-+|                               |          |         |       +-------------------------------------------------------------------------+
-+|                               |          |         |       | On demand run:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - avtest --send abort <BD_ADDR>                                         |
-+|                               |          |         |       +-------------------------------------------------------------------------+
-+|                               |          |         |       | Post-condition:                                                         |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Restart WirePlumber by running:                                       |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - systemctl --user start wireplumber                                  |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/ACP/SIG/SMG/BV-06-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Remove PTS device from Bluetooth devices                              |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/ACP/SIG/SMG/BV-08-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/ACP/SIG/SMG/BV-10-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/ACP/SIG/SMG/BV-12-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/ACP/SIG/SMG/BV-16-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/ACP/SIG/SMG/BV-18-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Start Lollypop and open a file                                        |
-+|                               |          |         |       +-------------------------------------------------------------------------+
-+|                               |          |         |       | On request play the file in Lollypop                                    |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/ACP/SIG/SMG/BV-20-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Start Lollypop and open a file                                        |
-+|                               |          |         |       +-------------------------------------------------------------------------+
-+|                               |          |         |       | On request play the file in Lollypop                                    |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/ACP/SIG/SMG/BV-22-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Start Lollypop and open a file                                        |
-+|                               |          |         |       +-------------------------------------------------------------------------+
-+|                               |          |         |       | On request play the file in Lollypop                                    |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/ACP/SIG/SMG/BV-24-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/ACP/SIG/SMG/BV-26-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/ACP/SIG/SMG/BI-05-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/ACP/SIG/SMG/BI-08-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/ACP/SIG/SMG/BI-11-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/ACP/SIG/SMG/BI-17-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/ACP/SIG/SMG/BI-20-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/ACP/SIG/SMG/BI-23-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Start Lollypop and open a file                                        |
-+|                               |          |         |       +-------------------------------------------------------------------------+
-+|                               |          |         |       | On request play the file in Lollypop                                    |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/ACP/SIG/SMG/BI-26-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/ACP/SIG/SMG/BI-33-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/ACP/SIG/SMG/BI-38-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/INT/SIG/SMG/BV-05-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/INT/SIG/SMG/BV-07-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/INT/SIG/SMG/BV-09-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/INT/SIG/SMG/BV-15-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/INT/SIG/SMG/BV-17-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Start Lollypop and open a file                                        |
-+|                               |          |         |       +-------------------------------------------------------------------------+
-+|                               |          |         |       | On request play the file in Lollypop                                    |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/INT/SIG/SMG/BV-19-C | PASS     |     6.1 | 5.69  |                                                                         |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/INT/SIG/SMG/BV-21-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Start Lollypop and open a file                                        |
-+|                               |          |         |       +-------------------------------------------------------------------------+
-+|                               |          |         |       | On request play the file in Lollypop                                    |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | On request pause the file in Loolypop                                   |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/INT/TRA/BTR/BV-01-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Start Lollypop and open a file                                        |
-+|                               |          |         |       +-------------------------------------------------------------------------+
-+|                               |          |         |       | On request play the file in Lollypop                                    |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/ACP/TRA/BTR/BI-01-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Stop WirePlumber by running:                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - systemctl --user stop wireplumber                                   |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Run:                                                                  |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - sudo avdtptest -d SRC -l -p                                         |
-+|                               |          |         |       +-------------------------------------------------------------------------+
-+|                               |          |         |       | Post-condition:                                                         |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Restart WirePlumber by running:                                       |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - systemctl --user start wireplumber                                  |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Stop 'avdtptest'                                                      |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/INT/SIG/SMG/BV-11-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Stop WirePlumber by running:                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - systemctl --user stop wireplumber                                   |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Run:                                                                  |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - sudo avdtptest -d SRC -l -s getconf                                 |
-+|                               |          |         |       +-------------------------------------------------------------------------+
-+|                               |          |         |       | Post-condition:                                                         |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Restart WirePlumber by running:                                       |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - systemctl --user start wireplumber                                  |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Stop 'avdtptest'                                                      |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/INT/SIG/SMG/BV-23-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Stop WirePlumber by running:                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - systemctl --user stop wireplumber                                   |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Run:                                                                  |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - sudo avdtptest -d SRC -l -p -s abort                                |
-+|                               |          |         |       +-------------------------------------------------------------------------+
-+|                               |          |         |       | Post-condition:                                                         |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Restart WirePlumber by running:                                       |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - systemctl --user start wireplumber                                  |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Stop 'avdtptest'                                                      |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/INT/SIG/SMG/BV-25-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Stop WirePlumber by running:                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - systemctl --user stop wireplumber                                   |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Run:                                                                  |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - sudo avdtptest -d SRC -l -p                                         |
-+|                               |          |         |       +-------------------------------------------------------------------------+
-+|                               |          |         |       | Post-condition:                                                         |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Restart WirePlumber by running:                                       |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - systemctl --user start wireplumber                                  |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Stop 'avdtptest'                                                      |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/INT/SIG/SMG/BV-28-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Stop WirePlumber by running:                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - systemctl --user stop wireplumber                                   |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Run:                                                                  |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - sudo avdtptest -d SRC -l -p                                         |
-+|                               |          |         |       +-------------------------------------------------------------------------+
-+|                               |          |         |       | Post-condition:                                                         |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Restart WirePlumber by running:                                       |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - systemctl --user start wireplumber                                  |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Stop 'avdtptest'                                                      |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/INT/SIG/SMG/BV-31-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Stop WirePlumber by running:                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - systemctl --user stop wireplumber                                   |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Run:                                                                  |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - sudo avdtptest -d SRC -l -p -v 0x0100                               |
-+|                               |          |         |       +-------------------------------------------------------------------------+
-+|                               |          |         |       | Post-condition:                                                         |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Restart WirePlumber by running:                                       |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - systemctl --user start wireplumber                                  |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Stop 'avdtptest'                                                      |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/INT/SIG/SMG/BI-30-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Stop WirePlumber by running:                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - systemctl --user stop wireplumber                                   |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Run:                                                                  |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - sudo avdtptest -d SRC -l -p -v 0x0100                               |
-+|                               |          |         |       +-------------------------------------------------------------------------+
-+|                               |          |         |       | Post-condition:                                                         |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Restart WirePlumber by running:                                       |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - systemctl --user start wireplumber                                  |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Stop 'avdtptest'                                                      |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/INT/SIG/SMG/BI-35-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Stop WirePlumber by running:                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - systemctl --user stop wireplumber                                   |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Run:                                                                  |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - sudo avdtptest -d SRC -l -p                                         |
-+|                               |          |         |       +-------------------------------------------------------------------------+
-+|                               |          |         |       | Post-condition:                                                         |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Restart WirePlumber by running:                                       |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - systemctl --user start wireplumber                                  |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Stop 'avdtptest'                                                      |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| AVDTP/SRC/INT/SIG/SMG/BI-36-C | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Stop WirePlumber by running:                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - systemctl --user stop wireplumber                                   |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Run:                                                                  |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - sudo avdtptest -d SRC -l -p                                         |
-+|                               |          |         |       +-------------------------------------------------------------------------+
-+|                               |          |         |       | Post-condition:                                                         |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Restart WirePlumber by running:                                       |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       |   - systemctl --user start wireplumber                                  |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Stop 'avdtptest'                                                      |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
-+| IOPT/CL/AVRCP-CT/SFC/BV-03-I  | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
-+|                               |          |         |       |                                                                         |
-+|                               |          |         |       | - Remove PTS device from Bluetooth devices                              |
-++-------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| Test name                    | Result   | Kernel  | BlueZ |                                                                         |
+++==============================+==========+=========+=======+=========================================================================+
++| AVRCP/CT/CEC/BV-01-I         | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - Remove PTS device from Bluetooth devices                              |
++|                              |          |         |       +-------------------------------------------------------------------------+
++|                              |          |         |       | On request create a Bluetooth connection from IUT to PTS                |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/CT/CEC/BV-02-I         | PASS     |     6.1 | 5.69  |                                                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/CT/CRC/BV-01-I         | PASS     |     6.1 | 5.69  |                                                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/CT/CRC/BV-02-I         | PASS     |     6.1 | 5.69  |                                                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/CT/PTH/BV-01-C         | PASS     |     6.1 | 5.69  | - busctl call org.bluez /org/bluez/hci0/dev_<BD_ADDR> \                 |
++|                              |          |         |       |   org.bluez.MediaControl1 VolumeUp                                      |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - busctl call org.bluez /org/bluez/hci0/dev_<BD_ADDR> \                 |
++|                              |          |         |       |   org.bluez.MediaControl1 VolumeDown                                    |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/CT/PTT/BV-02-I         | PASS     |     6.1 | 5.69  | - busctl call org.bluez /org/bluez/hci0/dev_<BD_ADDR> \                 |
++|                              |          |         |       |   org.bluez.MediaControl1 VolumeUp                                      |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - busctl call org.bluez /org/bluez/hci0/dev_<BD_ADDR> \                 |
++|                              |          |         |       |   org.bluez.MediaControl1 VolumeDown                                    |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/CT/VLH/BI-03-C         | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - Remove PTS device from Bluetooth devices                              |
++|                              |          |         |       | - Start VLC                                                             |
++|                              |          |         |       | - Cancel first try when requesting to initiate a control channel        |
++|                              |          |         |       |   connection, then retry this test                                      |
++|                              |          |         |       +-------------------------------------------------------------------------+
++|                              |          |         |       | On request create a Bluetooth connection from IUT to PTS                |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | On volume change request:                                               |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - busctl set-property org.bluez /org/bluez/hci0/dev_<BD_ADDR>/sep1/fd0 \|
++|                              |          |         |       |   org.bluez.MediaTransport1 Volume q 64                                 |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | Check using audio volume panel                                          |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/CT/VLH/BI-04-C         | PASS     |     6.1 | 5.69  | Check using audio volume panel                                          |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/CT/VLH/BV-01-C         | PASS     |     6.1 | 5.69  | On volume change request:                                               |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - busctl set-property org.bluez /org/bluez/hci0/dev_<BD_ADDR>/sep1/fd0 \|
++|                              |          |         |       |   org.bluez.MediaTransport1 Volume q 64                                 |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/CT/VLH/BV-03-C         | PASS     |     6.1 | 5.69  |                                                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/CT/VLH/BV-01-I         | PASS     |     6.1 | 5.69  | Check using audio volume panel                                          |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/CT/VLH/BV-02-I         | PASS     |     6.1 | 5.69  | On volume change request:                                               |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - busctl set-property org.bluez /org/bluez/hci0/dev_<BD_ADDR>/sep1/fd0 \|
++|                              |          |         |       |   org.bluez.MediaTransport1 Volume q 64                                 |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/CT/NFY/BV-01-C         | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - Remove PTS device from Bluetooth devices                              |
++|                              |          |         |       +-------------------------------------------------------------------------+
++|                              |          |         |       | On request create a Bluetooth connection from IUT to PTS                |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/CEC/BV-01-I         | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - Remove PTS device from Bluetooth devices                              |
++|                              |          |         |       +-------------------------------------------------------------------------+
++|                              |          |         |       | On request create a Bluetooth connection from IUT to PTS                |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/CFG/BI-01-C         | PASS     |     6.1 | 5.69  |                                                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/CFG/BV-02-C         | PASS     |     6.1 | 5.69  |                                                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/CRC/BV-01-I         | PASS     |     6.1 | 5.69  |                                                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/CRC/BV-02-I         | PASS     |     6.1 | 5.69  |                                                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/ICC/BV-01-I         | PASS     |     6.1 | 5.69  |                                                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/ICC/BV-02-I         | PASS     |     6.1 | 5.69  |                                                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/INV/BI-01-C         | PASS     |     6.1 | 5.69  |                                                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/INV/BV-02-C         | PASS     |     6.1 | 5.69  |                                                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/MDI/BV-02-C         | PASS     |     6.1 | 5.69  |                                                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/MDI/BV-04-C         | PASS     |     6.1 | 5.69  |                                                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/MDI/BV-05-C         | PASS     |     6.1 | 5.69  |                                                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/MPS/BI-01-C         | PASS     |     6.1 | 5.69  |                                                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/MPS/BV-02-C         | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - Remove PTS device from Bluetooth devices                              |
++|                              |          |         |       | - Start VLC and open a file                                             |
++|                              |          |         |       | - Cancel first try when requesting to initiate a control channel        |
++|                              |          |         |       |   connection, then retry this test                                      |
++|                              |          |         |       +-------------------------------------------------------------------------+
++|                              |          |         |       | On request create a Bluetooth connection from IUT to PTS                |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/MPS/BV-06-C         | PASS     |     6.1 | 5.69  |                                                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/MPS/BV-09-C         | PASS     |     6.1 | 5.69  |                                                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/MPS/BV-12-C         | PASS     |     6.1 | 5.69  |                                                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/MPS/BV-01-I         | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - Remove PTS device from Bluetooth devices                              |
++|                              |          |         |       | - Start VLC                                                             |
++|                              |          |         |       +-------------------------------------------------------------------------+
++|                              |          |         |       | VLC is shown as "Media Player: Player"                                  |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/MPS/BV-02-I         | PASS     |     6.1 | 5.69  | Check using audio volume panel                                          |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/MPS/BV-03-I         | PASS     |     6.1 | 5.69  | Check using audio volume panel                                          |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | Sometimes the volume is changed on Speaker instead of the Bluetooth PTS |
++|                              |          |         |       | audio device                                                            |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/NFY/BI-01-C         | PASS     |     6.1 | 5.69  |                                                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/NFY/BV-02-C         | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - Start Lollypop and open a file                                        |
++|                              |          |         |       +-------------------------------------------------------------------------+
++|                              |          |         |       | On request play the file in Lollypop                                    |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/NFY/BV-04-C         | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - Start VLC and play a file                                             |
++|                              |          |         |       +-------------------------------------------------------------------------+
++|                              |          |         |       | On "Place the IUT into a state where no track is currently selected…"   |
++|                              |          |         |       | request close VLC then press OK                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/NFY/BV-05-C         | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - Start VLC and play a file                                             |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/NFY/BV-08-C         | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - Start VLC and open a file                                             |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/PTT/BV-01-I         | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - Start Lollypop, play a file then pause it (not stopped)               |
++|                              |          |         |       |   (VLC doesn't receive the Play command but receive the Stop command)   |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/PTT/BV-02-I         | PASS     |     6.1 | 5.69  | Check using audio volume panel                                          |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | Sometimes the volume is changed on Speaker instead of the Bluetooth PTS |
++|                              |          |         |       | audio device, in this case check Bluetooth volume is above 0% or        |
++|                              |          |         |       | manually increase it                                                    |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/RCR/BV-02-C         | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - Open 'sbc_enc_test_04_more_than_512_bytes_metadata.mp3' file in VLC   |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/RCR/BV-04-C         | PASS     |     6.1 | 5.69  |                                                                         |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/VLH/BI-01-C         | PASS     |     6.1 | 5.69  | Sometimes inconclusive, retry                                           |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/VLH/BI-02-C         | PASS     |     6.1 | 5.69  | Sometimes inconclusive, retry                                           |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/VLH/BV-02-C         | PASS     |     6.1 | 5.69  | Sometimes inconclusive, retry                                           |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/VLH/BV-04-C         | PASS     |     6.1 | 5.69  | On volume change request:                                               |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - busctl set-property org.bluez /org/bluez/hci0/dev_<BD_ADDR>/fd0 \     |
++|                              |          |         |       |   org.bluez.MediaTransport1 Volume q 64                                 |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/VLH/BV-01-I         | PASS     |     6.1 | 5.69  | On volume change request:                                               |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - busctl set-property org.bluez /org/bluez/hci0/dev_<BD_ADDR>/fd0 \     |
++|                              |          |         |       |   org.bluez.MediaTransport1 Volume q 64                                 |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | Sometimes inconclusive, retry                                           |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| AVRCP/TG/VLH/BV-02-I         | PASS     |     6.1 | 5.69  | Expect to hear sound (or not), then silence:                            |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - busctl get-property org.bluez /org/bluez/hci0/dev_<BD_ADDR>/fd0 \     |
++|                              |          |         |       |   org.bluez.MediaTransport1 Volume q 0                                  |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | (click OK), then sound really low (click OK):                           |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - busctl get-property org.bluez /org/bluez/hci0/dev_<BD_ADDR>/fd0 \     |
++|                              |          |         |       |   org.bluez.MediaTransport1 Volume q 64                                 |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
++| IOPT/CL/AVRCP-CT/SFC/BV-03-I | PASS     |     6.1 | 5.69  | Pre-condition:                                                          |
++|                              |          |         |       |                                                                         |
++|                              |          |         |       | - Remove PTS device from Bluetooth devices                              |
+++------------------------------+----------+---------+-------+-------------------------------------------------------------------------+
 -- 
 2.43.0
 
