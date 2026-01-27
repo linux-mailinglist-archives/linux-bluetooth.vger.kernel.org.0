@@ -1,52 +1,52 @@
-Return-Path: <linux-bluetooth+bounces-18569-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18570-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kNczHgYHeWlrugEAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18569-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Jan 2026 19:42:14 +0100
+	id oN2EBwkHeWlrugEAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18570-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Jan 2026 19:42:17 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04D1499480
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Jan 2026 19:42:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E6E0599487
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Jan 2026 19:42:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 80C3B309427A
+	by sea.lore.kernel.org (Postfix) with ESMTP id D4E3B3096995
 	for <lists+linux-bluetooth@lfdr.de>; Tue, 27 Jan 2026 18:41:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61AD2328B70;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9066F328B72;
 	Tue, 27 Jan 2026 18:41:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="hGXg6yhO"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="GxOLda9m"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-23.smtp.github.com (out-23.smtp.github.com [192.30.252.206])
+Received: from out-20.smtp.github.com (out-20.smtp.github.com [192.30.252.203])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C9C328255
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00CA279907
 	for <linux-bluetooth@vger.kernel.org>; Tue, 27 Jan 2026 18:41:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.206
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.203
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769539271; cv=none; b=ur2xgXuBpY2Gba3sx4xt/3zZssuswIDzGsS9U25mDFTMlaKudz8QMZrwNOEa5CAk3MfjyS0b0j9+IQ3tcrnTEALJSXHJgOj+wVtY0WB+u6wpNN7+dfnyuzksA4GfgkN/VF4iqQ6zL6EcUwO7SKfCmuuYqQIpCqJwzfRmr7QJ1Po=
+	t=1769539272; cv=none; b=nP4GpoQScRo8Hay4A8u1GcRghxKMdRzE0CJFsVvWc20d9KAfI5zSu6RGflhEQlqMObQ8pZ8Rvb53WqM+UchlE/najxIdoyKR63LBuzZv9iIQYd4hI1a0HrV6sV2RjDWEcHPsDpJo8INDa/wxR9uOwnpsRkltL2Hll+dGXQb4Eg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769539271; c=relaxed/simple;
-	bh=+dU+QsBEQV9xD305TGhDWTkkW+Kfk1ad71iybzSt5dE=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=l2rHKFWR6nc/AgGX/uE0TGp8wb8dB9mcH8esdXLU1+D/c+OxLz4424mbSO9dlwVZpEvS+JHve95AuanAkAbPSt1q9n7KYxlgty16RyQpiSzt96X3iKNKpMmVew7EN+cW0DeYttSesugrlwOH017G6NjEVO2mZ0hnXWrizbXNh4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=hGXg6yhO; arc=none smtp.client-ip=192.30.252.206
+	s=arc-20240116; t=1769539272; c=relaxed/simple;
+	bh=6XA5553opCpq/zOrePt3oYXIkYCXKuvoAhyNtl9q6p0=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=ZDoeN7sJzA0ciAfipa/FiXzZOR5ZKY+S5+M2zj56xoK5vEhaaNyt3VhP3c44xsa+NLJhs2FAQo+rcaNrDZsWkYIrlYW0zC6djUDZX4vHqp2XdgKGsdz2BsDCvg/r4paalVLf9LsyqC4ZFZZhub1u5INe3/UVSUKHWSNHsoENElM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=GxOLda9m; arc=none smtp.client-ip=192.30.252.203
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-3cf1e0c.ac4-iad.github.net [10.52.202.116])
-	by smtp.github.com (Postfix) with ESMTPA id C3DD5210C9
-	for <linux-bluetooth@vger.kernel.org>; Tue, 27 Jan 2026 10:41:06 -0800 (PST)
+Received: from github.com (hubbernetes-node-93f4b09.va3-iad.github.net [10.48.204.60])
+	by smtp.github.com (Postfix) with ESMTPA id E222D3C10DC
+	for <linux-bluetooth@vger.kernel.org>; Tue, 27 Jan 2026 10:41:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1769539266;
-	bh=PLXHlhY7dSkCsyQM2LF2VQArgGGJ/TeFHuzQ3JDWoxg=;
+	s=pf2023; t=1769539267;
+	bh=8sWGTMz5jwQG3Wpmil5llj7turhKJgTAfzAxSruDOPA=;
 	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=hGXg6yhOJJTlwPL3Lhm99Q42sjCstik4kZi4TeuxYQWiZXSFtK28bBXatzQciu1MQ
-	 TId+QdC6aF/c0D+CsP482nawLTf99N1nSP2H4vKSDUv+IgQyjIvdRyrHaA9bbLnSMO
-	 TZ7QiUYhhFjBzfc7k67losjoRst37SGOccdPciEM=
-Date: Tue, 27 Jan 2026 10:41:06 -0800
+	b=GxOLda9m98lZgo8RPlieL69UU3lpVA5QxtGXrCrnBUDdb/F2ITFRUELoYrP92OQNH
+	 VIjyNpmCWsf96etvxgl66BwCZ/FZSpoPXJizf3hxlyDP/JozDgcd14kxohInyvjA9r
+	 P928MLCtmLfYKrSlIVSuTbWsZy4u9fedr4zJ6i6s=
+Date: Tue, 27 Jan 2026 10:41:07 -0800
 From: BluezTestBot <noreply@github.com>
 To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/1047693/26cf2d-000000@github.com>
+Message-ID: <bluez/bluez/push/refs/heads/1047690/0dc1f3-000000@github.com>
 Subject: [bluez/bluez]
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
@@ -74,7 +74,7 @@ X-Spamd-Result: default: False [2.04 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	RCPT_COUNT_ONE(0.00)[1];
 	RCVD_COUNT_THREE(0.00)[4];
-	TAGGED_FROM(0.00)[bounces-18569-lists,linux-bluetooth=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-18570-lists,linux-bluetooth=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	MISSING_XM_UA(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
@@ -88,10 +88,10 @@ X-Spamd-Result: default: False [2.04 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 04D1499480
+X-Rspamd-Queue-Id: E6E0599487
 X-Rspamd-Action: no action
 
-  Branch: refs/heads/1047693
+  Branch: refs/heads/1047690
   Home:   https://github.com/bluez/bluez
 
 To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
