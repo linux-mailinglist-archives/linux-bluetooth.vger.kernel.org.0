@@ -1,44 +1,44 @@
-Return-Path: <linux-bluetooth+bounces-18599-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18602-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id uIwdAtA6emlN4wEAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18599-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 17:35:28 +0100
+	id +PXBMdA3eml+4gEAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18602-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 17:22:40 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C17CA5D90
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 17:35:27 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id F2311A57E5
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 17:22:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7326931FA924
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 15:56:37 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 0D0E630E26E7
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 15:56:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BB173101B6;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8E183054D8;
 	Wed, 28 Jan 2026 15:56:11 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8062330CDA1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E6930DD3A
 	for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jan 2026 15:56:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615770; cv=none; b=A2iwVameR89BRz+o7DydO4oeWoUje4DlB5rD20tg+Uj/3IkiZpb3AmpqnvYQPaaeeyTEblvIsBRpsaFzK4/RnfSgVWHsPc7q9EGH7EfVp6r7s2/Fjfg0Q1+QRfaSpOXPU1ZlPz3QTFQglF8UAe4GahEIUFOxsD3ppZISgas/AIQ=
+	t=1769615771; cv=none; b=JzFNuKvyYCkk8wjJmR+oOji7KLbHQ2tE263sK/EbvIKsHBgqkrzozfqAYXrxq2Lrw/kGo9A4QK76qBhWtM1t+XUR2neW7pLSn7akDHFyNMCcbCmCGIOb+3x6osD4cykAi5H0CZAy+CpwatE3257wCRSzj4/f7gK7um2OKGMgd2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615770; c=relaxed/simple;
-	bh=XMidsdx3VRwha/rmd90G2l5eNbhb9ruZgdZIflldr58=;
+	s=arc-20240116; t=1769615771; c=relaxed/simple;
+	bh=p0IRn8yIfsmInYRtgdRa773pacgdPqREhHQ1OK1LhL0=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iojTJH1DkYCP6vOI+CrZ/lyH0xMqCT6HqzVYzceN2mCAZYLdEBYw/qzLSn2OAs2hJZphj58J2bcNGOrce4fKvIHALKy3zkuy3afUmyODq9XJMzc4nLvgvUiwZebJLZQV43+qFefMCAYDxj2fWef3RvTsa+J3h2wB7wXAOuw8s1I=
+	 MIME-Version; b=rT76/T3th06f/8WPtm3D4GEBq8cev7K79OFJcIoMUTfrLLgLZ9k2NxBcogKDdEFWDFjlTQRa+9s4cI3wVaE7zBbSuvC9elpbqfI6mLOm5AgLpfPqTHfmHx7aWM6BUJzHcjQwBCVyGDJTtRht9hTmFzn2KjDS9pJX/WBRIORcRNg=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.196
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 4DC7644010
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 820DD44014
 	for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jan 2026 15:56:00 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v6 14/20] unit: Make gobex-transfer tests run concurrently
-Date: Wed, 28 Jan 2026 16:11:52 +0100
-Message-ID: <20260128155548.2025252-15-hadess@hadess.net>
+Subject: [PATCH BlueZ v6 15/20] build: Only build profiles if the daemon is built
+Date: Wed, 28 Jan 2026 16:11:53 +0100
+Message-ID: <20260128155548.2025252-16-hadess@hadess.net>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128155548.2025252-1-hadess@hadess.net>
 References: <20260128155548.2025252-1-hadess@hadess.net>
@@ -51,89 +51,57 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
 X-GND-Score: 0
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieefjeekucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpeekteetgeettdehieduiedttdetffelleehtdejkeeluedvgfffvdevteetudfhkeenucfkphepvdgrtddumegvfeegmegvtgejfeemtghfvddtmeelsgdvleemtggufeeimeeikehfugemtgdtleefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvfeegmegvtgejfeemtghfvddtmeelsgdvleemtggufeeimeeikehfugemtgdtleefpdhhvghlohepohhlihhmphhitgdpmhgrihhlfhhrohhmpehhrgguvghssheshhgruggvshhsrdhnvghtpdhqihgupeegffevjeeigeegtddutddpmhhouggvpehsmhhtphhouhhtpdhnsggprhgtphhtthhopedupdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieefjeekucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpeekteetgeettdehieduiedttdetffelleehtdejkeeluedvgfffvdevteetudfhkeenucfkphepvdgrtddumegvfeegmegvtgejfeemtghfvddtmeelsgdvleemtggufeeimeeikehfugemtgdtleefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvfeegmegvtgejfeemtghfvddtmeelsgdvleemtggufeeimeeikehfugemtgdtleefpdhhvghlohepohhlihhmphhitgdpmhgrihhlfhhrohhmpehhrgguvghssheshhgruggvshhsrdhnvghtpdhqihgupeekvddtffffgeegtddugedpmhhouggvpehsmhhtphhouhhtpdhnsggprhgtphhtthhopedupdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
 X-GND-State: clean
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [0.04 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_CONTAINS_FROM(1.00)[];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCPT_COUNT_ONE(0.00)[1];
-	TAGGED_FROM(0.00)[bounces-18599-lists,linux-bluetooth=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-18602-lists,linux-bluetooth=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	DMARC_NA(0.00)[hadess.net];
 	RCVD_COUNT_THREE(0.00)[4];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
 	FROM_NEQ_ENVFROM(0.00)[hadess@hadess.net,linux-bluetooth@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	NEURAL_HAM(-0.00)[-0.954];
+	NEURAL_HAM(-0.00)[-0.986];
 	TO_DN_NONE(0.00)[];
 	R_DKIM_NA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[hadess.net:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 9C17CA5D90
+	DBL_BLOCKED_OPENRESOLVER(0.00)[meson.build:url,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,hadess.net:mid]
+X-Rspamd-Queue-Id: F2311A57E5
 X-Rspamd-Action: no action
 
 ---
- unit/meson.build | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ meson.build | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/unit/meson.build b/unit/meson.build
-index b74a67541e99..9acae732d495 100644
---- a/unit/meson.build
-+++ b/unit/meson.build
-@@ -70,15 +70,18 @@ tests3 = [
-   [ 'test-avdtp.c', '../src/log.c', 'avdtp.c' ],
-   [ 'test-avctp.c', '../src/log.c', 'avctp.c' ],
- ]
-+tests4 = []
- 
- if ical_dep.found()
-   tests3 += [
-     [ 'test-gobex.c', 'util.c', gobex_sources ],
-     [ 'test-gobex-packet.c', 'util.c', gobex_sources ],
-     [ 'test-gobex-header.c', 'util.c', gobex_sources ],
--    [ 'test-gobex-transfer.c', 'util.c', gobex_sources ],
-     [ 'test-gobex-apparam.c', 'util.c', gobex_sources ],
-   ]
-+  tests4 = [
-+    [ 'test-gobex-transfer.c', 'util.c', gobex_sources ],
-+  ]
- endif
- 
- foreach t: tests3
-@@ -92,6 +95,22 @@ foreach t: tests3
-   test(test_name, exe)
- endforeach
- 
-+foreach t: tests4
-+  test_name = t[0].substring(0, -2)
-+  exe = executable(test_name,
-+    sources: t,
-+    c_args: [ '-DSTORAGEDIR="@0"'.format(storagedir) ],
-+    include_directories: '../lib',
-+    dependencies: libshared_glib_dep
-+  )
-+
-+  r = run_command(sh, unittest_list, t, check: true)
-+  unit_tests = r.stdout().strip().split(' ')
-+  foreach ut: unit_tests
-+    test(ut, exe, args: [ '-p', ut ])
-+  endforeach
-+endforeach
-+
- exe = executable('test-gdbus-client',
-   sources: 'test-gdbus-client.c',
-   dependencies: [ libgdbus_internal_dep, libshared_glib_dep ]
+diff --git a/meson.build b/meson.build
+index f2220b2c4613..ab21fd80e76e 100644
+--- a/meson.build
++++ b/meson.build
+@@ -251,7 +251,9 @@ subdir('gdbus')
+ subdir('attrib')
+ subdir('btio')
+ subdir('plugins')
+-subdir('profiles')
++if get_option('daemon').enabled()
++  subdir('profiles')
++endif
+ subdir('src')
+ subdir('client')
+ if get_option('monitor').enabled()
 -- 
 2.52.0
 
