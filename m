@@ -1,116 +1,93 @@
-Return-Path: <linux-bluetooth+bounces-18580-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18581-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wPD2B2H6eWkE1QEAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18580-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 13:00:33 +0100
+	id oKxHFjEFemlE1gEAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18581-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 13:46:41 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 435A6A0F37
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 13:00:32 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id D32CEA182A
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 13:46:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 3DBE0300AC17
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 11:59:48 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CE9103016CB1
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 12:45:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C111E33D503;
-	Wed, 28 Jan 2026 11:59:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="h2ElTfOD"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63907350A0B;
+	Wed, 28 Jan 2026 12:45:03 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-17.smtp.github.com (out-17.smtp.github.com [192.30.252.200])
+Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D6E52EDD6B
-	for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jan 2026 11:59:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89719284B2E
+	for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jan 2026 12:45:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769601585; cv=none; b=qRiJ9/lHFE69T3c91SVDTUwhP6yFhLH1xONeTGRO37aoMVa6VcdHxYuJ4tC2O6I/ANl/aGQTP/FtnJuNTjwrlIz+NuhE1mkT2v2eEzeqxHaAxYU7DV7nzslIYbmF6jcMk/wFpgHuDERA5oaG7lEeV3g3erH9EdOhVmcp+YCsSWg=
+	t=1769604303; cv=none; b=XBZykC/soMUz6ZLYUEHeHdPwTx77PvOlPPt0ksUeNpJt0VlJw/nBCFDN9G/iIZNfRxet25FLaBEA0sp3AKsROErbhoJTHoGt9pBkMqnCIqBUysrpLYKfyNoYx29rbNP5wn512j7vnhuWxUEucMO39shESDYh84gmcouaEfWeGQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769601585; c=relaxed/simple;
-	bh=gdDEFvN+Gy5l6mzTuSwqUG+D/GaOmN4yHQuKNhkste8=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=pwaLuiLs0n1O9tcvPJSuYLl7AAhktIg9gTov/Ljhy1+4mi2QTZ1oLWWlXNpe8rt98PqRnQrun+K2dL6J8KfQJwUuerWs7hHSd28iDoyJDj8I6ODQYQGkvZfTHcq2u57XiG8pJP2pHXjUarZIIR5IRyIRWDPtx11+f99+yO0li9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=h2ElTfOD; arc=none smtp.client-ip=192.30.252.200
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-8e8e964.va3-iad.github.net [10.48.178.31])
-	by smtp.github.com (Postfix) with ESMTPA id 690004E1326
-	for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jan 2026 03:59:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1769601583;
-	bh=gK0Q4QYptWCg9Wc5oaurHT8AW7JZ1NNXAfzECXzuNaA=;
-	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=h2ElTfOD116rW/wH6vTh401RvyZRywmJi15zE2mhy8fl7z8+zuqtDbYvnUfvNwEEz
-	 aKycpuVBdVjiqBwzaBBT9g5gcleA/9m+/gD6AWAfrGJRWSucY/X3idePPaQUiytOV8
-	 rfTMsz/jaO1K79oCqZwyIwpT7u13wlEzklyfUgwU=
-Date: Wed, 28 Jan 2026 03:59:43 -0800
-From: fdanis-oss <noreply@github.com>
-To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/1048044/000000-615102@github.com>
-Subject: [bluez/bluez] 615102: doc/qualification: Fix typos
+	s=arc-20240116; t=1769604303; c=relaxed/simple;
+	bh=taZmEHAhg7yp2z0Gq1/uKSugIskE4/smmvc1FURvBco=;
+	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=BJ08diMzubGcH4ph5mu9/mTigpixMPBCdb/rFB3wWNwjEGPuzicpeBKQBVIVf2ZKM4fGuqRUDlC0c7ylmBeELbUQ+RSuW+VJdfDSMoGR7BZqULRIfkhKFiyMA1bHLuacxsF4QFeEFiglKyDxFnlypPF2AWliGq37ALy8YKxqqSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 5450F43A5E;
+	Wed, 28 Jan 2026 12:44:53 +0000 (UTC)
+Message-ID: <f2bb9c6c5f0caf82fd5a2af9cd6676e4349a70b9.camel@hadess.net>
+Subject: Re: [PATCH BlueZ] doc/qualification: Fix typos
+From: Bastien Nocera <hadess@hadess.net>
+To: =?ISO-8859-1?Q?Fr=E9d=E9ric?= Danis <frederic.danis@collabora.com>, 
+	linux-bluetooth@vger.kernel.org
+Date: Wed, 28 Jan 2026 13:44:52 +0100
+In-Reply-To: <20260128115359.222251-1-frederic.danis@collabora.com>
+References: <20260128115359.222251-1-frederic.danis@collabora.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+MIME-Version: 1.0
+X-GND-Sasl: hadess@hadess.net
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieefgedtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefkuffhvfffjghftgfgfgggsehtqhertddtreejnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpeeuveeivdetkeekgfefffeftefhjeeikeetffdvteejheefieeltedtvdeuleduleenucfkphepvdgrtddumegvfeegmegvtgejfeemtghfvddtmeelsgdvleemtggufeeimeeikehfugemtgdtleefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvfeegmegvtgejfeemtghfvddtmeelsgdvleemtggufeeimeeikehfugemtgdtleefpdhhvghloheplgfkrfhvieemvdgrtddumegvfeegmegvtgejfeemtghfvddtmeelsgdvleemtggufeeimeeikehfugemtgdtleefngdpmhgrihhlfhhrohhmpehhrgguvghssheshhgruggvshhsrdhnvghtpdhqihgupeehgeehtdfhgeefteehgfdpmhhouggvpehsmhhtphhouhhtpdhnsggprhgtphhtthhopedvpdhrtghpthhtohepfhhrvgguvghrihgtrdgurghnihhssegtohhllhgrsghorhgrrdgtohhmpdhrtghpthhtoheplhhinhhugidqsghlu
+ hgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-GND-State: clean
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [2.04 / 15.00];
-	DMARC_POLICY_REJECT(2.00)[github.com : SPF not aligned (relaxed),reject];
-	R_DKIM_REJECT(1.00)[github.com:s=pf2023];
+X-Spamd-Result: default: False [-1.46 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MV_CASE(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[github.com:-];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_ONE(0.00)[1];
+	TAGGED_RCPT(0.00)[linux-bluetooth];
 	RCVD_COUNT_THREE(0.00)[4];
-	TAGGED_FROM(0.00)[bounces-18580-lists,linux-bluetooth=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
+	NEURAL_HAM(-0.00)[-0.998];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	DMARC_NA(0.00)[hadess.net];
+	MID_RHS_MATCH_FROM(0.00)[];
+	R_DKIM_NA(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[hadess@hadess.net,linux-bluetooth@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[noreply@github.com,linux-bluetooth@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	TO_DN_NONE(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-bluetooth];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[collabora.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 435A6A0F37
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-18581-lists,linux-bluetooth=lfdr.de];
+	RCPT_COUNT_TWO(0.00)[2];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[]
+X-Rspamd-Queue-Id: D32CEA182A
 X-Rspamd-Action: no action
 
-  Branch: refs/heads/1048044
-  Home:   https://github.com/bluez/bluez
-  Commit: 61510247a4823dcf168d08e421c0199bcc30fa6e
-      https://github.com/bluez/bluez/commit/61510247a4823dcf168d08e421c01=
-99bcc30fa6e
-  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
-  Date:   2026-01-28 (Wed, 28 Jan 2026)
+On Wed, 2026-01-28 at 12:53 +0100, Fr=C3=A9d=C3=A9ric Danis wrote:
+> This fix the errors and warnings found during HTML generation.
 
-  Changed paths:
-    M doc/qualification/avrcp-pics.rst
-    M doc/qualification/gap-pics.rst
+Tested locally, and fixes the docs generation errors as expected.
 
-  Log Message:
-  -----------
-  doc/qualification: Fix typos
-
-This fix the errors and warnings found during HTML generation.
-
-
-
-To unsubscribe from these emails, change your notification settings at ht=
-tps://github.com/bluez/bluez/settings/notifications
++1 from me.
 
