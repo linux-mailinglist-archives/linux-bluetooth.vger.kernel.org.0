@@ -1,98 +1,223 @@
-Return-Path: <linux-bluetooth+bounces-18616-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18621-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0K7VBZmHemkE7gEAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18616-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 23:03:05 +0100
+	id sCJgNqCKemkE7gEAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18621-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 23:16:00 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id ABB0AA9598
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 23:03:04 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 45C1BA9743
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 23:16:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 14AF03045C24
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 22:02:37 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id C8EBE3010B87
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 22:15:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7464C342537;
-	Wed, 28 Jan 2026 22:02:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="BidknyHW"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B62DB3446B3;
+	Wed, 28 Jan 2026 22:15:55 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-28.smtp.github.com (out-28.smtp.github.com [192.30.252.211])
+Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [217.70.183.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0F133C19C
-	for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jan 2026 22:02:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.211
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E7222D7B0
+	for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jan 2026 22:15:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769637755; cv=none; b=lVEixd/b0eJjv7MByB3fLKCCCKZhH2nxBDmR97nfai7vH0x6TAbppZTerIaJ1VmwGAzcDLKBB9DxV0w3x9KnJA7F+KbiZ5IajNJ1Fkrh7dvJr9fQ4asxkiuA9wuJJ/PyMrVKpt8WLLKT5GWRUpmdsouqASIQf1MVPQC8wyfVZZw=
+	t=1769638555; cv=none; b=me5nMyDOCi1bcm2Ip7FKBe4cm0+qvzt9Z8+O7nFpMgdtPG3WnWRRO6WLMiusznG388gOkz126x1BNeVGArYHrXFkxXnrdLYI4AtZBBJkrm9BH4Hh9vlWiw0Q5CbT0NWgP36D9kong6RCtB0nBusQuVeiCaPcRc4pypBJ20c02d4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769637755; c=relaxed/simple;
-	bh=BY/YhDEJV5hUIbH5FwParuVffs2G+wyaa2i86jONrow=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=GkEdIcFU1S+Hz8N6+iSc7QF8tEErT0PdQPPSTLtkVGoOWWI4pAxMg9vQDwDg6mEUdKAsf1PUgWjwBon0xdhsMHFyNrm3d39qFN6VdGMrymQ1z5EMYAZteriPw2mheT1BdLM+V+/vjmiK9VjIUF4EmFCEtioCeR/1UkEWu4WrJA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=BidknyHW; arc=none smtp.client-ip=192.30.252.211
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-e595e05.ash1-iad.github.net [10.56.162.35])
-	by smtp.github.com (Postfix) with ESMTPA id AEB4C921345
-	for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jan 2026 14:02:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1769637753;
-	bh=YLgaBhd1n8AW+nlpjHn2gY+bB8VFuBJLC1id6PrTRVU=;
-	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=BidknyHWmvLlzfVCzHeqWTXV8Xkdbgz/IbTiv273z0bIFHYnl5BY0iRMT/jFuI0K7
-	 mxlxNH7EvhZBHYc2+CKkb3DxWzqulj8lR0YO1BozrN+VVTK7lAFbKer2iip7YwmXo1
-	 xUhtfSudTds+Lv4zNhN99zD0h8c8CwCmTQ0uAVYw=
-Date: Wed, 28 Jan 2026 14:02:33 -0800
-From: BluezTestBot <noreply@github.com>
+	s=arc-20240116; t=1769638555; c=relaxed/simple;
+	bh=5Ga+F45f8qbSxq6GkP3Nd52TOD8ZaEWtxUJKTClaVn4=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=J4vO7gzA/YkaH+BTAHZlUed/Ii5e8a0IXX3qV6A53mBtvuNMa5x+31VgoZzp83UsWCz2+zOjKb0WZC5JK7ryJQVWPFnp+4rfkvHPrs3EMZJZ4IHe1QQsAuoVuRMKtUz2pnfWSMgG8MpfetPbNRpyn7YmIYu2ii3j9ruEUqAIDg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
+Received: by mail.gandi.net (Postfix) with ESMTPSA id AD828443E5
+	for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jan 2026 22:15:44 +0000 (UTC)
+From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/1048215/969859-000000@github.com>
-Subject: [bluez/bluez]
+Subject: [PATCH BlueZ v7 00/16] Add meson build system and HTML docs
+Date: Wed, 28 Jan 2026 23:11:50 +0100
+Message-ID: <20260128221536.2319084-1-hadess@hadess.net>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-GND-Sasl: hadess@hadess.net
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieeggeelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvufffkffoggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpeduiedufeekkeffkefffefggeetjedtvedvtedufedtheduueeivedukeffjeejtdenucffohhmrghinhepshgvrhhvihgtvgdrihhnnecukfhppedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemlegsvdelmegtugefieemieekfhgumegttdelfeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemlegsvdelmegtugefieemieekfhgumegttdelfedphhgvlhhopeholhhimhhpihgtpdhmrghilhhfrhhomhephhgruggvshhssehhrgguvghsshdrnhgvthdpqhhiugepteffkedvkeeggeefgfehpdhmohguvgepshhmthhpohhuthdpnhgspghrtghpthhtohepuddprhgtphhtthhopehlihhnuhigqdgslhhuvghtohhothhhsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-GND-State: clean
+X-GND-Score: 0
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [2.04 / 15.00];
-	DMARC_POLICY_REJECT(2.00)[github.com : SPF not aligned (relaxed),reject];
-	R_DKIM_REJECT(1.00)[github.com:s=pf2023];
+X-Spamd-Result: default: False [0.04 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MV_CASE(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[github.com:-];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCPT_COUNT_ONE(0.00)[1];
-	RCVD_COUNT_THREE(0.00)[4];
-	TAGGED_FROM(0.00)[bounces-18616-lists,linux-bluetooth=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-18621-lists,linux-bluetooth=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	DMARC_NA(0.00)[hadess.net];
+	RCVD_COUNT_THREE(0.00)[4];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[noreply@github.com,linux-bluetooth@vger.kernel.org];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TO_DN_NONE(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: ABB0AA9598
+	FROM_NEQ_ENVFROM(0.00)[hadess@hadess.net,linux-bluetooth@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	NEURAL_HAM(-0.00)[-0.994];
+	TO_DN_NONE(0.00)[];
+	R_DKIM_NA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 45C1BA9743
 X-Rspamd-Action: no action
 
-  Branch: refs/heads/1048215
-  Home:   https://github.com/bluez/bluez
+Changes since v6:
+Drop:
+  doc: Port sap-api.txt to RST
+  doc: Port health-api.txt to RST
+  doc: Add "C" code-block markers for coding-style doc
+  tools: Install btmgmt along with other tools
 
-To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
+SAP and health profiles were removed, the C code-block marker needs a
+dependency check (both autotools and meson), and btmgmt was superseded
+by bluetoothctl's mgmt submenu.
+
+"build: Only build gdbus library if there is a user" was fixed to
+also build gdbus if the daemon was built.
+
+"github: Add docs deployment" was modified to be ready to deploy
+in bluez' github.
+
+Bastien Nocera (14):
+  build: Add meson wrap for libell
+  build: Add meson build system
+  build: Make more use of 'feature' options
+  build: Separate systemd and libsystemd dependencies
+  tools: Install gatttool if deprecated tools are enabled
+  tools: Install avinfo tool by default
+  emulator: Install the emulator if built
+  build: Add option to allow disabling bluetoothd
+  unit: Run test-bap tests concurrently
+  unit: Make gobex-transfer tests run concurrently
+  build: Only build profiles if the daemon is built
+  build: Only build gdbus library if there is a user
+  doc: Add HTML documentation
+  github: Add docs deployment
+
+Paul Otto (2):
+  client: Expand GATT submenu documentation
+  doc: Add introduction to GATT
+
+ .github/workflows/docs.yml                    |  54 +
+ attrib/meson.build                            |  17 +
+ btio/meson.build                              |   1 +
+ client/meson.build                            |  29 +
+ completion/meson.build                        |   3 +
+ doc/_static/bluez.css                         | 452 +++++++++
+ doc/_static/bluez.png                         | Bin 0 -> 17550 bytes
+ doc/_static/bullet.svg                        |   1 +
+ doc/_static/card.png                          | Bin 0 -> 38230 bytes
+ doc/_static/inter.woff2                       | Bin 0 -> 345588 bytes
+ doc/_static/toc_bullet.svg                    |  39 +
+ doc/bluetoothctl-cmd.rst                      |  34 +
+ doc/bluetoothctl-gatt.rst                     |  79 +-
+ doc/conf.py                                   |  39 +
+ doc/copy-subdir.py                            |  14 +
+ doc/daemons.rst                               |  12 +
+ doc/dbus-gatt.rst                             |  18 +
+ doc/dbus-obex.rst                             |  33 +
+ doc/dbus.rst                                  |  76 ++
+ doc/deprecated-tools.rst                      |  22 +
+ doc/dev-maint.rst                             |  17 +
+ doc/favicon.ico                               | Bin 0 -> 937 bytes
+ doc/gatt-intro.rst                            | 141 +++
+ doc/index.rst                                 |  47 +
+ doc/meson.build                               | 290 ++++++
+ doc/protocols.rst                             |  20 +
+ doc/qualifications.rst                        |  76 ++
+ doc/tools.rst                                 |  24 +
+ emulator/meson.build                          |  36 +
+ gdbus/meson.build                             |  19 +
+ gobex/meson.build                             |   8 +
+ lib/meson.build                               |  53 +
+ mesh/meson.build                              |  60 ++
+ meson.build                                   | 300 ++++++
+ meson_options.txt                             |  55 ++
+ monitor/meson.build                           |  37 +
+ obexd/meson.build                             | 121 +++
+ peripheral/meson.build                        |  13 +
+ plugins/meson.build                           |  29 +
+ profiles/meson.build                          | 167 ++++
+ src/meson.build                               |  90 ++
+ src/shared/meson.build                        |  85 ++
+ subprojects/ell.wrap                          |  11 +
+ .../0001-build-Add-meson-build-system.patch   | 922 ++++++++++++++++++
+ test/meson.build                              |  37 +
+ tools/mesh/meson.build                        |  16 +
+ tools/meson.build                             | 302 ++++++
+ tools/mpris-proxy.service.in                  |   2 +-
+ unit/meson.build                              | 163 ++++
+ unit/unittest_list.sh                         |  15 +
+ 50 files changed, 4055 insertions(+), 24 deletions(-)
+ create mode 100644 .github/workflows/docs.yml
+ create mode 100644 attrib/meson.build
+ create mode 100644 btio/meson.build
+ create mode 100644 client/meson.build
+ create mode 100644 completion/meson.build
+ create mode 100644 doc/_static/bluez.css
+ create mode 100644 doc/_static/bluez.png
+ create mode 100644 doc/_static/bullet.svg
+ create mode 100644 doc/_static/card.png
+ create mode 100644 doc/_static/inter.woff2
+ create mode 100644 doc/_static/toc_bullet.svg
+ create mode 100644 doc/bluetoothctl-cmd.rst
+ create mode 100644 doc/conf.py
+ create mode 100644 doc/copy-subdir.py
+ create mode 100644 doc/daemons.rst
+ create mode 100644 doc/dbus-gatt.rst
+ create mode 100644 doc/dbus-obex.rst
+ create mode 100644 doc/dbus.rst
+ create mode 100644 doc/deprecated-tools.rst
+ create mode 100644 doc/dev-maint.rst
+ create mode 100644 doc/favicon.ico
+ create mode 100644 doc/gatt-intro.rst
+ create mode 100644 doc/index.rst
+ create mode 100644 doc/meson.build
+ create mode 100644 doc/protocols.rst
+ create mode 100644 doc/qualifications.rst
+ create mode 100644 doc/tools.rst
+ create mode 100644 emulator/meson.build
+ create mode 100644 gdbus/meson.build
+ create mode 100644 gobex/meson.build
+ create mode 100644 lib/meson.build
+ create mode 100644 mesh/meson.build
+ create mode 100644 meson.build
+ create mode 100644 meson_options.txt
+ create mode 100644 monitor/meson.build
+ create mode 100644 obexd/meson.build
+ create mode 100644 peripheral/meson.build
+ create mode 100644 plugins/meson.build
+ create mode 100644 profiles/meson.build
+ create mode 100644 src/meson.build
+ create mode 100644 src/shared/meson.build
+ create mode 100644 subprojects/ell.wrap
+ create mode 100644 subprojects/packagefiles/0001-build-Add-meson-build-system.patch
+ create mode 100644 test/meson.build
+ create mode 100644 tools/mesh/meson.build
+ create mode 100644 tools/meson.build
+ create mode 100644 unit/meson.build
+ create mode 100644 unit/unittest_list.sh
+
+-- 
+2.52.0
+
 
