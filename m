@@ -1,167 +1,151 @@
-Return-Path: <linux-bluetooth+bounces-18614-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18615-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KLveOJCEemnx7AEAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18614-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 22:50:08 +0100
+	id OEYKNpaEemnx7AEAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18615-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 22:50:14 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46578A93C4
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 22:50:08 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59D52A93CB
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 22:50:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4DC5F301BC32
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 21:49:49 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 63905301915E
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 21:50:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB6EE31C57B;
-	Wed, 28 Jan 2026 21:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A621F328B41;
+	Wed, 28 Jan 2026 21:50:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="Vog5XHV/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PvCwCegG"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-26.smtp.github.com (out-26.smtp.github.com [192.30.252.209])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA9C16DC28
-	for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jan 2026 21:49:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.209
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2965A33A9F8
+	for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jan 2026 21:50:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769636988; cv=none; b=bYgMZg7TPqXUP8pGJPKaGnWyK++OnAjQ5r1TVtgk5sZ0c9RI7FhYdajjcz4pdibX8qD5zWSW8SBrqWq0mPudj7zo6MIjAuizQZu1novN1E77XfnNrbrR7L0TSx19VdhpSIvte3xsIF2xNW62NlCj0Qy22qTqlzKkLhJ6bL3zs3M=
+	t=1769637012; cv=none; b=PSJrknsCX0eKoz9teSbI2wx/VydBREtnHoq8ZxXDpAzzlLoNcu8CA7+EGGHfUWQAMn8TRWhvdF4whRkXsAUXb5dn8GkT0zvYWANRQlHahEvGsIjNiFuzD50hjMOo5rxNbu544SEPwtm0QEX3L5nDTqqvvAVwD0VoZcJ80/YHt5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769636988; c=relaxed/simple;
-	bh=qx1dWhFv40HOldJuC4u7zEyZaAlynmIshjF4n/rtdUk=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=jQEgnC/F8EtAShassPi9BJtls29vt8/BuIas7qd2QqOqlWuXzPlat/K90HASjivTtuOoPpiCobWEUmhgmV8wKpKnukAwg8RVNtY56K7dl31pVvSQi6NIn9ChWhDty8sxDp+znRj98L+1E5mJThRkRQmlW77cfATyxkz3oSdUUxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=Vog5XHV/; arc=none smtp.client-ip=192.30.252.209
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-77d345c.ash1-iad.github.net [10.56.209.113])
-	by smtp.github.com (Postfix) with ESMTPA id 4B47B60119C
-	for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jan 2026 13:49:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1769636986;
-	bh=5cQVb1x4NJJRI55/DmveHPjxHu1YMyQOp9umUAnVmo4=;
-	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=Vog5XHV/KZIkyVfqnkGBltIRL9y8WQU67Tkk4q1kaKT6QHLJGrBimHYcXnaGrdep8
-	 LNj0PPesD9U0zFC+aKI90nOiIQy6uXGUSslUW9jl7sP01s73pNZLHeD6Wn6dL457W1
-	 RQpxv5NDeIx0tEeicqM0XKYH40IPT/Y5qXI833bA=
-Date: Wed, 28 Jan 2026 13:49:46 -0800
-From: Luiz Augusto von Dentz <noreply@github.com>
-To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/master/a3c0aa-e2551c@github.com>
-Subject: [bluez/bluez] e328fd: build: Remove SAP support
+	s=arc-20240116; t=1769637012; c=relaxed/simple;
+	bh=ePLtc0vXj5ZLX/8O5tu90tYqf9PRY2R1g+FB/wKhgFQ=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=cArGe8nXxaB3cUBEXdwlDU2+ZP3IBngUk4k0+Srhrz+3etfX7mQXbMrGgronbAE0ZTYbC6IByE4K7QZwHICrC7Sz5OA4sy8wSNevuakqQasmEnxSl3+1RNztuCwjkmUvzhd+ML6kAoAeG6dWArbLncZdkIXfu8zhU3W9X8U9pY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PvCwCegG; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87A91C4CEF1;
+	Wed, 28 Jan 2026 21:50:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769637011;
+	bh=ePLtc0vXj5ZLX/8O5tu90tYqf9PRY2R1g+FB/wKhgFQ=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=PvCwCegGtXlO7DQmYdWX0R+i5ucEB/JXQOFEEyUFQh5CLM63NwSzGsiV/QnAC8CNs
+	 bVRUfaPo5PCHXk9cc45r+ctihWNjADBijmLP/rlHbPlvSBzwTHPSqyjM7T8JJ75Gl+
+	 f9eITuHrFty0pjfD3Eh5/QJkxoR+pr5t+1E7Eln8m3ha5VpZVhnsee7xMj8I9hTDf1
+	 crMge8kaAym2adwFuKJ6ALGk2eTUqy4NdnFPBPn11owGoP3WDyWcT1CDg1ATGW+Vh+
+	 aFQfabeePSUk33JpN2zIQE8hoCyMSgiU0mZRNYGaxkSljSi6Pq0QHpWOZhcjr8DsE8
+	 azpNc00sDjbfQ==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 11B5A39EF953;
+	Wed, 28 Jan 2026 21:50:06 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH BlueZ v1 1/2] build: Remove SAP support
+From: patchwork-bot+bluetooth@kernel.org
+Message-Id: 
+ <176963700485.2244560.8654968252856548726.git-patchwork-notify@kernel.org>
+Date: Wed, 28 Jan 2026 21:50:04 +0000
+References: <20260128183454.545066-1-luiz.dentz@gmail.com>
+In-Reply-To: <20260128183454.545066-1-luiz.dentz@gmail.com>
+To: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: linux-bluetooth@vger.kernel.org
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [2.04 / 15.00];
-	DMARC_POLICY_REJECT(2.00)[github.com : SPF not aligned (relaxed),reject];
-	R_DKIM_REJECT(1.00)[github.com:s=pf2023];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MV_CASE(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[github.com:-];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_ONE(0.00)[1];
-	RCVD_COUNT_THREE(0.00)[4];
-	TAGGED_FROM(0.00)[bounces-18614-lists,linux-bluetooth=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-18615-lists,linux-bluetooth=lfdr.de,bluetooth];
 	RCVD_TLS_LAST(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[patchwork-bot@kernel.org,linux-bluetooth@vger.kernel.org];
+	RCPT_COUNT_TWO(0.00)[2];
+	FREEMAIL_TO(0.00)[gmail.com];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[noreply@github.com,linux-bluetooth@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TO_DN_NONE(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_NO_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,makefile.tools:url]
-X-Rspamd-Queue-Id: 46578A93C4
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,intel.com:email,makefile.tools:url]
+X-Rspamd-Queue-Id: 59D52A93CB
 X-Rspamd-Action: no action
 
-  Branch: refs/heads/master
-  Home:   https://github.com/bluez/bluez
-  Commit: e328fde3e2e29888fa6098ea88f38d39c8ba6e33
-      https://github.com/bluez/bluez/commit/e328fde3e2e29888fa6098ea88f38d39c8ba6e33
-  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-  Date:   2026-01-28 (Wed, 28 Jan 2026)
+Hello:
 
-  Changed paths:
-    M .gitignore
-    M Makefile.am
-    M Makefile.plugins
-    M Makefile.tools
-    M README
-    M bootstrap-configure
-    M configure.ac
-    R doc/sap-api.txt
-    R profiles/sap/main.c
-    R profiles/sap/manager.c
-    R profiles/sap/manager.h
-    R profiles/sap/sap-dummy.c
-    R profiles/sap/sap.h
-    R profiles/sap/server.c
-    R profiles/sap/server.h
-    R test/sap_client.py
-    R test/test-sap-server
+This series was applied to bluetooth/bluez.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-  Log Message:
-  -----------
-  build: Remove SAP support
+On Wed, 28 Jan 2026 13:34:53 -0500 you wrote:
+> From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+> 
+> SAP plugin hasn't seen any updates in decades and the industry doesn't
+> really use it anymore.
+> ---
+>  .gitignore               |    1 -
+>  Makefile.am              |    3 +-
+>  Makefile.plugins         |    8 -
+>  Makefile.tools           |    4 +-
+>  README                   |   10 -
+>  bootstrap-configure      |    1 -
+>  configure.ac             |    4 -
+>  doc/sap-api.txt          |   20 -
+>  profiles/sap/main.c      |   31 -
+>  profiles/sap/manager.c   |   60 --
+>  profiles/sap/manager.h   |   10 -
+>  profiles/sap/sap-dummy.c |  364 ----------
+>  profiles/sap/sap.h       |  168 -----
+>  profiles/sap/server.c    | 1411 --------------------------------------
+>  profiles/sap/server.h    |   10 -
+>  test/sap_client.py       |  930 -------------------------
+>  test/test-sap-server     |  152 ----
+>  17 files changed, 3 insertions(+), 3184 deletions(-)
+>  delete mode 100644 doc/sap-api.txt
+>  delete mode 100644 profiles/sap/main.c
+>  delete mode 100644 profiles/sap/manager.c
+>  delete mode 100644 profiles/sap/manager.h
+>  delete mode 100644 profiles/sap/sap-dummy.c
+>  delete mode 100644 profiles/sap/sap.h
+>  delete mode 100644 profiles/sap/server.c
+>  delete mode 100644 profiles/sap/server.h
+>  delete mode 100644 test/sap_client.py
+>  delete mode 100755 test/test-sap-server
 
-SAP plugin hasn't seen any updates in decades and the industry doesn't
-really use it anymore.
+Here is the summary with links:
+  - [BlueZ,v1,1/2] build: Remove SAP support
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=e328fde3e2e2
+  - [BlueZ,v1,2/2] build: Remove health profiles support
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=e2551c5b9809
 
-
-  Commit: e2551c5b9809605b402b47d1c8c3b922c9d2acca
-      https://github.com/bluez/bluez/commit/e2551c5b9809605b402b47d1c8c3b922c9d2acca
-  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-  Date:   2026-01-28 (Wed, 28 Jan 2026)
-
-  Changed paths:
-    M .gitignore
-    M Makefile.am
-    M Makefile.plugins
-    M Makefile.tools
-    M README
-    M bootstrap-configure
-    M configure.ac
-    R doc/health-api.txt
-    R profiles/health/hdp.c
-    R profiles/health/hdp.h
-    R profiles/health/hdp_main.c
-    R profiles/health/hdp_manager.c
-    R profiles/health/hdp_manager.h
-    R profiles/health/hdp_types.h
-    R profiles/health/hdp_util.c
-    R profiles/health/hdp_util.h
-    R profiles/health/mcap.c
-    R profiles/health/mcap.h
-    R test/test-health
-    R test/test-health-sink
-    R tools/mcaptest.c
-
-  Log Message:
-  -----------
-  build: Remove health profiles support
-
-Health plugin hasn't seen any updates in decades and most of the industry
-has probably move on to LE and GATT.
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
-Compare: https://github.com/bluez/bluez/compare/a3c0aa5fc106...e2551c5b9809
-
-To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
