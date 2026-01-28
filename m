@@ -1,120 +1,180 @@
-Return-Path: <linux-bluetooth+bounces-18604-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18606-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cO9XKrczeml+4gEAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18604-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 17:05:11 +0100
+	id cJASC5k9emlB4wEAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18606-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 17:47:21 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 419D6A509E
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 17:05:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BFF61A61BF
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 17:47:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id BBBCB30195B5
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 16:00:17 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 202463006106
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 16:47:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0EC5273D76;
-	Wed, 28 Jan 2026 16:00:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0639A2FF675;
+	Wed, 28 Jan 2026 16:47:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="lhtnTBj+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MOSU0/LN"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-21.smtp.github.com (out-21.smtp.github.com [192.30.252.204])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f196.google.com (mail-qk1-f196.google.com [209.85.222.196])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06B930BBA5
-	for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jan 2026 16:00:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.204
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378EB2F3C02
+	for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jan 2026 16:47:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769616016; cv=none; b=hHWZLetyBKXCgZsUHNtGvkyuUzbZxdER0bb4hniufrUFvG5K7Yf+5Dx6gXsz7TZat4DOU0EXwJaJjsr23idpxT2BpIv0r1SI57lcgF2ZuetxEcGxA3bfrHnQ0Ivr4Hoh98qj7FaGqkv1KNcMuc/oXfw7eqX3Rw3wD5IV1031Jq0=
+	t=1769618829; cv=none; b=QGI8RK7NePNxaZ0nD1TMCWNZtZIcSUq5cWb8S+kWe0dWEI7L6KtuPp+jHrMKwTSoHCc52BmgRsI404029G5S5OJtZXvnBGxvdkr4f80JNWbS4nsHK4PffK6SxS7XvTlVRdNeFq7Y23nEDek0Vx+OyqyDpqC2IVJiHAyeFR1fIGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769616016; c=relaxed/simple;
-	bh=uVVUFyqksOMHKRTTAMVXKnuwR/5m0lKD1egE7WsW0jQ=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=Z5UxaSCRapidKUDu6lmmHj4AHtishSwyQ51r0DfdpL8hMQGVTcyxJIzQrx8kb7zke0JV6ma9XDKADbwNRHUTk4IlUbErZzqIAaP0SRQdz2zVUl6t77cypJBT1/1rtwQDM8Ck8TpAEsSbovOiOc1eSK/NazrNSLKvUO8mI/lcusU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=lhtnTBj+; arc=none smtp.client-ip=192.30.252.204
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-d4e2d4e.ac4-iad.github.net [10.52.223.72])
-	by smtp.github.com (Postfix) with ESMTPA id C491F40136A
-	for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jan 2026 08:00:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1769616013;
-	bh=lF1F/GyIycipwv0vEOJBQkakcZzyuzfCAFR1EP2QLcM=;
-	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=lhtnTBj+HvMOJmtrn/F80EKsjDtC2z1SLUaf2uzQhe6CYmacHqrvgzIFkFJCFbFfg
-	 pO7ibKUJYgJoKZg72HG8HWZpZb3x3lDhFNXyDedJB64/C33u8hi+HtokciAfdIPgQI
-	 0D9OPQXnjG2g0/KNnsOff4eyzxI84ugHQH1cAKHE=
-Date: Wed, 28 Jan 2026 08:00:13 -0800
-From: Magdalena Trivina <noreply@github.com>
-To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/1048150/000000-d8aa72@github.com>
-Subject: [bluez/bluez] d8aa72: tools/sdptool: report error when local SDP
- server ...
+	s=arc-20240116; t=1769618829; c=relaxed/simple;
+	bh=hnd/wGDkipw7kjxmC2k4jP/efvwx9SF1VtND31f25Bk=;
+	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
+	 In-Reply-To:References; b=tJ2Co9tUKojuced8CH1DXcfmJ2iusI4bRdY6+fWhgkfSIXnU0gbv3tlyZ0Mm6ZfR+T92QYaU+0zX8jrLP/R6Fpk6LpyGTYVlpK4BAe28dTgy7qeTD45UpdWp3rFz3XkilQU/pBRUr4g7AXXfggjYpy/xm975K4rOmjs2/0GeWqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MOSU0/LN; arc=none smtp.client-ip=209.85.222.196
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f196.google.com with SMTP id af79cd13be357-8c70ab3b5fcso9879485a.2
+        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jan 2026 08:47:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769618827; x=1770223627; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=nJe4isZGc9aUdC5y+Gj1VLBDDZsgWQlqf5f1vu42RIo=;
+        b=MOSU0/LNB6E6v27XMQX//LYexCBhPH6ShQ1rEAL7utpYxFlLyZ5MLl38ey8j8EEG5e
+         FkdQOM7gTHeC1YFuvo7NBDc6S8NF3IHIuYUGQ0xjKOgsVc3sHtzNVAqJEL3DSNU80z/g
+         9lJPcDpz42F0f6VbokK46hOfe7jnyouLy1GjaIC3cMgmbX6jtBy0r8JaZu9MMpTzsHV6
+         uvvKP6epiCFo4DmT5wxK93qoyL7OHXIqxUfZ/548D0EJ8XMH0L1EmslrOBsgBDxZsgS6
+         28dxyDUxbkJOZwEBp8N1srFijgOttN0chvx/LvT3x+SZpGJlxnuG7DKrLhnnFRPklsgl
+         4GVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769618827; x=1770223627;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nJe4isZGc9aUdC5y+Gj1VLBDDZsgWQlqf5f1vu42RIo=;
+        b=TRZvECyOe34LNzAtVBwSFsRv5m0M4nesDrjq2jMDLBMOP8XLUlbYjjLfYYYyaCqelg
+         VNdBav4FcDABWw5AWq+dPURoOxmLjUKVVTwUA+m39w96/gGhEFLxUP3eL1pV15vAl00K
+         aru9cWmh18NfNc9OqvV7lxRiAp2WgXQ2ryn49/d7hQLoEJVhC5rimzVpZBy8bAcxYji3
+         S5KPk10V9NDOkJR5Jp4hLv/bF4lNSN6w5Fsfea6WQka+IdiDPdid/MK0VPczfIPocRjI
+         zo9CdpD00PQYFLMNSMyFm/e/Ht0Jn9SpDRFdC0K63esmDw62MwO4zo0GwE0okMWX/DLq
+         aE0g==
+X-Gm-Message-State: AOJu0YyBA+UYkyEvgmnPyJFLdJi94IfFUgxooVvjdmoHD6306KlE2WH+
+	CcJcaUVSLVfPRCM6rZ46RRoJ1kxfh6VNlPaho6zAgRPFdM95IaRa7AfxdDS2DzWn
+X-Gm-Gg: AZuq6aJ2LXyQQUTONIQTz5GEE34QlfiDHBLmPNyf/WMjaxR3ehTyzylV5pBP6DZ2ggB
+	kZz0yjf68do3ZRCaHks/qmaOB1FK8nRNwGUAYIRL0YHk3IblexSYURVb/mUcNHjVMv22Ijs1i+N
+	ec5P6cSgT7p8sEr+KLwrDftT7pDoOV4fSsw33ToSW4eQfDXqzAJap+46eqFH42mqKoWKXju8dlC
+	XzglVN8xX7EOweq9VCweiXh9yz6/Fhp8PCmLQpiqHAfdrgApLWXVPvPsjSe8pjzdN48Ilz0FNk/
+	NmCe5GBS7p67zhs2hlc7euSUesH5VnIv9qZzV4UlzyVra5g1gv5xDvdrXQe8YQssjgkG0dIcFC6
+	SSNPtN58el76IculBv7x2aAaTL1QMfs0qkiXZcRAoia9LVWLHwHvg6rghupacsPU8T8kSk4CtNk
+	FQunfBpziWUDNCnsl2Ww==
+X-Received: by 2002:a05:620a:bcb:b0:8c6:a539:55d4 with SMTP id af79cd13be357-8c70b8fb2c0mr738533485a.48.1769618826833;
+        Wed, 28 Jan 2026 08:47:06 -0800 (PST)
+Received: from [172.17.0.2] ([64.236.142.131])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-894d3740d3esm20116796d6.29.2026.01.28.08.47.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Jan 2026 08:47:06 -0800 (PST)
+Message-ID: <697a3d8a.d40a0220.1a3272.f307@mx.google.com>
+Date: Wed, 28 Jan 2026 08:47:06 -0800 (PST)
+Content-Type: multipart/mixed; boundary="===============8629025643571931620=="
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+MIME-Version: 1.0
+From: bluez.test.bot@gmail.com
+To: linux-bluetooth@vger.kernel.org, trivin2024@gmail.com
+Subject: RE: tools/sdptool: report error when local SDP server is not found
+In-Reply-To: <20260128153905.163137-1-trivin2024@gmail.com>
+References: <20260128153905.163137-1-trivin2024@gmail.com>
+Reply-To: linux-bluetooth@vger.kernel.org
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [2.04 / 15.00];
-	DMARC_POLICY_REJECT(2.00)[github.com : SPF not aligned (relaxed),reject];
-	R_DKIM_REJECT(1.00)[github.com:s=pf2023];
+X-Spamd-Result: default: False [-1.16 / 15.00];
+	CTYPE_MIXED_BOGUS(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MV_CASE(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
-	MIME_GOOD(-0.10)[text/plain];
+	MIME_GOOD(-0.10)[multipart/mixed,text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[github.com:-];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_ONE(0.00)[1];
-	RCVD_COUNT_THREE(0.00)[4];
-	TAGGED_FROM(0.00)[bounces-18604-lists,linux-bluetooth=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
+	TAGGED_FROM(0.00)[bounces-18606-lists,linux-bluetooth=lfdr.de];
+	REPLYTO_DN_EQ_FROM_DN(0.00)[];
+	RCPT_COUNT_TWO(0.00)[2];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[noreply@github.com,linux-bluetooth@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	FREEMAIL_TO(0.00)[vger.kernel.org,gmail.com];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	MIME_TRACE(0.00)[0:+,1:+];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	FROM_NEQ_ENVFROM(0.00)[blueztestbot@gmail.com,linux-bluetooth@vger.kernel.org];
+	HAS_REPLYTO(0.00)[linux-bluetooth@vger.kernel.org];
 	TO_DN_NONE(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 419D6A509E
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	FROM_NO_DN(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mx.google.com:mid,vger.kernel.org:replyto,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: BFF61A61BF
 X-Rspamd-Action: no action
 
-  Branch: refs/heads/1048150
-  Home:   https://github.com/bluez/bluez
-  Commit: d8aa72c79fa742245eedd92ac39191aa414486be
-      https://github.com/bluez/bluez/commit/d8aa72c79fa742245eedd92ac39191aa414486be
-  Author: Magdalena Trivina <trivin2024@gmail.com>
-  Date:   2026-01-28 (Wed, 28 Jan 2026)
+--===============8629025643571931620==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-  Changed paths:
-    M tools/sdptool.c
+This is automated email and please do not reply to this email!
 
-  Log Message:
-  -----------
-  tools/sdptool: report error when local SDP server is not found
+Dear submitter,
 
-Currently, the sdptool add, setattr and setseq commands do not
-report any error when the local SDP server is unavailable.
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=1048150
 
-Add an explicit error message so users can distinguish between
-successful execution and failure due to a missing local server.
+---Test result---
 
-Signed-off-by: Magdalena Trivina Sihotang <trivin2024@gmail.com>
+Test Summary:
+CheckPatch                    PENDING   0.31 seconds
+GitLint                       PENDING   0.43 seconds
+BuildEll                      PASS      19.95 seconds
+BluezMake                     PASS      635.71 seconds
+MakeCheck                     PASS      18.34 seconds
+MakeDistcheck                 PASS      243.44 seconds
+CheckValgrind                 PASS      294.09 seconds
+CheckSmatch                   PASS      349.52 seconds
+bluezmakeextell               PASS      183.15 seconds
+IncrementalBuild              PENDING   0.40 seconds
+ScanBuild                     PASS      1024.20 seconds
+
+Details
+##############################
+Test: CheckPatch - PENDING
+Desc: Run checkpatch.pl script
+Output:
+
+##############################
+Test: GitLint - PENDING
+Desc: Run gitlint
+Output:
+
+##############################
+Test: IncrementalBuild - PENDING
+Desc: Incremental build with the patches in the series
+Output:
 
 
 
-To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
+---
+Regards,
+Linux Bluetooth
+
+
+--===============8629025643571931620==--
 
