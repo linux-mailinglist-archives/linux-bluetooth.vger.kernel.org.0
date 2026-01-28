@@ -1,249 +1,143 @@
-Return-Path: <linux-bluetooth+bounces-18631-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18634-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OGQTCsuKemnd7gEAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18631-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 23:16:43 +0100
+	id AO1ENxmQemmz7wEAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18634-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 23:39:21 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88B7EA979F
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 23:16:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E9E0A9AC1
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 23:39:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4371C306453D
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 22:16:02 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B0B5B3024129
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 28 Jan 2026 22:38:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B44522D7B0;
-	Wed, 28 Jan 2026 22:15:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7699C344D9C;
+	Wed, 28 Jan 2026 22:38:35 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [217.70.183.194])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com [209.85.160.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0139F342CA7
-	for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jan 2026 22:15:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58DD6343D64
+	for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jan 2026 22:38:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769638558; cv=none; b=pYvPkEo9bINCw7QiJQkYjclYKQ67LCuPIPxXBKmBQpuT3g/QSohedXKYkXvziRvQCWV0d+CJZKm94mpdc/SM1g3LH1n3jfGC4eTwkPihERzDNCasjJg/YiRbQbMx+9mhwNHgHabJtZ+sK0pOcyYNf6esIke4JwnLNppmf2zxHrU=
+	t=1769639915; cv=none; b=Rt9EVCuBeZGP+F4Tv3Zigbul0PO+HcJxANKcIbUgtTqmJLp4ufuUB0QS3TS8oJY39jSPDw3cGQMAQs675sQNRFUmVP9yiHQyF4VTwcwbjPW36tTm4xRnrjzecB+P6YrgRkUNbr4w1NS4AuLyg9sMYW/pFMulNjZ9whMBGC4bIgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769638558; c=relaxed/simple;
-	bh=hn9Xl2XOeHBPyx+rqTk65BM70aRnx2eHhjU9+IQfn7g=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l9pHbc5W3tLVpj/3rAMHy4IfEcUvCfYqClPfdHYM9+s5qbXdLlOFOBryxLHBXPtz2/dmn7zP5jfWG4ZPRodQQhZdNg0YHArwfJekQhXzDrzDHc5whQ9GFgrmpJoJndnyxNaiqrxX/uv/L3ARvC5eRv9Clj15v8cKS0cuO89TnNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 52CAB4440E;
-	Wed, 28 Jan 2026 22:15:49 +0000 (UTC)
-From: Bastien Nocera <hadess@hadess.net>
-To: linux-bluetooth@vger.kernel.org
-Cc: Paul Otto <potto@ieee.org>
-Subject: [PATCH BlueZ v7 16/16] doc: Add introduction to GATT
-Date: Wed, 28 Jan 2026 23:12:06 +0100
-Message-ID: <20260128221536.2319084-17-hadess@hadess.net>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260128221536.2319084-1-hadess@hadess.net>
-References: <20260128221536.2319084-1-hadess@hadess.net>
+	s=arc-20240116; t=1769639915; c=relaxed/simple;
+	bh=zXNWvIjs4F6YqMULk2tJeDRU9S2IuJD2liZZibV1TkI=;
+	h=MIME-Version:Date:Message-ID:Subject:From:To:Content-Type; b=fWvtcNFBmW5mx7JbhKlHs5aBGLXBefwZUIHTVmIyCQSx5ghTLTq4+t1lKle8Zkmm9+h2vCt+PT5swCoMyBHNzShS9cED1VgY6YzgSzCX9HWUps8ltNcELD67x2gANnilm/FGb2/zPV7hrxg50MUYp6MYQ1BFzwQwkHQZNCa+mww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com; arc=none smtp.client-ip=209.85.160.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com
+Received: by mail-oa1-f70.google.com with SMTP id 586e51a60fabf-404332162d9so1284353fac.2
+        for <linux-bluetooth@vger.kernel.org>; Wed, 28 Jan 2026 14:38:33 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769639912; x=1770244712;
+        h=to:from:subject:message-id:date:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yycyJvje41UjYay12DlpUJ1KoA4ywrwBoBvXPu+kvYg=;
+        b=w27Ji6xbXNBypS4pCfa+YMZM++l76/o+xCQlAIed4IXq9TC7trrsG7LcZRgJjzGPxV
+         i1Od6AZrJvcCWsAVDijppMbq0TuQ0ENBABFO9PEXos6rpYihY33BThOnS65ecnU9A5QT
+         VUp67bHGLgurDJZ73PdBxAvD0ao9ozuBNfbyHJj3Ha6ZKeVQF+tjFtjJJDGuRumTdg33
+         jwXBIHZcsEDMNwAef7NqU8C7JhqflGtL8YVU+7vPfnh4gTObPu2oLlxc+9thiWtEarsN
+         jhjkmY/46MVLfi0FiZgWShr1T33KdFmRSUEAT9p+ZpaOz3IsCecV3a33GBVyK4pvRMCe
+         vK7g==
+X-Gm-Message-State: AOJu0YwxRVpxs4aw8INcrcQBnVoiBQYFXAEQfE6PDclSrNLE3yUkCAdy
+	oZEJusU/xKQadVcd76vONi2V/uAg2VL7hoIBf5SrgAz30Gn+4qzLjwD3QOBVJuQWGBtRkGFFJBc
+	klcQ+otAMaFmQAboA7dajfnvWRwIkAPN3QohkqWEcFu3KeH2ACXIgCsbMkPY=
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: hadess@hadess.net
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieeggeelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpedvveeiheefkeehheekkedttdejkedvledugeeukeehfedtfeekjeetgfdvfeeuhfenucffohhmrghinhepghhithhhuhgsrdgtohhmpdhsvghtthhinhhgshdrrhgvrggunecukfhppedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemlegsvdelmegtugefieemieekfhgumegttdelfeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemlegsvdelmegtugefieemieekfhgumegttdelfedphhgvlhhopeholhhimhhpihgtpdhmrghilhhfrhhomhephhgruggvshhssehhrgguvghsshdrnhgvthdpqhhiugephedvveetueeggeegtdfgpdhmohguvgepshhmthhpohhuthdpnhgspghrtghpthhtohepvddprhgtphhtthhopehlihhnuhigqdgslhhuvghtohhothhhsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhothhtohesihgvvggvr
- dhorhhg
-X-GND-State: clean
-X-GND-Score: -100
+X-Received: by 2002:a05:6820:1c8b:b0:659:9a49:9047 with SMTP id
+ 006d021491bc7-662f20342d1mr3911938eaf.18.1769639912346; Wed, 28 Jan 2026
+ 14:38:32 -0800 (PST)
+Date: Wed, 28 Jan 2026 14:38:32 -0800
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <697a8fe8.a70a0220.9914.000a.GAE@google.com>
+Subject: [syzbot] Monthly bluetooth report (Jan 2026)
+From: syzbot <syzbot+listcdce069f94e74912c477@syzkaller.appspotmail.com>
+To: linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	luiz.dentz@gmail.com, marcel@holtmann.org, syzkaller-bugs@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.04 / 15.00];
+X-Spamd-Result: default: False [0.14 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
+	DMARC_POLICY_SOFTFAIL(0.10)[appspotmail.com : SPF not aligned (relaxed), No valid DKIM,none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DMARC_NA(0.00)[hadess.net];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	PRECEDENCE_BULK(0.00)[];
-	RCPT_COUNT_TWO(0.00)[2];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-18631-lists,linux-bluetooth=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	FROM_NEQ_ENVFROM(0.00)[hadess@hadess.net,linux-bluetooth@vger.kernel.org];
-	R_DKIM_NA(0.00)[];
-	NEURAL_HAM(-0.00)[-0.987];
+	FREEMAIL_TO(0.00)[vger.kernel.org,gmail.com,holtmann.org,googlegroups.com];
+	TAGGED_FROM(0.00)[bounces-18634-lists,linux-bluetooth=lfdr.de,listcdce069f94e74912c477];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	MISSING_XM_UA(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	TO_DN_NONE(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[syzbot@syzkaller.appspotmail.com,linux-bluetooth@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	TO_DN_SOME(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,hadess.net:mid,ieee.org:email]
-X-Rspamd-Queue-Id: 88B7EA979F
+	R_DKIM_NA(0.00)[];
+	REDIRECTOR_URL(0.00)[goo.gl];
+	RCPT_COUNT_FIVE(0.00)[5]
+X-Rspamd-Queue-Id: 6E9E0A9AC1
 X-Rspamd-Action: no action
 
-From: Paul Otto <potto@ieee.org>
+Hello bluetooth maintainers/developers,
 
-As originally written for the bluetoothctl gatt submenu at:
-https://github.com/potto216/bluez/blob/master/client/bluetoothctl-gatt.rst
+This is a 31-day syzbot report for the bluetooth subsystem.
+All related reports/information can be found at:
+https://syzkaller.appspot.com/upstream/s/bluetooth
 
-Closes: https://github.com/bluez/bluez/issues/747
+During the period, 0 new issues were detected and 0 were fixed.
+In total, 43 issues are still open and 96 have already been fixed.
+
+Some of the still happening issues:
+
+Ref  Crashes Repro Title
+<1>  45919   Yes   KASAN: slab-use-after-free Read in l2cap_unregister_user
+                   https://syzkaller.appspot.com/bug?extid=14b6d57fb728e27ce23c
+<2>  8086    Yes   WARNING in call_timer_fn
+                   https://syzkaller.appspot.com/bug?extid=6fb78d577e89e69602f9
+<3>  7211    Yes   WARNING in hci_conn_timeout (2)
+                   https://syzkaller.appspot.com/bug?extid=fc4b5b2477d4ca272907
+<4>  4192    Yes   general protection fault in lock_sock_nested
+                   https://syzkaller.appspot.com/bug?extid=d3ccfb78a0dc16ffebe3
+<5>  3504    Yes   general protection fault in h5_recv
+                   https://syzkaller.appspot.com/bug?extid=b5691bb559396b262064
+<6>  827     No    KASAN: vmalloc-out-of-bounds Read in kcov_remote_start
+                   https://syzkaller.appspot.com/bug?extid=8a173e13208949931dc7
+<7>  770     Yes   KASAN: slab-use-after-free Write in hci_conn_drop (3)
+                   https://syzkaller.appspot.com/bug?extid=3609b9b48e68e1fe47fd
+<8>  502     Yes   possible deadlock in l2cap_conn_del
+                   https://syzkaller.appspot.com/bug?extid=b71bb48c13bf3fed3692
+<9>  494     Yes   KASAN: slab-use-after-free Write in le_read_features_complete
+                   https://syzkaller.appspot.com/bug?extid=87badbb9094e008e0685
+<10> 452     Yes   WARNING: ODEBUG bug in hci_release_dev (2)
+                   https://syzkaller.appspot.com/bug?extid=b170dbf55520ebf5969a
+
 ---
- doc/gatt-intro.rst | 141 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 141 insertions(+)
- create mode 100644 doc/gatt-intro.rst
+This report is generated by a bot. It may contain errors.
+See https://goo.gl/tpsmEJ for more information about syzbot.
+syzbot engineers can be reached at syzkaller@googlegroups.com.
 
-diff --git a/doc/gatt-intro.rst b/doc/gatt-intro.rst
-new file mode 100644
-index 000000000000..271f9bac08ce
---- /dev/null
-+++ b/doc/gatt-intro.rst
-@@ -0,0 +1,141 @@
-+=========================================
-+Intro to GATT (Generic Attribute Profile)
-+=========================================
-+
-+The Generic Attribute Profile (GATT) defines how two connected Bluetooth
-+LE devices can share data using concepts called Services and Characteristics.
-+Data is orgnaized into a hierarchical structure of profiles, services, and
-+characteristics in the GATT database. The device containing the GATT database
-+is known as the server device and the device accessing the GATT database is
-+the client device. Only the database's services and characteristics are
-+documented here.
-+
-+BlueZ provides D-Bus interfaces for accessing GATT services and profiles which
-+are documented in the :doc:`D-Bus GATT APIs <dbus>` document.
-+
-+One-off usage and prototyping can also be done using the bluetoothctl
-+command-line utility.
-+
-+UUIDs
-+-----
-+
-+Services and characteristics are differentiated by Universally Unique
-+Identifiers (UUIDs). For GATT there are several formats of UUIDs: 128-bit,
-+32-bit, and 16-bit.
-+
-+128-bit UUIDs: Displayed in five groups of 32 hexadecimal digits separated
-+by hyphens (e.g., 123e4567-e89b-12d3-a456-426614174000). 128-bit UUIDs allow
-+for custom services and characteristics that do not conflict with those of
-+other vendors or standard profiles defined by the Bluetooth SIG.
-+
-+32-bit UUIDs: A subset of the 128-bit UUID, where only 32 bits are used to
-+represent the UUID. The UUID values fall within a certain range defined by
-+the Bluetooth specification. The 32-bit value is inserted into a base UUID
-+(UUUUUUUU-0000-1000-8000-00805F9B34FB) to form a full 128-bit UUID. The
-+UUUUUUUU in the base UUID is replaced by the 32-bit value. This format is
-+used within the Bluetooth protocol for standardized services and profiles.
-+
-+16-bit UUIDs: Similar to the 32-bit UUID, but more common. This is also
-+used for standardized services, characteristics, and descriptors defined by
-+the Bluetooth SIG. The 16-bit value is inserted into a base UUID
-+(0000UUUU-0000-1000-8000-00805F9B34FB) to form a full 128-bit UUID.
-+
-+Services and Characteristics
-+----------------------------
-+
-+Services: Collections of related data that together perform a specific
-+function or feature of the device. Each service is identified by a
-+UUID and contains Characteristics that define the actual data and behaviors
-+of the service.
-+
-+Characteristics: Pieces of data under a service, representing a specific
-+piece of information or a function of the device. Each characteristic can
-+have its own unique value, associated properties and access permissions that
-+define how it can be interacted with. These properties include read, write,
-+notify, indicate, and more. A Characteristic may include one or more
-+Descriptors that provide additional metadata or control specific aspects
-+of the Characteristic's behavior.
-+
-+Properties
-+----------
-+
-+Read Property: Allows a connected device to read the value of a characteristic.
-+Information meant to be consumed but not altered by the client device, such
-+as the device's battery level or sensor readings. Characteristics marked with
-+the read property are essentially broadcasting their data to be accessed by
-+other devices, ensuring that the information can be consumed without
-+being modified.
-+
-+Write Property: Enables a connected device to change the value of a
-+characteristic. An example of when a client device needs to alter data on the
-+server device is a Bluetooth controlled light bulb, where the characteristic
-+controlling the color or brightness of the light would have the write property,
-+allowing external devices to modify these settings.
-+
-+Read/Write Property: Characteristics can also be configured to support both
-+read and write properties simultaneously. This dual capability is useful for
-+characteristics that hold information which not only needs to be displayed to
-+external devices but also can be updated by them. For example, a Bluetooth
-+thermostat may have a characteristic with read/write properties for the target
-+temperature, enabling devices to both monitor the current setting and adjust
-+it as needed.
-+
-+Notifications and Indications
-+-----------------------------
-+
-+In addition to read and write properties,
-+Bluetooth characteristics can also be configured to notify or indicate to
-+connected devices when their value has changed. This is particularly useful
-+for dynamic data that changes over time, such as sensor measurements or
-+device status updates.
-+
-+Notifications: When a characteristic's notify property is enabled, it can
-+send an update to connected devices whenever its value changes. This allows
-+for real-time data streaming without the client having to continuously read
-+the characteristic's value. Notifications are unacknowledged, meaning the
-+sender does not receive confirmation that the message has been
-+received successfully.
-+
-+Indications: Similar to notifications, indications inform connected devices
-+about changes in a characteristic's value. The key difference is that
-+indications are acknowledged; the receiver sends back a confirmation to the
-+sender upon successfully receiving the update. This ensures reliable delivery
-+of important data changes but at the cost of higher power consumption and
-+potentially lower throughput due to the additional confirmation step.
-+
-+Organization of a GATT database The Bluetooth GATT database is a structured
-+collection of values that are used to share information between two Bluetooth
-+Low Energy (LE) devices. The GATT database is organized as a hierarchical
-+structure composed of Services, Characteristics, and Descriptors. The two LE
-+devices share the database information through read, writes, and subscription
-+to notifications or indications of data values. The two LE devices perform
-+this sharing by referencing 16-bit indexes known as "handles" which are
-+numerical identifiers for each element in the GATT database. This avoids
-+the need to use the UUIDs to reference the elements in the database.
-+
-+Service: A GATT database service is a collection of related functionalities
-+that a device offers. It groups together one or more Characteristics that are
-+logically related to perform a specific function or feature of the server
-+device. Each service is identified by a UUID and contains Characteristics
-+that define the actual data and behaviors of the service.
-+
-+Characteristic: Each characteristic can have its own unique value, associated
-+properties, and access permissions that define how it can be interacted with.
-+These properties include read, write, notify, indicate, and more. A
-+Characteristic may include one or more Descriptors that provide additional
-+metadata or control specific aspects of the Characteristic's behavior.
-+
-+Descriptors: A descriptor is an optional attribute that describes or controls
-+certain aspects of a Characteristic's behavior. They provide additional context
-+or metadata about a Characteristic. Some common types of Descriptors include the
-+Characteristic User Description (provides human-readable description), the
-+Characteristic Presentation Format (defines the format of the Characteristic
-+value), and the Client Characteristic Configuration (used to enable or
-+disable notifications or indications for a Characteristic).
-+
-+Handles: Every element in the GATT database (Service, Characteristic,
-+Descriptor) is assigned a unique handle. Handles are 16-bit numerical
-+identifiers that are used to reference these elements in GATT operations.
-+The handles are used to avoid the need to use the UUIDs to reference the
-+elements in the database.
-+
--- 
-2.52.0
+To disable reminders for individual bugs, reply with the following command:
+#syz set <Ref> no-reminders
 
+To change bug's subsystems, reply with:
+#syz set <Ref> subsystems: new-subsystem
+
+You may send multiple commands in a single email message.
 
