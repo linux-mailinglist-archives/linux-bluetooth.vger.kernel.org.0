@@ -1,116 +1,151 @@
-Return-Path: <linux-bluetooth+bounces-18668-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18669-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wGUiCKXpe2mtJQIAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18668-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Jan 2026 00:13:41 +0100
+	id SC0EHTDre2npJQIAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18669-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Jan 2026 00:20:16 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 700CEB59B5
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Jan 2026 00:13:40 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D54EB59F0
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Jan 2026 00:20:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 156373029AE8
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Jan 2026 23:13:27 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id BF7FE30115AE
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Jan 2026 23:20:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59F3A37474A;
-	Thu, 29 Jan 2026 23:13:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B69132E732;
+	Thu, 29 Jan 2026 23:20:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="FN4pLSUk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cyaWrIbS"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-27.smtp.github.com (out-27.smtp.github.com [192.30.252.210])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6EAE374743
-	for <linux-bluetooth@vger.kernel.org>; Thu, 29 Jan 2026 23:13:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.210
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B3D1EB5F8
+	for <linux-bluetooth@vger.kernel.org>; Thu, 29 Jan 2026 23:20:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769728405; cv=none; b=AvhjIdAaqBI/NPny8+v35Q7opf+YMv8LLKscLTQEvpZWZL+aWus/CwhKfG0CTM2ZAB69IVSW7SMQi8ulJ4UkULHpvlVtVVvM5TRzguEMgFr/XbqzwaBcrMgM2WszO9B3yB77zNlV5mc4BCJE2Xbs1Uen6To1vO7avjCiWq5/aNQ=
+	t=1769728811; cv=none; b=FK0NdAOzKOCESbqMnLYEY1z1lwf27ViZxCPGSZa4KJHewNU9WKXzXR/8OyugSqSnnOymjM94xgVWpo8hIuIim8khNsEhhluRjqs5PbFCR5pHNcJT17G4icCXCwEYyJSGF1/qUSxMjozIRpDg5D9hpmSCuEq9hZObgSrl2hwyOvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769728405; c=relaxed/simple;
-	bh=kQadUWDM7dTnM9z/Zc3WgYMtjj4lbXhsUBUtHQp3G3A=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=bwfmpbQFobAmVwPYaej2cbw6cklbvH0j+6vkh+kCTrjcG9it26vMWYpI0tvSlB6oWaNQBRy923eE8hdZifJquINPYSiugM1+ciN0fR7Fv6XY9kQBZoTh+xJ8lhg8jJD1llQLz1k/Q8PBZUkxHJbEnjjeMZVkDR8ty83JD/uUglQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=FN4pLSUk; arc=none smtp.client-ip=192.30.252.210
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-ba83afb.ash1-iad.github.net [10.56.130.38])
-	by smtp.github.com (Postfix) with ESMTPA id C91526005D3
-	for <linux-bluetooth@vger.kernel.org>; Thu, 29 Jan 2026 15:13:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1769728403;
-	bh=DCg5WMNiqmLbiJF5KevwffqtKHyGsySjbR/CHSAqZdY=;
-	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=FN4pLSUkxp4GblMDaH8C/tAQwnV9s4VCi0GP66YMdjdQMzn2zZYoR4BAB8tPi/fox
-	 urKLDgubEOOKIkh3Oz7Tsi1jPkP42GTPdO+/zP/30tDJ5rxlG5lMrl+h4dBmQ+x+Fr
-	 9OQg3oGPGPOSzTnA4X0srb2nFho0CQ4C3GIRbLF0=
-Date: Thu, 29 Jan 2026 15:13:23 -0800
-From: Paul Otto <noreply@github.com>
-To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/master/ebb331-358ab8@github.com>
-Subject: [bluez/bluez] 358ab8: client: Expand GATT submenu documentation
+	s=arc-20240116; t=1769728811; c=relaxed/simple;
+	bh=WfSq/w17gldpNuokoWI5xVaoh6W8xd+NwZOaw2KgdB0=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=igFIalY4/F8gekevNi/M+mxcgK5ZJyN95M1XGoEWAanqCTq1j1bhh8ovJugAUR63CRJQvZxckbNTWWw9iG+mopvGvr9aVCLS5WTDmekl2/4NgABHpuXLdyfWvKEpUrR/JbFv5Phib4ipKEYRmEqM6tm0lLpPI9GGIVo8Y9NDsMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cyaWrIbS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57105C4CEF7;
+	Thu, 29 Jan 2026 23:20:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769728811;
+	bh=WfSq/w17gldpNuokoWI5xVaoh6W8xd+NwZOaw2KgdB0=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=cyaWrIbSqIkEUsLFLUUHTWgHVR6EJCD8EIAoYWMFSIZ79FhpC6MXd6ydzCyn2Nc4p
+	 tejyTPlJ5+TMiRGI9XYGx3EfV7E94vCAoFnAtkur7V6pISPdjVg4CxKLOjgEtMn4wH
+	 RDyW+uQez1o8y2z0P0v0+9lzz+Eu/3EBymcRwvwW/v3ZYI6tLB+cm9iVB6jIH/htRu
+	 15aZkqXGU5RUh9F/7agdvhRvndwfxQ2n2SNNpWSp3RIr+LWSOjuTpG4bW3YSMcbD7r
+	 2lO4t7VP0wf41XI7xNfWAEdKUHXSsJjCNXRK7ybWJPt9s/y8B1BBM2ZV9w/2m0khYb
+	 FHXm1+xO1AqEQ==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 4EBCE380CEDD;
+	Thu, 29 Jan 2026 23:20:05 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH BlueZ v7 00/16] Add meson build system and HTML docs
+From: patchwork-bot+bluetooth@kernel.org
+Message-Id: 
+ <176972880410.3097460.14401542538153173311.git-patchwork-notify@kernel.org>
+Date: Thu, 29 Jan 2026 23:20:04 +0000
+References: <20260128221536.2319084-1-hadess@hadess.net>
+In-Reply-To: <20260128221536.2319084-1-hadess@hadess.net>
+To: Bastien Nocera <hadess@hadess.net>
+Cc: linux-bluetooth@vger.kernel.org
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [2.04 / 15.00];
-	DMARC_POLICY_REJECT(2.00)[github.com : SPF not aligned (relaxed),reject];
-	R_DKIM_REJECT(1.00)[github.com:s=pf2023];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MV_CASE(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[github.com:-];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_ONE(0.00)[1];
-	RCVD_COUNT_THREE(0.00)[4];
-	TAGGED_FROM(0.00)[bounces-18668-lists,linux-bluetooth=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-18669-lists,linux-bluetooth=lfdr.de,bluetooth];
 	RCVD_TLS_LAST(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[patchwork-bot@kernel.org,linux-bluetooth@vger.kernel.org];
+	RCPT_COUNT_TWO(0.00)[2];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[noreply@github.com,linux-bluetooth@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TO_DN_NONE(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FROM_NO_DN(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 700CEB59B5
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 9D54EB59F0
 X-Rspamd-Action: no action
 
-  Branch: refs/heads/master
-  Home:   https://github.com/bluez/bluez
-  Commit: 358ab8994207ddbe601631dcf0725a939030463e
-      https://github.com/bluez/bluez/commit/358ab8994207ddbe601631dcf0725a939030463e
-  Author: Paul Otto <potto@ieee.org>
-  Date:   2026-01-29 (Thu, 29 Jan 2026)
+Hello:
 
-  Changed paths:
-    M doc/bluetoothctl-gatt.rst
+This series was applied to bluetooth/bluez.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-  Log Message:
-  -----------
-  client: Expand GATT submenu documentation
+On Wed, 28 Jan 2026 23:11:50 +0100 you wrote:
+> Changes since v6:
+> Drop:
+>   doc: Port sap-api.txt to RST
+>   doc: Port health-api.txt to RST
+>   doc: Add "C" code-block markers for coding-style doc
+>   tools: Install btmgmt along with other tools
+> 
+> [...]
 
-From:
-https://github.com/potto216/bluez/blob/master/client/bluetoothctl-gatt.rst
+Here is the summary with links:
+  - [BlueZ,v7,01/16] build: Add meson wrap for libell
+    (no matching commit)
+  - [BlueZ,v7,02/16] build: Add meson build system
+    (no matching commit)
+  - [BlueZ,v7,03/16] build: Make more use of 'feature' options
+    (no matching commit)
+  - [BlueZ,v7,04/16] build: Separate systemd and libsystemd dependencies
+    (no matching commit)
+  - [BlueZ,v7,05/16] tools: Install gatttool if deprecated tools are enabled
+    (no matching commit)
+  - [BlueZ,v7,06/16] tools: Install avinfo tool by default
+    (no matching commit)
+  - [BlueZ,v7,07/16] emulator: Install the emulator if built
+    (no matching commit)
+  - [BlueZ,v7,08/16] build: Add option to allow disabling bluetoothd
+    (no matching commit)
+  - [BlueZ,v7,09/16] unit: Run test-bap tests concurrently
+    (no matching commit)
+  - [BlueZ,v7,10/16] unit: Make gobex-transfer tests run concurrently
+    (no matching commit)
+  - [BlueZ,v7,11/16] build: Only build profiles if the daemon is built
+    (no matching commit)
+  - [BlueZ,v7,12/16] build: Only build gdbus library if there is a user
+    (no matching commit)
+  - [BlueZ,v7,14/16] github: Add docs deployment
+    (no matching commit)
+  - [BlueZ,v7,15/16] client: Expand GATT submenu documentation
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=358ab8994207
+  - [BlueZ,v7,16/16] doc: Add introduction to GATT
+    (no matching commit)
 
-Closes: https://github.com/bluez/bluez/issues/747
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
-
-To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
