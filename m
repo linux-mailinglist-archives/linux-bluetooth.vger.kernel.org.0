@@ -1,169 +1,123 @@
-Return-Path: <linux-bluetooth+bounces-18652-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18653-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id AC+UKOiKe2mlFQIAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18652-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Jan 2026 17:29:28 +0100
+	id GFl2CT+Le2mlFQIAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18653-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Jan 2026 17:30:55 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06155B22CC
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Jan 2026 17:29:27 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id BAC5BB2344
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Jan 2026 17:30:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id AE6C73009522
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Jan 2026 16:29:26 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id C6006300598F
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 29 Jan 2026 16:30:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 323A733F39C;
-	Thu, 29 Jan 2026 16:29:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EE9B3469F6;
+	Thu, 29 Jan 2026 16:30:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="OwyJZrht"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WFi2bMSa"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-20.smtp.github.com (out-20.smtp.github.com [192.30.252.203])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82AB133557C
-	for <linux-bluetooth@vger.kernel.org>; Thu, 29 Jan 2026 16:29:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.203
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2D0D346792
+	for <linux-bluetooth@vger.kernel.org>; Thu, 29 Jan 2026 16:30:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769704165; cv=none; b=Q2+EtCzomlIJ7V2/nBYkBLpenqQiGop8To5GQfHDvlra93MRNRvXHafnA6MZ8XHYYT1G6GkC8WZVxXNCO2Ubw++jxPhdcKeqU6ZRSwUbhPzyKuwKO20XwB1dVe0NSa8R6fqGKXfjmqN0n6yxr09kQZ6sFYQiqB2FDDhUKysCU44=
+	t=1769704212; cv=none; b=C6Xk806jenWKgXeLPngBjm8ZEj+9VbgafA5W1MZozu4QWtoymOHD32xFeqLwX1tyO8DiWFEah9gELWuo4Hygk1pLgVUTIFQpoMa/3oUyuXCYYB+v5KuRLJclQj+Foiq0o8QmiizHoENpA6MWc6XnAlnbJIEi+jrOqVcH1MWzG8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769704165; c=relaxed/simple;
-	bh=vJoIGo+V3NJjc3QA0V7MGtxbeqknWU6OkC5x3M4PXOU=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=qxIFo7du/Kukk6hQo1Q+swozPLcodsRgUA51MbRgtsXN78mWF5YczstZhQm7yRaNInvgcVyoTjGqz6Qtmv9nTMTu8F8w/U7VdvJS/bYT50AHfstHeX/t22gy5cbbDHreXDAh70QBO6uEjX9X8i15ZNAcbPhNurFiTlfv+COPL04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=OwyJZrht; arc=none smtp.client-ip=192.30.252.203
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-702b401.va3-iad.github.net [10.48.166.34])
-	by smtp.github.com (Postfix) with ESMTPA id C5EB03C095E
-	for <linux-bluetooth@vger.kernel.org>; Thu, 29 Jan 2026 08:29:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1769704163;
-	bh=cBZY+p0rOtUjUUQhA/I8g5VGFMiIw5odhd7h9aXask8=;
-	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=OwyJZrhtYz3oPUxUfxSCtfj9J0CmIP7fIe4/mfpTMcLVrgwzwydzFREvOtbM2mpJs
-	 Ss1IXv2Ec6VAQs3JCzhV0np+VBeoNDC1SoLM/ge0jV/6hioS9XXvGKKHaym9rtsFF5
-	 7Gk+K2vsGGcc/k7QYLsjNcvp1i5NV4BGZhojua1g=
-Date: Thu, 29 Jan 2026 08:29:23 -0800
-From: Arkadiusz Bokowy <noreply@github.com>
-To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/master/e2551c-ebb331@github.com>
-Subject: [bluez/bluez] eb37ac: build: Remove left-over of health profiles
- removal
+	s=arc-20240116; t=1769704212; c=relaxed/simple;
+	bh=n66D/MNNFEBL3GF/+dZjE/xAaesgZpTG3yhJVq9iN4g=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=oT+b8goeWaBO8KgRGZYfVbe4Ox+23lRDhxQ/Qtv7cOghfmhkMAJjMOCTYU0ygG3Ri88pZlmd8TVlQr+jWgG4DlFoNbEDjlwS8kanpfDBYKdVK1qyKCM4PIl/D+bcYhzO88J7m638ONxZx6r4xJl028SWpEsGWlmKbiIomSpf/rI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WFi2bMSa; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FCE7C4CEF7;
+	Thu, 29 Jan 2026 16:30:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769704211;
+	bh=n66D/MNNFEBL3GF/+dZjE/xAaesgZpTG3yhJVq9iN4g=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=WFi2bMSao2v1qbr0gGrQVTyORXyvSbp+Dq5WEka2pY8oaidpb0kPrifBWoEfO2L5V
+	 e2/9Rqu1nE4q7U/+2UlfM3LMACUoa0AG1csXwPDxDP8oLS/k0SYlhyhXUgtIaI/izc
+	 LN5WLsH1rsWa7J9TRZooUbKUHmovQ1eqhv68FxEMC68rwLWd/8rdQzKaAnQWSf5zu1
+	 eiQfPqNeviKY/R60YGLMy7fW6ILOSCLgRs9EJGYLkXK8yru4ua3LkyVIQspo+uWQRX
+	 bCcQcyMOI7JGJebDSM3fQp7b41tUQWhHDn8E/xhQ+KrmuPKpoWhFN6HO2BzlWmG5ZF
+	 4k76GV+i3w/dQ==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id C8CA7380CECB;
+	Thu, 29 Jan 2026 16:30:05 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH] media: Fix G.722 @ 16 kHz codec ID value reported by
+ transport
+From: patchwork-bot+bluetooth@kernel.org
+Message-Id: 
+ <176970420460.2563498.7347833153547034544.git-patchwork-notify@kernel.org>
+Date: Thu, 29 Jan 2026 16:30:04 +0000
+References: <20260128103809.2679085-1-arkadiusz.bokowy@gmail.com>
+In-Reply-To: <20260128103809.2679085-1-arkadiusz.bokowy@gmail.com>
+To: Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>
+Cc: linux-bluetooth@vger.kernel.org
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [2.04 / 15.00];
-	DMARC_POLICY_REJECT(2.00)[github.com : SPF not aligned (relaxed),reject];
-	R_DKIM_REJECT(1.00)[github.com:s=pf2023];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MV_CASE(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[github.com:-];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_ONE(0.00)[1];
-	RCVD_COUNT_THREE(0.00)[4];
-	TAGGED_FROM(0.00)[bounces-18652-lists,linux-bluetooth=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-18653-lists,linux-bluetooth=lfdr.de,bluetooth];
 	RCVD_TLS_LAST(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[patchwork-bot@kernel.org,linux-bluetooth@vger.kernel.org];
+	RCPT_COUNT_TWO(0.00)[2];
+	FREEMAIL_TO(0.00)[gmail.com];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[noreply@github.com,linux-bluetooth@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TO_DN_NONE(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_NO_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,collabora.com:email,makefile.am:url,makefile.tools:url]
-X-Rspamd-Queue-Id: 06155B22CC
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: BAC5BB2344
 X-Rspamd-Action: no action
 
-  Branch: refs/heads/master
-  Home:   https://github.com/bluez/bluez
-  Commit: eb37ac9488b42c0f384b9822f8cc6db002774c1a
-      https://github.com/bluez/bluez/commit/eb37ac9488b42c0f384b9822f8cc6=
-db002774c1a
-  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-  Date:   2026-01-29 (Thu, 29 Jan 2026)
+Hello:
 
-  Changed paths:
-    M Makefile.am
+This patch was applied to bluetooth/bluez.git (master)
+by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
 
-  Log Message:
-  -----------
-  build: Remove left-over of health profiles removal
+On Wed, 28 Jan 2026 11:38:09 +0100 you wrote:
+> The G.722 @ 16 kHz codec ID is 0x01, not 0x02. The 0x02 value comes from
+> the ASHA ReadOnlyProperties GATT characteristic which is a bitmask with
+> bits corresponding to codec IDs - setting bit 1 gives bitmask value 0x02.
+> ---
+>  profiles/audio/media.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
+Here is the summary with links:
+  - media: Fix G.722 @ 16 kHz codec ID value reported by transport
+    https://git.kernel.org/pub/scm/bluetooth/bluez.git/?id=ebb33150ba76
 
-  Commit: 9bd859ea4a4c08f709ed12260898eed81dcdb4d0
-      https://github.com/bluez/bluez/commit/9bd859ea4a4c08f709ed12260898e=
-ed81dcdb4d0
-  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
-  Date:   2026-01-29 (Thu, 29 Jan 2026)
-
-  Changed paths:
-    M doc/qualification/avrcp-pics.rst
-    M doc/qualification/gap-pics.rst
-
-  Log Message:
-  -----------
-  doc/qualification: Fix typos
-
-This fix the errors and warnings found during HTML generation.
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
-  Commit: a2d140d70b1c74f2c6ee248f5d1f3838dd68c930
-      https://github.com/bluez/bluez/commit/a2d140d70b1c74f2c6ee248f5d1f3=
-838dd68c930
-  Author: Bastien Nocera <hadess@hadess.net>
-  Date:   2026-01-29 (Thu, 29 Jan 2026)
-
-  Changed paths:
-    M Makefile.tools
-
-  Log Message:
-  -----------
-  build: Don't install btmgmt man page as tool isn't
-
-The btmgmt tool isn't installed through the Makefiles, so the
-man page shouldn't be installed either.
-
-
-  Commit: ebb33150ba76f3b20280bfd30e410bf45e052dc1
-      https://github.com/bluez/bluez/commit/ebb33150ba76f3b20280bfd30e410=
-bf45e052dc1
-  Author: Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>
-  Date:   2026-01-29 (Thu, 29 Jan 2026)
-
-  Changed paths:
-    M profiles/audio/media.c
-
-  Log Message:
-  -----------
-  media: Fix G.722 @ 16 kHz codec ID value reported by transport
-
-The G.722 @ 16 kHz codec ID is 0x01, not 0x02. The 0x02 value comes from
-the ASHA ReadOnlyProperties GATT characteristic which is a bitmask with
-bits corresponding to codec IDs - setting bit 1 gives bitmask value 0x02.=
-
-
-
-Compare: https://github.com/bluez/bluez/compare/e2551c5b9809...ebb33150ba=
-76
-
-To unsubscribe from these emails, change your notification settings at ht=
-tps://github.com/bluez/bluez/settings/notifications
 
