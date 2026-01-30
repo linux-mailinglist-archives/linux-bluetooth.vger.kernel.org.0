@@ -1,87 +1,87 @@
-Return-Path: <linux-bluetooth+bounces-18748-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18750-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4GF3CpYqfWlcQgIAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18748-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Jan 2026 23:03:02 +0100
+	id 0ODYEZ0qfWlcQgIAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18750-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Jan 2026 23:03:09 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 134EBBEF3D
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Jan 2026 23:03:02 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id D9CE2BEF51
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Jan 2026 23:03:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 68B473004F0F
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Jan 2026 22:03:01 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 780233028C33
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Jan 2026 22:03:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FA7A36F43E;
-	Fri, 30 Jan 2026 22:03:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36A4A3542F7;
+	Fri, 30 Jan 2026 22:03:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bD3n4f+6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YuYKpmqr"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from mail-vk1-f194.google.com (mail-vk1-f194.google.com [209.85.221.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24771354ACC
-	for <linux-bluetooth@vger.kernel.org>; Fri, 30 Jan 2026 22:02:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8622EB5CD
+	for <linux-bluetooth@vger.kernel.org>; Fri, 30 Jan 2026 22:03:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769810580; cv=none; b=M5Re/iRfoTwYGE73fmzFQElA/+5khxloipKL5+m/J5FGHdJRGjRGpd2okwVFqYBQpblZBFYIx7pV8JHBCwnnpZwGUZm3acFML8RjNtA16VAtKddYrfYI3gWSGM+pLbipQWvUEvq527F4L5psKGyJDH8eOwRSLYOHjbbJ3t/fcnw=
+	t=1769810581; cv=none; b=iLvlItJr1Ldz0qcE7uH1ffa9/OQNzjIwZgFvTbqtvlSFjtMLwMU9u58zORJeNd0AZKVWZSCwZDePFLtFQf/HbaCqNtdxKeZuEjH2jQiNwYiW6P6rCM6MRyd4sogXCqgzLHkoyCzBuOd0mnOhrTNkdOjnpKs6M1J92SdLXbmHmHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769810580; c=relaxed/simple;
-	bh=1qcg6Fo+zUlw0awma7itvdhqQrXkosVfl4b4dIPdJk4=;
+	s=arc-20240116; t=1769810581; c=relaxed/simple;
+	bh=U12YggAc//1bv+uspaYqXIzKsHI1nWTvAPMCd2E7IwQ=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RWqL6utc0RPwujRE8Y/BdDuQHzsFDMzaSKF73Cmyro7wtLcp7sE2/pFc9axXNPbGbIKXMawncqoOZ3wkVHW1YYhstunIu4HtKrxrWkgGTeFTlLfa+Br3sM7TBROVRiXjnLCZqILJSiZtnr7bRJjmfT+1t76j6l/nX4+FSQv0whY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bD3n4f+6; arc=none smtp.client-ip=209.85.221.194
+	 MIME-Version; b=i1VAmX3aQe7Z+Qb2QF7CGttuUEvXuLWotV5Bxo+zPfONILojtN14VmAr1T8tCCHZhoE4jkcfOR8+hMVm8ej/+yCiP6WMLIPMe7QBHzqWUiM7TSRi73L0COfv+zxxu+/Rqdv+NC8SGBCK8DKrvmzGViObV5Vzr7xK9V6XAfXBOkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YuYKpmqr; arc=none smtp.client-ip=209.85.221.194
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vk1-f194.google.com with SMTP id 71dfb90a1353d-56376c3e866so1859478e0c.3
-        for <linux-bluetooth@vger.kernel.org>; Fri, 30 Jan 2026 14:02:58 -0800 (PST)
+Received: by mail-vk1-f194.google.com with SMTP id 71dfb90a1353d-56637ab30b8so2207022e0c.1
+        for <linux-bluetooth@vger.kernel.org>; Fri, 30 Jan 2026 14:03:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769810578; x=1770415378; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1769810579; x=1770415379; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=1I5Tcnn29kS7X5Bx7cDIRKiPlsqGmWf3rIkh4jrajJo=;
-        b=bD3n4f+6fM4yb9OA7cVHmAZ+zOJX9BBoi7sUXtS8oSB0Spq9sFTPBcIRYVGBZNhFWg
-         7HeVjcPaPwEGp1NjveWgIE45sBliWVZhzloQ/LTuB4lgrsPXBWsvVewi+022KWsqDXdK
-         qbi0COH9aCaI1Ud8yhclj419KRFZy/lXx69l4j+Jwtl+iBvKHKTO9tcf0kt6RAslIGty
-         fWkjKt2c8u2IRV7JHuJaMBQFNr8mmnyeRcH8wRd3fcJhre1WKLEv/mAuZWFpKJ9BwS6h
-         rPHs+tDdxK0WWxDWNMK9BFmAZtPtSpWFAvNNEVcO8p7ta9fwwFGKCwtUkVQB22flk1Kg
-         p9gg==
+        bh=jhlgYY9r5KTZIeBhSzNDjcbZ4V0gtimcWaWiuie20Oo=;
+        b=YuYKpmqrV2Dom48w+BjNVEubxkcwC3V6Df5fwfvDacAvYxAVd0J3PPhNLQMTEmVXQg
+         Km9OlZzGgAIucBNfJxP9ymNGFrk0gfNb9MYDAy4aQ82cw19rgxlXo91ng6H411iAYw/c
+         xAP8aGinwuAH4yjLo8v9+HZta1LDLdEfnuc4UKuKRf2FUukwf5Si2zbhCcFcoVXgQRKI
+         d3ZZNLQq2fsgQYQXJ0pe3TmdJ1K8BkedM8dlee2akGTaGN3bKHK41tK39aWDo/2reAl2
+         aezy7n3IApofNFGo7qFllcxecEQu7V71lMW1qny1cnF144mERunevuxW5AZsLI6GPg4t
+         ShvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769810578; x=1770415378;
+        d=1e100.net; s=20230601; t=1769810579; x=1770415379;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=1I5Tcnn29kS7X5Bx7cDIRKiPlsqGmWf3rIkh4jrajJo=;
-        b=toF5WkFlQpHcfeqokM0/IfAuglfY83MyClBN2mSqEA2j/Y/ofkZoz+UUzAfaMwFH7i
-         toYsfA5etlGpDfGmPY99Usdi7B+bvX+3YTjC3MmLxCMtBZGJ1paJYIkFGSFN+AfkZx0g
-         XDP0cGr9iX/+uibQFe6hLz362FBUcNog1R70xZHvLIV/hRZ6PTAENCsS5OhrOz1XHzd6
-         8XaCJBhqqPAb+6+K0i449a7m/SeEEbN9tn5C+Cjyw3Tb2u43VlPG5Amdf6oXtnaGzdaK
-         mAb5Jvb6AJDalELQQKmCuiH0w8aSWC47rXJF5zN6XE8zIbFhWFjR+lbVTF5VFXPUICt+
-         yttA==
-X-Gm-Message-State: AOJu0YzmnIM9BvKN1+OnK66Nc0tVlGb3IhKH2M4BSfTcZvsOtYgNGLLI
-	PB6iHA+5MYFWpNWwMhiUdYiOMFYIHXioaU+D/C+djyw7fdPiSjuwdxJob/KMWnPj
-X-Gm-Gg: AZuq6aIgeJniV/LWdiDfl4TQJu19bJa4875NsOD2lfn5DbaO0eEEz/CbShgZrXaAQYw
-	oWt0MV7GR3uZdt0Y5KQvI/GLbxpe6yx4KDNs5Nh32NA6zWUGMlhw9Aedxpg9CcNQC5SRGbOPSYX
-	bb2CpqyIkzJo0N31pAoDkGyZSSG7oB7Rycx9+AcoABOgh7CgXAFQQDCKnNDiEUJ8I4CzITmj26m
-	idfvrwIZlJieYhXSCkKD3FEoj/6PCzLa1IZYgWZosC3kno8SPlimfuZ/HB/CEVWMfe9ybitMoOJ
-	1bCtdp5xbLmC2i6USxkcdaKIlV4P3Z6zbDISxwYXJ4BqT0pv3UfReET6EEgpzJ0pQ6TaAJPKrtG
-	vudlLQk00yw3WT0wAWfqzBmBhxsykg35W2Ed3wNe0v5WFCRYrbyHs0s4z1Wn9tc1RMIT7HE/4F5
-	DKNYaS/PjvgzRK/sFzRiQ0g5yZCOcVnPmLOnbtuU7xnpvQIXxXGoDA8a13nM2IOEhkd/MoBwFed
-	9jbAg==
-X-Received: by 2002:a05:6122:906:b0:563:7390:b17d with SMTP id 71dfb90a1353d-5669fe8303bmr1274025e0c.0.1769810577722;
-        Fri, 30 Jan 2026 14:02:57 -0800 (PST)
+        bh=jhlgYY9r5KTZIeBhSzNDjcbZ4V0gtimcWaWiuie20Oo=;
+        b=OEl66iqcWP9/SWz9zC57uyK8bu3sQqyDUmxisTLFAGBiyfEjzwOysyyzqS4dOE7Waf
+         c5Q3oOfnT/5b7uV0zsKQ7Cu/reimrbYtNY8LHaqEqoP1W52N+m52s50DAj1wb4Q9nTD5
+         TSa9znK1tCwdvg9arHImJdfYW7wzaa9Vubi2HuroRobOoGwrLP5Acxhuv1YdwVNliqjN
+         amrmjanxa5//ql8ExH6EVUM1PRDH/jdvnZXEh07oRe8wWxQDoCUwYakpSoc5BjsWrNQc
+         0npYvXUEZj8F03hhps5PSxVAlAa1QQkK9WbAxIvehcPTHTTPiYQCt/toWuzXblhoiPh3
+         /K6g==
+X-Gm-Message-State: AOJu0YwG3TxLF08FSXcX5TyxJKV+9zejcQJE1K0//OfTPgagQqlqY4OP
+	1t/ANhfvBobDIaVCHNuRJNK1uQ71MADoJv/FuBz80s1643G+l3g+ceH+CTId8e43
+X-Gm-Gg: AZuq6aLOB/FILvf6LYQkzWC6Kmm5sk35jO9kJlp+tuYMGle8+CJC0lMpFe3GW9sRSay
+	lIZc7dJVdEmQCnNmMBxZO9G/WgjHt9haeK2JO3a7JXXf1YgkTQp8+nRltUHkhaQVtv5q0+jslcc
+	GserhsCpz44V5PLNWQw0a/kyVqjaB/Hhrp3UQUgqwxgMB/2BV1DsRKsiUCJjebHFzL3t6Nxc1qr
+	31MwHyw29FzpcsZ/U9xUMBUIYA+QPbmnxLP2oi26U6RO5kTbYRsE8YNZQixteg9PmnSvfRx7t+I
+	QkoNMPM/DjxReRFOnF8XvUBxPNIz3N/8fGMbc9YluRZL74j8lS22cF1WsppmOP+kLFBmntGVZ6Z
+	p8wdAV5Y3JfH+Wlr+SP9GPFbsF8R3SrBA4/9UWl/3XppGkagJX1ipIrGOSjKAnfYDf0euZhoBft
+	NrLP/NkhtjdGlNDqdRhKnBx/qfLQM0D47QtKPjbpjGXg/Td5XJq5qsAP5Dz0Rr9rBqAAQvTETOd
+	R14FA==
+X-Received: by 2002:a05:6102:440b:b0:5ef:a416:be63 with SMTP id ada2fe7eead31-5f8cdc8e1famr2858846137.22.1769810578732;
+        Fri, 30 Jan 2026 14:02:58 -0800 (PST)
 Received: from lvondent-mobl5 ([72.188.211.115])
-        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-948723adb7csm2404052241.2.2026.01.30.14.02.56
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-948723adb7csm2404052241.2.2026.01.30.14.02.57
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Jan 2026 14:02:57 -0800 (PST)
+        Fri, 30 Jan 2026 14:02:58 -0800 (PST)
 From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v3 14/37] doc/bluetoothctl-telephony: Add :Uses: fields and document arguments
-Date: Fri, 30 Jan 2026 17:02:05 -0500
-Message-ID: <20260130220229.1346261-15-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ v3 15/37] doc/bluetoothctl-transport: Add :Uses: fields and document arguments
+Date: Fri, 30 Jan 2026 17:02:06 -0500
+Message-ID: <20260130220229.1346261-16-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260130220229.1346261-1-luiz.dentz@gmail.com>
 References: <20260130220229.1346261-1-luiz.dentz@gmail.com>
@@ -97,7 +97,7 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -106,10 +106,10 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
 	DKIM_TRACE(0.00)[gmail.com:+];
-	TAGGED_FROM(0.00)[bounces-18748-lists,linux-bluetooth=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-18750-lists,linux-bluetooth=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	RCPT_COUNT_ONE(0.00)[1];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
 	PRECEDENCE_BULK(0.00)[];
@@ -120,8 +120,8 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	NEURAL_HAM(-0.00)[-1.000];
 	TO_DN_NONE(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 134EBBEF3D
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,intel.com:email]
+X-Rspamd-Queue-Id: D9CE2BEF51
 X-Rspamd-Action: no action
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
@@ -129,151 +129,157 @@ From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Add :Uses: fields to link commands to their corresponding D-Bus API
 methods, and document command arguments with usage examples.
 ---
- doc/bluetoothctl-telephony.rst | 75 ++++++++++++++++++++++++++++++++--
- 1 file changed, 71 insertions(+), 4 deletions(-)
+ doc/bluetoothctl-transport.rst | 78 +++++++++++++++++++++++++++++++++-
+ 1 file changed, 77 insertions(+), 1 deletion(-)
 
-diff --git a/doc/bluetoothctl-telephony.rst b/doc/bluetoothctl-telephony.rst
-index a6870e781a7a..84ea36f778ed 100644
---- a/doc/bluetoothctl-telephony.rst
-+++ b/doc/bluetoothctl-telephony.rst
+diff --git a/doc/bluetoothctl-transport.rst b/doc/bluetoothctl-transport.rst
+index 77d8457a5d6f..7e3809e5ac18 100644
+--- a/doc/bluetoothctl-transport.rst
++++ b/doc/bluetoothctl-transport.rst
 @@ -18,6 +18,9 @@ SYNOPSIS
  
- **bluetoothctl** [--options] [telephony.commands]
+ **bluetoothctl** [--options] [transport.commands]
  
-+This submenu manages telephony features using the **org.bluez.Telephony(5)**
-+and **org.bluez.Call(5)** interfaces.
++This submenu manages media transports for audio streaming using the
++**org.bluez.MediaTransport(5)** interface.
 +
- Telephony Commands
- ==================
+ Media Transport Commands
+ =========================
  
-@@ -27,34 +30,72 @@ list
- List available audio gateways.
+@@ -28,12 +31,23 @@ List available transports.
  
  :Usage: **> list**
-+:Example Display all available HFP audio gateways:
-+	| **> list**
  
++:Example Display all available media transports (A2DP, LE Audio, etc.):
++	| **> list**
++
  show
  ----
  
- Show audio gateway information.
+ Show transport information.
  
--:Usage: **> show [audiogw]**
-+:Usage: **> show [telephony]**
-+:Uses: **org.bluez.Telephony(5)** properties
-+:[telephony]: Audio gateway device path (optional, shows current if omitted)
-+:Example Show information for currently selected audio gateway:
+ :Usage: **> show [transport]**
++:Uses: **org.bluez.MediaTransport(5)** properties
++:[transport]: Specific transport object path (optional, shows current if omitted)
++:Example Show information for currently selected transport:
 +	| **> show**
-+:Example Show information for specific audio gateway device:
-+	| **> show /org/bluez/hci0/dev_00_11_22_33_44_55**
-+:Example Show information for another audio gateway:
-+	| **> show /org/bluez/hci0/dev_AA_BB_CC_DD_EE_FF**
++:Example Show transport information:
++	| **> show /org/bluez/hci0/dev_00_11_22_33_44_55/fd0**
++:Example Show Broadcast Isochronous Stream transport:
++	| **> show /org/bluez/hci0/dev_11_22_33_44_55_66/bis1**
  
- select
+ acquire
+ -------
+@@ -41,6 +55,13 @@ acquire
+ Acquire transport.
+ 
+ :Usage: **> acquire <transport> [transport1...]**
++:Uses: **org.bluez.MediaTransport(5)** method **Acquire**
++:<transport>: Media transport object path to acquire for audio streaming
++:[transport1...]: Additional transport paths for multi-stream acquisition (optional)
++:Example Acquire transport:
++	| **> acquire /org/bluez/hci0/dev_00_11_22_33_44_55/fd0**
++:Example Acquire multiple transports:
++	| **> acquire /org/bluez/hci0/dev_00_11_22_33_44_55/fd0 /org/bluez/hci0/dev_00_11_22_33_44_55/fd1**
+ 
+ Note:
+ 
+@@ -54,6 +75,13 @@ Select transport. For transports created on a Broadcast Sink device only. This m
+ the transport to the "broadcasting" state, pending acquire.
+ 
+ :Usage: **> select <transport> [transport1...]**
++:Uses: **org.bluez.MediaTransport(5)** method **Select**
++:<transport>: Broadcast sink transport path to move to broadcasting state
++:[transport1...]: Additional transport paths for multi-stream selection (optional)
++:Example Select single Broadcast Isochronous Stream:
++	| **> select /org/bluez/hci0/dev_00_11_22_33_44_55/bis1**
++:Example Select stereo broadcast streams:
++	| **> select /org/bluez/hci0/dev_00_11_22_33_44_55/bis1 /org/bluez/hci0/dev_00_11_22_33_44_55/bis2**
+ 
+ Note:
+ 
+@@ -77,6 +105,12 @@ was acquired by bluetoothctl it can be released straight away, without having to
+ unselected.
+ 
+ :Usage: **> unselect <transport> [transport1...]**
++:<transport>: Broadcast sink transport path to move to idle state
++:[transport1...]: Additional transport paths for multi-stream unselection (optional)
++:Example Unselect broadcast stream transport:
++	| **> unselect /org/bluez/hci0/dev_00_11_22_33_44_55/bis1**
++:Example Unselect multiple broadcast streams:
++	| **> unselect /org/bluez/hci0/dev_00_11_22_33_44_55/bis1 /org/bluez/hci0/dev_00_11_22_33_44_55/bis2**
+ 
+ Note:
+ If running the setup with an audio server that has LE Audio support (such as PipeWire), it will
+@@ -88,6 +122,13 @@ release
+ Release transport.
+ 
+ :Usage: **> release <transport> [transport1...]**
++:Uses: **org.bluez.MediaTransport(5)** method **Release**
++:<transport>: Media transport object path to release from audio streaming
++:[transport1...]: Additional transport paths for multi-stream release (optional)
++:Example Release transport:
++	| **> release /org/bluez/hci0/dev_00_11_22_33_44_55/fd0**
++:Example Release multiple transports:
++	| **> release /org/bluez/hci0/dev_00_11_22_33_44_55/fd0 /org/bluez/hci0/dev_00_11_22_33_44_55/fd1**
+ 
+ Note:
+ 
+@@ -98,7 +139,14 @@ send
+ 
+ Send contents of a file.
+ 
+-:Usage: **> send <transport> <filename>**
++:Usage: **> send <transport> <filename> [transport1...]**
++:<transport>: Media transport object path to send audio data through
++:<filename>: Path to audio file to transmit (supports WAV, MP3, PCM formats)
++:[transport1...]: Additional transport paths for multi-stream sending (optional)
++:Example Send encoded audio file via transport:
++	| **> send /org/bluez/hci0/dev_00_11_22_33_44_55/fd0 /home/user/music.<format>**
++:Example Send to multiple transports simultaneously:
++	| **> send /org/bluez/hci0/dev_00_11_22_33_44_55/fd0 /home/user/stereo-left.<format> /org/bluez/hci0/dev_00_11_22_33_44_55/fd1 /home/user/stereo-rigth.<format>**
+ 
+ receive
+ -------
+@@ -106,6 +154,14 @@ receive
+ Get/Set file to receive.
+ 
+ :Usage: **> receive <transport> [filename]**
++:<transport>: Media transport object path to receive audio data from
++:[filename]: Path to save received audio data (optional, shows current if omitted)
++:Example Show current receive file for transport:
++	| **> receive /org/bluez/hci0/dev_00_11_22_33_44_55/fd0**
++:Example Set file to receive audio data:
++	| **> receive /org/bluez/hci0/dev_00_11_22_33_44_55/fd0 /tmp/recorded_audio.wav**
++:Example Set file for broadcast audio capture (note quotes):
++	| **> receive /org/bluez/hci0/dev_11_22_33_44_55_66/bis1 "/home/user/My Recordings/broadcast.wav"**
+ 
+ volume
  ------
+@@ -113,6 +169,26 @@ volume
+ Get/Set transport volume.
  
- Select default audio gateway.
- 
--:Usage: **> select <audiogw>**
-+:Usage: **> select <telephony>**
-+:<telephony>: Audio gateway device path to set as default
-+:Example Select specific audio gateway as default:
-+	| **> select /org/bluez/hci0/dev_00_11_22_33_44_55**
-+:Example Select different audio gateway as default:
-+	| **> select /org/bluez/hci0/dev_AA_BB_CC_DD_EE_FF**
- 
- dial
- ----
- 
- Dial number.
- 
--:Usage: **> dial <number> [audiogw]**
-+:Usage: **> dial <number> [telephony]**
-+:Uses: **org.bluez.Telephony(5)** method **Dial**
-+:<number>: Phone number to dial
-+:[telephony]: Audio gateway device path (optional, uses current if omitted)
-+:Example Dial number using currently selected audio gateway:
-+	| **> dial 555-1234**
-+:Example Dial international number using current audio gateway:
-+	| **> dial +1-555-123-4567**
-+:Example Dial emergency number using current audio gateway:
-+	| **> dial 911**
-+:Example Dial number using specific audio gateway:
-+	| **> dial 555-1234 /org/bluez/hci0/dev_00_11_22_33_44_55**
-+:Example Dial UK number using specific audio gateway:
-+	| **> dial +44-20-7946-0958 /org/bluez/hci0/dev_AA_BB_CC_DD_EE_FF**
-+:Example Dial with caller ID blocking:
-+	| **> dial *67-555-1234**
-+:Example Dial with caller ID hiding (GSM format):
-+	| **> dial #31#555-1234**
- 
- hangup-all
- ----------
- 
- Hangup all calls.
- 
--:Usage: **> hangup-all**
-+:Usage: **> hangup-all [telephony]**
-+:Uses: **org.bluez.Telephony(5)** method **HangupAll**
-+:[telephony]: Audio gateway device path (optional, uses current if omitted)
-+:Example Terminate all active and waiting calls on current gateway:
-+	| **> hangup-all**
-+:Example Terminate all calls on specific audio gateway:
-+	| **> hangup-all /org/bluez/hci0/dev_00_11_22_33_44_55**
- 
- list-calls
- ----------
-@@ -62,6 +103,8 @@ list-calls
- List available calls.
- 
- :Usage: **> list-calls**
-+:Example Display all active, waiting, and held calls:
-+	| **> list-calls**
- 
- show-call
- ---------
-@@ -69,6 +112,14 @@ show-call
- Show call information.
- 
- :Usage: **> show-call <call>**
-+:Uses: **org.bluez.Call(5)** properties
-+:<call>: Call object path to display information for
-+:Example Show information for specific call:
-+	| **> show-call /org/bluez/hci0/dev_00_11_22_33_44_55/call1**
-+:Example Show information for another call:
-+	| **> show-call /org/bluez/hci0/dev_00_11_22_33_44_55/call2**
-+:Example Show call information from different device:
-+	| **> show-call /org/bluez/hci0/dev_AA_BB_CC_DD_EE_FF/call1**
- 
- answer
- ------
-@@ -76,6 +127,14 @@ answer
- Answer call.
- 
- :Usage: **> answer <call>**
-+:Uses: **org.bluez.Call(5)** method **Answer**
-+:<call>: Call object path to answer
-+:Example Answer incoming call:
-+	| **> answer /org/bluez/hci0/dev_00_11_22_33_44_55/call1**
-+:Example Answer waiting call:
-+	| **> answer /org/bluez/hci0/dev_00_11_22_33_44_55/call2**
-+:Example Answer call from different device:
-+	| **> answer /org/bluez/hci0/dev_AA_BB_CC_DD_EE_FF/call1**
- 
- hangup
- ------
-@@ -83,6 +142,14 @@ hangup
- Hangup call.
- 
- :Usage: **> hangup <call>**
-+:Uses: **org.bluez.Call(5)** method **Hangup**
-+:<call>: Call object path to terminate
-+:Example Terminate specific active call:
-+	| **> hangup /org/bluez/hci0/dev_00_11_22_33_44_55/call1**
-+:Example Terminate waiting or held call:
-+	| **> hangup /org/bluez/hci0/dev_00_11_22_33_44_55/call2**
-+:Example Terminate call from different device:
-+	| **> hangup /org/bluez/hci0/dev_AA_BB_CC_DD_EE_FF/call1**
+ :Usage: **> volume <transport> [value]**
++:Uses: **org.bluez.MediaTransport(5)** property **Volume**
++:<transport>: Media transport object path to control volume for
++:[value]: Volume level (0-127, optional, shows current if omitted)
++:Example Show current volume level:
++	| **> volume /org/bluez/hci0/dev_00_11_22_33_44_55/fd0**
++:Example Set volume to 100:
++	| **> volume /org/bluez/hci0/dev_00_11_22_33_44_55/fd0 100**
++
++metadata
++--------
++
++Get/Set Transport Metadata.
++
++:Usage: **> metadata <transport> [value...]**
++:<transport>: Media transport object path
++:[value...]: Metadata value as hex string (optional, shows current if omitted)
++:Example Show current metadata for transport:
++	| **> metadata /org/bluez/hci0/dev_00_11_22_33_44_55/fd0**
++:Example Set metadata value:
++	| **> metadata /org/bluez/hci0/dev_00_11_22_33_44_55/fd0 0x03020100**
  
  RESOURCES
  =========
