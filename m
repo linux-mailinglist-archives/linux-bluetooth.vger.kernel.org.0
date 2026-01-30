@@ -1,87 +1,87 @@
-Return-Path: <linux-bluetooth+bounces-18747-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18749-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mJq4MpUqfWlcQgIAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18747-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Jan 2026 23:03:01 +0100
+	id eOzVBpsqfWlcQgIAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18749-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Jan 2026 23:03:07 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91FAFBEF33
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Jan 2026 23:03:01 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93852BEF4A
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Jan 2026 23:03:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 04C633004601
+	by tor.lore.kernel.org (Postfix) with ESMTP id E831930241B3
 	for <lists+linux-bluetooth@lfdr.de>; Fri, 30 Jan 2026 22:03:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E7593542CB;
-	Fri, 30 Jan 2026 22:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A70A23612D5;
+	Fri, 30 Jan 2026 22:03:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JyY9AEug"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L0rHiDUM"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-vs1-f67.google.com (mail-vs1-f67.google.com [209.85.217.67])
+Received: from mail-vs1-f65.google.com (mail-vs1-f65.google.com [209.85.217.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC392FB093
-	for <linux-bluetooth@vger.kernel.org>; Fri, 30 Jan 2026 22:02:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998D02FB093
+	for <linux-bluetooth@vger.kernel.org>; Fri, 30 Jan 2026 22:02:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769810578; cv=none; b=g3B0Wkz8kCAG60LoV3NvQRnjY/anu3DusoxRpadT6os3eRgMnzLxdfTU2ykj3PelwrUg/f4WwrD4CRrP/DfRmlSvPISZM9zziwVEkAGkBkTLATEDv7OUu8ePlBMSkN8boSne+VqWnubDlUXvzbJVjhDaA1AKs4+OqrLHS++1kTQ=
+	t=1769810581; cv=none; b=aETuuxSUoM5phMPbBbOj+eqDlIxY+EO3frCHQNuTRV7fEVHoYvWUYTtC0L5FCcSUT1m5OFRa55cx0WOXWfNJyiKnQtDN2UCC7RhnsnaYx3jDyx2I35LxwIhoblW8/5ZwBAs6x1TKo4Ui/jKW/yfJbjXd34bJb/6Fwvi4LZdLy5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769810578; c=relaxed/simple;
-	bh=0r2wsKNM5PBapatPF2vhBYVmuiX/XqJ8mELQ02dGqBY=;
+	s=arc-20240116; t=1769810581; c=relaxed/simple;
+	bh=rUE5HZgo1c2zzKWDGgWnOkHm5Ox6izAIHvkfveqplpw=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N/77lYaMaSsWvQ4bPAQ4xxPVcnBcivQTRj+pBALjP44rYCbLQG6dkQdKabzQJ0Om5XDAHa6aKZfZazFnlWGCYOVgQ0nBYLc1GhbAiZPD/iwYNJNTQiTK3FC1tgMHKk2z5ATRj/PsX5wQHF7hvmWRdiBTo/6n2383Bc57Bx6GmhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JyY9AEug; arc=none smtp.client-ip=209.85.217.67
+	 MIME-Version:Content-Type; b=StvH1Q/ye4DBYyuRdRNBPAHrszUFNxxS3pQLnVGFJYQ1GZynRxxVPo1IRWiN8U0qihf9M4nce3L2R4JAxzr1lYp1czEONyCapHu57kiDxtjr04YtBnfSAamXcV5h74V69wRuAmSPWL/sM/jnmxvg4NZtlre5f51ORiP/t421KiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L0rHiDUM; arc=none smtp.client-ip=209.85.217.65
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vs1-f67.google.com with SMTP id ada2fe7eead31-5ee9fa419f5so514145137.3
-        for <linux-bluetooth@vger.kernel.org>; Fri, 30 Jan 2026 14:02:56 -0800 (PST)
+Received: by mail-vs1-f65.google.com with SMTP id ada2fe7eead31-5f53021703aso845671137.3
+        for <linux-bluetooth@vger.kernel.org>; Fri, 30 Jan 2026 14:02:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769810576; x=1770415376; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1769810578; x=1770415378; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=rx/ocwfBYqh1py3VurJ3UfTU+HkUKbb6wfZRKvKqIBg=;
-        b=JyY9AEugA+1UL/lw82zIn+phZo8Dc4HOV6Frkz2NQc0/KZfCATGYQ2CbnWxYVXbr4i
-         s6ATNNmU4K6/WpE2PMXsz56D4hAVxRXXK5nD6i1pTD5N47nH2YCT8Fe57I7rneau0LO5
-         KLQ9s27SUDikOdXCtIhqZocSRMfrS7gIWrlNS1k2Lk6jWjII++wAwkXhktmvLcpa3y/8
-         p6VcIw73Txk10kGyLXCGLB/OJdFEv9bgv80yefPE1KyaNd+R6T5jU1PJUUtmCF06I2Z+
-         TVlRK7+9olOdLG6OjIJtWhzSTyjysRMaVT1u9Lp0u+vWRNt1DZ4Yuz3INFYnj9+5oEbS
-         tbEg==
+        bh=4IfTXbPMbgVtzF/gDYXEBrFe5L1j4eJB2s2bTx/9zE4=;
+        b=L0rHiDUMV9dcM4CwAGdHO4o1b1cUvXUC1u0JE4Xc9cm+YYrk7Pk3s6TP9XOPXOeJrk
+         mr31RHGm8HmJkvOELMlEmw8YDuTVOO6he+EIZRPshf1eqa0RrN2h7JFsUqUzmfg1Jed1
+         MisdJmHTx6RLY5Ktexx6AR+CIgb+gu11/k58GVNGLpgdwYjVXPa020mOfabJVjt9dK/i
+         NqSi8gE7qgBchhiPfeIYT7fzlhDBkejP0B9eQiRpLO7O7tg402iscujTJJrtMUM4/gxe
+         6yJLzF6vqOOyiMOSJMK5UlFy+p1L3RVsWpWUyqSIOJ/o7YS0abHf6fDFvh4O8eKrTP0x
+         Vt3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769810576; x=1770415376;
+        d=1e100.net; s=20230601; t=1769810578; x=1770415378;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=rx/ocwfBYqh1py3VurJ3UfTU+HkUKbb6wfZRKvKqIBg=;
-        b=lxGZfxrQkIbXXNtV3k8UXOS40PoXAp1NwgARihPHZE/Ie0tVGw61lCJJhsS8hZTedi
-         GIoBmqkthuch3st4riWXw3oBIzUIKCCRVsL4ahyWJZ1TGdTNqCSdQDiLLjNFKTfgPMYw
-         A0iMqcay6OAJC69eUAB6PTqfeC3+pqvh/dMqZU5cjRqz5ObKH95aPNfLnOIU7a+0IRQi
-         CTY1UfIvAG9m+aXIPYkCH+3t0OfY0O1X82etFz77DjYmF+x6bikFx9dmqufWhZBIes15
-         lRJiNFICvI8ViA2wgvWu4m/z62SPd22sRi+nH0CeHTp1aYZBOSrcNio1YmzS6J7nBsJF
-         CpiA==
-X-Gm-Message-State: AOJu0YxvHgMKFwES9zHMPNhpWX1AzJBC4jRdqJ81VYFkYiC4QOPSi+ZH
-	RQVZlRJWc+AlfrIrLOcwrDHS2OYir2KpgrUttH6Nga69CkglUZCAGV+UDdsN/pWm
-X-Gm-Gg: AZuq6aIp8vYtdKSETsmzrPE1quKQ8R1fh6avfccm9pP3AOel5w+jjolfNRhm/Sw5+wN
-	MwDAcuHaNtiSf+3YNsBsMdADZMdUZ6wEQ/8OqqdnJ3o20PdirKGmRf12PzlZmRJu+39Vkphdr84
-	6AtZwOcdxB1j+j1fXRB3zTDA0eub/AtkTqaBtwNKIG1BNU1CXljQJiJrgPabEuk2oFtbivMyYQV
-	g3R+ClI/unHOg7LTqnUfYHMDCwVnEP6dNhy+1+pHN9clKv8ExurZcnZV1IJ+E3Fph23wFPvTPO/
-	MQCJ3mdHcKIZ97ky1coXoXDEMfMRr270JUU1E3uQUUc3txTnAD8JNE1YQe5AepJyvRu1tC1D9pC
-	Y/p2V7D2yiCPc5ACmzBtIAEdYsGdZy0PXk9vdAeJOY+hn8LxBd9nNVJNw6vtadNfVfdATlTde2J
-	tzvdn0fYF5Ze+0q4RL+XgWG4BGZRBdaqhRddadZZKeB7UP9+jcs7l5PnKnWyjKELWmRLOOCugqj
-	nGx2A==
-X-Received: by 2002:a05:6102:c07:b0:5ef:9a37:17b9 with SMTP id ada2fe7eead31-5f8e24a4b1dmr1346439137.12.1769810575439;
-        Fri, 30 Jan 2026 14:02:55 -0800 (PST)
+        bh=4IfTXbPMbgVtzF/gDYXEBrFe5L1j4eJB2s2bTx/9zE4=;
+        b=GVXdzxaEi1QXdLJcJtEG2zkkvbS9A9fYKmFwXs54dz8HXXNcrfBxoGeGcQ7qwp8yIx
+         W6bH6WspciYqsHAS6JyY8yOiXCM12Fss7a9Tz7pccogd2YhyNkji10qviGUve+/kTtf2
+         XKjStB1wTx20C/Y4inipQFs6urCjBMeXBjQesP9cIQ0WPfWn+fFvs8bSleZpkpip+kur
+         m7bn6I4mP0IIgn8OsOpKaJ2HsmozrumaEMeoOCR72GkLV0NGMZkjX6+4cmH0kkZewTMB
+         mdXwFARPHZ6rOQeSRefLiDMgtKRI34j+w1jPHgDQ9J+qSfU7hMP3E6Wq8lE8IxEv0bYx
+         1qXg==
+X-Gm-Message-State: AOJu0YxUJtETt+iY8f1qEOtMMgjm1Ak7hD535FNj+EBYrxAd+7QO9IXC
+	2u0CE3Fk1FdBQvsk7+orXINAoVDIi/0zwJA0gFtCnkpGbQe3Hkxp540nhiKDX83u
+X-Gm-Gg: AZuq6aJl16Hq1xJQBSFs9TrZv5fveZQ8K1Ijz5MOol6NF3KMq8As8MG3IXrdxhZ5UFc
+	XOmAZ93UigQ7/pApDI5YzJsXvBm8XEcGwGdm5Fv1lIWlRjmDrvY8EXFVMgTzIgGM5wEM8nZWTRx
+	VBKxooFyZfujEWFkjzc29w1S0RSIq4Jo3ZwyDGdDGHcN5XG6NaRBuhDGY3a7NulTNYCPeOqGWiG
+	876z0wx0+LebUq7nWRI6jTpPh6BBBEMwU4jExe6RdRRVnP8MnCH3+50Kve3tGoLr3LnSd7DsO/M
+	6Qpe2tIdRuYH85yg0SXmGOjnC+KQLNssj6W5jm0sTLzKcvk/pm4oAqowhhANWNro8e4hy0haEZ/
+	EbQlJoJlNVVlnzyaUMdWwQQpVuyvsm9/fNEer8OW75Tb1a9ZVNFqgxKSBBEv28ZrWBxjsIKkKjo
+	t5/RtjJLbP8mj0n/2cpKOlDWIU8NFdzo0h1h3zSFZqDPCBKJ4ofiOzGpfDByXs94VvuK3OJeQYd
+	PCYsixBPJ+BXT6r
+X-Received: by 2002:a05:6102:3e89:b0:5db:cba0:941 with SMTP id ada2fe7eead31-5f8e26860f1mr1496739137.38.1769810576670;
+        Fri, 30 Jan 2026 14:02:56 -0800 (PST)
 Received: from lvondent-mobl5 ([72.188.211.115])
-        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-948723adb7csm2404052241.2.2026.01.30.14.02.54
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-948723adb7csm2404052241.2.2026.01.30.14.02.55
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Jan 2026 14:02:54 -0800 (PST)
+        Fri, 30 Jan 2026 14:02:56 -0800 (PST)
 From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v3 12/37] doc/bluetoothctl-player: Add :Uses: fields and document arguments
-Date: Fri, 30 Jan 2026 17:02:03 -0500
-Message-ID: <20260130220229.1346261-13-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ v3 13/37] doc/bluetoothctl-scan: Add :Uses: fields and document arguments
+Date: Fri, 30 Jan 2026 17:02:04 -0500
+Message-ID: <20260130220229.1346261-14-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260130220229.1346261-1-luiz.dentz@gmail.com>
 References: <20260130220229.1346261-1-luiz.dentz@gmail.com>
@@ -91,37 +91,37 @@ List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
 	DKIM_TRACE(0.00)[gmail.com:+];
-	TAGGED_FROM(0.00)[bounces-18747-lists,linux-bluetooth=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_ONE(0.00)[1];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-bluetooth];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[luizdentz@gmail.com,linux-bluetooth@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-18749-lists,linux-bluetooth=lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_ONE(0.00)[1];
+	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
-	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[luizdentz@gmail.com,linux-bluetooth@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	TO_DN_NONE(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 91FAFBEF33
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-bluetooth];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,intel.com:email]
+X-Rspamd-Queue-Id: 93852BEF4A
 X-Rspamd-Action: no action
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
@@ -129,268 +129,205 @@ From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Add :Uses: fields to link commands to their corresponding D-Bus API
 methods, and document command arguments with usage examples.
 ---
- doc/bluetoothctl-player.rst | 118 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 118 insertions(+)
+ doc/bluetoothctl-scan.rst | 126 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 122 insertions(+), 4 deletions(-)
 
-diff --git a/doc/bluetoothctl-player.rst b/doc/bluetoothctl-player.rst
-index 1c5d436b31db..ccdd66663c67 100644
---- a/doc/bluetoothctl-player.rst
-+++ b/doc/bluetoothctl-player.rst
+diff --git a/doc/bluetoothctl-scan.rst b/doc/bluetoothctl-scan.rst
+index cee255131622..16b4d08daddf 100644
+--- a/doc/bluetoothctl-scan.rst
++++ b/doc/bluetoothctl-scan.rst
 @@ -18,6 +18,9 @@ SYNOPSIS
  
- **bluetoothctl** [--options] [player.commands]
+ **bluetoothctl** [--options] [scan.commands]
  
-+This submenu controls media playback using the **org.bluez.MediaPlayer(5)**
-+interface.
++This submenu configures discovery filters using **org.bluez.Adapter(5)**
++method **SetDiscoveryFilter**.
 +
- Media Player Commands
- =====================
+ Scan Commands
+ =============
  
-@@ -27,6 +30,8 @@ list
- List available players.
+@@ -27,6 +30,24 @@ uuids
+ Set/Get UUIDs filter.
  
- :Usage: **> list**
-+:Example Display all available media players (local and remote):
-+	| **> list**
+ :Usage: **> uuids [all/uuid1 uuid2 ...]**
++:Uses: **org.bluez.Adapter(5)** method **SetDiscoveryFilter** property **UUIDs**
++:[all/uuid1 uuid2 ...]: List of UUIDs to filter for during scanning (default: none, use "all" to scan for any UUID)
++:Example Show current UUID filter settings:
++	| **> uuids**
++:Example Filter for Generic Access service only:
++	| **> uuids 0x1800**
++:Example Filter for Battery service only:
++	| **> uuids 0x180F**
++:Example Filter for Generic Access and Battery services:
++	| **> uuids 0x1800 0x180F**
++:Example Filter for Device Info, Battery, and Environmental Sensing:
++	| **> uuids 0x180A 0x180F 0x181A**
++:Example Filter for Generic Access using full UUID:
++	| **> uuids 00001800-0000-1000-8000-00805f9b34fb**
++:Example Filter using mixed short and long forms:
++	| **> uuids 00001800-0000-1000-8000-00805f9b34fb 0000180f-0000-1000-8000-00805f9b34fb**
++:Example Remove UUID filtering (scan for all devices):
++	| **> uuids all**
  
- show
+ rssi
  ----
-@@ -34,6 +39,12 @@ show
- Show player information.
+@@ -41,7 +62,20 @@ If one or more discovery filters have been set, the RSSI delta-threshold imposed
+ by starting discovery by default will not be applied.
  
- :Usage: **> show [player]**
-+:Uses: **org.bluez.MediaPlayer(5)** properties
-+:[player]: Media player path or identifier (optional, shows currently selected player if omitted)
-+:Example Show information for currently selected player:
-+	| **> show**
-+:Example Show remote player information:
-+	| **> show /org/bluez/hci0/dev_00_11_22_33_44_55/player0**
+ :Usage: **> rssi [rssi]**
+-:Example: **> rssi -60**
++:Uses: **org.bluez.Adapter(5)** method **SetDiscoveryFilter** property **RSSI**
++:[rssi]: Minimum RSSI threshold value in dBm (optional, shows current if omitted)
++:Example Show current RSSI filter setting:
++	| **> rssi**
++:Example Only report devices with RSSI ≥ -60 dBm (close range):
++	| **> rssi -60**
++:Example Report devices with RSSI ≥ -80 dBm (medium range):
++	| **> rssi -80**
++:Example Report devices with RSSI ≥ -90 dBm (extended range):
++	| **> rssi -90**
++:Example Report only very close devices (RSSI ≥ -40 dBm):
++	| **> rssi -40**
++:Example Report devices with very weak signals (maximum sensitivity):
++	| **> rssi -100**
  
- select
- ------
-@@ -41,6 +52,9 @@ select
- Select default player.
- 
- :Usage: **> select <player>**
-+:<player>: Media player path or identifier to select as default
-+:Example Select remote Bluetooth media player:
-+	| **> select /org/bluez/hci0/dev_00_11_22_33_44_55/player0**
- 
- play
- ----
-@@ -48,6 +62,16 @@ play
- Start playback.
- 
- :Usage: **> play [item]**
-+:Uses: **org.bluez.MediaPlayer(5)** method **Play**
-+:[item]: Media item path to play (optional, starts playback of current item if omitted)
-+:Example Start playback on current player:
-+	| **> play**
-+:Example Play specific item from media browser:
-+	| **> play /org/bluez/item/1**
-+:Example Play named track item:
-+	| **> play /org/bluez/item/track_001**
-+:Example Play track from specific album folder:
-+	| **> play /org/bluez/item/album_rock/track_05**
- 
- pause
- -----
-@@ -55,6 +79,9 @@ pause
- Pause playback.
- 
- :Usage: **> pause**
-+:Uses: **org.bluez.MediaPlayer(5)** method **Pause**
-+:Example Pause current playback:
-+	| **> pause**
- 
- stop
- ----
-@@ -62,6 +89,9 @@ stop
- Stop playback.
- 
- :Usage: **> stop**
-+:Uses: **org.bluez.MediaPlayer(5)** method **Stop**
-+:Example Stop current playback:
-+	| **> stop**
- 
- next
- ----
-@@ -69,6 +99,9 @@ next
- Jump to next item.
- 
- :Usage: **> next**
-+:Uses: **org.bluez.MediaPlayer(5)** method **Next**
-+:Example Skip to next track:
-+	| **> next**
- 
- previous
+ pathloss
  --------
-@@ -76,6 +109,9 @@ previous
- Jump to previous item.
+@@ -55,7 +89,20 @@ If one or more discovery filters have been set, the RSSI delta-threshold
+ imposed by starting discovery by default will not be applied.
  
- :Usage: **> previous**
-+:Uses: **org.bluez.MediaPlayer(5)** method **Previous**
-+:Example Go back to previous track:
-+	| **> previous**
+ :Usage: **> pathloss [pathloss]**
+-:Example: **> pathloss 4**
++:Uses: **org.bluez.Adapter(5)** method **SetDiscoveryFilter** property **Pathloss**
++:[pathloss]: Maximum pathloss threshold value in dB (optional, shows current if omitted)
++:Example Show current pathloss filter setting:
++	| **> pathloss**
++:Example Report devices with maximum 4 dB pathloss (very close):
++	| **> pathloss 4**
++:Example Report devices with maximum 10 dB pathloss (close range):
++	| **> pathloss 10**
++:Example Report devices with maximum 20 dB pathloss (medium range):
++	| **> pathloss 20**
++:Example Report devices with maximum 30 dB pathloss (extended range):
++	| **> pathloss 30**
++:Example Report devices with maximum 50 dB pathloss (maximum range):
++	| **> pathloss 50**
  
- fast-forward
+ transport
+ ---------
+@@ -79,6 +126,15 @@ If "auto" transport is requested, the scan will use LE, BREDR, or both,
+ depending on what's currently enabled on the controller.
+ 
+ :Usage: **> transport [auto/bredr/le]**
++:[auto/bredr/le]: Transport type for scanning (optional, shows current if omitted)
++:Example Show current transport filter setting:
++	| **> transport**
++:Example Use automatic transport selection (LE + BR/EDR):
++	| **> transport auto**
++:Example Scan only Low Energy devices:
++	| **> transport le**
++:Example Scan only BR/EDR (Classic Bluetooth) devices:
++	| **> transport bredr**
+ 
+ duplicate-data
+ --------------
+@@ -91,6 +147,13 @@ When enabled, PropertiesChanged signals will be generated for ManufacturerData
+ and ServiceData every time they are discovered.
+ 
+ :Usage: **> duplicate-data [on/off]**
++:[on/off]: Enable or disable duplicate advertisement data reporting (optional, shows current if omitted)
++:Example Show current duplicate data filter setting:
++	| **> duplicate-data**
++:Example Enable reporting of duplicate advertisement data:
++	| **> duplicate-data on**
++:Example Disable duplicate data reporting (filter duplicates):
++	| **> duplicate-data off**
+ 
+ discoverable
  ------------
-@@ -83,6 +119,9 @@ fast-forward
- Fast forward playback.
+@@ -103,6 +166,13 @@ If the adapter is already discoverable, setting this filter won't have any
+ effect.
  
- :Usage: **> fast-forward**
-+:Uses: **org.bluez.MediaPlayer(5)** method **FastForward**
-+:Example Enable fast forward mode:
-+	| **> fast-forward**
+ :Usage: **> discoverable [on/off]**
++:[on/off]: Make adapter discoverable during scanning (optional, shows current if omitted)
++:Example Show current discoverable filter setting:
++	| **> discoverable**
++:Example Make adapter discoverable during scanning:
++	| **> discoverable on**
++:Example Keep adapter non-discoverable during scanning:
++	| **> discoverable off**
  
- rewind
- ------
-@@ -90,6 +129,9 @@ rewind
- Rewind playback.
- 
- :Usage: **> rewind**
-+:Uses: **org.bluez.MediaPlayer(5)** method **Rewind**
-+:Example Enable rewind mode:
-+	| **> rewind**
- 
- equalizer
- ---------
-@@ -97,6 +139,12 @@ equalizer
- Enable/Disable equalizer.
- 
- :Usage: **> equalizer <on/off>**
-+:Uses: **org.bluez.MediaPlayer(5)** property **Equalizer**
-+:<on/off>: Enable (on) or disable (off) the equalizer
-+:Example Enable equalizer:
-+	| **> equalizer on**
-+:Example Disable equalizer:
-+	| **> equalizer off**
- 
- repeat
- ------
-@@ -104,6 +152,16 @@ repeat
- Set repeat mode.
- 
- :Usage: **> repeat <singletrack/alltrack/group/off>**
-+:Uses: **org.bluez.MediaPlayer(5)** property **Repeat**
-+:<singletrack/alltrack/group/off>: Set repeat mode - singletrack (current track), alltrack (all tracks), group (current group/album), or off (no repeat)
-+:Example Disable repeat mode:
-+	| **> repeat off**
-+:Example Repeat current track:
-+	| **> repeat singletrack**
-+:Example Repeat entire playlist/queue:
-+	| **> repeat alltrack**
-+:Example Repeat current group/album:
-+	| **> repeat group**
- 
- shuffle
+ pattern
  -------
-@@ -111,6 +169,14 @@ shuffle
- Set shuffle mode.
+@@ -120,7 +190,21 @@ When set, it disregards device discoverable flags.
+        string "" pattern will match any device found.
  
- :Usage: **> shuffle <alltracks/group/off>**
-+:Uses: **org.bluez.MediaPlayer(5)** property **Shuffle**
-+:<alltracks/group/off>: Set shuffle mode - alltracks (shuffle all tracks), group (shuffle within current group), or off (no shuffle)
-+:Example Disable shuffle mode:
-+	| **> shuffle off**
-+:Example Shuffle all tracks in playlist:
-+	| **> shuffle alltracks**
-+:Example Shuffle tracks within current group:
-+	| **> shuffle group**
+ :Usage: **> pattern [value]**
+-
++:[value]: Pattern to match device address prefix or name (optional, shows current if omitted)
++:Example Show current pattern filter setting:
++	| **> pattern**
++:Example Discover devices with "Samsung" in the name:
++	| **> pattern Samsung**
++:Example Discover devices with "iPhone" in the name:
++	| **> pattern iPhone**
++:Example Discover devices with "Headphones" in the name:
++	| **> pattern Headphones**
++:Example Discover devices with addresses starting with 00:11:22:
++	| **> pattern 00:11:22**
++:Example Discover devices with addresses starting with AA:BB:CC:
++	| **> pattern AA:BB:CC**
++:Example Clear pattern filter (match any device):
++	| **> pattern ""**
  
- scan
- ----
-@@ -118,6 +184,14 @@ scan
- Set scan mode.
+ auto-connect
+ ------------
+@@ -131,13 +215,47 @@ Connect to discovered devices automatically if pattern filter has been set and
+ it matches the device address or name and the device is connectable.
  
- :Usage: **> scan <alltracks/group/off>**
-+:Uses: **org.bluez.MediaPlayer(5)** property **Scan**
-+:<alltracks/group/off>: Set scan mode - alltracks (scan through all tracks), group (scan within current group), or off (no scan)
-+:Example Disable scan mode:
-+	| **> scan off**
-+:Example Scan through all tracks:
-+	| **> scan alltracks**
-+:Example Scan through current group only:
-+	| **> scan group**
+ :Usage: **> auto-connect [on/off]**
++:[on/off]: Automatically connect to discovered devices matching pattern filter (optional, shows current if omitted)
++:Example Show current auto-connect filter setting:
++	| **> auto-connect**
++:Example Enable automatic connection to matching devices:
++	| **> auto-connect on**
++:Example Disable automatic connection (manual connection required):
++	| **> auto-connect off**
  
- change-folder
- -------------
-@@ -125,6 +199,15 @@ change-folder
- Change current folder.
- 
- :Usage: **> change-folder <item>**
-+:<item>: Folder path to navigate to, or ".." to go up one directory level
-+:Example Navigate to Albums folder:
-+	| **> change-folder /org/bluez/item/Albums**
-+:Example Navigate to Artists folder:
-+	| **> change-folder /org/bluez/item/Artists**
-+:Example Navigate to Playlists folder:
-+	| **> change-folder /org/bluez/item/Playlists**
-+:Example Go up one directory level:
-+	| **> change-folder ..**
- 
- list-items
- ----------
-@@ -132,6 +215,18 @@ list-items
- List items of current folder.
- 
- :Usage: **> list-items [start] [end]**
-+:[start]: Starting index for item list (optional, defaults to 0)
-+:[end]: Ending index for item list (optional, lists all items from start if omitted)
-+:Example List all items in current folder:
-+	| **> list-items**
-+:Example List first 10 items (0-10):
-+	| **> list-items 0 10**
-+:Example List items 5 through 15:
-+	| **> list-items 5 15**
-+:Example List items 10 through 20:
-+	| **> list-items 10 20**
-+:Example List first 50 items:
-+	| **> list-items 0 50**
- 
- search
- ------
-@@ -139,6 +234,15 @@ search
- Search items containing string.
- 
- :Usage: **> search <string>**
-+:<string>: Search term to find matching items (songs, albums, artists, etc.)
-+:Example Search for Beatles songs/albums:
-+	| **> search "The Beatles"**
-+:Example Search for items containing "rock":
-+	| **> search "rock"**
-+:Example Search for items from 2023:
-+	| **> search "2023"**
-+:Example Search for playlists:
-+	| **> search "playlist"**
- 
- queue
+ clear
  -----
-@@ -146,6 +250,13 @@ queue
- Add item to playlist queue.
  
- :Usage: **> queue <item>**
-+:<item>: Media item path to add to the playback queue
-+:Example Add specific track to queue:
-+	| **> queue /org/bluez/item/track_001**
-+:Example Add entire album to queue:
-+	| **> queue /org/bluez/item/album_rock**
-+:Example Add playlist to queue:
-+	| **> queue /org/bluez/item/playlist_favorites**
+ Clears discovery filter.
  
- show-item
- ---------
-@@ -153,6 +264,13 @@ show-item
- Show item information.
- 
- :Usage: **> show-item <item>**
-+:<item>: Media item path to display detailed information for
-+:Example Show details of specific track:
-+	| **> show-item /org/bluez/item/track_001**
-+:Example Show details of album:
-+	| **> show-item /org/bluez/item/album_rock**
-+:Example Show details of artist:
-+	| **> show-item /org/bluez/item/artist_beatles**
+-:Usage: **> clear [uuids/rssi/pathloss/transport/duplicate-data/discoverable/pattern]**
++:Usage: **> clear [uuids/rssi/pathloss/transport/duplicate-data/discoverable/pattern/auto-connect]**
++:[uuids/rssi/pathloss/transport/duplicate-data/discoverable/pattern/auto-connect]: Specific filter(s) to clear (optional, clears all if omitted)
++:Example Clear all discovery filters:
++	| **> clear**
++:Example Clear only UUID filter:
++	| **> clear uuids**
++:Example Clear only RSSI filter:
++	| **> clear rssi**
++:Example Clear only pathloss filter:
++	| **> clear pathloss**
++:Example Clear only transport filter:
++	| **> clear transport**
++:Example Clear only duplicate data filter:
++	| **> clear duplicate-data**
++:Example Clear only discoverable filter:
++	| **> clear discoverable**
++:Example Clear only pattern filter:
++	| **> clear pattern**
++:Example Clear only auto-connect filter:
++	| **> clear auto-connect**
++:Example Clear UUID and RSSI filters:
++	| **> clear uuids rssi**
++:Example Clear transport and pattern filters:
++	| **> clear transport pattern**
++:Example Clear pattern and auto-connect filters:
++	| **> clear pattern auto-connect**
++:Example Clear RSSI, pathloss, and discoverable filters:
++	| **> clear rssi pathloss discoverable**
  
  RESOURCES
  =========
