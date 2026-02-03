@@ -1,81 +1,65 @@
-Return-Path: <linux-bluetooth+bounces-18794-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18798-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0PYhIeGUgWl/HAMAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18794-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 03 Feb 2026 07:25:37 +0100
+	id QsWrCqOfgWkoIAMAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18798-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 03 Feb 2026 08:11:31 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4890D531D
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 03 Feb 2026 07:25:36 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 58228D58D6
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 03 Feb 2026 08:11:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 24DC83047513
-	for <lists+linux-bluetooth@lfdr.de>; Tue,  3 Feb 2026 06:25:24 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id A51C63013B4E
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  3 Feb 2026 07:11:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A42B37999C;
-	Tue,  3 Feb 2026 06:25:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b="FrCaN6kw"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 743F038F94D;
+	Tue,  3 Feb 2026 07:11:23 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mailgw01.mediatek.com (unknown [60.244.123.138])
+Received: from mailgw.kylinos.cn (mailgw.kylinos.cn [124.126.103.232])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89967377547;
-	Tue,  3 Feb 2026 06:25:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=60.244.123.138
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80C621CA13;
+	Tue,  3 Feb 2026 07:11:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=124.126.103.232
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770099922; cv=none; b=pjHY4HNuaX+TwsPxynatJKta6iC3zV/sYsGzczm4EyNwX25iNDXNp9STFBRHTTZmcfFk5M3bT4Uxofjrq0Ws8T86u3ydccRudMFrYllFFW51cNCIkR3QiW+S0qMnXKsBZ4ByTU+wd/ek4Bcf1p7WxjJRqGQ8hjNgNzf01Mt10M0=
+	t=1770102683; cv=none; b=Ei79vVDGRddlt1F0UJ5SMIkv0nIMOpXZpBgdCXlquYY10EYiwzhU+0nutxs3ZlM/UZJiP2Ji1rV7SRhE+vC9BszhdDwmaPJqpLeQkOG/er/Bhn+uv4gFZwqy5fUHUA7Na6BbBj7wL9xALEbo6BBtiAtbcLs1kTMMlRp2IlBenjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770099922; c=relaxed/simple;
-	bh=X+9qS1S3n/8MV3IAlB9flAOcJBgUkfzU0uBXcHivbmk=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ngCbc53VqScOFJihgqTA+f01f1MO1y040c19MPjDK+NZruMn31ToEfLuk3+KRC9Chuqs7qmASFBG+YFcA50l51WY5ghE/gCZv1cm/nl0kjFQrVQeMDHXq/9bvGFbTPaX7tN++0Kve5dRpoXr85BbhlmTfwk3pXanxjn4mNYIEo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com; spf=pass smtp.mailfrom=mediatek.com; dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b=FrCaN6kw; arc=none smtp.client-ip=60.244.123.138
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mediatek.com
-X-UUID: 19607b4e00c911f185319dbc3099e8fb-20260203
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
-	h=Content-Type:Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:CC:To:From; bh=llw5nIPmtNh9wxl3XcFeQkmLz9EI/2RnjokuZ1CWD6s=;
-	b=FrCaN6kwZGOnMpt8pjs3IvC0XTUXpkW0AbQsEQW4O5HHS+4EEe6SoK10uUIfaHQgXfvRr2FOsZ5W1xLUNsK8ZKzUGarM12TW8CacuUH49TwtYkqy875ZAmbxfWvs9BrZEeDLlaC4Z++o9Dy3X8Y57FWdQZxEpO2h0ZtXhdQqg5c=;
+	s=arc-20240116; t=1770102683; c=relaxed/simple;
+	bh=0aSr+P7iQ+SwTnB8MET0t+3sfonootQ8wLtOAm51iac=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=UoaxyUUVwzLb3W2QWDckC8pdPwqoAMCfQ/92ourQvT1G7P6ly46KIc5rWzUpZqwhHLuawah17C3HrYqBUR0G/Nl7r3ZfvHC3coktHblmVBaopG+TipP5vJ2mT3/eW1zRaR37Bsdj0Cnh6fhuc+6HCp/qwxNScnux45dX3ir0zMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn; spf=pass smtp.mailfrom=kylinos.cn; arc=none smtp.client-ip=124.126.103.232
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kylinos.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kylinos.cn
+X-UUID: 866f57ae00cf11f1b0f03b4cfa9209d1-20260203
 X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.11,REQID:0901f239-411c-4b8e-9565-6403609d0a52,IP:0,U
-	RL:0,TC:0,Content:-25,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTIO
-	N:release,TS:-25
-X-CID-META: VersionHash:89c9d04,CLOUDID:b31544f0-16bd-4243-b4ca-b08ca08ab1d8,B
-	ulkID:nil,BulkQuantity:0,Recheck:0,SF:81|82|102|836|888|898,TC:-5,Content:
-	0|15|50,EDM:-3,IP:nil,URL:0,File:130,RT:0,Bulk:nil,QS:nil,BEC:-1,COL:0,OSI
-	:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-O-INFO: VERSION:1.3.6,REQID:dde7ddc8-d6fe-4e87-a284-3bf9547aa378,IP:0,UR
+	L:0,TC:0,Content:-5,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+	release,TS:-5
+X-CID-META: VersionHash:a9d874c,CLOUDID:846838dc3ff6ece4b67f818d95f9c410,BulkI
+	D:nil,BulkQuantity:0,Recheck:0,SF:102|850|898,TC:nil,Content:0|15|50,EDM:-
+	3,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,A
+	V:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
 X-CID-BVR: 2,SSN|SDN
 X-CID-BAS: 2,SSN|SDN,0,_
 X-CID-FACTOR: TF_CID_SPAM_SNR
 X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 19607b4e00c911f185319dbc3099e8fb-20260203
-Received: from mtkmbs13n1.mediatek.inc [(172.21.101.193)] by mailgw01.mediatek.com
-	(envelope-from <chris.lu@mediatek.com>)
-	(Generic MTA with TLSv1.2 ECDHE-RSA-AES256-GCM-SHA384 256/256)
-	with ESMTP id 235145318; Tue, 03 Feb 2026 14:25:13 +0800
-Received: from mtkmbs11n2.mediatek.inc (172.21.101.187) by
- mtkmbs13n2.mediatek.inc (172.21.101.108) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.29; Tue, 3 Feb 2026 14:25:12 +0800
-Received: from mtksitap99.mediatek.inc (10.233.130.16) by
- mtkmbs11n2.mediatek.inc (172.21.101.73) with Microsoft SMTP Server id
- 15.2.2562.29 via Frontend Transport; Tue, 3 Feb 2026 14:25:12 +0800
-From: Chris Lu <chris.lu@mediatek.com>
-To: Marcel Holtmann <marcel@holtmann.org>, Johan Hedberg
-	<johan.hedberg@gmail.com>, Luiz Von Dentz <luiz.dentz@gmail.com>
-CC: Sean Wang <sean.wang@mediatek.com>, Will Lee <will-cy.Lee@mediatek.com>,
-	SS Wu <ss.wu@mediatek.com>, Steve Lee <steve.lee@mediatek.com>,
-	linux-bluetooth <linux-bluetooth@vger.kernel.org>, linux-kernel
-	<linux-kernel@vger.kernel.org>, linux-mediatek
-	<linux-mediatek@lists.infradead.org>, Chris Lu <chris.lu@mediatek.com>
-Subject: [PATCH v1 3/3] Bluetooth: btmtk: Add reset mechanism if downloading firmware failed
-Date: Tue, 3 Feb 2026 14:25:10 +0800
-Message-ID: <20260203062510.848761-4-chris.lu@mediatek.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20260203062510.848761-1-chris.lu@mediatek.com>
-References: <20260203062510.848761-1-chris.lu@mediatek.com>
+X-UUID: 866f57ae00cf11f1b0f03b4cfa9209d1-20260203
+X-User: jindongyang@kylinos.cn
+Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
+	(envelope-from <jindongyang@kylinos.cn>)
+	(Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
+	with ESMTP id 1790071685; Tue, 03 Feb 2026 15:11:13 +0800
+From: Dongyang Jin <jindongyang@kylinos.cn>
+To: marcel@holtmann.org,
+	luiz.dentz@gmail.com
+Cc: linux-bluetooth@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Dongyang Jin <jindongyang@kylinos.cn>
+Subject: [PATCH] Bluetooth: btbcm: remove done label in btbcm_patchram
+Date: Tue,  3 Feb 2026 15:10:48 +0800
+Message-Id: <20260203071048.1624461-1-jindongyang@kylinos.cn>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -83,89 +67,89 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.84 / 15.00];
+X-Spamd-Result: default: False [1.54 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_CONTAINS_FROM(1.00)[];
 	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[mediatek.com,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[mediatek.com:s=dk];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TO_DN_ALL(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[holtmann.org,gmail.com];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-18794-lists,linux-bluetooth=lfdr.de];
-	DKIM_TRACE(0.00)[mediatek.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TO_DN_SOME(0.00)[];
+	TAGGED_FROM(0.00)[bounces-18798-lists,linux-bluetooth=lfdr.de];
+	DMARC_NA(0.00)[kylinos.cn];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[chris.lu@mediatek.com,linux-bluetooth@vger.kernel.org];
+	FREEMAIL_TO(0.00)[holtmann.org,gmail.com];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	RCPT_COUNT_FIVE(0.00)[5];
+	FROM_NEQ_ENVFROM(0.00)[jindongyang@kylinos.cn,linux-bluetooth@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	PRECEDENCE_BULK(0.00)[];
+	R_DKIM_NA(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: E4890D531D
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 58228D58D6
 X-Rspamd-Action: no action
 
-Add a new flag 'BTMTK_FIRMWARE_DL_RETRY'.
-If an error occurs during mt79xx firmware download process, this flag
-will be set and cleared after a reset. If the flag is already set and
-firmware still cannot be loaded successfully after a reset, no further
-reset attempts will be made. In other words, if there is a problem during
-firmware download, only one reset will be attempted.
+There is no point in having the label since all it does is return the
+value in the 'err' variable. Instead make every goto return directly
+and remove the label.
 
-Signed-off-by: Chris Lu <chris.lu@mediatek.com>
+Signed-off-by: Dongyang Jin <jindongyang@kylinos.cn>
 ---
- drivers/bluetooth/btmtk.c | 6 ++++++
- drivers/bluetooth/btmtk.h | 1 +
- 2 files changed, 7 insertions(+)
+ drivers/bluetooth/btbcm.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
-index 67db5a48c3e4..14e2f4100806 100644
---- a/drivers/bluetooth/btmtk.c
-+++ b/drivers/bluetooth/btmtk.c
-@@ -1344,6 +1344,9 @@ int btmtk_usb_setup(struct hci_dev *hdev)
- 		err = btmtk_setup_firmware_79xx(hdev, fw_bin_name,
- 						btmtk_usb_hci_wmt_sync);
- 		if (err < 0) {
-+			/* retry once if setup firmware error */
-+			if (!test_and_set_bit(BTMTK_FIRMWARE_DL_RETRY, &btmtk_data->flags))
-+				btmtk_reset_sync(hdev);
- 			bt_dev_err(hdev, "Failed to set up firmware (%d)", err);
- 			return err;
+diff --git a/drivers/bluetooth/btbcm.c b/drivers/bluetooth/btbcm.c
+index d33cc70eec66..dccfbeee4721 100644
+--- a/drivers/bluetooth/btbcm.c
++++ b/drivers/bluetooth/btbcm.c
+@@ -223,7 +223,7 @@ int btbcm_patchram(struct hci_dev *hdev, const struct firmware *fw)
+ 		err = PTR_ERR(skb);
+ 		bt_dev_err(hdev, "BCM: Download Minidrv command failed (%d)",
+ 			   err);
+-		goto done;
++		return err;
+ 	}
+ 	kfree_skb(skb);
+ 
+@@ -242,8 +242,7 @@ int btbcm_patchram(struct hci_dev *hdev, const struct firmware *fw)
+ 
+ 		if (fw_size < cmd->plen) {
+ 			bt_dev_err(hdev, "BCM: Patch is corrupted");
+-			err = -EINVAL;
+-			goto done;
++			return -EINVAL;
  		}
-@@ -1371,6 +1374,9 @@ int btmtk_usb_setup(struct hci_dev *hdev)
- 		hci_set_msft_opcode(hdev, 0xFD30);
- 		hci_set_aosp_capable(hdev);
  
-+		/* Clear BTMTK_FIRMWARE_DL_RETRY if setup successfully */
-+		test_and_clear_bit(BTMTK_FIRMWARE_DL_RETRY, &btmtk_data->flags);
-+
- 		/* Set up ISO interface after protocol enabled */
- 		if (test_bit(BTMTK_ISOPKT_OVER_INTR, &btmtk_data->flags)) {
- 			if (!btmtk_usb_isointf_init(hdev))
-diff --git a/drivers/bluetooth/btmtk.h b/drivers/bluetooth/btmtk.h
-index 5df7c3296624..b9df2b8f0627 100644
---- a/drivers/bluetooth/btmtk.h
-+++ b/drivers/bluetooth/btmtk.h
-@@ -147,6 +147,7 @@ enum {
- 	BTMTK_HW_RESET_ACTIVE,
- 	BTMTK_ISOPKT_OVER_INTR,
- 	BTMTK_ISOPKT_RUNNING,
-+	BTMTK_FIRMWARE_DL_RETRY,
- };
+ 		cmd_param = fw_ptr;
+@@ -258,7 +257,7 @@ int btbcm_patchram(struct hci_dev *hdev, const struct firmware *fw)
+ 			err = PTR_ERR(skb);
+ 			bt_dev_err(hdev, "BCM: Patch command %04x failed (%d)",
+ 				   opcode, err);
+-			goto done;
++			return err;
+ 		}
+ 		kfree_skb(skb);
+ 	}
+@@ -266,8 +265,7 @@ int btbcm_patchram(struct hci_dev *hdev, const struct firmware *fw)
+ 	/* 250 msec delay after Launch Ram completes */
+ 	msleep(250);
  
- typedef int (*btmtk_reset_sync_func_t)(struct hci_dev *, void *);
+-done:
+-	return err;
++	return 0;
+ }
+ EXPORT_SYMBOL(btbcm_patchram);
+ 
 -- 
-2.45.2
+2.25.1
 
 
