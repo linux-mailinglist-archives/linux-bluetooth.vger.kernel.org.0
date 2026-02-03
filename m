@@ -1,98 +1,144 @@
-Return-Path: <linux-bluetooth+bounces-18793-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18795-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UBu8D43ZgGnMBwMAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18793-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 02 Feb 2026 18:06:21 +0100
+	id ULcSJ+KUgWl/HAMAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18795-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 03 Feb 2026 07:25:38 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA179CF5D7
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 02 Feb 2026 18:06:20 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4864AD5325
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 03 Feb 2026 07:25:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id B0480303E5D0
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  2 Feb 2026 17:03:52 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 39EC030480B2
+	for <lists+linux-bluetooth@lfdr.de>; Tue,  3 Feb 2026 06:25:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9819C3816E0;
-	Mon,  2 Feb 2026 17:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D37B37A481;
+	Tue,  3 Feb 2026 06:25:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="hk2hYxI4"
+	dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b="PofFxX+w"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-28.smtp.github.com (out-28.smtp.github.com [192.30.252.211])
+Received: from mailgw02.mediatek.com (unknown [210.61.82.184])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10AD239086
-	for <linux-bluetooth@vger.kernel.org>; Mon,  2 Feb 2026 17:03:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.211
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A22523783DA;
+	Tue,  3 Feb 2026 06:25:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.61.82.184
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770051823; cv=none; b=U2gAsoHeuLZXgc/TzzVsLvkSNjGl7Aj+GeQCZH2PZL7XZeV4hQ+PmTT2yU7LsRIP1N5c0AJYhbsdxbJH1Yg5/3u9McLJZeX4xzpwEEMgQkGBr6jpjRsz9DRvyA6bSL/vwIMeC2miGQZaV+UXevtdwybU8RQFmf6pHFs83AEN1Lc=
+	t=1770099922; cv=none; b=BytgrKBhSYG3WTqJk/T1aLX2OJfLm+hHxdK2DrO1AV8c2ZhU1FtDqwF8tBl8KGkrHBlTZVNxInxMYoG6IoMZRaasIVyTz/Z1MXpfXZ9aoWbBxakInSUerc1lKSWsEAqxebYbvocvTTT8N9q/xhZkBqcIv/XKMzRR0GJ7PgRr+9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770051823; c=relaxed/simple;
-	bh=zA2lfKJWVLYoLbk3suZX7Yincq3oL+nBhzYIHaknEHQ=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=Vyc7JYMASyJ7pAxJEPquY9sTm1VDy0lUqMxQsDxno86q8kLFLT6kp0rc435OURUopOiTCYLZN65p88vOwYd4gOc9fuhK3S/uaaayu6grgCDf8ejEN9Fg0yJUOGXcv8qZ1Mj4gGPfrguQKhPqjBmuG9fP+rrbmpa2MzHUEF6llBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=hk2hYxI4; arc=none smtp.client-ip=192.30.252.211
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-5040f2b.ash1-iad.github.net [10.56.202.49])
-	by smtp.github.com (Postfix) with ESMTPA id 1937A92114E
-	for <linux-bluetooth@vger.kernel.org>; Mon,  2 Feb 2026 09:03:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1770051821;
-	bh=UTk+q+jJYVekJgdAjUSaPVLtTHxyBEBg7tYJG2jV0fg=;
-	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=hk2hYxI4pOeyepV0y8+YmmUn6xQbLMDWbUs9dPDxf0OJSYuEBSX6KvKkvx2TbX2pw
-	 l7mt0HADA1Lydt/44ZRoZoKZWJKe6Ys8ZgVedK0Pklr/PDYrJWMX2nlG6PBksHfov4
-	 TNZaS6hwavfaEBXlNBWS4dv4ipkNatu0ndhqMvYQ=
-Date: Mon, 02 Feb 2026 09:03:41 -0800
-From: BluezTestBot <noreply@github.com>
-To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/1049069/55d9a7-000000@github.com>
-Subject: [bluez/bluez]
+	s=arc-20240116; t=1770099922; c=relaxed/simple;
+	bh=iq7Y5QOiK4OMBhcK+S1vsEo2isUr0+K4j1CMpIFSjFo=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=GcCY0xU2x2czFHHAoS/XlbJyIUqsPUXjjSp2poT990lqvKnq7uwwRdb1NEiX/tkm7/cJ2VyD6i5FaCwGoPSV3rq30vz1tnecyaaN6Sr2OOWPRrRvApQurRCoFINZ8sK68/i+bTHi9S5Y0NuM3W7R7NJKFMM/DCDFzj/A4ZftrPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com; spf=pass smtp.mailfrom=mediatek.com; dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b=PofFxX+w; arc=none smtp.client-ip=210.61.82.184
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mediatek.com
+X-UUID: 19131cf000c911f1b7fc4fdb8733b2bc-20260203
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
+	h=Content-Type:Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:CC:To:From; bh=OP2N/nleBhBlAyv2V95uSRI6uJfND7JrtKouTkzXdkw=;
+	b=PofFxX+wQ+EAk82PxtmR351gWXOg2lLxwO2pg9ASnLn561SV5uyUWfDriNfKqgFHGkFClQTERXKL9NlNFF+Fe9BPhl8eZKCe5xpAVM3xxxyvZiyU0U/8gtwVHPq93y/UQvu1cKVj5PL2ioSo3u9mpdUuseEgD0jTBkwP5tINA3U=;
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.11,REQID:311ab801-d751-4822-b43b-7f03d358c1bb,IP:0,U
+	RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+	release,TS:0
+X-CID-META: VersionHash:89c9d04,CLOUDID:f593dd5a-a957-4259-bcca-d3af718d7034,B
+	ulkID:nil,BulkQuantity:0,Recheck:0,SF:102|836|888|898,TC:-5,Content:0|15|5
+	0,EDM:-3,IP:nil,URL:0,File:130,RT:0,Bulk:nil,QS:nil,BEC:-1,COL:0,OSI:0,OSA
+	:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 19131cf000c911f1b7fc4fdb8733b2bc-20260203
+Received: from mtkmbs10n1.mediatek.inc [(172.21.101.34)] by mailgw02.mediatek.com
+	(envelope-from <chris.lu@mediatek.com>)
+	(Generic MTA with TLSv1.2 ECDHE-RSA-AES256-GCM-SHA384 256/256)
+	with ESMTP id 1985120293; Tue, 03 Feb 2026 14:25:13 +0800
+Received: from mtkmbs11n2.mediatek.inc (172.21.101.187) by
+ mtkmbs10n2.mediatek.inc (172.21.101.183) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.29; Tue, 3 Feb 2026 14:25:12 +0800
+Received: from mtksitap99.mediatek.inc (10.233.130.16) by
+ mtkmbs11n2.mediatek.inc (172.21.101.73) with Microsoft SMTP Server id
+ 15.2.2562.29 via Frontend Transport; Tue, 3 Feb 2026 14:25:12 +0800
+From: Chris Lu <chris.lu@mediatek.com>
+To: Marcel Holtmann <marcel@holtmann.org>, Johan Hedberg
+	<johan.hedberg@gmail.com>, Luiz Von Dentz <luiz.dentz@gmail.com>
+CC: Sean Wang <sean.wang@mediatek.com>, Will Lee <will-cy.Lee@mediatek.com>,
+	SS Wu <ss.wu@mediatek.com>, Steve Lee <steve.lee@mediatek.com>,
+	linux-bluetooth <linux-bluetooth@vger.kernel.org>, linux-kernel
+	<linux-kernel@vger.kernel.org>, linux-mediatek
+	<linux-mediatek@lists.infradead.org>, Chris Lu <chris.lu@mediatek.com>
+Subject: [PATCH v1 0/3] Trigger reset if firmware status is abnormal when
+Date: Tue, 3 Feb 2026 14:25:07 +0800
+Message-ID: <20260203062510.848761-1-chris.lu@mediatek.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [2.04 / 15.00];
-	DMARC_POLICY_REJECT(2.00)[github.com : SPF not aligned (relaxed),reject];
-	R_DKIM_REJECT(1.00)[github.com:s=pf2023];
+X-Spamd-Result: default: False [0.84 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MV_CASE(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[mediatek.com,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[mediatek.com:s=dk];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[github.com:-];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_ONE(0.00)[1];
-	RCVD_COUNT_THREE(0.00)[4];
-	TAGGED_FROM(0.00)[bounces-18793-lists,linux-bluetooth=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_ALL(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[noreply@github.com,linux-bluetooth@vger.kernel.org];
+	FREEMAIL_TO(0.00)[holtmann.org,gmail.com];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-18795-lists,linux-bluetooth=lfdr.de];
+	DKIM_TRACE(0.00)[mediatek.com:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	MIME_TRACE(0.00)[0:+];
 	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[chris.lu@mediatek.com,linux-bluetooth@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	TO_DN_NONE(0.00)[];
-	NEURAL_HAM(-0.00)[-0.997];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: DA179CF5D7
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 4864AD5325
 X-Rspamd-Action: no action
 
-  Branch: refs/heads/1049069
-  Home:   https://github.com/bluez/bluez
+When the device unexpectedly restarts during previous firmware
+download process, it can cause mt79xx firmware status to be
+abnormal in the next attempt. In this case, a reset should be
+performed to ensure everything starts afresh.
 
-To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
+These changes include:
+1. Optimizing the handling after the download function retry
+   is exhausted, a reset should be performed.
+2. Another download firmware command also needs to check status
+   , and if an unexpected status occurs, trigger a reset.
+3. Adding a flag "BTMTK_FIRMWARE_DL_RETRY": if download firmware
+   process enters the reset mechanism, this flag will be set.
+   After a successful setup, the flag will be cleared.
+   If the flag is already set, no further reset attempts will be
+   made to avoid endless reset retries.
+
+Chris Lu (3):
+  Bluetooth: btmtk: improve mt79xx firmware setup retry flow
+  Bluetooth: btmtk: add status check in  mt79xx firmware setup
+  Bluetooth: btmtk: Add reset mechanism if downloading firmware failed
+
+ drivers/bluetooth/btmtk.c | 21 +++++++++++++++++++--
+ drivers/bluetooth/btmtk.h |  1 +
+ 2 files changed, 20 insertions(+), 2 deletions(-)
+
+-- 
+2.45.2
+
 
