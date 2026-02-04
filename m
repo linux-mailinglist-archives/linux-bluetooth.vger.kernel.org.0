@@ -1,74 +1,73 @@
-Return-Path: <linux-bluetooth+bounces-18819-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18820-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cEkzBC/tgmmqfAMAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18819-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 04 Feb 2026 07:54:39 +0100
+	id UDW2MjkGg2lLgwMAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18820-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 04 Feb 2026 09:41:29 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFA5CE2715
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 04 Feb 2026 07:54:38 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47B6DE344C
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 04 Feb 2026 09:41:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 04EB430186AD
-	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Feb 2026 06:54:38 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 8C46A3121811
+	for <lists+linux-bluetooth@lfdr.de>; Wed,  4 Feb 2026 08:35:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB8FF3876BE;
-	Wed,  4 Feb 2026 06:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9864539448C;
+	Wed,  4 Feb 2026 08:35:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e9q1Gy5K"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZIebUTdK"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8BA387593
-	for <linux-bluetooth@vger.kernel.org>; Wed,  4 Feb 2026 06:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26386394475
+	for <linux-bluetooth@vger.kernel.org>; Wed,  4 Feb 2026 08:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770188073; cv=none; b=rL4w0oe9iPmIL276jcypGOi6tOTWcY54UFZZbO/4Nm1pzQO4TjSrcUFf/jDTS3vazEkeG2O+514Cql3SxYYOSkLF9sREr9T0NUJYfK3zhMcxfRjNtH14IytbNW7AbjzfNJUkok/SgvLq8jjqJ99o4OxmxWs6UzzryePPtyljV1k=
+	t=1770194126; cv=none; b=FlNQb9D1dKe4BLjtGOWMUi+BpAsJffuf+7DeEVO3M5xHWDmOw9qTRkCs0JqC+ffV8qdvPeIE4sAcUsIsVsN63T934lIunSrOIvgG5nXFHRBUeSuvrf4l09AjxeNHDI0SnAhK2cnkGR19s8bHqhvm7AKor3dspja2tLxKfA9NCSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770188073; c=relaxed/simple;
-	bh=k1louEX48bOyPYjjyyX7S3hm8rwb73te9+Atmg1ovZE=;
+	s=arc-20240116; t=1770194126; c=relaxed/simple;
+	bh=yeKRlF1Os7t6iRi8JTDQZME4p46PCVLYkIAaHT4KYdA=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=EHZJwaBkhOMp5OjXSrIg5gGIWMgLMt8kUfuzRjjVtfrjVquOo4lQpxslQ9IO7SHCvJhZRtiBtRLjmUWRiahbDmqwbuZRyBdU2hk2+1NQX8O3eJBR78DaSZH7VNfDAqoO/ulcIeEY69e4IFy9dNelbsNytLU/pXYq946GSCSQ21Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e9q1Gy5K; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 297F1C4CEF7
-	for <linux-bluetooth@vger.kernel.org>; Wed,  4 Feb 2026 06:54:33 +0000 (UTC)
+	 Content-Type:MIME-Version; b=UlRJ9MhZZ//R5EzQR3qM1Vsmo9JG5rY6mkf2W6ReoEgHAjNC4FuvF/2/Bs0rl9q6p1yorZSaJIJBMxiWiPutMAlxk4/GlkJQK+BUDrVXhiEsTSZW376hujKOP0ZvT9EPuKVDH2WAGS5OCT6OE02TOGByrxc7jAxAu5VeuFyGkjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZIebUTdK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id BB327C2BC86
+	for <linux-bluetooth@vger.kernel.org>; Wed,  4 Feb 2026 08:35:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770188073;
-	bh=k1louEX48bOyPYjjyyX7S3hm8rwb73te9+Atmg1ovZE=;
+	s=k20201202; t=1770194125;
+	bh=yeKRlF1Os7t6iRi8JTDQZME4p46PCVLYkIAaHT4KYdA=;
 	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=e9q1Gy5KPe6cuPHF+R1yVR1zxkj6g0NhEps5jSTR6M+y7rvpgZ19sA0hzTmX/kAXn
-	 59LyDuINaE2+KBTwP2PKH9b41Ay01tvP4Kf7CNca2UuYwTeg3jK567nswqgmgROh7t
-	 xSW76+8jkt/TJ5vpFBShqV3Qcuu8VIRXZMv9WQXjy0kmVdORUMiFGiJL8JK5+ICcLT
-	 vwqI6GDFgnMToAudzH3/xokRNUbotEiLlGVb4R9NXX3eXC60K3/2zFuxyFFmGOCsx6
-	 tVNav//2WFVlABfNaFBOzhQV+QOy27FXGVIiyZFEFoTSPzT0niuBOpXuFxmMrevKU9
-	 7wTmhbYN9hFQg==
+	b=ZIebUTdKE8SXkourfSDNU8mHssZWpXk1YCADoTc02TWnTD5B+pH1yXETkL9F61mgs
+	 fXZxt7OpJkb2QUqhzA+b4NtLPJ1XEJF1omfmo6B69UPKHAoDOY5ppLYgW1/f0k79ln
+	 z9Vh2OkBOy/VLwX3EcX2yvXSozAlAl245v670BHtxMIZ/czwW9SZ4B4TuKkRshP5cn
+	 SdNwDq3JCK1jzlbYC6NBZgBv3opC3ZJPz0moQxqb66ScTdRkqbgm6JvpCSoBZNzKrj
+	 qT4Gkk0Sg7RtmIxQYBLxGAxI8MatWVZWzrX5tiphag5OF9M3jVYdni2SLrw8wYKBRu
+	 i+ONyteJj7HVg==
 Received: by aws-us-west-2-korg-bugzilla-1.web.codeaurora.org (Postfix, from userid 48)
-	id 18FFDC3279F; Wed,  4 Feb 2026 06:54:33 +0000 (UTC)
+	id B258EC3279F; Wed,  4 Feb 2026 08:35:25 +0000 (UTC)
 From: bugzilla-daemon@kernel.org
 To: linux-bluetooth@vger.kernel.org
-Subject: [Bug 221041] [BUG] bluetooth: hci_h5: kernel panic in h5_recv
- (general protection fault / KASAN null-ptr-deref) via TTY ioctls (syzkaller)
-Date: Wed, 04 Feb 2026 06:54:32 +0000
-X-Bugzilla-Reason: CC
+Subject: [Bug 221045] Intel AX201 wireless driver not working
+Date: Wed, 04 Feb 2026 08:35:25 +0000
+X-Bugzilla-Reason: AssignedTo
 X-Bugzilla-Type: changed
 X-Bugzilla-Watch-Reason: None
-X-Bugzilla-Product: Linux
-X-Bugzilla-Component: Kernel
-X-Bugzilla-Version: unspecified
+X-Bugzilla-Product: Drivers
+X-Bugzilla-Component: network-wireless-intel
+X-Bugzilla-Version: 2.5
 X-Bugzilla-Keywords: 
 X-Bugzilla-Severity: high
-X-Bugzilla-Who: w15303746062@163.com
+X-Bugzilla-Who: aros@gmx.com
 X-Bugzilla-Status: NEW
 X-Bugzilla-Resolution: 
 X-Bugzilla-Priority: P3
-X-Bugzilla-Assigned-To: linux-kernel@kernel-bugs.kernel.org
+X-Bugzilla-Assigned-To: drivers_network-wireless-intel@kernel-bugs.kernel.org
 X-Bugzilla-Flags: 
-X-Bugzilla-Changed-Fields: bug_severity
-Message-ID: <bug-221041-62941-jyERIsRBcC@https.bugzilla.kernel.org/>
-In-Reply-To: <bug-221041-62941@https.bugzilla.kernel.org/>
-References: <bug-221041-62941@https.bugzilla.kernel.org/>
+X-Bugzilla-Changed-Fields: component assigned_to
+Message-ID: <bug-221045-62941-biBBXApEIS@https.bugzilla.kernel.org/>
+In-Reply-To: <bug-221045-62941@https.bugzilla.kernel.org/>
+References: <bug-221045-62941@https.bugzilla.kernel.org/>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-Bugzilla-URL: https://bugzilla.kernel.org/
@@ -84,18 +83,18 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-18819-lists,linux-bluetooth=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-18820-lists,linux-bluetooth=lfdr.de];
 	FROM_NEQ_ENVFROM(0.00)[bugzilla-daemon@kernel.org,linux-bluetooth@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	FROM_NO_DN(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
@@ -104,21 +103,23 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCPT_COUNT_ONE(0.00)[1];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: AFA5CE2715
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 47B6DE344C
 X-Rspamd-Action: no action
 
-https://bugzilla.kernel.org/show_bug.cgi?id=3D221041
+https://bugzilla.kernel.org/show_bug.cgi?id=3D221045
 
-=E7=8E=8B=E6=98=8E=E7=85=9C (w15303746062@163.com) changed:
+Artem S. Tashkinov (aros@gmx.com) changed:
 
            What    |Removed                     |Added
 ----------------------------------------------------------------------------
-           Severity|normal                      |high
+          Component|Bluetooth                   |network-wireless-intel
+           Assignee|linux-bluetooth@vger.kernel |drivers_network-wireless-in
+                   |.org                        |tel@kernel-bugs.kernel.org
 
 --=20
 You may reply to this email to add a comment.
 
 You are receiving this mail because:
-You are on the CC list for the bug.=
+You are the assignee for the bug.=
 
