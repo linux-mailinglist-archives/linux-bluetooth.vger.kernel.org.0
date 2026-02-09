@@ -1,112 +1,157 @@
-Return-Path: <linux-bluetooth+bounces-18904-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18905-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0PPcNpxQimmmJQAAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18904-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 09 Feb 2026 22:24:44 +0100
+	id 4F7CCLBTimkVJgAAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18905-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 09 Feb 2026 22:37:52 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76F35114C8F
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 09 Feb 2026 22:24:44 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 916E9114D86
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 09 Feb 2026 22:37:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id F0E913029E60
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  9 Feb 2026 21:23:00 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 6952730215AF
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  9 Feb 2026 21:37:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E15A30C60D;
-	Mon,  9 Feb 2026 21:23:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="CF4kjjPL"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2023630B524;
+	Mon,  9 Feb 2026 21:37:49 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-25.smtp.github.com (out-25.smtp.github.com [192.30.252.208])
+Received: from mout02.posteo.de (mout02.posteo.de [185.67.36.142])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E5F253B42
-	for <linux-bluetooth@vger.kernel.org>; Mon,  9 Feb 2026 21:22:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.208
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3993426ED48
+	for <linux-bluetooth@vger.kernel.org>; Mon,  9 Feb 2026 21:37:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.142
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770672180; cv=none; b=it9s+FkVGqRXkGaXAg32BYuqTWAFids3df4gc+Qr7J7t4ML6kfi5/lQA1kC7D+zEd0H+FgXalL7u7AZKusJWpQX4QBVWP20ckDeR91fbbnPlWeHTdlZqLPd/NlMWdeqbisWaLl837FyBUf8foqVFaoPvCq68pePJuONy2dZ4GAU=
+	t=1770673068; cv=none; b=uEKB4LNWuAcm4YYky0GbYYMFnTWDF2McXjysA+BcMYsfuhkujttjfguvVqWyRP/MxWXxpTGQDLX8DC2AtTLhVseTYLdOP/c64C2IzVcK9fQ8loEZYfJ1kvUyd9hJW2oFy7khbyZeNxSGx3A/JHXL2Vja+dZRoBrEJWTY3YJXiaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770672180; c=relaxed/simple;
-	bh=XNDQtnfg/orsvgHnuO35Be5ykb37OFPwSEDjfWqbpWY=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=YfAmMrg7LpxWTcG3YR3QSatOJPU7okUkEi7erCO//QZWF/txnuTU4hFTwWfbkR2hYmLqWW61C4/H1Y/BlLdwDgB6CWrYMf6aaJz9lxCidvEyEIWsBXHA79U1wvol9TbmKoPc70lRES0lf35DUa8kcHFomlLn1fS86sdcvMPuS9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=CF4kjjPL; arc=none smtp.client-ip=192.30.252.208
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-25761c4.ash1-iad.github.net [10.56.145.43])
-	by smtp.github.com (Postfix) with ESMTPA id 72EA0141318
-	for <linux-bluetooth@vger.kernel.org>; Mon,  9 Feb 2026 13:22:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1770672178;
-	bh=SNeJWye1969gu2z7Vy+5N2PpNNGLkcZ/p0McB9q+oa8=;
-	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=CF4kjjPLWYtaUozVDjZN3TaOu2aAvgSR5Jzd+Ivm2n1K3JLz9ydPa5R3zuyUL9buo
-	 QMHr55iquDqS6AJQLJ3uRwAvms85wNL0rjfScbYZh4bR6fCADTSCeA9YegEzawy17F
-	 /vS/lN5DkY4neEpt2qTGoABeQMaa+nkhRy9RUEns=
-Date: Mon, 09 Feb 2026 13:22:58 -0800
-From: Copilot <noreply@github.com>
-To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/copilot/generate-release-notes/ce6a16-aaefe9@github.com>
-Subject: [bluez/bluez] aaefe9: Add release notes summary document
+	s=arc-20240116; t=1770673068; c=relaxed/simple;
+	bh=4u4OOSkdRkmTDkt7iUi9Yp3ijCvx3bpj5IvAAlczQTs=;
+	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=HvupBWr0jbstlzs/n430WtLuu8WoErN3kSNIx326/9i1BAPIgEPmBRpC++PzIgBmSA/eYv2lJ03I3Pae3Gl6Mat078SmsfWdjVPPhyf7xAseE6puwQ19TuqVhJ0gIy02Zr0c8G+whu6/QyfnpXmm6ViwZj/Og9yDjU0Zhi3lRAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=fail smtp.mailfrom=iki.fi; arc=none smtp.client-ip=185.67.36.142
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iki.fi
+Received: from submission (posteo.de [185.67.36.169]) 
+	by mout02.posteo.de (Postfix) with ESMTPS id D007E240103
+	for <linux-bluetooth@vger.kernel.org>; Mon,  9 Feb 2026 22:36:35 +0100 (CET)
+Received: from customer (localhost [127.0.0.1])
+	by submission (posteo.de) with ESMTPSA id 4f8ygl016Yz6tvx;
+	Mon,  9 Feb 2026 22:36:34 +0100 (CET)
+Message-ID: <8e576f35b6279255c1eed099c1142625c53a6be5.camel@iki.fi>
+Subject: Re: [PATCH BlueZ 2/2] emulator: Fix compilation on big endian
+ systems
+From: Pauli Virtanen <pav@iki.fi>
+To: Bastien Nocera <hadess@hadess.net>, linux-bluetooth@vger.kernel.org
+Date: Mon, 09 Feb 2026 21:36:35 +0000
+In-Reply-To: <20260209203316.3050687-2-hadess@hadess.net>
+References: <20260209203316.3050687-1-hadess@hadess.net>
+	 <20260209203316.3050687-2-hadess@hadess.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+MIME-Version: 1.0
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [2.04 / 15.00];
-	DMARC_POLICY_REJECT(2.00)[github.com : SPF not aligned (relaxed),reject];
+X-Spamd-Result: default: False [-1.46 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_DKIM_REJECT(1.00)[github.com:s=pf2023];
-	MV_CASE(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_ONE(0.00)[1];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[github.com:-];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-18904-lists,linux-bluetooth=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-18905-lists,linux-bluetooth=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_TWO(0.00)[2];
+	DMARC_NA(0.00)[iki.fi];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	MISSING_XM_UA(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	FROM_NEQ_ENVFROM(0.00)[noreply@github.com,linux-bluetooth@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[pav@iki.fi,linux-bluetooth@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	RCVD_COUNT_FIVE(0.00)[5];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TO_DN_NONE(0.00)[];
+	R_DKIM_NA(0.00)[];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 76F35114C8F
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 916E9114D86
 X-Rspamd-Action: no action
 
-  Branch: refs/heads/copilot/generate-release-notes
-  Home:   https://github.com/bluez/bluez
-  Commit: aaefe90892544ec86dc4bb8622ce71b3c6ca3abe
-      https://github.com/bluez/bluez/commit/aaefe90892544ec86dc4bb8622ce71b3c6ca3abe
-  Author: copilot-swe-agent[bot] <198982749+Copilot@users.noreply.github.com>
-  Date:   2026-02-09 (Mon, 09 Feb 2026)
+Hi,
 
-  Changed paths:
-    A RELEASE_NOTES_SUMMARY.txt
+ma, 2026-02-09 kello 21:33 +0100, Bastien Nocera kirjoitti:
+> Use new helper macros for byteswapping constants.
+>=20
+> This fixes the build on big endian systems like s390x:
+>=20
+> emulator/bthost.c: In function =E2=80=98bthost_setup_sco=E2=80=99:
+> ./src/shared/util.h:43:26: error: initializer element is not constant
+> =C2=A0=C2=A0 43 | #define cpu_to_le32(val) bswap_32(val)
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ^~~~~~~~
+> etc.
+>=20
+> Fixes: 85888a8357ea ("bthost: add bthost_setup_sco() and accept
+> incoming eSCO")
+> ---
+> =C2=A0emulator/bthost.c | 16 ++++++++--------
+> =C2=A01 file changed, 8 insertions(+), 8 deletions(-)
+>=20
+> diff --git a/emulator/bthost.c b/emulator/bthost.c
+> index d09ad1e76c50..37865f61bc52 100644
+> --- a/emulator/bthost.c
+> +++ b/emulator/bthost.c
+> @@ -3562,18 +3562,18 @@ int bthost_setup_sco(struct bthost *bthost,
+> uint16_t acl_handle,
+> =C2=A0{
+> =C2=A0	static const struct bt_hci_cmd_setup_sync_conn settings[] =3D
+> {
 
-  Log Message:
-  -----------
-  Add release notes summary document
+Removing the "static" here would be another way to fix it, as it
+doesn't really need to be static here.
 
-Co-authored-by: Vudentz <2156363+Vudentz@users.noreply.github.com>
+> =C2=A0		{
+> -			.tx_bandwidth =3D cpu_to_le32(0x00001f40),
+> -			.rx_bandwidth =3D cpu_to_le32(0x00001f40),
+> -			.max_latency =3D cpu_to_le16(0x000a),
+> +			.tx_bandwidth =3D
+> cpu_constant_to_le32(0x00001f40),
+> +			.rx_bandwidth =3D
+> cpu_constant_to_le32(0x00001f40),
+> +			.max_latency =3D cpu_constant_to_le16(0x000a),
+> =C2=A0			.retrans_effort =3D 0x01,
+> -			.voice_setting =3D
+> cpu_to_le16(BT_VOICE_CVSD_16BIT),
+> +			.voice_setting =3D
+> cpu_constant_to_le16(BT_VOICE_CVSD_16BIT),
+> =C2=A0		},
+> =C2=A0		{
+> -			.tx_bandwidth =3D cpu_to_le32(0x00001f40),
+> -			.rx_bandwidth =3D cpu_to_le32(0x00001f40),
+> -			.max_latency =3D cpu_to_le16(0x000d),
+> +			.tx_bandwidth =3D
+> cpu_constant_to_le32(0x00001f40),
+> +			.rx_bandwidth =3D
+> cpu_constant_to_le32(0x00001f40),
+> +			.max_latency =3D cpu_constant_to_le16(0x000d),
+> =C2=A0			.retrans_effort =3D 0x02,
+> -			.voice_setting =3D
+> cpu_to_le16(BT_VOICE_TRANSPARENT),
+> +			.voice_setting =3D
+> cpu_constant_to_le16(BT_VOICE_TRANSPARENT),
+> =C2=A0		}
+> =C2=A0	};
+> =C2=A0	struct bt_hci_cmd_setup_sync_conn cmd;
 
+--=20
+Pauli Virtanen
 
-
-To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
