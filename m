@@ -1,148 +1,138 @@
-Return-Path: <linux-bluetooth+bounces-18897-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18896-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id yM9NFdlEimk9JAAAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18897-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 09 Feb 2026 21:34:33 +0100
+	id 2GPTItVEimk9JAAAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18896-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 09 Feb 2026 21:34:29 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id EAD7A1147B5
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 09 Feb 2026 21:34:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E72781147AE
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 09 Feb 2026 21:34:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 081A93020D65
-	for <lists+linux-bluetooth@lfdr.de>; Mon,  9 Feb 2026 20:34:27 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 94E26301CFBD
+	for <lists+linux-bluetooth@lfdr.de>; Mon,  9 Feb 2026 20:34:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A9BE22FD665;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 029AE2E62AC;
 	Mon,  9 Feb 2026 20:34:26 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from mslow3.mail.gandi.net (mslow3.mail.gandi.net [217.70.178.249])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A950727C866
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2EF124C676
 	for <linux-bluetooth@vger.kernel.org>; Mon,  9 Feb 2026 20:34:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.178.249
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770669266; cv=none; b=htrNXKCd7ePFKarGbw2Hp+tI8NWG/bKHYyGQRsID1bO08Any+q1cdq+TkGpyADk5GCMrb4KomcFcRkF4fdE4ccJ6YqeV7f9xN0ppkFWxSCXPLmoRBykRKbyaYh+dYeVHXRAyNx2eXoQItWkkZu0zFqqza56lgxlDfqUMCG0uamM=
+	t=1770669265; cv=none; b=r9YlFijo8+NSZ8CvY0s2KEEZZLOJ7cNDAAiA386ZCjdrlHhs3BnsUFJ1DXiIq3BfAZtm0WgiEAIqWYbq1dlVKPUo08Dfwfs4LDgWDg4+ONdxPj7xCJ7qtPPDfBZd5+a+JJ59x63TT96w1P4k+defWXyEZ97fc4PwpbcUy+0JyhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770669266; c=relaxed/simple;
-	bh=VBaZZtWZfBNVrKki/L1/thLjNnBZQMDh1fxkdbgYnq4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=WCWE8MZSOCEqnSoYPqoNeE2k5r95sXsH2lSkAdZoEnj/OevLSRrB31fUjCprfZDpRWeoKNMJF6v6FGy7F1iDfqxx+UR/O69hBdb888ZHgt45egEj2a6iuwmnAyRk89dhGyJV3QJISwQjQSser26JXKgd2NIMIFEduSfbPzwUlD4=
+	s=arc-20240116; t=1770669265; c=relaxed/simple;
+	bh=VvhC1qOv+DiHVpUkxkaObXF9WlCf+KkLBRxcn4ei5Ic=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=DSIkRVxShj24/Sjmfde78CGLxEoFx2NScAW4wXwj/oNDgMUUELu62lJHYGtNei8rlAT07OsHV4ydWjARr9ltojZfNMDlPHzaM2CG3JfTObSDonTicvunIGyIzn7T//o6ArlVe84b1584y/96Yol47Svm/BcL1vmO/bp2wcgXUv8=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.178.249
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
 Received: from relay2-d.mail.gandi.net (relay2-d.mail.gandi.net [217.70.183.194])
-	by mslow3.mail.gandi.net (Postfix) with ESMTP id 8BC8258128D
+	by mslow3.mail.gandi.net (Postfix) with ESMTP id 8C42D581290
 	for <linux-bluetooth@vger.kernel.org>; Mon,  9 Feb 2026 20:33:33 +0000 (UTC)
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 5C48143859;
+Received: by mail.gandi.net (Postfix) with ESMTPSA id BFC15441B7;
 	Mon,  9 Feb 2026 20:33:25 +0000 (UTC)
 From: Bastien Nocera <hadess@hadess.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ 1/2] shared/util: Add byte-swapping macros for constants
-Date: Mon,  9 Feb 2026 21:33:12 +0100
-Message-ID: <20260209203316.3050687-1-hadess@hadess.net>
+Subject: [PATCH BlueZ 2/2] emulator: Fix compilation on big endian systems
+Date: Mon,  9 Feb 2026 21:33:13 +0100
+Message-ID: <20260209203316.3050687-2-hadess@hadess.net>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260209203316.3050687-1-hadess@hadess.net>
+References: <20260209203316.3050687-1-hadess@hadess.net>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-GND-Sasl: hadess@hadess.net
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleejjeekucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffoggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpeffteektdejuddvhfdtfedtvdetgeeileethfetgfdtheekvefgueeifffhvefhfeenucfkphepvdgrtddumegvfeegmegvtgejfeemtghfvddtmeelsgdvleemtggufeeimeeikehfugemtgdtleefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddumegvfeegmegvtgejfeemtghfvddtmeelsgdvleemtggufeeimeeikehfugemtgdtleefpdhhvghlohepohhlihhmphhitgdpmhgrihhlfhhrohhmpehhrgguvghssheshhgruggvshhsrdhnvghtpdhqihgupeehveegkedugeefkeehledpmhhouggvpehsmhhtphhouhhtpdhnsggprhgtphhtthhopedvpdhrtghpthhtoheplhhinhhugidqsghluhgvthhoohhthhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehprghvsehikhhirdhfih
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduleejjeekucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffojghfgggtgfesthekredtredtjeenucfhrhhomhepuegrshhtihgvnhcupfhotggvrhgruceohhgruggvshhssehhrgguvghsshdrnhgvtheqnecuggftrfgrthhtvghrnheptddtfeegffevteehfeejvdelvefhvdfgtdfhieeigeevleeitdegvdehfeekhffgnecukfhppedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemlegsvdelmegtugefieemieekfhgumegttdelfeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemlegsvdelmegtugefieemieekfhgumegttdelfedphhgvlhhopeholhhimhhpihgtpdhmrghilhhfrhhomhephhgruggvshhssehhrgguvghsshdrnhgvthdpqhhiugepuefhveduheeggeduueejpdhmohguvgepshhmthhpohhuthdpnhgspghrtghpthhtohepvddprhgtphhtthhopehlihhnuhigqdgslhhuvghtohhothhhsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgrvhesihhkihdrfhhi
 X-GND-State: clean
 X-GND-Score: -100
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.04 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+X-Spamd-Result: default: False [-0.46 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-bluetooth];
+	TO_DN_SOME(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	DMARC_NA(0.00)[hadess.net];
-	TAGGED_FROM(0.00)[bounces-18897-lists,linux-bluetooth=lfdr.de];
 	RCPT_COUNT_TWO(0.00)[2];
-	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[hadess@hadess.net,linux-bluetooth@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	PRECEDENCE_BULK(0.00)[];
 	R_DKIM_NA(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	TAGGED_FROM(0.00)[bounces-18896-lists,linux-bluetooth=lfdr.de];
 	RCVD_COUNT_FIVE(0.00)[5];
-	TAGGED_RCPT(0.00)[linux-bluetooth];
+	RCVD_TLS_LAST(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,hadess.net:mid]
-X-Rspamd-Queue-Id: EAD7A1147B5
+X-Rspamd-Queue-Id: E72781147AE
 X-Rspamd-Action: no action
 
-We can't use functions to populate constants, so add new helpers for
-the various __bswap_constant_XX macros available for that purpose.
----
- src/shared/util.h | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+Use new helper macros for byteswapping constants.
 
-diff --git a/src/shared/util.h b/src/shared/util.h
-index c480351d6e9f..8683684831c5 100644
---- a/src/shared/util.h
-+++ b/src/shared/util.h
-@@ -29,12 +29,24 @@
- #define cpu_to_le16(val) (val)
- #define cpu_to_le32(val) (val)
- #define cpu_to_le64(val) (val)
-+#define le16_constant_to_cpu(val) (val)
-+#define le32_constant_to_cpu(val) (val)
-+#define le64_constant_to_cpu(val) (val)
-+#define cpu_constant_to_le16(val) (val)
-+#define cpu_constant_to_le32(val) (val)
-+#define cpu_constant_to_le64(val) (val)
- #define be16_to_cpu(val) bswap_16(val)
- #define be32_to_cpu(val) bswap_32(val)
- #define be64_to_cpu(val) bswap_64(val)
- #define cpu_to_be16(val) bswap_16(val)
- #define cpu_to_be32(val) bswap_32(val)
- #define cpu_to_be64(val) bswap_64(val)
-+#define be16_constant_to_cpu(val) __bswap_constant_16(val)
-+#define be32_constant_to_cpu(val) __bswap_constant_32(val)
-+#define be64_constant_to_cpu(val) __bswap_constant_64(val)
-+#define cpu_constant_to_be16(val) __bswap_constant_16(val)
-+#define cpu_constant_to_be32(val) __bswap_constant_32(val)
-+#define cpu_constant_to_be64(val) __bswap_constant_64(val)
- #elif __BYTE_ORDER == __BIG_ENDIAN
- #define le16_to_cpu(val) bswap_16(val)
- #define le32_to_cpu(val) bswap_32(val)
-@@ -42,12 +54,24 @@
- #define cpu_to_le16(val) bswap_16(val)
- #define cpu_to_le32(val) bswap_32(val)
- #define cpu_to_le64(val) bswap_64(val)
-+#define le16_constant_to_cpu(val) __bswap_constant_16(val)
-+#define le32_constant_to_cpu(val) __bswap_constant_32(val)
-+#define le64_constant_to_cpu(val) __bswap_constant_64(val)
-+#define cpu_constant_to_le16(val) __bswap_constant_16(val)
-+#define cpu_constant_to_le32(val) __bswap_constant_32(val)
-+#define cpu_constant_to_le64(val) __bswap_constant_64(val)
- #define be16_to_cpu(val) (val)
- #define be32_to_cpu(val) (val)
- #define be64_to_cpu(val) (val)
- #define cpu_to_be16(val) (val)
- #define cpu_to_be32(val) (val)
- #define cpu_to_be64(val) (val)
-+#define be16_constant_to_cpu(val) (val)
-+#define be32_constant_to_cpu(val) (val)
-+#define be64_constant_to_cpu(val) (val)
-+#define cpu_constant_to_be16(val) (val)
-+#define cpu_constant_to_be32(val) (val)
-+#define cpu_constant_to_be64(val) (val)
- #else
- #error "Unknown byte order"
- #endif
+This fixes the build on big endian systems like s390x:
+
+emulator/bthost.c: In function ‘bthost_setup_sco’:
+./src/shared/util.h:43:26: error: initializer element is not constant
+   43 | #define cpu_to_le32(val) bswap_32(val)
+      |                          ^~~~~~~~
+etc.
+
+Fixes: 85888a8357ea ("bthost: add bthost_setup_sco() and accept
+incoming eSCO")
+---
+ emulator/bthost.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/emulator/bthost.c b/emulator/bthost.c
+index d09ad1e76c50..37865f61bc52 100644
+--- a/emulator/bthost.c
++++ b/emulator/bthost.c
+@@ -3562,18 +3562,18 @@ int bthost_setup_sco(struct bthost *bthost, uint16_t acl_handle,
+ {
+ 	static const struct bt_hci_cmd_setup_sync_conn settings[] = {
+ 		{
+-			.tx_bandwidth = cpu_to_le32(0x00001f40),
+-			.rx_bandwidth = cpu_to_le32(0x00001f40),
+-			.max_latency = cpu_to_le16(0x000a),
++			.tx_bandwidth = cpu_constant_to_le32(0x00001f40),
++			.rx_bandwidth = cpu_constant_to_le32(0x00001f40),
++			.max_latency = cpu_constant_to_le16(0x000a),
+ 			.retrans_effort = 0x01,
+-			.voice_setting = cpu_to_le16(BT_VOICE_CVSD_16BIT),
++			.voice_setting = cpu_constant_to_le16(BT_VOICE_CVSD_16BIT),
+ 		},
+ 		{
+-			.tx_bandwidth = cpu_to_le32(0x00001f40),
+-			.rx_bandwidth = cpu_to_le32(0x00001f40),
+-			.max_latency = cpu_to_le16(0x000d),
++			.tx_bandwidth = cpu_constant_to_le32(0x00001f40),
++			.rx_bandwidth = cpu_constant_to_le32(0x00001f40),
++			.max_latency = cpu_constant_to_le16(0x000d),
+ 			.retrans_effort = 0x02,
+-			.voice_setting = cpu_to_le16(BT_VOICE_TRANSPARENT),
++			.voice_setting = cpu_constant_to_le16(BT_VOICE_TRANSPARENT),
+ 		}
+ 	};
+ 	struct bt_hci_cmd_setup_sync_conn cmd;
 -- 
 2.52.0
 
