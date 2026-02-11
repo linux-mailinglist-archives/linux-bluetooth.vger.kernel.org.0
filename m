@@ -1,315 +1,159 @@
-Return-Path: <linux-bluetooth+bounces-18943-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18948-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QEioEKFQjGmukgAAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18943-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Feb 2026 10:49:21 +0100
+	id 2BdqBVhwjGluoAAAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18948-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Feb 2026 13:04:40 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id CEE7E122F16
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Feb 2026 10:49:20 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6CBE6124133
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Feb 2026 13:04:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 45E98306493A
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Feb 2026 09:47:38 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 23696302494A
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Feb 2026 12:04:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 356F4366565;
-	Wed, 11 Feb 2026 09:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FB48320A0B;
+	Wed, 11 Feb 2026 12:04:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="Ndw2IIqY"
+	dkim=pass (2048-bit key) header.d=dominikbrodowski.net header.i=@dominikbrodowski.net header.b="jTgTQfyk"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from isilmar-4.linta.de (isilmar-4.linta.de [136.243.71.142])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683762F6192
-	for <linux-bluetooth@vger.kernel.org>; Wed, 11 Feb 2026 09:47:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85E37280A5B;
+	Wed, 11 Feb 2026 12:04:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=136.243.71.142
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770803254; cv=none; b=ZddbMd04vmgDOiIuxuv7gfjRpyqBb57QMfI9HTjhTfcrAT4GiNkBXNCitu7g9+6rVmRXQZ3LUIxrnUSfHIn+tL0BpZSalJOG39JjvuHFPOo+7oA2VoSi2cA/RsnjRBacV7532fEWMjxnxtCDODCYjoF3gxEybz2nv159U63O0NU=
+	t=1770811469; cv=none; b=aRR0B+Ogps+uXFLqnB6PMbuSHGXJ6etpmWwS0OOo0SOPPdRtbBI/J9g0d3h6K8vYxp5Ywx1UVTKqFeu1nTRiPuEV89Z7Ocox6rjbsYpAeuAiVNxxirV7SSCLdrGWI77TeQF7IXlj05VNDkcIcdOhVxrTl/5YDCu93rAqlQLg4v8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770803254; c=relaxed/simple;
-	bh=vN6Ldi968Ka0jA+5UKT1gJWmf7nDlcesQdxNmp7k+3w=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Vieo/ZLR5ZZRyoM8dcaWnordzzBIV0u5K04INY4qpWYmUua4O5KlaMRDHfKkq97PLKgbgoN3PG/XIhBtgfeNMzJ2UXMJriw1XnJK3Qs7q3UwX00XFJq4XEXYMuMt6UpS4bl5K3w4lphZUawj3qm20/8Z5Kt8F2t00KMIx4AIAnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=Ndw2IIqY; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1770803251;
-	bh=vN6Ldi968Ka0jA+5UKT1gJWmf7nDlcesQdxNmp7k+3w=;
-	h=From:To:Subject:Date:From;
-	b=Ndw2IIqYcli6fg7fJ8b/2oIU98FuedTKKuBdZDK7PoyobGdDHeoaKpbe8D9c6nVir
-	 lQja4QjfCU0ZInlYb8kn8lSf/yPy4kdi7rQrT0KOCiO+0S1asEvYz0iST3JkxSuXeC
-	 3W6T0bgr7ZNSgiUZUprSzZ6IKM9Lwax+hod3Gcv7AL32nf/AKmur58+QPGGIK9/bDy
-	 whxWthHsFxlv+qsqxauQ6MJmFGBq2sym/azqrNP7Pm7D1gcJAiGZvZEoZncLijaZ7Y
-	 /+hDyNTQqVD9bTuDMq8eOPUj4TSQgxpVGid7OthpA0SrVr1Y+1vbi8ktJwk23g2Jbu
-	 SDvkJCOE5LKOQ==
-Received: from fdanis-ThinkPad-X1.. (2A02-8428-AF44-1001-3D27-f5d9-cb51-6B68.rev.sfr.net [IPv6:2a02:8428:af44:1001:3d27:f5d9:cb51:6b68])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: fdanis)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 86C5D17E009B
-	for <linux-bluetooth@vger.kernel.org>; Wed, 11 Feb 2026 10:47:31 +0100 (CET)
-From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
-To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v2] tools/btpclient: Add GATT support to get Device name
-Date: Wed, 11 Feb 2026 10:47:26 +0100
-Message-ID: <20260211094726.198317-1-frederic.danis@collabora.com>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1770811469; c=relaxed/simple;
+	bh=F5ocLiFb5PagaCJNTCTkOoYR8su+CxhPpODAa4a2U68=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JQ3wsPDDyZIikXJcvV4Ndrm+it1q1XwnuGq1kZEdQ4aLbSy7SC9dOiggCy7MOAC+Ja+3oohVLZfFq1EkCeEi/eUVq8bT5Kia8mumZRnaQSCRvHXVAtcLvl740Tv1YfT75ibjwyTyOGVyGVvlfyKP7Gh3pzhJgxjWEAf4NRyqRS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=dominikbrodowski.net; spf=pass smtp.mailfrom=dominikbrodowski.net; dkim=pass (2048-bit key) header.d=dominikbrodowski.net header.i=@dominikbrodowski.net header.b=jTgTQfyk; arc=none smtp.client-ip=136.243.71.142
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=dominikbrodowski.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dominikbrodowski.net
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=dominikbrodowski.net;
+	s=k25.isilmar-4; t=1770810959;
+	bh=F5ocLiFb5PagaCJNTCTkOoYR8su+CxhPpODAa4a2U68=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=jTgTQfyk6DGXiB6SilnA7QB+cED1F8DbgS8ibkkK8UXVYDVfrN+rBg5r0xCVxDzkd
+	 9R976RUlE5fn1V7Rfw3wLoE1fDG0RRvgjjP0//vNgDu8Yh5xzyy7Ze7iLuA8oYpRPx
+	 36/DviW67q9k704KNQh5o5xadJHyLqAMzkuXppIHIvdwCX4gjpiC/GfVTQpDC3tkzO
+	 2znC1pjOuu/lJgsFL/KY2AtuLyJZC16qktwHOv3b7cZu4tle29uqd6NUitUM9VXCs5
+	 M1P4eeMaQ9FI3kLXWCusR8U9RT3pc0thP2a7ol/dcyvYk0xuhQHbkuQTLgAo8Qnk+6
+	 fSkTTJWf4Xy2g==
+Received: from scops.dominikbrodowski.net (unknown [10.2.0.113])
+	by isilmar-4.linta.de (Postfix) with ESMTPSA id 58AE020033E;
+	Wed, 11 Feb 2026 11:55:59 +0000 (UTC)
+Received: by scops.dominikbrodowski.net (Postfix, from userid 1000)
+	id 366CA80054; Wed, 11 Feb 2026 11:02:27 +0100 (CET)
+Date: Wed, 11 Feb 2026 11:02:27 +0100
+From: Dominik Brodowski <linux@dominikbrodowski.net>
+To: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+Cc: linux-mips@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+	Ondrej Zary <linux@rainbow-software.org>,
+	Russell King <linux@armlinux.org.uk>,
+	Huacai Chen <chenhuacai@kernel.org>,
+	WANG Xuerui <kernel@xen0n.name>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Marcel Holtmann <marcel@holtmann.org>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Theodore Ts'o <tytso@mit.edu>,
+	=?iso-8859-1?Q?Andr=E9?= Draszik <andre.draszik@linaro.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Yosry Ahmed <yosry.ahmed@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>, Paul Moore <paul@paul-moore.com>,
+	Simon Horman <horms@kernel.org>,
+	Casey Schaufler <casey@schaufler-ca.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>
+Subject: Re: [RFC PATCH] bluetooth: remove all PCMCIA drivers
+Message-ID: <aYxTsxNj2NLj8I6y@scops.dominikbrodowski.net>
+References: <20260211082246.41148-1-enelsonmoore@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260211082246.41148-1-enelsonmoore@gmail.com>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.49 / 15.00];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MIXED_CHARSET(0.67)[subject];
-	DMARC_POLICY_ALLOW(-0.50)[collabora.com,none];
-	R_DKIM_ALLOW(-0.20)[collabora.com:s=mail];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[dominikbrodowski.net:s=k25.isilmar-4];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	TAGGED_FROM(0.00)[bounces-18943-lists,linux-bluetooth=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-18948-lists,linux-bluetooth=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_ONE(0.00)[1];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	FREEMAIL_TO(0.00)[gmail.com];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DMARC_NA(0.00)[dominikbrodowski.net];
+	RCPT_COUNT_TWELVE(0.00)[28];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[vger.kernel.org,rainbow-software.org,armlinux.org.uk,kernel.org,xen0n.name,alpha.franken.de,linux.ibm.com,ellerman.id.au,gmail.com,holtmann.org,gondor.apana.org.au,oracle.com,mit.edu,linaro.org,linux-foundation.org,cmpxchg.org,linux.dev,paul-moore.com,schaufler-ca.com,google.com];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_NONE(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[frederic.danis@collabora.com,linux-bluetooth@vger.kernel.org];
-	DKIM_TRACE(0.00)[collabora.com:+];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[linux@dominikbrodowski.net,linux-bluetooth@vger.kernel.org];
+	DKIM_TRACE(0.00)[dominikbrodowski.net:+];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: CEE7E122F16
+	TO_DN_SOME(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[dominikbrodowski.net:email,dominikbrodowski.net:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,scops.dominikbrodowski.net:mid]
+X-Rspamd-Queue-Id: 6CBE6124133
 X-Rspamd-Action: no action
 
-The device name is retrieved during GATT connection, so no need to
-send a specific request, just need to send the name to PTS when the
-property is updated.
 
-This allows to pass GAP/IDLE/NAMP/BV-01-C.
----
-v1 -> v2: Fix memory leak
+Am Wed, Feb 11, 2026 at 12:22:04AM -0800 schrieb Ethan Nelson-Moore:
+> PCMCIA is almost completely obsolete (the last computers supporting it
+> natively were from ~2009), and the general consensus [1] seems to be
+> that support for it should be gradually removed from the kernel.
+> 
+> In 2023, an initial step of removing all the PCMCIA char drivers was
+> taken in commit 9b12f050c76f ("char: pcmcia: remove all the drivers"),
+> and that has not been reverted, so it seems logical to continue this
+> process by removing more low-hanging fruit.
+> 
+> These three Bluetooth drivers have had no meaningful changes since
+> their status was discussed in 2022 [2], and are unlikely to have any
+> remaining users. The latest functional change to any of them was a
+> patch to bluecard_cs to fix LED blinking behavior in 2017. The other
+> two drivers have not had any meaningful changes made since 2007. Remove
+> them.
+> 
+> Note that even with these drivers removed, it is still possible to use
+> other PCMCIA Bluetooth cards that present themselves as a standard
+> serial port via serial_cs and hciattach while the serial_cs driver is
+> still present.
+> 
+> [1] https://lore.kernel.org/all/c5b39544-a4fb-4796-a046-0b9be9853787@app.fastmail.com/
+> [2] https://lore.kernel.org/all/Y07d7rMvd5++85BJ@owl.dominikbrodowski.net/
+> 
+> Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
 
- src/shared/btp.h  |  18 +++++++
- tools/btpclient.c | 121 ++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 139 insertions(+)
+Acked-by: Dominik Brodowski <linux@dominikbrodowski.net>
 
-diff --git a/src/shared/btp.h b/src/shared/btp.h
-index ad18cfb3a..cf921e64a 100644
---- a/src/shared/btp.h
-+++ b/src/shared/btp.h
-@@ -285,6 +285,24 @@ struct btp_gap_identity_resolved_ev {
- 	bdaddr_t identity_address;
- } __packed;
- 
-+#define BTP_OP_GATT_READ_SUPPORTED_COMMANDS	0x01
-+
-+#define BTP_OP_GATT_READ_UUID			0x12
-+struct btp_gatt_read_uuid_cp {
-+	uint8_t address_type;
-+	bdaddr_t address;
-+	uint16_t start_handle;
-+	uint16_t end_handle;
-+	uint8_t uuid_len;
-+	uint8_t uuid[];
-+} __packed;
-+
-+struct btp_gatt_read_uuid_rp {
-+	uint8_t status;
-+	uint8_t count;
-+	uint8_t data[];
-+} __packed;
-+
- struct btp;
- 
- typedef void (*btp_destroy_func_t)(void *user_data);
-diff --git a/tools/btpclient.c b/tools/btpclient.c
-index b70e2b573..8466d0606 100644
---- a/tools/btpclient.c
-+++ b/tools/btpclient.c
-@@ -22,6 +22,7 @@
- #include <ell/ell.h>
- 
- #include "bluetooth/bluetooth.h"
-+#include "bluetooth/uuid.h"
- #include "src/shared/btp.h"
- 
- #define AD_PATH "/org/bluez/advertising"
-@@ -41,6 +42,7 @@
- #define AD_TYPE_MANUFACTURER_DATA		0xff
- 
- static void register_gap_service(void);
-+static void register_gatt_service(void);
- 
- static struct l_dbus *dbus;
- 
-@@ -65,6 +67,9 @@ static char *socket_path;
- static struct btp *btp;
- 
- static bool gap_service_registered;
-+static bool gatt_service_registered;
-+
-+static bool gatt_uuid_name_in_progress;
- 
- struct ad_data {
- 	uint8_t data[25];
-@@ -2769,6 +2774,72 @@ static void register_gap_service(void)
- 					btp_gap_confirm_entry_rsp, NULL, NULL);
- }
- 
-+static void btp_gatt_read_commands(uint8_t index, const void *param,
-+					uint16_t length, void *user_data)
-+{
-+	uint16_t commands = 0;
-+
-+	if (index != BTP_INDEX_NON_CONTROLLER) {
-+		btp_send_error(btp, BTP_GATT_SERVICE, index,
-+						BTP_ERROR_INVALID_INDEX);
-+		return;
-+	}
-+
-+	commands |= (1 << BTP_OP_GATT_READ_SUPPORTED_COMMANDS);
-+	commands |= (1 << BTP_OP_GATT_READ_UUID);
-+
-+	commands = L_CPU_TO_LE16(commands);
-+
-+	btp_send(btp, BTP_GATT_SERVICE, BTP_OP_GATT_READ_SUPPORTED_COMMANDS,
-+			BTP_INDEX_NON_CONTROLLER, sizeof(commands), &commands);
-+}
-+
-+static void btp_gatt_read_uuid(uint8_t index, const void *param,
-+					uint16_t length, void *user_data)
-+{
-+	struct btp_adapter *adapter = find_adapter_by_index(index);
-+	const struct btp_gatt_read_uuid_cp *cp = param;
-+	uint8_t status = BTP_ERROR_FAIL;
-+	bool prop;
-+
-+	if (!adapter) {
-+		status = BTP_ERROR_INVALID_INDEX;
-+		goto failed;
-+	}
-+
-+	/* Adapter needs to be powered to be able to read UUID */
-+	if (!l_dbus_proxy_get_property(adapter->proxy, "Powered", "b",
-+					&prop) || !prop) {
-+		goto failed;
-+	}
-+
-+	if (cp->uuid_len == 2) {
-+		uint16_t uuid = cp->uuid[0] | (cp->uuid[1] << 8);
-+
-+		/* Name UUID is automatically retrieved during connection */
-+		if (uuid == GATT_CHARAC_DEVICE_NAME) {
-+			gatt_uuid_name_in_progress = true;
-+			return;
-+		}
-+	}
-+
-+	/* TODO: Process other UUIDs */
-+
-+	return;
-+
-+failed:
-+	btp_send_error(btp, BTP_GATT_SERVICE, index, status);
-+}
-+
-+static void register_gatt_service(void)
-+{
-+	btp_register(btp, BTP_GATT_SERVICE, BTP_OP_GATT_READ_SUPPORTED_COMMANDS,
-+					btp_gatt_read_commands, NULL, NULL);
-+
-+	btp_register(btp, BTP_GATT_SERVICE, BTP_OP_GATT_READ_UUID,
-+					btp_gatt_read_uuid, NULL, NULL);
-+}
-+
- static void btp_core_read_commands(uint8_t index, const void *param,
- 					uint16_t length, void *user_data)
- {
-@@ -2833,6 +2904,16 @@ static void btp_core_register(uint8_t index, const void *param,
- 
- 		return;
- 	case BTP_GATT_SERVICE:
-+		if (gatt_service_registered)
-+			goto failed;
-+
-+		register_gatt_service();
-+		gatt_service_registered = true;
-+
-+		btp_send(btp, BTP_CORE_SERVICE, BTP_OP_CORE_REGISTER,
-+					BTP_INDEX_NON_CONTROLLER, 0, NULL);
-+
-+		return;
- 	case BTP_L2CAP_SERVICE:
- 	case BTP_MESH_NODE_SERVICE:
- 	case BTP_CORE_SERVICE:
-@@ -2871,6 +2952,12 @@ static void btp_core_unregister(uint8_t index, const void *param,
- 		gap_service_registered = false;
- 		break;
- 	case BTP_GATT_SERVICE:
-+		if (!gatt_service_registered)
-+			goto failed;
-+
-+		btp_unregister_service(btp, BTP_GATT_SERVICE);
-+		gatt_service_registered = false;
-+		break;
- 	case BTP_L2CAP_SERVICE:
- 	case BTP_MESH_NODE_SERVICE:
- 	case BTP_CORE_SERVICE:
-@@ -3162,6 +3249,40 @@ static void property_changed(struct l_dbus_proxy *proxy, const char *name,
- 			 * type.
- 			 */
- 			btp_identity_resolved_ev(proxy);
-+		} else if (!strcmp(name, "Name")) {
-+			struct btp_device *device;
-+			struct btp_adapter *adapter;
-+			const char *pts_name;
-+			uint8_t pts_name_len;
-+			struct btp_gatt_read_uuid_rp *rp;
-+
-+			if (!gatt_uuid_name_in_progress)
-+				return;
-+
-+			device = find_device_by_proxy(proxy);
-+			adapter = find_adapter_by_device(device);
-+
-+			if (!l_dbus_message_get_arguments(msg, "s", &pts_name))
-+				return;
-+
-+			pts_name_len = strlen(pts_name);
-+			rp = malloc(sizeof(struct btp_gatt_read_uuid_rp) + 3 +
-+								pts_name_len);
-+
-+			rp->status = 0;
-+			rp->count = 1;
-+			bt_put_le16(GATT_CHARAC_DEVICE_NAME, rp->data);
-+			rp->data[2] = pts_name_len;
-+			memcpy(rp->data+3, pts_name, pts_name_len);
-+
-+			btp_send(btp, BTP_GATT_SERVICE, BTP_OP_GATT_READ_UUID,
-+					adapter->index,
-+					sizeof(struct btp_gatt_read_uuid_rp) +
-+					3 + pts_name_len, rp);
-+
-+			gatt_uuid_name_in_progress = false;
-+
-+			free(rp);
- 		}
- 	}
- }
--- 
-2.43.0
+Which tree will this go through?
 
+Thanks,
+	Dominik
 
