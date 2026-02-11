@@ -1,178 +1,213 @@
-Return-Path: <linux-bluetooth+bounces-18947-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18949-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aPgbLl1mjGkFmgAAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18947-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Feb 2026 12:22:05 +0100
+	id kA6YMhN6jGktpAAAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18949-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Feb 2026 13:46:11 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C882123D3E
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Feb 2026 12:22:04 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C87012479D
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Feb 2026 13:46:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DC9AC30160DA
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Feb 2026 11:21:38 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 35ACE30182B8
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 11 Feb 2026 12:46:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D740536B07B;
-	Wed, 11 Feb 2026 11:21:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cw8g9/Qg"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CB2935DCE2;
+	Wed, 11 Feb 2026 12:46:09 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-qk1-f194.google.com (mail-qk1-f194.google.com [209.85.222.194])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay7-d.mail.gandi.net (relay7-d.mail.gandi.net [217.70.183.200])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C9D36BCE7
-	for <linux-bluetooth@vger.kernel.org>; Wed, 11 Feb 2026 11:21:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94A91E7660
+	for <linux-bluetooth@vger.kernel.org>; Wed, 11 Feb 2026 12:46:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.200
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770808897; cv=none; b=cXX9P9TTNu5RlAmy1opD/bC0WuvWx1uz4YjC5tjpbadLQmnIWlJxcWndDTjVfvR7bH83XjMJl8UThjI8XD+qs+s2IZoRm0QYjZ6WF/3IZn/0bcnDW84AWSIbYdzt5ND+nfsgN/q53s8g1cQHaUwi0o0nEVqgToJ+fYD+qDR1GBY=
+	t=1770813969; cv=none; b=dGiTx03keYUcGGSdGGCq4ZMNa7sRwZDwY3jDMz9gcEOJ24P8uC6HrzBmC/MW5X1Uwlx06cFlwf1rDPKSyRq6n1DJxDj0vIqaqOnKmVCDf9HHbtUbTJrKuonNjVdzypgkWq6oJIeTMyoS76YD8zg4I5HL2KxMz9s8Rbj+cd06cJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770808897; c=relaxed/simple;
-	bh=ZjY5+D30mGVRtvpz48RpTih282xPldm+6nqMJJiKpCA=;
-	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
-	 In-Reply-To:References; b=XU0tdzUXdv068s9w6BJaO4n1bMIUzSuZ6VuNVXbcfhQkzISl5jXLADbVBeKNo9Rju7qmE47JXb7dYGG5uyXfGsutMzh0CRQ9c6GT+iiAD0CbXyR9X4gzT48yMdKYYcEGGjdpAdjyVH6QR/7HgRwfFd+Qe7vFw7DVgB2qZTQkqRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Cw8g9/Qg; arc=none smtp.client-ip=209.85.222.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f194.google.com with SMTP id af79cd13be357-8ca01dc7d40so196412485a.1
-        for <linux-bluetooth@vger.kernel.org>; Wed, 11 Feb 2026 03:21:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770808894; x=1771413694; darn=vger.kernel.org;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=kJ1UmQeK1czHWJFPsOHgPtl07Wj8Hq0aOIK/uj4SUUU=;
-        b=Cw8g9/QgV5flew5D7PnaNkCWXA8+nF7VUGr6RJI8HKoa7pYiav7Alp3GS+qwCsoU1s
-         rCJILuAnDrd12hZ7gMAyfgP/Ak8viWs0CFsMNC2BVJL2UdrypUN8eC2bG3Mn0+cXsig0
-         TAxPM4GfrsYw9MstkQUgRzZLbARIKMjcWQNTDJfkuEpXq0M1yGNMp3Cn00V6T9QSnm2x
-         sctReCY8T0fBe1ySnSqi5VGb3SbwPa+KJRrhABVH+OkMKz82m56hu6JeyjBFDMnJX5ZE
-         1TacANWtFoRm/Ejd7QynpJIKYtoZ5kTKXbP+e9v492/Ugvp7RcCIC8Zgjrk8lC5f4v34
-         aXEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770808894; x=1771413694;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kJ1UmQeK1czHWJFPsOHgPtl07Wj8Hq0aOIK/uj4SUUU=;
-        b=fUDAD0GHItGxdsaly/UOaIzLfSntDk9vZPWsqfbgMP9OBzV4d8pzX+D6EHfv0BfPDv
-         pnBEb0wXgrlCrptcdGn5sUROs3odJarZ456lUdMJEKhu/VdaIxbYpK6kz9ovQEMUPpnK
-         61kJyIBvSPHYVs2KkFjbWXC6ym9YxgeDwPoUTyia0aOUlnr723MAp9XN9kZSG5TRbZ7Q
-         Aat6vYESeWKkR+pmIrJBmBBqiMO/suBGAj5j7eW5S7TiRxXKHw+zyK/+oJw5cWAJ/XmJ
-         pT5Q6SQziruCx9clZlRtKtxetHwDoGCW2IsJjsvnM65ih1ZRwDyBZGGkTvPuQPWT7eq0
-         hnOg==
-X-Gm-Message-State: AOJu0YyhTBdUn4HIuBCWtERCqafChwcoejJejMMnZcX6DNAGLqBI+DbI
-	Wjb6cur3dUnhNTIfyH7tP1a8XOjvB2f7y5WmtoM8cfYTUENaghH7jDrlDT0AmOxf
-X-Gm-Gg: AZuq6aKZTsD/7UJU99Uo2ztIb8pJsjCIFV7LGz+Tf3OiAXlabCpaRlWhJbV3sh2g5TU
-	Y8yzAcHq9GMDgsY2n7ydojbsjkEHGz4dZxkeYSeotJmF28cGTJlGj74DXAQB3BnPEtk0EZDQngH
-	/qsu15gLFwM7ETj/JDne/oGCon8PD2QeHlRWmzj9MRUcd9id0fxnszDAAXY/RqwVTup2NqnLSlI
-	zeexkOgkuXvBMgI1YcX7X8x5dEOY+5Ynz5qtF856jdQ/1yLGwzZ3Qg0qYabtdzP5Vx4Du94iKdy
-	83pjaP4RTY4+TT0DYb2Oo14WRHJkdKNHeYJ4sFdJko5bzFckzNaVP54yzfyMvdB8PVhGlCuCYmp
-	bv/u/EFg0Gkggr2ZEwMCE6vqz+ZGmrl8pAEUsbt23lqGpgl4ajl+2r5zUDdHO/Gon9vP7f2QAz9
-	pCvddVVHBp+jfXlJ1n6XEZV6MCveGshLU=
-X-Received: by 2002:a05:620a:3953:b0:8b2:eae0:bbf4 with SMTP id af79cd13be357-8caf0487af1mr2147181285a.19.1770808894594;
-        Wed, 11 Feb 2026 03:21:34 -0800 (PST)
-Received: from [172.17.0.2] ([135.232.177.176])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8971cc7ff1csm12488646d6.3.2026.02.11.03.21.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Feb 2026 03:21:34 -0800 (PST)
-Message-ID: <698c663e.d40a0220.9aaea.5a14@mx.google.com>
-Date: Wed, 11 Feb 2026 03:21:34 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============5489971740746234956=="
+	s=arc-20240116; t=1770813969; c=relaxed/simple;
+	bh=ggNHXjdFbos+neIKu8WnosBU1mMBYU7gM/olyUFo0Kc=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=Gwi2XnKmkv7mR/9JZmnDPBvUaPZ7hmNf9b9tTZJLy9QaE08xmIc6g9wurO+tZwW9cakIvUlwO+3YqMV/wqqI+RjF5vbKjaT6tJ/m6yNozaM4RaO2od2SAP8toMpIMzNGXuyqGLTqMdyWQLkLefiezuKqiJaZk2GJXy8W/K0d48g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.200
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 35331441E5
+	for <linux-bluetooth@vger.kernel.org>; Wed, 11 Feb 2026 12:45:59 +0000 (UTC)
+From: Bastien Nocera <hadess@hadess.net>
+To: linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ v8 00/15] Add meson build system and HTML docs
+Date: Wed, 11 Feb 2026 13:41:56 +0100
+Message-ID: <20260211124550.3830639-1-hadess@hadess.net>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: bluez.test.bot@gmail.com
-To: linux-bluetooth@vger.kernel.org, frederic.danis@collabora.com
-Subject: RE: [BlueZ,v2] tools/btpclient: Add GATT support to get Device name
-In-Reply-To: <20260211094726.198317-1-frederic.danis@collabora.com>
-References: <20260211094726.198317-1-frederic.danis@collabora.com>
-Reply-To: linux-bluetooth@vger.kernel.org
+Content-Transfer-Encoding: 8bit
+X-GND-Sasl: hadess@hadess.net
+X-GND-State: clean
+X-GND-Score: 0
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtddvheelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvufffkffoggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpeduiedufeekkeffkefffefggeetjedtvedvtedufedtheduueeivedukeffjeejtdenucffohhmrghinhepshgvrhhvihgtvgdrihhnnecukfhppedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemlegsvdelmegtugefieemieekfhgumegttdelfeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemlegsvdelmegtugefieemieekfhgumegttdelfedphhgvlhhopeholhhimhhpihgtpdhmrghilhhfrhhomhephhgruggvshhssehhrgguvghsshdrnhgvthdpqhhiugepfeehfeefudeggedugfehpdhmohguvgepshhmthhpohhuthdpnhgspghrtghpthhtohepuddprhgtphhtthhopehlihhnuhigqdgslhhuvghtohhothhhsehvghgvrhdrkhgvrhhnvghlrdhorhhg
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.16 / 15.00];
-	CTYPE_MIXED_BOGUS(1.00)[];
+X-Spamd-Result: default: False [0.04 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
-	MIME_GOOD(-0.10)[multipart/mixed,text/plain];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-18947-lists,linux-bluetooth=lfdr.de];
-	REPLYTO_DN_EQ_FROM_DN(0.00)[];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
+	RCPT_COUNT_ONE(0.00)[1];
+	MIME_TRACE(0.00)[0:+];
+	DMARC_NA(0.00)[hadess.net];
+	TAGGED_FROM(0.00)[bounces-18949-lists,linux-bluetooth=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+,1:+];
-	RCPT_COUNT_TWO(0.00)[2];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	FROM_NEQ_ENVFROM(0.00)[blueztestbot@gmail.com,linux-bluetooth@vger.kernel.org];
-	HAS_REPLYTO(0.00)[linux-bluetooth@vger.kernel.org];
-	TO_DN_NONE(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TAGGED_RCPT(0.00)[linux-bluetooth];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	FROM_NO_DN(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mx.google.com:mid]
-X-Rspamd-Queue-Id: 1C882123D3E
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[hadess@hadess.net,linux-bluetooth@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	PRECEDENCE_BULK(0.00)[];
+	R_DKIM_NA(0.00)[];
+	TO_DN_NONE(0.00)[];
+	TAGGED_RCPT(0.00)[linux-bluetooth];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,meson.build:url,hadess.net:mid]
+X-Rspamd-Queue-Id: 3C87012479D
 X-Rspamd-Action: no action
 
---===============5489971740746234956==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Changes since v7:
+- Use Figtree as the documentation font
+- Update main logo
+- Update favicon
+- Update OpenGraph card logo
+- Fix GATT introduction not being linked from the docs
+- Don't install btmgmt man page
+- Drop merged "client: Expand GATT submenu documentation"
+- Update vendored ell to 0.82
 
-This is automated email and please do not reply to this email!
+Bastien Nocera (14):
+  build: Add meson wrap for libell
+  build: Add meson build system
+  build: Make more use of 'feature' options
+  build: Separate systemd and libsystemd dependencies
+  tools: Install gatttool if deprecated tools are enabled
+  tools: Install avinfo tool by default
+  emulator: Install the emulator if built
+  build: Add option to allow disabling bluetoothd
+  unit: Run test-bap tests concurrently
+  unit: Make gobex-transfer tests run concurrently
+  build: Only build profiles if the daemon is built
+  build: Only build gdbus library if there is a user
+  doc: Add HTML documentation
+  github: Add docs deployment
 
-Dear submitter,
+Paul Otto (1):
+  doc: Add introduction to GATT
 
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=1053057
+ .github/workflows/docs.yml                    |  54 +
+ attrib/meson.build                            |  17 +
+ btio/meson.build                              |   1 +
+ client/meson.build                            |  29 +
+ completion/meson.build                        |   3 +
+ doc/_static/bluez.css                         | 452 +++++++++
+ doc/_static/bluez.png                         | Bin 0 -> 18354 bytes
+ doc/_static/bullet.svg                        |   1 +
+ doc/_static/card.png                          | Bin 0 -> 35387 bytes
+ doc/_static/figtree.woff2                     | Bin 0 -> 14364 bytes
+ doc/_static/toc_bullet.svg                    |  39 +
+ doc/bluetoothctl-cmd.rst                      |  34 +
+ doc/conf.py                                   |  39 +
+ doc/copy-subdir.py                            |  14 +
+ doc/daemons.rst                               |  12 +
+ doc/dbus-gatt.rst                             |  20 +
+ doc/dbus-obex.rst                             |  33 +
+ doc/dbus.rst                                  |  76 ++
+ doc/deprecated-tools.rst                      |  22 +
+ doc/dev-maint.rst                             |  17 +
+ doc/favicon.ico                               | Bin 0 -> 29152 bytes
+ doc/gatt-intro.rst                            | 141 +++
+ doc/index.rst                                 |  47 +
+ doc/meson.build                               | 295 ++++++
+ doc/protocols.rst                             |  20 +
+ doc/qualifications.rst                        |  76 ++
+ doc/tools.rst                                 |  24 +
+ emulator/meson.build                          |  36 +
+ gdbus/meson.build                             |  19 +
+ gobex/meson.build                             |   8 +
+ lib/meson.build                               |  53 +
+ mesh/meson.build                              |  60 ++
+ meson.build                                   | 300 ++++++
+ meson_options.txt                             |  55 ++
+ monitor/meson.build                           |  37 +
+ obexd/meson.build                             | 121 +++
+ peripheral/meson.build                        |  13 +
+ plugins/meson.build                           |  29 +
+ profiles/meson.build                          | 167 ++++
+ src/meson.build                               |  90 ++
+ src/shared/meson.build                        |  85 ++
+ subprojects/ell.wrap                          |  11 +
+ .../0001-build-Add-meson-build-system.patch   | 922 ++++++++++++++++++
+ test/meson.build                              |  37 +
+ tools/mesh/meson.build                        |  16 +
+ tools/meson.build                             | 302 ++++++
+ tools/mpris-proxy.service.in                  |   2 +-
+ unit/meson.build                              | 163 ++++
+ unit/unittest_list.sh                         |  15 +
+ 49 files changed, 4006 insertions(+), 1 deletion(-)
+ create mode 100644 .github/workflows/docs.yml
+ create mode 100644 attrib/meson.build
+ create mode 100644 btio/meson.build
+ create mode 100644 client/meson.build
+ create mode 100644 completion/meson.build
+ create mode 100644 doc/_static/bluez.css
+ create mode 100644 doc/_static/bluez.png
+ create mode 100644 doc/_static/bullet.svg
+ create mode 100644 doc/_static/card.png
+ create mode 100644 doc/_static/figtree.woff2
+ create mode 100644 doc/_static/toc_bullet.svg
+ create mode 100644 doc/bluetoothctl-cmd.rst
+ create mode 100644 doc/conf.py
+ create mode 100644 doc/copy-subdir.py
+ create mode 100644 doc/daemons.rst
+ create mode 100644 doc/dbus-gatt.rst
+ create mode 100644 doc/dbus-obex.rst
+ create mode 100644 doc/dbus.rst
+ create mode 100644 doc/deprecated-tools.rst
+ create mode 100644 doc/dev-maint.rst
+ create mode 100644 doc/favicon.ico
+ create mode 100644 doc/gatt-intro.rst
+ create mode 100644 doc/index.rst
+ create mode 100644 doc/meson.build
+ create mode 100644 doc/protocols.rst
+ create mode 100644 doc/qualifications.rst
+ create mode 100644 doc/tools.rst
+ create mode 100644 emulator/meson.build
+ create mode 100644 gdbus/meson.build
+ create mode 100644 gobex/meson.build
+ create mode 100644 lib/meson.build
+ create mode 100644 mesh/meson.build
+ create mode 100644 meson.build
+ create mode 100644 meson_options.txt
+ create mode 100644 monitor/meson.build
+ create mode 100644 obexd/meson.build
+ create mode 100644 peripheral/meson.build
+ create mode 100644 plugins/meson.build
+ create mode 100644 profiles/meson.build
+ create mode 100644 src/meson.build
+ create mode 100644 src/shared/meson.build
+ create mode 100644 subprojects/ell.wrap
+ create mode 100644 subprojects/packagefiles/0001-build-Add-meson-build-system.patch
+ create mode 100644 test/meson.build
+ create mode 100644 tools/mesh/meson.build
+ create mode 100644 tools/meson.build
+ create mode 100644 unit/meson.build
+ create mode 100644 unit/unittest_list.sh
 
----Test result---
+-- 
+2.52.0
 
-Test Summary:
-CheckPatch                    PENDING   0.45 seconds
-GitLint                       PENDING   0.46 seconds
-BuildEll                      PASS      19.97 seconds
-BluezMake                     PASS      639.90 seconds
-MakeCheck                     PASS      18.53 seconds
-MakeDistcheck                 PASS      242.00 seconds
-CheckValgrind                 PASS      293.99 seconds
-CheckSmatch                   PASS      349.38 seconds
-bluezmakeextell               PASS      182.90 seconds
-IncrementalBuild              PENDING   0.44 seconds
-ScanBuild                     PASS      1015.19 seconds
-
-Details
-##############################
-Test: CheckPatch - PENDING
-Desc: Run checkpatch.pl script
-Output:
-
-##############################
-Test: GitLint - PENDING
-Desc: Run gitlint
-Output:
-
-##############################
-Test: IncrementalBuild - PENDING
-Desc: Incremental build with the patches in the series
-Output:
-
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============5489971740746234956==--
 
