@@ -1,154 +1,133 @@
-Return-Path: <linux-bluetooth+bounces-18983-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-18984-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SAdlAC6EjWmQ3gAAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-18983-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 12 Feb 2026 08:41:34 +0100
+	id 8HaEMteFjWmx3gAAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-18984-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 12 Feb 2026 08:48:39 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5582212AFCD
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 12 Feb 2026 08:41:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F06A12B034
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 12 Feb 2026 08:48:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 73309304E705
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 12 Feb 2026 07:41:30 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3763C3075948
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 12 Feb 2026 07:48:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 296622C08A1;
-	Thu, 12 Feb 2026 07:41:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62D3629D289;
+	Thu, 12 Feb 2026 07:48:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=codecoup.pl header.i=@codecoup.pl header.b="hFdRZU53"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tJrVLIXQ"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7FA28D8DA
-	for <linux-bluetooth@vger.kernel.org>; Thu, 12 Feb 2026 07:41:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6CD29A2;
+	Thu, 12 Feb 2026 07:48:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770882088; cv=none; b=WKu3dsMSlQ3ksd5H8V3qzl7HUwTU29FFsCcKNafCsoGJbl9O4U+kEjto8QIVkmY8Q1J7dwHKboTmCu1uX4re8Ss1+mxrtLhdo3+fXoqjo55iCcubQoBrsnkKieaUQarjFTsYD+SnflPV9EUl8ejq6dduAUCMmcWjX1Bbl4I5Sq0=
+	t=1770882510; cv=none; b=qThos3py5z1hdk6p2a1Z0/T2J0nSxZwQ8rUiwdpsSWVU3vAjYlsUo55OJrJwWLNkFHANg8xcFnt0/aZ03LuXKfnreOIIwmCn5tm1GTbeOzBj99gDtThXO+DniJpMwlh6OFmkSqnqRI7VodiOTDNtE6fpf22w76Pu3qNGEkn5bjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770882088; c=relaxed/simple;
-	bh=Bybq6YVBkqHEowrDi0KJ1icafdlKDBEW945WLREiWpA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TcEfEmrCpu7xit6VS1nsccUiMSnKTy7aQFBcuSi1x7vO1Dq9YzxdUQ8NFlyJaBdicK/WR9S2NReZ2CJXUwVtKVplgMnhw1YGuRcWZgzblRAvuIbVkoUiA3zVWHTQj8r4cVse6ryowkg/NZ2vox3mzv65OaYud2rnv0aafNRKBgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=codecoup.pl; spf=pass smtp.mailfrom=codecoup.pl; dkim=pass (2048-bit key) header.d=codecoup.pl header.i=@codecoup.pl header.b=hFdRZU53; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=codecoup.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codecoup.pl
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-47edd6111b4so113778315e9.1
-        for <linux-bluetooth@vger.kernel.org>; Wed, 11 Feb 2026 23:41:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=codecoup.pl; s=google; t=1770882085; x=1771486885; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=/dcSnhEINyICNkHx9eepePnYVOOlEAglwp8cHbM0S0Y=;
-        b=hFdRZU53ovu9sdBUVPauU1F77o+Jawo+F1y+KUwpFhjQ5VJb9RfqEni/RQYCiNaRyr
-         97yuBzwsZgxWMmsXve8zD0NCtBiproGkYBKGx0kaPz8Mn2hYbxI2F9jvb8fKBZfPbIli
-         mUvq60AiC4YbzSfEJk8EHGWykTmwan12D0IeWyRIICuTZdAcBw3RNsocN7wKeZh1uEa/
-         BwmfTLYYFIZnKlCvfdJmHhVzANFbb1LhxJKOauD82x0UpmKkOEEfdbuz0bN002EoDaKK
-         SMVITj8qXk9oR8bIm03/wlqj9uRGq52/4NwHT4RKjh9n7Wa5DeSylqEqfgkTEdy2sGEe
-         R8CA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770882085; x=1771486885;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/dcSnhEINyICNkHx9eepePnYVOOlEAglwp8cHbM0S0Y=;
-        b=MlMYC1SHKAfQRhbiMhuVCo2B11VIOVCm8herQeiCVvqp4C/7tmFXwMtsEQ8PDn3jc8
-         8U5fhsjqC9kZjntzaiyG9YvJlaO91DoSvOf/UYzB/cjnpmXAXEoAwHO4g2DDUIQoCx4x
-         UMjQaNUHA+NF6Hr83UyupVuQiRnSbcEz5qX9z/rt5Lut/s6Ny4vK7QIlPXPlwryrhPXP
-         jLwJyFRM//gDYtXFM485slDBgMmYr1v2AlEOfASU58i9WLdTbpW8sKGH4DMWPhX7pwGa
-         gAB/ch7OOnMKjU+BbjLHJ1i1cf2kB/+lRrlzKBgnYc/dgYWQCtbirOs4znIbQ2Up8AjI
-         Nykg==
-X-Gm-Message-State: AOJu0YyUHQkrJAxaIG/7+UVrsEvCYt3CUu8XNLk8xQW62uMzounx/vg2
-	+IahR0M6BCauamm8Wn+o8XaN38Qypn9cEqpyeCtas6C5tFDSA68/DAxmTa/atnRMa6HUO76+BLa
-	jHJW5d70=
-X-Gm-Gg: AZuq6aIfWFh5MtSWqXE4cZ79t7z/SvtEmJ3bOi8eDhQcJIDNduQKhRLw0vqEFsyDS9d
-	86s4gfUO8TK/dZHozcNgJv9lrZNdWK+UtZhxaaA6UZm75tusbn1+M/twEvaRYntjY/RGy+wU+VC
-	GhpugGLDt53O8xFkYnz70xA6P5MRFRfg9CkqpWlMKMYCntAHG3ySz4HXqQdaeRswXvTFzEY/VdD
-	Wrd6Hc5Q4q/0yOs/hKCrvlovGdGmAdqKxF6Zn7d9mgIHnFv9Cu4OKw2hSN9Y7tBP0lSTWp+190v
-	PE+8s6v/LETRNoCqoYyaKt1uU0IQ+cp+ua2eENaTdLsyTEUSO3JBawQAvmTzQvWmqbP0eWxTjR/
-	PnoLnpmLmtnTCF/xGdnEQ6lKutGcbkQb38Tfkw8mh4hYVIpSzTt4JHRzM5RzljmwaTtNfUmn3Up
-	x0UsF61Vsnyy3ekKTzNGaKOftPIkPT
-X-Received: by 2002:a05:600c:3147:b0:477:9ce2:a0d8 with SMTP id 5b1f17b1804b1-483656094dfmr23961805e9.0.1770882085434;
-        Wed, 11 Feb 2026 23:41:25 -0800 (PST)
-Received: from localhost ([95.143.243.62])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4834d5d77f9sm190614435e9.3.2026.02.11.23.41.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Feb 2026 23:41:25 -0800 (PST)
-From: Mariusz Skamra <mariusz.skamra@codecoup.pl>
-To: linux-bluetooth@vger.kernel.org
-Cc: stable@vger.kernel.org,
-	Mariusz Skamra <mariusz.skamra@codecoup.pl>
-Subject: [PATCH] Bluetooth: Fix CIS host feature condition
-Date: Thu, 12 Feb 2026 08:41:11 +0100
-Message-ID: <20260212074111.316980-1-mariusz.skamra@codecoup.pl>
-X-Mailer: git-send-email 2.53.0
+	s=arc-20240116; t=1770882510; c=relaxed/simple;
+	bh=1v5bdO3G5lcngWEcs9w9BledEi1V0scMHcB9CFT+cQs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=e9uy/Dmyn4qXS10iz5/zDi1L47tUdb8ugGr6W8VOgADsHDZ6SBeNBjCPUr92YEq8OyFSjV381dG6i+8jNAZON8LsF4RioFpEavnZCjLLW36Cb66mnJgp4vefGNTaAvuqtvSOpEF5BgRi/8frEEvoyYvNIPSLauS/ttb7LGAqqkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tJrVLIXQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBD9BC4CEF7;
+	Thu, 12 Feb 2026 07:48:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1770882509;
+	bh=1v5bdO3G5lcngWEcs9w9BledEi1V0scMHcB9CFT+cQs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=tJrVLIXQKkEh2ijH8TE+h+4b1TUgrI+ZoAY41hYtVten+wHw74vCrJjRWaDGUrvov
+	 lMSw25ToyvpI5e3Rev11JHdjAEku+VABe+ibKr7/7XgilKmJDsPgP1up5QwwKb/en9
+	 tb1lqXbjwUgCzVm3EWeNAyEEr2uKFKgnyqrW/3fs=
+Date: Thu, 12 Feb 2026 08:48:25 +0100
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Mariusz Skamra <mariusz.skamra@codecoup.pl>
+Cc: linux-bluetooth@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH] Bluetooth: Fix CIS host feature condition
+Message-ID: <2026021216-lyrically-tactful-d3b3@gregkh>
+References: <20260212074111.316980-1-mariusz.skamra@codecoup.pl>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260212074111.316980-1-mariusz.skamra@codecoup.pl>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [2.34 / 15.00];
+	MID_END_EQ_FROM_USER_PART(4.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[codecoup.pl:s=google];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[linuxfoundation.org,none];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[linuxfoundation.org:s=korg];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-18983-lists,linux-bluetooth=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-18984-lists,linux-bluetooth=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DMARC_NA(0.00)[codecoup.pl: no valid DMARC record];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	RCPT_COUNT_THREE(0.00)[3];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mariusz.skamra@codecoup.pl,linux-bluetooth@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[codecoup.pl:+];
-	RCVD_COUNT_FIVE(0.00)[5];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[gregkh@linuxfoundation.org,linux-bluetooth@vger.kernel.org];
+	DKIM_TRACE(0.00)[linuxfoundation.org:+];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 5582212AFCD
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,codecoup.pl:email]
+X-Rspamd-Queue-Id: 2F06A12B034
 X-Rspamd-Action: no action
 
-This fixes the condition for sending the LE Set Host Feature command.
-The command is sent to indicate host support for Connected Isochronous
-Streams in this case. It has been observed that the system could not
-initialize BIS-only capable controllers because the controllers do not
-support the command.
+On Thu, Feb 12, 2026 at 08:41:11AM +0100, Mariusz Skamra wrote:
+> This fixes the condition for sending the LE Set Host Feature command.
+> The command is sent to indicate host support for Connected Isochronous
+> Streams in this case. It has been observed that the system could not
+> initialize BIS-only capable controllers because the controllers do not
+> support the command.
+> 
+> As per Core v6.2 | Vol 4, Part E, Table 3.1 the command shall be
+> supported if CIS Central or CIS Peripheral is supported; otherwise,
+> the command is optional.
+> 
+> Signed-off-by: Mariusz Skamra <mariusz.skamra@codecoup.pl>
+> ---
+>  net/bluetooth/hci_sync.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+> index f04a90bce4a9..0b0dc0965f5a 100644
+> --- a/net/bluetooth/hci_sync.c
+> +++ b/net/bluetooth/hci_sync.c
+> @@ -4592,7 +4592,7 @@ static int hci_le_set_host_features_sync(struct hci_dev *hdev)
+>  {
+>  	int err;
+>  
+> -	if (iso_capable(hdev)) {
+> +	if (cis_capable(hdev)) {
+>  		/* Connected Isochronous Channels (Host Support) */
+>  		err = hci_le_set_host_feature_sync(hdev, 32,
+>  						   (iso_enabled(hdev) ? 0x01 :
+> -- 
+> 2.53.0
+> 
+> 
 
-As per Core v6.2 | Vol 4, Part E, Table 3.1 the command shall be
-supported if CIS Central or CIS Peripheral is supported; otherwise,
-the command is optional.
+<formletter>
 
-Signed-off-by: Mariusz Skamra <mariusz.skamra@codecoup.pl>
----
- net/bluetooth/hci_sync.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This is not the correct way to submit patches for inclusion in the
+stable kernel tree.  Please read:
+    https://www.kernel.org/doc/html/latest/process/stable-kernel-rules.html
+for how to do this properly.
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index f04a90bce4a9..0b0dc0965f5a 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -4592,7 +4592,7 @@ static int hci_le_set_host_features_sync(struct hci_dev *hdev)
- {
- 	int err;
- 
--	if (iso_capable(hdev)) {
-+	if (cis_capable(hdev)) {
- 		/* Connected Isochronous Channels (Host Support) */
- 		err = hci_le_set_host_feature_sync(hdev, 32,
- 						   (iso_enabled(hdev) ? 0x01 :
--- 
-2.53.0
-
+</formletter>
 
