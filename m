@@ -1,66 +1,67 @@
-Return-Path: <linux-bluetooth+bounces-19016-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-19017-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sHZUDP/1jmnbGAEAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-19016-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 13 Feb 2026 10:59:27 +0100
+	id aBqTNev1jmnbGAEAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-19017-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 13 Feb 2026 10:59:07 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86C30134C94
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 13 Feb 2026 10:59:26 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id C02AE134C84
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 13 Feb 2026 10:59:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id BD6933038F42
+	by tor.lore.kernel.org (Postfix) with ESMTP id E2826305CA21
 	for <lists+linux-bluetooth@lfdr.de>; Fri, 13 Feb 2026 09:59:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3627334F476;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38C6C34F47C;
 	Fri, 13 Feb 2026 09:59:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b="N3T192wR"
+	dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b="kh454XR4"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from mailgw02.mediatek.com (unknown [210.61.82.184])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 804D833E361;
-	Fri, 13 Feb 2026 09:58:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32FB133DEE3;
+	Fri, 13 Feb 2026 09:58:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.61.82.184
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770976741; cv=none; b=OXCzLPkgmFErL/8pweyIAQBrbnI49abedH22e7h4xHgBerY0/fesxChSUqzGikDqyEySe9Fzv241byxgMUfuLpCsiEy2LkjOOZ9R0VZrvUggBoSjZTBnglNp12F60TgxRnsE2s5oFCfiLW1/18yMJJygoFPtMJMVcW41Syde/O0=
+	t=1770976741; cv=none; b=G5MXwvP50KRI0wqYHWjkoawZzSAb8uzMYiL3LMjNgAdpkgl0MFHi1M/nLeaIpatXe2mULrjJDnKwTDxbgrTbvAU/aL1rdm0xZjOCwT3KDKz7y1fPC8qtJBjP9vKLhZ32eTOIagaRLmgV+9UBO15d5jw97z95vUWS/BUEix20LUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1770976741; c=relaxed/simple;
-	bh=lQrnKRa3jOWiZGQcUD8boVBRzWl//aNIC1YT85BdAVg=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=qGO2pGGxHAUuND/wfebGD3y0/TLF3QEr/rU2ybcI70R3RslKAVTHyCzio4S084FdfLvGHVmTDkMKQXvTjFaony0KC8DB7MbQLF3rrhkq8XzOj0plx77H/hTUaWHEam1FNMqKumYHwSB+ugfXvT800iqI8gzTfxLvzJpIBzme7V4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com; spf=pass smtp.mailfrom=mediatek.com; dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b=N3T192wR; arc=none smtp.client-ip=210.61.82.184
+	bh=kgYFrTnkQGq3YJKtjCFtGekPNUnq/dJ7AObAqO2dqjs=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=nXJOp+xcnqRVZUsB5PAeTQSvFqW89FiLmlPKsZgJNk3VPseUBGp0lHEVoR5eeOYcl+hJ+ofSVdRg1Zj/ladTK16RCMOiwi1u0uEjQj9cO2BJlDu2c4YrSbYpSt/bcAqVlXPTInqipWPcJpNEXhnnLVbolYfel9OxUwmjr9kNNNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com; spf=pass smtp.mailfrom=mediatek.com; dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b=kh454XR4; arc=none smtp.client-ip=210.61.82.184
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mediatek.com
-X-UUID: 96cabb8e08c211f1b7fc4fdb8733b2bc-20260213
+X-UUID: 96ead46e08c211f1b7fc4fdb8733b2bc-20260213
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
-	h=Content-Type:Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:CC:To:From; bh=hLSmdwEWae9IQdlbU6DZdZZBigKJ9gwYpd2Oml3/yz8=;
-	b=N3T192wRUPtesZUyQQJmLSCQ4wq5085rSCrf05hg/lAli7ZB1BbgqqDK/0OLETY2opgBzJy7unVxayGmYkKngJlon+yjoIjf60WL18Y5Znqjum/wO79DVyU+Z+Pr952VE2KMf4gkWra8MMy2mqABDNBUxb4KaoXoeX+6yaurB3E=;
+	h=Content-Type:Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:CC:To:From; bh=Az83B8+u+O/+8RgAIslUgHN/aIRNLe/wvu6o0L5xp7o=;
+	b=kh454XR4XJRJq2XCcjL9D/5QMY/iNS0m37JR+2rt1Mthd5Whm7ccZOd3BeJlGv2VUlO61BjIfl3AdkaV2kiUgSJOgUnWQseet/UU1Ck6Eg86P1T+dvbjbgUAfmSi5TLjZhqPlFsvqEQmRHOoKfq+Fe3oPuQhapy2Cao0qDHznXQ=;
 X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.11,REQID:29641738-9e4f-4e23-864d-266feba2f63d,IP:0,U
+X-CID-O-INFO: VERSION:1.3.11,REQID:30ede4dc-c222-4154-a8e2-8925c40599b0,IP:0,U
 	RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
 	release,TS:0
-X-CID-META: VersionHash:89c9d04,CLOUDID:cd58a5e9-ef90-4382-9c6f-55f2a0689a6b,B
-	ulkID:nil,BulkQuantity:0,Recheck:0,SF:102|836|888|898,TC:-5,Content:0|15|5
-	0,EDM:-3,IP:nil,URL:0,File:130,RT:0,Bulk:nil,QS:nil,BEC:-1,COL:0,OSI:0,OSA
-	:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-META: VersionHash:89c9d04,CLOUDID:7731ec7a-8c8a-4fc4-88c0-3556e7711556,B
+	ulkID:nil,BulkQuantity:0,Recheck:0,SF:81|82|102|836|888|898,TC:-5,Content:
+	0|15|50,EDM:-3,IP:nil,URL:0,File:130,RT:0,Bulk:nil,QS:nil,BEC:-1,COL:0,OSI
+	:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
 X-CID-BVR: 2,SSN|SDN
 X-CID-BAS: 2,SSN|SDN,0,_
 X-CID-FACTOR: TF_CID_SPAM_SNR
 X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 96cabb8e08c211f1b7fc4fdb8733b2bc-20260213
-Received: from mtkmbs09n1.mediatek.inc [(172.21.101.35)] by mailgw02.mediatek.com
+X-UUID: 96ead46e08c211f1b7fc4fdb8733b2bc-20260213
+Received: from mtkmbs13n1.mediatek.inc [(172.21.101.193)] by mailgw02.mediatek.com
 	(envelope-from <chris.lu@mediatek.com>)
 	(Generic MTA with TLSv1.2 ECDHE-RSA-AES256-GCM-SHA384 256/256)
-	with ESMTP id 1419347873; Fri, 13 Feb 2026 17:58:47 +0800
+	with ESMTP id 34495171; Fri, 13 Feb 2026 17:58:47 +0800
 Received: from mtkmbs13n2.mediatek.inc (172.21.101.108) by
- MTKMBS09N1.mediatek.inc (172.21.101.35) with Microsoft SMTP Server
+ mtkmbs10n1.mediatek.inc (172.21.101.34) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
  15.2.2562.29; Fri, 13 Feb 2026 17:58:46 +0800
 Received: from mtksitap99.mediatek.inc (10.233.130.16) by
  mtkmbs13n2.mediatek.inc (172.21.101.73) with Microsoft SMTP Server id
- 15.2.2562.29 via Frontend Transport; Fri, 13 Feb 2026 17:58:45 +0800
+ 15.2.2562.29 via Frontend Transport; Fri, 13 Feb 2026 17:58:46 +0800
 From: Chris Lu <chris.lu@mediatek.com>
 To: Marcel Holtmann <marcel@holtmann.org>, Johan Hedberg
 	<johan.hedberg@gmail.com>, Luiz Von Dentz <luiz.dentz@gmail.com>
@@ -69,10 +70,12 @@ CC: Sean Wang <sean.wang@mediatek.com>, Will Lee <will-cy.Lee@mediatek.com>,
 	linux-bluetooth <linux-bluetooth@vger.kernel.org>, linux-kernel
 	<linux-kernel@vger.kernel.org>, linux-mediatek
 	<linux-mediatek@lists.infradead.org>, Chris Lu <chris.lu@mediatek.com>
-Subject: [PATCH v1 1/2] Bluetooth: btusb: MT7922: Add VID/PID 0e8d/223c
-Date: Fri, 13 Feb 2026 17:58:42 +0800
-Message-ID: <20260213095843.226923-1-chris.lu@mediatek.com>
+Subject: [PATCH v1 2/2] Bluetooth: btusb: MT7925: Add VID/PID 0e8d/8c38
+Date: Fri, 13 Feb 2026 17:58:43 +0800
+Message-ID: <20260213095843.226923-2-chris.lu@mediatek.com>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20260213095843.226923-1-chris.lu@mediatek.com>
+References: <20260213095843.226923-1-chris.lu@mediatek.com>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -88,14 +91,14 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[mediatek.com,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[mediatek.com:s=dk];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	TO_DN_ALL(0.00)[];
-	TAGGED_FROM(0.00)[bounces-19016-lists,linux-bluetooth=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-19017-lists,linux-bluetooth=lfdr.de];
 	FREEMAIL_TO(0.00)[holtmann.org,gmail.com];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
@@ -106,19 +109,19 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	RCVD_COUNT_FIVE(0.00)[6];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
 	RCPT_COUNT_SEVEN(0.00)[11];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	FROM_HAS_DN(0.00)[]
-X-Rspamd-Queue-Id: 86C30134C94
+X-Rspamd-Queue-Id: C02AE134C84
 X-Rspamd-Action: no action
 
-Add VID 0e8d & PID 223c for MediaTek MT7922 USB Bluetooth chip.
+Add VID 0e8d & PID 8c38 for MediaTek MT7925 USB Bluetooth chip.
 
 The information in /sys/kernel/debug/usb/devices about the Bluetooth
 device is listed as the below.
 
-T:  Bus=07 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
+T:  Bus=06 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
 D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0e8d ProdID=223c Rev= 1.00
+P:  Vendor=0e8d ProdID=8c38 Rev= 1.00
 S:  Manufacturer=MediaTek Inc.
 S:  Product=Wireless_Device
 S:  SerialNumber=000000000
@@ -162,18 +165,18 @@ Signed-off-by: Chris Lu <chris.lu@mediatek.com>
  1 file changed, 2 insertions(+)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 247d6aff5e79..c60f9be0699f 100644
+index c60f9be0699f..e384d70663d2 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -709,6 +709,8 @@ static const struct usb_device_id quirks_table[] = {
+@@ -749,6 +749,8 @@ static const struct usb_device_id quirks_table[] = {
  						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x04ca, 0x38e4), .driver_info = BTUSB_MEDIATEK |
+ 	{ USB_DEVICE(0x0489, 0xe151), .driver_info = BTUSB_MEDIATEK |
  						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0e8d, 0x223c), .driver_info = BTUSB_MEDIATEK |
++	{ USB_DEVICE(0x0e8d, 0x8c38), .driver_info = BTUSB_MEDIATEK |
 +						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3568), .driver_info = BTUSB_MEDIATEK |
+ 	{ USB_DEVICE(0x13d3, 0x3602), .driver_info = BTUSB_MEDIATEK |
  						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3584), .driver_info = BTUSB_MEDIATEK |
+ 	{ USB_DEVICE(0x13d3, 0x3603), .driver_info = BTUSB_MEDIATEK |
 -- 
 2.45.2
 
