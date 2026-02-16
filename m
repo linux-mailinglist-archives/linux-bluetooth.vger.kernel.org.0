@@ -1,166 +1,123 @@
-Return-Path: <linux-bluetooth+bounces-19071-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-19072-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id uN/IOsQTk2nD1QEAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-19071-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Feb 2026 13:55:32 +0100
+	id sJ2WNHMjk2kX1wEAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-19072-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Feb 2026 15:02:27 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4BC9B143783
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Feb 2026 13:55:32 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 37EAF144614
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Feb 2026 15:02:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5A7A7301A39D
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Feb 2026 12:55:28 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 15632303CD31
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Feb 2026 13:55:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32315285CB9;
-	Mon, 16 Feb 2026 12:55:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6399D30EF67;
+	Mon, 16 Feb 2026 13:55:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="AC4bpm3t"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K8nYS48d"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 855E317A2F6;
-	Mon, 16 Feb 2026 12:55:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E2830214B
+	for <linux-bluetooth@vger.kernel.org>; Mon, 16 Feb 2026 13:55:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771246526; cv=none; b=helvbjwBL1+PiDmuohbiV2fOhCwhbUOP8d8sqcQDfwU01EmXG+QMLvrrUUj11AY9nDZSSAj0d8xcJlQsmUPtjGJpWkxON2PS1RNoVXdkNOamwBviuB/gvSGboq+6zvUO3gT6RhSjEqaW8m1s90j3kBOFCbmszu3YvIEJMeODt3Q=
+	t=1771250121; cv=none; b=XTwyD3LjRC87w/CgZJAahjuezUOPis+ICtE7EmV2w5JLboMe89LOwQgFu5cexLpBY+DHlINbNAg0z2owKbMZ3nZ9FKnn1ADu/ECrxWHMcVC3XEcUZ/kLCux1gSSPoTn5t3FcUAdv3+LN9C2sBvOcX//5vTC2v73oAtmeKBKsjvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771246526; c=relaxed/simple;
-	bh=wMud/zXsW57h/pzFLrQyWiLWanq9uGVhLdnmh94RKyY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BakWjVKeH78hsEj4xcuXLqJyeUjeypF5l2HhI/FjkVTP6F4o+QkiQZK3X1Pl9xkXRsDZhy27/ga8qHTnmPhQ3JwesxM4pJlamf0IRyAdkcnQPUZ+pKBnGaAk5KgbQrzuW4z/l2fKPboZJq81zh/lHW68fo0FsVdcAmc6KAApFEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=AC4bpm3t; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1771246523;
-	bh=wMud/zXsW57h/pzFLrQyWiLWanq9uGVhLdnmh94RKyY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=AC4bpm3thsMtP87lemc3eM14HXqf4MEjhDK6TVvGXfJRYVT+6OrpM7w9MakmNjNRR
-	 orgwToWFJjxiMGL5YX/VN5TkTG0D/ZkAm+GUN3JquiQw+dyziBO0zO9t606R+Fpg4k
-	 UFKGzpCJlGbccREX9PNc6P241OZxCm6MGIxsly3rljmv7R1Mjb8UVrLcYMT4n+Fjm+
-	 UJeF+a+lFsAGvawT8e/K6pSjkWiAe6P1g9gy9hMm/NZcVWaQ9mDiDumTMmBcBunRpS
-	 zOP4cuXv8OVBvBL/o0BSG3Xk2uR+A2Mg3lnk8lu2XkW4od6CoLszW9EVbHhD7+Msug
-	 xgORXVDmAviYg==
-Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits))
-	(No client certificate requested)
-	(Authenticated sender: kholk11)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 9082D17E12A9;
-	Mon, 16 Feb 2026 13:55:23 +0100 (CET)
-Message-ID: <60ff7530-b9a4-47a7-b5bc-3c81a57a4fc0@collabora.com>
-Date: Mon, 16 Feb 2026 13:55:23 +0100
+	s=arc-20240116; t=1771250121; c=relaxed/simple;
+	bh=WuXtutbYXSx1uTXxQ9LkzK4NqHxGja73lK4froANsAw=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lZYFd4lnHyRVuwEH49Qd7Jlfr55pTtmlxtbIKUXhojcZpy9XzNt44s2N7suW7P4Xlzb05tE9XljcvAOraeS5AaUa6lGkcKhQDa2qVZstoQLm2G3bz05odpU+EbDrH2dPsjmScCXxesH+ZZvlGRXzOsBhkcZ1501bOJz1/RYY6Bg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K8nYS48d; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B50DC116C6
+	for <linux-bluetooth@vger.kernel.org>; Mon, 16 Feb 2026 13:55:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1771250120;
+	bh=WuXtutbYXSx1uTXxQ9LkzK4NqHxGja73lK4froANsAw=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
+	b=K8nYS48d37wzgf35U6a+33K+B8ArS4lgkTG79/jd5SdXBOD0lnXn3/TpVPEEc5455
+	 zMV5IL09aXX5VkysBVP4YsFphe1p1jzYOr0Lm7JMyHa0xkKhpYXo8OyctMFO7Hvbt7
+	 DicyNGEm+SL9oXSN9iYKWMEuojqhM8j1rX0j/qlEk4Gvv3Msn76Pzm6y+KNizO9TtL
+	 NbjNYvEKPtfVlHi+Ez7Jvtt38v0xNxtQ11fK20k1knftOejRBwhdR7iKfug9NR5LIe
+	 Nuu/0rBrvSmZXaez7dCeZch+mvnVABwKp9HEvGF8/nGmRbRLedHS5VBZTyvA23Xfrv
+	 ynJF7sRS3adyw==
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-3870c7479c0so24719831fa.3
+        for <linux-bluetooth@vger.kernel.org>; Mon, 16 Feb 2026 05:55:20 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWALMiAc6Z5jp2tfsaScFZ2hl5pAB89bHGOM7cw8dl0Hf/FuBtgGkCbQ6erpgETjf3/+nJBrwosIHQxZ1mP8dM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyiaX68lgu3TAMrPweDDQJfE0iJSa8lG776AIC7cEct0CaSbtOs
+	bUkeHMwrO/PvDMa9m7tEHDqaftb3DJf7kz5THb5gin3MYepzMpVDx919OyCB86ZAr0f+4RgDrlJ
+	m6OMERK04PdaBtjCCpdKC3TH2FCNGFBjEBEZBDmefHw==
+X-Received: by 2002:a05:651c:1989:b0:383:f43:ed45 with SMTP id
+ 38308e7fff4ca-38810576c8dmr34584651fa.30.1771250119305; Mon, 16 Feb 2026
+ 05:55:19 -0800 (PST)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 16 Feb 2026 05:55:17 -0800
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 16 Feb 2026 05:55:17 -0800
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <20260212141721.69961-1-johannes.goede@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Bluetooth: btusb: Add support for MediaTek MT7902
-To: OnlineLearningTutorials <kush.kulshrestha5@gmail.com>,
- luiz.dentz@gmail.com, marcel@holtmann.org
-Cc: kush.kulshrestha.5@gmail.com, matthias.bgg@gmail.com,
- linux-bluetooth@vger.kernel.org, linux-mediatek@lists.infradead.org,
- linux-kernel@vger.kernel.org
-References: <20260214082738.139047-1-kush.kulshrestha.5@gmail.com>
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Content-Language: en-US
-In-Reply-To: <20260214082738.139047-1-kush.kulshrestha.5@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20260212141721.69961-1-johannes.goede@oss.qualcomm.com>
+Date: Mon, 16 Feb 2026 05:55:17 -0800
+X-Gmail-Original-Message-ID: <CAMRc=Mff1ui-RcobTuXK1r0Ftbm2ywtUtz7zr2LXb55pv6dtbQ@mail.gmail.com>
+X-Gm-Features: AaiRm53DB-Dx51woX6Cd2-P4BBMCPMS2JeoPnyhASV_vRiV_Xz3X0YxDUx8eOM8
+Message-ID: <CAMRc=Mff1ui-RcobTuXK1r0Ftbm2ywtUtz7zr2LXb55pv6dtbQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] Bluetooth: hci_qca: Fix confusing shutdown() and
+ power_off() naming
+To: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+	Bartosz Golaszewski <brgl@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[collabora.com,none];
-	R_DKIM_ALLOW(-0.20)[collabora.com:s=mail];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-19071-lists,linux-bluetooth=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[gmail.com,holtmann.org];
-	FREEMAIL_CC(0.00)[gmail.com,vger.kernel.org,lists.infradead.org];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-19072-lists,linux-bluetooth=lfdr.de];
 	TO_DN_SOME(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,holtmann.org,gmail.com];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,mail.gmail.com:mid];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[angelogioacchino.delregno@collabora.com,linux-bluetooth@vger.kernel.org];
-	DKIM_TRACE(0.00)[collabora.com:+];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-bluetooth@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,collabora.com:mid,collabora.com:dkim]
-X-Rspamd-Queue-Id: 4BC9B143783
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCPT_COUNT_FIVE(0.00)[6];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 37EAF144614
 X-Rspamd-Action: no action
 
-Il 14/02/26 09:27, OnlineLearningTutorials ha scritto:
-> This patch adds USB IDs for the AzureWave/MediaTek MT7902 Bluetooth
-> module.
-> The device IDs included are:
-> - 13d3:3579
-> - 13d3:3580
-> - 13d3:3594
-> - 13d3:3596
-> 
-> Signed-off-by: OnlineLearningTutorials <kush.kulshrestha.5@gmail.com>
-
-Please use your real name when you send patches, and also use the get_maintainer.pl
-script.
-
-Actually, just read: https://docs.kernel.org/process/submitting-patches.html
-
-Regards,
-Angelo
-
+On Thu, 12 Feb 2026 15:17:20 +0100, Hans de Goede
+<johannes.goede@oss.qualcomm.com> said:
+> The function called qca_power_off() is actually the hci_dev shutdown
+> handler, rename it to qca_hci_shutdown() to make this clear.
+>
+> While the qca_power_shutdown() function is actually the counter-part
+> of qca_power_on() rename it to qca_power_off() to make this clear.
+>
+> Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
 > ---
->   drivers/bluetooth/btmtk.c |  1 +
->   drivers/bluetooth/btusb.c | 10 ++++++++++
->   2 files changed, 11 insertions(+)
-> 
-> diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
-> index a8c520dc09e1..b793947dd920 100644
-> --- a/drivers/bluetooth/btmtk.c
-> +++ b/drivers/bluetooth/btmtk.c
-> @@ -1323,6 +1323,7 @@ int btmtk_usb_setup(struct hci_dev *hdev)
->   	case 0x7668:
->   		fwname = FIRMWARE_MT7668;
->   		break;
-> +	case 0x7902:
->   	case 0x7922:
->   	case 0x7925:
->   	case 0x7961:
-> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-> index fcec8e589e81..13a2aa13b9f4 100644
-> --- a/drivers/bluetooth/btusb.c
-> +++ b/drivers/bluetooth/btusb.c
-> @@ -629,6 +629,16 @@ static const struct usb_device_id quirks_table[] = {
->   	/* Additional MediaTek MT7668 Bluetooth devices */
->   	{ USB_DEVICE(0x043e, 0x3109), .driver_info = BTUSB_MEDIATEK |
->   						     BTUSB_WIDEBAND_SPEECH },
-> +
-> +	/* Additional MediaTek MT7902 Bluetooth devices */
-> +	{ USB_DEVICE(0x13d3, 0x3579), .driver_info = BTUSB_MEDIATEK |
-> +						     BTUSB_WIDEBAND_SPEECH },
-> +	{ USB_DEVICE(0x13d3, 0x3580), .driver_info = BTUSB_MEDIATEK |
-> +						     BTUSB_WIDEBAND_SPEECH },
-> +	{ USB_DEVICE(0x13d3, 0x3594), .driver_info = BTUSB_MEDIATEK |
-> +						     BTUSB_WIDEBAND_SPEECH },
-> +	{ USB_DEVICE(0x13d3, 0x3596), .driver_info = BTUSB_MEDIATEK |
-> +						     BTUSB_WIDEBAND_SPEECH },
->   
->   	/* Additional MediaTek MT7920 Bluetooth devices */
->   	{ USB_DEVICE(0x0489, 0xe134), .driver_info = BTUSB_MEDIATEK |
 
-
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
