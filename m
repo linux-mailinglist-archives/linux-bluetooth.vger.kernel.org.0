@@ -1,120 +1,160 @@
-Return-Path: <linux-bluetooth+bounces-19077-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-19078-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id ABanKelFk2l83AEAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-19077-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Feb 2026 17:29:29 +0100
+	id sC0ECsVLk2mi3AEAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-19078-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Feb 2026 17:54:29 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F747146302
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Feb 2026 17:29:28 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6EC94146762
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Feb 2026 17:54:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 60B9C303D648
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Feb 2026 16:28:16 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 94091303CD3D
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Feb 2026 16:51:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25E4C332ED7;
-	Mon, 16 Feb 2026 16:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2C122C11DB;
+	Mon, 16 Feb 2026 16:51:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="Cgqp+9qn"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="C6N2BOw/"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-26.smtp.github.com (out-26.smtp.github.com [192.30.252.209])
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A64332EC7
-	for <linux-bluetooth@vger.kernel.org>; Mon, 16 Feb 2026 16:28:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.209
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E382737F2
+	for <linux-bluetooth@vger.kernel.org>; Mon, 16 Feb 2026 16:51:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771259291; cv=none; b=HRYT7bX6XEIaCO0AwEm0oZc0P2sNfysP83478KD3s/ierrU+5z8G3Wcp1t0dFiHJLw1MI5WqD7S3UWvrK+of6+2bEgcELRe4r8GQeH5qdOHJTjUA0UbfBu0F8TkXPbxhDUn+feeNItPyAXShRfIIo7ASBk6kXpVaydZFx2cdRmg=
+	t=1771260697; cv=none; b=RuYTdEZ6pah4u/lU3C7bguykgx7A2uAVC1dm7Rd+3CEqc8F5ZuQEk1e8pV+jQCTKcQILCI8XARJNpdMqxeDuRqHHk7MXEb1bAEOizy0RWUejG2V+ll+MONuGZww5nCgxzw0w7pqVPTjlIxlsDOVAWE+p1a/z7Z7WmRYUzYj67eo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771259291; c=relaxed/simple;
-	bh=EE8J6LzI4G/7gtTVZYLGuPtsMVtRtgRF/zvlb1CajRo=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=SC05ARuQFv8CVMoSYAgmoAvH7CUqyYNUnHHpDjugX6H22feWG0l7CFSrQt4b6MokpIWyyObNr7Ihx2v/xNpOkU+hIlgB28rrCde+0hfgFFwV7c3jNWidEDnX+Ffd0aNmLTvTROTAc+GXnGm0DkjpjT/+Mak5Cgc26+MxC3FDIjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=Cgqp+9qn; arc=none smtp.client-ip=192.30.252.209
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-b799553.ash1-iad.github.net [10.56.14.57])
-	by smtp.github.com (Postfix) with ESMTPA id 2601C6002C3
-	for <linux-bluetooth@vger.kernel.org>; Mon, 16 Feb 2026 08:28:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1771259289;
-	bh=N5d54M/nxXMzdU978m3VK1E1dB1xEwHh64kx+sm5vOk=;
-	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=Cgqp+9qn83USCU328QlNGTfqf3YR4cNnYXZgHcX0GcJGHFtOGikQ3RZeGBYxX85Ef
-	 YAlQLmcMvyYZ/EsmBglRpqbrHu7KcMnB85uMhVr1EfvYLt7mqxgynorWXKzUA6dTzK
-	 msMagmXdE4CenqhJucJ7TKKATtzzSceT2kg6S8fM=
-Date: Mon, 16 Feb 2026 08:28:08 -0800
-From: Pauli Virtanen <noreply@github.com>
+	s=arc-20240116; t=1771260697; c=relaxed/simple;
+	bh=tCfMOSeVHKMlN5tfwaCoya3sUE+TCmWQVHCUi39DOcU=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=mXXGYniFuN9IMTndVrYkfsLp3dFjy7WnIug94tvzQqLeL7x7RjibO/ygIthJ0gww8tnopcGzcfYhEEogWwXhWG/irtIWDXiN7aEHsozdFGdEWVkz68aA3PMP+50H7CEFadIHyy8LPiOI14MF+QpFH27EFn5jPb+I/7QvwSoPsI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=C6N2BOw/; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1771260693;
+	bh=tCfMOSeVHKMlN5tfwaCoya3sUE+TCmWQVHCUi39DOcU=;
+	h=From:To:Subject:Date:From;
+	b=C6N2BOw/jDnYa1Y6aRCmKzxS/2kTPOcufDUreMo2NCHmGiE6rN1gwYuQ8O5er0QNp
+	 7JjXush7wlpYgmxRv04O8rG4cCsQAb4wj/xZ7MI4DGWVlIL7ePrxOEtDgFduMIc2Ld
+	 ryjfqWQ0RqkPVAjQEYgJzutU6/n3ta+17TG5mNz/CcSYwJZcFbeHaRdw3zwlW60o7n
+	 AMoCkMPZ9MdflVVx6MELC1tD+Fu+7J4J7liEmuyNVQV9KGYUGOIgYrR7NVfuyBy2hf
+	 bJ2xXJg9PEC8BUNYq3kcVFrHUxCLWEX+VJ4XoufN8FrAu4vRU7Hbh6DU8yb+Tw/R/n
+	 TtbpzkLV7P2WQ==
+Received: from fdanis-ThinkPad-X1.. (2a02-8428-Af44-1001-4c10-12D9-233c-cfc3.rev.sfr.net [IPv6:2a02:8428:af44:1001:4c10:12d9:233c:cfc3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: fdanis)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 477AC17E00A3
+	for <linux-bluetooth@vger.kernel.org>; Mon, 16 Feb 2026 17:51:33 +0100 (CET)
+From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Danis?= <frederic.danis@collabora.com>
 To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/1054617/000000-25a493@github.com>
-Subject: [bluez/bluez] 25a493: a2dp: connect source profile after sink
+Subject: [PATCH BlueZ 1/3] tools/btpclient: Move btpclient to client/btpclient directory
+Date: Mon, 16 Feb 2026 17:51:25 +0100
+Message-ID: <20260216165127.110686-1-frederic.danis@collabora.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [2.04 / 15.00];
-	DMARC_POLICY_REJECT(2.00)[github.com : SPF not aligned (relaxed),reject];
+X-Spamd-Result: default: False [-0.49 / 15.00];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_DKIM_REJECT(1.00)[github.com:s=pf2023];
-	MV_CASE(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_MIXED_CHARSET(0.67)[subject];
+	DMARC_POLICY_ALLOW(-0.50)[collabora.com,none];
+	R_DKIM_ALLOW(-0.20)[collabora.com:s=mail];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_ONE(0.00)[1];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[github.com:-];
 	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-19078-lists,linux-bluetooth=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-19077-lists,linux-bluetooth=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[noreply@github.com,linux-bluetooth@vger.kernel.org];
+	RCPT_COUNT_ONE(0.00)[1];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	PRECEDENCE_BULK(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_NONE(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[frederic.danis@collabora.com,linux-bluetooth@vger.kernel.org];
+	DKIM_TRACE(0.00)[collabora.com:+];
+	PRECEDENCE_BULK(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 1F747146302
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,collabora.com:mid,collabora.com:dkim,makefile.tools:url]
+X-Rspamd-Queue-Id: 6EC94146762
 X-Rspamd-Action: no action
 
-  Branch: refs/heads/1054617
-  Home:   https://github.com/bluez/bluez
-  Commit: 25a493547bd3450af0acf80e64a6c9622bda8c76
-      https://github.com/bluez/bluez/commit/25a493547bd3450af0acf80e64a6c9622bda8c76
-  Author: Pauli Virtanen <pav@iki.fi>
-  Date:   2026-02-16 (Mon, 16 Feb 2026)
+This prepares the split of btp services in per profile files for
+easier maintenance.
+---
+ .gitignore                                 |  4 ++--
+ Makefile.tools                             | 13 +++++++------
+ {tools => client/btpclient}/btpclient.c    |  0
+ {tools => client/btpclient}/btpclientctl.c |  0
+ 4 files changed, 9 insertions(+), 8 deletions(-)
+ rename {tools => client/btpclient}/btpclient.c (100%)
+ rename {tools => client/btpclient}/btpclientctl.c (100%)
 
-  Changed paths:
-    M profiles/audio/a2dp.c
+diff --git a/.gitignore b/.gitignore
+index ea895c064..71ef28e1e 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -133,8 +133,8 @@ tools/btattach
+ tools/btconfig
+ tools/btmgmt
+ tools/btsnoop
+-tools/btpclient
+-tools/btpclientctl
++client/btpclient/btpclient
++client/btpclient/btpclientctl
+ tools/btmon-logger
+ tools/bluetooth-logger.service
+ tools/mpris-proxy.service
+diff --git a/Makefile.tools b/Makefile.tools
+index 4f4ee88de..edfb5282c 100644
+--- a/Makefile.tools
++++ b/Makefile.tools
+@@ -583,14 +583,15 @@ test_scripts += test/bluezutils.py \
+ 		test/test-gatt-profile test/test-mesh test/agent.py
+ 
+ if BTPCLIENT
+-noinst_PROGRAMS += tools/btpclient tools/btpclientctl
++noinst_PROGRAMS += client/btpclient/btpclient client/btpclient/btpclientctl
+ 
+-tools_btpclient_SOURCES = tools/btpclient.c src/shared/btp.c src/shared/btp.h
+-tools_btpclient_LDADD = lib/libbluetooth-internal.la \
++client_btpclient_btpclient_SOURCES = client/btpclient/btpclient.c \
++				src/shared/btp.c src/shared/btp.h
++client_btpclient_btpclient_LDADD = lib/libbluetooth-internal.la \
+ 				src/libshared-ell.la $(ell_ldadd)
+-tools/btpclient.$(OBJEXT): src/libshared-ell.la ell/internal
++client/btpclient/btpclient.$(OBJEXT): src/libshared-ell.la ell/internal
+ 
+-tools_btpclientctl_SOURCES = tools/btpclientctl.c client/display.c
+-tools_btpclientctl_LDADD = src/libshared-mainloop.la src/libshared-glib.la \
++client_btpclient_btpclientctl_SOURCES = client/btpclient/btpclientctl.c client/display.c
++client_btpclient_btpclientctl_LDADD = src/libshared-mainloop.la src/libshared-glib.la \
+ 				lib/libbluetooth-internal.la -lreadline
+ endif
+diff --git a/tools/btpclient.c b/client/btpclient/btpclient.c
+similarity index 100%
+rename from tools/btpclient.c
+rename to client/btpclient/btpclient.c
+diff --git a/tools/btpclientctl.c b/client/btpclient/btpclientctl.c
+similarity index 100%
+rename from tools/btpclientctl.c
+rename to client/btpclient/btpclientctl.c
+-- 
+2.43.0
 
-  Log Message:
-  -----------
-  a2dp: connect source profile after sink
-
-Since cdcd845f87ee the order in which profiles with the same priority
-are connected is the same order as btd_profile_register() is called,
-instead of being the opposite order.  When initiating connections, we
-want to prefer a2dp-sink profile over a2dp-source, as connecting both at
-the same time does not work currently.
-
-Add .after_services to specify the order.
-
-Fixes: https://github.com/bluez/bluez/issues/1898
-
-
-
-To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
