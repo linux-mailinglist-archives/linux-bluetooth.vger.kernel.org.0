@@ -1,165 +1,178 @@
-Return-Path: <linux-bluetooth+bounces-19081-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-19082-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id fIraGC1Pk2nA3QEAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-19081-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Feb 2026 18:09:01 +0100
+	id cMj8GttQk2nA3QEAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-19082-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Feb 2026 18:16:11 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A6FDD1468AB
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Feb 2026 18:09:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C5CF1146A21
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Feb 2026 18:16:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 52AA43008A7E
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Feb 2026 17:08:57 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E3F0330166F9
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 16 Feb 2026 17:16:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 536182C2349;
-	Mon, 16 Feb 2026 17:08:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFA792DAFDA;
+	Mon, 16 Feb 2026 17:16:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="QzOOkQOw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RNP5VhcP"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-25.smtp.github.com (out-25.smtp.github.com [192.30.252.208])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f195.google.com (mail-dy1-f195.google.com [74.125.82.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75B417A2F6
-	for <linux-bluetooth@vger.kernel.org>; Mon, 16 Feb 2026 17:08:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.208
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287F72D978A
+	for <linux-bluetooth@vger.kernel.org>; Mon, 16 Feb 2026 17:16:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771261735; cv=none; b=SQQ6VDbYiZ6uc8eX5pN4P52jP2w58itVDzHtvOXwo88ho0RoDVt2qwOMeP020HWJ015qF1gn+6WyCl3B3R+kCLklHfybaa/JeqadkWVfahT3aFlzPxnnp4woWMdUeEfA//7B4tkXI18xzO/uhoK8FPgRHSHYc8ORl4wCIW86lRM=
+	t=1771262167; cv=none; b=GMOowWdwbFGJyHBkpuNBY+6nll8m2Qy8lakCMiG93878M9tvrId7afU1nx6FEdnXpFg8bIr5Qj5yZ+BYtQPLjh+priJE8xERrenzvkMcxrMGIfEd3Psaq8BAmUNoybk2ALaBDhT3gHSkFxQzJxZglkXcrLMzTgUgDDY0UrlZUlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771261735; c=relaxed/simple;
-	bh=oqgQhLV2gRAQaiaGH9LlB8imGiHZoWypo2wOhOVJqFk=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=ABB714YWCbnrb+a0svCfebirsNVNKHKzmxeJYBS2QVk/VIw0d4hEfnvGfsyvaU6kA1tkYv7+vimtMplIwAjUuvYyKRU08IksiIaaLC26jrpElVEg9H5Y+OD/Bp27Ihe5YxUCQ/f10ElEcjhYgqR58iAAq40k/u52KOrLaF/4jGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=QzOOkQOw; arc=none smtp.client-ip=192.30.252.208
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-8626523.ash1-iad.github.net [10.56.225.26])
-	by smtp.github.com (Postfix) with ESMTPA id 0534E14082B
-	for <linux-bluetooth@vger.kernel.org>; Mon, 16 Feb 2026 09:08:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1771261734;
-	bh=0qUnWfnJYpnxSy40eem7uHv9zC972FHZYHxppVeLZsQ=;
-	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=QzOOkQOwMwUTJV3Eo/1KlgOzHbA5+IdxiU2Ka/tkwsr/tZu17dvjKErVKkyu2PrO0
-	 qTqj3PMdDM/4+t92pvKCivAs89IGm7gR2zXpz4P3z/sjwXqPLAxHYAAv5vCkOOT6QO
-	 TmxdMELC/Y2Y37GtxRCFcKGupeQgmrvQIxq5qqZw=
-Date: Mon, 16 Feb 2026 09:08:53 -0800
-From: fdanis-oss <noreply@github.com>
-To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/1054634/000000-50e9d2@github.com>
-Subject: [bluez/bluez] d72e51: tools/btpclient: Move btpclient to
- client/btpclien...
+	s=arc-20240116; t=1771262167; c=relaxed/simple;
+	bh=nsXkIT74rFDoGIL44ySMfTYgbL8jabFZZK33quNs6Ro=;
+	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
+	 In-Reply-To:References; b=EeGALrwJxlo3lQ9fymnJGuYKU9RjVNH7oMHvHSRsHThgfnpQHi5Ucbm9Ya07dHiUqr2i0aYP/wVycEM9lSFMbvQWalL3CcHJ+DhXDh6SdQ0nUPQQPj2nA34DYeB3mmdlsctZh3uv8vphH7ulpZXBxT9azOrrrxjkBLqLvnjHgFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RNP5VhcP; arc=none smtp.client-ip=74.125.82.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-dy1-f195.google.com with SMTP id 5a478bee46e88-2ba68df3687so5914396eec.1
+        for <linux-bluetooth@vger.kernel.org>; Mon, 16 Feb 2026 09:16:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771262164; x=1771866964; darn=vger.kernel.org;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=F3GO5cRlEqOqytyhadWXNPZzRJuGYU8Wgh+C2dRuJS8=;
+        b=RNP5VhcPagcrFKnupgxqFlqCnEVGSHAN0iHFjeB4YvmnNjFO6m0a9UjS1pp+IFn3iM
+         j4GZph1o5cl3MjDjTZBKYzF+scdYWahnE0URd4a/J5ByVfn3X9DF3me1OWiRuKE66Tjd
+         ZTWuAQPCdpn0c5XJBuwQ1aGGPVmYNwPHsOxzgOvJqouU3IoVwpEJxn3meVE3yldZxjOt
+         3DmGSFJcBPLRVaEh4debFFYjA5lyOvjqYDLS+k4HLwRWPGeAgkcx46BR6dlX4n9XYNrN
+         41Xa+HX2wWwlF9AMZCMtzge3SjuA+vip3XLnZghsPGNTfzcEwuEF7yDwdRZs7F2mwRPA
+         IsWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771262164; x=1771866964;
+        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=F3GO5cRlEqOqytyhadWXNPZzRJuGYU8Wgh+C2dRuJS8=;
+        b=wV0fD2dGr5++zE/JZW3LKr2mqcNtxnm+3MgPw5iHn4p15YLZ9YfwJZ2na0ZOSj307q
+         sspUwHamZLRMwvS1jt2ilXwh76UcFS3rztY+BTJw9WF1GZFGuiyVgYdR3yGXPJ6i6Xeo
+         FDxsN0w1LIKcCARRk4dR4Ecw6iQcBBRlkKziKr9HfceQUUC7cPt/12VrpN7l14CIwDaj
+         WAegf+cnkBhcMNqlVtcTXGGe0dMa7uuUp5iqjgVOyWias1xzqUofu85Dn+me7hnF0o76
+         RciOBdnwM6cva1G9UfJxMVVxBsP1Mv7YE8pggDMq0ONJQjDhqktIa0b11zqwAaVRgaAb
+         71zA==
+X-Gm-Message-State: AOJu0Yz8u8RRxgL3u3Uj/+lbPM8oAV1ym8McZXyfcOMH8/rc/MwB00Y7
+	vj6SUO9JWCirNADBMdFPSpi5RWyznKb2KFNwlbFlkPKXcH/tfK3yhIyf0+R8wAzr
+X-Gm-Gg: AZuq6aIjyIJlZ/MP2Jpk57U6zc5nCw9gTIDkf3F+7a2qlZlzelzSJYnEEwDA+lVpkvt
+	fQAtRP6kwon8wLZgdNtxbjzdNLFK8ecvwbhkKSyNzLEyCa+B1zLVF6P+LSh0lUXDGqZg3t++pVV
+	c2I9T0mguamOxLdcnYyhVK80eS/16JqitZpvem2rh7JBU9R+u8IVnIleCDU3g9h0Hye2j6kcgGa
+	NO0vko8Lcvlomf2A/7gh3LXcjrkLlTAJ7jYE2KMoc47gcR+Y+s0ip1j5Bx15hONwnYLxTnHnFOg
+	HjUikdfDyw7Ta6Muv9A4068H9fKTzy/Vns590g6fsQLJ0fAo6KN39vhITGVwpADJiV+x+qTpnYS
+	Q4Hjb4HSYSebLUXu462mcw7pp6Sdq4dVVTuKI5dDa8tdTx9dUOeB//8iSQ8jDRWqZ7Ih2zYTQB+
+	BTfhCVkmxtsihGhxpRsZyEqn+3JEJ+HZooWYa0Djk=
+X-Received: by 2002:a05:7301:608:b0:2b8:261a:fbdf with SMTP id 5a478bee46e88-2bac97da825mr4536330eec.39.1771262163596;
+        Mon, 16 Feb 2026 09:16:03 -0800 (PST)
+Received: from [172.17.0.2] ([52.190.183.85])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2bacb5575b3sm10081561eec.9.2026.02.16.09.16.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Feb 2026 09:16:03 -0800 (PST)
+Message-ID: <699350d3.050a0220.3dc4cc.8527@mx.google.com>
+Date: Mon, 16 Feb 2026 09:16:03 -0800 (PST)
+Content-Type: multipart/mixed; boundary="===============0872676656881246096=="
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+MIME-Version: 1.0
+From: bluez.test.bot@gmail.com
+To: linux-bluetooth@vger.kernel.org, pav@iki.fi
+Subject: RE: [BlueZ,v2] a2dp: connect source profile after sink
+In-Reply-To: <ba0e71b91a24557f088b015a349c6ccee6260ec2.1771258477.git.pav@iki.fi>
+References: <ba0e71b91a24557f088b015a349c6ccee6260ec2.1771258477.git.pav@iki.fi>
+Reply-To: linux-bluetooth@vger.kernel.org
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [2.04 / 15.00];
-	DMARC_POLICY_REJECT(2.00)[github.com : SPF not aligned (relaxed),reject];
+X-Spamd-Result: default: False [-1.16 / 15.00];
+	CTYPE_MIXED_BOGUS(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_DKIM_REJECT(1.00)[github.com:s=pf2023];
-	MV_CASE(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
-	MIME_GOOD(-0.10)[text/plain];
+	MIME_GOOD(-0.10)[multipart/mixed,text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_ONE(0.00)[1];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[github.com:-];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-19082-lists,linux-bluetooth=lfdr.de];
+	REPLYTO_DN_EQ_FROM_DN(0.00)[];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-19081-lists,linux-bluetooth=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	FROM_NEQ_ENVFROM(0.00)[noreply@github.com,linux-bluetooth@vger.kernel.org];
-	MID_RHS_MATCH_FROM(0.00)[];
+	MIME_TRACE(0.00)[0:+,1:+];
+	RCPT_COUNT_TWO(0.00)[2];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	FROM_NEQ_ENVFROM(0.00)[blueztestbot@gmail.com,linux-bluetooth@vger.kernel.org];
+	HAS_REPLYTO(0.00)[linux-bluetooth@vger.kernel.org];
 	TO_DN_NONE(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,makefile.tools:url,collabora.com:email]
-X-Rspamd-Queue-Id: A6FDD1468AB
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	FROM_NO_DN(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vger.kernel.org:replyto,checkpatch.pl:url]
+X-Rspamd-Queue-Id: C5CF1146A21
 X-Rspamd-Action: no action
 
-  Branch: refs/heads/1054634
-  Home:   https://github.com/bluez/bluez
-  Commit: d72e51c696f5558a6e8610d971cd9268e6941f41
-      https://github.com/bluez/bluez/commit/d72e51c696f5558a6e8610d971cd9=
-268e6941f41
-  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
-  Date:   2026-02-16 (Mon, 16 Feb 2026)
+--===============0872676656881246096==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
 
-  Changed paths:
-    M .gitignore
-    M Makefile.tools
-    A client/btpclient/btpclient.c
-    A client/btpclient/btpclientctl.c
-    R tools/btpclient.c
-    R tools/btpclientctl.c
+This is automated email and please do not reply to this email!
 
-  Log Message:
-  -----------
-  tools/btpclient: Move btpclient to client/btpclient directory
+Dear submitter,
 
-This prepares the split of btp services in per profile files for
-easier maintenance.
+Thank you for submitting the patches to the linux bluetooth mailing list.
+This is a CI test results with your patch series:
+PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=1054617
 
+---Test result---
 
-  Commit: 1bbc0b8ad95259f8a780a17ff80a2e898014f84b
-      https://github.com/bluez/bluez/commit/1bbc0b8ad95259f8a780a17ff80a2=
-e898014f84b
-  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
-  Date:   2026-02-16 (Mon, 16 Feb 2026)
+Test Summary:
+CheckPatch                    PENDING   0.52 seconds
+GitLint                       PENDING   0.43 seconds
+BuildEll                      PASS      21.07 seconds
+BluezMake                     PASS      659.15 seconds
+MakeCheck                     PASS      18.73 seconds
+MakeDistcheck                 PASS      248.08 seconds
+CheckValgrind                 PASS      299.93 seconds
+CheckSmatch                   PASS      363.60 seconds
+bluezmakeextell               PASS      185.67 seconds
+IncrementalBuild              PENDING   0.35 seconds
+ScanBuild                     PASS      1048.60 seconds
 
-  Changed paths:
-    M Makefile.tools
-    M client/btpclient/btpclient.c
-    A client/btpclient/btpclient.h
-    A client/btpclient/core.c
-    A client/btpclient/core.h
+Details
+##############################
+Test: CheckPatch - PENDING
+Desc: Run checkpatch.pl script
+Output:
 
-  Log Message:
-  -----------
-  client/btpclient: Move btp core service in its own file
+##############################
+Test: GitLint - PENDING
+Desc: Run gitlint
+Output:
 
-Moving the btp services in their own files will simplify maintenance.
-
-
-  Commit: 50e9d26760c85913a057fde324c47a6871da6d4d
-      https://github.com/bluez/bluez/commit/50e9d26760c85913a057fde324c47=
-a6871da6d4d
-  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
-  Date:   2026-02-16 (Mon, 16 Feb 2026)
-
-  Changed paths:
-    M Makefile.tools
-    M client/btpclient/btpclient.c
-    M client/btpclient/btpclient.h
-    M client/btpclient/core.c
-    M client/btpclient/core.h
-    A client/btpclient/gap.c
-    A client/btpclient/gap.h
-
-  Log Message:
-  -----------
-  client/btpclient: Move btp GAP service in its own file
-
-Moving the btp services in their own files will simplify maintenance.
+##############################
+Test: IncrementalBuild - PENDING
+Desc: Incremental build with the patches in the series
+Output:
 
 
-Compare: https://github.com/bluez/bluez/compare/d72e51c696f5%5E...50e9d26=
-760c8
 
-To unsubscribe from these emails, change your notification settings at ht=
-tps://github.com/bluez/bluez/settings/notifications
+---
+Regards,
+Linux Bluetooth
+
+
+--===============0872676656881246096==--
 
