@@ -1,87 +1,87 @@
-Return-Path: <linux-bluetooth+bounces-19161-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-19163-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4IY+D4EFlmm4YQIAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-19161-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 18 Feb 2026 19:31:29 +0100
+	id kP9vBZwFlmlGYgIAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-19163-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 18 Feb 2026 19:31:56 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68287158B98
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 18 Feb 2026 19:31:28 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C9BF158BB4
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 18 Feb 2026 19:31:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 676143004065
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 18 Feb 2026 18:31:25 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C368530265BD
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 18 Feb 2026 18:31:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E695322C98;
-	Wed, 18 Feb 2026 18:31:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 698C833FE24;
+	Wed, 18 Feb 2026 18:31:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iEz+MK7Z"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aj9BvQAK"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com [209.85.221.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4462638BA
-	for <linux-bluetooth@vger.kernel.org>; Wed, 18 Feb 2026 18:31:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F07A3469E6
+	for <linux-bluetooth@vger.kernel.org>; Wed, 18 Feb 2026 18:31:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771439484; cv=none; b=X1wkMbBN/ABCrkvwmusLaHO0hh6BVGkOGdUnoIWQyjtwOWpVGG8IoJAR2Y++ewcORRW7GsKKqdFCDEz2Sh+tpn3gRhoLp9/YF8oNQDJEju4fCSQNTxR/fU+6+JVMFywUGZcnvQdmIgbBNP/cMH7LKoiEfpTlICl7a4HUsm+Jj7U=
+	t=1771439486; cv=none; b=jkMI8QkHZbtF9VxnQus/FIRhqzWWA6CqL48eDx7ItlDujZmK+JzNGH6hu46fCtSh3lWHTfQPq+k2LfnqdKFxhKVDBrDZzLL3egEJyhHu6BBSpA7c+F9eHczOV6ZXCc0dImXiGIaL4yx3y/LyhnV3jEXNmrIYz2wjXWMBiGWPBoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771439484; c=relaxed/simple;
-	bh=1IJc+iXbLOAclTgdmVYoo2gsguRPJplrQe70+EOH8Fg=;
+	s=arc-20240116; t=1771439486; c=relaxed/simple;
+	bh=7nDIgYFc0zNgYPlCWDkEt46KuR8qj32AkcJ8ho/0oXg=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UwQXhkfVmwMbVu/hqJzZO3hfq3nBmNJdNteEOtu1Jbdl+fZ92AylvvDqvGJL+xHP6uMn2p3k0ZmYaha4zfJS67ImPyThEK10R0DSDSrw4X/cmGUTK0L9cT7Qon8piUSClfleM1JoYr348W4mSPFFI+7M1PfsWPn0nggZh5WStns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iEz+MK7Z; arc=none smtp.client-ip=209.85.221.171
+	 MIME-Version; b=rCoDnVwLuOLRN/KQ1Cpm/E88XUx0QwtYzmtT08h3etJrtWxl1kL5BlDHa1mfoJJEmgdRK6ZhTdJAh0GNhdEEBb7SAXrOWi9IuHHTZJJ2HL2XUdy+izFBeaI9lwO06+0cN0rqTNO2gYr6fzTFK2RXJPIGGCzfKlg71IHttdqRy0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aj9BvQAK; arc=none smtp.client-ip=209.85.221.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vk1-f171.google.com with SMTP id 71dfb90a1353d-567404384b7so100961e0c.3
-        for <linux-bluetooth@vger.kernel.org>; Wed, 18 Feb 2026 10:31:22 -0800 (PST)
+Received: by mail-vk1-f171.google.com with SMTP id 71dfb90a1353d-5664340e14fso80787e0c.1
+        for <linux-bluetooth@vger.kernel.org>; Wed, 18 Feb 2026 10:31:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771439482; x=1772044282; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771439483; x=1772044283; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=q32v8WNXKb6NO9IFdmH4yaS1YUnL7pgZ8UnB4X5hSHE=;
-        b=iEz+MK7ZljUSIbRFtQZxYqbruWRkFY0HL8FprYkqvkhX54j/liZA9ocHY7i7hCn/YX
-         fVUEn5wS/KueKTr/GGc6lOexEBMZJRDTKIaD9h7FIH5iNa6PU5DDh7cMZBhRuiodTnvW
-         TvnkIGHxQrw+3xRuHeOqTgiub1H3F+3zfqDyqZy6GTgcYkSABzPxxVCetAvuRoKPp2IL
-         gusakZ0O3wKEh0/urdPrbKczRHGWUGcM5n4/vccutMl0H6tKOD+A0JCdoPLtjBrn+TRf
-         F+JOHNmEfw24YiYmaP/aomAR6DV+sBnVNupfMl1h2z7lFdroSbTQtyttsIdoihmou6L1
-         xOWQ==
+        bh=x9sE2Xoy1YVjrIfnn3Em1zqxFG2O+agQ2uDrTo2vRyE=;
+        b=aj9BvQAKBT0zzS/8EQa5xJtHlcXGFIsEEiK933BqaEC/3SQdRBpLOBzv/yRpYmIJWR
+         lGYR/ThFZE9WE5qtxX6/lVoj2xU+9JhEWnw90c/jz1S78rHJ9jiXn4Y3pushPtL9xs9T
+         uNF4X4PYBbdEyaiVbESeBcjl1K0psCd/CZEoBeHVgz1V1jKd4eSPKMBiHZL5doEcF9FD
+         qC1r7mafNT5h+NOqrLr1LqHinniRaza1kERuoM8kNxaDlFNBfeyWqWcNj8N1qA8/WwD+
+         ct26k2PcGmc4KF6eYbpyquYAlm8cKTGpORribqVphUyyWFFKDhgrfw2q6dza3spNho3a
+         5F9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771439482; x=1772044282;
+        d=1e100.net; s=20230601; t=1771439483; x=1772044283;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=q32v8WNXKb6NO9IFdmH4yaS1YUnL7pgZ8UnB4X5hSHE=;
-        b=qdrdSEynGrHoBcQlBu2Iqf1tiqim5wz3FmcoddJTUtkrXWgzrGznvZ25YvjuK0Vo/U
-         Apxt/xUc8Y6tkpJkIxfjsP44xeFFrVVleV9KqBzsD3Ou1KXswB0/atxv7jvRI38ejWw6
-         DT1FHckUC87HCGWHpXiClP/ZxwW/XHC3daEQrDRvNFaj2UWbqWtDY5xMidj/LJ6dHVtW
-         x5wmQ7MJ/lHKDCQahIpCpy3Vab43pY5AHFDNFPqGhASRzOEJ3fyPPqKS3ubvVnYwZJ0z
-         fbGi/2WY6sJmMNNytdS9d9hRyGjnnzsUQaDL73M0L9Klt9CehaXXaeXZH75wvpdGOlFP
-         KV1g==
-X-Gm-Message-State: AOJu0Yz/wvt+dGQ1MHnvMupH99FRnRiggFU6ZFmJRK6rJxz/7IdWX6BG
-	/pZcouK5Tw4L4ceIo84ROV2EWfnyrzkzVv6mM7MX6gadNELfNwPcPmi7iCOcVPOO
-X-Gm-Gg: AZuq6aKiiLhonzbwVWbbkTxv0D62O8OfOWNAQLlUm85GAXf8X0imkxLyWa09HQT+b6i
-	u6L0ARBONDMHc11oan65fNalxm+K4wbs4PSPDvJ+ScSL7xxUFYyUeOuk6QvRaDwYIkp4/ytyGYd
-	/6iiudsQiqTTe2MBhjtwgjxvmTGY8JSB8gOzKXtE5HxUEmj6QVi1wb6wYZOUN3FxWSoQbEZbvdr
-	IXxX3tgYNtzIBNB4u046DTQD0IqZvy7/H8aWlceFKEJ6F7stJVRUMq1zbZI+tzHrl3ex1t0Rlm6
-	MdJoQLGagtpo/baqx6m4TH4vZkK1gS63mnyiJQ78zUAv2kwzZpk7KkPEGiD4OAsba7P2c8Y7l0r
-	RdMA4+Qn11IsD62JaiH/rmyQbUTBNh1OMIO7H4TYPjwn14ZhsBx0XwmSKjm+uG+J6XhY6ddruKe
-	InCnLv07IMBtIL1KW4dOetIO0n+Nl1/0oFXtXvyMYzePur3CxXC259NsPrjsBfizFQHBe3mWaBi
-	jFDoJ1ywONM5X85vUriT4dADUJh
-X-Received: by 2002:a05:6122:4f98:b0:566:226b:e30 with SMTP id 71dfb90a1353d-56889b79736mr5711737e0c.7.1771439481617;
-        Wed, 18 Feb 2026 10:31:21 -0800 (PST)
+        bh=x9sE2Xoy1YVjrIfnn3Em1zqxFG2O+agQ2uDrTo2vRyE=;
+        b=r4gvkRinix5RiSsTI7UK26bc/94fj9e7EGVty3UkjIRr90txO5k+WBAQ6hg+2c8+a4
+         6pMF0Mf2WkVovGBzRWEnC0UklfKL4SElxFGKqleSKfbbO50lTzCf/AKgbHGUwqqO072u
+         LBXZZ0GpCwnPIr5jSzWvI1knCR7fqhBsHEymNE+Nx1Fi74bsg4CHrILAK/ndKQxWrbBO
+         v6idFZ+1qK0++VJrQj6lYutZgNb4Gm5N7eIhAU4Bqytn0NkvhdXtT0fK0XPcx6aeSPI4
+         Z+YY6xUPq0fyufhOEOKrZyLDeS6vaBPya6lLNwaSpSgcgl0fkeLufaXNLTIUd34sSRYY
+         R/6Q==
+X-Gm-Message-State: AOJu0YyjJYJ4nsgivq8DeS5q3iJxvpp8rUkxeRIpr0Tu/XdXtiqfhqYa
+	S7X28B9gaRrCVTqgQQPgs65dtip1lcPgSmR4R4YgdZs2VfgDHLELHJC0JK7ZvLWz
+X-Gm-Gg: AZuq6aKiESIXkMkUuaxP7rVfDfJm2bpHpl0hOj79LZnOwLs0K+UEtY/f/CBn315hZ5B
+	A4XDwrCDHfkKQ0jr/OM6U/8Wo/sg2cfPns1CUsOWYH354nmbuIRyG4nsQytdN+GzcHSXdu1qDtA
+	UliEMpbDbo6RkYrqt944sQSHXi6kHS2afX4OUBi9JjidlfYNLq0g/ItzbGZ3EZcAi2rtqk9XHZj
+	RksbbGbfvx6iHWhjxfYP0upJMhXNQR/axNPRMfc91X9VRc24NeONCC/L1ph/m0PYVt0pesItEFu
+	akNSIhmUkzep1eiHqI6VieJgz1jdvZQlbdddVXtJgKSdmh/dw+GaGRsZpMV272HtefdIllRqUpR
+	cqQ0qHIMRpXdLs6XmLgNsJOafmxE9gK9YebjslG2H6kI89wjox2TKUbI4z2vJW0199hLKrPzn/n
+	Ziqhyuuhh3SZS8/cAs2FykjGWjs6CX3MJiMPqWfLkPHwFKR4GunPKIn3AH0aBvC0BQBWSBOPT9O
+	CF3QASZriqm3VAlWg==
+X-Received: by 2002:a05:6122:65aa:b0:53c:6d68:1cce with SMTP id 71dfb90a1353d-56889c2a979mr4916401e0c.16.1771439482509;
+        Wed, 18 Feb 2026 10:31:22 -0800 (PST)
 Received: from lvondent-mobl5 ([72.188.211.115])
-        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-94afd1f1f82sm10959316241.8.2026.02.18.10.31.20
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-94afd1f1f82sm10959316241.8.2026.02.18.10.31.21
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 18 Feb 2026 10:31:21 -0800 (PST)
 From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v1 2/5] doc/btmon: Add dedicate sections for timestamp and frame number
-Date: Wed, 18 Feb 2026 13:31:07 -0500
-Message-ID: <20260218183110.2840582-2-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ v1 3/5] doc/btmon: Add connection tracking section
+Date: Wed, 18 Feb 2026 13:31:08 -0500
+Message-ID: <20260218183110.2840582-3-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260218183110.2840582-1-luiz.dentz@gmail.com>
 References: <20260218183110.2840582-1-luiz.dentz@gmail.com>
@@ -97,7 +97,7 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -106,10 +106,10 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
 	DKIM_TRACE(0.00)[gmail.com:+];
-	TAGGED_FROM(0.00)[bounces-19161-lists,linux-bluetooth=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-19163-lists,linux-bluetooth=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	RCPT_COUNT_ONE(0.00)[1];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
 	PRECEDENCE_BULK(0.00)[];
@@ -120,63 +120,169 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	NEURAL_HAM(-0.00)[-1.000];
 	TO_DN_NONE(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email]
-X-Rspamd-Queue-Id: 68287158B98
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,intel.com:email]
+X-Rspamd-Queue-Id: 5C9BF158BB4
 X-Rspamd-Action: no action
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-This adds sections for how timestamp and frame numbers are generated
-and explaim the difference between a frame number and a line number.
+This adds connection tracking section which explains how connections
+and buffers are tracked.
 ---
- doc/btmon.rst | 35 +++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+ doc/btmon.rst | 141 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 141 insertions(+)
 
 diff --git a/doc/btmon.rst b/doc/btmon.rst
-index e51001921ab1..de05a5fcd6df 100644
+index de05a5fcd6df..d93aa34a9412 100644
 --- a/doc/btmon.rst
 +++ b/doc/btmon.rst
-@@ -442,6 +442,41 @@ Example of protocol layering in ACL data::
-             Authentication requirement: Bonding, MITM, SC (0x2d)
-             Max encryption key size: 16
+@@ -531,6 +531,147 @@ The kernel forwarded this as a MGMT Device Connected event. bluetoothd
+ logged its ``connected_callback()``. Then data exchange began -- an L2CAP
+ parameter update and ATT MTU negotiation over the new ACL connection.
  
-+Timestamp Notes
-+---------------
++CONNECTION TRACKING
++===================
 +
-+When reading btsnoop files with ``-t`` or ``-T``, timestamps reflect the
-+wall-clock time recorded in the btsnoop file. The precision depends on
-+the source:
++HCI uses **connection handles** (16-bit integers) to identify individual
++connections. Understanding how handles map to devices is essential for
++reading traces.
 +
-+- **Live capture** (``btmon`` monitor channel): Microsecond precision
-+  from the kernel.
-+- **btsnoop files**: The btsnoop format stores timestamps as
-+  microseconds since epoch, so full microsecond precision is
-+  preserved. Trailing zeros in the display (e.g., ``14:38:46.589000``)
-+  indicate the original capture source had millisecond granularity.
++Handle Types
++------------
 +
-+The default timestamp mode shows seconds elapsed since the first
-+packet in the trace, which is useful for measuring intervals between
-+events without needing to know the absolute time.
++Different connection types use different handle ranges, but these ranges
++are controller-specific and not standardized. The connection type can be
++determined by looking at the event that created the handle:
 +
-+Frame Numbers vs Line Numbers
-+-----------------------------
++.. list-table::
++   :header-rows: 1
++   :widths: 15 25 60
 +
-+btmon assigns sequential **frame numbers** (``#N``) to HCI packets.
-+These are stable identifiers for specific packets regardless of output
-+formatting. However, when processing btmon text output with tools like
-+``grep`` or ``sed``, the relevant unit is **line numbers** in the output
-+file. The two are unrelated:
++   * - Type
++     - Creation Event
++     - Description
++   * - BR/EDR ACL
++     - Connection Complete
++     - Classic Bluetooth data connection
++   * - LE ACL
++     - LE (Enhanced) Connection Complete
++     - Low Energy data connection
++   * - CIS
++     - LE CIS Established
++     - Connected Isochronous Stream (LE Audio)
++   * - BIS
++     - LE BIG Complete
++     - Broadcast Isochronous Stream (LE Audio)
++   * - SCO/eSCO
++     - Synchronous Connection Complete
++     - Voice/audio synchronous connection (classic)
 +
-+- A single frame may produce many output lines (header + decoded
-+  fields).
-+- Frame numbers only apply to HCI traffic (``<`` and ``>``). MGMT
-+  (``@``) and system notes (``=``) do not have frame numbers.
-+- When referencing specific packets, prefer frame numbers (``#487``)
-+  over line numbers, as frame numbers are stable across different
-+  terminal widths and formatting options.
++A single device may have multiple handles simultaneously. For example,
++an LE Audio device will have an LE ACL handle for control traffic and
++one or more CIS handles for audio streams. The ``LE CIS Established``
++event includes the ACL connection handle that the CIS is associated
++with.
 +
- Practical Reading Guide
- -----------------------
++Controller Buffer Tracking
++--------------------------
++
++Buffer tracking may show a indicator in square brackets::
++
++    < ACL Data TX: Handle 2048 [1/6] flags 0x00 dlen 16
++
++The ``[1/6]`` means this is buffer slot 1 of 6 available controller
++ACL buffers. This reflects the host-side HCI flow control: the host
++tracks how many buffers the controller has available and shows the
++current usage. When the controller sends ``Number of Completed Packets``
++events, buffers are freed and the count decreases.
++
++HCI ERROR AND DISCONNECT REASON CODES
++======================================
++
++HCI status and disconnect reason codes use the same code space. These
++appear in ``Status:`` and ``Reason:`` fields throughout the trace.
++btmon decodes them automatically, but the hex values are useful for
++searching and filtering.
++
++Common Disconnect Reasons
++-------------------------
++
++.. list-table::
++   :header-rows: 1
++   :widths: 8 40 52
++
++   * - Code
++     - Name
++     - Diagnostic Meaning
++   * - 0x05
++     - Authentication Failure
++     - Pairing or encryption setup failed. Key may be
++       stale or devices have mismatched security databases.
++   * - 0x08
++     - Connection Timeout
++     - The supervision timer expired. The remote device
++       moved out of range or stopped responding. This is
++       an RF link loss.
++   * - 0x13
++     - Remote User Terminated Connection
++     - The remote device intentionally disconnected.
++       This is the normal graceful disconnect.
++   * - 0x14
++     - Remote Device Terminated due to Low Resources
++     - The remote device ran out of resources (memory,
++       connection slots).
++   * - 0x15
++     - Remote Device Terminated due to Power Off
++     - The remote device is powering down.
++   * - 0x16
++     - Connection Terminated By Local Host
++     - The local BlueZ stack intentionally disconnected.
++       Normal when bluetoothd initiates disconnect.
++   * - 0x1f
++     - Unspecified Error
++     - Generic error. Often indicates a firmware issue.
++   * - 0x22
++     - LMP/LL Response Timeout
++     - Link layer procedure timed out. The remote device
++       stopped responding to LL control PDUs.
++   * - 0x28
++     - Instant Passed
++     - A timing-critical operation missed its deadline.
++       Often seen with connection parameter updates.
++   * - 0x2f
++     - Insufficient Security
++     - The required security level (encryption, MITM
++       protection) was not met.
++   * - 0x3b
++     - Unacceptable Connection Parameters
++     - The remote rejected a connection parameter update.
++   * - 0x3d
++     - Connection Terminated due to MIC Failure
++     - Encryption integrity check failed. Possible key
++       mismatch or corruption.
++   * - 0x3e
++     - Connection Failed to be Established
++     - Connection attempt failed entirely (e.g., the
++       remote device did not respond to connection
++       requests).
++   * - 0x3f
++     - MAC Connection Failed
++     - MAC-level connection failure.
++   * - 0x44
++     - Operation Cancelled by Host
++     - The host cancelled the operation before it
++       completed.
++
++Full Error Code Table
++---------------------
++
++The complete set of HCI error codes (0x00-0x45) is defined in the
++Bluetooth Core Specification, Volume 1, Part F. btmon decodes all
++of them automatically in ``Status:`` and ``Reason:`` fields. The
++source mapping is in ``monitor/packet.c`` (``error2str_table``).
++
+ EXAMPLES
+ ========
  
 -- 
 2.52.0
