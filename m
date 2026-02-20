@@ -1,98 +1,128 @@
-Return-Path: <linux-bluetooth+bounces-19218-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-19219-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sD9BKVHel2mp9gIAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-19218-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Feb 2026 05:08:49 +0100
+	id iFfbJjIVmGki/wIAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-19219-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Feb 2026 09:02:58 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2AA681647BF
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Feb 2026 05:08:49 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED600165778
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Feb 2026 09:02:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 3056E3014288
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Feb 2026 04:08:15 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3BC593028816
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Feb 2026 08:02:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C47422F39A7;
-	Fri, 20 Feb 2026 04:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DD223328FB;
+	Fri, 20 Feb 2026 08:02:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="WA1IRxgF"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="oVyKxb1v"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-23.smtp.github.com (out-23.smtp.github.com [192.30.252.206])
+Received: from out-179.mta1.migadu.com (out-179.mta1.migadu.com [95.215.58.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A93A274B42
-	for <linux-bluetooth@vger.kernel.org>; Fri, 20 Feb 2026 04:08:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.206
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4810D334C13
+	for <linux-bluetooth@vger.kernel.org>; Fri, 20 Feb 2026 08:02:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771560488; cv=none; b=m2I9xqvkF0i5q/yP7CELGvHG5Xquel4yaJLrPIi6Z+A2eBIioBn9l3FEAUwSYq85HYxuyyNod4T0+8mVmqWK1kGuHQHEJqHjc9X+u9a1lU2Rg5hbfG8gZYa63ouUzNVQH1ROGF8tWr4oRYQ6GfCbTuDdpSd/s9qxTl5S43u96/w=
+	t=1771574549; cv=none; b=DwUh+pGwUgtbNyiinS2xcKj1uY/YREb9janY7H91RGrVVPL/WuRp/nOkpRf7hClCNcvgJ4jq6kulnhS13KCWxxpSmr//L8F77imnJhKMz0ozVj5BNxI8+I2O8XVv+UiGbxCZNcaXMNV49mT8rj48cXQQLpU7QG8PiaJBkXzJglU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771560488; c=relaxed/simple;
-	bh=JzGjb3dPWAu+S7+sBeChQn1QZnOw84x8Av/sWavbsTE=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=i/fFNqpl0bYOmh29j6S8wIexMvXBEpwrijaPZcIau5uoWA9lnKD9W6GpxU5ua9vEj5Vz5oTr5XVuPJ8/hSAe1L6SravQi1P2STlYX9IA/Yj0gy/feh6+5tM/rerThZybHocRwulNE3UoO5/0UMikZUzbQ07kLIKqj1IHbV2GIMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=WA1IRxgF; arc=none smtp.client-ip=192.30.252.206
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-57520fe.ac4-iad.github.net [10.52.206.15])
-	by smtp.github.com (Postfix) with ESMTPA id 5DCB321099
-	for <linux-bluetooth@vger.kernel.org>; Thu, 19 Feb 2026 20:08:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1771560486;
-	bh=7udi9ya37NZoBuI/5gJW7qiL9WQ1KESLwgRR1jdQ0Gk=;
-	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=WA1IRxgFfSFLlMEVbaBJwqwEUqnkdFNs5I5Xtc6+LDSAOb77poj4HMhZcnIc1N1Dt
-	 za++bixhY60PwAwI/ybltiGzkkB2P3b1z61/DJ0wanB7+x0uxuzlA6ECieLmI23pUm
-	 SyvSX8czKc2wJWh0fuL1xGGHkUkTMlSN29wavLsg=
-Date: Thu, 19 Feb 2026 20:08:06 -0800
-From: BluezTestBot <noreply@github.com>
-To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/1044931/7e5b9a-000000@github.com>
-Subject: [bluez/bluez]
+	s=arc-20240116; t=1771574549; c=relaxed/simple;
+	bh=5c1gP6x4dLJeq1KTHb9rDAfWjbYQRtgyLYkYgEkv240=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=F98hHiB0tIFrOo9sbKZUuooDoqZ/iEbyMZWj+noR4eRQnM2DoQxqlisKPtdxkG/zzjkEzB1ySroqimcq7xfY1dLriVKi7ehKUEqbXAJX88bmq8WRrNu4mJjeADXpyy6R09+1m7LvPNrhkOpaNrXepQZWJ/rSB6lcN2wF/c0NTu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=oVyKxb1v; arc=none smtp.client-ip=95.215.58.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1771574536;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=aB4n5OGLZi0GRqIuGAXu+AgsLlHy39nmgJ8AKbZreq4=;
+	b=oVyKxb1vH6nf29w2xHflwlpQnNUXJlEyB23K1pClgA8/2jNr8CpzUHrNPUYdeZfP74eTA8
+	GA6QMA6vQplh46lTMJS6fyS1mU1mxwsy7rh/Lb6IvcTyLXX+51cuPTe0bbWbQguLfDfG+r
+	n0cNCTRI1S8gugayybnBFaq8vUE1sKE=
+From: Thorsten Blum <thorsten.blum@linux.dev>
+To: Marcel Holtmann <marcel@holtmann.org>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: Thorsten Blum <thorsten.blum@linux.dev>,
+	linux-bluetooth@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] Bluetooth: btintel_pcie: Replace snprintf("%s") with strscpy
+Date: Fri, 20 Feb 2026 09:00:59 +0100
+Message-ID: <20260220080058.1112042-2-thorsten.blum@linux.dev>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [2.04 / 15.00];
-	DMARC_POLICY_REJECT(2.00)[github.com : SPF not aligned (relaxed),reject];
-	R_DKIM_REJECT(1.00)[github.com:s=pf2023];
+X-Spamd-Result: default: False [0.84 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MV_CASE(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[linux.dev,none];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[linux.dev:s=key1];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[github.com:-];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_ONE(0.00)[1];
-	RCVD_COUNT_THREE(0.00)[4];
-	TAGGED_FROM(0.00)[bounces-19218-lists,linux-bluetooth=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-19219-lists,linux-bluetooth=lfdr.de];
+	TO_DN_SOME(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[holtmann.org,gmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[3];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[noreply@github.com,linux-bluetooth@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[thorsten.blum@linux.dev,linux-bluetooth@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	TO_DN_NONE(0.00)[];
+	DKIM_TRACE(0.00)[linux.dev:+];
 	NEURAL_HAM(-0.00)[-0.997];
-	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 2AA681647BF
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linux.dev:mid,linux.dev:dkim,linux.dev:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: ED600165778
 X-Rspamd-Action: no action
 
-  Branch: refs/heads/1044931
-  Home:   https://github.com/bluez/bluez
+Replace snprintf("%s", ...) with the faster and more direct strscpy().
 
-To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+---
+ drivers/bluetooth/btintel_pcie.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
+index eaf5de46a702..82399ad99d96 100644
+--- a/drivers/bluetooth/btintel_pcie.c
++++ b/drivers/bluetooth/btintel_pcie.c
+@@ -10,6 +10,7 @@
+ #include <linux/module.h>
+ #include <linux/firmware.h>
+ #include <linux/pci.h>
++#include <linux/string.h>
+ #include <linux/wait.h>
+ #include <linux/delay.h>
+ #include <linux/interrupt.h>
+@@ -268,7 +269,7 @@ static inline void btintel_pcie_dump_debug_registers(struct hci_dev *hdev)
+ 	if (!skb)
+ 		return;
+ 
+-	snprintf(buf, sizeof(buf), "%s", "---- Dump of debug registers ---");
++	strscpy(buf, "---- Dump of debug registers ---");
+ 	bt_dev_dbg(hdev, "%s", buf);
+ 	skb_put_data(skb, buf, strlen(buf));
+ 
+-- 
+Thorsten Blum <thorsten.blum@linux.dev>
+GPG: 1D60 735E 8AEF 3BE4 73B6  9D84 7336 78FD 8DFE EAD4
+
 
