@@ -1,87 +1,87 @@
-Return-Path: <linux-bluetooth+bounces-19242-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-19245-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6FFpFoSamGkTKAMAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-19242-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Feb 2026 18:31:48 +0100
+	id QCu8ComamGkTKAMAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-19245-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Feb 2026 18:31:53 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id F155E169B61
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Feb 2026 18:31:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 13776169B7D
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Feb 2026 18:31:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 5C726300C038
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Feb 2026 17:31:46 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id DDB53302408B
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 20 Feb 2026 17:31:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1036C31A813;
-	Fri, 20 Feb 2026 17:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE6D335FF55;
+	Fri, 20 Feb 2026 17:31:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CsJzKyLh"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S/a4YClo"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-vk1-f194.google.com (mail-vk1-f194.google.com [209.85.221.194])
+Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D69035F8D3
-	for <linux-bluetooth@vger.kernel.org>; Fri, 20 Feb 2026 17:31:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F8C35F8C1
+	for <linux-bluetooth@vger.kernel.org>; Fri, 20 Feb 2026 17:31:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771608701; cv=none; b=g9rX7VpzT3YkkFaW5ywNCgB2qu7C4KrQOa6xOOfya+w7X8lVVhMRVsOieObLqx5WzFvmQJsS6mbsVY/dxBZP+iUkg2fnJfnJ8WoEb08UNLB9AzA9SMS7UBm3DlBtAkXtZ5rkShQDlleSXzdc2a3e5TRtJpee9J6Kb5+D4+b3JMc=
+	t=1771608705; cv=none; b=Y9xBY0iqkRD4rMJpRCZD9UgMZKvjZrjrWx+TooAyNz5ANkyQJeFhFeXytDWcpwtuZEJO1p3J7pP3z8XxlxMt3p5AhOWLrWgonELNSoJrVAszu4OGUpiOm2KQI554FqrKxLQfPzLnW7wgjdI9uu+iGS0RXwiHrZAiessyAJ/wli4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771608701; c=relaxed/simple;
-	bh=vwSVyKrm1S3cImEjxyS+0Lzvxz2Gcz3bPnd/wChzCKo=;
+	s=arc-20240116; t=1771608705; c=relaxed/simple;
+	bh=H4zjT+BLKCBWcQS02Fi3hrtt6oqjnk/2YIkK+PPQUB4=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rv6Bv0A8Kk0sADc5qm44/QbNUk/wmJh+j3oWhK+3tLXQZ/xsaHxfU0Lr13/5zpdmarCm9TSLCXRdhdusGFA/bCRu+inadRjc6bgA1VzcFhXetPln84Y6+h0qIwdwS1X6FpIbfVejcmWDFTssQ8LnAso+cbXdd7uTFE867hYiB7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CsJzKyLh; arc=none smtp.client-ip=209.85.221.194
+	 MIME-Version; b=JKqGsXo5nCR13Y6+IxK+FwUMjCXHnLuo+fwwwVNdif4WqxPTlbmgA9raQltyJK8ar9zpfYPRl9ux2KnU1bdR8CKHzkbk8bLXgqdiVNYWzw/9LmLKduZgsyalMFZkY4belwbV/fYCSexvx+DhK4ghZJfs9vhnR8apcnHNKCj/sLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S/a4YClo; arc=none smtp.client-ip=209.85.221.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vk1-f194.google.com with SMTP id 71dfb90a1353d-5665171836cso2484275e0c.2
-        for <linux-bluetooth@vger.kernel.org>; Fri, 20 Feb 2026 09:31:39 -0800 (PST)
+Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-5673fd077b4so1120664e0c.0
+        for <linux-bluetooth@vger.kernel.org>; Fri, 20 Feb 2026 09:31:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771608699; x=1772213499; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1771608703; x=1772213503; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=+dEW+DH4tW8V4LkU7Pun4JiyvlXapof8twkYuk8NcHc=;
-        b=CsJzKyLhuj9ttLYx9jcbsQYGKPAgmD06xlgz0pQhhiAutwFP7DcCj+igMqUDh9COIT
-         Nifmde/6CzzAnYCoQBVUKDxcUX7qCr5nHVGuHjzsSEg3N7GwZvX9ZLjpKNYOYvcTEJAi
-         6eh+Jl1sZNbIyej4LHsi3sp+8kGoX3VGvIDut7KJiWkOjM0vAvabknGgMuP70MPWLUFq
-         GLrD+a3qHcz/YewjDCBzh0F98CXmXpVs/+/yIu1CNoMDe6vE/9jtNvofAi4ovDszaS33
-         ZQl8s1YYO40ILI7mSkcScJXVFKHPL4i5HpTaaVxaELljxPf6S+c15ZFhd+683JXCD196
-         1MzQ==
+        bh=A2rIh0SOIfZLLJEFPvUCOVpLnOusiQsVKVkKXhuxsaY=;
+        b=S/a4YClodykAi5v8H4guWLLvcFvuZWXjXb0Z68kJWF5ne3mHddZ94eSbuWf2g9+Rjj
+         CtVkB7UXADnMOVaq/RJ/1Cr7bZd0fSEyna961M6CkHKvUg8EUeO79Ew8tJ1hCR5lUyme
+         VyJau8QAQollZo6hPPxgfazvbIZoo72CGtF0fdjN1f3rVoQ1Uejxgg7e8d2QH/myjmCu
+         CbuuE4HheKUnx6k1Tjv3OdrO8A6dkK1R0/1gFUViTQOZqdCbI7L0WR7ymw2OpDO5Kth5
+         eH+HsS0O/3yEj9uaYGGs29qCd2oCe2o4L/jsjvtXggpqwPIHTHPV5a+31b2iuMs+Mom/
+         JPfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771608699; x=1772213499;
+        d=1e100.net; s=20230601; t=1771608703; x=1772213503;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=+dEW+DH4tW8V4LkU7Pun4JiyvlXapof8twkYuk8NcHc=;
-        b=r/9L4riyDfte6T0Y1ALop9o7V8kaTobTq3/XfMTrWSoLL8opdhxIuM2nuhhtM+q9LS
-         yFtHaCyy7LnIhqsry/ggB6WVd9Cjxw3OVGr2Q6tAqu1Q6/qqR2FSbBNeqJAipBM20a57
-         v1pGjoSCczTsz2NkcsThJZ5InAmPdl7ZEiI1zmKTHDo7S1di5RyRQZ81GVghEZqV9kSJ
-         5pCdn1roZPJYyYrPiTjZEBfXC5AgRHX3oIJsow3iPYi6H/pdqCw++7YeITfqJcdJQLit
-         ZEczSKOSQMLFCDsjLyLNwQZAFt6yt7bCaW1LbG2rmWlRt8IFY56KOki3BqPWu/4GQSj9
-         ze8Q==
-X-Gm-Message-State: AOJu0YyG5/kKgaNQnJAUtnRL9p0RYAbl7MUz/tr1wZ6ZVL4PWoJQ9zVF
-	+FzW69OEmDFJyjfI037CR+uKp50olFgPolsq4YwSkOypfgzNvIrOV0wH5+sENr4Y
-X-Gm-Gg: AZuq6aIjkk+aq7gfclYpIDkzVWOGDVnweXqM54mDH8aDY7ZTzYp9Ag6bNWCYedK1w6m
-	klaj4XpHNDmmVicXGHgW7XzHWY8UQx5j5mEdJlY4FGnvaJVTYPYyT0qnyovL4KMlewg9uMUaxxC
-	0FaPu990432E88uhfz1ZUeiHUzlizYDnMztrwlUd1F/4GnvhgaQgEZC4T/lDWIHmFm781mkKyed
-	Ce05tc2cHADcO2t9jKTfSCml4KTekG/SO7bw8Dh6kPh1XyRim9QfAsHEtl1hF38ehvanuBS7izc
-	C3GbQh1l4PEsBDjfcya2FZOOke/917zjMFD9WppTl9ZqzqR1ZtnQpwNPlOlR1KhraDJgLpVaGmw
-	GrkPOkOFfvILNLAhuc3kAoZc5IBinIpaPLhzeqen6TyL9ddekA8zdQPW2WUngbsRYceKwelxu9m
-	lIi7nLzQ96YO8TKXOHKRXMKBWlc++BfblJLBpJtaHmAyo/2Axb+XK3Yly9D3MIzalPJRD/ulc6S
-	oSRbIhXuq1NGrOyBNCpo9ycrZyo
-X-Received: by 2002:a05:6122:17a6:b0:566:24fc:9501 with SMTP id 71dfb90a1353d-568e47a9d6fmr295556e0c.6.1771608698725;
-        Fri, 20 Feb 2026 09:31:38 -0800 (PST)
+        bh=A2rIh0SOIfZLLJEFPvUCOVpLnOusiQsVKVkKXhuxsaY=;
+        b=bh9icxhHu/sZUYPihaE6fokss4DaYlBA283XZcI97JGm8gX0CD7qEmYqOzyE6Aw2vx
+         /uX33wijDCel9k+DxkNB3iYqLgrs/PxciChSQNBUD7nwJFdW0alXsLIT/IP5WdFt7x7L
+         le+Xl9zNDsHklKEteRRjEKaz1Ol76fnaIBnHwATIANymiXJ8DF4b/JLih1XeRir9lDjb
+         SToPCkajIRqnDKF9aJMHpC5ud+FO9pVs02haert+wUCzYWZGqj+NWwZ3GpCcM75+38pP
+         8PpMZmgInqn9LsGuVZyTBR09x72NqvNfeXiq4EMeZ0lqiBjxhYRLrRbev6gy/mDVtxI6
+         mVlA==
+X-Gm-Message-State: AOJu0YzjGttnNCXi70GgstjxnHX7qFvdeTgOgjHRWxQoyU1c3B1ggiW9
+	FWsviu3syY72kEq9cUZ9TNyaLsbNT9YUVAYPXS+1QlfICo4qYd8omGGcE6S3LQ==
+X-Gm-Gg: AZuq6aIYB1AZxiEgA6tv8ojhJUinDHf3nelo3wr8i1zKTYdka6hMp7R2x2x8jQBnKE2
+	ns/d+bCFSKiSADKJwE0a7RNhGJXOHLo+jxMaOonyAM/VIVoz+obp2C3FfwrFbMJUyTx2DeOz+sH
+	WVEqDKrpdQ5ah6aFucyRVGbWGKJHVWUCZlY/1Kbc7eSIhuxrx6kDRkW4EZdvckSh+Oz6wTwnsYU
+	XZQBnFe8BqCT9SpMMyoL53mUuA9I1Uu9IWWmvlRMIt6Rr5cjcJbCHsrS2TbNJl82um4f8vEwSFn
+	DpvvKoKgFQoW56LOIr+9uqQXAd5fNR/EMxIh/ol1lsW/qMDzJsYbx1NcHuH5HNyC81RxfF7tGBe
+	gHEheqnSre0+eg+TcejUWLzJbAQNbPvvn5uysFV7ng0DLEgVmDv9cF6RkVvWTtXy6bFODOsfT3i
+	1PAceGp77LhCDxWnPh3RoHXYDQJrcPxfsgu9SMXDb8KZWMXxABdQIrq//xAWABrLjG3YB2uHjrj
+	BwEzC3qpb9Dx89Gxg==
+X-Received: by 2002:a05:6122:459a:b0:566:7d83:dfdc with SMTP id 71dfb90a1353d-568e48800ebmr248675e0c.9.1771608699713;
+        Fri, 20 Feb 2026 09:31:39 -0800 (PST)
 Received: from lvondent-mobl5 ([72.188.211.115])
-        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-94da8b3eefdsm77864241.9.2026.02.20.09.31.37
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-94da8b3eefdsm77864241.9.2026.02.20.09.31.38
         for <linux-bluetooth@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Feb 2026 09:31:38 -0800 (PST)
+        Fri, 20 Feb 2026 09:31:39 -0800 (PST)
 From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
 To: linux-bluetooth@vger.kernel.org
-Subject: [PATCH BlueZ v2 10/12] monitor: Add connection lifecycle to analyze summary
-Date: Fri, 20 Feb 2026 12:31:14 -0500
-Message-ID: <20260220173120.3418666-10-luiz.dentz@gmail.com>
+Subject: [PATCH BlueZ v2 11/12] monitor: Prefix data packets with proper type
+Date: Fri, 20 Feb 2026 12:31:15 -0500
+Message-ID: <20260220173120.3418666-11-luiz.dentz@gmail.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260220173120.3418666-1-luiz.dentz@gmail.com>
 References: <20260220173120.3418666-1-luiz.dentz@gmail.com>
@@ -106,7 +106,7 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
 	DKIM_TRACE(0.00)[gmail.com:+];
-	TAGGED_FROM(0.00)[bounces-19242-lists,linux-bluetooth=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-19245-lists,linux-bluetooth=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	RCPT_COUNT_ONE(0.00)[1];
 	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
@@ -121,320 +121,98 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	TO_DN_NONE(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,intel.com:email]
-X-Rspamd-Queue-Id: F155E169B61
+X-Rspamd-Queue-Id: 13776169B7D
 X-Rspamd-Action: no action
 
 From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-Record the frame number at connection and disconnection time for each
-connection. Print the connected and disconnected frame numbers in the
-per-connection summary produced by analyze mode so that users can
-cross-reference with the btmon trace output:
+This attemps to prefix data packets using conn_type_str so it
+properly differentiate BR and LE bearers and CIS from BIS and also
+eliminate "Data TX/RX" labels as they are implicit from the direction
+marker:
 
-  Found LE-ACL connection with handle 2051
-        Address: 66:B0:26:F1:D3:BC (Resolvable)
-        RX packets: 48/48
-        RX Latency: 1-7604 msec (~74 msec)
-        RX size: 5-51 octets (~13 octets)
-        RX speed: ~0 Kb/s
-        TX packets: 39/37
-        TX Latency: 12-426 msec (~43 msec)
-        TX size: 5-97 octets (~15 octets)
-        TX speed: ~1 Kb/s
-        Connected: #52044
-        Disconnected: #53069
-        Disconnect Reason: 0x08
-
-Also fix the TODO in conn_destroy() that was passing a hardcoded 0x00
-address type by using the stored bdaddr_type from the LE connection
-complete events.
+< LE-CIS: Handle 2304 [8/8] SN 15 ...
+> LE-ACL: Handle 2048 ...
 ---
- monitor/analyze.c | 73 ++++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 59 insertions(+), 14 deletions(-)
+ monitor/packet.c | 27 +++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
 
-diff --git a/monitor/analyze.c b/monitor/analyze.c
-index 2cf42f903b61..1db1e7898132 100644
---- a/monitor/analyze.c
-+++ b/monitor/analyze.c
-@@ -68,8 +68,12 @@ struct hci_conn {
- 	uint16_t link;
- 	uint8_t type;
- 	uint8_t bdaddr[6];
-+	uint8_t bdaddr_type;
- 	bool setup_seen;
- 	bool terminated;
-+	uint8_t disconnect_reason;
-+	unsigned long frame_connected;
-+	unsigned long frame_disconnected;
- 	struct queue *tx_queue;
- 	struct timeval last_rx;
- 	struct queue *chan_list;
-@@ -241,13 +245,22 @@ static void conn_destroy(void *data)
- 	}
+diff --git a/monitor/packet.c b/monitor/packet.c
+index a4930c855144..fbe773ffbdfe 100644
+--- a/monitor/packet.c
++++ b/monitor/packet.c
+@@ -14155,6 +14155,7 @@ void packet_hci_acldata(struct timeval *tv, struct ucred *cred, uint16_t index,
+ 	uint16_t handle = le16_to_cpu(hdr->handle);
+ 	uint16_t dlen = le16_to_cpu(hdr->dlen);
+ 	uint8_t flags = acl_flags(handle);
++	char label[8];
+ 	char handle_str[58], extra_str[32];
+ 	struct packet_conn_data *conn;
+ 	struct index_buf_pool *pool = &index_list[index].acl;
+@@ -14194,9 +14195,13 @@ void packet_hci_acldata(struct timeval *tv, struct ucred *cred, uint16_t index,
  
- 	printf("  Found %s connection with handle %u\n", str, conn->handle);
--	/* TODO: Store address type */
--	packet_print_addr("Address", conn->bdaddr, 0x00);
-+	packet_print_addr("Address", conn->bdaddr, conn->bdaddr_type);
- 	if (!conn->setup_seen)
- 		print_field("Connection setup missing");
- 	print_stats(&conn->rx, "RX");
- 	print_stats(&conn->tx, "TX");
+ 	sprintf(extra_str, "flags 0x%2.2x dlen %d", flags, dlen);
  
-+	if (conn->setup_seen) {
-+		print_field("Connected: #%lu", conn->frame_connected);
-+		if (conn->terminated) {
-+			print_field("Disconnected: #%lu",
-+					conn->frame_disconnected);
-+			print_field("Disconnect Reason: 0x%02x",
-+						conn->disconnect_reason);
-+		}
-+	}
++	if (conn)
++		sprintf(label, "%s", conn_type_str(conn->type));
++	else
++		sprintf(label, "ACL");
 +
- 	queue_destroy(conn->rx.plot, free);
- 	queue_destroy(conn->tx.plot, free);
- 	queue_destroy(conn->chan_list, chan_destroy);
-@@ -465,6 +478,7 @@ static void command_pkt(struct timeval *tv, uint16_t index,
- }
+ 	print_packet(tv, cred, in ? '>' : '<', index, NULL, COLOR_HCI_ACLDATA,
+-				in ? "ACL Data RX" : "ACL Data TX",
+-						handle_str, extra_str);
++				label, handle_str, extra_str);
  
- static void evt_conn_complete(struct hci_dev *dev, struct timeval *tv,
-+					unsigned long frame,
- 					const void *data, uint16_t size)
- {
- 	const struct bt_hci_evt_conn_complete *evt = data;
-@@ -478,10 +492,12 @@ static void evt_conn_complete(struct hci_dev *dev, struct timeval *tv,
- 		return;
+ 	if (!in)
+ 		packet_enqueue_tx(tv, acl_handle(handle),
+@@ -14221,6 +14226,7 @@ void packet_hci_scodata(struct timeval *tv, struct ucred *cred, uint16_t index,
+ 	const hci_sco_hdr *hdr = data;
+ 	uint16_t handle = le16_to_cpu(hdr->handle);
+ 	uint8_t flags = acl_flags(handle);
++	char label[8];
+ 	char handle_str[42], extra_str[32];
+ 	struct packet_conn_data *conn;
  
- 	memcpy(conn->bdaddr, evt->bdaddr, 6);
-+	conn->frame_connected = frame;
- 	conn->setup_seen = true;
- }
+@@ -14256,9 +14262,13 @@ void packet_hci_scodata(struct timeval *tv, struct ucred *cred, uint16_t index,
  
- static void evt_disconnect_complete(struct hci_dev *dev, struct timeval *tv,
-+					unsigned long frame,
- 					const void *data, uint16_t size)
- {
- 	const struct bt_hci_evt_disconnect_complete *evt = data;
-@@ -494,6 +510,8 @@ static void evt_disconnect_complete(struct hci_dev *dev, struct timeval *tv,
- 	if (!conn)
- 		return;
+ 	sprintf(extra_str, "flags 0x%2.2x dlen %d", flags, hdr->dlen);
  
-+	conn->frame_disconnected = frame;
-+	conn->disconnect_reason = evt->reason;
- 	conn->terminated = true;
- }
++	if (conn)
++		sprintf(label, "%s", conn_type_str(conn->type));
++	else
++		sprintf(label, "SCO");
++
+ 	print_packet(tv, cred, in ? '>' : '<', index, NULL, COLOR_HCI_SCODATA,
+-				in ? "SCO Data RX" : "SCO Data TX",
+-						handle_str, extra_str);
++				label, handle_str, extra_str);
  
-@@ -555,6 +573,7 @@ static void plot_add(struct queue *queue, struct timeval *latency,
- }
+ 	if (!in)
+ 		packet_enqueue_tx(tv, acl_handle(handle),
+@@ -14282,6 +14292,7 @@ void packet_hci_isodata(struct timeval *tv, struct ucred *cred, uint16_t index,
+ 	const struct bt_hci_iso_data_start *start;
+ 	uint16_t handle = le16_to_cpu(hdr->handle);
+ 	uint8_t flags = acl_flags(handle);
++	char label[8];
+ 	char handle_str[56], extra_str[50], ts_str[16] = { 0 };
+ 	struct index_buf_pool *pool = &index_list[index].iso;
+ 	struct packet_conn_data *conn;
+@@ -14328,9 +14339,13 @@ void packet_hci_isodata(struct timeval *tv, struct ucred *cred, uint16_t index,
+ 	sprintf(extra_str, "flags 0x%2.2x dlen %u slen %u%s", flags, hdr->dlen,
+ 							start->slen, ts_str);
  
- static void evt_le_conn_complete(struct hci_dev *dev, struct timeval *tv,
-+					unsigned long frame,
- 					struct iovec *iov)
- {
- 	const struct bt_hci_evt_le_conn_complete *evt;
-@@ -569,10 +588,13 @@ static void evt_le_conn_complete(struct hci_dev *dev, struct timeval *tv,
- 		return;
++	if (conn)
++		sprintf(label, "%s", conn_type_str(conn->type));
++	else
++		sprintf(label, "ISO");
++
+ 	print_packet(tv, cred, in ? '>' : '<', index, NULL, COLOR_HCI_ISODATA,
+-				in ? "ISO Data RX" : "ISO Data TX",
+-						handle_str, extra_str);
++				label, handle_str, extra_str);
  
- 	memcpy(conn->bdaddr, evt->peer_addr, 6);
-+	conn->bdaddr_type = evt->peer_addr_type;
-+	conn->frame_connected = frame;
- 	conn->setup_seen = true;
- }
- 
- static void evt_le_enh_conn_complete(struct hci_dev *dev, struct timeval *tv,
-+					unsigned long frame,
- 					struct iovec *iov)
- {
- 	const struct bt_hci_evt_le_enhanced_conn_complete *evt;
-@@ -587,6 +609,8 @@ static void evt_le_enh_conn_complete(struct hci_dev *dev, struct timeval *tv,
- 		return;
- 
- 	memcpy(conn->bdaddr, evt->peer_addr, 6);
-+	conn->bdaddr_type = evt->peer_addr_type;
-+	conn->frame_connected = frame;
- 	conn->setup_seen = true;
- }
- 
-@@ -640,6 +664,7 @@ static void evt_num_completed_packets(struct hci_dev *dev, struct timeval *tv,
- }
- 
- static void evt_sync_conn_complete(struct hci_dev *dev, struct timeval *tv,
-+					unsigned long frame,
- 					const void *data, uint16_t size)
- {
- 	const struct bt_hci_evt_sync_conn_complete *evt = data;
-@@ -653,10 +678,12 @@ static void evt_sync_conn_complete(struct hci_dev *dev, struct timeval *tv,
- 		return;
- 
- 	memcpy(conn->bdaddr, evt->bdaddr, 6);
-+	conn->frame_connected = frame;
- 	conn->setup_seen = true;
- }
- 
- static void evt_le_cis_established(struct hci_dev *dev, struct timeval *tv,
-+					unsigned long frame,
- 					struct iovec *iov)
- {
- 	const struct bt_hci_evt_le_cis_established *evt;
-@@ -671,6 +698,7 @@ static void evt_le_cis_established(struct hci_dev *dev, struct timeval *tv,
- 	if (!conn)
- 		return;
- 
-+	conn->frame_connected = frame;
- 	conn->setup_seen = true;
- 
- 	link = link_lookup(dev, conn->handle);
-@@ -696,6 +724,7 @@ static void evt_le_cis_req(struct hci_dev *dev, struct timeval *tv,
- }
- 
- static void evt_le_big_complete(struct hci_dev *dev, struct timeval *tv,
-+					unsigned long frame,
- 					struct iovec *iov)
- {
- 	const struct bt_hci_evt_le_big_complete *evt;
-@@ -713,12 +742,15 @@ static void evt_le_big_complete(struct hci_dev *dev, struct timeval *tv,
- 			return;
- 
- 		conn = conn_lookup_type(dev, handle, BTMON_CONN_BIS);
--		if (conn)
-+		if (conn) {
- 			conn->setup_seen = true;
-+			conn->frame_connected = frame;
-+		}
- 	}
- }
- 
- static void evt_le_big_sync_established(struct hci_dev *dev, struct timeval *tv,
-+					unsigned long frame,
- 					struct iovec *iov)
- {
- 	const struct bt_hci_evt_le_big_sync_estabilished *evt;
-@@ -736,12 +768,15 @@ static void evt_le_big_sync_established(struct hci_dev *dev, struct timeval *tv,
- 			return;
- 
- 		conn = conn_lookup_type(dev, handle, BTMON_CONN_BIS);
--		if (conn)
-+		if (conn) {
- 			conn->setup_seen = true;
-+			conn->frame_connected = frame;
-+		}
- 	}
- }
- 
- static void evt_le_meta_event(struct hci_dev *dev, struct timeval *tv,
-+					unsigned long frame,
- 					const void *data, uint16_t size)
- {
- 	struct iovec iov = {
-@@ -755,27 +790,28 @@ static void evt_le_meta_event(struct hci_dev *dev, struct timeval *tv,
- 
- 	switch (subevt) {
- 	case BT_HCI_EVT_LE_CONN_COMPLETE:
--		evt_le_conn_complete(dev, tv, &iov);
-+		evt_le_conn_complete(dev, tv, frame, &iov);
- 		break;
- 	case BT_HCI_EVT_LE_ENHANCED_CONN_COMPLETE:
--		evt_le_enh_conn_complete(dev, tv, &iov);
-+		evt_le_enh_conn_complete(dev, tv, frame, &iov);
- 		break;
- 	case BT_HCI_EVT_LE_CIS_ESTABLISHED:
--		evt_le_cis_established(dev, tv, &iov);
-+		evt_le_cis_established(dev, tv, frame, &iov);
- 		break;
- 	case BT_HCI_EVT_LE_CIS_REQ:
- 		evt_le_cis_req(dev, tv, &iov);
- 		break;
- 	case BT_HCI_EVT_LE_BIG_COMPLETE:
--		evt_le_big_complete(dev, tv, &iov);
-+		evt_le_big_complete(dev, tv, frame, &iov);
- 		break;
- 	case BT_HCI_EVT_LE_BIG_SYNC_ESTABILISHED:
--		evt_le_big_sync_established(dev, tv, &iov);
-+		evt_le_big_sync_established(dev, tv, frame, &iov);
- 		break;
- 	}
- }
- 
- static void event_pkt(struct timeval *tv, uint16_t index,
-+					unsigned long frame,
- 					const void *data, uint16_t size)
- {
- 	const struct bt_hci_evt_hdr *hdr = data;
-@@ -793,10 +829,10 @@ static void event_pkt(struct timeval *tv, uint16_t index,
- 
- 	switch (hdr->evt) {
- 	case BT_HCI_EVT_CONN_COMPLETE:
--		evt_conn_complete(dev, tv, data, size);
-+		evt_conn_complete(dev, tv, frame, data, size);
- 		break;
- 	case BT_HCI_EVT_DISCONNECT_COMPLETE:
--		evt_disconnect_complete(dev, tv, data, size);
-+		evt_disconnect_complete(dev, tv, frame, data, size);
- 		break;
- 	case BT_HCI_EVT_CMD_COMPLETE:
- 		evt_cmd_complete(dev, tv, data, size);
-@@ -805,10 +841,10 @@ static void event_pkt(struct timeval *tv, uint16_t index,
- 		evt_num_completed_packets(dev, tv, data, size);
- 		break;
- 	case BT_HCI_EVT_SYNC_CONN_COMPLETE:
--		evt_sync_conn_complete(dev, tv, data, size);
-+		evt_sync_conn_complete(dev, tv, frame, data, size);
- 		break;
- 	case BT_HCI_EVT_LE_META_EVENT:
--		evt_le_meta_event(dev, tv, data, size);
-+		evt_le_meta_event(dev, tv, frame, data, size);
- 		break;
- 	}
- }
-@@ -1047,6 +1083,7 @@ void analyze_trace(const char *path)
- {
- 	struct btsnoop *btsnoop_file;
- 	unsigned long num_packets = 0;
-+	unsigned long num_frames = 0;
- 	uint32_t format;
- 
- 	btsnoop_file = btsnoop_open(path, BTSNOOP_FLAG_PKLG_SUPPORT);
-@@ -1084,21 +1121,27 @@ void analyze_trace(const char *path)
- 			del_index(&tv, index, buf, pktlen);
- 			break;
- 		case BTSNOOP_OPCODE_COMMAND_PKT:
-+			num_frames++;
- 			command_pkt(&tv, index, buf, pktlen);
- 			break;
- 		case BTSNOOP_OPCODE_EVENT_PKT:
--			event_pkt(&tv, index, buf, pktlen);
-+			num_frames++;
-+			event_pkt(&tv, index, num_frames, buf, pktlen);
- 			break;
- 		case BTSNOOP_OPCODE_ACL_TX_PKT:
-+			num_frames++;
- 			acl_pkt(&tv, index, true, buf, pktlen);
- 			break;
- 		case BTSNOOP_OPCODE_ACL_RX_PKT:
-+			num_frames++;
- 			acl_pkt(&tv, index, false, buf, pktlen);
- 			break;
- 		case BTSNOOP_OPCODE_SCO_TX_PKT:
-+			num_frames++;
- 			sco_pkt(&tv, index, true, buf, pktlen);
- 			break;
- 		case BTSNOOP_OPCODE_SCO_RX_PKT:
-+			num_frames++;
- 			sco_pkt(&tv, index, false, buf, pktlen);
- 			break;
- 		case BTSNOOP_OPCODE_OPEN_INDEX:
-@@ -1123,9 +1166,11 @@ void analyze_trace(const char *path)
- 			ctrl_msg(&tv, index, buf, pktlen);
- 			break;
- 		case BTSNOOP_OPCODE_ISO_TX_PKT:
-+			num_frames++;
- 			iso_pkt(&tv, index, true, buf, pktlen);
- 			break;
- 		case BTSNOOP_OPCODE_ISO_RX_PKT:
-+			num_frames++;
- 			iso_pkt(&tv, index, false, buf, pktlen);
- 			break;
- 		default:
+ 	if (!in)
+ 		packet_enqueue_tx(tv, acl_handle(handle),
 -- 
 2.52.0
 
