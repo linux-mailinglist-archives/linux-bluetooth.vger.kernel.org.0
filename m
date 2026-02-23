@@ -1,98 +1,130 @@
-Return-Path: <linux-bluetooth+bounces-19303-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-19304-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8BcnF1jbnGkrLwQAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-19303-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 23 Feb 2026 23:57:28 +0100
+	id 6KGMB4vknGlNMAQAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-19304-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Feb 2026 00:36:43 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id DBC8417EA2D
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 23 Feb 2026 23:57:27 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C19517FA2A
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Feb 2026 00:36:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id F24C6307CEAE
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 23 Feb 2026 22:57:24 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id DCAD4309E3E8
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 23 Feb 2026 23:34:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82CEE37C0F5;
-	Mon, 23 Feb 2026 22:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7635837F8A7;
+	Mon, 23 Feb 2026 23:34:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="O4d1cdzY"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="Dl+GhZpe"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-17.smtp.github.com (out-17.smtp.github.com [192.30.252.200])
+Received: from out-173.mta1.migadu.com (out-173.mta1.migadu.com [95.215.58.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0FB5695
-	for <linux-bluetooth@vger.kernel.org>; Mon, 23 Feb 2026 22:57:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D26437E317
+	for <linux-bluetooth@vger.kernel.org>; Mon, 23 Feb 2026 23:34:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771887444; cv=none; b=JSjbiei/XX0l/t8pNSz1jWHOp9DyLaGSF+PSWdoeF0Bud6X5/6ijkkh3J330j8gW+GPzQNX0KDByq+QOHrX49ceGcqtwlBtx+wrOdA7QYsWGV9q97SL/WjSgANETWG9tQgoJJbK7yuYRiPDrw93+0NPFhz/AY6h4S/Id4sa22p8=
+	t=1771889682; cv=none; b=b15wKywAikCJadTJVesUbnwlnOr7qcYg98Ig0Q4RU3IDxX20xXwvGGbJAYhisHeZGd9ITBgE6U/ks0Y1YkEcyGDgtTmGCzZSAw9rxSseEuC40aYeL9fifR5kncBdA/ZLZ6XICB0HE6hhVOiqcEdbHr3fbhJAH71+SD0U8CVAKNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771887444; c=relaxed/simple;
-	bh=80zepsma+/YVws/Ei3JREcDUSJmiqyNHPGcVJHsWE+Q=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=C+zMPmVbM2YjGN1ELSyNY3cFDrZE5kAqmw3Tt0XieTIfPMkjfiNzDoPRaG2giux6ZmRvgLzF8CiWNLu2BRMiO8+n2ZNY0UbXtPqz/stAdxF79w+IKQvxFBWRYrH7fU1Ks7db0KdO8VBVr4UB2mjOgJAHXrlAf5Uiqt43vHExejA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=O4d1cdzY; arc=none smtp.client-ip=192.30.252.200
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-8ded26f.va3-iad.github.net [10.48.131.46])
-	by smtp.github.com (Postfix) with ESMTPA id 54C9D4E09E9
-	for <linux-bluetooth@vger.kernel.org>; Mon, 23 Feb 2026 14:57:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1771887442;
-	bh=xsySsnxTEjuVvftG3dUeyQv4sXoVfrX0/z2fjkzCMXc=;
-	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=O4d1cdzYGy5+fk5FoYc+alKODEUtLFDGpcfMn2UoU2hYNwIuEK/I2QMtZ1ZaeVWkv
-	 g+B73jHy5+FzJiDt4DEMN/fjbZhmcj3csL7agTmrXlP0h3Wk+riV6OYmZFQ8TqplbM
-	 XrSpamzQJPfC9jcF+BZI28CcPVNbLiHPjl3VdpGM=
-Date: Mon, 23 Feb 2026 14:57:22 -0800
-From: BluezTestBot <noreply@github.com>
-To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/1056016/752bb0-000000@github.com>
-Subject: [bluez/bluez]
+	s=arc-20240116; t=1771889682; c=relaxed/simple;
+	bh=pciwHYBXFB6v/vUAo2tH4GtOQRnTkny9zpmgBJVAQDA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bPR+EaSuRM6Pu5ZvArombymzgx/I9BFELK6h0FQtOT44sbRTbTjhoLrRyu7Hagpif/6aId971VyI9wKtEsiqXGmBXivch+ZqLpzAlsTC88PiTzrxllssgz2YDj0CI2re7ZV+wmDu0FWIqI/xSbDJfpOF714j7wdFsjtbIKg0SEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=Dl+GhZpe; arc=none smtp.client-ip=95.215.58.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1771889668;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=n90OW/otD7lsfZE/MLcmeBPOW3B5AGA8tFtKamYFmAE=;
+	b=Dl+GhZpesQ67jJEcMhTvgf8exYc1C4a8IY85QwoD9nr9dDhk5DFjFGfXaGV6NGyqgSySB3
+	J91/WLZggRE/XWLsFfjQBEn6UCqaq/AiKNQ9OdXKE6cLvMCEX/wZ9zp2d48DzZD72gvs/S
+	RySFKpe/V/OcxFoZwab00f7fNnJPUac=
+From: Thorsten Blum <thorsten.blum@linux.dev>
+To: Marcel Holtmann <marcel@holtmann.org>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Cc: Thorsten Blum <thorsten.blum@linux.dev>,
+	linux-bluetooth@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] Bluetooth: btintel_pcie: Use struct_size to improve hci_drv_read_info
+Date: Tue, 24 Feb 2026 00:33:42 +0100
+Message-ID: <20260223233341.426067-2-thorsten.blum@linux.dev>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
-X-Auto-Response-Suppress: All
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [2.04 / 15.00];
-	DMARC_POLICY_REJECT(2.00)[github.com : SPF not aligned (relaxed),reject];
-	R_DKIM_REJECT(1.00)[github.com:s=pf2023];
+X-Spamd-Result: default: False [0.84 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MV_CASE(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[linux.dev,none];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64];
+	R_DKIM_ALLOW(-0.20)[linux.dev:s=key1];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[github.com:-];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_ONE(0.00)[1];
-	RCVD_COUNT_THREE(0.00)[4];
-	TAGGED_FROM(0.00)[bounces-19303-lists,linux-bluetooth=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-19304-lists,linux-bluetooth=lfdr.de];
+	TO_DN_SOME(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[holtmann.org,gmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[3];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[noreply@github.com,linux-bluetooth@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[thorsten.blum@linux.dev,linux-bluetooth@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TO_DN_NONE(0.00)[];
+	DKIM_TRACE(0.00)[linux.dev:+];
 	NEURAL_HAM(-0.00)[-0.997];
-	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: DBC8417EA2D
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linux.dev:mid,linux.dev:dkim,linux.dev:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 6C19517FA2A
 X-Rspamd-Action: no action
 
-  Branch: refs/heads/1056016
-  Home:   https://github.com/bluez/bluez
+Use struct_size(), which provides additional compile-time checks for
+structures with flexible array members (e.g., __must_be_array()), to
+determine the allocation size for a new 'struct hci_drv_rp_read_info'.
 
-To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+---
+ drivers/bluetooth/btintel_pcie.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
+index eda243988cfd..473b2115e637 100644
+--- a/drivers/bluetooth/btintel_pcie.c
++++ b/drivers/bluetooth/btintel_pcie.c
+@@ -9,6 +9,7 @@
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/firmware.h>
++#include <linux/overflow.h>
+ #include <linux/pci.h>
+ #include <linux/string.h>
+ #include <linux/wait.h>
+@@ -2373,7 +2374,7 @@ static int btintel_pcie_hci_drv_read_info(struct hci_dev *hdev, void *data,
+ 	u16 opcode, num_supported_commands =
+ 		ARRAY_SIZE(btintel_pcie_hci_drv_supported_commands);
+ 
+-	rp_size = sizeof(*rp) + num_supported_commands * 2;
++	rp_size = struct_size(rp, supported_commands, num_supported_commands);
+ 
+ 	rp = kmalloc(rp_size, GFP_KERNEL);
+ 	if (!rp)
+-- 
+Thorsten Blum <thorsten.blum@linux.dev>
+GPG: 1D60 735E 8AEF 3BE4 73B6  9D84 7336 78FD 8DFE EAD4
+
 
