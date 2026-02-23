@@ -1,75 +1,75 @@
-Return-Path: <linux-bluetooth+bounces-19290-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-19291-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CGD7N0uInGm7IwQAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-19290-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 23 Feb 2026 18:03:07 +0100
+	id EGntKmeInGm7IwQAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-19291-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 23 Feb 2026 18:03:35 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A78717A472
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 23 Feb 2026 18:03:07 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2BB1117A499
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 23 Feb 2026 18:03:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id B7F8E300B506
-	for <lists+linux-bluetooth@lfdr.de>; Mon, 23 Feb 2026 17:02:41 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 5356130576FA
+	for <lists+linux-bluetooth@lfdr.de>; Mon, 23 Feb 2026 17:02:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AC65328B77;
-	Mon, 23 Feb 2026 17:02:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC382329C54;
+	Mon, 23 Feb 2026 17:02:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dp6eazGP"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Zyfq01aE"
 X-Original-To: linux-bluetooth@vger.kernel.org
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D47F31987D
-	for <linux-bluetooth@vger.kernel.org>; Mon, 23 Feb 2026 17:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670B4322C99
+	for <linux-bluetooth@vger.kernel.org>; Mon, 23 Feb 2026 17:02:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771866153; cv=none; b=ds/MuCsVExaUYzEqAVgn0haYSZDEVOUxWgbcyfJsjKSJKkX0Gjaxj2vKusmd6xCBgX30baWzXcoQq4z2cKAuFwHmZy2I5mKyU/tysITcwkoHjvFnppF5AhR8nzhLQgwdyKW8Q40UBH+usJU0VZCJ9jWHl+amt9iRDEJvKbOsSac=
+	t=1771866155; cv=none; b=VUDbwEi3Ji9WcA1kk5Re6nJWfvKQJR69E8bZCQVvRiYe3wJ3xul7gMRsAxww0x4TDKoEuuCG2i7+h22XYfugEeUoyQ4BcPVKwanCbBYz8pIJU5yfeMBjcmw/d1WKVfJ/BH/76a5ld6Zk4fwvcYWoAcENygndE2mzg72rNNwLJ00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771866153; c=relaxed/simple;
-	bh=dlELvtIo1r5xONcz+QJkMSl9SYa2M2qr6QuuxnU/x3E=;
+	s=arc-20240116; t=1771866155; c=relaxed/simple;
+	bh=lNyG0W9p+DPIt1HyQbjLgyu5+qJtQQQdUiQZk54AJFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ze2jVnbAXEupa9+35XmztkrAVNzgyy3XaWl79hGlSR8wovr85RTiYBOn5RjCVOQmIPlWYU8OOlbdEAIty8KpO0aUoq/N28GteNvljmNaX1ZZ3P0p/3g149uXgW5EnZPQlpR27stEFFvs/b3Ol3DIHwX7QMhIyVuwneF1eMpeqpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dp6eazGP; arc=none smtp.client-ip=198.175.65.9
+	 MIME-Version; b=YWmwvT8YfobbvdMkCFP8vaHDNxjnqUaK2AekclrZJ+37zy6NhOEo13CMORiSwq4Lya75L9z3U8/1mYA1GR1ePFVVaT75JY3PutJdPkW5NS67w1BOjcFYa5iTLGmuvAAqKl1WRyT0n8xrr8TslmuEPAOXDshSItW45a6kju6R2DA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Zyfq01aE; arc=none smtp.client-ip=198.175.65.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1771866151; x=1803402151;
+  t=1771866153; x=1803402153;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=dlELvtIo1r5xONcz+QJkMSl9SYa2M2qr6QuuxnU/x3E=;
-  b=dp6eazGPqKizbEvK9R5dO57OpADNBBF+JP6rkIxHOH0VbZp37qYem8zR
-   yi1W++QCLbeOLTVATL5SfGwtYCXO0HNUzBb/dO924aTZGEeUqd2I6oYSU
-   CGm+Ty0bdjc9rCrOAfNVwYtZohAJjVgnPIhwrrY9oDo9a4KfW11z7SY5c
-   0mYOnH6Dl4wk73qqhVC3II1fTE/EwGtzaO25Jm18evNPhCzPhlSa/dxnG
-   udUGohf8jctaLsxlJVAJFJwUXSr8HMfrbcMWXzPPFLanaYVJyyq7BfA4V
-   w5W50RKGA+ACgtc38UFj6gbSEWgHiVw2v01JpVV7Z0V2izB88mdWG7ljK
-   Q==;
-X-CSE-ConnectionGUID: rEri5OtVRmqqMxqZ/UzKsA==
-X-CSE-MsgGUID: hcJaqUZ3RyGQ/iFKyVFWHA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11710"; a="95484474"
+  bh=lNyG0W9p+DPIt1HyQbjLgyu5+qJtQQQdUiQZk54AJFA=;
+  b=Zyfq01aE/0QWthdZPfqG4mVnSRs6zQYsxw7WTK5TMkmoCBqNvRgBXIQt
+   lPuMU5dyRMtOuqw7UiRuwIfpyWV0H7Cg/UtUK6WqcGyEq6F0L1WK2+tIM
+   nbQCjtCr2TilTW1BfKdAlzhsOZ2xYE7mpnlYQV/hYMl8nh5RecUhvzl3g
+   +ePwMBn93ppw+wrOrLpXYsGvr+jXTegE/5O/YenVGruip9iNQLike9T7c
+   3HebnUtVWDpXHEB0DE1MsYNzFdtVumtV6w5+/C3DkC1inF3dCFOgwDt4p
+   H0C+hKUA5EazYLTA6gaeEMoEtJ4LS8pB7dnI73JiotyUA3I7QWAPf2uKI
+   w==;
+X-CSE-ConnectionGUID: cbXZkDRtSKWT+EJ++DVZiw==
+X-CSE-MsgGUID: V/5MKXtjT0CRCBCJAUG+jA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11710"; a="95484481"
 X-IronPort-AV: E=Sophos;i="6.21,307,1763452800"; 
-   d="scan'208";a="95484474"
+   d="scan'208";a="95484481"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Feb 2026 09:02:30 -0800
-X-CSE-ConnectionGUID: xJ5MmaISR3ibFWlv35+2EA==
-X-CSE-MsgGUID: 3d1I7fJpTkWz4qGHl9+vRQ==
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Feb 2026 09:02:33 -0800
+X-CSE-ConnectionGUID: qJMLjnVeTZ6lpPaXosUbow==
+X-CSE-MsgGUID: oBvA+07QQ+6QInDvC+oHNw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.21,307,1763452800"; 
-   d="scan'208";a="214698386"
+   d="scan'208";a="214698402"
 Received: from intel-lenovo-legion-y540-15irh-pg0.iind.intel.com ([10.224.186.95])
-  by orviesa006.jf.intel.com with ESMTP; 23 Feb 2026 09:02:28 -0800
+  by orviesa006.jf.intel.com with ESMTP; 23 Feb 2026 09:02:30 -0800
 From: Kiran K <kiran.k@intel.com>
 To: linux-bluetooth@vger.kernel.org
 Cc: ravishankar.srivatsa@intel.com,
 	chandrashekar.devegowda@intel.com,
 	chethan.tumkur.narayan@intel.com,
 	Kiran K <kiran.k@intel.com>
-Subject: [PATCH v1 5/7] btintel_pcie: Add support for exception dump for ScP2
-Date: Mon, 23 Feb 2026 22:51:01 +0530
-Message-ID: <20260223172104.167471-5-kiran.k@intel.com>
+Subject: [PATCH v1 6/7] Bluetooth: btintel: Add support for Scorpious Peak2F support
+Date: Mon, 23 Feb 2026 22:51:02 +0530
+Message-ID: <20260223172104.167471-6-kiran.k@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260223172104.167471-1-kiran.k@intel.com>
 References: <20260223172104.167471-1-kiran.k@intel.com>
@@ -87,7 +87,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
 	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
@@ -95,9 +95,9 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-19290-lists,linux-bluetooth=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-19291-lists,linux-bluetooth=lfdr.de];
 	DKIM_TRACE(0.00)[intel.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCPT_COUNT_FIVE(0.00)[5];
 	FROM_NEQ_ENVFROM(0.00)[kiran.k@intel.com,linux-bluetooth@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
@@ -106,55 +106,58 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	NEURAL_HAM(-0.00)[-0.999];
 	RCVD_COUNT_FIVE(0.00)[5];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:mid,intel.com:dkim,intel.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 0A78717A472
+	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:mid,intel.com:dkim,intel.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 2BB1117A499
 X-Rspamd-Action: no action
 
-Add device coredump support for Scorpious Peak2 product.
+Add support for Intel Bluetooth Scorpious Peak2F core.
 
 Signed-off-by: Kiran K <kiran.k@intel.com>
 ---
- drivers/bluetooth/btintel.h      | 1 +
- drivers/bluetooth/btintel_pcie.c | 7 +++++++
- 2 files changed, 8 insertions(+)
+ drivers/bluetooth/btintel.c      | 3 +++
+ drivers/bluetooth/btintel_pcie.c | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/bluetooth/btintel.h b/drivers/bluetooth/btintel.h
-index 1d9dde3c7874..bef7ea84b1e4 100644
---- a/drivers/bluetooth/btintel.h
-+++ b/drivers/bluetooth/btintel.h
-@@ -59,6 +59,7 @@ struct intel_tlv {
- #define BTINTEL_CNVI_GAP		0x910
- #define BTINTEL_CNVI_BLAZARU		0x930
- #define BTINTEL_CNVI_SCP		0xA00
-+#define BTINTEL_CNVI_SCP2		0xA10
- 
- /* CNVR */
- #define BTINTEL_CNVR_FMP2		0x910
+diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
+index b3cbb61065d1..b6dd3ab830c7 100644
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -498,6 +498,7 @@ int btintel_version_info_tlv(struct hci_dev *hdev,
+ 	case 0x1e:	/* BlazarI (Bzr) */
+ 	case 0x1f:      /* Scorpious Peak */
+ 	case 0x20:	/* Scorpious Peak2 */
++	case 0x21:	/* Scorpious Peak2 F */
+ 	case 0x22:	/* BlazarIW (BzrIW) */
+ 		break;
+ 	default:
+@@ -3325,6 +3326,7 @@ void btintel_set_msft_opcode(struct hci_dev *hdev, u8 hw_variant)
+ 	case 0x1e:
+ 	case 0x1f:
+ 	case 0x20:
++	case 0x21:
+ 	case 0x22:
+ 		hci_set_msft_opcode(hdev, 0xFC1E);
+ 		break;
+@@ -3667,6 +3669,7 @@ static int btintel_setup_combined(struct hci_dev *hdev)
+ 	case 0x1e:
+ 	case 0x1f:
+ 	case 0x20:
++	case 0x21:
+ 	case 0x22:
+ 		/* Display version information of TLV type */
+ 		btintel_version_info_tlv(hdev, &ver_tlv);
 diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
-index 19abffca209f..bf71817b1cc6 100644
+index bf71817b1cc6..d0cabf4df7c0 100644
 --- a/drivers/bluetooth/btintel_pcie.c
 +++ b/drivers/bluetooth/btintel_pcie.c
-@@ -73,6 +73,9 @@ struct btintel_pcie_dev_recovery {
- #define BTINTEL_PCIE_SCP_HWEXP_SIZE		4096
- #define BTINTEL_PCIE_SCP_HWEXP_DMP_ADDR		0xB030F800
- 
-+#define BTINTEL_PCIE_SCP2_HWEXP_SIZE		4096
-+#define BTINTEL_PCIE_SCP2_HWEXP_DMP_ADDR	0xB031D000
-+
- #define BTINTEL_PCIE_MAGIC_NUM	0xA5A5A5A5
- 
- #define BTINTEL_PCIE_TRIGGER_REASON_USER_TRIGGER	0x17A2
-@@ -1230,6 +1233,10 @@ static void btintel_pcie_read_hwexp(struct btintel_pcie_data *data)
- 		len = BTINTEL_PCIE_SCP_HWEXP_SIZE;
- 		addr = BTINTEL_PCIE_SCP_HWEXP_DMP_ADDR;
- 	break;
-+	case BTINTEL_CNVI_SCP2:
-+		len = BTINTEL_PCIE_SCP2_HWEXP_SIZE;
-+		addr = BTINTEL_PCIE_SCP2_HWEXP_DMP_ADDR;
-+	break;
- 	default:
- 		bt_dev_err(data->hdev, "Unsupported cnvi 0x%8.8x", data->dmp_hdr.cnvi_top);
- 		return;
+@@ -2107,6 +2107,7 @@ static int btintel_pcie_setup_internal(struct hci_dev *hdev)
+ 	case 0x1e:	/* BzrI */
+ 	case 0x1f:	/* ScP  */
+ 	case 0x20:	/* ScP2 */
++	case 0x21:	/* ScP2 F */
+ 	case 0x22:	/* BzrIW */
+ 		/* Display version information of TLV type */
+ 		btintel_version_info_tlv(hdev, &ver_tlv);
 -- 
 2.43.0
 
