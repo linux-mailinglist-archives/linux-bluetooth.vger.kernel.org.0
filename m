@@ -1,228 +1,229 @@
-Return-Path: <linux-bluetooth+bounces-19323-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-19363-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KGrYHOtBnWkMOAQAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-19323-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Feb 2026 07:15:07 +0100
+	id GN2aKdwYnmm7TQQAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-19363-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Feb 2026 22:32:12 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B2A8182575
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Feb 2026 07:15:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1017C18CCCB
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Feb 2026 22:32:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 31D5F3087D34
-	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Feb 2026 06:14:41 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id DB9DB304743B
+	for <lists+linux-bluetooth@lfdr.de>; Tue, 24 Feb 2026 21:31:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C2BC2D063E;
-	Tue, 24 Feb 2026 06:14:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5330633EB09;
+	Tue, 24 Feb 2026 21:31:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AGHAp1VY"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B03E29BD95
-	for <linux-bluetooth@vger.kernel.org>; Tue, 24 Feb 2026 06:14:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF8B33DEDD;
+	Tue, 24 Feb 2026 21:31:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771913679; cv=none; b=LqBoAsiUYZETilNuyZjJv/W+vX5+3hDU5uV9jzI3XEbHXARYm8sIWrGdLK5QcCBuky/RuQzeYENYw/wEktQR8GLjr//sHgfV2n2n+0FjtsD7fV0KjgyCVh/WmEbirYO1m5N6RQ40J8O0rZGwDqdhtfKWTQubFBXmW0V5hkDxS+Y=
+	t=1771968701; cv=none; b=uun8bTMk0Vy376tIc1sAC9vFCw4PL3yWCxl+PH04767d0xL/WY7u4s8grjzsKo+190ZzIV6qElL2l/Pqx/a+xovesj9UXQBUmMxA0XngIyp8mecJUq/gwl/gewQdm8WrQUQDMnPTn0iZCk5zQsh2LNXJhAJ33sSaMYm4hnbOrYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771913679; c=relaxed/simple;
-	bh=0PBvdJqAbSRqDqNaFsvrlM8Zju0hcAR5wr7VhLHEc6E=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=klvt9Qguqp/fBaNjZh+MLHOCMQcBE14H160fBbaAhVLe4RWfT6VILeyrPX7j8qGaYgpuZKjXNV08yTALAgYuduXaheS6rzapHmJYePzMThN2uDAP6A7k0cweezAiC7w3SKlVl8+eovPeQ38JNF6+5q+peCSVJcOxV845jOMboC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.161.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=quarantine dis=none) header.from=kernel.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-679b072ed3aso2686294eaf.1
-        for <linux-bluetooth@vger.kernel.org>; Mon, 23 Feb 2026 22:14:38 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771913677; x=1772518477;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=rQv1yJimGlxvy4yGPgOsX/UNrk5wbgDTKKecRY0I1tE=;
-        b=JPZLCkuywqcC8HcqiY/+OCem11zWWXyULydG43Dom61ijyCge4vW2Ip/s+yvACdhcO
-         lpNNtP/3ifFI9HueCW6j2+FR7b5GdDChR94Nps02VfBWX/J3E0sDtBPSzgivHp7f4yRD
-         JySu53nwVl8IhjkxZ4fQBxxZUx1fE4M6ooe9yfAsmfoFWhJSPgZv1P1fxaH+43xC1DhK
-         jZiiYq0zmBV492buVkUw/MMKB/tbSYEscHcKKTrifiPa4CNlKWhBOYt575929WtniV4D
-         DvCpjTfESOTWZhCciJnX4SmfxHZEdjAVVRotRBPgFjg5DDE83uqfFEng+hMGdJHu8Thb
-         vEgQ==
-X-Gm-Message-State: AOJu0Yy83Lr14OHhtymxtf7eiIq/TXuwRDjE7nRHxJWC0cyw/ZWnowD8
-	CTAU1UJnIYH7AwEawmRonwXLyFL0/vyCP/8peIEHoUPOuGDqgWTt2I8B
-X-Gm-Gg: AZuq6aITiOWxk4PxdZnb7uAYQOC/UzmhGumgIISEXOp7/oNxJ1E0sTfqkm7/dFOJWbe
-	Fz273yZibju2SVscp7NBZybB8ttsGlJJaXF9WxMjg1/yOafMrKGKB1ogwlRSHY0kUYfbc2MEBbd
-	BzpLN4hij76SkREVmvhMmV4d7Eb82WAB2rRnmaVNAUtmVqGlVIhQWfktHrepjZIXzDsOzwgjnN4
-	zjfBTCe6XfIQ0lOW+t3OOrRnWZtJNgfpbL0ohmBG3ZYtZ4/72DIra/Ct2nsNa3hFTp0k54PiJnz
-	Fo9s7qKwkSgyxtmr2doPnFKTVU6vZS0omKLpCoFxR2IP0m3WG4REY6VZdbBBCsGSgAGcebm4dXn
-	Xql7exuArC15HfOowCu+QdDo+jTloeqJOPB7z3LuL1vcBiaL7t/xL05kG/2zcfEgVrXpsieALu1
-	AxnqpFq/2KVVgVR3JyFQGkmAB1wGxDOgJOD9e5etqQe0SApS4tS1wrk7JSeoElhqE=
-X-Received: by 2002:a05:6820:4c04:b0:661:1d0c:a5af with SMTP id 006d021491bc7-679c461247dmr5953555eaf.69.1771913677584;
-        Mon, 23 Feb 2026 22:14:37 -0800 (PST)
-Received: from sean-HP-EliteBook-830-G6.attlocal.net ([2600:1702:5083:7610:8ac2:4fdd:a742:61b8])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-679c56dbde9sm7895306eaf.11.2026.02.23.22.14.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Feb 2026 22:14:35 -0800 (PST)
-From: Sean Wang <sean.wang@kernel.org>
-To: marcel@holtmann.org,
-	luiz.dentz@gmail.com,
-	ulf.hansson@linaro.org
-Cc: linux-bluetooth@vger.kernel.org,
-	linux-mediatek@lists.infradead.org,
-	linux-mmc@vger.kernel.org,
-	Sean Wang <sean.wang@mediatek.com>
-Subject: [PATCH v2 8/8] Bluetooth: btmtk: add MT7902 SDIO support
-Date: Tue, 24 Feb 2026 00:13:25 -0600
-Message-ID: <20260224061325.20189-8-sean.wang@kernel.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260224061325.20189-1-sean.wang@kernel.org>
-References: <20260224061325.20189-1-sean.wang@kernel.org>
+	s=arc-20240116; t=1771968701; c=relaxed/simple;
+	bh=YIlxGwPr5hMd/xYC92n77YTEg4ZxfpXED5MmFXnriGA=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=LgoLwXMs+ix978Q7k/9wpcrPXePuxz26lx4DXfRGvvbvfcyjVQvqP6TI1G7zbr9umKJuPa9mXS8A+ebKdIWF+YRP/w8LP3HRUoBBD8sE0DkFwzYhaaGQNzqFxR5CC9TsiskaILe//z81agNC6c4Jzy7zMLmyMxMeCyimZeyeO5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AGHAp1VY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A998BC116D0;
+	Tue, 24 Feb 2026 21:31:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1771968701;
+	bh=YIlxGwPr5hMd/xYC92n77YTEg4ZxfpXED5MmFXnriGA=;
+	h=Date:From:To:Cc:Subject:From;
+	b=AGHAp1VYfEp8JV0mtoHFu/TlxSn1frOQtTrUcFQKzGqTe0q7YGXqPbrN44SgKLePx
+	 zVmCQqhQki+nTDHMfT4GRqwGhBnYYNN0DWenHLjJV13eYD8RJ6jniJIe8vaDGKqXMa
+	 H61sSnNocbGNbxoJ8v9IoJJP+n+tOY0Dm7xoK7yFHc5mkvnBk4HiLsv+9wYJF7128/
+	 NjFIIYz4sypjpOAPUXrdXGVK6wbh2V7KIVfHZgDcRy1vMLuBmxZeeNAuxT7BnhDkbz
+	 qs2csCdBhnDHI6Q0V7nPM6RwNKOcKkgsLnhVgMci4d4vnkrkaU8qNAbGZNV+JT42xX
+	 UEuAQy5VyxfBg==
+Date: Tue, 24 Feb 2026 15:31:08 +0900
+From: "Gustavo A. R. Silva" <gustavoars@kernel.org>
+To: Marcel Holtmann <marcel@holtmann.org>,
+	Johan Hedberg <johan.hedberg@gmail.com>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <horms@kernel.org>
+Cc: linux-bluetooth@vger.kernel.org, netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	linux-hardening@vger.kernel.org
+Subject: [PATCH][next] Bluetooth: hci.h: Avoid a couple
+ -Wflex-array-member-not-at-end warnings
+Message-ID: <aZ1FrL8qvvKuktBF@kspp>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [1.04 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_MISSING_CHARSET(0.50)[];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[holtmann.org,gmail.com,linaro.org];
-	TAGGED_FROM(0.00)[bounces-19323-lists,linux-bluetooth=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-19363-lists,linux-bluetooth=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[holtmann.org,gmail.com,davemloft.net,google.com,kernel.org,redhat.com];
+	RCVD_COUNT_THREE(0.00)[4];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[gustavoars@kernel.org,linux-bluetooth@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-bluetooth];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-bluetooth];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sean.wang@kernel.org,linux-bluetooth@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	R_DKIM_NA(0.00)[];
-	NEURAL_HAM(-0.00)[-0.912];
-	RCPT_COUNT_SEVEN(0.00)[7];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mediatek.com:email]
-X-Rspamd-Queue-Id: 1B2A8182575
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 1017C18CCCB
 X-Rspamd-Action: no action
 
-From: Sean Wang <sean.wang@mediatek.com>
+-Wflex-array-member-not-at-end was introduced in GCC-14, and we are
+getting ready to enable it, globally.
 
-Add MT7902 Bluetooth SDIO support by introducing chip data and
-registering the device ID.
+struct hci_std_codecs and struct hci_std_codecs_v2 are flexible
+structures, this is structures that contain a flexible-array member
+(__u8 codec[]; and struct hci_std_codec_v2 codec[];, correspondingly.)
 
-Runtime PM is not yet supported by the driver, but normal operation
-is unaffected.
+Since struct hci_rp_read_local_supported_codecs and struct
+hci_rp_read_local_supported_codecs_v2 are defined by hardware, we
+create the new struct hci_std_codecs_hdr and struct hci_std_codecs_v2_hdr
+types, and use them to replace the object types causing trouble in
+struct hci_rp_read_local_supported_codecs and struct
+hci_rp_read_local_supported_codecs_v2, namely struct hci_std_codecs
+std_codecs; and struct hci_std_codecs_v2_hdr std_codecs;.
 
-Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Also, once -fms-extensions is enabled, we can use transparent struct
+members in both struct hci_std_codecs and struct hci_std_codecs_v2_hdr.
+
+Notice that the newly created types does not contain the flex-array
+member `codec`, which is the object causing the -Wfamnae warnings.
+
+After these changes, the size of struct hci_rp_read_local_supported_codecs
+and struct hci_rp_read_local_supported_codecs_v2, along with their
+member's offsets remain the same, hence the memory layouts don't
+change:
+
+Before changes:
+struct hci_rp_read_local_supported_codecs {
+        __u8                       status;               /*     0     1 */
+        struct hci_std_codecs      std_codecs;           /*     1     1 */
+        struct hci_vnd_codecs      vnd_codecs;           /*     2     1 */
+
+        /* size: 3, cachelines: 1, members: 3 */
+        /* last cacheline: 3 bytes */
+} __attribute__((__packed__));
+
+struct hci_rp_read_local_supported_codecs_v2 {
+        __u8                       status;               /*     0     1 */
+        struct hci_std_codecs_v2   std_codecs;           /*     1     1 */
+        struct hci_vnd_codecs_v2   vendor_codecs;        /*     2     1 */
+
+        /* size: 3, cachelines: 1, members: 3 */
+        /* last cacheline: 3 bytes */
+} __attribute__((__packed__));
+
+After changes:
+struct hci_rp_read_local_supported_codecs {
+	__u8                       status;               /*     0     1 */
+	struct hci_std_codecs_hdr  std_codecs;           /*     1     1 */
+	struct hci_vnd_codecs      vnd_codecs;           /*     2     1 */
+
+	/* size: 3, cachelines: 1, members: 3 */
+	/* last cacheline: 3 bytes */
+} __attribute__((__packed__));
+
+struct hci_rp_read_local_supported_codecs_v2 {
+	__u8                       status;               /*     0     1 */
+	struct hci_std_codecs_v2_hdr std_codecs;         /*     1     1 */
+	struct hci_vnd_codecs_v2   vendor_codecs;        /*     2     1 */
+
+	/* size: 3, cachelines: 1, members: 3 */
+	/* last cacheline: 3 bytes */
+} __attribute__((__packed__));
+
+With these changes fix the following warnings:
+
+include/net/bluetooth/hci.h:1490:31: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
+include/net/bluetooth/hci.h:1525:34: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
+
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
 ---
-v2: no changes
----
- drivers/bluetooth/btmtksdio.c | 42 ++++++++++++++++++++++++-----------
- 1 file changed, 29 insertions(+), 13 deletions(-)
+ include/net/bluetooth/hci.h | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c
-index e986e5af51ae..042064464d34 100644
---- a/drivers/bluetooth/btmtksdio.c
-+++ b/drivers/bluetooth/btmtksdio.c
-@@ -42,24 +42,35 @@ struct btmtksdio_data {
- 	const char *fwname;
- 	u16 chipid;
- 	bool lp_mbox_supported;
-+	bool pm_runtime_supported;
- };
+diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+index 89ad9470fa71..572b1c620c5d 100644
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -1468,8 +1468,12 @@ struct hci_rp_read_data_block_size {
+ } __packed;
  
- static const struct btmtksdio_data mt7663_data = {
- 	.fwname = FIRMWARE_MT7663,
- 	.chipid = 0x7663,
- 	.lp_mbox_supported = false,
-+	.pm_runtime_supported = true,
- };
- 
- static const struct btmtksdio_data mt7668_data = {
- 	.fwname = FIRMWARE_MT7668,
- 	.chipid = 0x7668,
- 	.lp_mbox_supported = false,
-+	.pm_runtime_supported = true,
- };
- 
- static const struct btmtksdio_data mt7921_data = {
- 	.fwname = FIRMWARE_MT7961,
- 	.chipid = 0x7921,
- 	.lp_mbox_supported = true,
-+	.pm_runtime_supported = true,
-+};
+ #define HCI_OP_READ_LOCAL_CODECS	0x100b
+-struct hci_std_codecs {
++struct hci_std_codecs_hdr {
+ 	__u8	num;
++} __packed;
 +
-+static const struct btmtksdio_data mt7902_data = {
-+	.fwname = FIRMWARE_MT7902,
-+	.chipid = 0x7902,
-+	.lp_mbox_supported = false,
-+	.pm_runtime_supported = false,
- };
++struct hci_std_codecs {
++	struct hci_std_codecs_hdr;
+ 	__u8	codec[];
+ } __packed;
  
- static const struct sdio_device_id btmtksdio_table[] = {
-@@ -69,6 +80,8 @@ static const struct sdio_device_id btmtksdio_table[] = {
- 	 .driver_data = (kernel_ulong_t)&mt7668_data },
- 	{SDIO_DEVICE(SDIO_VENDOR_ID_MEDIATEK, SDIO_DEVICE_ID_MEDIATEK_MT7961),
- 	 .driver_data = (kernel_ulong_t)&mt7921_data },
-+	{SDIO_DEVICE(SDIO_VENDOR_ID_MEDIATEK, SDIO_DEVICE_ID_MEDIATEK_MT7902),
-+	.driver_data = (kernel_ulong_t)&mt7902_data },
- 	{ }	/* Terminating entry */
- };
- MODULE_DEVICE_TABLE(sdio, btmtksdio_table);
-@@ -1090,6 +1103,7 @@ static int btmtksdio_setup(struct hci_dev *hdev)
- 	set_bit(BTMTKSDIO_HW_TX_READY, &bdev->tx_state);
+@@ -1487,7 +1491,7 @@ struct hci_vnd_codecs {
  
- 	switch (bdev->data->chipid) {
-+	case 0x7902:
- 	case 0x7921:
- 		if (test_bit(BTMTKSDIO_HW_RESET_ACTIVE, &bdev->tx_state)) {
- 			err = btmtksdio_mtk_reg_read(hdev, MT7921_DLSTATUS,
-@@ -1167,22 +1181,24 @@ static int btmtksdio_setup(struct hci_dev *hdev)
- 	delta = ktime_sub(rettime, calltime);
- 	duration = (unsigned long long)ktime_to_ns(delta) >> 10;
+ struct hci_rp_read_local_supported_codecs {
+ 	__u8	status;
+-	struct hci_std_codecs std_codecs;
++	struct hci_std_codecs_hdr std_codecs;
+ 	struct hci_vnd_codecs vnd_codecs;
+ } __packed;
  
--	pm_runtime_set_autosuspend_delay(bdev->dev,
--					 MTKBTSDIO_AUTOSUSPEND_DELAY);
--	pm_runtime_use_autosuspend(bdev->dev);
-+	if (bdev->data->pm_runtime_supported) {
-+		pm_runtime_set_autosuspend_delay(bdev->dev,
-+						 MTKBTSDIO_AUTOSUSPEND_DELAY);
-+		pm_runtime_use_autosuspend(bdev->dev);
+@@ -1504,8 +1508,12 @@ struct hci_std_codec_v2 {
+ 	__u8	transport;
+ } __packed;
  
--	err = pm_runtime_set_active(bdev->dev);
--	if (err < 0)
--		return err;
-+		err = pm_runtime_set_active(bdev->dev);
-+		if (err < 0)
-+			return err;
+-struct hci_std_codecs_v2 {
++struct hci_std_codecs_v2_hdr {
+ 	__u8	num;
++} __packed;
++
++struct hci_std_codecs_v2 {
++	struct hci_std_codecs_v2_hdr;
+ 	struct hci_std_codec_v2 codec[];
+ } __packed;
  
--	/* Default forbid runtime auto suspend, that can be allowed by
--	 * enable_autosuspend flag or the PM runtime entry under sysfs.
--	 */
--	pm_runtime_forbid(bdev->dev);
--	pm_runtime_enable(bdev->dev);
-+		/* Default forbid runtime auto suspend, that can be allowed by
-+		 * enable_autosuspend flag or the PM runtime entry under sysfs.
-+		 */
-+		pm_runtime_forbid(bdev->dev);
-+		pm_runtime_enable(bdev->dev);
+@@ -1522,7 +1530,7 @@ struct hci_vnd_codecs_v2 {
  
--	if (enable_autosuspend)
--		pm_runtime_allow(bdev->dev);
-+		if (enable_autosuspend)
-+			pm_runtime_allow(bdev->dev);
-+	}
- 
- 	bt_dev_info(hdev, "Device setup in %llu usecs", duration);
+ struct hci_rp_read_local_supported_codecs_v2 {
+ 	__u8	status;
+-	struct hci_std_codecs_v2 std_codecs;
++	struct hci_std_codecs_v2_hdr std_codecs;
+ 	struct hci_vnd_codecs_v2 vendor_codecs;
+ } __packed;
  
 -- 
 2.43.0
