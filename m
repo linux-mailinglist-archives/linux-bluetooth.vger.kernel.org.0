@@ -1,153 +1,182 @@
-Return-Path: <linux-bluetooth+bounces-19377-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-19375-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OPQXL2fTnmnwXQQAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-19377-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 25 Feb 2026 11:48:07 +0100
+	id gIZRLxzTnmnwXQQAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-19375-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 25 Feb 2026 11:46:52 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F85B195FC4
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 25 Feb 2026 11:48:07 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A804195F8F
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 25 Feb 2026 11:46:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A67EB303FABD
-	for <lists+linux-bluetooth@lfdr.de>; Wed, 25 Feb 2026 10:43:47 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2AE573116705
+	for <lists+linux-bluetooth@lfdr.de>; Wed, 25 Feb 2026 10:41:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBE0C38F25B;
-	Wed, 25 Feb 2026 10:43:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04FA1392C5F;
+	Wed, 25 Feb 2026 10:41:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b="iN3HL4GB"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
+Received: from mailgw02.mediatek.com (unknown [210.61.82.184])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88E9344DB8
-	for <linux-bluetooth@vger.kernel.org>; Wed, 25 Feb 2026 10:43:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=141.14.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9D7E33CE85;
+	Wed, 25 Feb 2026 10:41:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.61.82.184
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772016225; cv=none; b=ba1QDLWjHqMGBrlaaA1bZy9+fTg5BTgIFqx94dz0UvPHUuOdvgK2IU8dCx8rUqiVcgMkmATL6j4bak6/iMvkRsIKyI7LGru8ZHNaE02Uz4+yz8SMUGldXlGoDuUl9+sTT63d+qlyfRTI7eZXtvXfa2kgyPTm89tbMh3n3jSp6Cs=
+	t=1772016106; cv=none; b=HodPAdJqtIEbOn3Cif13IkbI9htKMPE6Whj0tDvYxOk0I9NSnyI4ArBMb4PJ+SplA4gBw0wnaSbx1QgxT+t2THKulxb0Os6WEQEqmUj+JAW1p6LBM8/S0yp9PzGOvrJO7agbTt0PTRy//23CvsDPOoU288uawD5y6WOZJ+5gSxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772016225; c=relaxed/simple;
-	bh=+eLYqVD9t2SH88Vw58ox6H9Dl1Ud8/+NKzepuwwwO+0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:Cc:From:
-	 In-Reply-To:Content-Type; b=c0v0M17FJbuRjwXCDMY0mgx/TcSbbuLMhdcLAg/BZSPTWoaCYY7qewOhfHh7xAiOK2ccjshlwQ6lvoHrquRQbg4nWnR3gDtR5FFlBjCrXtSvz6Dd1dVVa+D0IPoLvo+RP9IwEOYgnUr/YdfgZlh2/vFBDIZjR0IHCwSGDAPy1Xk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de; spf=pass smtp.mailfrom=molgen.mpg.de; arc=none smtp.client-ip=141.14.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=molgen.mpg.de
-Received: from [172.18.249.96] (ip-185-104-138-144.ptr.icomera.net [185.104.138.144])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: pmenzel)
-	by mx.molgen.mpg.de (Postfix) with ESMTPSA id 0A25A4C443009E;
-	Wed, 25 Feb 2026 11:37:51 +0100 (CET)
-Message-ID: <044a30df-8cfb-477c-ba81-d76a044d73ef@molgen.mpg.de>
-Date: Wed, 25 Feb 2026 11:37:50 +0100
+	s=arc-20240116; t=1772016106; c=relaxed/simple;
+	bh=lQrnKRa3jOWiZGQcUD8boVBRzWl//aNIC1YT85BdAVg=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=dZ/Kw34SkLf1mAIeCzdlTBQRbIi6TDY5c84rLymI+jisgosqp3G/YFdKYeJvIxbrPNmk6YvB7DipYX/7MRGLiMIICRAHWJaxg4cu69Gy+wTXlZ3f6vvfRRGKrezzOZ3AXpZMiDvRvkPU7lDu1IR1SlGJ3+SnBgPV85SDyxZXsvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com; spf=pass smtp.mailfrom=mediatek.com; dkim=pass (1024-bit key) header.d=mediatek.com header.i=@mediatek.com header.b=iN3HL4GB; arc=none smtp.client-ip=210.61.82.184
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mediatek.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mediatek.com
+X-UUID: 91f968e4123611f1b7fc4fdb8733b2bc-20260225
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mediatek.com; s=dk;
+	h=Content-Type:Content-Transfer-Encoding:MIME-Version:Message-ID:Date:Subject:CC:To:From; bh=hLSmdwEWae9IQdlbU6DZdZZBigKJ9gwYpd2Oml3/yz8=;
+	b=iN3HL4GB6sX3AQyUZOnsjXQd4rXZqyq+yvvAtIOlS9pqWSFwZ+W3AxtPbC/D3dWEptffN0zTJaCxpMQhhsok28OZ2nzWD2ZiM0SO9xhYEebqJXVA1164MLVt+UUXbhJyk71jotMTHMmlydMWEX2tj3LyTym/q1AnBOrpOGQXcZk=;
+X-CID-P-RULE: Release_Ham
+X-CID-O-INFO: VERSION:1.3.11,REQID:e1ce6ee0-5be9-476f-b204-ca529583d99d,IP:0,U
+	RL:0,TC:0,Content:0,EDM:0,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION:
+	release,TS:0
+X-CID-META: VersionHash:89c9d04,CLOUDID:6aa0417b-8c8a-4fc4-88c0-3556e7711556,B
+	ulkID:nil,BulkQuantity:0,Recheck:0,SF:102|836|888|898,TC:-5,Content:0|15|5
+	0,EDM:-3,IP:nil,URL:0,File:130,RT:0,Bulk:nil,QS:nil,BEC:-1,COL:0,OSI:0,OSA
+	:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
+X-CID-BVR: 2,SSN|SDN
+X-CID-BAS: 2,SSN|SDN,0,_
+X-CID-FACTOR: TF_CID_SPAM_SNR
+X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
+X-UUID: 91f968e4123611f1b7fc4fdb8733b2bc-20260225
+Received: from mtkmbs11n1.mediatek.inc [(172.21.101.185)] by mailgw02.mediatek.com
+	(envelope-from <chris.lu@mediatek.com>)
+	(Generic MTA with TLSv1.2 ECDHE-RSA-AES256-GCM-SHA384 256/256)
+	with ESMTP id 1075470567; Wed, 25 Feb 2026 18:41:41 +0800
+Received: from mtkmbs11n1.mediatek.inc (172.21.101.185) by
+ mtkmbs10n1.mediatek.inc (172.21.101.34) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.29; Wed, 25 Feb 2026 18:41:39 +0800
+Received: from mtksitap99.mediatek.inc (10.233.130.16) by
+ mtkmbs11n1.mediatek.inc (172.21.101.73) with Microsoft SMTP Server id
+ 15.2.2562.29 via Frontend Transport; Wed, 25 Feb 2026 18:41:39 +0800
+From: Chris Lu <chris.lu@mediatek.com>
+To: Marcel Holtmann <marcel@holtmann.org>, Johan Hedberg
+	<johan.hedberg@gmail.com>, Luiz Von Dentz <luiz.dentz@gmail.com>
+CC: Sean Wang <sean.wang@mediatek.com>, Will Lee <will-cy.Lee@mediatek.com>,
+	SS Wu <ss.wu@mediatek.com>, Steve Lee <steve.lee@mediatek.com>,
+	linux-bluetooth <linux-bluetooth@vger.kernel.org>, linux-kernel
+	<linux-kernel@vger.kernel.org>, linux-mediatek
+	<linux-mediatek@lists.infradead.org>, Chris Lu <chris.lu@mediatek.com>
+Subject: [RESEND PATCH v1 1/2] Bluetooth: btusb: MT7922: Add VID/PID 0e8d/223c
+Date: Wed, 25 Feb 2026 18:41:35 +0800
+Message-ID: <20260225104136.3943529-1-chris.lu@mediatek.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Bluetooth: Increase LE connection timeout for industrial
- sensors
-To: Dajid Morel <dajid.morel@volvo.com>
-References: <AM7PR05MB679030C679B87FCDEF903CAAEC75A@AM7PR05MB6790.eurprd05.prod.outlook.com>
-Content-Language: en-US
-Cc: linux-bluetooth@vger.kernel.org
-From: Paul Menzel <pmenzel@molgen.mpg.de>
-In-Reply-To: <AM7PR05MB679030C679B87FCDEF903CAAEC75A@AM7PR05MB6790.eurprd05.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.46 / 15.00];
+X-Spamd-Result: default: False [0.84 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[mediatek.com,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[mediatek.com:s=dk];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	TAGGED_FROM(0.00)[bounces-19377-lists,linux-bluetooth=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	DMARC_NA(0.00)[mpg.de];
-	RCPT_COUNT_TWO(0.00)[2];
+	TO_DN_ALL(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[holtmann.org,gmail.com];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-19375-lists,linux-bluetooth=lfdr.de];
+	DKIM_TRACE(0.00)[mediatek.com:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[pmenzel@molgen.mpg.de,linux-bluetooth@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
-	MID_RHS_MATCH_FROM(0.00)[];
-	R_DKIM_NA(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[chris.lu@mediatek.com,linux-bluetooth@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	NEURAL_HAM(-0.00)[-0.999];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,volvo.com:email]
-X-Rspamd-Queue-Id: 3F85B195FC4
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mediatek.com:mid,mediatek.com:dkim,mediatek.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 3A804195F8F
 X-Rspamd-Action: no action
 
-Dear Dajid,
+Add VID 0e8d & PID 223c for MediaTek MT7922 USB Bluetooth chip.
 
+The information in /sys/kernel/debug/usb/devices about the Bluetooth
+device is listed as the below.
 
-Thank you for your patch.
+T:  Bus=07 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0e8d ProdID=223c Rev= 1.00
+S:  Manufacturer=MediaTek Inc.
+S:  Product=Wireless_Device
+S:  SerialNumber=000000000
+C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
+A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:  If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+I:* If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
 
-Am 25.02.26 um 10:07 schrieb Dajid Morel:
->  From 7945e077525b9ddcbbfd2d4f7251c6f669f7cccb Mon Sep 17 00:00:00 2001
-> 
-> From: Dajid Morel <dajid.morel@volvo.com>
-> 
-> Date: Tue, 24 Feb 2026 22:10:35 +0100
-> 
-> Subject: [PATCH] Bluetooth: Increase LE connection timeout for industrial
-> 
->   sensors
+Signed-off-by: Chris Lu <chris.lu@mediatek.com>
+---
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Note, that your patch was mangled. Please use `git send-email` or b4 to 
-submit the patch.
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 247d6aff5e79..c60f9be0699f 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -709,6 +709,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x04ca, 0x38e4), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0e8d, 0x223c), .driver_info = BTUSB_MEDIATEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3568), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3584), .driver_info = BTUSB_MEDIATEK |
+-- 
+2.45.2
 
-
-Please add an elaborate commit message body (`git commit --amend`) 
-giving the motivation/reasoning for the change, and ideally also a test 
-case.
-
-> Signed-off-by: Dajid Morel <dajid.morel@volvo.com>
-> 
-> ---
-> 
->   net/bluetooth/hci_conn.c | 4 ++--
-> 
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> 
-> 
-> diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-> 
-> index d177b7f49..8aeed0962 100644
-> 
-> --- a/net/bluetooth/hci_conn.c
-> 
-> +++ b/net/bluetooth/hci_conn.c
-> 
-> @@ -1131,7 +1131,7 @@ struct hci_conn *hci_connect_le(struct hci_dev *hdev, bdaddr_t *dst,
-> 
-> 
-> 
->    conn->dst_type = dst_type;
-> 
->    conn->sec_level = BT_SECURITY_LOW;
-> 
-> - conn->conn_timeout = conn_timeout;
-> 
-> + conn->conn_timeout = msecs_to_jiffies(20000);
-
-Please mention in the commit message, why 20 s is the right value, and 
-why not use less or mor.
-
-[…]
-
-
-Kind regards,
-
-Paul
 
