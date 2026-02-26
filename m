@@ -1,53 +1,54 @@
-Return-Path: <linux-bluetooth+bounces-19451-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-19452-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8GsxEzOroGlGlgQAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-19451-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 26 Feb 2026 21:21:07 +0100
+	id iGbXBziroGlGlgQAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-19452-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 26 Feb 2026 21:21:12 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A81421AF02F
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 26 Feb 2026 21:21:06 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1646A1AF036
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 26 Feb 2026 21:21:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 89AEF300D9C0
-	for <lists+linux-bluetooth@lfdr.de>; Thu, 26 Feb 2026 20:20:10 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 6A2713008694
+	for <lists+linux-bluetooth@lfdr.de>; Thu, 26 Feb 2026 20:21:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C55834611EE;
-	Thu, 26 Feb 2026 20:20:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1FC7E44D68A;
+	Thu, 26 Feb 2026 20:21:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="GZSKf8UI"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="f104jvwJ"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-28.smtp.github.com (out-28.smtp.github.com [192.30.252.211])
+Received: from out-21.smtp.github.com (out-21.smtp.github.com [192.30.252.204])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60066428828
-	for <linux-bluetooth@vger.kernel.org>; Thu, 26 Feb 2026 20:20:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.211
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F5A428828
+	for <linux-bluetooth@vger.kernel.org>; Thu, 26 Feb 2026 20:21:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.204
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772137209; cv=none; b=ImI2MZCE26LkUv5ioIMRUWpo1xYNKTKHzsDMNMSHFWiGGwmTpyoknNtkf8jDWOTjh9CfZu5y6UMNoreBFlsRKDZ9iZ2amFbup5fk762AhZchoxFQDQvdeMDTGB00d+hZ4aWweozP6uWpjDtAoTNKA7JZfm73sLkPNkmuV66k6jc=
+	t=1772137265; cv=none; b=FhGxOqPVOXfHLvg09ZtDPOp6LSqo/BUMKP4XXC0PNTsP6ALkdJWuu3mTI1V334Uw0HJ3YlGf1+gGQs+qvawlgGbIKwMdIPjUkqJL+bZ+qgWLseCToo9IYhvKok7yxXomxBiPb35ejq9mv/hshUo4pgGPMOfrFRn7YyrhVqakeRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772137209; c=relaxed/simple;
-	bh=LIcWmgYApA7L0ARRH3Ooh8WzxB+Y1uxSruTeeaVgcQw=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=MczwjHziuk9KV9242xBnbqOBAcO/CAD7LwgwFJ6jGsK96ViuGmQuBetnzQZO+1udvIEdiEovErKciFTzk7w7ruie93Seqd3GTzJYBgjpQFQcnSei47kp91dVShMtDEJ8B/LLXNwW5nKeuimUGfykko+B/y3fglrgYJo+bk6Ohnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=GZSKf8UI; arc=none smtp.client-ip=192.30.252.211
+	s=arc-20240116; t=1772137265; c=relaxed/simple;
+	bh=elg6uY3ykrY0ZexxaxRBdMcTm7VwRCOP3o5B6Xh/z0E=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=huAqH2+Yx9DnDZGIAnLDzcbNql+MWXVetMbAiJ/nfBIR/VPJcEwT3xMjmBPYjj/n5pF4vFvVsqtLEG3VTbrTPT+CECEOdJP+rrFReZMDrlOnFTRJ6aAqAKABH5N/CIAbCUlzBrgjdhARhhrExwash7R5ZBhe74EOuf8OqL285T4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=f104jvwJ; arc=none smtp.client-ip=192.30.252.204
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-4df9fdc.ash1-iad.github.net [10.56.191.30])
-	by smtp.github.com (Postfix) with ESMTPA id 9382E92131A
-	for <linux-bluetooth@vger.kernel.org>; Thu, 26 Feb 2026 12:20:07 -0800 (PST)
+Received: from github.com (hubbernetes-node-7df5d9e.ac4-iad.github.net [10.52.85.50])
+	by smtp.github.com (Postfix) with ESMTPA id 3027840134A
+	for <linux-bluetooth@vger.kernel.org>; Thu, 26 Feb 2026 12:21:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1772137207;
-	bh=lrAyz0iXG5JB+r4r6JNaYHJEQL6qVy6vpxYwOWath7I=;
+	s=pf2023; t=1772137263;
+	bh=7r3o9e3/N5YhlvblvKP3rzKCMcYaEQkEJliLGuE8m+4=;
 	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=GZSKf8UIiA7BeAkgJcejX3jL+uCyvQ+oJOyRl7GPAhdsQTGy6o0yMlNT97QZlE0DP
-	 AWARYQfj1oNWlfBiyquErp8fzqSyJg8dXM/SxBvAd+83Bf1rkLByAcmkBnL+BO0lQv
-	 nxWQsjDEwJhU8GIh8ziDf46dOmR8rnFRgkYAeenw=
-Date: Thu, 26 Feb 2026 12:20:07 -0800
-From: fdanis-oss <noreply@github.com>
+	b=f104jvwJx9+1wABmcUSq751Lwl8W5AC2MFHygg2mxlDx2zLt2wgmqwux74k3gasOg
+	 oSeIC6r58kbnQBejdjd42Ulx8Uh+y4JPFgb+G15t9GAzbjWgfW3cCkx17SMuNeZa5I
+	 PYt6k0peVFALqTAqopu6fhFKrehXREhF6FrymP84=
+Date: Thu, 26 Feb 2026 12:21:03 -0800
+From: Luiz Augusto von Dentz <noreply@github.com>
 To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/master/bf52d6-21459a@github.com>
-Subject: [bluez/bluez] 21459a: shared/bap: Fix endpoint configuration
+Message-ID: <bluez/bluez/push/refs/heads/1058640/000000-63ee6a@github.com>
+Subject: [bluez/bluez] d94844: hciemu: Fix silently dropping packet if writev
+ ret...
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -56,7 +57,7 @@ List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
 X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
 X-Auto-Response-Suppress: All
 X-Rspamd-Server: lfdr
@@ -65,7 +66,7 @@ X-Spamd-Result: default: False [2.04 / 15.00];
 	R_DKIM_REJECT(1.00)[github.com:s=pf2023];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MV_CASE(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
@@ -74,51 +75,74 @@ X-Spamd-Result: default: False [2.04 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	RCPT_COUNT_ONE(0.00)[1];
 	RCVD_COUNT_THREE(0.00)[4];
-	TAGGED_FROM(0.00)[bounces-19451-lists,linux-bluetooth=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-19452-lists,linux-bluetooth=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	MISSING_XM_UA(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[noreply@github.com,linux-bluetooth@vger.kernel.org];
+	PRECEDENCE_BULK(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	TO_DN_NONE(0.00)[];
-	NEURAL_HAM(-0.00)[-0.993];
+	NEURAL_HAM(-0.00)[-0.995];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: A81421AF02F
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,intel.com:email]
+X-Rspamd-Queue-Id: 1646A1AF036
 X-Rspamd-Action: no action
 
-  Branch: refs/heads/master
+  Branch: refs/heads/1058640
   Home:   https://github.com/bluez/bluez
-  Commit: 21459ac269ed67cac7948ec7a482cf3c4e653d0d
-      https://github.com/bluez/bluez/commit/21459ac269ed67cac7948ec7a482c=
-f3c4e653d0d
-  Author: Fr=C3=A9d=C3=A9ric Danis <frederic.danis@collabora.com>
+  Commit: d9484420164c5487b35b696bb5e97e3f0a6d25c1
+      https://github.com/bluez/bluez/commit/d9484420164c5487b35b696bb5e97e3f0a6d25c1
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
   Date:   2026-02-26 (Thu, 26 Feb 2026)
 
   Changed paths:
-    M profiles/audio/media.c
-    M src/shared/bap.c
-    M src/shared/bap.h
+    M emulator/hciemu.c
 
   Log Message:
   -----------
-  shared/bap: Fix endpoint configuration
+  hciemu: Fix silently dropping packet if writev return -EAGAIN
 
-When a first local endpoint is created after connection to a remote
-device this doesn't trigger the SelectProperties request because
-bt_bap_bac ops are not yet set when bt_bap_select() is called.
-Creating a second local endpoint allows to trigger SelectProperties
-request for the first endpoint.
-
-This commit fixes this behavior by setting the ops during bt_bap_pac
-creation.
+The code has been silently dropping packets due to lack of buffer
+since hciemu design is single threaded it cannot do partial writes
+or flushes to force the buffer to be consumed and give space to the
+next chunk, so in order to fix this the code will now attempt to
+detect if a socket runs out of space and automatically bump the
+buffer with use of SO_SNDBUF.
 
 
+  Commit: 63ee6a0a5629453243dff7477fb127de719e3414
+      https://github.com/bluez/bluez/commit/63ee6a0a5629453243dff7477fb127de719e3414
+  Author: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+  Date:   2026-02-26 (Thu, 26 Feb 2026)
 
-To unsubscribe from these emails, change your notification settings at ht=
-tps://github.com/bluez/bluez/settings/notifications
+  Changed paths:
+    M emulator/bthost.c
+
+  Log Message:
+  -----------
+  bthost: Add segmentation support for L2CAP LE-(E)CRED mode
+
+This fixes the following tests since the kernel now attempts to
+check if a segment length is bigger than the MPS:
+
+L2CAP LE Client - Read 32k Success - run
+  Connect in progress
+  Client connect CID 0x0040 handle 0x0001
+  Successfully connected to CID 0x0040
+Bluetooth: Too big LE L2CAP MPS: len 672 > 188
+
+L2CAP LE Client - RX Timestamping 32k - run
+  Connect in progress
+  Client connect CID 0x0040 handle 0x0001
+  Successfully connected to CID 0x0040
+Bluetooth: Too big LE L2CAP MPS: len 672 > 188
+
+
+Compare: https://github.com/bluez/bluez/compare/d9484420164c%5E...63ee6a0a5629
+
+To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
