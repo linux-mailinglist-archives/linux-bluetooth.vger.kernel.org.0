@@ -1,53 +1,54 @@
-Return-Path: <linux-bluetooth+bounces-19481-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-19498-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GE9eMLu/oWnPwAQAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-19481-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Feb 2026 17:00:59 +0100
+	id KCpTLYTGoWkVwQQAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-19498-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Feb 2026 17:29:56 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id A34281BA73D
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Feb 2026 17:00:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2FDFE1BACD7
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Feb 2026 17:29:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id B2ECD30CE530
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Feb 2026 15:56:52 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id F2E0330ECAE5
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Feb 2026 16:25:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B829E44A70F;
-	Fri, 27 Feb 2026 15:56:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3117542981E;
+	Fri, 27 Feb 2026 16:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="eyeK6waT"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="iO5JOYxb"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-21.smtp.github.com (out-21.smtp.github.com [192.30.252.204])
+Received: from out-24.smtp.github.com (out-24.smtp.github.com [192.30.252.207])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB7944B695
-	for <linux-bluetooth@vger.kernel.org>; Fri, 27 Feb 2026 15:56:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.204
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B085428839
+	for <linux-bluetooth@vger.kernel.org>; Fri, 27 Feb 2026 16:25:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.207
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772207790; cv=none; b=udJtqL36dvqeR7xLR9z1vPjVLv6FnZyGhw2tOlkl3wqdZYZWt81SVGAldTYdLhy5KSO8Gn9sh9MNUEj9bWIVD6isgu9INdGmBvXAYXt8c5etkL5rXVF/EQEgxwxxX+hAPo8/x0brQ7cEmJopTm8RqOoD3XcEdIZN+idZFHOVL2g=
+	t=1772209545; cv=none; b=n1xALJH39lOr0G0PkPg+aYH2QUz9NFquolnZgA95x/jgVTm9S+laEBMO3HOlLYlU4PMokIiCK2AFhef7MDqUMFxUICXKXfzQEN+DRhf8zsHFwUnQrmTxtrE0N3iny12FnQdio5c2EOGVxpe1GXu0CAVc6epIWLRD0lem/BIkDiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772207790; c=relaxed/simple;
-	bh=xSTkmPIlHNXYuc+pfX2Hba7r7FszKFLrYywPSPJxplE=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=cbtL4PjguHPVwY5ZSQI/Ig7knxMvIkNdxBqNjExP/0Qfm3Y+UnTvp7i5TzUuYRtdl3YxBc9sVESI/tpEi9zop0aGPgH7zHD2uVEY2nciy+QwoqMkPMO/4gCj36EfJii099+gBXI7BZk5LvnRPqVnkFfBs0TIaBeF4hQVLuN+Eno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=eyeK6waT; arc=none smtp.client-ip=192.30.252.204
+	s=arc-20240116; t=1772209545; c=relaxed/simple;
+	bh=byo9Gsv5pzv4HIUdstk7yAOYCRiw+0tf+yWw/b9E+1g=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=VCNBbaA56chsbhT83lEubosF1MRAYomCsjh0bSXD1oQF+ebyevvMtHRkzJV/3g8jhauAeo1MhnZYptO+bp5rgjMWCLBuzbISuC2YLauzIAPzUzt2NqvugJCVAKfKH29kXz7Emm/05fD7aADegj0Aq1EioD6D27LXI6fh8dbEy6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=iO5JOYxb; arc=none smtp.client-ip=192.30.252.207
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-e4c9d5a.ac4-iad.github.net [10.52.155.46])
-	by smtp.github.com (Postfix) with ESMTPA id 2678A40091B
-	for <linux-bluetooth@vger.kernel.org>; Fri, 27 Feb 2026 07:56:24 -0800 (PST)
+Received: from github.com (hubbernetes-node-95378a2.ac4-iad.github.net [10.52.222.77])
+	by smtp.github.com (Postfix) with ESMTPA id AAF3F640924
+	for <linux-bluetooth@vger.kernel.org>; Fri, 27 Feb 2026 08:25:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1772207784;
-	bh=u+66Utsin2oZDmbMnQMcWUTOBZuq0qZWi2ZivyhfJIs=;
+	s=pf2023; t=1772209543;
+	bh=XdXYx5z6I1WEzgU/X+ppn2agZiyJm/oDbT0mQr5+hmE=;
 	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=eyeK6waTFPuRiNybARVshce02S994ftJKhknip1ZLitkC/Yapf3MoaClIAZvSljh3
-	 A7oTwPwjajmSn3IoeREBSpkjlORpr5V336MQdehV+3H42yJT6Gijgf9LnhN9R4SZX1
-	 5ZXiVdt79yOr+PIFGB0N3i7Si08BlnT9gAopzYq0=
-Date: Fri, 27 Feb 2026 07:56:24 -0800
-From: BluezTestBot <noreply@github.com>
+	b=iO5JOYxbxi8c8UAF2MXv2AHjPz/sZFmQepwFbJVHMLGgmF0N00l8OJ8LEO3HfSUWq
+	 9oSoultYjGFGlAanjI5oZXxmENdiqFC22QQNboX4tj7TfbCn2wwg4ZA0kQD9m69gOt
+	 YXcWRiWuLh/aIUtF6DbT/fm+/7tyf5j8ZiuayrWs=
+Date: Fri, 27 Feb 2026 08:25:43 -0800
+From: Christian Eggers <noreply@github.com>
 To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/1048150/d8aa72-000000@github.com>
-Subject: [bluez/bluez]
+Message-ID: <bluez/bluez/push/refs/heads/1059103/000000-8b909d@github.com>
+Subject: [bluez/bluez] b19a85: doc/qualification: gap-pics: add footnote for
+ TSPC...
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -74,25 +75,260 @@ X-Spamd-Result: default: False [2.04 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	RCPT_COUNT_ONE(0.00)[1];
 	RCVD_COUNT_THREE(0.00)[4];
-	TAGGED_FROM(0.00)[bounces-19481-lists,linux-bluetooth=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-19498-lists,linux-bluetooth=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	MISSING_XM_UA(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[noreply@github.com,linux-bluetooth@vger.kernel.org];
 	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[noreply@github.com,linux-bluetooth@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	TO_DN_NONE(0.00)[];
 	NEURAL_HAM(-0.00)[-0.999];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: A34281BA73D
+	DBL_BLOCKED_OPENRESOLVER(0.00)[arri.de:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 2FDFE1BACD7
 X-Rspamd-Action: no action
 
-  Branch: refs/heads/1048150
+  Branch: refs/heads/1059103
   Home:   https://github.com/bluez/bluez
+  Commit: b19a85b5fd44e274f031c9dee98b913010f3b28f
+      https://github.com/bluez/bluez/commit/b19a85b5fd44e274f031c9dee98b913010f3b28f
+  Author: Christian Eggers <ceggers@arri.de>
+  Date:   2026-02-27 (Fri, 27 Feb 2026)
+
+  Changed paths:
+    M doc/qualification/gap-pics.rst
+
+  Log Message:
+  -----------
+  doc/qualification: gap-pics: add footnote for TSPC_GAP_21_9 feature
+
+This feature is not supported by some host controllers (e.g. RTL8761BU)
+and must be disabled with such hardware.
+
+
+  Commit: 6a73d94d17fc90c308f50849b0afd4d72f0c719e
+      https://github.com/bluez/bluez/commit/6a73d94d17fc90c308f50849b0afd4d72f0c719e
+  Author: Christian Eggers <ceggers@arri.de>
+  Date:   2026-02-27 (Fri, 27 Feb 2026)
+
+  Changed paths:
+    M doc/qualification/gap-pts.rst
+
+  Log Message:
+  -----------
+  doc/qualification: gap-pts: fix GAP/SEC/CSIGN/* tests
+
+These tests require an additional characteristic for authenticated
+signed writes:
+
+> Couldn't find a characteristic which supports ATT Signed Write.
+
+
+  Commit: 5363f436812b977062f4f907d7c6cc77d7e46877
+      https://github.com/bluez/bluez/commit/5363f436812b977062f4f907d7c6cc77d7e46877
+  Author: Christian Eggers <ceggers@arri.de>
+  Date:   2026-02-27 (Fri, 27 Feb 2026)
+
+  Changed paths:
+    M doc/qualification/gap-pts.rst
+
+  Log Message:
+  -----------
+  doc/qualification: gap-pts: fix GAP/SEC/SEM/BV-24-C test
+
+The test complains if the characteristic is created with read,write
+
+
+  Commit: ac227fa1146f9d6947bee2dc0db954bac76704a9
+      https://github.com/bluez/bluez/commit/ac227fa1146f9d6947bee2dc0db954bac76704a9
+  Author: Christian Eggers <ceggers@arri.de>
+  Date:   2026-02-27 (Fri, 27 Feb 2026)
+
+  Changed paths:
+    M doc/qualification/sm-pics.rst
+
+  Log Message:
+  -----------
+  doc/qualification: sm-pics: update capabilities in table 7b
+
+Match naming with current Qualification Workspace
+
+
+  Commit: b6fc33d4e2220d576175fa5329f6009b5ade3519
+      https://github.com/bluez/bluez/commit/b6fc33d4e2220d576175fa5329f6009b5ade3519
+  Author: Christian Eggers <ceggers@arri.de>
+  Date:   2026-02-27 (Fri, 27 Feb 2026)
+
+  Changed paths:
+    M doc/qualification/sm-pts.rst
+
+  Log Message:
+  -----------
+  doc/qualification: sm-pts: fix SM/PER/PKE/BI-03-C and BV-02-C tests
+
+Running 'btmgmt' is not required, passkey in shown in bluetoothctl.
+
+
+  Commit: b62e46860d84dd853c88d1fd036d13d739a7d640
+      https://github.com/bluez/bluez/commit/b62e46860d84dd853c88d1fd036d13d739a7d640
+  Author: Christian Eggers <ceggers@arri.de>
+  Date:   2026-02-27 (Fri, 27 Feb 2026)
+
+  Changed paths:
+    M doc/qualification/sm-pts.rst
+
+  Log Message:
+  -----------
+  doc/qualification: sm-pts: fix SM/PER/SCPK/BI-03-C test
+
+Running 'btmgmt' is not required, passkey in shown in bluetoothctl.
+
+
+  Commit: 03e8cdbcb6471eba8301123204c0c971cefb503c
+      https://github.com/bluez/bluez/commit/03e8cdbcb6471eba8301123204c0c971cefb503c
+  Author: Christian Eggers <ceggers@arri.de>
+  Date:   2026-02-27 (Fri, 27 Feb 2026)
+
+  Changed paths:
+    M doc/qualification/sm-pts.rst
+
+  Log Message:
+  -----------
+  doc/qualification: sm-pts: add description for M/PER/PIS/BV-0[1-2]-C
+
+
+  Commit: 1833a3577ec852a6182e2dd0ad3d1a8b92af103e
+      https://github.com/bluez/bluez/commit/1833a3577ec852a6182e2dd0ad3d1a8b92af103e
+  Author: Christian Eggers <ceggers@arri.de>
+  Date:   2026-02-27 (Fri, 27 Feb 2026)
+
+  Changed paths:
+    M doc/qualification/sm-pts.rst
+
+  Log Message:
+  -----------
+  doc/qualification: sm-pts: add description for SM/PER/KDU/BI-04-C test
+
+
+  Commit: 5fad0c8dab26c770e4e521c2609b1300bed893a3
+      https://github.com/bluez/bluez/commit/5fad0c8dab26c770e4e521c2609b1300bed893a3
+  Author: Christian Eggers <ceggers@arri.de>
+  Date:   2026-02-27 (Fri, 27 Feb 2026)
+
+  Changed paths:
+    M doc/qualification/gatt-pts.rst
+
+  Log Message:
+  -----------
+  doc/qualification: gatt-pts: add description for GATT/SR/GAW/BI-39-C
+
+
+  Commit: 5fddfac97bde4ed88506938e1854f140a1c1dbce
+      https://github.com/bluez/bluez/commit/5fddfac97bde4ed88506938e1854f140a1c1dbce
+  Author: Christian Eggers <ceggers@arri.de>
+  Date:   2026-02-27 (Fri, 27 Feb 2026)
+
+  Changed paths:
+    M doc/qualification/gatt-pts.rst
+
+  Log Message:
+  -----------
+  doc/qualification: gatt-pts: update description for GATT/SR/GAN/BV-01-C
+
+'btgatt-server' exits after PTS disconnects and is not available when
+PTS reconnects. Starting btgatt-server again would solve the problem,
+but we should prefer testing with the real GATT daemon instead of using
+debugging containers. Additionally, this solution also works for
+GATT/SR/GAN/BV-03-C (next commit).
+
+
+  Commit: 3060f01bb44e1cea2606eeb03cefe8686805a83a
+      https://github.com/bluez/bluez/commit/3060f01bb44e1cea2606eeb03cefe8686805a83a
+  Author: Christian Eggers <ceggers@arri.de>
+  Date:   2026-02-27 (Fri, 27 Feb 2026)
+
+  Changed paths:
+    M doc/qualification/gatt-pts.rst
+
+  Log Message:
+  -----------
+  doc/qualification: gatt-pts: add description for GATT/SR/GAN/BV-03-C
+
+Same as for GATT/SR/GAN/BV-01-C.
+
+
+  Commit: 687ea77bfcb425e7d760bdddf25a5a14e0509587
+      https://github.com/bluez/bluez/commit/687ea77bfcb425e7d760bdddf25a5a14e0509587
+  Author: Christian Eggers <ceggers@arri.de>
+  Date:   2026-02-27 (Fri, 27 Feb 2026)
+
+  Changed paths:
+    M doc/qualification/gatt-pts.rst
+
+  Log Message:
+  -----------
+  doc/qualification: gatt-pts: update description for GATT/SR/GAI/BV-01-C
+
+This tests requires an indication on the "Service Changed"
+characteristic of the builtin "GATT" service. This indication can be
+raised by adding (or removing) a custom service. Of course we have to do
+this at the point when PTS is expecting to revice the notification.
+
+https://lore.kernel.org/linux-bluetooth/CABBYNZ+O6KbjXoxTKSaPnSd=p2CDJ7j6cBktPT4xXD=PR0CBhA@mail.gmail.com/
+
+
+  Commit: 2fe3096bea3db025ac0bb75f0ed3b2ce04a0d139
+      https://github.com/bluez/bluez/commit/2fe3096bea3db025ac0bb75f0ed3b2ce04a0d139
+  Author: Christian Eggers <ceggers@arri.de>
+  Date:   2026-02-27 (Fri, 27 Feb 2026)
+
+  Changed paths:
+    M doc/qualification/gatt-pts.rst
+
+  Log Message:
+  -----------
+  doc/qualification: gatt-pts: add description for GATT/SR/GAI/BV-02-C
+
+Same as for GATT/SR/GAI/BV-01-C
+
+
+  Commit: 8b1b9cb59a751735f187a9218cd53d7a1c2804dd
+      https://github.com/bluez/bluez/commit/8b1b9cb59a751735f187a9218cd53d7a1c2804dd
+  Author: Christian Eggers <ceggers@arri.de>
+  Date:   2026-02-27 (Fri, 27 Feb 2026)
+
+  Changed paths:
+    M doc/qualification/l2cap-pts.rst
+
+  Log Message:
+  -----------
+  doc/qualification: l2cap-pts: remove redundant test documentation
+
+L2CAP/LE/REJ/BI-01-C is documented twice
+
+
+  Commit: 8b909d0ef21372a770bfa4ae976fbb5d8fc076f9
+      https://github.com/bluez/bluez/commit/8b909d0ef21372a770bfa4ae976fbb5d8fc076f9
+  Author: Christian Eggers <ceggers@arri.de>
+  Date:   2026-02-27 (Fri, 27 Feb 2026)
+
+  Changed paths:
+    M doc/qualification/l2cap-pics.rst
+    M doc/qualification/l2cap-pts.rst
+
+  Log Message:
+  -----------
+  doc/qualification: l2cap-pts: add descriptions for LE CFC tests
+
+All these tests depend on TSPC_L2CAP_2_46. Some tests require kernel
+fixes.
+
+
+Compare: https://github.com/bluez/bluez/compare/b19a85b5fd44%5E...8b909d0ef213
 
 To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
