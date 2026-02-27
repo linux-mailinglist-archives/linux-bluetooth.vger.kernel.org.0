@@ -1,63 +1,44 @@
-Return-Path: <linux-bluetooth+bounces-19458-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-19460-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0CYsHud/oWkUtgQAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-19458-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Feb 2026 12:28:39 +0100
+	id aC35IIaAoWkUtgQAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-19460-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Feb 2026 12:31:18 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id CED531B68ED
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Feb 2026 12:28:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DBB9E1B6977
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Feb 2026 12:31:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 32333315094A
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Feb 2026 11:24:15 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7432E313562F
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Feb 2026 11:29:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77C973EF0BC;
-	Fri, 27 Feb 2026 11:24:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="zpQOeSZq"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF97D3F0765;
+	Fri, 27 Feb 2026 11:29:22 +0000 (UTC)
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from canpmsgout07.his.huawei.com (canpmsgout07.his.huawei.com [113.46.200.222])
+Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7648536C0CE;
-	Fri, 27 Feb 2026 11:24:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.222
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13143EFD18
+	for <linux-bluetooth@vger.kernel.org>; Fri, 27 Feb 2026 11:29:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772191453; cv=none; b=nPyHLk9rijlLnBnIhmjjI7fW6smHzr1v+V/9feBMteADc4F1esP3pm7ujN4zxMhe1qhafE6AvzXMLmLno6tlqY4xVg/7EscuW2J1Gp4/H4A+SrD5cL2rbA9LMeHd/7/PEHR3qvq7Kn6paI/l5xluKxZMy4er5iGRkEiA9DD+Chk=
+	t=1772191761; cv=none; b=PVNkKY1dfmubijZi8BXxRhYzHyi3Kz9idOEOkb76boPKv1FoeVp56I9TqPLRcoPqHxtDgrqwvbMY7yGg4bLugE7OpZtPR/SntsfeTsWyUCs0Du/U41qiqJPjiqRjggneCEYJ0z4ruEVzCBZ2Ghs2x52e+wrc4EdF5N/I4aIchqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772191453; c=relaxed/simple;
-	bh=5QjAjo5uDOX1TV4BvMSo0+rPv0iJk3LgL9i77oAwYQE=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=IlLctEeRkoBuYrp4jEn25m0HnP4o6lAKBpKqETillaFR/U49nTaV0djKMrkzNIbzfudS9QcRkX6kNNHm8AtIOyW6Shwk7MaX2WpM6dHvY6BGFDMar7ciIs4PqZuDEcfiTDVcbXRIlRq2bJk6ua5p/EMMaXJT2Dmmm+9/FukAh1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=zpQOeSZq; arc=none smtp.client-ip=113.46.200.222
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
-	c=relaxed/relaxed; q=dns/txt;
-	h=From;
-	bh=88NWIMzdut4wFYMN/IOL9CvyxMsxNH1iWh6cKQMW8xo=;
-	b=zpQOeSZq3Pgz7opP9P+ETO/ttfub9s8ZYPaBefUs15ClqGzFG3X15+YVhcqH7YRRlP9NTq5L4
-	Hri7Yp6d8FEH1FWnjrg1XVHB1VwLzP5hz4KMpgySpkTSckx+m1l7o4G6W4iehC+GEVrkXSUqDlO
-	RRHHXXBZIqmN7JdeIZBGDOw=
-Received: from mail.maildlp.com (unknown [172.19.163.15])
-	by canpmsgout07.his.huawei.com (SkyGuard) with ESMTPS id 4fMm7957xtzLlTr;
-	Fri, 27 Feb 2026 19:19:17 +0800 (CST)
-Received: from dggpemf100009.china.huawei.com (unknown [7.185.36.128])
-	by mail.maildlp.com (Postfix) with ESMTPS id AFCDC40539;
-	Fri, 27 Feb 2026 19:24:05 +0800 (CST)
-Received: from huawei.com (10.67.175.29) by dggpemf100009.china.huawei.com
- (7.185.36.128) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 27 Feb
- 2026 19:24:05 +0800
-From: Wang Tao <wangtao554@huawei.com>
-To: <marcel@holtmann.org>, <johan.hedberg@gmail.com>, <luiz.dentz@gmail.com>
-CC: <linux-bluetooth@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-	<zhangqiao22@huawei.com>, <tanghui20@huawei.com>, <wangtao554@huawei.com>
-Subject: [PATCH] Bluetooth: MGMT: Fix list corruption and UAF in command complete handlers
-Date: Fri, 27 Feb 2026 11:03:39 +0000
-Message-ID: <20260227110339.919014-1-wangtao554@huawei.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1772191761; c=relaxed/simple;
+	bh=horvH+f8CJ0kVOIcCZHhdyqxsU/6Vfw4kLg+iPIj88I=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=c+7OLeEZWoD6Dhid1H3/SvyFakGwaDLMtel6dbkkh4vn4accBj2VHhBl4OxUlFpqKLWx7W0qtOn4pUZYZ+fJJtx6HZbANeW/ALKvWWnWeqFcwdahMvVwKXT/PaHSjOsEOuySdQtGi9lY5Aocx+yBWlr8T502U30VsZsinvmE4gA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net; spf=pass smtp.mailfrom=hadess.net; arc=none smtp.client-ip=217.70.183.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=hadess.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hadess.net
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 14F6F4327B
+	for <linux-bluetooth@vger.kernel.org>; Fri, 27 Feb 2026 11:29:08 +0000 (UTC)
+From: Bastien Nocera <hadess@hadess.net>
+To: linux-bluetooth@vger.kernel.org
+Subject: [PATCH BlueZ 0/2] Fix bluetoothctl no output
+Date: Fri, 27 Feb 2026 12:27:16 +0100
+Message-ID: <20260227112900.1946851-1-hadess@hadess.net>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -65,93 +46,56 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: kwepems100002.china.huawei.com (7.221.188.206) To
- dggpemf100009.china.huawei.com (7.185.36.128)
+X-GND-Sasl: hadess@hadess.net
+X-GND-Score: 0
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeekkeekucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhephffvufffkffoggfgsedtkeertdertddtnecuhfhrohhmpeeurghsthhivghnucfpohgtvghrrgcuoehhrgguvghssheshhgruggvshhsrdhnvghtqeenucggtffrrghtthgvrhhnpeffudfgkeffjeekieeivddtfeevvdelffejudfhhfehueehueefkeefueethfevfeenucffohhmrghinhepghhithhhuhgsrdgtohhmnecukfhppedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemsggrgeefmegrieejieemtgdvugefmeejrgehfeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemvgefgeemvggtjeefmegtfhdvtdemsggrgeefmegrieejieemtgdvugefmeejrgehfedphhgvlhhopeholhhimhhpihgtpdhmrghilhhfrhhomhephhgruggvshhssehhrgguvghsshdrnhgvthdpqhhiugepudeghfeihfegfedvjeeupdhmohguvgepshhmthhpohhuthdpnhgspghrtghpthhtohepuddprhgtphhtthhopehlihhnuhigqdgslhhuvghtohhothhhsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-GND-State: clean
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [0.04 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[huawei.com,quarantine];
 	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[huawei.com:s=dkim];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_NEQ_ENVFROM(0.00)[wangtao554@huawei.com,linux-bluetooth@vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-19458-lists,linux-bluetooth=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_TO(0.00)[holtmann.org,gmail.com];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[huawei.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	NEURAL_HAM(-0.00)[-1.000];
-	TO_DN_NONE(0.00)[];
-	TAGGED_RCPT(0.00)[linux-bluetooth];
-	RCVD_COUNT_FIVE(0.00)[6];
 	MIME_TRACE(0.00)[0:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,huawei.com:mid,huawei.com:dkim,huawei.com:email]
-X-Rspamd-Queue-Id: CED531B68ED
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_ONE(0.00)[1];
+	TAGGED_FROM(0.00)[bounces-19460-lists,linux-bluetooth=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	DMARC_NA(0.00)[hadess.net];
+	RCVD_COUNT_THREE(0.00)[4];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-bluetooth];
+	FROM_NEQ_ENVFROM(0.00)[hadess@hadess.net,linux-bluetooth@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	NEURAL_HAM(-0.00)[-0.998];
+	TO_DN_NONE(0.00)[];
+	R_DKIM_NA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,makefile.tools:url]
+X-Rspamd-Queue-Id: DBB9E1B6977
 X-Rspamd-Action: no action
 
-Commit 302a1f674c00 ("Bluetooth: MGMT: Fix possible UAFs") introduced
-mgmt_pending_valid(), which not only validates the pending command but
-also unlinks it from the pending list if it is valid. This change in
-semantics requires updates to several completion handlers to avoid list
-corruption and memory safety issues.
+This fixes a regression in 5.86, and works around a problem specific to
+btmgmt.
 
-This patch addresses two left-over issues from the aforementioned rework:
+Both commits can be tested independently using the regression test in
+the meson port:
+https://github.com/hadess/bluez/commits/wip/hadess/add-integration-tests/
 
-1. In mgmt_add_adv_patterns_monitor_complete(), mgmt_pending_remove()
-is replaced with mgmt_pending_free() in the success path. Since
-mgmt_pending_valid() already unlinks the command at the beginning of
-the function, calling mgmt_pending_remove() leads to a double list_del()
-and subsequent list corruption/kernel panic.
+Bastien Nocera (2):
+  Revert "shared/shell: Don't init input for non-interactive shells"
+  tools: Work-around broken stdin handling in home-made mainloop
 
-2. In set_mesh_complete(), the use of mgmt_pending_foreach() in the error
-path is removed. Since the current command is already unlinked by
-mgmt_pending_valid(), this foreach loop would incorrectly target other
-pending mesh commands, potentially freeing them while they are still being
-processed concurrently (leading to UAFs). The redundant mgmt_cmd_status()
-is also simplified to use cmd->opcode directly.
+ Makefile.tools     |  4 ++--
+ src/shared/shell.c | 10 +++++-----
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-Fixes: 302a1f674c00 ("Bluetooth: MGMT: Fix possible UAFs")
-Signed-off-by: Wang Tao <wangtao554@huawei.com>
----
- net/bluetooth/mgmt.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
-
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index a7238fd3b03b..d52238ce6a9a 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -2195,10 +2195,7 @@ static void set_mesh_complete(struct hci_dev *hdev, void *data, int err)
- 	sk = cmd->sk;
- 
- 	if (status) {
--		mgmt_cmd_status(cmd->sk, hdev->id, MGMT_OP_SET_MESH_RECEIVER,
--				status);
--		mgmt_pending_foreach(MGMT_OP_SET_MESH_RECEIVER, hdev, true,
--				     cmd_status_rsp, &status);
-+		mgmt_cmd_status(cmd->sk, hdev->id, cmd->opcode, status);
- 		goto done;
- 	}
- 
-@@ -5377,7 +5374,7 @@ static void mgmt_add_adv_patterns_monitor_complete(struct hci_dev *hdev,
- 
- 	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode,
- 			  mgmt_status(status), &rp, sizeof(rp));
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
- 
- 	hci_dev_unlock(hdev);
- 	bt_dev_dbg(hdev, "add monitor %d complete, status %d",
 -- 
-2.34.1
+2.53.0
 
 
