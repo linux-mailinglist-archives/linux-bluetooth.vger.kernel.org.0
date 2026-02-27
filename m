@@ -1,184 +1,156 @@
-Return-Path: <linux-bluetooth+bounces-19466-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-19467-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iCPAJdWQoWlZuQQAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-19466-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Feb 2026 13:40:53 +0100
+	id sHJnAryroWkivgQAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-19467-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Feb 2026 15:35:40 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37E091B7401
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Feb 2026 13:40:53 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75DAD1B911A
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Feb 2026 15:35:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 9FC473015B61
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Feb 2026 12:40:52 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id EC56B3047350
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 27 Feb 2026 14:33:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA9E13ECBCC;
-	Fri, 27 Feb 2026 12:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61F382BE7C6;
+	Fri, 27 Feb 2026 14:33:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HiFiUtvC"
+	dkim=pass (1024-bit key) header.d=arri.de header.i=@arri.de header.b="hO2vhUSN"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from AS8PR04CU009.outbound.protection.outlook.com (mail-westeuropeazon11011018.outbound.protection.outlook.com [52.101.70.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430E23D4115
-	for <linux-bluetooth@vger.kernel.org>; Fri, 27 Feb 2026 12:40:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772196050; cv=none; b=nnwI5uqMkODXdaaBMl+L16eoiCqgGjYCydz54PqgOuNbLUZi3c81hZyue2/DF67esrmCYuFw1EIKE1cWXVPbFMVERYwggbxTuvAE/sAkb4IimEdLzo1wz0C3JXzSZ/10dAfxkPD7mWSLGQln0hXTdDfhZ70vlvKrmQfTRWyLmeQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772196050; c=relaxed/simple;
-	bh=eXJ6DbULWi1bdmjL/6mjcIEN5aJ8H2FtGFUaWweWZrw=;
-	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Subject:
-	 In-Reply-To:References; b=HiawS66vNQUCF01DXvNEFytwze2R0cN0RKrBItUn3alsKAqhU5IDdPkco3Y25XTeiJ0o6lTkOttiJFnRbdRtRu0/KUeqFNxKuuN9KG6AV8i4anmc2aQwf9p6zZ7hiRLxMTl/bmJbaVDNL6YlOWj9aq75D3lqdgGDF0R0e6qYLn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HiFiUtvC; arc=none smtp.client-ip=209.85.160.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-506a93ba42dso22908791cf.1
-        for <linux-bluetooth@vger.kernel.org>; Fri, 27 Feb 2026 04:40:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772196048; x=1772800848; darn=vger.kernel.org;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=4kQ/10s40jwCAcXGNyHRu/PTYGpG2eUxNMqg3ZeJCXE=;
-        b=HiFiUtvCMKehOaWNPJkwZAAvZdj78gNHacrKhf08yzNvO1VOWwtS/3r2GDr1Xy0leD
-         bOr8I9+uaK+uxeNZjL64qOMhQyGYOJnSx7Ss/mKToAP2TbSnmFkrj16V63KCE/AEeKcY
-         F4pOgUt2CmT1ui6IQNxevhw//0l1ifhvPEqDKdK5Zq18vWDU1vbLYi2URWLuIQNpi7qy
-         9QA+Tkf6n4z8JPxFv0Rahm+7nNCQNa7s9QjCU7Vt3a1U+hZpawpbl+hVVGVqeQtRHWSc
-         LllFNCR8xLveMdqfHVAJxNEK4yMt8f+50VaeBuMiLmhwfKEnsxzNo7Mh3K//lbL4W+4f
-         g+JA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772196048; x=1772800848;
-        h=reply-to:references:in-reply-to:subject:to:from:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4kQ/10s40jwCAcXGNyHRu/PTYGpG2eUxNMqg3ZeJCXE=;
-        b=PXzAE8W1I4ngM868YaeNhbDYiPKsFqzzzWzY5j8eev2w8DBmL6zAZ2PrDFcL0FEfDR
-         sRqlrK6FzjDYIDHT8hvNW8s9iL/S54yfVb6fy9yB55QaaLBWZESe/9Y1v5X+fFCTL1y0
-         ip1puNY4XmD+3JbwDfNxvqClxu7jrje9a+gelSb81nQ+k4beAWhoxqO341IgKAVs11yE
-         Bc1JQyc6s5UF0PDW0vyLtFYvA5bLifYGWE9yfRJ+x8gd1YHjeB/4O7ntnZ63zTUx/9ok
-         HeB/OQik4EHzTV/nT55MoSg9CcgPbZvRUZnLb4I8oJ4kyllANTS9V8da3DcBFVZO0DEU
-         861Q==
-X-Gm-Message-State: AOJu0YzMvCb691IFLTgzM9BnstDURmPtjDsjhlKEA/M3CFZRbUMO/Nr9
-	6aRjReJq1kXDMMkoZ/23YKdlSBw+QQqX+k/DzJe56BXYxmhEmdeAncnX9IYiVA==
-X-Gm-Gg: ATEYQzxjkelJK7VW1I7yO4P9/BWvekKJA0N96eNP11HWTVQcQrQBPnSxe9tep18NGTT
-	Fr1685n9woh75CbWHmgIWpNMP34yMFZUCOgiloso11BF82XetsbHJyRxhiHujtPbpbn3pVIvoiZ
-	7JwfITJCRcfFDAOWE5URsnay9cKrh8qyRAI3uGT/qIUv1A8IvysufVmiSk6wg2CHb6OT+kDoiwN
-	hUeFj5c7OLVDFE7LAXfkwwv1tbqM/TcuY6tXnJcGx40GPPVgOERw/9b2OUCWmHIuh6wcxsbtiyV
-	Rr4rrYZa5HxRWPabgoqKXrDVG1d7rQQZYrYAEmZFoecUbg0jmYnXYU4StJsHnJcQxOrbKbtUgjm
-	wHENh36+UeuUJXY35m/i+YuEjh/buV2ht7GR6IrgdxVf79TvS9kZ5BcKwp7nzg8fE9W4SJjsTss
-	VTqZs9rvTRbirjmUtFK2zJ+cBs8UV+2t3+N2TUjfpf
-X-Received: by 2002:ac8:5acb:0:b0:4f4:df23:ab5d with SMTP id d75a77b69052e-507528fb099mr29301891cf.75.1772196047716;
-        Fri, 27 Feb 2026 04:40:47 -0800 (PST)
-Received: from [172.17.0.2] ([172.174.167.17])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-899c715ae92sm44625286d6.5.2026.02.27.04.40.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Feb 2026 04:40:47 -0800 (PST)
-Message-ID: <69a190cf.d40a0220.2453af.407a@mx.google.com>
-Date: Fri, 27 Feb 2026 04:40:47 -0800 (PST)
-Content-Type: multipart/mixed; boundary="===============7719537009583789930=="
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0514F2749EA
+	for <linux-bluetooth@vger.kernel.org>; Fri, 27 Feb 2026 14:33:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.70.18
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772202796; cv=fail; b=MO1ga+Na9K+FhpvgkKdVqZnag/FmRQnco6/LLTLTD6hBI0DXg/XGHCM5ZOoxp/o3GT3MalifVCjSxFlQFpOd8QdkXAivHfsFNTF0y81lDh9xSkdD0JiqW+aoJG9TyPK4PdU43UXQ98dGC+8b9cCDz2sUa9YIbQp12UQrbXL+spI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772202796; c=relaxed/simple;
+	bh=SHJ7oBF3YTrgeaOX4BTGdfzYo7//8DAdZB6Vj0/gDe0=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=iuIL6V4tFYak4KtO8R3L5Zutlgb6eYHYvNDIjUXCq438wUH3s7S9mFA5LjO3CtpCd3CYU6DG9PAb8FjfqPGKHO/QLtyKnOJTXXO+jziW5Wpf3ONZplDauM+emsytmljWnycAgxI2S0OaLkyg8J834F6vAGT1wDDlMv/eBoX19A0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arri.de; spf=pass smtp.mailfrom=arri.de; dkim=pass (1024-bit key) header.d=arri.de header.i=@arri.de header.b=hO2vhUSN; arc=fail smtp.client-ip=52.101.70.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arri.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arri.de
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=XJVE9XYOYf+6DWzWBu6BBiWwRQcIlBzakuaFbv3M/xloK9k/A4xxvW56bdDzek3YHvvUYLCkT9EfPG98716y0/6dEr7QsPrMKkKG4LARy49SpAafJiTN4uQaorGOoVNt9DvP+LKngzU0ByKNChDssob7Y/fYlfphO/RFjBbxqwhxigGfByE2oMlDGatoc8ERcUlpQOi25KvUGQH+Igl5tWS2WoQ7Rno9J7c0eM8F8skVwVE9x8sV+oZppFwGy5GNekPRc0xRmYsfS0TmbvWcoEgLDOqIVOqV1bSBfsvtcmbpKys4FfelQ+pe4naVfyaIJc10cq46TBOL/B4Tui2R7g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=SHJ7oBF3YTrgeaOX4BTGdfzYo7//8DAdZB6Vj0/gDe0=;
+ b=xrGyESFT8gcwVuO0HUry9gWMTE1DW8qChryg4bDv8jyZ/g6GC/OgzICzIxEFj3b5RgpxqiemJS0jk7Rq9YDYSHBjAyQsQxR7ixoziKfV2DY1h/pHfyb/p5UJZ0Yc5d3kJkztliNOM2ptQrczUHDvjnHmBdDG5NzjsthpldStWD9Wqpn5jUcJaajXrJHOFjfWawn4wX+3Ig5HhCN/5jLcSOHRcWn0AKhPoX2mRBmWT6GHsbzUNdnDmKiEBQqdhhFF21gIkdf6kqB3JlZwFjM6xZHu1S9QGNvCGW6rUZHrmI1HtcOdmkvjwM1wxTSqEvGkR9CVnS5h1lclywzx1eqngQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 217.111.95.7) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=arri.de;
+ dmarc=fail (p=none sp=none pct=100) action=none header.from=arri.de;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arri.de; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SHJ7oBF3YTrgeaOX4BTGdfzYo7//8DAdZB6Vj0/gDe0=;
+ b=hO2vhUSNUZiRrmwP4idEdGTtLYIfNlsSO737eRV2iqg7rO1RWUyR0qNDf+TfTunYjIR9GfoSpf8Na16KJ6lVGrqXfB5hgb2JL60kRbe7ez/z2nkqlbOMKNAW7wccHaNX/T3Yl169JabbMCweuWXPdKdIrtxq23B3a0+/vi2aSMQ=
+Received: from AS8PR04CA0170.eurprd04.prod.outlook.com (2603:10a6:20b:331::25)
+ by DBAPR03MB6359.eurprd03.prod.outlook.com (2603:10a6:10:199::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.16; Fri, 27 Feb
+ 2026 14:33:07 +0000
+Received: from AM3PEPF00009B9E.eurprd04.prod.outlook.com
+ (2603:10a6:20b:331:cafe::2e) by AS8PR04CA0170.outlook.office365.com
+ (2603:10a6:20b:331::25) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9632.26 via Frontend Transport; Fri,
+ 27 Feb 2026 14:32:46 +0000
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 217.111.95.7)
+ smtp.mailfrom=arri.de; dkim=none (message not signed)
+ header.d=none;dmarc=fail action=none header.from=arri.de;
+Received-SPF: Fail (protection.outlook.com: domain of arri.de does not
+ designate 217.111.95.7 as permitted sender) receiver=protection.outlook.com;
+ client-ip=217.111.95.7; helo=mta.arri.de;
+Received: from mta.arri.de (217.111.95.7) by
+ AM3PEPF00009B9E.mail.protection.outlook.com (10.167.16.23) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9654.16 via Frontend Transport; Fri, 27 Feb 2026 14:33:07 +0000
+Received: from N9W6SW14.arri.de (192.168.54.16) by mta.arri.de (10.10.18.5)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.37; Fri, 27 Feb
+ 2026 15:33:06 +0100
+From: Christian Eggers <ceggers@arri.de>
+To: <linux-bluetooth@vger.kernel.org>
+CC: <ceggers@arri.de>
+Subject: [PATCH Bluez v2 0/4] client: align 'io-cap' and 'pair' cmds with the docs
+Date: Fri, 27 Feb 2026 15:24:21 +0100
+Message-ID: <20260227143242.5204-1-ceggers@arri.de>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: bluez.test.bot@gmail.com
-To: linux-bluetooth@vger.kernel.org, hadess@hadess.net
-Subject: RE: Fix bluetoothctl no output
-In-Reply-To: <20260227112900.1946851-2-hadess@hadess.net>
-References: <20260227112900.1946851-2-hadess@hadess.net>
-Reply-To: linux-bluetooth@vger.kernel.org
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM3PEPF00009B9E:EE_|DBAPR03MB6359:EE_
+X-MS-Office365-Filtering-Correlation-Id: c55c5fe0-4524-4253-0339-08de760d1fc5
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|1800799024|36860700013|82310400026;
+X-Microsoft-Antispam-Message-Info:
+	JUy1o7e6Cd/b6jwgGRfzZgFKkbZIyh06SYKlaySvm4GZ5NJra4Qm16hYAukcYZpfZSQ+xsl6h/Bmev5hcVwS+8ipKhOyP7sae5GTpMJgZlDJqTGHRaUiJi3Ceegkucn9kl/HEvA1LmlRP5cWSDySm2EdFwHptSKAdE3S0bZdxFri8WbQiFqLCnCQQKvfC2b56gzAyCrt1Fg1wKpeapNo4CQ7AVAkCohgrKb4fLZfW+QljZioXTWJRVhZiI+f19z28bo17OHQeALrm8bWGcF3hWpt2l3L2k0PjU5PnmprBoXp05IO+tN5jp12mT5ktzFIIqCUpMvF8OsWLBg3wt+CpNI6R+rgmw5yZrjocPCpWmB5FRk+Xgt2o7CJ8OWZMKtrc3gWLkOIurqn5sLGrr+zDm105OqKunxWyqaIQS1xoZ6awSLhKDJz1XqM22lGfhY6R2bYCQDMQaccfPP7xa0QtOX7+QKbG7zx/9utbqyuwreoMjyvCCe5PJb11j00/GsUsO9ZWJmtWkH0+44jV+qCC4zrKl3mwmKnqaHI7aXTLzzeePZquBwubixf+D8vD3PSrGqWMjlg0p8B9IIm8OhsAaX8RuShe6e37z+wDwzUaQjjfUIa3rkJ1NKw/dE891KG5huB1JNHMe3LAJqybDKdmXNWA4Zk/QmJJ8k7xqpFzqGEh/SZCrasY09BaQoLZp6dHWs/swbEwUnkfzqelMhEkRZg/uspjUYvr4KBHPpBGMkh/ShYKSz18bv//gozgMhNZgL+m+Q6yq5Q4oyMfL0KWBBmhJ9c/fF4jCY1gsuMzI6MPYLPANxG+UhgfAtI0w3fNkT47qWhQbIoFAfSuFFNmg==
+X-Forefront-Antispam-Report:
+	CIP:217.111.95.7;CTRY:DE;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mta.arri.de;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(376014)(1800799024)(36860700013)(82310400026);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	+M2b0OwUrSMeLOdv03fBG6QqPS8DINZZTy/U/pBrbnGSed98aT3ewhAujppEGLYS4L/jgru+ImTg6+GoAnOyq8G4g9s3WQ6RJHGdlpUy2hcKUsJT4/bd8FL2kGHxgixsyl9a10SH2fe1uSxcNXAXl5uQaqCGY4PAyXrPFv2Nm7Ms8CueD4e7hJu6YW20zJo+9IGz0VFPFSFfiKSLzFPE4liwP0+/uSQQRdT4zXnkduyw3aRTRKrTLCoQhAKxdfE4kB82l2JQlcfTeXPzV1ymDi+Ju3nUa0xQel0cYprOD/SkUPZGnVBI46g/8pL9dpqtc4V5nEQW5EouB/K57vG64+CaAWUEtwk58FVtYv9rs2KFU1eNIfBmGJDHl0GKzGFsd/tiNUwFaOiWeGlIpYnE9SguXQldchJ3vEwYOUS0940VWFmjVlOTdkQ7Y+NUw7wn
+X-OriginatorOrg: arri.de
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Feb 2026 14:33:07.1794
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: c55c5fe0-4524-4253-0339-08de760d1fc5
+X-MS-Exchange-CrossTenant-Id: e6a73a5a-614d-4c51-b3e3-53b660a9433a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=e6a73a5a-614d-4c51-b3e3-53b660a9433a;Ip=[217.111.95.7];Helo=[mta.arri.de]
+X-MS-Exchange-CrossTenant-AuthSource:
+	AM3PEPF00009B9E.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBAPR03MB6359
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	CTYPE_MIXED_BOGUS(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+X-Spamd-Result: default: False [1.34 / 15.00];
+	ARC_REJECT(1.00)[cv is fail on i=2];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[arri.de,none];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[arri.de:s=selector1];
 	MAILLIST(-0.15)[generic];
-	MIME_GOOD(-0.10)[multipart/mixed,text/plain];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	TAGGED_FROM(0.00)[bounces-19466-lists,linux-bluetooth=lfdr.de];
-	REPLYTO_DN_EQ_FROM_DN(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[blueztestbot@gmail.com,linux-bluetooth@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-19467-lists,linux-bluetooth=lfdr.de];
 	RCPT_COUNT_TWO(0.00)[2];
-	FREEMAIL_FROM(0.00)[gmail.com];
 	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+,1:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	MISSING_XM_UA(0.00)[];
-	HAS_REPLYTO(0.00)[linux-bluetooth@vger.kernel.org];
-	TO_DN_NONE(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
+	DKIM_TRACE(0.00)[arri.de:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	MIME_TRACE(0.00)[0:+];
 	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[ceggers@arri.de,linux-bluetooth@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_NONE(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[arri.de:mid,arri.de:dkim,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	FROM_NO_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,vger.kernel.org:replyto,mx.google.com:mid,checkpatch.pl:url]
-X-Rspamd-Queue-Id: 37E091B7401
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 75DAD1B911A
 X-Rspamd-Action: no action
 
---===============7719537009583789930==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+According to doc/bluetoothctl-mgmt.rst, the 'io-cap' and 'pair' cmds
+should have a string type <cap> argument. But in the current
+implementation, the parser expects an integer (and doesn't complain if
+something else is passed).
 
-This is automated email and please do not reply to this email!
+v2:
+- Split the first patch into two parts
+- Use an enum instead of preprocessor defines
+- Remove obsolete documentation update for l2test's -O <mtu> option
 
-Dear submitter,
-
-Thank you for submitting the patches to the linux bluetooth mailing list.
-This is a CI test results with your patch series:
-PW Link:https://patchwork.kernel.org/project/bluetooth/list/?series=1058931
-
----Test result---
-
-Test Summary:
-CheckPatch                    PENDING   0.27 seconds
-GitLint                       PENDING   0.35 seconds
-BuildEll                      PASS      22.00 seconds
-BluezMake                     PASS      738.49 seconds
-MakeCheck                     PASS      19.00 seconds
-MakeDistcheck                 PASS      264.31 seconds
-CheckValgrind                 PASS      309.83 seconds
-CheckSmatch                   WARNING   374.42 seconds
-bluezmakeextell               PASS      194.64 seconds
-IncrementalBuild              PENDING   0.35 seconds
-ScanBuild                     PASS      1120.04 seconds
-
-Details
-##############################
-Test: CheckPatch - PENDING
-Desc: Run checkpatch.pl script
-Output:
-
-##############################
-Test: GitLint - PENDING
-Desc: Run gitlint
-Output:
-
-##############################
-Test: CheckSmatch - WARNING
-Desc: Run smatch tool with source
-Output:
-src/shared/shell.c: note: in included file (through /usr/include/readline/readline.h):src/shared/shell.c: note: in included file (through /usr/include/readline/readline.h):src/shared/shell.c: note: in included file (through /usr/include/readline/readline.h):
-##############################
-Test: IncrementalBuild - PENDING
-Desc: Incremental build with the patches in the series
-Output:
-
-
-
----
-Regards,
-Linux Bluetooth
-
-
---===============7719537009583789930==--
 
