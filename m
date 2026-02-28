@@ -1,177 +1,339 @@
-Return-Path: <linux-bluetooth+bounces-19521-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-19529-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CEIUC+vkomm67wQAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-19521-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 28 Feb 2026 13:51:55 +0100
+	id GLh0H7HpomlG8AQAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-19529-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 28 Feb 2026 14:12:17 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF3361C30E5
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 28 Feb 2026 13:51:54 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C14951C3285
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 28 Feb 2026 14:12:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A967330BC828
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 28 Feb 2026 12:51:43 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 6B22030387C8
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 28 Feb 2026 13:12:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 754E543CED4;
-	Sat, 28 Feb 2026 12:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50D5343E499;
+	Sat, 28 Feb 2026 13:12:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="vXGZThHl"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="D0IMXSVt"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
+Received: from out-17.smtp.github.com (out-17.smtp.github.com [192.30.252.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0DA543636C
-	for <linux-bluetooth@vger.kernel.org>; Sat, 28 Feb 2026 12:51:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772283103; cv=pass; b=SnTMq7qNwowWV6b/FBqTLPe+WEjmIOY9v25AQ6wiSQTYdmAsxLVL4VoWRmEtfqF4Bx7519SGi3O0w+X2BdY+YtPn4AjV5tgRB5/RBpp0bwyMS19sjhAHWOu9+yG+sTGLVEvPpfGBTW5/X0b/uuyHPKyiBcNFmuN275R/s8Xk/fM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772283103; c=relaxed/simple;
-	bh=7ARrynRS517Lak0ZabLPY2DZe2gv8MSJdmZ2UxG5hX4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JCMFobFuJfFMnKDYvhiqZo2tb9uw/I57WLoNpueMQGyuRxLGgsPRDKbWSatYgO9oP3HobNN8bK1Zj+OHbWX5gErnMeX/A/0T1Kxc2++mf+8zj4UVB85yqQG3u+MKMGHj/94fpcIW3dESGnBn3TAZaHBbnJdg3Dw4nutAw08s2ZU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=vXGZThHl; arc=pass smtp.client-ip=195.140.195.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
-Received: from monolith.lan (unknown [IPv6:2a03:1b20:d:f011:2::d001])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: pav)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4fNQ7J0fkdzyv6;
-	Sat, 28 Feb 2026 14:51:40 +0200 (EET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
-	t=1772283100;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Kmboy+V+pPlY69KX/BiiCGRRFI0CZGjqP5bdCAIhuvY=;
-	b=vXGZThHlznuIef/CZtnw24bT6b9TKOw7uLy2yNQtUCNq7jvk9VVjL7pZpdHV/agLKq9Kz9
-	Z6OfMFncie6UvET0umyeY3lgNXMlgzgeArzH16cLO2VCHE2+JCkz9HCXSs1d86EUiIRglL
-	gJdYWK9AcAuNuGZnAc9pzWdvyiLj5I4=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
-	s=meesny; t=1772283100;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Kmboy+V+pPlY69KX/BiiCGRRFI0CZGjqP5bdCAIhuvY=;
-	b=bwylobYrwI3CvvrJ70cjf8WtCOFc0ihH4xmuCHlXXTBTb69Fc/kCcB0goz9CJIYNniMdsG
-	Afu83h62e/cPZHFO/oVfc/cjPG+h5D0BHdDmmWIcqOHF2Gm6D/EFVweI6EDBt2qscvq6A6
-	4RX8v1V9lTbLP5/CeFMMSphu2pbuEhA=
-ARC-Authentication-Results: i=1;
-	ORIGINATING;
-	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
-ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1772283100;
-	b=Yojd3KtcLUJ4jRt89ZtjkP4XXntfmgaJE1rYvYZpUQCqqOIe7nsvZT88SzSmyYjwzWNTBf
-	t5w6hRsyBOqAl7bV7RZlDgREh1i8PDiddzDWmcAzM4UcRNdN4dNdzcDKsGrPQ+KptXqb7V
-	zJ/h/FGQwgF2oIpBeTeWD74guSboFp0=
-From: Pauli Virtanen <pav@iki.fi>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 807EA43C05D
+	for <linux-bluetooth@vger.kernel.org>; Sat, 28 Feb 2026 13:12:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.200
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772284333; cv=none; b=bYBXyiv++RFGU1r51QP73XejrICiWzq66YyMYOplL5UNzUpzOM2+OJhnQMnWpjrXhepAP4Iec9j2g+gMGVYnH+cezwCaRg25gIGs1ncJBv3Vr4lVbe9lU1ewJ9xDe6kriLpn8zMPMh+KPJDEUKjbBbHsGuJ9VGsUpgUTW/Njuqc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772284333; c=relaxed/simple;
+	bh=E/o4NE+9aG5A0YH3VVl/QooVoy8dFHVQcV14ch27Ngk=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=Re5ve91CkJ2tltHXENOnGtM1kEvPFZWqwxts3Jl0oIZMIGYtvttEBKaMXZqIGtlbONukLq/IGrawKWfvOIKsH0T1TFYNsQQ36KLrkdwMWSOgFriB0noeJV5dzO5c/+7ju4GX6vq3ca/zW054KOFvy+e/YPqud/3hPowtQAW29Ns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=D0IMXSVt; arc=none smtp.client-ip=192.30.252.200
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
+Received: from github.com (hubbernetes-node-14c492b.va3-iad.github.net [10.48.204.89])
+	by smtp.github.com (Postfix) with ESMTPA id 9814F4E0451
+	for <linux-bluetooth@vger.kernel.org>; Sat, 28 Feb 2026 05:12:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+	s=pf2023; t=1772284331;
+	bh=n0FyQvjImRcW40b/J9eEidRQRjaTEg7v5ueZi3g91q4=;
+	h=Date:From:To:Subject:List-Unsubscribe:From;
+	b=D0IMXSVtAiI3UdSsTYAGsbJj6p0IxW9xvX4GHayUMN1tOCBQRe6MPjvx6+PviCmDG
+	 5WrafMw8dtTiEJLS9pfGCihcTjtx3alMpiEvPBcP2CholwzumTPmw5PQJ5r9fFH6Du
+	 ZN16gNFbqgPxWVvtw919Nh4H2/pMH+bQU0RIo3sg=
+Date: Sat, 28 Feb 2026 05:12:11 -0800
+From: Pauli Virtanen <noreply@github.com>
 To: linux-bluetooth@vger.kernel.org
-Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ 11/11] build: add functional testing target
-Date: Sat, 28 Feb 2026 14:51:17 +0200
-Message-ID: <a811f7fc2cb1d147205add87236b8d0dc15bb4c2.1772282574.git.pav@iki.fi>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <cover.1772282574.git.pav@iki.fi>
-References: <cover.1772282574.git.pav@iki.fi>
+Message-ID: <bluez/bluez/push/refs/heads/1059428/000000-feb53f@github.com>
+Subject: [bluez/bluez] 16cc4d: emulator: btvirt: check pkt lengths, don't get
+ stu...
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
+X-Auto-Response-Suppress: All
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	MID_CONTAINS_FROM(1.00)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[iki.fi:s=meesny];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+X-Spamd-Result: default: False [2.04 / 15.00];
+	DMARC_POLICY_REJECT(2.00)[github.com : SPF not aligned (relaxed),reject];
+	R_DKIM_REJECT(1.00)[github.com:s=pf2023];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MV_CASE(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_TLS_LAST(0.00)[];
-	DMARC_NA(0.00)[iki.fi];
-	RCVD_COUNT_THREE(0.00)[4];
-	TAGGED_FROM(0.00)[bounces-19521-lists,linux-bluetooth=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWO(0.00)[2];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DKIM_TRACE(0.00)[github.com:-];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[pav@iki.fi,linux-bluetooth@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[iki.fi:+];
-	NEURAL_HAM(-0.00)[-1.000];
+	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_ONE(0.00)[1];
+	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-19529-lists,linux-bluetooth=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[noreply@github.com,linux-bluetooth@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	TO_DN_NONE(0.00)[];
+	NEURAL_HAM(-0.00)[-0.999];
+	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[iki.fi:mid,iki.fi:dkim,configure.ac:url]
-X-Rspamd-Queue-Id: BF3361C30E5
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,makefile.am:url]
+X-Rspamd-Queue-Id: C14951C3285
 X-Rspamd-Action: no action
+
+  Branch: refs/heads/1059428
+  Home:   https://github.com/bluez/bluez
+  Commit: 16cc4d43f56f9fe76c1bb048235b43d389039699
+      https://github.com/bluez/bluez/commit/16cc4d43f56f9fe76c1bb048235b43d389039699
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2026-02-28 (Sat, 28 Feb 2026)
+
+  Changed paths:
+    M emulator/server.c
+
+  Log Message:
+  -----------
+  emulator: btvirt: check pkt lengths, don't get stuck on malformed
+
+Don't try to parse packet before whole header is received.
+
+If received data has unknown packet type, reset buffer so that we don't
+get stuck.
+
+
+  Commit: ccb109943ea6f0a9e50940a2c49188e437be874b
+      https://github.com/bluez/bluez/commit/ccb109943ea6f0a9e50940a2c49188e437be874b
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2026-02-28 (Sat, 28 Feb 2026)
+
+  Changed paths:
+    M emulator/main.c
+
+  Log Message:
+  -----------
+  emulator: btvirt: allow specifying where server unix sockets are made
+
+Make --server to take optional path name where to create the various
+server sockets.
+
+
+  Commit: b79db08053a6bfc8175c25a3d7712a600b4fb4f4
+      https://github.com/bluez/bluez/commit/b79db08053a6bfc8175c25a3d7712a600b4fb4f4
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2026-02-28 (Sat, 28 Feb 2026)
+
+  Changed paths:
+    M tools/test-runner.c
+
+  Log Message:
+  -----------
+  test-runner: enable path argument for --unix
+
+Allow specifying the path for the controller socket to be used.
+
+
+  Commit: cacb4e991a58aeabaca5d937f655e72116a945c0
+      https://github.com/bluez/bluez/commit/cacb4e991a58aeabaca5d937f655e72116a945c0
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2026-02-28 (Sat, 28 Feb 2026)
+
+  Changed paths:
+    M tools/test-runner.c
+
+  Log Message:
+  -----------
+  test-runner: Add -o/--option option
+
+Allow passing arbitrary arguments to QEMU.
+
+
+  Commit: 49b9867ce58599ae039db702c41b93a6f21266c6
+      https://github.com/bluez/bluez/commit/49b9867ce58599ae039db702c41b93a6f21266c6
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2026-02-28 (Sat, 28 Feb 2026)
+
+  Changed paths:
+    M tools/test-runner.c
+
+  Log Message:
+  -----------
+  test-runner: allow source tree root for -k
+
+Allow passing source tree root for -k option, look up kernel below it.
+
+
+  Commit: 526a4b1090836b9f97f71d79944e0145c954e6f5
+      https://github.com/bluez/bluez/commit/526a4b1090836b9f97f71d79944e0145c954e6f5
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2026-02-28 (Sat, 28 Feb 2026)
+
+  Changed paths:
+    M doc/ci.config
+    M doc/test-runner.rst
+    M doc/tester.config
+
+  Log Message:
+  -----------
+  doc: enable CONFIG_VIRTIO_CONSOLE in tester config
+
+Enable kernel option that allows using -device virtserialport in qemu.
+This is easier to make work reliably than pci-serial channel.
+
+
+  Commit: 88b06e80e3e9761ff8ecdceb124d8deca4747eb7
+      https://github.com/bluez/bluez/commit/88b06e80e3e9761ff8ecdceb124d8deca4747eb7
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2026-02-28 (Sat, 28 Feb 2026)
+
+  Changed paths:
+    M tools/test-runner.c
+
+  Log Message:
+  -----------
+  test-runner: use virtio-serial for implementing -u device forwarding
+
+Using pci-serial to forward eg. btvirt sockets is unreliable, as qemu or
+kernel seems to be sometimes dropping part of the sent data or insert
+spurious \0 bytes, leading to sporadic errors like:
+
+    kernel: Bluetooth: hci0: command 0x0c52 tx timeout
+    kernel: Bluetooth: hci0: Opcode 0x0c52 failed: -110
+    btvirt: packet error, unknown type: 0
+
+This appears to occur most often when host system is under load, e.g.
+due to multiple test-runners running at the same time.  The problem is
+not specific to btvirt, but seems to be in the qemu serial device layer
+vs. kernel interaction.
+
+Change test-runner to use virtserialport to forward the btvirt
+connection inside the VM, as virtio-serial doesn't appear to have these
+problems.
+
+Since it's not a TTY device, we have to do vport <-> tty-with-hci-ldisc
+forwarding of the data in test-runner, so this becomes a bit more
+involved.
+
+
+  Commit: 896d393768d79c3d4fd36e9e584c8c57d023d017
+      https://github.com/bluez/bluez/commit/896d393768d79c3d4fd36e9e584c8c57d023d017
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2026-02-28 (Sat, 28 Feb 2026)
+
+  Changed paths:
+    A doc/test-functional.rst
+
+  Log Message:
+  -----------
+  doc: add functional/integration testing documentation
+
+Add documentation for functional/integration test suite.
+
+
+  Commit: 266aab3e510e73e73358922916335f4c40e9cd9d
+      https://github.com/bluez/bluez/commit/266aab3e510e73e73358922916335f4c40e9cd9d
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2026-02-28 (Sat, 28 Feb 2026)
+
+  Changed paths:
+    A unit/func_test/__init__.py
+    A unit/func_test/conftest.py
+    A unit/func_test/lib/__init__.py
+    A unit/func_test/lib/env.py
+    A unit/func_test/lib/host_plugins.py
+    A unit/func_test/lib/rpc.py
+    A unit/func_test/lib/runner.py
+    A unit/func_test/lib/tests/__init__.py
+    A unit/func_test/lib/tests/test_rpc.py
+    A unit/func_test/lib/utils.py
+    A unit/func_test/requirements.txt
+    A unit/func_test/test_bluetoothctl_vm.py
+    A unit/func_test/test_btmgmt_vm.py
+    A unit/pytest.ini
+    A unit/test-functional
+
+  Log Message:
+  -----------
+  unit: add functional/integration testing framework
+
+Add framework for writing tests simulating "real" environments where
+BlueZ and other parts of the stack run on different virtual machine
+hosts that communicate with each other.
+
+This uses tools/test-runner to launch VM instances, but does not use the
+intra-VM setup code to allow reusing the same VM instances for multiple
+tests.
+
+Implements:
+
+- RPC communication with tester instances running each of the VM hosts,
+  so that tests can be written on the parent host which coordinates the
+  execution.
+
+- Extensible way to add stateful test-specific code inside the VM
+  instances
+
+- Logging control: output from different processes running inside the VM
+  are separated and can be filtered.
+
+- Test runner framework with Pytest (more convenient than Python/unittest)
+
+- Grouping tests to minimize VM reboots
+
+- Redirecting USB controllers to use for testing
+
+There is no requirement that the tests spawn VM instances, the test
+runner can be used for any tests written in Python.
+
+
+  Commit: 4caba4aaccf48fd6086241a5d7633f6b2851176e
+      https://github.com/bluez/bluez/commit/4caba4aaccf48fd6086241a5d7633f6b2851176e
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2026-02-28 (Sat, 28 Feb 2026)
+
+  Changed paths:
+    A unit/func_test/test_pipewire.py
+    M unit/pytest.ini
+
+  Log Message:
+  -----------
+  unit: func_test: add Pipewire-using smoke tests
+
+Add test for Pipewire hosts connecting A2DP/HFP BREDR services to each
+other
+
+
+  Commit: feb53f9ee079a4ba880720bcbb3057f9eda3d965
+      https://github.com/bluez/bluez/commit/feb53f9ee079a4ba880720bcbb3057f9eda3d965
+  Author: Pauli Virtanen <pav@iki.fi>
+  Date:   2026-02-28 (Sat, 28 Feb 2026)
+
+  Changed paths:
+    M Makefile.am
+    M configure.ac
+
+  Log Message:
+  -----------
+  build: add functional testing target
 
 This adds check-functional: target that runs the functional test suite.
 
 Also add a --enable-functional-testing=<kernel-image> argument for
 configure that can be used to include it in the check: make target,
 possibly with a predefined kernel image.
----
- Makefile.am  |  7 +++++++
- configure.ac | 17 +++++++++++++++++
- 2 files changed, 24 insertions(+)
 
-diff --git a/Makefile.am b/Makefile.am
-index dee6aa6d0..906b3ef6b 100644
---- a/Makefile.am
-+++ b/Makefile.am
-@@ -786,6 +786,13 @@ endif
- TESTS = $(unit_tests)
- AM_TESTS_ENVIRONMENT = MALLOC_CHECK_=3 MALLOC_PERTURB_=69
- 
-+check-functional: all
-+	$(srcdir)/unit/test-functional -v --kernel="$(FUNCTIONAL_TESTING_KERNEL)" --build-dir="$(top_builddir)"
-+
-+if FUNCTIONAL_TESTING
-+check: check-functional
-+endif
-+
- if DBUS_RUN_SESSION
- AM_TESTS_ENVIRONMENT += dbus-run-session --
- endif
-diff --git a/configure.ac b/configure.ac
-index 52de7d665..f4b65f7b5 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -405,6 +405,23 @@ if (test "${enable_testing}" = "yes"); then
- 		#include <linux/net_tstamp.h>]])
- fi
- 
-+AC_ARG_ENABLE(functional-testing, AS_HELP_STRING([--enable-functional-testing],
-+			[enable functional testing tools]),
-+			[enable_functional_testing=yes; functional_testing_kernel=${enableval}],
-+                        [enable_functional_testing=no])
-+AM_CONDITIONAL(FUNCTIONAL_TESTING, test "${enable_functional_testing}" = "yes")
-+AC_ARG_VAR(FUNCTIONAL_TESTING_KERNEL, [vmlinux image to use for functional testing])
-+FUNCTIONAL_TESTING_KERNEL=${functional_testing_kernel}
-+
-+if (test "${enable_functional_testing}" = "yes"); then
-+  AC_MSG_CHECKING([pytest and dependencies])
-+  python3 -m pip install --dry-run --no-index -r "${srcdir}/unit/func_test/requirements.txt" >/dev/null
-+  if (test "$?" != "0"); then
-+    AC_MSG_ERROR([pytest or dependencies missing])
-+  fi
-+  AC_MSG_RESULT([ok])
-+fi
-+
- AC_ARG_ENABLE(experimental, AS_HELP_STRING([--enable-experimental],
- 			[enable experimental tools]),
- 					[enable_experimental=${enableval}])
--- 
-2.53.0
 
+Compare: https://github.com/bluez/bluez/compare/16cc4d43f56f%5E...feb53f9ee079
+
+To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
