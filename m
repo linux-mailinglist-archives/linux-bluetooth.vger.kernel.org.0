@@ -1,64 +1,45 @@
-Return-Path: <linux-bluetooth+bounces-19524-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-19517-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MEz8J/bkomm67wQAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-19524-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 28 Feb 2026 13:52:06 +0100
+	id APSUJt7komm67wQAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-19517-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 28 Feb 2026 13:51:42 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C57E1C30FA
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 28 Feb 2026 13:52:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 042B61C30B9
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 28 Feb 2026 13:51:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 30BC830CDE94
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 28 Feb 2026 12:51:45 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id AB3E6304521B
+	for <lists+linux-bluetooth@lfdr.de>; Sat, 28 Feb 2026 12:51:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 133C143D51E;
-	Sat, 28 Feb 2026 12:51:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5B1A42EEC8;
+	Sat, 28 Feb 2026 12:51:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b="pZhHlXnC";
-	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="vm+xgpHP"
+	dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b="ZblyW+Zy"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from lahtoruutu.iki.fi (lahtoruutu.iki.fi [185.185.170.37])
+Received: from meesny.iki.fi (meesny.iki.fi [195.140.195.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1457C438FEB
-	for <linux-bluetooth@vger.kernel.org>; Sat, 28 Feb 2026 12:51:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=185.185.170.37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF3A22689C
+	for <linux-bluetooth@vger.kernel.org>; Sat, 28 Feb 2026 12:51:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=195.140.195.201
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772283103; cv=pass; b=vDe3AAs9mf3hF5Vxc6U3c0wtSPs7UEBeiAqAJtj1HdECUiWmtP8zU2OLGnNq71Vl3POYhOtJfQVFsuq33yKcTM2A6N9R8P9SxxdoLHyar3Y0xuI5uk7ucxrJy0oCdJzm+FzHPHhZlTPyrlhhlT0v58MTLAwgi0T3rmGzWzF4Y6A=
+	t=1772283097; cv=pass; b=dJFOCXHowCq16WbNd1ZI9/Wqrg5XtNbkdypNTok1IU2MVZgD0rSSRJ2345/atggk8V0KMuHsXW89RU46azMemv1mQwXDl7YbVMy3Yi3rFG3BIIT16sJvoFVoo34X0Wx5FdPuPosEsFUxGBl0HO9FcFMxDpoWx0GKH7Z4P8gNCiQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772283103; c=relaxed/simple;
-	bh=E567MtBI0RdYQ34tB0yKkB4MN1QjaVlYGumkTKtDSVM=;
+	s=arc-20240116; t=1772283097; c=relaxed/simple;
+	bh=KhaSn9U5TGNyM+Rr8VCAz2p32L0L3SC5h66L6yHEF+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rBMdUUZpjSshxiKoFMAcdek/xLJ2ocf3ZAUdo65Vy8R3nB2DWsOUhZJxh5pe9JwUnIVIMEEpoYuDzoHN/maH1SNOkWXnbIHFIbbBLwY6IxaCPnho2ZUFYH4DtuTgB/jOCHIQDARgmXtnBpumuAdIMJ7Gp4+SmQBuH0EaYlZElUw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (2048-bit key) header.d=iki.fi header.i=@iki.fi header.b=pZhHlXnC; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=vm+xgpHP; arc=pass smtp.client-ip=185.185.170.37
+	 MIME-Version; b=NNXPgZ9OJqCkJf+DHBjNYpBIF3cFW8Fda3ZOVlKTuWFYeVMYPHntzSQD4CPT07obSmNXAb/5veH1/sH+b2loNMtBZauK1UMo8GjJS8+lG8Xrf0zRabgP2BW/aqgLcJJqAA6bAcSbuefX4rL1sLsM4NEnZ0qhO0h+WTS9ON/tkSw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi; spf=pass smtp.mailfrom=iki.fi; dkim=pass (1024-bit key) header.d=iki.fi header.i=@iki.fi header.b=ZblyW+Zy; arc=pass smtp.client-ip=195.140.195.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iki.fi
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iki.fi
-Received: from meesny.iki.fi (meesny.iki.fi [IPv6:2001:67c:2b0:1c1::201])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519)
-	(No client certificate requested)
-	by lahtoruutu.iki.fi (Postfix) with ESMTPS id 4fNQ765QBXz49Q5n
-	for <linux-bluetooth@vger.kernel.org>; Sat, 28 Feb 2026 14:51:30 +0200 (EET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=lahtoruutu;
-	t=1772283090;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=kwEG6L7ld3n0mgFOQNK8DUyjTtA8udcuK5PSfRe9GiY=;
-	b=pZhHlXnCDjWfCg/bRwlq5xfmXOP1RejdeHKPqHYKSYCV2PTOLjocGDHdYGsqsfWlbhS2n0
-	GZlDo591AR4iILKH0CCw5gaiakRhhmf+iLZ9bei0AT9i5Vr8DfoFz+y25YrDD43DfbFrp/
-	2s+aFlto511l8a1yjNj9vSoGhQGG0PEZEss7zdDFvfVuMS6FYAtlUMjHDYQNE0dnB0tTEs
-	lilJjPM/qOQw811yb4rQ0pjFseeFOG56gtL37OE1mXDhqp4Ajyo8iWUk0sIyopz9u1GSaN
-	eE3memgdxmQvzqHiAMF+xeAkFijjAQ6q0TFGdwHyVzynmUHD3bjTer8k0x1OPA==
 Received: from monolith.lan (unknown [IPv6:2a03:1b20:d:f011:2::d001])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: pav)
-	by meesny.iki.fi (Postfix) with ESMTPSA id 4fNQ6z2zRyz109f;
+	by meesny.iki.fi (Postfix) with ESMTPSA id 4fNQ6z5fRhz10BX;
 	Sat, 28 Feb 2026 14:51:23 +0200 (EET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
 	t=1772283083;
@@ -66,33 +47,33 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi; s=meesny;
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=kwEG6L7ld3n0mgFOQNK8DUyjTtA8udcuK5PSfRe9GiY=;
-	b=vm+xgpHP4KjheetY9FuO6MoNwOMy4td9XdoL6ta4VCqOUqhBCfsE20uXWNeoTNxnrvLsER
-	pDC0cvxcTyH6BBr23FT458zeRLYOQA3BHdpYvkkz4VCNBfi0qzlgybtEi8wfDzdvrGu2nc
-	E8kAJ0P7oidiTTJEVjXDzONvd1UDKQc=
+	bh=o7PZwaLAn4Iw/yOWnWFmExpfeiYQBFi5jccS8/IX2Qk=;
+	b=ZblyW+Zys92wqIrcUOndMCe3OTktAWe7k/mIFkI3ae0NqIXL44sUuOI2aOi1/w8ygmIQpP
+	g+a3JEug5gKpg8KKg5u7IcJUsmbKzxtsBlXXX/01FG6W7IDqN0Qz1jP6WDrxAX7A8Di9yQ
+	wtPhw/ksWbzg3xkHIcv9QiJQvBdSaFE=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=iki.fi;
 	s=meesny; t=1772283083;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=kwEG6L7ld3n0mgFOQNK8DUyjTtA8udcuK5PSfRe9GiY=;
-	b=ItAfHYjijKxt4FOutKuYRQNhmPoczX3lSzOgHR/Y7fJG78gM8QuIXItUZ7hF01mWmY47Kc
-	zxlkL+T0hmdVPb/Ou1u3Oej55hGaI3y3sIyExh3kssgyFJiiLMroNFvmu5v3TFWjDsFgia
-	NiRvg1c59N7QSJrtkRFBT3LovhWGIrk=
+	bh=o7PZwaLAn4Iw/yOWnWFmExpfeiYQBFi5jccS8/IX2Qk=;
+	b=LrQBUhJrQN7I9YIsg9+obnmXDo/ebx5bz5BEV6zev7UGNn+bRksnhluGCj3cpe6dCN70A+
+	8E+xYDnhvr+qKZejWy9o2BZYVu4sFhF2WHVFj/aykuJWec181O7leHd9QJCEnK/wogeuBV
+	jhpJSi1ZXvJn/P1tYNfNBwbgCpkT9qU=
 ARC-Authentication-Results: i=1;
 	ORIGINATING;
 	auth=pass smtp.auth=pav smtp.mailfrom=pav@iki.fi
 ARC-Seal: i=1; a=rsa-sha256; d=iki.fi; s=meesny; cv=none; t=1772283083;
-	b=w0EV7UstPHoRUolz3Bgc7Yd9EGAhoTCA2iGZbxVLPV1toE5yEWpm8mDajFD65WIk7rPg24
-	ZnwztcbWqtOv7wBEXAUVzPf4gClCjRF+P8rwxEyWbbGilRa4v4d4enu9AbKQrCsQsp8CW3
-	Zw2iv2NeJ682QqKvPNdG2oX/vxzI43E=
+	b=QsM+EO4slMsLQ9TcpRxYnXGxtSvSwCuL1aZeeOFnOXWXJXruMV945dieSHwOlkAgyCPqG+
+	+X4K6+GcoZ6HorOKKEUxQ7wGqJzJPwo2Lf+CK/lcz45ja84dmdVMf2dRPYM8S8WUQkvnVC
+	fYKuP6sH6XmArBpxENXFMtxsG29wxq4=
 From: Pauli Virtanen <pav@iki.fi>
 To: linux-bluetooth@vger.kernel.org
 Cc: Pauli Virtanen <pav@iki.fi>
-Subject: [PATCH BlueZ 04/11] test-runner: Add -o/--option option
-Date: Sat, 28 Feb 2026 14:51:10 +0200
-Message-ID: <17a465421effa917abebb84c09fc7b6031cab1db.1772282574.git.pav@iki.fi>
+Subject: [PATCH BlueZ 05/11] test-runner: allow source tree root for -k
+Date: Sat, 28 Feb 2026 14:51:11 +0200
+Message-ID: <64bfa60999465f7d5aaf013420e7ef9d783dcf8d.1772282574.git.pav@iki.fi>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <cover.1772282574.git.pav@iki.fi>
 References: <cover.1772282574.git.pav@iki.fi>
@@ -105,125 +86,120 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
 	MID_CONTAINS_FROM(1.00)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
 	R_MISSING_CHARSET(0.50)[];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[iki.fi:s=lahtoruutu,iki.fi:s=meesny];
+	R_DKIM_ALLOW(-0.20)[iki.fi:s=meesny];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_TWO(0.00)[2];
-	RCVD_TLS_LAST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	DMARC_NA(0.00)[iki.fi];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-19524-lists,linux-bluetooth=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-19517-lists,linux-bluetooth=lfdr.de];
+	DMARC_NA(0.00)[iki.fi];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_TWO(0.00)[2];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[pav@iki.fi,linux-bluetooth@vger.kernel.org];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_COUNT_FIVE(0.00)[5];
-	DKIM_TRACE(0.00)[iki.fi:+];
-	TAGGED_RCPT(0.00)[linux-bluetooth];
 	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[pav@iki.fi,linux-bluetooth@vger.kernel.org];
+	DKIM_TRACE(0.00)[iki.fi:+];
+	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-bluetooth];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[iki.fi:mid,iki.fi:dkim]
-X-Rspamd-Queue-Id: 0C57E1C30FA
+	FROM_HAS_DN(0.00)[]
+X-Rspamd-Queue-Id: 042B61C30B9
 X-Rspamd-Action: no action
 
-Allow passing arbitrary arguments to QEMU.
+Allow passing source tree root for -k option, look up kernel below it.
 ---
- tools/test-runner.c | 22 +++++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
+ tools/test-runner.c | 42 ++++++++++++++++++++++++++++--------------
+ 1 file changed, 28 insertions(+), 14 deletions(-)
 
 diff --git a/tools/test-runner.c b/tools/test-runner.c
-index 331cb6eb1..3de3a9d74 100644
+index 3de3a9d74..b3e0b0cfe 100644
 --- a/tools/test-runner.c
 +++ b/tools/test-runner.c
-@@ -41,6 +41,7 @@
- #endif
+@@ -93,18 +93,31 @@ static const char *kernel_table[] = {
+ 	NULL
+ };
  
- #define CMDLINE_MAX (2048 * 10)
-+#define EXTRA_OPT_MAX 64
+-static const char *find_kernel(void)
++static bool find_kernel(const char *root, char path[PATH_MAX])
+ {
++	struct stat st;
+ 	int i;
  
- static const char *own_binary;
- static char **test_argv;
-@@ -59,6 +60,8 @@ static const char *qemu_binary = NULL;
- static const char *kernel_image = NULL;
- static char *audio_server;
- static char *usb_dev;
-+static char *extra_opts[EXTRA_OPT_MAX];
-+static int num_extra_opts;
- 
- static const char *qemu_table[] = {
- 	"qemu-system-x86_64",
-@@ -291,7 +294,8 @@ static void start_qemu(void)
- 
- 	argv = alloca(sizeof(qemu_argv) +
- 			(sizeof(char *) * (6 + (num_devs * 4))) +
--			(sizeof(char *) * (usb_dev ? 4 : 0)));
-+			(sizeof(char *) * (usb_dev ? 4 : 0)) +
-+			(sizeof(char *) * num_extra_opts));
- 	memcpy(argv, qemu_argv, sizeof(qemu_argv));
- 
- 	pos = (sizeof(qemu_argv) / sizeof(char *)) - 1;
-@@ -335,6 +339,9 @@ static void start_qemu(void)
- 		argv[pos++] = usb_dev;
+-	for (i = 0; kernel_table[i]; i++) {
+-		struct stat st;
+-
+-		if (!stat(kernel_table[i], &st))
+-			return kernel_table[i];
++	if (root) {
++		snprintf(path, PATH_MAX, "%s", root);
++		if (stat(path, &st))
++			return false;
++		if (!(st.st_mode & S_IFDIR))
++			return true;
  	}
  
-+	for (i = 0; i < num_extra_opts; ++i)
-+		argv[pos++] = extra_opts[i];
+-	return NULL;
++	for (i = 0; kernel_table[i]; i++) {
++		if (root)
++			snprintf(path, PATH_MAX, "%s/%s", root,
++						kernel_table[i]);
++		else
++			snprintf(path, PATH_MAX, "%s",
++						kernel_table[i]);
++		if (!stat(path, &st))
++			return true;
++	}
 +
- 	argv[pos] = NULL;
- 
- 	execve(argv[0], argv, qemu_envp);
-@@ -1199,10 +1206,11 @@ static void usage(void)
- 		"\t-l, --emulator[=num]   Start btvirt\n"
- 		"\t-A, --audio[=path]     Start audio server\n"
- 		"\t-u, --unix[=path]      Provide serial device\n"
--		"\t-U, --usb [qemu_args]  Provide USB device\n"
-+		"\t-U, --usb <qemu_args>  Provide USB device\n"
- 		"\t-q, --qemu <path>      QEMU binary\n"
- 		"\t-H, --qemu-host-cpu    Use host CPU (requires KVM support)\n"
- 		"\t-k, --kernel <image>   Kernel image (bzImage)\n"
-+		"\t-o, --option <opt>     Additional argument passed to QEMU\n"
- 		"\t-h, --help             Show help options\n");
++	return false;
  }
  
-@@ -1220,6 +1228,7 @@ static const struct option main_options[] = {
- 	{ "kernel",  required_argument, NULL, 'k' },
- 	{ "audio",   optional_argument, NULL, 'A' },
- 	{ "usb",     required_argument, NULL, 'U' },
-+	{ "option",  required_argument, NULL, 'o' },
- 	{ "version", no_argument,       NULL, 'v' },
- 	{ "help",    no_argument,       NULL, 'h' },
- 	{ }
-@@ -1239,7 +1248,7 @@ int main(int argc, char *argv[])
- 	for (;;) {
- 		int opt;
+ static const struct {
+@@ -1209,7 +1222,7 @@ static void usage(void)
+ 		"\t-U, --usb <qemu_args>  Provide USB device\n"
+ 		"\t-q, --qemu <path>      QEMU binary\n"
+ 		"\t-H, --qemu-host-cpu    Use host CPU (requires KVM support)\n"
+-		"\t-k, --kernel <image>   Kernel image (bzImage)\n"
++		"\t-k, --kernel <image>   Kernel bzImage or source tree path\n"
+ 		"\t-o, --option <opt>     Additional argument passed to QEMU\n"
+ 		"\t-h, --help             Show help options\n");
+ }
+@@ -1236,6 +1249,8 @@ static const struct option main_options[] = {
  
--		opt = getopt_long(argc, argv, "au::bdsl::mq:Hk:A::U:vh",
-+		opt = getopt_long(argc, argv, "au::bdsl::mq:Hk:A::U:o:vh",
- 						main_options, NULL);
- 		if (opt < 0)
- 			break;
-@@ -1284,6 +1293,13 @@ int main(int argc, char *argv[])
- 		case 'U':
- 			usb_dev = optarg;
- 			break;
-+		case 'o':
-+			if (num_extra_opts >= EXTRA_OPT_MAX) {
-+				fprintf(stderr, "Too many -o\n");
-+				return EXIT_FAILURE;
-+			}
-+			extra_opts[num_extra_opts++] = optarg;
-+			break;
- 		case 'v':
- 			printf("%s\n", VERSION);
- 			return EXIT_SUCCESS;
+ int main(int argc, char *argv[])
+ {
++	char kernel_path[PATH_MAX];
++
+ 	if (getpid() == 1 && getppid() == 0) {
+ 		prepare_sandbox();
+ 		run_tests();
+@@ -1335,14 +1350,13 @@ int main(int argc, char *argv[])
+ 		}
+ 	}
+ 
+-	if (!kernel_image) {
+-		kernel_image = find_kernel();
+-		if (!kernel_image) {
+-			fprintf(stderr, "No default kernel image found\n");
+-			return EXIT_FAILURE;
+-		}
++	if (!find_kernel(kernel_image, kernel_path)) {
++		fprintf(stderr, "No kernel image found\n");
++		return EXIT_FAILURE;
+ 	}
+ 
++	kernel_image = kernel_path;
++
+ 	printf("Using QEMU binary %s\n", qemu_binary);
+ 	printf("Using kernel image %s\n", kernel_image);
+ 
 -- 
 2.53.0
 
