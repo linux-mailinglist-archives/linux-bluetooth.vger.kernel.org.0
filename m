@@ -1,218 +1,221 @@
-Return-Path: <linux-bluetooth+bounces-19540-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-19544-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QNCMA5VbpGn6egUAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-19540-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 01 Mar 2026 16:30:29 +0100
+	id MCC7OnhbpGn6egUAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-19544-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 01 Mar 2026 16:30:00 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A0171D0717
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 01 Mar 2026 16:30:28 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id D7CB71D0709
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 01 Mar 2026 16:30:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id AAA0130241A3
-	for <lists+linux-bluetooth@lfdr.de>; Sun,  1 Mar 2026 15:29:46 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 1B9F83013DE1
+	for <lists+linux-bluetooth@lfdr.de>; Sun,  1 Mar 2026 15:29:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46AD83358CE;
-	Sun,  1 Mar 2026 15:29:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4B023370EC;
+	Sun,  1 Mar 2026 15:29:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.net header.i=martinbts@gmx.net header.b="U0eM3Zxg"
+	dkim=pass (2048-bit key) header.d=gmx.net header.i=martinbts@gmx.net header.b="gNrbfgAx"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 003A832142B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C87331220
 	for <linux-bluetooth@vger.kernel.org>; Sun,  1 Mar 2026 15:29:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772378981; cv=none; b=N2Bj3+ODaW//+GrHmGqil8NrnPta+Zae4a+AJA+cyRQuCXPwpoUffDsNmzjQiZAQvW9wwEKNl1pmeFcsdO7EVlp4PI+jsFLTFauE0ts6uJUrytXs2IWsh5hxYieG+pyiySQSJQ+vJfd4Xu7ihSUb3q4Zq5u59l5C1jfjyz5f/84=
+	t=1772378983; cv=none; b=QHFfHVJ2zdNbPpm6F+UpWIIAd7L4j+4D6kLzGrMsGWQZSVKq66FQuizuRBUXD/ETxOZ149buFdWuU6+TwVIdQ2oec8CC60B3LVgokbOPJ0m3ABK5e0BbNXQL71jChWNENiFz1VGbdLCTMnnnmeqA4wd4rc628Jm2ZrPzgFJhDeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772378981; c=relaxed/simple;
-	bh=O7l1Mbfxp8ddf5OicRK892Ho01f5c0KpqLz4DRpfRAU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=I6Zu0s6OAm/xjstzhQ3/2pzQZoz9najOWI9gWjyDO95TD5sgMsSRHSLmyI/lXNL8L41PyN8EZPeSW+jb2T3MO+TtAKCcIGUFkqlpc/uClJLp3a70+PDMmVuUFaw1fVGUizbRhxESTCujUk1sdDUb2/eNrb8VcAg54pRSSYSxD5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net; spf=pass smtp.mailfrom=gmx.net; dkim=pass (2048-bit key) header.d=gmx.net header.i=martinbts@gmx.net header.b=U0eM3Zxg; arc=none smtp.client-ip=212.227.17.21
+	s=arc-20240116; t=1772378983; c=relaxed/simple;
+	bh=iXinGyyqfkQUxT/xcP0IoFRIWWdRaMmh0A4k4Wd1raE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Oe55pGxPfvOjzp/Zv3TaKcEeZd5kycDOqRIAyUTCQ/M4f2A5pnY0YDuDv6Tyxke0/SNaKr5F/RaUbp6Dqm5eebE5Gz5tTmry1acEftZ28jQuSzek2jIlb2BZZ/Gw6rtok0FUKMSgo569G++rYiLBnq3G7iF9DoaVCgZhdM1GenI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net; spf=pass smtp.mailfrom=gmx.net; dkim=pass (2048-bit key) header.d=gmx.net header.i=martinbts@gmx.net header.b=gNrbfgAx; arc=none smtp.client-ip=212.227.17.22
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.net
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.net;
 	s=s31663417; t=1772378978; x=1772983778; i=martinbts@gmx.net;
-	bh=jMpmJ+RFGQD1Rgz/y56n2RhDU2SaXn5Kxm6TZsY9Gng=;
-	h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	bh=isxXnKz+zNDEMdA7aaD8SwgFV+tF2H1rZ/KDklzqxck=;
+	h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:In-Reply-To:
+	 References:MIME-Version:Content-Transfer-Encoding:cc:
 	 content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=U0eM3ZxgrwFY5GyEwqhv7Gr5WkJ8cIoCVxZGYZNz70M+OAvX4dciqIlO4T5IoEMn
-	 weitmLEkLH99mqlLPK5qgGxnSMMflM8hy1MLWdaFiCmin33C3thLAJO/eiCJDNMrB
-	 ewLW1GSydgpB3Q94bLxeNPIjs52ZnqhCDEwwXns0i1vB6ep0retKvjOd+/lb5FfL0
-	 7yNXqaPXq4QQdt6LBTaCSlGWxIFAZpNOuNnbflp3j04WP5P4OO2SfAycaIRuXx2RD
-	 LMEYFrrflkXj8prguxvqJ2gcVIscyKz5gd7vmsesQP0YOqfvVd2JGxuMqjh1Jkvfj
-	 FtkMTS6gVRO9sPHZTQ==
+	b=gNrbfgAxHyZKZV/Rj9wgiG3g9RCtk6WAxnRLzz9ZFImFqagLslskjdM0v3MVi4Hj
+	 iu3nBj6J6Gs5MiWp8iAM9v4FtXQAdt3qTIASeGeKru7cuUwgJjwYioO7+ZkCD3iUn
+	 6BtUY010yJz9eJL7P1LgFsjP2BGBbQD2QbhjVbeQr210nS94t0UAZrUUaJFul3hST
+	 mLgs/WUo4X2hAX7T/r4IA1S+8yOzbEeY8JB2CmhKTVBF7BlopEyQddxoqViOWL8J9
+	 m7FkMRHS1eVsOljtNJZkSebfo2QiqEmrPYrP+HICClD72ptWgIgjCEd40IfHkxKti
+	 X1kesUod2NkH1g/zMg==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from client.hidden.invalid by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MgvvJ-1vTPfb0ClB-00kcTe; Sun, 01
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MZCfJ-1wA8qh0rhp-00J5DO; Sun, 01
  Mar 2026 16:29:38 +0100
 From: Martin BTS <martinbts@gmx.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: Martin BTS <martinbts@gmx.net>
-Subject: [PATCH BlueZ 0/5] Enable and add support for Nintendo Switch 2 controllers
-Date: Sun,  1 Mar 2026 16:29:25 +0100
-Message-ID: <20260301152930.221472-1-martinbts@gmx.net>
+Subject: [PATCH BlueZ 1/5] shared/att: Don't disconnect on ATT request timeout
+Date: Sun,  1 Mar 2026 16:29:26 +0100
+Message-ID: <20260301152930.221472-2-martinbts@gmx.net>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260301152930.221472-1-martinbts@gmx.net>
+References: <20260301152930.221472-1-martinbts@gmx.net>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:DXTxQAWHLvyR4BdMHlnU078fJpUnPpn0+ajhyLPYBqKlrwFJo+n
- LJ4fBMdgqMF0BFrKCsBv5m/DIOaVDUdh0dikiTud/4PyLq0ICyKWP9q1hdShmyiri+z8zGT
- Eiln7OKR4n/y/689+J4S8Macaetfjart9VV/N2Dr4UrXkJod4167L+a36PdWdhzU9uNkzsP
- kjw5mZhPPn40iO9T+pm6w==
+X-Provags-ID: V03:K1:uiZjwc/OvSd92BgmV5KB0xgufRs3vjO1vCIuahyrCEjNjy5J9Pq
+ L3C2CcS00l2b/jC+YS3SC960+qCVedXtsh7kg09Qge5pPOZbbDdLYzhJz6rOvBS/E4FeUZa
+ CD3xieM6TLwSb32quAM9h04jAMVeuCk7Gwsk5hfr8Rry2dtKBsGFXdJ9h72K/zAQ1DwkX98
+ 0bQ3vnmPVo0cxvrl5uGsQ==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:88S+IwyXYp0=;vNVZxsPPfZFpbcxU665UdqRM1Le
- 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
- 3vgjIBJHvgIVCYSKeCFniGsYyYXjZRsZjQf3dg
+UI-OutboundReport: notjunk:1;M01:P0:szrEE8FUfV0=;bVRv69J5JO08zjXHxk5amWvQlxs
+ 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
+ ov9eSPi7aD+oGe50eFEL1h1x6IaTT
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[gmx.net,quarantine];
+	R_MISSING_CHARSET(0.50)[];
 	R_DKIM_ALLOW(-0.20)[gmx.net:s=s31663417];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-19540-lists,linux-bluetooth=lfdr.de];
-	FROM_HAS_DN(0.00)[];
 	RCPT_COUNT_TWO(0.00)[2];
+	TAGGED_FROM(0.00)[bounces-19544-lists,linux-bluetooth=lfdr.de];
+	FREEMAIL_CC(0.00)[gmx.net];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[gmx.net];
-	DKIM_TRACE(0.00)[gmx.net:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FREEMAIL_FROM(0.00)[gmx.net];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[martinbts@gmx.net,linux-bluetooth@vger.kernel.org];
-	FREEMAIL_FROM(0.00)[gmx.net];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[gmx.net:+];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 8A0171D0717
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: D7CB71D0709
 X-Rspamd-Action: no action
 
-The Nintendo Switch 2 controllers are special in their handshake
-(requirements) and the way how they use GATT notifications to transport us=
-er
-input.
+The ATT layer currently calls io_shutdown() on every request timeout,
+terminating the connection.  This is too aggressive for devices that
+silently ignore optional ATT requests (e.g. secondary service
+discovery, UUID 0x2801) while remaining otherwise fully functional.
 
-This patchset plows the road and introduces an initial plugin for NS2
-controllers, resulting in a uhid device that can be sensibly used by
-hid-generic but is also supposed to sit well with the new (out-of-tree)
-hid-switch2 driver.
+Remove the io_shutdown() call from timeout_cb().  The upper layer
+(gatt-client.c) already handles aborted-request error codes for
+optional operations and continues discovery.  Truly dead connections
+are caught by the link-layer supervision timeout.
+=2D--
+ src/shared/att.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-Patches 1 and 2 are required, 3 and 4 are QoL improvements and patch 5
-is the Nintendo Switch 2 specific part.
-
-Disclaimer:
-I only have a Pro Controller 2 and all work has been done with this Pro
-Controller 2 only. This is also my first contribution ever this close to t=
-he
-kernel. I may only appear to know what I am doing and the development stat=
-us
-is "works on my machine".=20
-
-Martin BTS (5):
-  shared/att: Don't disconnect on ATT request timeout
-  shared/gatt-client: Handle secondary discovery timeout
-  device: Add btd_device_set_alias()
-  dbus-common: Add Gaming appearance class (0x2a)
-  plugins/switch2: Add Nintendo Switch 2 Controller plugin
-
- Makefile.plugins         |    3 +
- plugins/switch2.c        | 1053 ++++++++++++++++++++++++++++++++++++++
- src/dbus-common.c        |    2 +
- src/device.c             |   14 +
- src/device.h             |    1 +
- src/shared/att.c         |   12 +-
- src/shared/gatt-client.c |   13 +
- 7 files changed, 1094 insertions(+), 4 deletions(-)
- create mode 100644 plugins/switch2.c
-
+diff --git a/src/shared/att.c b/src/shared/att.c
+index 3d3c8cfa2..e93e7429a 100644
+=2D-- a/src/shared/att.c
++++ b/src/shared/att.c
+@@ -504,11 +504,15 @@ static bool timeout_cb(void *user_data)
+ 	disc_att_send_op(op);
+=20
+ 	/*
+-	 * Directly terminate the connection as required by the ATT protocol.
+-	 * This should trigger an io disconnect event which will clean up the
+-	 * io and notify the upper layer.
++	 * Do NOT call io_shutdown() here. Shutting down the ATT bearer on
++	 * every request timeout is too aggressive: some devices never respond
++	 * to optional ATT requests (e.g. secondary service discovery, UUID
++	 * 0x2801) while remaining otherwise fully functional. The upper layer
++	 * (gatt-client.c) already handles the aborted-request error codes
++	 * (BT_ATT_ERROR_UNLIKELY) for optional operations and continues
++	 * discovery. Truly dead connections are handled by the LL supervision
++	 * timeout without requiring ATT-level disconnection here.
+ 	 */
+-	io_shutdown(chan->io);
+=20
+ 	return false;
+ }
 =2D-=20
 2.47.3
 
