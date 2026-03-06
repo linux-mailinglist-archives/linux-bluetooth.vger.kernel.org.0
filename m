@@ -1,54 +1,53 @@
-Return-Path: <linux-bluetooth+bounces-19892-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-19893-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YAUbL08jq2n6aAEAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-19892-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 06 Mar 2026 19:56:15 +0100
+	id YN5/AH4jq2n6aAEAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-19893-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 06 Mar 2026 19:57:02 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32F78226DF8
-	for <lists+linux-bluetooth@lfdr.de>; Fri, 06 Mar 2026 19:56:14 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 53D02226E0E
+	for <lists+linux-bluetooth@lfdr.de>; Fri, 06 Mar 2026 19:57:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 74A7530576DA
-	for <lists+linux-bluetooth@lfdr.de>; Fri,  6 Mar 2026 18:56:13 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 4BF5A300E199
+	for <lists+linux-bluetooth@lfdr.de>; Fri,  6 Mar 2026 18:56:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B630E36EAA5;
-	Fri,  6 Mar 2026 18:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 409CA371056;
+	Fri,  6 Mar 2026 18:56:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="L4iU02Cu"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=github.com header.i=@github.com header.b="c3eeo6et"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from out-22.smtp.github.com (out-22.smtp.github.com [192.30.252.205])
+Received: from out-20.smtp.github.com (out-20.smtp.github.com [192.30.252.203])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30CC8353ED9
-	for <linux-bluetooth@vger.kernel.org>; Fri,  6 Mar 2026 18:56:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.205
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A603921F3
+	for <linux-bluetooth@vger.kernel.org>; Fri,  6 Mar 2026 18:56:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.30.252.203
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772823372; cv=none; b=b1WrO3Ay8ymsRUTtS20Qua4IaJJfD6IXSz6Muo6rCCCuXOeJnxT0XqdOsizviT8qV/KADJ3YPDNL6aWF9yCniSFegobhwrL0j1xvtLXVvGZyRjazzZMZxHs/PkIe12aBtu0yHQR1quN4ASxmHnlum0y0O4UDaZzTJJOf2p7nwuU=
+	t=1772823416; cv=none; b=rfr5p9Dte1wT3agkTjH3pcnr8CK1Z5VvlyOiRuAaZ3wWynNZZz1+UE6BesrSbLxIK9WOaNgB/gI/eFLPxbisbJc5sw+OVnJAHKb7rySKzARIaFZGmIYG7uhipjw6qk00NmP0S7BJkE06tY7AVNSX1NxmtHsGU7MmqvYEJdSOFoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772823372; c=relaxed/simple;
-	bh=7xAGWiJpfXvJ4KSV+qv9XtYCq5I0OMvLwp6LtC/jQ7A=;
-	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=P7ho77O89SrInzF2vDjEg+eU7RRFK0lxQSe8lJBR0P6t0y+cnjO5DxaLMcjmp4Erqjthebnmi9DEQl9Ww0WE7bk2Bye0JU2GvCv51u7023kjsKpPg86VpKjQHs+4oOjCsa6ruUL6yW1iUegtmLYEvYTg2j4qvZyKOmEkd3xJD+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=L4iU02Cu; arc=none smtp.client-ip=192.30.252.205
+	s=arc-20240116; t=1772823416; c=relaxed/simple;
+	bh=179dERlEfxltrUigfiR3LCZh61/XMSLzK/jhplMHFkA=;
+	h=Date:From:To:Message-ID:Subject:Mime-Version:Content-Type; b=PGSudQLDzyLITLMIMv8d52/u4Jd2EJmnSZwAV9aQfsr+eSKPkQSuEYDQtv9oFkvYutf2/q/nc3B9iDzOUrmI4oxXdeuxacuEmVPi6QeJwomKTdc92SAgmBM9N0wj83q0FNI+Z4UVzWmPTPU3UHVEFDOx9V9juUFmesEd0An98Ss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (1024-bit key) header.d=github.com header.i=@github.com header.b=c3eeo6et; arc=none smtp.client-ip=192.30.252.203
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Received: from github.com (hubbernetes-node-9b54ba7.ac4-iad.github.net [10.55.90.25])
-	by smtp.github.com (Postfix) with ESMTPA id 46CF021413
-	for <linux-bluetooth@vger.kernel.org>; Fri,  6 Mar 2026 10:56:10 -0800 (PST)
+Received: from github.com (hubbernetes-node-22b4aba.va3-iad.github.net [10.48.179.57])
+	by smtp.github.com (Postfix) with ESMTPA id 111A81C11E7
+	for <linux-bluetooth@vger.kernel.org>; Fri,  6 Mar 2026 10:56:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
-	s=pf2023; t=1772823370;
-	bh=AH8YYJ4vetItR0emuOkf0SSMrfHUO8oXfGDjl/4ZlUU=;
+	s=pf2023; t=1772823415;
+	bh=qM5OMG8AobSv/Dc/F4+65FtlpbTzwwgqCkCwdGaRDu4=;
 	h=Date:From:To:Subject:List-Unsubscribe:From;
-	b=L4iU02CuylIwYtYym+sXMCVh5pFF0Dl9XB0MlyqCHAi6m8Yeg3B+WIqkDi6O5RJzJ
-	 tTBoZR7gLzeQljQlYM2NL9C6DBX2tI14tw2J6u+Lx83A/+sHTc3fVQbCgS4saR2M6Y
-	 tVNLwsXQ6jitOy8U+cylNpSz9P3iZW6SrQ85uicI=
-Date: Fri, 06 Mar 2026 10:56:10 -0800
-From: Christian Eggers <noreply@github.com>
+	b=c3eeo6et59aFIEOLjWprVnePAaDXuIeB8+OBIJSJikXzqQ1mucq4wRzOjx9nPrQZJ
+	 jMyWQ21RxvE1AW8i7Tk1VYcakyHPYOvAFFtTfuBI3Cv1NUfaYbHQL2YfyBfI8S1Mx4
+	 Tr85xvcJZNGGK+0B3abGEsL+GuEhAfFxa9dWtANo=
+Date: Fri, 06 Mar 2026 10:56:55 -0800
+From: BluezTestBot <noreply@github.com>
 To: linux-bluetooth@vger.kernel.org
-Message-ID: <bluez/bluez/push/refs/heads/master/8d82d3-33388c@github.com>
-Subject: [bluez/bluez] dfc43e: gap-pics: Add footnote for TSPC_GAP_21_9
- feature
+Message-ID: <bluez/bluez/push/refs/heads/1062730/9cabd8-000000@github.com>
+Subject: [bluez/bluez]
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
@@ -60,143 +59,40 @@ Content-Type: text/plain;
 Content-Transfer-Encoding: 7bit
 X-GitHub-Recipient-Address: linux-bluetooth@vger.kernel.org
 X-Auto-Response-Suppress: All
-X-Rspamd-Queue-Id: 32F78226DF8
+X-Rspamd-Queue-Id: 53D02226E0E
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [2.04 / 15.00];
 	DMARC_POLICY_REJECT(2.00)[github.com : SPF not aligned (relaxed),reject];
 	R_DKIM_REJECT(1.00)[github.com:s=pf2023];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MV_CASE(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-19892-lists,linux-bluetooth=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-19893-lists,linux-bluetooth=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[noreply@github.com,linux-bluetooth@vger.kernel.org];
 	RCPT_COUNT_ONE(0.00)[1];
 	DKIM_TRACE(0.00)[github.com:-];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	MISSING_XM_UA(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TO_DN_NONE(0.00)[];
-	NEURAL_SPAM(0.00)[0.064];
+	NEURAL_SPAM(0.00)[0.125];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[noreply@github.com,linux-bluetooth@vger.kernel.org];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
+	PRECEDENCE_BULK(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-  Branch: refs/heads/master
+  Branch: refs/heads/1062730
   Home:   https://github.com/bluez/bluez
-  Commit: dfc43ee483fcce5ffe61c0809501ced197cd8596
-      https://github.com/bluez/bluez/commit/dfc43ee483fcce5ffe61c0809501ced197cd8596
-  Author: Christian Eggers <ceggers@arri.de>
-  Date:   2026-03-06 (Fri, 06 Mar 2026)
-
-  Changed paths:
-    M doc/qualification/gap-pics.rst
-
-  Log Message:
-  -----------
-  gap-pics: Add footnote for TSPC_GAP_21_9 feature
-
-Unfortunately, v1 of my patch series has been applied to master. This is
-an incremental update to v2 of 1b7e682ef4b7 ("doc/qualification:
-gap-pics: add footnote for TSPC_GAP_21_9 feature")
-
-
-  Commit: a843a95b4cd11f0feeb524876cfbee474a7ac986
-      https://github.com/bluez/bluez/commit/a843a95b4cd11f0feeb524876cfbee474a7ac986
-  Author: Christian Eggers <ceggers@arri.de>
-  Date:   2026-03-06 (Fri, 06 Mar 2026)
-
-  Changed paths:
-    M doc/qualification/gatt-pts.rst
-
-  Log Message:
-  -----------
-  gatt-pts: Add description for GATT/SR/GAW/BI-39-C
-
-Unfortunately, v1 of my patch series has been applied to master. This is
-an incremental update to v2 of db7d1a9c770c ("doc/qualification:
-gatt-pts: add description for GATT/SR/GAW/BI-39-C")
-
-
-  Commit: 0ca7685dd6b9263b1d993d77402d253cc9986468
-      https://github.com/bluez/bluez/commit/0ca7685dd6b9263b1d993d77402d253cc9986468
-  Author: Christian Eggers <ceggers@arri.de>
-  Date:   2026-03-06 (Fri, 06 Mar 2026)
-
-  Changed paths:
-    M doc/qualification/gatt-pts.rst
-
-  Log Message:
-  -----------
-  gatt-pts: Add description for GATT/SR/GAN/BV-03-C
-
-Unfortunately, v1 of my patch series has been applied to master. This is
-an incremental update to v2 of 268d715b80e0 ("doc/qualification:
-gatt-pts: add description for GATT/SR/GAN/BV-03-C")
-
-
-  Commit: 47bf221d31831f796c91199472251ec72e974af3
-      https://github.com/bluez/bluez/commit/47bf221d31831f796c91199472251ec72e974af3
-  Author: Christian Eggers <ceggers@arri.de>
-  Date:   2026-03-06 (Fri, 06 Mar 2026)
-
-  Changed paths:
-    M doc/qualification/gatt-pts.rst
-
-  Log Message:
-  -----------
-  gatt-pts: Update description for GATT/SR/GAI/BV-01-C
-
-Unfortunately, v1 of my patch series has been applied to master. This is
-an incremental update to v2 of 7a2d04492f98 ("doc/qualification:
-gatt-pts: update description for GATT/SR/GAI/BV-01-C")
-
-
-  Commit: 5ab15728068cc142e8bc2d4ada48d8fc3f431254
-      https://github.com/bluez/bluez/commit/5ab15728068cc142e8bc2d4ada48d8fc3f431254
-  Author: Christian Eggers <ceggers@arri.de>
-  Date:   2026-03-06 (Fri, 06 Mar 2026)
-
-  Changed paths:
-    M doc/qualification/gatt-pts.rst
-
-  Log Message:
-  -----------
-  gatt-pts: Add description for GATT/SR/GAI/BV-02-C
-
-Unfortunately, v1 of my patch series has been applied to master. This is
-an incremental update to v2 of 04af0bbeca63 ("doc/qualification:
-gatt-pts: add description for GATT/SR/GAI/BV-02-C")
-
-
-  Commit: 33388cb1d6f1aa8925b048060c1ca5833e8909ee
-      https://github.com/bluez/bluez/commit/33388cb1d6f1aa8925b048060c1ca5833e8909ee
-  Author: Christian Eggers <ceggers@arri.de>
-  Date:   2026-03-06 (Fri, 06 Mar 2026)
-
-  Changed paths:
-    M doc/qualification/l2cap-pts.rst
-
-  Log Message:
-  -----------
-  l2cap-pts: Add descriptions for LE CFC tests
-
-Unfortunately, v1 of my patch series has been applied to master. This is
-an incremental update to v2 of d99f2e129634 ("doc/qualification:
-l2cap-pts: add descriptions for LE CFC tests")
-
-
-Compare: https://github.com/bluez/bluez/compare/8d82d3e1e539...33388cb1d6f1
 
 To unsubscribe from these emails, change your notification settings at https://github.com/bluez/bluez/settings/notifications
 
