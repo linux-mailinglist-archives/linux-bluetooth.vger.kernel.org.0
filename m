@@ -1,240 +1,291 @@
-Return-Path: <linux-bluetooth+bounces-19915-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-19912-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oCDgMTVwrWme2wEAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-19915-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 08 Mar 2026 13:48:53 +0100
+	id oPZTCx5wrWme2wEAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-19912-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 08 Mar 2026 13:48:30 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 50BDB2304E4
-	for <lists+linux-bluetooth@lfdr.de>; Sun, 08 Mar 2026 13:48:53 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C15AD2304BB
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 08 Mar 2026 13:48:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B82A6302A2CE
-	for <lists+linux-bluetooth@lfdr.de>; Sun,  8 Mar 2026 12:48:30 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 304E3300A313
+	for <lists+linux-bluetooth@lfdr.de>; Sun,  8 Mar 2026 12:48:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A6393783B9;
-	Sun,  8 Mar 2026 12:48:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A188375F9A;
+	Sun,  8 Mar 2026 12:48:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.net header.i=martinbts@gmx.net header.b="LYQ1RQD1"
+	dkim=pass (2048-bit key) header.d=gmx.net header.i=martinbts@gmx.net header.b="h9ygbnRS"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB07F35F17A
-	for <linux-bluetooth@vger.kernel.org>; Sun,  8 Mar 2026 12:48:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A48F376BE1
+	for <linux-bluetooth@vger.kernel.org>; Sun,  8 Mar 2026 12:48:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772974110; cv=none; b=ltLSEr8pzyQykwR5G4LTX7FBJq0HYgUBDcTcyecOHd/Z/jfc+nrVAAR5QQExWDK0qwHWlOsCmZDA0Ii3Bk0w0VE6s3/B9Xm+/0eJSm/U2bO3F9korccI9fbLyYDxYSHcovsJsgCDhiTv28EM2mrKIDaKux5/mKicDY8YPLFjohg=
+	t=1772974108; cv=none; b=AFYmqv9f5bBNu5pRD6qUKFufBw8b1q1YTcUwqH50cWgSiwpYUPedvcb3ZsUBpzK9NB9yezEdtKESZ1q5spUOcrgS2nE8sTQCXAxK0f331ZgPZal6tLuhujyBuB9Glu3JVmmr9kN9cb4oTy9s36Z6lF2mo58mGJjYPDHR45axgLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772974110; c=relaxed/simple;
-	bh=/O+LzGqq4BawnyWAovxHmE+b4XLbeJv7bmXqbtiKC38=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=kUpWNKqejnZbmgKKWjO4R6KH7hhPhwEMmAAP1bi8/Otl1cUajkOVGnagB0Zrag++DQyz2H5jZKXX3apq36CYbFlTiPnPZ1DkAVggwZ7chzDfTUOgZEULL3LpKANOf6ZRUuB6IbIq3w02YTSUxQH1RNe36hb/3d82R855hfMoNXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net; spf=pass smtp.mailfrom=gmx.net; dkim=pass (2048-bit key) header.d=gmx.net header.i=martinbts@gmx.net header.b=LYQ1RQD1; arc=none smtp.client-ip=212.227.15.18
+	s=arc-20240116; t=1772974108; c=relaxed/simple;
+	bh=JJotgogY7xc2up7yUeFBAIuoE0BybgIdEwWCeQvzINw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=PCFFIF5bf7/2ZxCgS+d1I+LOpnbqK23QYxEcRXGxZ8tAMU5Ttrd9+5jcntRaqHmq7wMsiG4n3YY3LZOmUezJj/V4X6f2mhPA3eLuQAnAnLl+ZfVXKhRw0N0dyry1/vAye8ATzdoeV2NLSMiXG+m9HYKkKfR6Yph9k7zdIV0OEwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net; spf=pass smtp.mailfrom=gmx.net; dkim=pass (2048-bit key) header.d=gmx.net header.i=martinbts@gmx.net header.b=h9ygbnRS; arc=none smtp.client-ip=212.227.15.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.net
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.net;
-	s=s31663417; t=1772974101; x=1773578901; i=martinbts@gmx.net;
-	bh=LVmaX9pqdNp9PT9ptbTgn2C9XOnEblDahj8ZgN9S43Q=;
-	h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	s=s31663417; t=1772974102; x=1773578902; i=martinbts@gmx.net;
+	bh=jn68mZVLVQAdVBrSiDl1lsbH7EkHfqtft+WObZSDVnA=;
+	h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:In-Reply-To:
+	 References:MIME-Version:Content-Transfer-Encoding:cc:
 	 content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=LYQ1RQD1m7KSKke9RvafvCI7GTcF1V1LN6WUt5u9lbSGMMBq3dzFJMJHS782opLX
-	 stJuhu17nrk+vRXF1za+qaO4P6BfqkR3iF8w8ClsFW0Wpm0XF+QBvVOpMN9aDGuqf
-	 Cd3h2SaLN3wuqahunpOVRxyNTijmg7DkiXC6q2H+8wtvn2uFPcUWa8gpmlsepLmCY
-	 0Fp7qL1mxA37YZAQMcS0xf0qFYTdZFTP6A3x5mT4tDvw7rgQrVomNTmZlXdi0Y3Xg
-	 NDvJlgzYuql0wZxYEt5spynYFMrtG2dazxdnHI9yz41o9krBpq2tOseljhS/nFfbw
-	 zDAGAL6lQsRX7Z30lg==
+	b=h9ygbnRSEyfaJh793AC32fUgde6vWrZLqblrzzr2JwLaNJNN/3oldnGQoSR9XAy1
+	 BJqdAwWOrqBrPVY0D/Mv/2J+zRG/6gCIOtzPn2AsFjYyAj7USSBvD//32Ka+t6+U/
+	 Df3tBg7sJqMXKQPgvpMrBWdUzUvsfJ/2+5+plu6F+17K9yLJJo+M2IF2AhCKvoqGC
+	 kCFTMjkJQBKSFbxLM2wsy8GwvnYDl1B3uAqHg6EJre53naKR+zoNZNu6DUz9IVLbu
+	 nTtN3CTecD85eqDhvEwtgIgxohLtlt8ygDbTH7jPIAIj+DEI7BVKnRX9CN7AhWy8u
+	 gjar4u6f/E2eOWPbtw==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MbzyP-1vN9Ja2qS7-00icUs; Sun, 08
- Mar 2026 13:48:21 +0100
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N3bWr-1vZ8IY3tL9-00ugnO; Sun, 08
+ Mar 2026 13:48:22 +0100
 From: Martin BTS <martinbts@gmx.net>
 To: linux-bluetooth@vger.kernel.org
 Cc: hadess@hadess.net,
 	luiz.dentz@gmail.com,
 	vi@endrift.com,
 	Martin BTS <martinbts@gmx.net>
-Subject: [PATCH BlueZ v2 0/6] Nintendo Switch 2 support
-Date: Sun,  8 Mar 2026 13:47:37 +0100
-Message-ID: <20260308124745.19248-1-martinbts@gmx.net>
+Subject: [PATCH BlueZ v2 1/6] shared/gatt: make secondary discovery optional
+Date: Sun,  8 Mar 2026 13:47:38 +0100
+Message-ID: <20260308124745.19248-2-martinbts@gmx.net>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260308124745.19248-1-martinbts@gmx.net>
+References: <20260308124745.19248-1-martinbts@gmx.net>
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:1391Q8n+EHR7mwpSGnBWCrE37QGCboVsEf0sq9FtGGWZ67SQOTG
- JImBu8O+zl8PtGW1pEUWa3zz93DW5P03VHZ9BZ2wRXwkILhnIrDXb+mLID1H35KuEXHmanQ
- IxZsgiIYz+bnA/BVW+IVJzd189cKPReywoIoJoV2AfSv4mHNc3/7fp+Jgnymlh9ehGNRQX7
- wtrjzHp+evHbJVwe4WByg==
+X-Provags-ID: V03:K1:gRggcDJJ80NwR6Yn3aUZ/6UPsYgin5DIAuJnOyMdXkY9++bKIMn
+ s7lf/C5C/SBITzIHXgNPFhx5xwixJHilT7J4DT1sewg5WEuoRfJ5SYP/flea95YbT6dZNIT
+ liMEJhNFrA6ykUvUB4ftOiyzsXwVWsn/+Q56O4L4naahLw4AhNNKFQBGmKl/7KJM3ZT2/bs
+ QRJJn1canNPIUYYHDKcMA==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:eqCtEvPnG80=;mLPnsJ42qqFD019heVfnBXCeGoY
- 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
- e2xQewHuWl3PFm7JQ=
-X-Rspamd-Queue-Id: 50BDB2304E4
+UI-OutboundReport: notjunk:1;M01:P0:2h9LGhpCpew=;inOaf+jORfrn0W+Z9eZRPyGZSpD
+ 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
+X-Rspamd-Queue-Id: C15AD2304BB
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.34 / 15.00];
+X-Spamd-Result: default: False [0.84 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_CONTAINS_FROM(1.00)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[gmx.net,quarantine];
 	R_DKIM_ALLOW(-0.20)[gmx.net:s=s31663417];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-19915-lists,linux-bluetooth=lfdr.de];
-	FREEMAIL_FROM(0.00)[gmx.net];
+	TAGGED_FROM(0.00)[bounces-19912-lists,linux-bluetooth=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	FROM_HAS_DN(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_FROM(0.00)[gmx.net];
+	TO_DN_SOME(0.00)[];
+	FREEMAIL_CC(0.00)[hadess.net,gmail.com,endrift.com,gmx.net];
 	DKIM_TRACE(0.00)[gmx.net:+];
-	RCPT_COUNT_FIVE(0.00)[5];
-	NEURAL_HAM(-0.00)[-0.979];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[martinbts@gmx.net,linux-bluetooth@vger.kernel.org];
-	FREEMAIL_CC(0.00)[hadess.net,gmail.com,endrift.com,gmx.net];
-	TAGGED_RCPT(0.00)[linux-bluetooth];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_FIVE(0.00)[5];
+	NEURAL_HAM(-0.00)[-0.992];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	TAGGED_RCPT(0.00)[linux-bluetooth];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-Changes v2:
-* Drop original patches 1 and 2 (tollerate ATT timeout)
-* New patches 1, 2, 3 introduce a device property skip_secondary,
-  that makes secondary device discovery optional
-* set_alias() is now public btd_device_set_alias() as suggested
-* Fix assigned numbers reference comment
-* Link to v1: https://lore.kernel.org/all/20260301152930.221472-1-martinbt=
-s@gmx.net/
+BREAKING CHANGE!
 
-v2 blurb:
+* Remove gatt_client_init from bt_gatt_client_new. Consumers must now
+  call gatt_client_init themselves!
+* Remove mtu paramter from bt_gatt_client_new
+* Rename gatt_client_init to bt_gatt_client_init and make it public
+* Introduce a new bt_gatt_client field "skip_secondary", default false
+* Introduce public skip_secondary setter
+* If true, skip_secondary makes discover_primary_cb goto done
+  (instead of discoverying secondary services)
+=2D--
+ src/shared/gatt-client.c | 22 ++++++++++++++--------
+ src/shared/gatt-client.h |  4 +++-
+ 2 files changed, 17 insertions(+), 9 deletions(-)
 
-The problem is the secondary service discovery. It will time out on the
-Procon2 which is essentially an unrecoverable error and we cannot
-connect the controller as a result.
-
-This patchset proposes making the secondary service discovery optional,
-so that we can prevent dealing with the Procon2's behaviour.
-It now is a property of the device, if it wants/needs a secondary
-discovery, or not. This allows device specific plugins to make the
-correct configuration in time, bevor a gatt-client is created. The
-default is the original behaviour: do a secondary services discovery.
-
-I marked patch 1 as a breaking change, because of how it changes the
-gatt-client interface. It appears this gatt-client is only used
-internally and never exposed so it technically isn't a breaking change
-for BlueZ, but I cannot be sure.
-
-For the record: The Procon2 reports appearance 0x0A82 Portable handheld co=
-nsole
-
-Martin BTS (6):
-  shared/gatt: make secondary discovery optional
-  device: allow skip secondary discovery
-  fixup: propagate new gatt interface through codebase
-  device: Rename set_alias to  btd_device_set_alias()
-  dbus-common: Add Gaming appearance class (0x2a)
-  plugins/switch2: Add Nintendo Switch 2 Controller plugin
-
- Makefile.plugins         |    3 +
- peripheral/gatt.c        |    5 +-
- plugins/switch2.c        | 1070 ++++++++++++++++++++++++++++++++++++++
- src/dbus-common.c        |    2 +
- src/device.c             |   33 +-
- src/device.h             |    2 +
- src/shared/gatt-client.c |   22 +-
- src/shared/gatt-client.h |    4 +-
- tools/btgatt-client.c    |    5 +-
- unit/test-bap.c          |    3 +-
- unit/test-gatt.c         |    3 +-
- unit/test-gmap.c         |    3 +-
- unit/test-mcp.c          |    3 +-
- unit/test-micp.c         |    3 +-
- unit/test-tmap.c         |    3 +-
- 15 files changed, 1133 insertions(+), 31 deletions(-)
- create mode 100644 plugins/switch2.c
-
+diff --git a/src/shared/gatt-client.c b/src/shared/gatt-client.c
+index df1541b88..7896ed329 100644
+=2D-- a/src/shared/gatt-client.c
++++ b/src/shared/gatt-client.c
+@@ -93,6 +93,7 @@ struct bt_gatt_client {
+ 	struct queue *notify_chrcs;
+ 	int next_reg_id;
+ 	unsigned int disc_id, nfy_id, nfy_mult_id, ind_id;
++	bool skip_secondary;
+=20
+ 	/*
+ 	 * Handles of the GATT Service and the Service Changed characteristic
+@@ -1344,7 +1345,7 @@ secondary:
+ 	 * functionality of a device and is referenced from at least one
+ 	 * primary service on the device.
+ 	 */
+-	if (queue_isempty(op->pending_svcs))
++	if (queue_isempty(op->pending_svcs) || client->skip_secondary)
+ 		goto done;
+=20
+ 	/* Discover secondary services */
+@@ -2106,7 +2107,7 @@ done:
+ 	notify_client_ready(client, success, att_ecode);
+ }
+=20
+-static bool gatt_client_init(struct bt_gatt_client *client, uint16_t mtu)
++bool bt_gatt_client_init(struct bt_gatt_client *client, uint16_t mtu)
+ {
+ 	struct discovery_op *op;
+=20
+@@ -2549,7 +2550,6 @@ fail:
+=20
+ struct bt_gatt_client *bt_gatt_client_new(struct gatt_db *db,
+ 							struct bt_att *att,
+-							uint16_t mtu,
+ 							uint8_t features)
+ {
+ 	struct bt_gatt_client *client;
+@@ -2561,11 +2561,6 @@ struct bt_gatt_client *bt_gatt_client_new(struct ga=
+tt_db *db,
+ 	if (!client)
+ 		return NULL;
+=20
+-	if (!gatt_client_init(client, mtu)) {
+-		bt_gatt_client_free(client);
+-		return NULL;
+-	}
+-
+ 	return bt_gatt_client_ref(client);
+ }
+=20
+@@ -2592,6 +2587,17 @@ struct bt_gatt_client *bt_gatt_client_clone(struct =
+bt_gatt_client *client)
+ 	return bt_gatt_client_ref(clone);
+ }
+=20
++bool bt_gatt_client_set_skip_secondary(struct bt_gatt_client *client,
++								bool skip)
++{
++	if (!client)
++		return false;
++
++	client->skip_secondary =3D skip;
++
++	return true;
++}
++
+ struct bt_gatt_client *bt_gatt_client_ref(struct bt_gatt_client *client)
+ {
+ 	if (!client)
+diff --git a/src/shared/gatt-client.h b/src/shared/gatt-client.h
+index 63cf99500..e510ad455 100644
+=2D-- a/src/shared/gatt-client.h
++++ b/src/shared/gatt-client.h
+@@ -18,9 +18,11 @@ struct bt_gatt_client;
+=20
+ struct bt_gatt_client *bt_gatt_client_new(struct gatt_db *db,
+ 							struct bt_att *att,
+-							uint16_t mtu,
+ 							uint8_t features);
+ struct bt_gatt_client *bt_gatt_client_clone(struct bt_gatt_client *client=
+);
++bool bt_gatt_client_init(struct bt_gatt_client *client, uint16_t mtu);
++bool bt_gatt_client_set_skip_secondary(struct bt_gatt_client *client,
++								bool skip);
+=20
+ struct bt_gatt_client *bt_gatt_client_ref(struct bt_gatt_client *client);
+ void bt_gatt_client_unref(struct bt_gatt_client *client);
 =2D-=20
 2.47.3
 
