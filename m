@@ -1,279 +1,241 @@
-Return-Path: <linux-bluetooth+bounces-19908-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-19915-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aB9DHEtMrGkxogEAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-19908-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 07 Mar 2026 17:03:23 +0100
+	id oCDgMTVwrWme2wEAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-19915-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 08 Mar 2026 13:48:53 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70BA922CA05
-	for <lists+linux-bluetooth@lfdr.de>; Sat, 07 Mar 2026 17:03:22 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 50BDB2304E4
+	for <lists+linux-bluetooth@lfdr.de>; Sun, 08 Mar 2026 13:48:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 31F2530106A3
-	for <lists+linux-bluetooth@lfdr.de>; Sat,  7 Mar 2026 16:03:19 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B82A6302A2CE
+	for <lists+linux-bluetooth@lfdr.de>; Sun,  8 Mar 2026 12:48:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 862B52F1FE4;
-	Sat,  7 Mar 2026 16:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A6393783B9;
+	Sun,  8 Mar 2026 12:48:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hpTWYmTE"
+	dkim=pass (2048-bit key) header.d=gmx.net header.i=martinbts@gmx.net header.b="LYQ1RQD1"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1704D7083C
-	for <linux-bluetooth@vger.kernel.org>; Sat,  7 Mar 2026 16:03:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB07F35F17A
+	for <linux-bluetooth@vger.kernel.org>; Sun,  8 Mar 2026 12:48:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772899395; cv=none; b=a4fLgECyoUW/JM9bChs1JUYubz1aDtPs/6wSuI9qxBI6/kq9LhvTp5KOt08DpWkftpQJc53wtX2ZNsyfaEwDnRjXHtjwqwftVumyhmszibaYok4NTVKLmlSQzxZP5irxmWhHOzFmlGA6fYYKr5L7tTpNmM8JKq3pEkcq2r/NCMA=
+	t=1772974110; cv=none; b=ltLSEr8pzyQykwR5G4LTX7FBJq0HYgUBDcTcyecOHd/Z/jfc+nrVAAR5QQExWDK0qwHWlOsCmZDA0Ii3Bk0w0VE6s3/B9Xm+/0eJSm/U2bO3F9korccI9fbLyYDxYSHcovsJsgCDhiTv28EM2mrKIDaKux5/mKicDY8YPLFjohg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772899395; c=relaxed/simple;
-	bh=h3qZSjHG4685ymcHEEG49pAL0qpvRgdCJMgrCneaH/Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VTCSRLVBo05TRTxCv7F/slpe5ODX1ffGDBTy0ZRU/n7hxF5czO5ru4/vMIhTnYnQB28wQh22dnHsKBe5SdOI50qbPRtc4pF8l/Ep7sN0FmnWazK6HXpUcJTtagozVlmw7ssKYemtc0jB8VpsGjkxJkquiySXyz/Pt+IjhTFX3jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hpTWYmTE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B353CC2BC87
-	for <linux-bluetooth@vger.kernel.org>; Sat,  7 Mar 2026 16:03:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772899394;
-	bh=h3qZSjHG4685ymcHEEG49pAL0qpvRgdCJMgrCneaH/Q=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=hpTWYmTEM9imBEVAK++fkAXoedLU0u1zUDlqsGlgxcuiMXAk/q6Xjf6b2WVC1DeSP
-	 rPXpHynZXUAfTXyKnhRnPvvFgQGO8agenDvHS8nBHOM1+/gcwmtiTF76eL8HSPUv4D
-	 ec+ARVRwrd3ZATeRo2qHTFYPQzQO+6J7Ws6eIo4//gwcjYwLDkndTHkRpIM/1S/r02
-	 cPY39HuWR7hZFGP0XdSzV0vSJqVqvCdLUR2fSod5MgCMBmH9H9M2q8YXYAi4cn8web
-	 Xfu0aZ93QL4i+5C1k0wROMrmDz+2AGelVPOfEbx2FhenZUbWSJa6l4p1xaIXJXgU/q
-	 Le2vDXofgbSRQ==
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-38a33a542aeso27152201fa.3
-        for <linux-bluetooth@vger.kernel.org>; Sat, 07 Mar 2026 08:03:14 -0800 (PST)
-X-Gm-Message-State: AOJu0YzqLyGkelsq6SNzA6Txewto2ZfY6ZoiSVOcAbYsEsRCEEQHPmVZ
-	ybAOgEBunHrQTlD3eB6H3nx9Qb6Ru79jNNbR25SwTeMrdVtB9yGUuKImTvvoU5GbN9l5ioRapnK
-	5ZO5eT+huW7rd5wc7iwXaB2y1mmCSyJM=
-X-Received: by 2002:a05:651c:50f:b0:38a:4df7:aeb3 with SMTP id
- 38308e7fff4ca-38a4df7afa9mr1446861fa.11.1772899393033; Sat, 07 Mar 2026
- 08:03:13 -0800 (PST)
+	s=arc-20240116; t=1772974110; c=relaxed/simple;
+	bh=/O+LzGqq4BawnyWAovxHmE+b4XLbeJv7bmXqbtiKC38=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=kUpWNKqejnZbmgKKWjO4R6KH7hhPhwEMmAAP1bi8/Otl1cUajkOVGnagB0Zrag++DQyz2H5jZKXX3apq36CYbFlTiPnPZ1DkAVggwZ7chzDfTUOgZEULL3LpKANOf6ZRUuB6IbIq3w02YTSUxQH1RNe36hb/3d82R855hfMoNXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net; spf=pass smtp.mailfrom=gmx.net; dkim=pass (2048-bit key) header.d=gmx.net header.i=martinbts@gmx.net header.b=LYQ1RQD1; arc=none smtp.client-ip=212.227.15.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.net
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.net;
+	s=s31663417; t=1772974101; x=1773578901; i=martinbts@gmx.net;
+	bh=LVmaX9pqdNp9PT9ptbTgn2C9XOnEblDahj8ZgN9S43Q=;
+	h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=LYQ1RQD1m7KSKke9RvafvCI7GTcF1V1LN6WUt5u9lbSGMMBq3dzFJMJHS782opLX
+	 stJuhu17nrk+vRXF1za+qaO4P6BfqkR3iF8w8ClsFW0Wpm0XF+QBvVOpMN9aDGuqf
+	 Cd3h2SaLN3wuqahunpOVRxyNTijmg7DkiXC6q2H+8wtvn2uFPcUWa8gpmlsepLmCY
+	 0Fp7qL1mxA37YZAQMcS0xf0qFYTdZFTP6A3x5mT4tDvw7rgQrVomNTmZlXdi0Y3Xg
+	 NDvJlgzYuql0wZxYEt5spynYFMrtG2dazxdnHI9yz41o9krBpq2tOseljhS/nFfbw
+	 zDAGAL6lQsRX7Z30lg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MbzyP-1vN9Ja2qS7-00icUs; Sun, 08
+ Mar 2026 13:48:21 +0100
+From: Martin BTS <martinbts@gmx.net>
+To: linux-bluetooth@vger.kernel.org
+Cc: hadess@hadess.net,
+	luiz.dentz@gmail.com,
+	vi@endrift.com,
+	Martin BTS <martinbts@gmx.net>
+Subject: [PATCH BlueZ v2 0/6] Nintendo Switch 2 support
+Date: Sun,  8 Mar 2026 13:47:37 +0100
+Message-ID: <20260308124745.19248-1-martinbts@gmx.net>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: linux-bluetooth@vger.kernel.org
 List-Id: <linux-bluetooth.vger.kernel.org>
 List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <177272816248.352280.12453518046823439297@jetm.me> <20260305162928.5E8F11EA006C@mailuser.phl.internal>
-In-Reply-To: <20260305162928.5E8F11EA006C@mailuser.phl.internal>
-From: Sean Wang <sean.wang@kernel.org>
-Date: Sat, 7 Mar 2026 10:03:02 -0600
-X-Gmail-Original-Message-ID: <CAGp9Lzrysz8Tyh2KUMWVgHMsfUqojiJgPseG+CTULTqH=QQhaw@mail.gmail.com>
-X-Gm-Features: AaiRm50Z5zLDAmRzmFDg9isAm_P-f83-g_hPMNKric6CZrYmyIJ7xGVQHUtqjc4
-Message-ID: <CAGp9Lzrysz8Tyh2KUMWVgHMsfUqojiJgPseG+CTULTqH=QQhaw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] Bluetooth: btmtk: Add MT6639 (MT7927) Bluetooth support
-To: Javier Tia <floss@jetm.me>
-Cc: linux-bluetooth@vger.kernel.org, 
-	"moderated list:ARM/Mediatek SoC support" <linux-mediatek@lists.infradead.org>, 
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 70BA922CA05
+X-Provags-ID: V03:K1:1391Q8n+EHR7mwpSGnBWCrE37QGCboVsEf0sq9FtGGWZ67SQOTG
+ JImBu8O+zl8PtGW1pEUWa3zz93DW5P03VHZ9BZ2wRXwkILhnIrDXb+mLID1H35KuEXHmanQ
+ IxZsgiIYz+bnA/BVW+IVJzd189cKPReywoIoJoV2AfSv4mHNc3/7fp+Jgnymlh9ehGNRQX7
+ wtrjzHp+evHbJVwe4WByg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:eqCtEvPnG80=;mLPnsJ42qqFD019heVfnBXCeGoY
+ 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
+ e2xQewHuWl3PFm7JQ=
+X-Rspamd-Queue-Id: 50BDB2304E4
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [0.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmx.net,quarantine];
+	R_DKIM_ALLOW(-0.20)[gmx.net:s=s31663417];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,lists.infradead.org,gmail.com];
-	TAGGED_FROM(0.00)[bounces-19908-lists,linux-bluetooth=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MISSING_XM_UA(0.00)[];
+	TAGGED_FROM(0.00)[bounces-19915-lists,linux-bluetooth=lfdr.de];
+	FREEMAIL_FROM(0.00)[gmx.net];
+	RCVD_TLS_LAST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[gmx.net:+];
+	RCPT_COUNT_FIVE(0.00)[5];
+	NEURAL_HAM(-0.00)[-0.979];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sean.wang@kernel.org,linux-bluetooth@vger.kernel.org];
-	RCPT_COUNT_THREE(0.00)[4];
-	NEURAL_HAM(-0.00)[-0.995];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[martinbts@gmx.net,linux-bluetooth@vger.kernel.org];
+	FREEMAIL_CC(0.00)[hadess.net,gmail.com,endrift.com,gmx.net];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,anthropic.com:email,jetm.me:email]
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-Hi Javier,
+Changes v2:
+* Drop original patches 1 and 2 (tollerate ATT timeout)
+* New patches 1, 2, 3 introduce a device property skip_secondary,
+  that makes secondary device discovery optional
+* set_alias() is now public btd_device_set_alias() as suggested
+* Fix assigned numbers reference comment
+* Link to v1: https://lore.kernel.org/all/20260301152930.221472-1-martinbt=
+s@gmx.net/
 
-On Thu, Mar 5, 2026 at 10:33=E2=80=AFAM Javier Tia <floss@jetm.me> wrote:
->
-> The MediaTek MT7927 (Filogic 380) combo WiFi 7 + BT 5.4 module uses
-> hardware variant 0x6639 for its Bluetooth subsystem. Without this patch,
-> the chip fails with "Unsupported hardware variant (00006639)" or hangs
-> during firmware download.
->
-> Three changes are needed to support MT6639:
->
-> 1. Firmware naming: MT6639 uses firmware version prefix "2_1" instead of
->    "1_1" used by MT7925 and other variants. The firmware path is
->    mediatek/mt6639/BT_RAM_CODE_MT6639_2_1_hdr.bin.
->
-> 2. Section filtering: The MT6639 firmware binary contains 9 sections, but
->    only sections with (dlmodecrctype & 0xff) =3D=3D 0x01 are Bluetooth-re=
-lated.
->    Sending the remaining WiFi/other sections causes an irreversible BT
->    subsystem hang requiring a full power cycle. This matches the Windows
->    driver behavior observed via USB captures.
->
-> 3. Firmware persistence: MT6639 firmware persists across BT soft power
->    cycles (WMT_FUNC_CTRL=3D0 does not clear firmware). Skip re-download o=
-n
->    subsequent setups to avoid a ~2.6s delay on each BT power toggle.
->
-> Also add 0x6639 to the reset register (CONNV3) and firmware setup switch
-> cases alongside the existing 0x7925 handling.
->
-> Link: https://bugzilla.kernel.org/show_bug.cgi?id=3D221096
-> Link: https://github.com/openwrt/mt76/issues/927
-> Assisted-by: Claude Code <noreply@anthropic.com> [claude-opus-4-6]
-> Signed-off-by: Javier Tia <floss@jetm.me>
-> ---
->  drivers/bluetooth/btmtk.c | 32 ++++++++++++++++++++++++++++++--
->  drivers/bluetooth/btmtk.h |  1 +
->  2 files changed, 31 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
-> index 2507d587f28a..3821fde9e361 100644
-> --- a/drivers/bluetooth/btmtk.c
-> +++ b/drivers/bluetooth/btmtk.c
-> @@ -112,7 +112,11 @@ static void btmtk_coredump_notify(struct hci_dev *hd=
-ev, int state)
->  void btmtk_fw_get_filename(char *buf, size_t size, u32 dev_id, u32 fw_ve=
-r,
->                            u32 fw_flavor)
->  {
-> -       if (dev_id =3D=3D 0x7925)
-> +       if (dev_id =3D=3D 0x6639)
-> +               snprintf(buf, size,
-> +                        "mediatek/mt%04x/BT_RAM_CODE_MT%04x_2_%x_hdr.bin=
-",
-> +                        dev_id & 0xffff, dev_id & 0xffff, (fw_ver & 0xff=
-) + 1);
-> +       else if (dev_id =3D=3D 0x7925)
->                 snprintf(buf, size,
->                          "mediatek/mt%04x/BT_RAM_CODE_MT%04x_1_%x_hdr.bin=
-",
->                          dev_id & 0xffff, dev_id & 0xffff, (fw_ver & 0xff=
-) + 1);
-> @@ -130,6 +134,7 @@ EXPORT_SYMBOL_GPL(btmtk_fw_get_filename);
->  int btmtk_setup_firmware_79xx(struct hci_dev *hdev, const char *fwname,
->                               wmt_cmd_sync_func_t wmt_cmd_sync)
->  {
-> +       struct btmtk_data *data =3D hci_get_priv(hdev);
->         struct btmtk_hci_wmt_params wmt_params;
->         struct btmtk_patch_header *hdr;
->         struct btmtk_global_desc *globaldesc =3D NULL;
-> @@ -166,6 +171,14 @@ int btmtk_setup_firmware_79xx(struct hci_dev *hdev, =
-const char *fwname,
->                 section_offset =3D le32_to_cpu(sectionmap->secoffset);
->                 dl_size =3D le32_to_cpu(sectionmap->bin_info_spec.dlsize)=
-;
->
-> +               /* MT6639: only download sections where dlmode byte0 =3D=
-=3D 0x01,
-> +                * matching the Windows driver behavior which skips WiFi/=
-other
-> +                * sections that would cause the chip to hang.
-> +                */
+v2 blurb:
 
-BT and WiFi use separate firmware.
-I=E2=80=99m not sure why those WiFi sections are included in the binary.
-Another concern is whether it is appropriate to upload the firmware
-used in Windows to the linux-firmware repository,
-The firmware files are probably intended for dedicated OEMs.
+The problem is the secondary service discovery. It will time out on the
+Procon2 which is essentially an unrecoverable error and we cannot
+connect the controller as a result.
 
-> +               if (data->dev_id =3D=3D 0x6639 && dl_size > 0 &&
-> +                   (le32_to_cpu(sectionmap->bin_info_spec.dlmodecrctype)=
- & 0xff) !=3D 0x01)
-> +                       continue;
-> +
->                 if (dl_size > 0) {
->                         retry =3D 20;
->                         while (retry > 0) {
-> @@ -852,7 +865,7 @@ int btmtk_usb_subsys_reset(struct hci_dev *hdev, u32 =
-dev_id)
->                 if (err < 0)
->                         return err;
->                 msleep(100);
-> -       } else if (dev_id =3D=3D 0x7925) {
-> +       } else if (dev_id =3D=3D 0x7925 || dev_id =3D=3D 0x6639) {
->                 err =3D btmtk_usb_uhw_reg_read(hdev, MTK_BT_RESET_REG_CON=
-NV3, &val);
->                 if (err < 0)
->                         return err;
-> @@ -1339,9 +1352,20 @@ int btmtk_usb_setup(struct hci_dev *hdev)
->         case 0x7925:
->         case 0x7961:
->         case 0x7902:
-> +       case 0x6639:
->                 btmtk_fw_get_filename(fw_bin_name, sizeof(fw_bin_name), d=
-ev_id,
->                                       fw_version, fw_flavor);
->
-> +               /* MT6639: firmware persists across BT soft power cycles
-> +                * (shutdown only sends WMT_FUNC_CTRL=3D0). Skip re-downl=
-oad
-> +                * on subsequent setups to avoid ~2.6s delay.
-> +                */
+This patchset proposes making the secondary service discovery optional,
+so that we can prevent dealing with the Procon2's behaviour.
+It now is a property of the device, if it wants/needs a secondary
+discovery, or not. This allows device specific plugins to make the
+correct configuration in time, bevor a gatt-client is created. The
+default is the original behaviour: do a secondary services discovery.
 
-This is common logic for the other mediatek chips. It only takes
-longer on the first power-on.
+I marked patch 1 as a breaking change, because of how it changes the
+gatt-client interface. It appears this gatt-client is only used
+internally and never exposed so it technically isn't a breaking change
+for BlueZ, but I cannot be sure.
 
-> +               if (dev_id =3D=3D 0x6639 &&
-> +                   test_bit(BTMTK_FIRMWARE_LOADED, &btmtk_data->flags)) =
-{
-> +                       bt_dev_info(hdev, "MT6639: firmware already loade=
-d, skipping download");
-> +                       goto skip_fw_setup_79xx;
-> +               }
-> +
->                 err =3D btmtk_setup_firmware_79xx(hdev, fw_bin_name,
->                                                 btmtk_usb_hci_wmt_sync);
->                 if (err < 0) {
-> @@ -1352,6 +1376,10 @@ int btmtk_usb_setup(struct hci_dev *hdev)
->                         return err;
->                 }
->
-> +               if (dev_id =3D=3D 0x6639)
-> +                       set_bit(BTMTK_FIRMWARE_LOADED, &btmtk_data->flags=
-);
+For the record: The Procon2 reports appearance 0x0A82 Portable handheld co=
+nsole
 
-If the firmware download is properly handled in
-btmtk_setup_firmware_79xx, we don't need the extra bit.
+Martin BTS (6):
+  shared/gatt: make secondary discovery optional
+  device: allow skip secondary discovery
+  fixup: propagate new gatt interface through codebase
+  device: Rename set_alias to  btd_device_set_alias()
+  dbus-common: Add Gaming appearance class (0x2a)
+  plugins/switch2: Add Nintendo Switch 2 Controller plugin
 
-> +
-> +skip_fw_setup_79xx:
->                 /* It's Device EndPoint Reset Option Register */
->                 err =3D btmtk_usb_uhw_reg_write(hdev, MTK_EP_RST_OPT,
->                                               MTK_EP_RST_IN_OUT_OPT);
-> diff --git a/drivers/bluetooth/btmtk.h b/drivers/bluetooth/btmtk.h
-> index adaf385626ee..6645bcadb523 100644
-> --- a/drivers/bluetooth/btmtk.h
-> +++ b/drivers/bluetooth/btmtk.h
-> @@ -8,6 +8,7 @@
->  #define FIRMWARE_MT7902                "mediatek/BT_RAM_CODE_MT7902_1_1_=
-hdr.bin"
->  #define FIRMWARE_MT7961                "mediatek/BT_RAM_CODE_MT7961_1_2_=
-hdr.bin"
->  #define FIRMWARE_MT7925                "mediatek/mt7925/BT_RAM_CODE_MT79=
-25_1_1_hdr.bin"
-> +#define FIRMWARE_MT7927                "mediatek/mt6639/BT_RAM_CODE_MT66=
-39_2_1_hdr.bin"
->
->  #define HCI_EV_WMT 0xe4
->  #define HCI_WMT_MAX_EVENT_SIZE         64
-> --
-> 2.53.0
->
+ Makefile.plugins         |    3 +
+ peripheral/gatt.c        |    5 +-
+ plugins/switch2.c        | 1070 ++++++++++++++++++++++++++++++++++++++
+ src/dbus-common.c        |    2 +
+ src/device.c             |   33 +-
+ src/device.h             |    2 +
+ src/shared/gatt-client.c |   22 +-
+ src/shared/gatt-client.h |    4 +-
+ tools/btgatt-client.c    |    5 +-
+ unit/test-bap.c          |    3 +-
+ unit/test-gatt.c         |    3 +-
+ unit/test-gmap.c         |    3 +-
+ unit/test-mcp.c          |    3 +-
+ unit/test-micp.c         |    3 +-
+ unit/test-tmap.c         |    3 +-
+ 15 files changed, 1133 insertions(+), 31 deletions(-)
+ create mode 100644 plugins/switch2.c
+
+=2D-=20
+2.47.3
+
 
