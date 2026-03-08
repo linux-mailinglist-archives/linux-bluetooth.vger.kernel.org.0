@@ -1,55 +1,55 @@
-Return-Path: <linux-bluetooth+bounces-19912-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
+Return-Path: <linux-bluetooth+bounces-19909-lists+linux-bluetooth=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-bluetooth@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oPZTCx5wrWme2wEAu9opvQ
-	(envelope-from <linux-bluetooth+bounces-19912-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
+	id UKvgBR5wrWme2wEAu9opvQ
+	(envelope-from <linux-bluetooth+bounces-19909-lists+linux-bluetooth=lfdr.de@vger.kernel.org>)
 	for <lists+linux-bluetooth@lfdr.de>; Sun, 08 Mar 2026 13:48:30 +0100
 X-Original-To: lists+linux-bluetooth@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C15AD2304BB
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 74F222304BA
 	for <lists+linux-bluetooth@lfdr.de>; Sun, 08 Mar 2026 13:48:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 304E3300A313
-	for <lists+linux-bluetooth@lfdr.de>; Sun,  8 Mar 2026 12:48:29 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 4E67B300F9D8
+	for <lists+linux-bluetooth@lfdr.de>; Sun,  8 Mar 2026 12:48:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A188375F9A;
-	Sun,  8 Mar 2026 12:48:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A2F7378820;
+	Sun,  8 Mar 2026 12:48:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.net header.i=martinbts@gmx.net header.b="h9ygbnRS"
+	dkim=pass (2048-bit key) header.d=gmx.net header.i=martinbts@gmx.net header.b="Qb3g+jCr"
 X-Original-To: linux-bluetooth@vger.kernel.org
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A48F376BE1
-	for <linux-bluetooth@vger.kernel.org>; Sun,  8 Mar 2026 12:48:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0199935F17A
+	for <linux-bluetooth@vger.kernel.org>; Sun,  8 Mar 2026 12:48:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772974108; cv=none; b=AFYmqv9f5bBNu5pRD6qUKFufBw8b1q1YTcUwqH50cWgSiwpYUPedvcb3ZsUBpzK9NB9yezEdtKESZ1q5spUOcrgS2nE8sTQCXAxK0f331ZgPZal6tLuhujyBuB9Glu3JVmmr9kN9cb4oTy9s36Z6lF2mo58mGJjYPDHR45axgLs=
+	t=1772974106; cv=none; b=WWb9QeTQjWw9TX+Cf54xTdTEJAfwJ26x7g6NEisVfb+7eW45qekiylGSuucSoLY7GZL016DpwEgVqd7y2qk6HCE+8eGbV+Q67hLoG+86pYefrmuUJbyztEKBFW9CakbVw3/S0OahSRXDMzjL8VUIBLiB5Qq3IjAZkex7bJ0vihs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772974108; c=relaxed/simple;
-	bh=JJotgogY7xc2up7yUeFBAIuoE0BybgIdEwWCeQvzINw=;
+	s=arc-20240116; t=1772974106; c=relaxed/simple;
+	bh=Y0fWd/7jbrN22NPp2Z/sGpm4LMChK3vJaXvD3yaEVfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PCFFIF5bf7/2ZxCgS+d1I+LOpnbqK23QYxEcRXGxZ8tAMU5Ttrd9+5jcntRaqHmq7wMsiG4n3YY3LZOmUezJj/V4X6f2mhPA3eLuQAnAnLl+ZfVXKhRw0N0dyry1/vAye8ATzdoeV2NLSMiXG+m9HYKkKfR6Yph9k7zdIV0OEwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net; spf=pass smtp.mailfrom=gmx.net; dkim=pass (2048-bit key) header.d=gmx.net header.i=martinbts@gmx.net header.b=h9ygbnRS; arc=none smtp.client-ip=212.227.15.19
+	 MIME-Version; b=dVB8Ah5yaXWm6n3htC8nYnnuW3XPlOY4SqFnzkRyRhRpQUAP9oFCej8gz22R5DxRGvqWsBaTr9mDaj3Dlq2p8c9TmvF3YrtP8tXW6F1bYleyTzbYogUwSPKSRclcty8KsNFcg6iOcCNOOUGcVe1hMo7aGFxZoi68vyv2XM0xdxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net; spf=pass smtp.mailfrom=gmx.net; dkim=pass (2048-bit key) header.d=gmx.net header.i=martinbts@gmx.net header.b=Qb3g+jCr; arc=none smtp.client-ip=212.227.15.15
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.net
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.net;
 	s=s31663417; t=1772974102; x=1773578902; i=martinbts@gmx.net;
-	bh=jn68mZVLVQAdVBrSiDl1lsbH7EkHfqtft+WObZSDVnA=;
+	bh=vXM0tjnJzNciJMb/G2KwPpEp09LpQlWlxwe6UavyOnQ=;
 	h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:In-Reply-To:
 	 References:MIME-Version:Content-Transfer-Encoding:cc:
 	 content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=h9ygbnRSEyfaJh793AC32fUgde6vWrZLqblrzzr2JwLaNJNN/3oldnGQoSR9XAy1
-	 BJqdAwWOrqBrPVY0D/Mv/2J+zRG/6gCIOtzPn2AsFjYyAj7USSBvD//32Ka+t6+U/
-	 Df3tBg7sJqMXKQPgvpMrBWdUzUvsfJ/2+5+plu6F+17K9yLJJo+M2IF2AhCKvoqGC
-	 kCFTMjkJQBKSFbxLM2wsy8GwvnYDl1B3uAqHg6EJre53naKR+zoNZNu6DUz9IVLbu
-	 nTtN3CTecD85eqDhvEwtgIgxohLtlt8ygDbTH7jPIAIj+DEI7BVKnRX9CN7AhWy8u
-	 gjar4u6f/E2eOWPbtw==
+	b=Qb3g+jCrO381JqOfF/JGSWeiqCzqtnoGC3jRtK+0cEP42iXI08IRezN5zk0qZdMU
+	 CNYUh3i63CSpKZK2WFOANl8rZPqcRAqsn8SpSsh0YKh7DRkf6WbCTiKQEgTZvnKOA
+	 sPYUGC0pvdXPkhpcd6VtZ68CbrN1/xgGJ2rYpj92dUk8FOtRK1qHX2uD5XMGr5eSp
+	 2fFTxgysHhYEn2HSe8AnJ18NcXvjNfYUXSaRCR1YB/sTlI1aAQjUmxF+zM/E5xRRr
+	 n637gNUAcoqF8Fu0x//HexL7F14HbmSu4GEpAGpKSxrPi6uaBIoQnVkAbxtri6JGN
+	 qq91glu95cBHrwMULQ==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N3bWr-1vZ8IY3tL9-00ugnO; Sun, 08
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mplc7-1vI96p0jXB-00divw; Sun, 08
  Mar 2026 13:48:22 +0100
 From: Martin BTS <martinbts@gmx.net>
 To: linux-bluetooth@vger.kernel.org
@@ -57,9 +57,9 @@ Cc: hadess@hadess.net,
 	luiz.dentz@gmail.com,
 	vi@endrift.com,
 	Martin BTS <martinbts@gmx.net>
-Subject: [PATCH BlueZ v2 1/6] shared/gatt: make secondary discovery optional
-Date: Sun,  8 Mar 2026 13:47:38 +0100
-Message-ID: <20260308124745.19248-2-martinbts@gmx.net>
+Subject: [PATCH BlueZ v2 2/6] device: allow skip secondary discovery
+Date: Sun,  8 Mar 2026 13:47:39 +0100
+Message-ID: <20260308124745.19248-3-martinbts@gmx.net>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260308124745.19248-1-martinbts@gmx.net>
 References: <20260308124745.19248-1-martinbts@gmx.net>
@@ -70,86 +70,86 @@ List-Subscribe: <mailto:linux-bluetooth+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-bluetooth+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:gRggcDJJ80NwR6Yn3aUZ/6UPsYgin5DIAuJnOyMdXkY9++bKIMn
- s7lf/C5C/SBITzIHXgNPFhx5xwixJHilT7J4DT1sewg5WEuoRfJ5SYP/flea95YbT6dZNIT
- liMEJhNFrA6ykUvUB4ftOiyzsXwVWsn/+Q56O4L4naahLw4AhNNKFQBGmKl/7KJM3ZT2/bs
- QRJJn1canNPIUYYHDKcMA==
+X-Provags-ID: V03:K1:M2H0Cx2zGPnzOoLcKO8Nf0GbMbppGkshfNlhX7Qg6zjhVWa0Pmt
+ MiyGqmqMPnYQSCaP9tCC5M166NZbmxsPoJkJBferg/4HgUOCtwGpwUAvnzAQZs+SZFbRkX3
+ 5mohiLWBW8QwWR2ugMrssulP0Lp2Trlccp3RbUhn6xOWpmBUNzRetTW3C4F0nTa8AvalSPc
+ Vk7inE/h2XN4wnNoFQfRA==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:2h9LGhpCpew=;inOaf+jORfrn0W+Z9eZRPyGZSpD
- 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
-X-Rspamd-Queue-Id: C15AD2304BB
+UI-OutboundReport: notjunk:1;M01:P0:wfafIBjeQLQ=;UeICViw1cB0E1yFDESTmqneUPvI
+ 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
+ 6AZ+qX8afCyXzOIs4Ggo8B+KAZWPO
+X-Rspamd-Queue-Id: 74F222304BA
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [0.84 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
@@ -158,11 +158,11 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[gmx.net,quarantine];
 	R_DKIM_ALLOW(-0.20)[gmx.net:s=s31663417];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-19912-lists,linux-bluetooth=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-19909-lists,linux-bluetooth=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
@@ -179,113 +179,83 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	NEURAL_HAM(-0.00)[-0.992];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-bluetooth];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-BREAKING CHANGE!
-
-* Remove gatt_client_init from bt_gatt_client_new. Consumers must now
-  call gatt_client_init themselves!
-* Remove mtu paramter from bt_gatt_client_new
-* Rename gatt_client_init to bt_gatt_client_init and make it public
-* Introduce a new bt_gatt_client field "skip_secondary", default false
+* Introduce new btd_device field skip_secondary
 * Introduce public skip_secondary setter
-* If true, skip_secondary makes discover_primary_cb goto done
-  (instead of discoverying secondary services)
+* Use new gatt client interface to push device->skip_secondary into
+  device->client->skip_secondary after new() but before init()
+* Doing secondary service discovery is now a device property that can be
+  set by device specific plugins.
 =2D--
- src/shared/gatt-client.c | 22 ++++++++++++++--------
- src/shared/gatt-client.h |  4 +++-
- 2 files changed, 17 insertions(+), 9 deletions(-)
+ src/device.c | 18 ++++++++++++++++--
+ src/device.h |  1 +
+ 2 files changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/src/shared/gatt-client.c b/src/shared/gatt-client.c
-index df1541b88..7896ed329 100644
-=2D-- a/src/shared/gatt-client.c
-+++ b/src/shared/gatt-client.c
-@@ -93,6 +93,7 @@ struct bt_gatt_client {
- 	struct queue *notify_chrcs;
- 	int next_reg_id;
- 	unsigned int disc_id, nfy_id, nfy_mult_id, ind_id;
-+	bool skip_secondary;
+diff --git a/src/device.c b/src/device.c
+index 3ea683667..4c2c0b635 100644
+=2D-- a/src/device.c
++++ b/src/device.c
+@@ -275,6 +275,7 @@ struct btd_device {
+ 	struct gatt_db *db;			/* GATT db cache */
+ 	unsigned int db_id;
+ 	struct bt_gatt_client *client;		/* GATT client instance */
++	bool		skip_secondary;
+ 	struct bt_gatt_server *server;		/* GATT server instance */
+ 	unsigned int gatt_ready_id;
 =20
- 	/*
- 	 * Handles of the GATT Service and the Service Changed characteristic
-@@ -1344,7 +1345,7 @@ secondary:
- 	 * functionality of a device and is referenced from at least one
- 	 * primary service on the device.
- 	 */
--	if (queue_isempty(op->pending_svcs))
-+	if (queue_isempty(op->pending_svcs) || client->skip_secondary)
- 		goto done;
-=20
- 	/* Discover secondary services */
-@@ -2106,7 +2107,7 @@ done:
- 	notify_client_ready(client, success, att_ecode);
+@@ -5113,6 +5114,11 @@ void device_get_name(struct btd_device *device, cha=
+r *name, size_t len)
+ 	}
  }
 =20
--static bool gatt_client_init(struct bt_gatt_client *client, uint16_t mtu)
-+bool bt_gatt_client_init(struct bt_gatt_client *client, uint16_t mtu)
- {
- 	struct discovery_op *op;
-=20
-@@ -2549,7 +2550,6 @@ fail:
-=20
- struct bt_gatt_client *bt_gatt_client_new(struct gatt_db *db,
- 							struct bt_att *att,
--							uint16_t mtu,
- 							uint8_t features)
- {
- 	struct bt_gatt_client *client;
-@@ -2561,11 +2561,6 @@ struct bt_gatt_client *bt_gatt_client_new(struct ga=
-tt_db *db,
- 	if (!client)
- 		return NULL;
-=20
--	if (!gatt_client_init(client, mtu)) {
--		bt_gatt_client_free(client);
--		return NULL;
--	}
--
- 	return bt_gatt_client_ref(client);
- }
-=20
-@@ -2592,6 +2587,17 @@ struct bt_gatt_client *bt_gatt_client_clone(struct =
-bt_gatt_client *client)
- 	return bt_gatt_client_ref(clone);
- }
-=20
-+bool bt_gatt_client_set_skip_secondary(struct bt_gatt_client *client,
-+								bool skip)
++void btd_device_set_skip_secondary(struct btd_device *device, bool skip)
 +{
-+	if (!client)
-+		return false;
-+
-+	client->skip_secondary =3D skip;
-+
-+	return true;
++	device->skip_secondary =3D skip;
 +}
 +
- struct bt_gatt_client *bt_gatt_client_ref(struct bt_gatt_client *client)
+ bool device_name_known(struct btd_device *device)
  {
- 	if (!client)
-diff --git a/src/shared/gatt-client.h b/src/shared/gatt-client.h
-index 63cf99500..e510ad455 100644
-=2D-- a/src/shared/gatt-client.h
-+++ b/src/shared/gatt-client.h
-@@ -18,9 +18,11 @@ struct bt_gatt_client;
+ 	return device->name[0] !=3D '\0';
+@@ -6301,10 +6307,18 @@ static void gatt_client_init(struct btd_device *de=
+vice)
+ 		bt_att_set_security(device->att, BT_ATT_SECURITY_MEDIUM);
+ 	}
 =20
- struct bt_gatt_client *bt_gatt_client_new(struct gatt_db *db,
- 							struct bt_att *att,
--							uint16_t mtu,
- 							uint8_t features);
- struct bt_gatt_client *bt_gatt_client_clone(struct bt_gatt_client *client=
-);
-+bool bt_gatt_client_init(struct bt_gatt_client *client, uint16_t mtu);
-+bool bt_gatt_client_set_skip_secondary(struct bt_gatt_client *client,
-+								bool skip);
+-	device->client =3D bt_gatt_client_new(device->db, device->att,
+-						device->att_mtu, features);
++	device->client =3D bt_gatt_client_new(device->db, device->att, features)=
+;
+ 	if (!device->client) {
++		DBG("Failed to create gatt client");
++		return;
++	}
++
++	bt_gatt_client_set_skip_secondary(device->client,
++						device->skip_secondary);
++
++	if (!bt_gatt_client_init(device->client, device->att_mtu)) {
+ 		DBG("Failed to initialize");
++		gatt_client_cleanup(device);
+ 		return;
+ 	}
 =20
- struct bt_gatt_client *bt_gatt_client_ref(struct bt_gatt_client *client);
- void bt_gatt_client_unref(struct bt_gatt_client *client);
+diff --git a/src/device.h b/src/device.h
+index c7b8b2a16..19f270388 100644
+=2D-- a/src/device.h
++++ b/src/device.h
+@@ -22,6 +22,7 @@ char *btd_device_get_storage_path(struct btd_device *dev=
+ice,
+=20
+=20
+ void btd_device_device_set_name(struct btd_device *device, const char *na=
+me);
++void btd_device_set_skip_secondary(struct btd_device *device, bool skip);
+ void device_store_cached_name(struct btd_device *dev, const char *name);
+ void device_get_name(struct btd_device *device, char *name, size_t len);
+ bool device_name_known(struct btd_device *device);
 =2D-=20
 2.47.3
 
